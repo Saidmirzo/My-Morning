@@ -8,13 +8,13 @@ part of 'exercise_holder.dart';
 
 class ExerciseHolderAdapter extends TypeAdapter<ExerciseHolder> {
   @override
-  final typeId = 50;
+  final int typeId = 50;
 
   @override
   ExerciseHolder read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ExerciseHolder(
       (fields[0] as List)?.cast<ExerciseTitle>(),
@@ -31,4 +31,14 @@ class ExerciseHolderAdapter extends TypeAdapter<ExerciseHolder> {
       ..writeByte(1)
       ..write(obj.skipExercises);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ExerciseHolderAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

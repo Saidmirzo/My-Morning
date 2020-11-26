@@ -8,13 +8,13 @@ part of 'meditation_progress.dart';
 
 class MeditationProgressAdapter extends TypeAdapter<MeditationProgress> {
   @override
-  final typeId = 11;
+  final int typeId = 11;
 
   @override
   MeditationProgress read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MeditationProgress(
       fields[0] as int,
@@ -28,4 +28,14 @@ class MeditationProgressAdapter extends TypeAdapter<MeditationProgress> {
       ..writeByte(0)
       ..write(obj.seconds);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MeditationProgressAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

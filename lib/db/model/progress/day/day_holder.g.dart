@@ -8,13 +8,13 @@ part of 'day_holder.dart';
 
 class DayHolderAdapter extends TypeAdapter<DayHolder> {
   @override
-  final typeId = 12;
+  final int typeId = 12;
 
   @override
   DayHolder read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return DayHolder(
       (fields[0] as List)?.cast<Day>(),
@@ -28,4 +28,14 @@ class DayHolderAdapter extends TypeAdapter<DayHolder> {
       ..writeByte(0)
       ..write(obj.listOfDays);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DayHolderAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

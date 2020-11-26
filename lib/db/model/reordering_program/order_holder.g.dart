@@ -8,13 +8,13 @@ part of 'order_holder.dart';
 
 class OrderHolderAdapter extends TypeAdapter<OrderHolder> {
   @override
-  final typeId = 201;
+  final int typeId = 201;
 
   @override
   OrderHolder read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return OrderHolder(
       (fields[0] as List)?.cast<OrderItem>(),
@@ -28,4 +28,14 @@ class OrderHolderAdapter extends TypeAdapter<OrderHolder> {
       ..writeByte(0)
       ..write(obj.list);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is OrderHolderAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

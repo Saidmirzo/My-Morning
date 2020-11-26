@@ -9,13 +9,13 @@ part of 'vocabulary_note_progress.dart';
 class VocabularyNoteProgressAdapter
     extends TypeAdapter<VocabularyNoteProgress> {
   @override
-  final typeId = 35;
+  final int typeId = 35;
 
   @override
   VocabularyNoteProgress read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return VocabularyNoteProgress(
       fields[0] as String,
@@ -29,4 +29,14 @@ class VocabularyNoteProgressAdapter
       ..writeByte(0)
       ..write(obj.note);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is VocabularyNoteProgressAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

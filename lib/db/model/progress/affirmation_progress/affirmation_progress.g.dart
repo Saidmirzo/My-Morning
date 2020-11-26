@@ -8,13 +8,13 @@ part of 'affirmation_progress.dart';
 
 class AffirmationProgressAdapter extends TypeAdapter<AffirmationProgress> {
   @override
-  final typeId = 10;
+  final int typeId = 10;
 
   @override
   AffirmationProgress read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AffirmationProgress(
       fields[0] as int,
@@ -31,4 +31,14 @@ class AffirmationProgressAdapter extends TypeAdapter<AffirmationProgress> {
       ..writeByte(1)
       ..write(obj.text);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AffirmationProgressAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

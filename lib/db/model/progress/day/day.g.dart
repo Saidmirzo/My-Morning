@@ -8,13 +8,13 @@ part of 'day.dart';
 
 class DayAdapter extends TypeAdapter<Day> {
   @override
-  final typeId = 13;
+  final int typeId = 13;
 
   @override
   Day read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Day(
       fields[0] as String,
@@ -49,4 +49,14 @@ class DayAdapter extends TypeAdapter<Day> {
       ..writeByte(7)
       ..write(obj.visualizationProgress);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DayAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

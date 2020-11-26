@@ -8,13 +8,13 @@ part of 'fitness_progress.dart';
 
 class FitnessProgressAdapter extends TypeAdapter<FitnessProgress> {
   @override
-  final typeId = 14;
+  final int typeId = 14;
 
   @override
   FitnessProgress read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FitnessProgress(
       fields[0] as int,
@@ -31,4 +31,14 @@ class FitnessProgressAdapter extends TypeAdapter<FitnessProgress> {
       ..writeByte(1)
       ..write(obj.exercise);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is FitnessProgressAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

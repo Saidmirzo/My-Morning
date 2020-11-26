@@ -8,13 +8,13 @@ part of 'note.dart';
 
 class NoteAdapter extends TypeAdapter<Note> {
   @override
-  final typeId = 20;
+  final int typeId = 20;
 
   @override
   Note read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Note(
       fields[0] as String,
@@ -28,4 +28,14 @@ class NoteAdapter extends TypeAdapter<Note> {
       ..writeByte(0)
       ..write(obj.note);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NoteAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

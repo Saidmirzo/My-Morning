@@ -8,13 +8,13 @@ part of 'visualization_progress.dart';
 
 class VisualizationProgressAdapter extends TypeAdapter<VisualizationProgress> {
   @override
-  final typeId = 17;
+  final int typeId = 17;
 
   @override
   VisualizationProgress read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return VisualizationProgress(
       fields[0] as int,
@@ -31,4 +31,14 @@ class VisualizationProgressAdapter extends TypeAdapter<VisualizationProgress> {
       ..writeByte(1)
       ..write(obj.text);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is VisualizationProgressAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

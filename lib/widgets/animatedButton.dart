@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/progress/awareness_progress/awareness_progress.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 const _duration = Duration(milliseconds: 500);
@@ -11,14 +14,8 @@ class AnimatedButton extends StatefulWidget {
   final double width;
   final FontWeight fontWeight;
 
-  AnimatedButton(
-    this.onPressed, 
-    this.fontFamily, 
-    this.title, 
-    this.fontSize,
-    this.width,
-    this.fontWeight
-  );
+  AnimatedButton(this.onPressed, this.fontFamily, this.title, this.fontSize,
+      this.width, this.fontWeight);
 
   _AnimatedButtonState createState() => _AnimatedButtonState();
 }
@@ -67,7 +64,15 @@ class _AnimatedButtonState extends State<AnimatedButton> {
             autofocus: false,
             hoverColor: AppColors.TRANSPARENT,
             highlightElevation: 0,
-            onPressed: () {
+            onPressed: () async {
+              // TODO change
+              AwarenessProgress awarenessProgress = await myDbBox.get(
+                  MyResource.AWARENESS_PROGRESS_KEY,
+                  defaultValue: AwarenessProgress(0));
+              awarenessProgress.incrementAwareness();
+              await myDbBox.put(
+                  MyResource.AWARENESS_PROGRESS_KEY, awarenessProgress);
+
               change();
               widget.onPressed();
             },

@@ -12,6 +12,7 @@ class MyResource {
   static const String VOCABULARY_TIME_KEY = "vocabulary_time";
   static const String READING_TIME_KEY = "reading_time";
   static const String VISUALIZATION_TIME_KEY = "visualization_time";
+  static const String AWARENESS_PROGRESS_KEY = "awareness_progress";
 
   static const String DAYS_HOLDER = 'days_holder';
   static const String EXERCISES_HOLDER = 'big_exercises_holder';

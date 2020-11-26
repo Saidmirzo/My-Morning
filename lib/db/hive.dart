@@ -17,6 +17,7 @@ import 'model/exercise/exercise_holder.dart';
 import 'model/exercise/exercise_title.dart';
 import 'model/exercise_time/exercise_time_adapter.dart';
 import 'model/progress/affirmation_progress/affirmation_progress.dart';
+import 'model/progress/awareness_progress/awareness_progress.dart';
 import 'model/progress/day/day.dart';
 import 'model/progress/day/day_holder.dart';
 import 'model/progress/fitness_porgress/fitness_progress.dart';
@@ -59,6 +60,7 @@ class MyDB {
     Hive.registerAdapter(OrderItemAdapter());
     Hive.registerAdapter(OrderHolderAdapter());
     Hive.registerAdapter(UserProgramAdapter());
+    Hive.registerAdapter(AwarenessProgressAdapter());
 
     await this.openMyBox();
   }

@@ -8,13 +8,13 @@ part of 'user_program.dart';
 
 class UserProgramAdapter extends TypeAdapter<UserProgram> {
   @override
-  final typeId = 220;
+  final int typeId = 220;
 
   @override
   UserProgram read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserProgram(
       (fields[0] as List)?.cast<ExerciseTitle>(),
@@ -28,4 +28,14 @@ class UserProgramAdapter extends TypeAdapter<UserProgram> {
       ..writeByte(0)
       ..write(obj.exercises);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserProgramAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

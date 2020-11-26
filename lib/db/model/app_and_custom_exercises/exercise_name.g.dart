@@ -8,13 +8,13 @@ part of 'exercise_name.dart';
 
 class ExerciseNameAdapter extends TypeAdapter<ExerciseName> {
   @override
-  final typeId = 100;
+  final int typeId = 100;
 
   @override
   ExerciseName read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ExerciseName(
       fields[0] as String,
@@ -34,4 +34,14 @@ class ExerciseNameAdapter extends TypeAdapter<ExerciseName> {
       ..writeByte(2)
       ..write(obj.size);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ExerciseNameAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
