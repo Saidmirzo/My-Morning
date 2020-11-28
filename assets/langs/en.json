@@ -81,7 +81,7 @@
   "cancel": "Cancel",
   "skip": "Skip",
   "minutes": "minutes",
-  "choose": "Choose\nsequence",
+  "choose_sequence": "Choose\nsequence",
   "choose_title": "Drag and drop to change sequence of exercises and set time on them.",
   "affirmation_small": "Affirmations",
   "meditation_small": "Meditation",
@@ -197,6 +197,8 @@
   "wealth_text_7": "I am connected to the universal supply of money.",
   "wealth_text_8": "The Universe showers me with gifts.",
   "wealth_text_9": "Every good deed comes back to me multiplied",
-  "wealth_text_10": "I always attract lots of resources and ideas."
+  "wealth_text_10": "I always attract lots of resources and ideas.",
+  "choose_ready": "Choose a ready one",
+  "choose": "Choose"
 }
 

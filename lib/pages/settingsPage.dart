@@ -6,7 +6,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
-import 'package:morningmagic/dialog/affirmation_text_dialog.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../db/model/affirmation_text/affirmation_text.dart';
@@ -97,7 +96,7 @@ class SettingsPageState extends State<SettingsPage> {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'choose'.tr(),
+                              'choose_sequence'.tr(),
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: AppColors.VIOLET,
@@ -213,19 +212,19 @@ class SettingsPageState extends State<SettingsPage> {
                                   Icon(
                                     Icons.add_circle_outline,
                                     size: 40,
-                                    //color: AppColors.VIOLET,
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 10,
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: Text('choose_ready'.tr(),
+                                          style: TextStyle(
+                                            color: AppColors.VIOLET,
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.normal,
+                                          )),
                                     ),
-                                    child: Text('Выбрать готовую',
-                                        //textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: AppColors.VIOLET,
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.normal,
-                                        )),
                                   ),
                                 ],
                               ),
@@ -424,7 +423,7 @@ class SettingsPageState extends State<SettingsPage> {
       if (billingService.purchaserInfo != _purchaserInfo)
         setState(() {
           billingService.purchaserInfo = _purchaserInfo;
-          print('Purchase state updatet');
+          print('Purchase state updated');
           tableList = wrapTable(true);
         });
     });

@@ -46,7 +46,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                     child: InkWell(
                       onTap: () => Navigator.pop(context),
                       child: Text(
-                        'назад',
+                        'back_button'.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 23,
@@ -68,7 +68,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                                   _affirmationTextList[_selectedItemIndex]);
                             },
                       child: Text(
-                        'выбрать',
+                        'choose'.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 23,

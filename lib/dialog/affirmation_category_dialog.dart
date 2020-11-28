@@ -35,7 +35,7 @@ class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    'назад',
+                    'back_button'.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 23,
