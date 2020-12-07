@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/notepad.dart';
+import 'package:morningmagic/db/resource.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 import '../resources/colors.dart';
 
-import 'journalMyDitailsEdit.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import 'journalMy.dart';
 
 class journalMyDitails extends StatefulWidget {
   String id;
@@ -17,6 +24,31 @@ class journalMyDitails extends StatefulWidget {
 }
 
 class _journalMyDitailsState extends State<journalMyDitails> {
+  List<dynamic> list;
+  List<dynamic> tempList;
+  TextEditingController controller;
+  FocusNode focusNode;
+  bool isEnabled = false;
+  @override
+  void initState() {
+    super.initState();
+    list = MyDB().getBox().get(MyResource.NOTEPADS);
+    controller = TextEditingController(text: widget.text);
+    focusNode = FocusNode();
+    focusNode.addListener(
+        () => print('focusNode updated: hasFocus: ${focusNode.hasFocus}'));
+  }
+
+  void setFocus() {
+    FocusScope.of(context).requestFocus(focusNode);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    focusNode.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,9 +97,14 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                               style: TextStyle(),
                             ),
                             Spacer(),
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
-                                print('!!!edite!!!');
+                                setState(() {
+                                  isEnabled = true;
+                                });
+                                Future.delayed(Duration(milliseconds: 300), () {
+                                  setFocus();
+                                });
                               },
                               child: Icon(
                                 Icons.edit_outlined,
@@ -96,16 +133,22 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.7,
                         child: SingleChildScrollView(
-                          child: Text(
-                            widget.text,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.04, //16,
-                              color: Colors.black54,
-                            ),
-                            //style: Theme.of(context).textTheme.title,
+                            child: TextField(
+                          focusNode: focusNode,
+                          controller: controller,
+                          maxLines: 100,
+                          enabled: isEnabled ? true : false,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
                           ),
-                        ),
+                          // enabled: true,
+                          style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).size.width * 0.04, //16,
+                            color: Colors.black54,
+                          ),
+                          //style: Theme.of(context).textTheme.title,
+                        )),
                       ),
                     ],
                   ),
@@ -133,7 +176,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
-                    child: Text('мой дневник',
+                    child: Text('my_diary'.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.VIOLET,
@@ -145,17 +188,19 @@ class _journalMyDitailsState extends State<journalMyDitails> {
               ),
             ),
           ),
-          Spacer(
-            flex: 10,
-          ),
           Positioned(
             bottom: 0,
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => journalMyDitailsEdit()));
+                setState(() {
+                  list.removeWhere((value) => value[0] == widget.id);
+                  list.insert(int.parse(widget.id),
+                      [widget.id, controller.text, widget.date]);
+                });
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => journalMy()));
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -174,7 +219,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                         left: 10,
                       ),
                       //width: MediaQuery.of(context).size.width * 0.75,
-                      child: Text('Добавить заметку',
+                      child: Text('save_diary'.tr(),
                           //textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.VIOLET,
@@ -191,82 +236,92 @@ class _journalMyDitailsState extends State<journalMyDitails> {
       ),
     );
   }
-}
 
-_showAlert(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        titleTextStyle: TextStyle(
-          backgroundColor: AppColors.SHADER_BOTTOM,
-        ),
-        titlePadding: EdgeInsets.all(0),
-        contentPadding: EdgeInsets.all(0),
-        actionsPadding: EdgeInsets.all(0),
-        buttonPadding: EdgeInsets.all(0),
-        backgroundColor: AppColors.BOTTOM_GRADIENT,
-        // title: Container(
-        //   color: AppColors.VIOLET,
-        //   child: Text(
-        //     'Сообщение !',
-        //     style: TextStyle(
-        //       color: AppColors.VIOLET,
-        //       backgroundColor: AppColors.SHADER_BOTTOM,
-        //       fontSize: 30,
-        //     ),
-        //   ),
-        // ),
-        content: Container(
-          height: MediaQuery.of(context).size.height * 0.2,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                  'Вы уверены ?',
-                  style: TextStyle(
-                    color: AppColors.VIOLET,
-                    fontSize: 40,
+  _showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          titleTextStyle: TextStyle(
+            backgroundColor: AppColors.SHADER_BOTTOM,
+          ),
+          titlePadding: EdgeInsets.all(0),
+          contentPadding: EdgeInsets.all(0),
+          actionsPadding: EdgeInsets.all(0),
+          buttonPadding: EdgeInsets.all(0),
+          backgroundColor: AppColors.BOTTOM_GRADIENT,
+          // title: Container(
+          //   color: AppColors.VIOLET,
+          //   child: Text(
+          //     'Сообщение !',
+          //     style: TextStyle(
+          //       color: AppColors.VIOLET,
+          //       backgroundColor: AppColors.SHADER_BOTTOM,
+          //       fontSize: 30,
+          //     ),
+          //   ),
+          // ),
+          content: Container(
+            height: MediaQuery.of(context).size.height * 0.2,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Text(
+                    'sure'.tr(),
+                    style: TextStyle(
+                      color: AppColors.VIOLET,
+                      fontSize: 40,
+                    ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FlatButton(
-                    child: Text(
-                      "Да",
-                      style: TextStyle(
-                        color: AppColors.FIX_TOP,
-                        fontSize: 40,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FlatButton(
+                      child: Text(
+                        'yes'.tr(),
+                        style: TextStyle(
+                          color: AppColors.FIX_TOP,
+                          fontSize: 40,
+                        ),
                       ),
+                      onPressed: () {
+                        setState(() {
+                          list.removeWhere((value) => value[0] == widget.id);
+                        });
+                        setState(() {
+                          MyDB().getBox().put(MyResource.NOTEPADS, list);
+                        });
+
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => journalMy()));
+                      },
                     ),
-                    onPressed: () {
-                      //Put your code here which you want to execute on Yes button click.
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  FlatButton(
-                    child: Text(
-                      "Нет",
-                      style: TextStyle(
-                        color: AppColors.FIX_TOP,
-                        fontSize: 40,
+                    FlatButton(
+                      child: Text(
+                        'no'.tr(),
+                        style: TextStyle(
+                          color: AppColors.FIX_TOP,
+                          fontSize: 40,
+                        ),
                       ),
+                      onPressed: () {
+                        //Put your code here which you want to execute on No button click.
+                        Navigator.of(context).pop();
+                      },
                     ),
-                    onPressed: () {
-                      //Put your code here which you want to execute on No button click.
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              )
-            ],
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      );
-    },
-  );
+        );
+      },
+    );
+  }
 }

@@ -7,19 +7,16 @@ import 'package:morningmagic/db/model/progress/visualization_progress/visualizat
 import 'package:morningmagic/db/model/progress/vocabulary_progress/vocabulary_note_progress.dart';
 import 'package:morningmagic/db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
 
+
 part 'day.g.dart';
+
 
 @HiveType(typeId: 13)
 class Day extends HiveObject {
-  Day(
-      this.date,
-      this.affirmationProgress,
-      this.meditationProgress,
-      this.fitnessProgress,
-      this.readingProgress,
-      this.vocabularyNoteProgress,
-      this.vocabularyRecordProgress,
-      this.visualizationProgress);
+
+  Day(this.date, this.affirmationProgress, this.meditationProgress,
+      this.fitnessProgress, this.readingProgress, this.vocabularyNoteProgress,
+      this.vocabularyRecordProgress, this.visualizationProgress);
 
   @HiveField(0)
   String date;
@@ -54,4 +51,6 @@ class Day extends HiveObject {
         'vocabularyRecordProgress: $vocabularyRecordProgress, '
         'visualizationProgress: $visualizationProgress}';
   }
+
+
 }

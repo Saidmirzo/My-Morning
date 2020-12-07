@@ -5,34 +5,34 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'my_const.dart';
 
-class BillingService{
+class BillingService {
   PurchaserInfo purchaserInfo;
   Offerings offerings;
 
-  init() async{
+  init() async {
     await Purchases.setDebugLogsEnabled(false);
     await Purchases.setup(REVENUE_KEY);
     purchaserInfo = await Purchases.getPurchaserInfo();
     offerings = await Purchases.getOfferings();
   }
 
-  bool isPro(){
+  bool isPro() {
     return purchaserInfo?.entitlements?.all["all_features"]?.isActive ?? false;
   }
 
-  Package getMonthlyTarif(){
+  Package getMonthlyTarif() {
     if (offerings == null) return null;
     final offering = offerings.current;
     if (offering == null) return null;
     return offering.monthly;
   }
 
-  String getPrice(Package package){
+  String getPrice(Package package) {
     return package?.product?.priceString ?? "vip_def_month_price".tr();
   }
 
-  startPaymentPage(BuildContext context) async{
-    await Navigator.push(context, MaterialPageRoute(builder: (_)=> PaymentPage()));
+  startPaymentPage(BuildContext context) async {
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (_) => PaymentPage()));
   }
-
 }

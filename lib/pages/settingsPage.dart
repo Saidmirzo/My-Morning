@@ -102,7 +102,7 @@ class SettingsPageState extends State<SettingsPage> {
                                   color: AppColors.VIOLET,
                                   fontFamily: 'sans-serif-black',
                                   fontStyle: FontStyle.normal,
-                                  fontSize: 26),
+                                  fontSize: 24),
                             ),
                           )),
                     ),
@@ -693,6 +693,7 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   Future<String> _showAffirmationCategoryDialog(BuildContext context) async {
-    return await showDialog(context: context, child: AffirmationCategoryDialog());
+    return await showDialog(
+        context: context, child: AffirmationCategoryDialog());
   }
 }

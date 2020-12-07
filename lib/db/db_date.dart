@@ -1,6 +1,5 @@
 class DBDate {
   String getStringDate() {
-
     String result = "";
     DateTime dateTime = DateTime.now();
 

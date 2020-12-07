@@ -1,6 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/progress_util.dart';
@@ -9,16 +11,16 @@ import 'package:morningmagic/widgets/customAppBar.dart';
 import 'package:morningmagic/widgets/customBottomExerciseNavigation.dart';
 
 class ExerciseDetails extends StatefulWidget {
-
   final int stepId;
   final int pageId;
   final bool isCustomProgramm;
 
-  const ExerciseDetails({Key key, 
-    @required this.stepId,
-    @required this.pageId,
-    @required this.isCustomProgramm
-  }) : super(key: key);
+  const ExerciseDetails(
+      {Key key,
+      @required this.stepId,
+      @required this.pageId,
+      @required this.isCustomProgramm})
+      : super(key: key);
 
   @override
   State createState() {
@@ -29,13 +31,11 @@ class ExerciseDetails extends StatefulWidget {
 class ExerciseOneScDetails extends State<ExerciseDetails> {
   final assetsAudioPlayer = AssetsAudioPlayer();
   TimerAppBar timerAppBar;
-  
+
   @override
   Widget build(BuildContext context) {
     int id = widget.stepId + 1;
-    timerAppBar = TimerAppBar(
-      'exercise_${id}_title'.tr()
-    );
+    timerAppBar = TimerAppBar('exercise_${id}_title'.tr());
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
@@ -43,8 +43,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
           preferredSize: Size.fromHeight(80.0),
           child: timerAppBar,
         ),
-        body: Center(
-          child: Container(
+        body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
@@ -66,7 +65,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                   height: MediaQuery.of(context).size.height - 270,
                   child: LayoutBuilder(
                     builder: (BuildContext context,
-                      BoxConstraints viewportConstraints) {
+                        BoxConstraints viewportConstraints) {
                       return SingleChildScrollView(
                         child: ConstrainedBox(
                           constraints: BoxConstraints(
@@ -80,9 +79,13 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                 child: Column(
                                   children: <Widget>[
                                     Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
                                       padding: EdgeInsets.only(bottom: 3),
                                       child: Text(
-                                        'exercise'.tr(namedArgs: {'id': id.toString()}),
+                                        'exercise'.tr(
+                                            namedArgs: {'id': id.toString()}),
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontStyle: FontStyle.normal,
@@ -93,6 +96,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                     ),
                                     Text(
                                       'exercise_${id}_title'.tr(),
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontStyle: FontStyle.normal,
@@ -104,10 +108,14 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(bottom: 30),
+                                padding: EdgeInsets.only(
+                                  bottom: 30,
+                                  left: 20,
+                                  right: 20,
+                                ),
                                 child: Text(
                                   'exercise_${id}_text'.tr(),
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: "JMH",
@@ -134,25 +142,34 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                       timerAppBar.cancelTimer();
                       assetsAudioPlayer.stop();
                       assetsAudioPlayer.dispose();
-                      if (widget.isCustomProgramm){
+                      if (widget.isCustomProgramm) {
                         ExerciseUtils().goNextRoute(context, widget.pageId);
-                      } else if (id<10) Navigator.push( context, MaterialPageRoute(builder: (context) => ExerciseDetails(stepId: id, pageId: widget.pageId, isCustomProgramm: false)) );
+                      } else if (id < 10)
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ExerciseDetails(
+                                    stepId: id,
+                                    pageId: widget.pageId,
+                                    isCustomProgramm: false)));
                       else {
                         OrderUtil().getRouteById(2).then((value) {
-                          Navigator.push( context,
-                            MaterialPageRoute(
-                              builder: (context) => TimerSuccessScreen(() {
-                                Navigator.push(context, value);
-                              })
-                            )
-                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TimerSuccessScreen(() {
+                                        Navigator.push(context, value);
+                                      },
+                                          MyDB()
+                                              .getBox()
+                                              .get(MyResource.FITNESS_TIME_KEY)
+                                              .time,
+                                          false)));
                         });
                       }
                     }))
               ],
-            )
-          ),
-        ),
+            )),
       ),
     );
   }

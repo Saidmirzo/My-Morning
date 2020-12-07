@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/pages/Reclama.dart';
 import 'package:morningmagic/pages/screenFitness.dart';
 import 'package:morningmagic/storage.dart';
 
@@ -76,7 +77,7 @@ class OrderUtil {
 
     if (!billingService.isPro() && (id!=0 && id!=1)) {
       print('!isPro && (id!=0 || id!=1)');
-      return MaterialPageRoute(builder: (context) => UpsellPage());
+      return MaterialPageRoute(builder: (context) => Reclama());
     }
 
     if (id==2) return MaterialPageRoute(builder: (context) => FitnessScreen(pageId: id));

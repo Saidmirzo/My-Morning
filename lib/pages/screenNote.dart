@@ -20,9 +20,12 @@ class NoteScreen extends StatefulWidget {
 
 class NoteScreenState extends State<NoteScreen> {
   TextEditingController textEditingController;
+  int count;
+  DateTime date = DateTime.now();
 
-  String getInputString(){
-    Note note = MyDB().getBox().get(MyResource.NOTE_KEY, defaultValue: Note(""));
+  String getInputString() {
+    Note note =
+        MyDB().getBox().get(MyResource.NOTE_KEY, defaultValue: Note(""));
     return note.note;
   }
 
@@ -30,23 +33,45 @@ class NoteScreenState extends State<NoteScreen> {
   void initState() {
     initEditText();
     super.initState();
+    count = MyDB().getBox().get('note_count') ?? 0;
+    Future.delayed(Duration(days: 1), () {
+      MyDB().getBox().put('note_count', 0);
+    });
   }
 
   void initEditText() {
     textEditingController = new TextEditingController(text: getInputString());
-    textEditingController.addListener(() async{
+    textEditingController.addListener(() async {
       if (textEditingController.text != null &&
           textEditingController.text.isNotEmpty) {
-        await MyDB().getBox().put(MyResource.NOTE_KEY, Note(textEditingController.text));
+        await MyDB()
+            .getBox()
+            .put(MyResource.NOTE_KEY, Note(textEditingController.text));
       }
     });
+  }
+
+  void saveProg(String box, String path) {
+    DateTime date = DateTime.now();
+    List<dynamic> list = MyDB().getBox().get(box) ?? [];
+    setState(() {
+      list.add([
+        list.isNotEmpty ? (int.parse(list.last[0]) + 1).toString() : '0',
+        path,
+        '${date.day}.${date.month}.${date.year}',
+      ]);
+    });
+    MyDB().getBox().put(box, list);
   }
 
   void saveNoteProgress() {
     if (textEditingController.text != null &&
         textEditingController.text.isNotEmpty) {
-      VocabularyNoteProgress noteProgress = VocabularyNoteProgress(textEditingController.text);
-      Day day = ProgressUtil().createDay(null, null, null, null, noteProgress, null, null);
+      VocabularyNoteProgress noteProgress =
+          VocabularyNoteProgress(textEditingController.text);
+      saveProg(MyResource.NOTEPADS, noteProgress.note);
+      Day day = ProgressUtil()
+          .createDay(null, null, null, null, noteProgress, null, null);
       ProgressUtil().updateDayList(day);
     }
   }
@@ -135,18 +160,17 @@ class NoteScreenState extends State<NoteScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          TimerSuccessScreen(() {
+                                      builder: (context) => TimerSuccessScreen(
+                                              () {
                                             Navigator.push(context, value);
-                                          })));
+                                          },
+                                              MyDB()
+                                                  .getBox()
+                                                  .get(MyResource
+                                                      .VOCABULARY_TIME_KEY)
+                                                  .time, false)));
                             });
-                            },
-                            'rex',
-                            'next_button'.tr(),
-                            22,
-                            null,
-                            null
-                          ),
+                          }, 'rex', 'next_button'.tr(), 22, null, null),
                         ),
                       ],
                     ),

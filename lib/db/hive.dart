@@ -16,8 +16,8 @@ import 'model/book/book_adapter.dart';
 import 'model/exercise/exercise_holder.dart';
 import 'model/exercise/exercise_title.dart';
 import 'model/exercise_time/exercise_time_adapter.dart';
+import 'model/notepad.dart';
 import 'model/progress/affirmation_progress/affirmation_progress.dart';
-import 'model/progress/awareness_progress/awareness_progress.dart';
 import 'model/progress/day/day.dart';
 import 'model/progress/day/day_holder.dart';
 import 'model/progress/fitness_porgress/fitness_progress.dart';
@@ -31,12 +31,11 @@ import 'model/user_program/user_program.dart';
 Box myDbBox;
 
 class MyDB {
-
   Future<void> initHiveDatabase() async {
     print('initHiveDatabase');
 
     await Hive.initFlutter();
-
+    Hive.registerAdapter(NotepadAdapter());
     Hive.registerAdapter(UserAdapter());
     Hive.registerAdapter(AffirmationTextAdapter());
     Hive.registerAdapter(BookAdapter());
@@ -60,26 +59,24 @@ class MyDB {
     Hive.registerAdapter(OrderItemAdapter());
     Hive.registerAdapter(OrderHolderAdapter());
     Hive.registerAdapter(UserProgramAdapter());
-    Hive.registerAdapter(AwarenessProgressAdapter());
 
     await this.openMyBox();
   }
 
-  openMyBox() async{
+  openMyBox() async {
     myDbBox = await Hive.openBox(MyResource.BOX_NAME);
   }
 
-  getBox(){
+  getBox() {
     if (Hive == null) {
       print('Hive == null | need reInit db');
       // await this.initHiveDatabase();
     }
-    if (myDbBox == null){
+    if (myDbBox == null) {
       print('myDbBox == null | need openBox');
       // myDbBox = await Hive.openBox(MyResource.BOX_NAME);
     }
     // print('return myDbBox');
     return myDbBox;
   }
-
 }

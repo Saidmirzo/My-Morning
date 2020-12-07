@@ -23,12 +23,12 @@ class InputTextColumn extends StatefulWidget {
 class InputTextColumnState extends State<InputTextColumn> {
   TextEditingController controller;
   ReadingProgress readingProgress;
+  DateTime date = DateTime.now();
 
   @override
   void initState() {
     getTime().then((value) {
       Book book = value.get(MyResource.BOOK_KEY, defaultValue: Book(""));
-
       controller = TextEditingController();
       controller.addListener(() {
         if (controller != null && controller.text.isNotEmpty) {
@@ -52,6 +52,38 @@ class InputTextColumnState extends State<InputTextColumn> {
       controller.clear();
       controller.text = "0";
     }
+  }
+
+  void saveProg(String box, String type) {
+    List<dynamic> tempList;
+    List<dynamic> list = MyDB().getBox().get(box) ?? [];
+    tempList = list;
+    print(list);
+    print(tempList);
+    if (list.isNotEmpty) {
+      if (list.last[2] == '${date.day}.${date.month}.${date.year}') {
+        list.add([
+          tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
+          tempList[tempList.indexOf(tempList.last)][1] +
+                  '\n$type - ${readingProgress.book} (${readingProgress.pages} ' + 'pages_note'.tr() + ')',
+          '${date.day}.${date.month}.${date.year}'
+        ]);
+        list.removeAt(list.indexOf(list.last) - 1);
+      } else {
+        list.add([
+          list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
+          '\n$type - ${readingProgress.book} (${readingProgress.pages} ' + 'pages_note'.tr() + ')',
+          '${date.day}.${date.month}.${date.year}'
+        ]);
+      }
+    } else {
+      list.add([
+        list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
+        '\n$type - ${readingProgress.book} (${readingProgress.pages} ' + 'pages_note'.tr() + ')',
+        '${date.day}.${date.month}.${date.year}'
+      ]);
+    }
+    MyDB().getBox().put(box, list);
   }
 
   Future<Box> getTime() async {
@@ -144,6 +176,7 @@ class InputTextColumnState extends State<InputTextColumn> {
       Day day = ProgressUtil()
           .createDay(null, null, null, readingProgress, null, null, null);
       ProgressUtil().updateDayList(day);
+    saveProg('my_reading_progress', 'reading_small'.tr());
     }
   }
 }

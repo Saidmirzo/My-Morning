@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "826588910326",
+    "firebase_url": "https://my-morning-b0697.firebaseio.com",
+    "project_id": "my-morning-b0697",
+    "storage_bucket": "my-morning-b0697.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826588910326:android:c9a1dcd28eaf2e16b312d7",
+        "android_client_info": {
+          "package_name": "com.wonderfullmoning.morningmagic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826588910326-v9htbajnfdi6dj5psv7brugcbbpront5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wonderfullmoning.morningmagic",
+            "certificate_hash": "15a5a58e6672b2a799e52ce44a6fb67676ef3ee2"
+          }
+        },
+        {
+          "client_id": "826588910326-4jletru6sln2pso5ri7i0m72n0k64nrg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZguWmD6z14ugww5JodAQpF5PhUnGSTFA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826588910326-4jletru6sln2pso5ri7i0m72n0k64nrg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-8444251353824953~3273634678"
+    }
+  ],
+  "configuration_version": "1"
+}

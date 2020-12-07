@@ -15,7 +15,6 @@ import 'package:morningmagic/utils/string_util.dart';
 Timer timer;
 
 class TimerAppBar extends StatefulWidget {
-
   final String exerciseName;
   final TimeAppBarState timeAppBarState = TimeAppBarState();
 
@@ -33,15 +32,16 @@ class TimerAppBar extends StatefulWidget {
 }
 
 class TimeAppBarState extends State<TimerAppBar> {
-
   int _time;
   int _startValue;
+  DateTime date = DateTime.now();
 
   String time;
   @override
   void initState() {
     initAndGet().then((value) {
-      ExerciseTime time = value.get(MyResource.FITNESS_TIME_KEY, defaultValue: ExerciseTime(3));
+      ExerciseTime time =
+          value.get(MyResource.FITNESS_TIME_KEY, defaultValue: ExerciseTime(3));
       _time = time.time * 60;
       _startValue = time.time * 60;
       startTimer();
@@ -49,7 +49,7 @@ class TimeAppBarState extends State<TimerAppBar> {
     super.initState();
   }
 
-  Future<Box> initAndGet() async{
+  Future<Box> initAndGet() async {
     return await MyDB().getBox();
   }
 
@@ -64,18 +64,17 @@ class TimeAppBarState extends State<TimerAppBar> {
         Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(bottom: 5),
+                padding: EdgeInsets.only(top: 30, bottom: 5),
                 child: Text(
                   'timer'.tr(),
                   style: TextStyle(
                       color: AppColors.WHITE,
                       fontSize: 14,
                       fontFamily: "rex",
-                      fontStyle: FontStyle.normal
-                  ),
+                      fontStyle: FontStyle.normal),
                 ),
               ),
               Text(
@@ -84,8 +83,7 @@ class TimeAppBarState extends State<TimerAppBar> {
                     color: AppColors.WHITE,
                     fontSize: 27,
                     fontFamily: "aparaj",
-                    fontStyle: FontStyle.normal
-                ),
+                    fontStyle: FontStyle.normal),
               ),
             ],
           ),
@@ -99,16 +97,60 @@ class TimeAppBarState extends State<TimerAppBar> {
     if (_startValue != null && _time != null) {
       result = _startValue - _time;
     }
-    return result ;
+    return result;
+  }
+
+  void saveProg(String box, String type, String name) {
+    List<dynamic> tempList;
+    List<dynamic> list = MyDB().getBox().get(box) ?? [];
+    tempList = list;
+    print(list);
+    print(tempList);
+    if (list.isNotEmpty) {
+      if (list.last[2] == '${date.day}.${date.month}.${date.year}') {
+        list.add([
+          tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
+          tempList[tempList.indexOf(tempList.last)][1] +
+              (getPassedSeconds() < 5
+                  ? '\n$type - ' + 'skip_note'.tr() + '($name)'
+                  : '\n$type - ${getPassedSeconds()} ' +
+                      'seconds'.tr() +
+                      '($name)'),
+          '${date.day}.${date.month}.${date.year}'
+        ]);
+        list.removeAt(list.indexOf(list.last) - 1);
+      } else {
+        list.add([
+          list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
+          getPassedSeconds() < 5
+              ? '\n$type - ' + 'skip_note'.tr() + '($name)'
+              : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($name)',
+          '${date.day}.${date.month}.${date.year}'
+        ]);
+      }
+    } else {
+      list.add([
+        list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
+        getPassedSeconds() < 5
+            ? '\n$type - ' + 'skip_note'.tr() + '($name)'
+            : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($name)',
+        '${date.day}.${date.month}.${date.year}'
+      ]);
+    }
+    MyDB().getBox().put(box, list);
   }
 
   void saveFitnessProgress() {
     if (getPassedSeconds() > 0) {
-      FitnessProgress fitness = FitnessProgress(getPassedSeconds(), widget.exerciseName);
-      Day day = ProgressUtil().createDay(null, null, fitness, null, null, null, null);
+      FitnessProgress fitness =
+          FitnessProgress(getPassedSeconds(), widget.exerciseName);
+      saveProg('my_fitness_progress', 'exercises_note'.tr(),
+          widget.exerciseName.tr());
+      Day day =
+          ProgressUtil().createDay(null, null, fitness, null, null, null, null);
       ProgressUtil().updateDayList(day);
       _time = _startValue;
-    }
+    } else {}
   }
 
   void startTimer() {
@@ -116,15 +158,15 @@ class TimeAppBarState extends State<TimerAppBar> {
     if (timer == null || !timer.isActive) {
       timer = Timer.periodic(
           oneSec,
-              (Timer timer) => setState(() {
-            if (_time < 1) {
-              timer.cancel();
-              saveFitnessProgress();
-            } else {
-              _time = _time - 1;
-              print(_time);
-            }
-          }));
+          (Timer timer) => setState(() {
+                if (_time < 1) {
+                  timer.cancel();
+                  saveFitnessProgress();
+                } else {
+                  _time = _time - 1;
+                  print(_time);
+                }
+              }));
     } else if (timer != null && timer.isActive) {
       timer.cancel();
     }

@@ -1,3 +1,4 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,21 +35,18 @@ class TimerPageState extends State<TimerPage> {
       isInitialized = true;
       timerService.buttonText = 'start'.tr();
     }
-    return SafeArea(
-      child: Scaffold(
-        body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints viewportConstraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: viewportConstraints.maxHeight,
-                ),
-                child: Container(
-                  width: MediaQuery.of(context)
-                      .size
-                      .width, // match parent(all screen)
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: viewportConstraints.maxHeight,
+              ),
+              child: Container(
+                width: MediaQuery.of(context).size.width, // match parent(all screen)
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
@@ -56,40 +54,37 @@ class TimerPageState extends State<TimerPage> {
                       AppColors.MIDDLE_GRADIENT,
                       AppColors.BOTTOM_GRADIENT
                     ],
-                  )),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 16,
+                  )
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    getAffirmationWidget(),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: CircleProgressBar(
+                        text: StringUtil().createTimeString(timerService.time),
+                        foregroundColor: AppColors.WHITE,
+                        value: timerService.createValue(),
                       ),
-                      getAffirmationWidget(),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        child: CircleProgressBar(
-                          text:
-                              StringUtil().createTimeString(timerService.time),
-                          foregroundColor: AppColors.WHITE,
-                          value: timerService.createValue(),
-                        ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 40),
+                      child: StartSkipColumn(
+                        () => timerService.startTimer(),
+                        () => timerService.skipTask(), 
+                        () => timerService.goToHome(), 
+                        timerService.buttonText
                       ),
-                      Container(
-                        padding: EdgeInsets.only(top: 40),
-                        child: StartSkipColumn(
-                            () => timerService.startTimer(),
-                            () => timerService.skipTask(),
-                            () => timerService.goToHome(),
-                            timerService.buttonText),
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height / 10),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height/10),
+                  ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -97,8 +92,9 @@ class TimerPageState extends State<TimerPage> {
   Widget getAffirmationWidget() {
     if (widget.pageId == 0 && timerService.affirmationText != null) {
       return Container(
+        
         padding: EdgeInsets.only(left: 5, right: 5, bottom: 30),
-        child: AffirmationText(
+        child: CustomText(
           text: timerService.affirmationText,
           size: 22,
         ),
@@ -113,4 +109,5 @@ class TimerPageState extends State<TimerPage> {
     super.dispose();
     timerService.dispose();
   }
+
 }

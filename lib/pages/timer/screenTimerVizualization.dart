@@ -32,6 +32,7 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
   bool timerSwitch = false;
   String visualizationText;
   String buttonText;
+  DateTime date = DateTime.now();
 
   bool isInitialized = false;
 
@@ -42,8 +43,10 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
   @override
   void initState() {
     getTimeAndText().then((Box box) {
-      ExerciseTime time = box.get(MyResource.VISUALIZATION_TIME_KEY, defaultValue: ExerciseTime(0));
-      Visualization visualization = box.get(MyResource.VISUALIZATION_KEY, defaultValue: Visualization(""));
+      ExerciseTime time = box.get(MyResource.VISUALIZATION_TIME_KEY,
+          defaultValue: ExerciseTime(0));
+      Visualization visualization = box.get(MyResource.VISUALIZATION_KEY,
+          defaultValue: Visualization(""));
       visualizationText = visualization.visualization;
       _time = time.time * 60;
       _startTime = time.time;
@@ -127,6 +130,7 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
                         Future.delayed(const Duration(milliseconds: 300), () {
                           OrderUtil().getRouteById(5).then((value) {
                             Navigator.push(context, value);
+                            saveVisualizationProgress();
                           });
                         });
                       }, () {
@@ -150,13 +154,57 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
     return _startValue - _time;
   }
 
+  void saveProg(String box, String type, String text) {
+    List<dynamic> tempList;
+    List<dynamic> list = MyDB().getBox().get(box) ?? [];
+    tempList = list;
+    print(list);
+    print(tempList);
+    if (list.isNotEmpty) {
+      if (list.last[2] == '${date.day}.${date.month}.${date.year}') {
+        print(getPassedSeconds());
+        list.add([
+          tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
+          tempList[tempList.indexOf(tempList.last)][1] +
+              (getPassedSeconds() < 5
+                  ? '\n$type - ' + 'skip_note'.tr()
+                  : '\n$type - ${getPassedSeconds()} ' +
+                      'seconds'.tr() +
+                      '($text)'),
+          '${date.day}.${date.month}.${date.year}'
+        ]);
+        list.removeAt(list.indexOf(list.last) - 1);
+      } else {
+        list.add([
+          list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
+          getPassedSeconds() < 5
+              ? '\n$type - ' + 'skip_note'.tr()
+              : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($text)',
+          '${date.day}.${date.month}.${date.year}'
+        ]);
+      }
+    } else {
+      list.add([
+        list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
+        getPassedSeconds() < 5
+            ? '\n$type - ' + 'skip_note'.tr()
+            : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($text)',
+        '${date.day}.${date.month}.${date.year}'
+      ]);
+    }
+    MyDB().getBox().put(box, list);
+  }
+
   void saveVisualizationProgress() {
     if (getPassedSeconds() > 0) {
+      saveProg('my_visualization_progress', 'visualization_small'.tr(),
+          visualizationText);
       VisualizationProgress visualizationProgress =
           VisualizationProgress(getPassedSeconds(), visualizationText);
       Day day = ProgressUtil()
           .createDay(null, null, null, null, null, null, visualizationProgress);
       ProgressUtil().updateDayList(day);
+
       _time = _startValue;
     }
   }
@@ -177,8 +225,11 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
     }
   }
 
+  int count;
+
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
+    DateTime dateTime = DateTime.now();
     if (_timer == null || !_timer.isActive) {
       setState(() {
         timerSwitch = true;
@@ -197,12 +248,17 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
                         MaterialPageRoute(
                           builder: (context) => TimerSuccessScreen(() {
                             Navigator.push(context, value);
-                          }),
+                          },
+                              MyDB()
+                                  .getBox()
+                                  .get(MyResource.VISUALIZATION_TIME_KEY)
+                                  .time,
+                              true),
                         ));
                   });
                 } else {
                   _time = _time - 1;
-                  print(_time);
+                  print(getPassedSeconds());
                 }
               }));
     } else if (_timer != null && _timer.isActive) {

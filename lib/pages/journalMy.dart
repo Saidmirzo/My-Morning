@@ -1,10 +1,18 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/instance_manager.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/notepad.dart';
+import 'package:morningmagic/db/resource.dart';
 
+import '../app_states.dart';
 import '../resources/colors.dart';
 
+import 'journalMyDetailsAdd.dart';
 import 'journalMyDitails.dart';
-import 'journalMyDitailsEdit.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class journalMy extends StatefulWidget {
   @override
@@ -12,6 +20,14 @@ class journalMy extends StatefulWidget {
 }
 
 class _journalMyState extends State<journalMy> {
+  List<dynamic> list;
+  @override
+  void initState() {
+    super.initState();
+    list = MyDB().getBox().get(MyResource.NOTEPADS) ?? [];
+    print(MyDB().getBox().get(MyResource.NOTEPADS));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +51,34 @@ class _journalMyState extends State<journalMy> {
               ),
             ),
             //SingleChildScrollView
-            child: CategoriesScreen(),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 75, bottom: 75),
+              child: GridView(
+                //padding: const EdgeInsets.all(25),
+                children: list.isNotEmpty
+                    ? List.generate(
+                        list.length,
+                        (index) => !list[index][1].contains('cache')
+                            ? CategoryItem(
+                                list.isNotEmpty ? list[index][0] : '0',
+                                list.isNotEmpty ? list[index][1] : '0',
+                                list.isNotEmpty ? list[index][2] : '01.01.2020',
+                              )
+                            : CategoryRecordItem(
+                                list.isNotEmpty ? list[index][0] : '0',
+                                list.isNotEmpty ? list[index][1] : '0',
+                                list.isNotEmpty ? list[index][2] : '01.01.2020',
+                              ),
+                      )
+                    : [],
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
+                  childAspectRatio: 5 / 4.1,
+                  crossAxisSpacing: 0,
+                  mainAxisSpacing: 0,
+                ),
+              ),
+            ),
           ),
           Positioned(
             top: 30,
@@ -52,13 +95,15 @@ class _journalMyState extends State<journalMy> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
-                    child: Text('мой дневник',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.VIOLET,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        )),
+                    child: Text(
+                      'my_diary'.tr(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.VIOLET,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -71,7 +116,7 @@ class _journalMyState extends State<journalMy> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => journalMyDitailsEdit()));
+                        builder: (context) => JournalMyDitailsAdd()));
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -90,13 +135,15 @@ class _journalMyState extends State<journalMy> {
                         left: 10,
                       ),
                       //width: MediaQuery.of(context).size.width * 0.75,
-                      child: Text('Добавить заметку',
-                          //textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.VIOLET,
-                            fontSize: 30,
-                            fontWeight: FontWeight.normal,
-                          )),
+                      child: Text(
+                        'add_note'.tr(),
+                        //textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.VIOLET,
+                          fontSize: 30,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -107,18 +154,6 @@ class _journalMyState extends State<journalMy> {
       ),
     );
   }
-}
-
-class Notepad {
-  final String id;
-  final String text;
-  final String date;
-
-  const Notepad({
-    @required this.id,
-    @required this.text,
-    @required this.date,
-  });
 }
 
 class CategoryItem extends StatelessWidget {
@@ -146,7 +181,8 @@ class CategoryItem extends StatelessWidget {
           //splashColor: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(15),
           child: Container(
-            padding: const EdgeInsets.all(15),
+            padding:
+                const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
             margin: const EdgeInsets.only(
               bottom: 15,
               left: 5,
@@ -194,25 +230,127 @@ class CategoryItem extends StatelessWidget {
   }
 }
 
-class CategoriesScreen extends StatelessWidget {
+class CategoryRecordItem extends StatefulWidget {
+  final String id;
+  final String text;
+  final String date;
+
+  CategoryRecordItem(this.id, this.text, this.date);
+
+  @override
+  _CategoryRecordItemState createState() => _CategoryRecordItemState();
+}
+
+class _CategoryRecordItemState extends State<CategoryRecordItem> {
+  bool isPlayed = false;
+  final assetsAudioPlayer = AssetsAudioPlayer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+        margin: const EdgeInsets.only(
+          bottom: 15,
+          left: 5,
+          right: 5,
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: Center(
+                child: AudioWidget.file(
+                  onReadyToPlay: (duration) {
+                    print('ready');
+                  },
+                  onPositionChanged: (current, duration) {
+                    print(duration);
+                    if (current.inSeconds == duration.inSeconds)
+                      setState(() {
+                        isPlayed = false;
+                      });
+                  },
+                  onFinished: () {
+                    print('stop');
+                  },
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isPlayed = !isPlayed;
+                      });
+                    },
+                    child: Icon(isPlayed ? Icons.pause : Icons.play_arrow,
+                        size: 70, color: AppColors.VIOLET),
+                  ),
+                  path: widget.text,
+                  play: isPlayed,
+                ),
+              ),
+            ),
+            Spacer(),
+            Container(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: Icon(Icons.access_time),
+                  ),
+                  Text(
+                    widget.date,
+                    style: TextStyle(),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          border: Border.all(width: 1, color: AppColors.BLUE),
+        ),
+      ),
+    );
+  }
+}
+
+class CategoriesScreen extends StatefulWidget {
+  @override
+  _CategoriesScreenState createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
+  AppStates appStates = Get.put(AppStates());
+
+  List<dynamic> list;
+  @override
+  void initState() {
+    super.initState();
+    list = MyDB().getBox().get(MyResource.NOTEPADS);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 75, bottom: 75),
       child: GridView(
         //padding: const EdgeInsets.all(25),
-        children: DUMMY_CATEGORIES
-            .map(
-              (catData) => CategoryItem(
-                catData.id,
-                catData.text,
-                catData.date,
-              ),
-            )
-            .toList(),
+        children: list != null
+            ? List.generate(
+                list != null ? list.length : 1,
+                (index) => CategoryItem(
+                  list[index].id,
+                  list[index].text,
+                  list[index].date,
+                ),
+              )
+            : [],
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-          childAspectRatio: 5 / 4,
+          childAspectRatio: 5 / 4.1,
           crossAxisSpacing: 0,
           mainAxisSpacing: 0,
         ),
@@ -220,90 +358,3 @@ class CategoriesScreen extends StatelessWidget {
     );
   }
 }
-
-const DUMMY_CATEGORIES = const [
-  Notepad(
-    id: '0',
-    text:
-        '1 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.321 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32 1 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '1',
-    text:
-        '2 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '2',
-    text:
-        '3 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '3',
-    text:
-        '4 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '4',
-    text:
-        '5 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '5',
-    text:
-        '6 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '6',
-    text:
-        '7 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '7',
-    text:
-        '8  Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '8',
-    text:
-        '9 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '9',
-    text:
-        '10 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '10',
-    text:
-        '11 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '11',
-    text:
-        '12 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '12',
-    text:
-        '13 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-  Notepad(
-    id: '13',
-    text:
-        '14 Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в разделе 1.10.32',
-    date: '21.11.2020',
-  ),
-];

@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 
 import '../pages/success/screenTimerSuccess.dart';
 import '../resources/colors.dart';
@@ -137,7 +139,11 @@ class PlayerColumnState extends State<PlayerColumn> {
                       MaterialPageRoute(
                           builder: (context) => TimerSuccessScreen(() {
                                 Navigator.push(context, value);
-                              })));
+                              },
+                                  MyDB()
+                                      .getBox()
+                                      .get(MyResource.VOCABULARY_TIME_KEY)
+                                      .time, false)));
                 });
                 visibleDiagram = false;
                 widget.onPressed();

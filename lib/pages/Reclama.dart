@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:morningmagic/pages/payment.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../resources/colors.dart';
-
-import 'journalMyDitailsEdit.dart';
 import 'askedQuestionsScreen.dart';
 
 class Reclama extends StatefulWidget {
@@ -40,22 +40,37 @@ class _ReclamaState extends State<Reclama> {
             top: MediaQuery.of(context).size.height / 2 - 60,
             child: InkWell(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PaymentPage()));
               },
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child:
-                        Text('ПОПРОБОВАТЬ ПОЛНЫЙ КОМПЛЕКС\n(3 дня бесплатно)',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.VIOLET,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                            )),
-                  ),
-                ],
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'buy_free'.tr(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.VIOLET,
+                        fontFamily: 'rex',
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    Text(
+                      'three_days'.tr(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.VIOLET,
+                        fontFamily: 'rex',
+                        fontSize: 17,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -80,6 +95,7 @@ class _ReclamaState extends State<Reclama> {
                         style: TextStyle(
                           color: AppColors.VIOLET,
                           fontSize: 20,
+                          fontFamily: 'rex',
                           fontWeight: FontWeight.normal,
                         )),
                   ],

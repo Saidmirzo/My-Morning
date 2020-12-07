@@ -1,6 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:morningmagic/widgets/custom_progress_bar/arcProgressBar.dart';
@@ -8,8 +10,10 @@ import 'package:vibration/vibration.dart';
 
 class TimerSuccessScreen extends StatefulWidget {
   final VoidCallback onPressed;
+  final int minutes;
+  final bool isFinal;
 
-  TimerSuccessScreen(this.onPressed);
+  TimerSuccessScreen(this.onPressed, this.minutes, this.isFinal);
 
   @override
   State createState() {
@@ -19,12 +23,110 @@ class TimerSuccessScreen extends StatefulWidget {
 
 class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   AssetsAudioPlayer assetsAudioPlayer;
+  DateTime dateTime = DateTime.now();
+  int count;
+
+  String getWeekDay() {
+    switch (DateTime.now().weekday) {
+      case 1:
+        return 'monday';
+      case 2:
+        return 'tuesday';
+      case 3:
+        return 'wednesday';
+      case 4:
+        return 'thursday';
+      case 5:
+        return 'friday';
+      case 6:
+        return 'saturday';
+      case 7:
+        return 'sunday';
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     assetsAudioPlayer = AssetsAudioPlayer();
     assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
+
+    MyDB().getBox().put(
+        MyResource.TOTAL_COUNT_OF_SESSIONS,
+        MyDB().getBox().get(MyResource.TOTAL_COUNT_OF_SESSIONS) != null
+            ? MyDB().getBox().get(MyResource.TOTAL_COUNT_OF_SESSIONS) + 1
+            : 1);
+    MyDB().getBox().put(
+        '${MyResource.MONTH_COUNT_OF_SESSIONS}_${dateTime.month}',
+        MyDB().getBox().get(MyResource.MONTH_COUNT_OF_SESSIONS) != null
+            ? MyDB().getBox().get(MyResource.MONTH_COUNT_OF_SESSIONS) + 1
+            : 1);
+    MyDB().getBox().put(
+        MyResource.YEAR_COUNT_OF_SESSIONS,
+        MyDB().getBox().get(MyResource.YEAR_COUNT_OF_SESSIONS) != null
+            ? MyDB().getBox().get(MyResource.YEAR_COUNT_OF_SESSIONS) + 1
+            : 1);
+
+    MyDB().getBox().put(
+        MyResource.TOTAL_MINUTES_OF_AWARENESS,
+        MyDB().getBox().get(MyResource.TOTAL_MINUTES_OF_AWARENESS) != null
+            ? MyDB().getBox().get(MyResource.TOTAL_MINUTES_OF_AWARENESS) +
+                widget.minutes
+            : widget.minutes);
+    MyDB().getBox().put(
+        '${MyResource.MONTH_MINUTES_OF_AWARENESS}_${dateTime.month}',
+        MyDB().getBox().get(MyResource.MONTH_MINUTES_OF_AWARENESS) != null
+            ? MyDB().getBox().get(MyResource.MONTH_MINUTES_OF_AWARENESS) +
+                widget.minutes
+            : widget.minutes);
+    MyDB().getBox().put(
+        MyResource.YEAR_MINUTES_OF_AWARENESS,
+        MyDB().getBox().get(MyResource.YEAR_MINUTES_OF_AWARENESS) != null
+            ? MyDB().getBox().get(MyResource.YEAR_MINUTES_OF_AWARENESS) +
+                widget.minutes
+            : widget.minutes);
+    if (widget.isFinal) {
+      MyDB().getBox().put(
+          MyResource.TOTAL_COUNT_OF_COMPLETED_SESSIONS,
+          MyDB().getBox().get(MyResource.TOTAL_COUNT_OF_COMPLETED_SESSIONS) !=
+                  null
+              ? MyDB()
+                      .getBox()
+                      .get(MyResource.TOTAL_COUNT_OF_COMPLETED_SESSIONS) +
+                  1
+              : 1);
+      MyDB().getBox().put(
+          '${MyResource.MONTH_COUNT_OF_COMPLETED_SESSIONS}_${dateTime.month}',
+          MyDB().getBox().get(MyResource.MONTH_COUNT_OF_COMPLETED_SESSIONS) !=
+                  null
+              ? MyDB()
+                      .getBox()
+                      .get(MyResource.MONTH_COUNT_OF_COMPLETED_SESSIONS) +
+                  1
+              : 1);
+      MyDB().getBox().put(
+          '${MyResource.YEAR_COUNT_OF_COMPLETED_SESSIONS}_${dateTime.year}',
+          MyDB().getBox().get(MyResource.YEAR_COUNT_OF_COMPLETED_SESSIONS) !=
+                  null
+              ? MyDB()
+                      .getBox()
+                      .get(MyResource.YEAR_COUNT_OF_COMPLETED_SESSIONS) +
+                  1
+              : 1);
+    }
+
+    MyDB().getBox().put(
+        MyResource.PERCENT_OF_AWARENESS,
+        MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS) != null
+            ? MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS) + 0.5
+            : 0.5);
+
+    MyDB().getBox().put(
+     getWeekDay(),
+        MyDB().getBox().get(getWeekDay()) != null
+            ? (MyDB().getBox().get(getWeekDay()) + widget.minutes)
+            : widget.minutes);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });
@@ -53,7 +155,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+              gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
@@ -79,8 +181,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
                     assetsAudioPlayer.dispose();
                   }
                   widget.onPressed();
-                }, 'rex', 'continue'.tr(),
-                21, null, null),
+                }, 'rex', 'continue'.tr(), 21, null, null),
               ),
             ],
           ),

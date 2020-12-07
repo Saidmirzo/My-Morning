@@ -75,6 +75,8 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
     _recording = current;
   }
 
+  int count;
+
   Future<void> _pauseRecording() async {
     await _recorder.pause();
     Recording current = await _recorder.current();
@@ -150,14 +152,49 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
     }
   }
 
+  void saveProg(String box, String path) {
+    DateTime date = DateTime.now();
+    List<dynamic> list = MyDB().getBox().get(box) ?? [];
+    setState(() {
+      list.add([
+        list.isNotEmpty ? (int.parse(list.last[0]) + 1).toString() : '0',
+        path,
+        '${date.day}.${date.month}.${date.year}',
+      ]);
+    });
+    MyDB().getBox().put(box, list);
+  }
+
   void saveVocabularyRecordProgress(String path) {
+    DateTime dateTime = DateTime.now();
     if (path != null) {
       path = path.substring(1);
       VocabularyRecordProgress recordProgress =
           new VocabularyRecordProgress(path);
+      saveProg(MyResource.NOTEPADS, path);
       Day day = ProgressUtil()
           .createDay(null, null, null, null, null, recordProgress, null);
       ProgressUtil().updateDayList(day);
+      print(recordProgress);
+    }
+  }
+
+  String getWeekDay() {
+    switch (DateTime.now().weekday) {
+      case 1:
+        return 'monday';
+      case 2:
+        return 'tuesday';
+      case 3:
+        return 'wednesday';
+      case 4:
+        return 'thursday';
+      case 5:
+        return 'friday';
+      case 6:
+        return 'saturday';
+      case 7:
+        return 'sunday';
     }
   }
 

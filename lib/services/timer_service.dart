@@ -18,7 +18,7 @@ import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class TimerService{
+class TimerService {
   BuildContext context;
   State state;
   Timer timer;
@@ -30,8 +30,8 @@ class TimerService{
   String visualizationText;
   String bookTitle;
   String buttonText;
-  
-  init(State _state, BuildContext _context, int _pageId){
+
+  init(State _state, BuildContext _context, int _pageId) {
     this.state = _state;
     this.context = _context;
     this.pageId = _pageId;
@@ -42,13 +42,13 @@ class TimerService{
       startTimer();
     });
   }
-  
-  dispose(){
+
+  dispose() {
     print('Timer cancel');
     if (timer != null) timer.cancel();
   }
 
-  Function skipTask(){
+  Function skipTask() {
     if (timer != null && timer.isActive) {
       buttonText = 'start'.tr();
       timer.cancel();
@@ -62,31 +62,73 @@ class TimerService{
     });
   }
 
-  Function goToHome(){
+  Function goToHome() {
     timer.cancel();
-    Navigator.pushNamedAndRemoveUntil(
-        context, '/start', (r) => false);
+    Navigator.pushNamedAndRemoveUntil(context, '/start', (r) => false);
     // При выходе в меню чтение (id4) не сохраняем
     if (pageId != 4) saveProgress();
   }
 
-
   Future<int> getTimeAndText() async {
     Box box = await MyDB().getBox();
-    ExerciseTime time = box.get(this.getBoxTimeKey(pageId), defaultValue: ExerciseTime(0));
-    AffirmationText text = box.get(MyResource.AFFIRMATION_TEXT_KEY, defaultValue: AffirmationText(""));
+    ExerciseTime time =
+        box.get(this.getBoxTimeKey(pageId), defaultValue: ExerciseTime(0));
+    AffirmationText text = box.get(MyResource.AFFIRMATION_TEXT_KEY,
+        defaultValue: AffirmationText(""));
     affirmationText = text.affirmationText;
-    Visualization visualization = box.get(MyResource.VISUALIZATION_KEY, defaultValue: Visualization(""));
+    Visualization visualization =
+        box.get(MyResource.VISUALIZATION_KEY, defaultValue: Visualization(""));
     visualizationText = visualization.visualization;
     Book book = box.get(MyResource.BOOK_KEY, defaultValue: Book(""));
     bookTitle = book.bookName;
     return time.time;
   }
 
+  DateTime date = DateTime.now();
+
   int getPassedSeconds() {
     return startValue - time;
   }
 
+  void saveProg(String box, String type, String text) {
+    List<dynamic> tempList;
+    List<dynamic> list = MyDB().getBox().get(box) ?? [];
+    tempList = list;
+    print(list);
+    print(tempList);
+    if (list.isNotEmpty) {
+      if (list.last[2] == '${date.day}.${date.month}.${date.year}') {
+        list.add([
+          tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
+          tempList[tempList.indexOf(tempList.last)][1] +
+              (getPassedSeconds() < 5
+                  ? '\n$type - ' + 'skip_note'.tr()
+                  : '\n$type - ${getPassedSeconds()} ' +
+                      'seconds'.tr() +
+                      '($text)'),
+          '${date.day}.${date.month}.${date.year}'
+        ]);
+        list.removeAt(list.indexOf(list.last) - 1);
+      } else {
+        list.add([
+          list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
+          getPassedSeconds() < 5
+              ? '\n$type - ' + 'skip_note'.tr()
+              : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($text)',
+          '${date.day}.${date.month}.${date.year}'
+        ]);
+      }
+    } else {
+      list.add([
+        list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
+        getPassedSeconds() < 5
+            ? '\n$type - ' + 'skip_note'.tr()
+            : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($text)',
+        '${date.day}.${date.month}.${date.year}'
+      ]);
+    }
+    MyDB().getBox().put(box, list);
+  }
 
   void saveProgress() {
     print('Passed seconds: ${getPassedSeconds()}');
@@ -97,23 +139,35 @@ class TimerService{
       // FitnessProgress fitnessProgress;
       switch (pageId) {
         case 0:
+          saveProg('my_affirmation_progress', 'affirmation_small'.tr(),
+              affirmationText);
           affirmation =
               AffirmationProgress(getPassedSeconds(), affirmationText);
           break;
         case 1:
           meditation = MeditationProgress(getPassedSeconds());
           break;
+        case 2:
+          saveProg('my_fitness_progress', 'Упражнения', '');
+          break;
+        case 4:
+          saveProg('my_reading_progress', 'Чтение', '');
+          break;
         case 5:
+          saveProg('my_visualization_progress', 'Визуализация', '');
           visualizationProgress =
               VisualizationProgress(getPassedSeconds(), visualizationText);
           break;
         default:
       }
 
-      Day day = ProgressUtil().createDay(affirmation, meditation, null, null, null, null, visualizationProgress);
+      Day day = ProgressUtil().createDay(affirmation, meditation, null, null,
+          null, null, visualizationProgress);
       ProgressUtil().updateDayList(day);
       print('SaveTimerPage id$pageId : $day');
       time = startValue;
+    } else {
+      print('Dont save');
     }
   }
 
@@ -133,20 +187,21 @@ class TimerService{
         buttonText = 'stop'.tr();
       });
       timer = Timer.periodic(
-        oneSec,
-        (Timer timer) => state.setState(() {
-          if (time < 1) {
-            timer.cancel();
-            if(pageId!=4) saveProgress();
-            buttonText = 'start'.tr();
-            OrderUtil().getRouteById(pageId).then((value) => getNextPage(value));
-          } else {
-            time = time - 1;
-            print(time);
-          }
-        }
-      ));
-    } else if (timer != null && timer.isActive){
+          oneSec,
+          (Timer timer) => state.setState(() {
+                if (time < 1) {
+                  timer.cancel();
+                  if (pageId != 4) saveProgress();
+                  buttonText = 'start'.tr();
+                  OrderUtil()
+                      .getRouteById(pageId)
+                      .then((value) => getNextPage(value));
+                } else {
+                  time = time - 1;
+                  print(time);
+                }
+              }));
+    } else if (timer != null && timer.isActive) {
       timer.cancel();
       state.setState(() {
         buttonText = 'start'.tr();
@@ -157,8 +212,11 @@ class TimerService{
   getNextPage(Route value) {
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
-        if (pageId == 4) return TimerInputSuccessScreen();
-        return TimerSuccessScreen(() => Navigator.push(context, value));
+        if (pageId == 4)
+          return TimerInputSuccessScreen(
+              minutes: MyDB().getBox().get(getBoxTimeKey(4)).time);
+        return TimerSuccessScreen(() => Navigator.push(context, value),
+            MyDB().getBox().get(getBoxTimeKey(pageId)).time, false);
       },
     ));
   }
@@ -184,5 +242,4 @@ class TimerService{
         return MyResource.VISUALIZATION_TIME_KEY;
     }
   }
-  
 }

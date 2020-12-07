@@ -1,29 +1,29 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:morningmagic/pages/loadingPage.dart';
 import 'package:morningmagic/pages/menuPage.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp]
-  ).then((_) async{
-    runApp(
-      EasyLocalization(
-        child: MyApp(),
-        supportedLocales: [
-          Locale('en'),
-          Locale('ru'),
-        ],
-        path: 'assets/langs',
-        fallbackLocale: Locale('en'),
-        // startLocale: Locale('de'),
-        // saveLocale: false,
-        useOnlyLangCode: true,
-      )
-    );
+  await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) async {
+    runApp(EasyLocalization(
+      child: MyApp(),
+      supportedLocales: [
+        Locale('en'),
+        Locale('ru'),
+      ],
+      path: 'assets/langs',
+      fallbackLocale: Locale('en'),
+      // startLocale: Locale('de'),
+      // saveLocale: false,
+      useOnlyLangCode: true,
+    ));
   });
 }
 
@@ -35,6 +35,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  FirebaseAnalytics analytics = FirebaseAnalytics();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -50,5 +51,4 @@ class _MyAppState extends State<MyApp> {
       home: LoadingPage(),
     );
   }
-  
 }

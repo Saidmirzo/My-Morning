@@ -15,5 +15,4 @@ class ExerciseName extends HiveObject {
 
   @HiveField(2)
   double size;
-
 }

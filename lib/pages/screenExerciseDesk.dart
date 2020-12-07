@@ -20,7 +20,7 @@ class ExerciseDeskScreen extends StatefulWidget {
   final pageId;
 
   const ExerciseDeskScreen({Key key, @required this.pageId}) : super(key: key);
-  
+
   @override
   ExerciseDeskScreenState createState() {
     return ExerciseDeskScreenState();
@@ -38,17 +38,17 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
     super.initState();
   }
 
-  void init() async{
+  void init() async {
     ExerciseUtils().saveExercisesNames(await MyDB().getBox());
 
     allExercises = new List<ExerciseName>();
 
-    AppExerciseHolder appExerciseHolder = await MyDB().getBox().get(MyResource.APP_EXERCISES_HOLDER);
+    AppExerciseHolder appExerciseHolder =
+        await MyDB().getBox().get(MyResource.APP_EXERCISES_HOLDER);
     appExercises = appExerciseHolder.list;
     CustomExerciseHolder customExerciseHolder = await MyDB().getBox().get(
-      MyResource.CUSTOM_EXERCISES_HOLDER,
-      defaultValue: CustomExerciseHolder(List<ExerciseName>())
-    );
+        MyResource.CUSTOM_EXERCISES_HOLDER,
+        defaultValue: CustomExerciseHolder(List<ExerciseName>()));
     customExercises = customExerciseHolder.list;
 
     allExercises.addAll(appExercises);
@@ -57,13 +57,14 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
     print("all exercises size " + allExercises.length.toString());
   }
 
-  Future<List<ExerciseName>> initExerciseList() async{
-    ExerciseUtils().saveExercisesNames( MyDB().getBox());
+  Future<List<ExerciseName>> initExerciseList() async {
+    ExerciseUtils().saveExercisesNames(MyDB().getBox());
     List<ExerciseName> allList = new List<ExerciseName>();
     List<ExerciseName> appExercisesList = new List<ExerciseName>();
     List<ExerciseName> customExercisesList = new List<ExerciseName>();
 
-    AppExerciseHolder appExerciseHolder = MyDB().getBox().get(MyResource.APP_EXERCISES_HOLDER);
+    AppExerciseHolder appExerciseHolder =
+        MyDB().getBox().get(MyResource.APP_EXERCISES_HOLDER);
     appExercisesList = appExerciseHolder.list;
     CustomExerciseHolder customExerciseHolder = MyDB().getBox().get(
         MyResource.CUSTOM_EXERCISES_HOLDER,
@@ -72,7 +73,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
 
     allList.addAll(appExercisesList);
     allList.addAll(customExercisesList);
-    
+
     print("future allList length" + allList.length.toString());
 
     return allList;
@@ -109,10 +110,12 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
     return true;
   }
 
-  void clearExercisesHolder() async{
+  void clearExercisesHolder() async {
     List<ExerciseTitle> skip = List<ExerciseTitle>();
     List<ExerciseTitle> fresh = List<ExerciseTitle>();
-    await MyDB().getBox().put(MyResource.EXERCISES_HOLDER, ExerciseHolder(fresh, skip));
+    await MyDB()
+        .getBox()
+        .put(MyResource.EXERCISES_HOLDER, ExerciseHolder(fresh, skip));
   }
 
   @override
@@ -120,99 +123,88 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-    body: Container(
-      padding: EdgeInsets.only(top: 10),
-      width: MediaQuery.of(context).size.width, // match parent(all screen)
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          AppColors.TOP_GRADIENT,
-          AppColors.MIDDLE_GRADIENT,
-          AppColors.BOTTOM_GRADIENT
-        ],
-      )),
-      child: LayoutBuilder(
-        builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: viewportConstraints.maxHeight,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width / 12),
-                    child: Text(
-                      'delete_hint'.tr(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontStyle: FontStyle.italic,
-                        fontFamily: "rex",
-                        color: AppColors.VIOLET,
+        body: Container(
+          padding: EdgeInsets.only(top: 10),
+          width: MediaQuery.of(context).size.width, // match parent(all screen)
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.TOP_GRADIENT,
+              AppColors.MIDDLE_GRADIENT,
+              AppColors.BOTTOM_GRADIENT
+            ],
+          )),
+          child: LayoutBuilder(
+            builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: viewportConstraints.maxHeight,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width / 12),
+                        child: Text(
+                          'delete_hint'.tr(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: "rex",
+                            color: AppColors.VIOLET,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width / 15),
-                    child: checkWidget(),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width / 12),
-                    child: Text(
-                      'pull_program'.tr(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontStyle: FontStyle.italic,
-                        fontFamily: "rex",
-                        color: AppColors.VIOLET,
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width / 15),
+                        child: checkWidget(),
                       ),
-                    ),
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width / 12),
+                        child: Text(
+                          'pull_program'.tr(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: "rex",
+                            color: AppColors.VIOLET,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width / 5),
+                        child: AnimatedButton(() {
+                          _openDialog();
+                        }, "rex", 'add_exercises'.tr(), 20, null, null),
+                      ),
+                      Container(
+                        child: ExerciseDragTarget(),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width / 17,
+                            bottom: MediaQuery.of(context).size.width / 17),
+                        child: AnimatedButton(() {
+                          goNextPage();
+                        }, 'rex', 'start'.tr(), 20, null, null),
+                      ),
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width / 5),
-                    child: AnimatedButton(() {
-                      _openDialog();
-                    },
-                        "rex",
-                        'add_exercises'.tr(),
-                        20,
-                        null,
-                        null),
-                  ),
-                  Container(
-                    child: ExerciseDragTarget(),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width / 17,
-                        bottom: MediaQuery.of(context).size.width / 17),
-                    child: AnimatedButton(() {
-                      goNextPage();
-                    },
-                      'rex',
-                      'start'.tr(),
-                      20,
-                      null,
-                      null
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    ),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -229,26 +221,30 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
         });
   }
 
-  void goNextPage(){
+  void goNextPage() {
     saveDataToBox();
   }
 
-  void saveDataToBox(){
+  void saveDataToBox() {
     ExerciseHolder holder = MyDB().getBox().get(MyResource.EXERCISES_HOLDER);
     if (holder != null && holder.freshExercises.length > 0) {
       ExerciseTitle first = holder.freshExercises.first;
       holder.freshExercises.removeAt(0);
       holder.skipExercises.add(first);
       MyDB().getBox().put(MyResource.EXERCISES_HOLDER, holder);
-      ExerciseUtils().chooseExerciseAndRoute(context, first.title, widget.pageId);
+      print(first.title);
+      ExerciseUtils()
+          .chooseExerciseAndRoute(context, first.title, widget.pageId);
     } else {
-      ToastUtils.showCustomToast( context, 'add_exercise'.tr());
+      ToastUtils.showCustomToast(context, 'add_exercise'.tr());
     }
   }
 
-  void clearExerciseHolder() async{
+  void clearExerciseHolder() async {
     List<ExerciseTitle> skip = List<ExerciseTitle>();
     List<ExerciseTitle> fresh = List<ExerciseTitle>();
-    await MyDB().getBox().put(MyResource.EXERCISES_HOLDER, new ExerciseHolder(fresh, skip));
+    await MyDB()
+        .getBox()
+        .put(MyResource.EXERCISES_HOLDER, new ExerciseHolder(fresh, skip));
   }
 }
