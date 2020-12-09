@@ -6,6 +6,7 @@ import 'package:expandable/expandable.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/myFitnessProgress.dart';
@@ -231,8 +232,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   children: [
                     Container(
                       padding: EdgeInsets.only(
-                          left: context.locale == Locale('ru') ? 25 : 30,
-                          right: context.locale == Locale('ru') ? 40 : 35),
+                          left: context.locale == Locale('ru') ? 40 : 40,
+                          right: context.locale == Locale('ru') ? 48 : 42),
                       decoration: BoxDecoration(
                           color: Color(0xffEBC2BE),
                           borderRadius: BorderRadius.only(
@@ -372,9 +373,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(
-                                  Icons.headset,
-                                  color: Colors.black54,
+                                SvgPicture.asset(
+                                  'assets/images/amount_practice.svg',
+                                  width: 23,
                                 ),
                                 Text(
                                   'count_of_sessions'.tr(),
@@ -655,10 +656,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.speaker_notes, color: Colors.black54,
-                                size: MediaQuery.of(context).size.width *
-                                    0.064, //24,
+                              SvgPicture.asset(
+                                'assets/images/sport.svg',
+                                width: 23,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -758,10 +758,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.note_add, color: Colors.black54,
-                                size: MediaQuery.of(context).size.width *
-                                    0.064, //24,
+                              SvgPicture.asset(
+                                'assets/images/books.svg',
+                                width: 23,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -811,10 +810,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.note_add, color: Colors.black54,
-                                size: MediaQuery.of(context).size.width *
-                                    0.064, //24,
+                              SvgPicture.asset(
+                                'assets/images/visualization.svg',
+                                width: 23,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),

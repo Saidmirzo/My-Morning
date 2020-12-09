@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/instance_manager.dart';
+import 'package:morningmagic/app_states.dart';
+import 'package:morningmagic/dialog/audio_meditation_dialog.dart';
 import 'package:morningmagic/pages/timerPage.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
@@ -10,19 +14,20 @@ class ExerciseStartPage extends StatefulWidget {
   final String desc;
   final Function btnNext;
 
-  const ExerciseStartPage({
-    Key key,
-    @required this.pageId,
-    @required this.title,
-    @required this.desc,
-    @required this.btnNext
-  }) : super(key: key);
+  const ExerciseStartPage(
+      {Key key,
+      @required this.pageId,
+      @required this.title,
+      @required this.desc,
+      @required this.btnNext})
+      : super(key: key);
 
   @override
   State createState() => ExerciseStartPageState();
 }
 
 class ExerciseStartPageState extends State<ExerciseStartPage> {
+  AppStates appStates = Get.put(AppStates());
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -31,16 +36,15 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
         body: Container(
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AppColors.TOP_GRADIENT,
-                AppColors.MIDDLE_GRADIENT,
-                AppColors.BOTTOM_GRADIENT
-              ],
-            )
-          ),
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.TOP_GRADIENT,
+              AppColors.MIDDLE_GRADIENT,
+              AppColors.BOTTOM_GRADIENT
+            ],
+          )),
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
@@ -68,6 +72,36 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
                       color: AppColors.VIOLET,
                     ),
                   ),
+                  SizedBox(height: 20),
+                  widget.pageId == 1
+                      ? Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        AudioMeditationDialog());
+                              },
+                              child: Image.asset('assets/images/music_icon.png',
+                                  width: 40, height: 40),
+                            ),
+                            SizedBox(height: 5),
+                            Obx(
+                              () => Text(
+                                appStates.listNames[
+                                    appStates.selectedMeditationIndex.value],
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "JMH",
+                                  fontStyle: FontStyle.italic,
+                                  color: AppColors.VIOLET,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
                 ],
               ),
               Positioned(
@@ -75,21 +109,13 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
                 child: ButtonTheme(
                   minWidth: 170.0,
                   height: 50.0,
-                  child: AnimatedButton(
-                    () {
-                      Navigator.push(
+                  child: AnimatedButton(() {
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TimerPage(
-                            pageId: widget.pageId ?? 5
-                          )
-                        )
-                      );
-                    },
-                    'rex',
-                    'next_button'.tr(),
-                    null, null, null
-                  ),
+                            builder: (context) =>
+                                TimerPage(pageId: widget.pageId ?? 5)));
+                  }, 'rex', 'next_button'.tr(), null, null, null),
                 ),
               )
             ],

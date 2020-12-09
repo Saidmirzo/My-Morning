@@ -24,7 +24,7 @@ class PlayerColumn extends StatefulWidget {
 
 class PlayerColumnState extends State<PlayerColumn> {
   bool pauseSwitch = false;
-  LineBox lineBox = LineBox();
+  LineBox lineBox = LineBox(lines: 21);
   bool visibleDiagram = false;
 
   @override

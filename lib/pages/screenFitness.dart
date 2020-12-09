@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get/instance_manager.dart';
+import 'package:morningmagic/app_states.dart';
 import '../pages/screenExerciseDesk.dart';
 import '../resources/colors.dart';
 import '../widgets/animatedButton.dart';
@@ -18,8 +20,10 @@ class FitnessScreen extends StatefulWidget {
 }
 
 class FitnessScreenState extends State<FitnessScreen> {
+  AppStates appStates = Get.put(AppStates());
   @override
   void initState() {
+    appStates.isPlayed.value = false;
     super.initState();
   }
 

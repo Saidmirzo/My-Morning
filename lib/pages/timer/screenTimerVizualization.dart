@@ -85,19 +85,20 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
                   ],
                 )),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Container(
                         padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height / 6),
+                          top: MediaQuery.of(context).size.height / 6,
+                        ),
                         child: Visibility(
                           visible: timerSwitch,
                           maintainSize: true,
                           maintainState: true,
                           maintainAnimation: true,
                           child: Text(
-                            'timer_started'.tr(),
+                            visualizationText,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontStyle: FontStyle.normal,
@@ -118,7 +119,8 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
                     ),
                     Container(
                       padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height / 30),
+                          top: MediaQuery.of(context).size.height / 30,
+                          bottom: MediaQuery.of(context).size.height / 10),
                       child: StartSkipColumn(() {
                         startTimer();
                       }, () {

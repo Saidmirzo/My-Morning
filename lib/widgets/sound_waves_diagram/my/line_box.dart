@@ -8,6 +8,11 @@ import 'line.dart';
 List<Line> linesList;
 
 class LineBox extends StatefulWidget {
+  final int lines;
+
+  LineBox({this.lines});
+
+
   @override
   State<StatefulWidget> createState() {
     return LineBoxState();
@@ -50,7 +55,7 @@ class LineBoxState extends State<LineBox> with TickerProviderStateMixin {
 
     double wideStep = 0;
 
-    for (int i = 0; i < 21; i++) {
+    for (int i = 0; i < widget.lines; i++) {
       wideStep = wideStep + 6;
 
       AnimationController controller = AnimationController(
