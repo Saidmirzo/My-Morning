@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/pages/Reclama.dart';
-import 'package:morningmagic/pages/screenFitness.dart';
 import 'package:morningmagic/storage.dart';
 
-import '../pages/askedQuestionsScreen.dart';
 import '../db/model/reordering_program/order_holder.dart';
 import '../db/model/reordering_program/order_item.dart';
 import '../db/resource.dart';
+import '../pages/askedQuestionsScreen.dart';
 import '../pages/exerciseStartPage.dart';
 import '../pages/screenVizualization.dart';
 import '../pages/screenVocabulary.dart';
 import '../pages/timerPage.dart';
-import '../pages/upsellPage.dart';
 import '../widgets/exerciseTile.dart';
 
 class OrderUtil {
@@ -80,7 +79,7 @@ class OrderUtil {
       return MaterialPageRoute(builder: (context) => Reclama());
     }
 
-    if (id==2) return MaterialPageRoute(builder: (context) => FitnessScreen(pageId: id));
+    if (id==2) return MaterialPageRoute(builder: (context) => FitnessMainPage(pageId: id));
     if (id==3) return MaterialPageRoute(builder: (context) => VocabularyScreen());
     if (id==5) return MaterialPageRoute(builder: (context) => VisualizationScreen());
     

@@ -20,8 +20,6 @@ Future<void> main() async {
       ],
       path: 'assets/langs',
       fallbackLocale: Locale('en'),
-      // startLocale: Locale('de'),
-      // saveLocale: false,
       useOnlyLangCode: true,
     ));
   });

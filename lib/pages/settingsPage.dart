@@ -46,7 +46,7 @@ class SettingsPageState extends State<SettingsPage> {
   void initState() {
     _init();
     _initOpenDialog();
-    initPurchaseListiner();
+    initPurchaseListener();
     tableList = wrapTable(false);
     super.initState();
   }
@@ -417,7 +417,7 @@ class SettingsPageState extends State<SettingsPage> {
     addListenersToEditText();
   }
 
-  initPurchaseListiner() {
+  initPurchaseListener() {
     Purchases.addPurchaserInfoUpdateListener((_purchaserInfo) {
       print('Purchaser Info Listener');
       if (billingService.purchaserInfo != _purchaserInfo)
