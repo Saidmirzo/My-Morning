@@ -9,8 +9,6 @@ import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
 
-
-
 class AudioMeditationDialog extends StatefulWidget {
   @override
   _AudioMeditationDialogState createState() => _AudioMeditationDialogState();
@@ -20,17 +18,23 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
   LineBox lineBox = LineBox(lines: 36);
   AppStates appStates = Get.put(AppStates());
   List<String> _audioList = [
-    'assets/audios/morning_glory.mp3',
-    'assets/audios/morning_space.mp3',
-    'assets/audios/morning_sunshine.mp3',
-    'assets/audios/relaxing_journey.mp3',
+    'assets/audios/bell_temple.mp3',
+    'assets/audios/dawn_chorus.mp3',
+    'assets/audios/eclectopedia.mp3',
+    'assets/audios/hommic.mp3',
+    'assets/audios/meditation_space.mp3',
+    'assets/audios/sounds_of_the_forest.mp3',
+    'assets/audios/unlock_your_brainpower.mp3',
   ];
   List<String> listNames = [
-  'Morning glory',
-  'Morning space',
-  'Morning sunshine',
-  'Relaxing journey'
-];
+    'Bell temple',
+    'Dawn chorus',
+    'Eclectopedia',
+    'Hommic',
+    'Meditation space',
+    'Sounds of the forest',
+    'Unlock your brainpower'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
           borderRadius: BorderRadius.circular(30),
         ),
         child: Container(
-          height: MediaQuery.of(context).size.height / 2.1,
+          height: MediaQuery.of(context).size.height / 1.5,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -69,7 +73,6 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                       ),
                       InkWell(
                         onTap: () {
-                          
                           modalSetState(() {
                             Navigator.pop(context);
                           });
@@ -200,7 +203,7 @@ class _MainAudioMeditationDialogItemState
                                 ? false
                                 : pauseSwitch,
                       ),
-                      SizedBox(width: 20),
+                      SizedBox(width: 10),
                       Text(
                         widget.name,
                         textAlign: TextAlign.center,

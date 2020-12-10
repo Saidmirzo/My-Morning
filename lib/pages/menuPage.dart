@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/services/menu_service.dart';
@@ -26,6 +27,7 @@ class StartScreenState extends State<StartScreen> {
     menuService.getDayHolderSize().then((int value) {
       dayHolderSize = value;
     });
+    AnalyticService.screenView('menu_page');
     super.initState();
   }
 

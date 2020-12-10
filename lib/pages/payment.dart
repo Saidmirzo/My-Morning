@@ -2,6 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/instance_manager.dart';
+import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/my_const.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/my_url.dart';
@@ -16,6 +19,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   Size size;
+  AppStates appStates = Get.put(AppStates());
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -86,7 +90,6 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Widget btnBuy() {
-    FirebaseAnalytics analytics = FirebaseAnalytics();
     return Container(
       width: size.width * 0.7,
       height: 60,
@@ -100,7 +103,7 @@ class _PaymentPageState extends State<PaymentPage> {
         onPressed: () async {
           try {
             await Purchases.purchasePackage(billingService.getMonthlyTarif());
-            analytics.logEcommercePurchase(
+            await AnalyticService.analytics.logEcommercePurchase(
               value: 75,
               currency: 'RUB',
             );

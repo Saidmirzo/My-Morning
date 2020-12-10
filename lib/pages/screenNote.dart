@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/note/note.dart';
 import 'package:morningmagic/db/model/progress/day/day.dart';
@@ -37,6 +38,7 @@ class NoteScreenState extends State<NoteScreen> {
     Future.delayed(Duration(days: 1), () {
       MyDB().getBox().put('note_count', 0);
     });
+    AnalyticService.screenView('text_note_page');
   }
 
   void initEditText() {

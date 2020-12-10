@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/services/timer_service.dart';
 
@@ -28,10 +29,13 @@ class TimerPageState extends State<TimerPage> {
   bool isInitialized = false;
   TimerService timerService = TimerService();
   List<String> _audioList = [
-    'assets/audios/morning_glory.mp3',
-    'assets/audios/morning_space.mp3',
-    'assets/audios/morning_sunshine.mp3',
-    'assets/audios/relaxing_journey.mp3',
+    'assets/audios/bell_temple.mp3',
+    'assets/audios/dawn_chorus.mp3',
+    'assets/audios/eclectopedia.mp3',
+    'assets/audios/hommic.mp3',
+    'assets/audios/meditation_space.mp3',
+    'assets/audios/sounds_of_the_forest.mp3',
+    'assets/audios/unlock_your_brainpower.mp3',
   ];
   AppStates appStates = Get.put(AppStates());
   String selectedAudio;
@@ -41,6 +45,17 @@ class TimerPageState extends State<TimerPage> {
     super.initState();
     timerService.init(this, context, widget.pageId);
     selectedAudio = _audioList[appStates.selectedMeditationIndex.value];
+    if (widget.pageId == 0) {
+      AnalyticService.screenView('affirmation_timer_page');
+    } else if (widget.pageId == 1) {
+      AnalyticService.screenView('meditation_timer_page');
+    } else if (widget.pageId == 2) {
+      print('таймер фитнес');
+    } else if (widget.pageId == 4) {
+      AnalyticService.screenView('reading_timer_page');
+    } else if (widget.pageId == 5) {
+      print('таймер визуализация');
+    }
   }
 
   @override
@@ -85,8 +100,17 @@ class TimerPageState extends State<TimerPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  InkWell(
-                                    onTap: () {
+                                  RaisedButton(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    autofocus: false,
+                                    hoverColor: AppColors.TRANSPARENT,
+                                    highlightElevation: 0,
+                                    padding: EdgeInsets.zero,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    onPressed: () {
                                       if (appStates
                                               .selectedMeditationIndex.value >
                                           0) {
@@ -96,7 +120,7 @@ class TimerPageState extends State<TimerPage> {
                                             1;
                                       } else {
                                         appStates
-                                            .selectedMeditationIndex.value = 3;
+                                            .selectedMeditationIndex.value = 6;
                                       }
                                       setState(() {
                                         selectedAudio = _audioList[appStates
@@ -109,8 +133,17 @@ class TimerPageState extends State<TimerPage> {
                                       color: AppColors.VIOLET,
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () {
+                                  RaisedButton(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    autofocus: false,
+                                    hoverColor: AppColors.TRANSPARENT,
+                                    highlightElevation: 0,
+                                    padding: EdgeInsets.zero,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    onPressed: () {
                                       setState(() {
                                         isPlayed = !isPlayed;
                                       });
@@ -121,11 +154,20 @@ class TimerPageState extends State<TimerPage> {
                                       color: AppColors.VIOLET,
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () {
+                                  RaisedButton(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    autofocus: false,
+                                    hoverColor: AppColors.TRANSPARENT,
+                                    highlightElevation: 0,
+                                    padding: EdgeInsets.zero,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    onPressed: () {
                                       if (appStates
                                               .selectedMeditationIndex.value <
-                                          3) {
+                                          6) {
                                         appStates.selectedMeditationIndex
                                             .value = appStates
                                                 .selectedMeditationIndex.value +

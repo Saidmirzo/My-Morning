@@ -7,6 +7,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/myFitnessProgress.dart';
@@ -45,6 +46,7 @@ class AskedQuestionsScreen extends StatefulWidget {
 class _AskedQuestionsState extends State<AskedQuestionsScreen> {
   @override
   void initState() {
+    AnalyticService.screenView('dashboard');
     super.initState();
   }
 

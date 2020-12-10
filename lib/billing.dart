@@ -17,7 +17,7 @@ class BillingService {
   }
 
   bool isPro() {
-    return purchaserInfo?.entitlements?.all["all_features"]?.isActive ?? true;
+    return purchaserInfo?.entitlements?.all["all_features"]?.isActive ?? false;
   }
 
   Package getMonthlyTarif() {

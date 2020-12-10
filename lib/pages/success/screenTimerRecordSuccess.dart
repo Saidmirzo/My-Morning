@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/day/day.dart';
@@ -211,7 +212,7 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
     _startTime = time.time;
 
     startTimer();
-
+    AnalyticService.screenView('note_voice_page');
     super.initState();
   }
 

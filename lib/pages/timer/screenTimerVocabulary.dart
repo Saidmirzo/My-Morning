@@ -46,6 +46,7 @@ class TimerVocabularyScreenState extends State<TimerVocabularyScreen> {
         startTimer();
       });
     });
+    print('экран таймера дневника');
     super.initState();
   }
 

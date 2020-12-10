@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/day/day.dart';
@@ -51,6 +52,7 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
       _time = time.time * 60;
       _startTime = time.time;
       _startValue = time.time * 60;
+      AnalyticService.screenView('visualization_timer_page');
       startTimer();
     });
     super.initState();
