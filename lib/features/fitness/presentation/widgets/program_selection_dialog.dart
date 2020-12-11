@@ -11,15 +11,6 @@ class ProgramSelectionDialog extends StatefulWidget {
 }
 
 class _ProgramSelectionDialogState extends State<ProgramSelectionDialog> {
-
-  final List<FitnessProgram> _programs = [
-    FitnessProgram(name: 'Program1', isCreatedByUser: false, exercises: []),
-    FitnessProgram(name: 'Program2', isCreatedByUser: false, exercises: []),
-    FitnessProgram(name: 'Program3', isCreatedByUser: false, exercises: [])
-  ];
-
-  // FitnessProgram selectedProgram;
-
   @override
   Widget build(BuildContext context) {
     final _fitnessController = Get.find<FitnessController>();
@@ -40,6 +31,7 @@ class _ProgramSelectionDialogState extends State<ProgramSelectionDialog> {
               ),
               Row(
                 children: [
+                  // TODO move to widget
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: Padding(
@@ -65,13 +57,12 @@ class _ProgramSelectionDialogState extends State<ProgramSelectionDialog> {
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: _programs.length,
+                  itemCount: _fitnessController.programs.length,
                   itemBuilder: (context, index) => FitnessProgramDialogItem(
-                    program: _programs[index],
-                    /* isSelected: false,*/
+                    program: _fitnessController.programs[index],
                     onItemSelected: () {
                       final FitnessController c = Get.find();
-                      c.selectedProgram = _programs[index];
+                      c.selectedProgram = _fitnessController.programs[index];
                     },
                   ),
                 ),
@@ -81,9 +72,7 @@ class _ProgramSelectionDialogState extends State<ProgramSelectionDialog> {
                 child: Obx(() {
                   bool _isActive = _fitnessController.selectedProgram != null;
                   return InkWell(
-                    onTap: _isActive
-                        ? navigateProgramScreen
-                        : null,
+                    onTap: _isActive ? navigateProgramScreen : null,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 12.0),
@@ -124,9 +113,7 @@ class FitnessProgramDialogItem extends StatelessWidget {
   final VoidCallback onItemSelected;
 
   const FitnessProgramDialogItem(
-      {Key key,
-      @required this.program,
-      @required this.onItemSelected})
+      {Key key, @required this.program, @required this.onItemSelected})
       : super(key: key);
 
   @override
@@ -146,6 +133,7 @@ class FitnessProgramDialogItem extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
+                // TODO make StyledText
                 child: Text(
                   program.name,
                   textAlign: TextAlign.center,
