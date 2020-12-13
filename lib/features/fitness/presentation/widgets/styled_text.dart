@@ -7,20 +7,20 @@ class StyledText extends StatelessWidget {
   final String data;
   final double fontSize;
   final Color color;
-  final TextAlign texAlign;
+  final TextAlign textAlign;
 
   const StyledText(this.data,
       {Key key,
       this.fontSize = 12,
       this.color = AppColors.VIOLET,
-      this.texAlign = TextAlign.start})
+      this.textAlign = TextAlign.start})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
-      textAlign: TextAlign.center,
+      textAlign: textAlign,
       style: TextStyle(
         fontSize: fontSize,
         fontFamily: 'rex',

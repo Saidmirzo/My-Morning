@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
-import 'package:morningmagic/features/fitness/models/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/models/fitness_program.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/program_edit_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/resources/colors.dart';
 
@@ -93,9 +93,10 @@ class _FitnessProgramSettingsPageState
         )),
         SizedBox(width: 16),
         FloatingActionButton.extended(
-          onPressed: () {
-            // TODO open yours
-          },
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => ProgramEditDialog(),
+          ),
           label: Padding(
             padding: const EdgeInsets.only(top: 4.0),
             child: StyledText(
@@ -127,8 +128,6 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
 
   @override
   Widget build(BuildContext context) {
-    final FitnessController c = Get.find();
-
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Card(
@@ -151,10 +150,15 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Wrap(
-                    spacing: 4,
-                    children: _buildExerciseChip(widget.program),
-                  ),
+                  child: Obx(() {
+                    final _program =
+                        _fitnessController.findProgram(widget.program);
+
+                    return Wrap(
+                      spacing: 4,
+                      children: _buildExerciseChip(_program),
+                    );
+                  }),
                 ),
                 Row(
                   children: [
@@ -166,7 +170,8 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
                         title: 'Удалить'),
                     SizedBox(width: 8),
                     _buildProgramCardActionButton(
-                        onPressed: () => {},
+                        onPressed: () =>
+                            _showEditProgramDialog(program: widget.program),
                         buttonColor: AppColors.VIOLET,
                         icon: Icons.edit,
                         title: 'Редактировать'),
@@ -248,26 +253,13 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
 
     return widgets;
   }
-}
 
-class ExerciseItem extends StatelessWidget {
-  final FitnessExercise exercise;
-
-  const ExerciseItem({Key key, this.exercise}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text(
-        exercise.name,
-        style: TextStyle(
-            fontFamily: 'rex',
-            fontStyle: FontStyle.normal,
-            color: AppColors.WHITE),
+  Future<void> _showEditProgramDialog({FitnessProgram program}) async {
+    await showDialog(
+      context: context,
+      builder: (context) => ProgramEditDialog(
+        program: program,
       ),
-      decoration: BoxDecoration(
-          color: AppColors.LIGHT_VIOLET,
-          borderRadius: BorderRadius.all(Radius.circular(8))),
     );
   }
 }

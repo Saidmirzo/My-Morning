@@ -13,8 +13,23 @@ class FitnessController extends GetxController {
 
   final List<FitnessProgram> programs = generateDefaultPrograms().obs;
 
+  FitnessProgram findProgram(FitnessProgram program) {
+    return programs.where((element) => element == program).first;
+  }
+
   void deleteProgram(FitnessProgram program) {
     programs.removeWhere((element) => element == program);
+  }
+
+  int programIndex(FitnessProgram program) => programs.indexOf(program);
+
+  void addProgram(FitnessProgram program) {
+    programs.add(program);
+  }
+
+  void updateProgram(FitnessProgram oldProgram, FitnessProgram newProgram) {
+    int _index = programIndex(oldProgram);
+    programs.replaceRange(_index, _index + 1, [newProgram]);
   }
 
   void restoreDefaultPrograms() {
@@ -24,8 +39,7 @@ class FitnessController extends GetxController {
 
   static List<FitnessProgram> generateDefaultPrograms() => [
         FitnessProgram(
-          name:
-              'Program1 df dfdfdfdfkd;lfkd;lfk;d dfdfdkljfldkjfdklfj dkjfdkljfldkj',
+          name: 'Program1',
           isCreatedByUser: false,
           exercises: [
             FitnessExercise(name: 'Потягивания', description: null),

@@ -4,10 +4,9 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_program_settings.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/fitness_menu_item_button.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/program_selection_dialog.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/program_selection_dialog.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/fitness_main_menu_button.dart';
 
-import '../../../../pages/screenExerciseDesk.dart';
 import '../../../../resources/colors.dart';
 
 class FitnessMainPage extends StatelessWidget {
@@ -39,14 +38,14 @@ class FitnessMainPage extends StatelessWidget {
               SizedBox(
                 height: 48,
               ),
-              FitnessMenuItemButton(
+              FitnessMenuButton(
                   onPressed: () => showProgramSelectionDialog(context),
                   text: 'Начать программу', // начать программу
                   pageId: pageId),
               SizedBox(
                 height: 16,
               ),
-              FitnessMenuItemButton(
+              FitnessMenuButton(
                   onPressed: () => navigateToProgramSettings(context),
                   text: 'Настройки программ', // создать программу
                   pageId: pageId),
@@ -62,14 +61,7 @@ class FitnessMainPage extends StatelessWidget {
   }
 
   void navigateToProgramSettings(BuildContext context) {
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => ExerciseDeskScreen(pageId: pageId)));
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => FitnessProgramSettingsPage()));
-
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => FitnessProgramSettingsPage()));
   }
 }

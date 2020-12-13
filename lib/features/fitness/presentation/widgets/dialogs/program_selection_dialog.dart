@@ -5,12 +5,7 @@ import 'package:morningmagic/features/fitness/presentation/controller/fitness_co
 import 'package:morningmagic/pages/exerciseDetails.dart';
 import 'package:morningmagic/resources/colors.dart';
 
-class ProgramSelectionDialog extends StatefulWidget {
-  @override
-  _ProgramSelectionDialogState createState() => _ProgramSelectionDialogState();
-}
-
-class _ProgramSelectionDialogState extends State<ProgramSelectionDialog> {
+class ProgramSelectionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _fitnessController = Get.find<FitnessController>();
@@ -72,7 +67,8 @@ class _ProgramSelectionDialogState extends State<ProgramSelectionDialog> {
                 child: Obx(() {
                   bool _isActive = _fitnessController.selectedProgram != null;
                   return InkWell(
-                    onTap: _isActive ? navigateProgramScreen : null,
+                    onTap:
+                        _isActive ? () => navigateProgramScreen(context) : null,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 12.0),
@@ -98,7 +94,7 @@ class _ProgramSelectionDialogState extends State<ProgramSelectionDialog> {
     );
   }
 
-  void navigateProgramScreen() {
+  void navigateProgramScreen(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
