@@ -94,7 +94,7 @@ class TimerPageState extends State<TimerPage> {
                         ? Container(
                             margin: EdgeInsets.only(top: 50),
                             child: AudioWidget.assets(
-                              loop: true,
+                              loopMode: LoopMode.single,
                               path: selectedAudio,
                               play: isPlayed,
                               child: Row(

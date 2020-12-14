@@ -75,6 +75,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           ],
         )),
         child: SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -222,7 +223,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20))),
-                height: MediaQuery.of(context).size.height * 0.215,
+                height: MediaQuery.of(context).size.height < 668
+                    ? MediaQuery.of(context).size.height * 0.255
+                    : MediaQuery.of(context).size.height * 0.215,
                 margin: const EdgeInsets.only(
                   left: 20.0,
                   right: 20,
@@ -234,8 +237,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   children: [
                     Container(
                       padding: EdgeInsets.only(
-                          left: context.locale == Locale('ru') ? 40 : 40,
-                          right: context.locale == Locale('ru') ? 48 : 42),
+                        left: context.locale == Locale('ru') ? 40 : 40,
+                        right: context.locale == Locale('ru') ? 48 : 42,
+                      ),
                       decoration: BoxDecoration(
                           color: Color(0xffEBC2BE),
                           borderRadius: BorderRadius.only(
@@ -244,7 +248,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                             bottomLeft: Radius.circular(4),
                             bottomRight: Radius.circular(4),
                           )),
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height < 668
+                          ? MediaQuery.of(context).size.height * 0.08
+                          : MediaQuery.of(context).size.height * 0.06,
                       child: Row(
                         //crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

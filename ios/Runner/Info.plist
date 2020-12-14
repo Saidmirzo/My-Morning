@@ -31,8 +31,18 @@
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Music!</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>The data is used exclusively for the user and is not passed on to third parties</string>
+	<key>NSContactsUsageDescription</key>
+	<string>User data is collected exclusively for the user and is not passed on to third parties.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>The data is used exclusively for the user and is not passed on to third parties</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The data is used exclusively for the user and is not passed on to third parties</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>microphone</string>
+	<key>NSMotionUsageDescription</key>
+	<string>The data is used exclusively for the user and is not passed on to third parties</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>speech</string>
 	<key>UILaunchStoryboardName</key>

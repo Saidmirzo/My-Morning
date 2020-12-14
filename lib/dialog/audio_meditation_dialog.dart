@@ -44,7 +44,9 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
           borderRadius: BorderRadius.circular(30),
         ),
         child: Container(
-          height: MediaQuery.of(context).size.height / 1.5,
+          height: MediaQuery.of(context).size.height < 668
+                    ? MediaQuery.of(context).size.height / 1.35
+                    : MediaQuery.of(context).size.height / 1.5,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -62,14 +64,14 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          'back_button'.tr(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 23,
-                              fontFamily: 'rex',
-                              fontStyle: FontStyle.normal,
-                              color: AppColors.VIOLET),
-                        ),
+                            'back_button'.tr(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 23,
+                                fontFamily: 'rex',
+                                fontStyle: FontStyle.normal,
+                                color: AppColors.VIOLET),
+                          ),
                       ),
                       InkWell(
                         onTap: () {
