@@ -103,6 +103,7 @@ class _FitnessProgramSettingsPageState
               'Создать\nсвою',
               color: Colors.white,
               fontSize: 16,
+              textAlign: TextAlign.center,
             ),
           ),
           icon: Icon(Icons.add),

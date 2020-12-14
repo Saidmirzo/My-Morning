@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/features/fitness/models/fitness_program.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/dialog_action_button.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/program_dialog_item.dart';
 import 'package:morningmagic/pages/exerciseDetails.dart';
 import 'package:morningmagic/resources/colors.dart';
+
+import '../styled_text.dart';
 
 class ProgramSelectionDialog extends StatelessWidget {
   @override
@@ -24,28 +27,8 @@ class ProgramSelectionDialog extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              Row(
-                children: [
-                  // TODO move to widget
-                  InkWell(
-                    onTap: () => Navigator.pop(context),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 12.0),
-                      child: Text(
-                        'назад',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 23,
-                            fontFamily: 'rex',
-                            fontStyle: FontStyle.normal,
-                            color: AppColors.VIOLET),
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                ],
-              ),
+              DialogActionButton(
+                  text: 'назад', onTap: () => Navigator.pop(context)),
               SizedBox(
                 height: 8,
               ),
@@ -53,7 +36,7 @@ class ProgramSelectionDialog extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: _fitnessController.programs.length,
-                  itemBuilder: (context, index) => FitnessProgramDialogItem(
+                  itemBuilder: (context, index) => ProgramDialogItem(
                     program: _fitnessController.programs[index],
                     onItemSelected: () {
                       final FitnessController c = Get.find();
@@ -72,21 +55,16 @@ class ProgramSelectionDialog extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 12.0),
-                      child: Text(
-                        'Начать',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 23,
-                            fontFamily: 'rex',
-                            fontStyle: FontStyle.normal,
-                            color: _isActive
-                                ? AppColors.VIOLET
-                                : AppColors.VIOLET.withAlpha(70)),
-                      ),
+                      child: StyledText('Начать',
+                          textAlign: TextAlign.center,
+                          fontSize: 23,
+                          color: _isActive
+                              ? AppColors.VIOLET
+                              : AppColors.VIOLET.withAlpha(70)),
                     ),
                   );
                 }),
-              )
+              ),
             ],
           ),
         ),
@@ -100,52 +78,5 @@ class ProgramSelectionDialog extends StatelessWidget {
         MaterialPageRoute(
             builder: (context) => ExerciseDetails(
                 stepId: 0, isCustomProgramm: false, pageId: 0)));
-  }
-}
-
-class FitnessProgramDialogItem extends StatelessWidget {
-  final FitnessProgram program;
-
-  final VoidCallback onItemSelected;
-
-  const FitnessProgramDialogItem(
-      {Key key, @required this.program, @required this.onItemSelected})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final FitnessController c = Get.find();
-
-    return GestureDetector(
-      onTap: onItemSelected,
-      child: Obx(() {
-        final _isSelected = c.selectedProgram == program;
-        return Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Container(
-            decoration: BoxDecoration(
-                color: _isSelected ? AppColors.PINK : AppColors.LIGHT_VIOLET,
-                borderRadius: BorderRadius.all(Radius.circular(40))),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                // TODO make StyledText
-                child: Text(
-                  program.name,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    decoration: TextDecoration.none,
-                    color: AppColors.WHITE,
-                    fontStyle: FontStyle.normal,
-                    fontFamily: 'rex',
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      }),
-    );
   }
 }

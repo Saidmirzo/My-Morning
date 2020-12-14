@@ -38,14 +38,14 @@ class FitnessMainPage extends StatelessWidget {
               SizedBox(
                 height: 48,
               ),
-              FitnessMenuButton(
+              FitnessMainMenuButton(
                   onPressed: () => showProgramSelectionDialog(context),
                   text: 'Начать программу', // начать программу
                   pageId: pageId),
               SizedBox(
                 height: 16,
               ),
-              FitnessMenuButton(
+              FitnessMainMenuButton(
                   onPressed: () => navigateToProgramSettings(context),
                   text: 'Настройки программ', // создать программу
                   pageId: pageId),

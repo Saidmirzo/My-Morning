@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 
-class FitnessMenuButton extends StatelessWidget {
-  const FitnessMenuButton(
+class FitnessMainMenuButton extends StatelessWidget {
+  const FitnessMainMenuButton(
       {Key key,
       @required this.pageId,
       @required this.onPressed,

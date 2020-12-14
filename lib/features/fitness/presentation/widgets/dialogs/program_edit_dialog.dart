@@ -4,6 +4,8 @@ import 'package:get/state_manager.dart';
 import 'package:morningmagic/features/fitness/models/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/models/fitness_program.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/dialog_action_button.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/exercise_edit_dialog_item.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/resources/colors.dart';
 
@@ -151,48 +153,14 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
   Row _buildDialogHeader(BuildContext context) {
     return Row(
       children: [
-        // TODO move to widget
-        InkWell(
+        DialogActionButton(
+          text: 'назад',
           onTap: () => Navigator.pop(context),
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-            child: Text(
-              'назад',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 23,
-                  fontFamily: 'rex',
-                  fontStyle: FontStyle.normal,
-                  color: AppColors.VIOLET),
-            ),
-          ),
         ),
         Spacer(),
-        InkWell(
-          onTap: () {
-            if (_formKey.currentState.validate()) {
-              bool _isCreatedByUser = (widget.program != null)
-                  ? widget.program.isCreatedByUser
-                  : true;
-              final _newProgram = FitnessProgram(
-                  name: _textController.text,
-                  isCreatedByUser: _isCreatedByUser,
-                  exercises: exercises);
-              (widget.program != null)
-                  ? _fitnessController.updateProgram(
-                      widget.program, _newProgram)
-                  : _fitnessController.addProgram(_newProgram);
-
-              Navigator.pop(context);
-            }
-          },
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-            child:
-                StyledText('сохранить', fontSize: 23, color: AppColors.VIOLET),
-          ),
+        DialogActionButton(
+          text: 'сохранить',
+          onTap: () => _saveProgram(context),
         ),
       ],
     );
@@ -213,45 +181,20 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
 
     return widgets;
   }
-}
 
-class ExerciseItem extends StatelessWidget {
-  final FitnessExercise exercise;
-  final VoidCallback onDeleteItem;
+  void _saveProgram(BuildContext context) {
+    if (_formKey.currentState.validate()) {
+      bool _isCreatedByUser =
+          (widget.program != null) ? widget.program.isCreatedByUser : true;
+      final _newProgram = FitnessProgram(
+          name: _textController.text,
+          isCreatedByUser: _isCreatedByUser,
+          exercises: exercises);
+      (widget.program != null)
+          ? _fitnessController.updateProgram(widget.program, _newProgram)
+          : _fitnessController.addProgram(_newProgram);
 
-  ExerciseItem({Key key, @required this.exercise, @required this.onDeleteItem})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-      decoration: BoxDecoration(
-          color: AppColors.LIGHT_VIOLET,
-          borderRadius: BorderRadius.all(Radius.circular(40))),
-      child: Row(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 16.0, right: 8.0, top: 12, bottom: 8),
-              child: StyledText(
-                exercise.name,
-                color: AppColors.WHITE,
-                fontSize: 18,
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.delete,
-              color: AppColors.WHITE,
-            ),
-            onPressed: onDeleteItem,
-          )
-        ],
-      ),
-    );
+      Navigator.pop(context);
+    }
   }
 }
