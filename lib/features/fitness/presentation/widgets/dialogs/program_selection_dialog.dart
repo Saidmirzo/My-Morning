@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/dialog_action_button.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/dialog_header_button.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/program_dialog_item.dart';
 import 'package:morningmagic/pages/exerciseDetails.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -27,7 +27,7 @@ class ProgramSelectionDialog extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              DialogActionButton(
+              DialogHeaderButton(
                   text: 'назад', onTap: () => Navigator.pop(context)),
               SizedBox(
                 height: 8,

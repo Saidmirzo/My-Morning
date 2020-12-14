@@ -4,10 +4,11 @@ import 'package:get/state_manager.dart';
 import 'package:morningmagic/features/fitness/models/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/models/fitness_program.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/dialog_action_button.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/dialog_footer_button.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/dialog_header_button.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/add_exercise_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/exercise_edit_dialog_item.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
-import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/fitness_name_input_form.dart';
 
 typedef ExerciseCallback = void Function(FitnessExercise exercise);
 
@@ -65,11 +66,12 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
               SizedBox(
                 height: 8,
               ),
-              Text(
-                'Удерживайте упражнение, чтобы перетащить в нужное место',
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-                textAlign: TextAlign.center,
-              ),
+              if (exercises.isNotEmpty)
+                Text(
+                  'Удерживайте упражнение, чтобы перетащить в нужное место',
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
               SizedBox(
                 height: 8,
               ),
@@ -100,65 +102,22 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
     );
   }
 
-  FlatButton _buildAddNewExerciseButton() {
-    return FlatButton.icon(
-        onPressed: () => {},
-        shape: new RoundedRectangleBorder(
-            side: BorderSide(style: BorderStyle.solid, width: 1),
-            borderRadius: new BorderRadius.circular(30.0)),
-        icon: Icon(
-          Icons.add,
-          color: AppColors.VIOLET,
-        ),
-        label: Padding(
-          padding: const EdgeInsets.only(top: 4.0),
-          child: StyledText(
-            'Добавить упражнение',
-            fontSize: 16,
-          ),
-        ));
-  }
+  Widget _buildAddNewExerciseButton() => DialogFooterButton(
+      text: 'Добавить упражнения',
+      onPressed: () => _openAddExerciseDialog(context, exercises));
 
-  Form _buildProgramNameInputForm() {
-    return Form(
-      key: _formKey,
-      child: TextFormField(
-        validator: (value) {
-          if (value.isEmpty) return 'Введите название';
-          return null;
-        },
-        controller: _textController,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.VIOLET, width: 1),
-          ),
-          suffixIcon: IconButton(
-            icon: Icon(
-              Icons.clear,
-              color: AppColors.VIOLET,
-            ),
-            onPressed: () => _textController.text = '',
-          ),
-          border: OutlineInputBorder(),
-          hintText: 'Введите название программы',
-        ),
-        autofocus: false,
-      ),
-    );
-  }
+  Widget _buildProgramNameInputForm() =>
+      FitnessNameInputForm(formKey: _formKey, textController: _textController);
 
   Row _buildDialogHeader(BuildContext context) {
     return Row(
       children: [
-        DialogActionButton(
+        DialogHeaderButton(
           text: 'назад',
           onTap: () => Navigator.pop(context),
         ),
         Spacer(),
-        DialogActionButton(
+        DialogHeaderButton(
           text: 'сохранить',
           onTap: () => _saveProgram(context),
         ),
@@ -170,7 +129,7 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
       List<FitnessExercise> exercises, ExerciseCallback onDelete) {
     final List<Widget> widgets = [];
     exercises.forEach((element) {
-      widgets.add(ExerciseItem(
+      widgets.add(ExerciseEditDialogItem(
         exercise: element,
         onDeleteItem: () {
           onDelete(element);
@@ -195,6 +154,21 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
           : _fitnessController.addProgram(_newProgram);
 
       Navigator.pop(context);
+    }
+  }
+
+  Future<void> _openAddExerciseDialog(
+      BuildContext context, List<FitnessExercise> initialExercises) async {
+    final List<FitnessExercise> _result = await showDialog(
+      context: context,
+      builder: (context) => AddExerciseDialog(
+        initialExercises: initialExercises,
+      ),
+    );
+    if (_result != null) {
+      setState(() {
+        exercises.addAll(_result);
+      });
     }
   }
 }

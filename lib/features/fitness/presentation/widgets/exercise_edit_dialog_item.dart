@@ -3,11 +3,12 @@ import 'package:morningmagic/features/fitness/models/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/resources/colors.dart';
 
-class ExerciseItem extends StatelessWidget {
+class ExerciseEditDialogItem extends StatelessWidget {
   final FitnessExercise exercise;
   final VoidCallback onDeleteItem;
 
-  ExerciseItem({Key key, @required this.exercise, @required this.onDeleteItem})
+  ExerciseEditDialogItem(
+      {Key key, @required this.exercise, @required this.onDeleteItem})
       : super(key: key);
 
   @override

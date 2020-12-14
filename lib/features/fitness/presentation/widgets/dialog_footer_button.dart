@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:morningmagic/resources/colors.dart';
+
+import 'styled_text.dart';
+
+class DialogFooterButton extends StatelessWidget {
+  final String text;
+
+  final VoidCallback onPressed;
+
+  const DialogFooterButton(
+      {Key key, @required this.text, @required this.onPressed})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton.icon(
+        onPressed: onPressed,
+        shape: new RoundedRectangleBorder(
+            side: BorderSide(
+                style: BorderStyle.solid, width: 2, color: AppColors.VIOLET),
+            borderRadius: new BorderRadius.circular(30.0)),
+        icon: Icon(
+          Icons.add,
+          color: AppColors.VIOLET,
+        ),
+        label: Padding(
+          padding: const EdgeInsets.only(top: 4.0),
+          child: StyledText(
+            text,
+            fontSize: 16,
+          ),
+        ));
+  }
+}

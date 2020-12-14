@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 
-class DialogActionButton extends StatelessWidget {
+class DialogHeaderButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
 
-  const DialogActionButton({Key key, @required this.text, @required this.onTap})
+  const DialogHeaderButton({Key key, @required this.text, @required this.onTap})
       : super(key: key);
 
   @override

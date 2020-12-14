@@ -62,4 +62,12 @@ class FitnessController extends GetxController {
         ),
         FitnessProgram(name: 'Program3', isCreatedByUser: false, exercises: [])
       ];
+
+  static List<FitnessExercise> generateDefaultExercises() => [
+        FitnessExercise(name: 'Потягивания', description: null),
+        FitnessExercise(name: 'Ходьба', description: null),
+        FitnessExercise(name: 'Взмахи', description: null),
+        FitnessExercise(name: 'Прыжки', description: null),
+        FitnessExercise(name: 'Шаги на месте', description: null),
+      ];
 }
