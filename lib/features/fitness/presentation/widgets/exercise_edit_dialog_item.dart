@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:morningmagic/features/fitness/models/fitness_exercise.dart';
+import 'package:morningmagic/features/fitness/domain/entities/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/resources/colors.dart';
 

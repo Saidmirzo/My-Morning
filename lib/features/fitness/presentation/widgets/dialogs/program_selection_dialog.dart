@@ -76,7 +76,7 @@ class ProgramSelectionDialog extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ExerciseDetails(
-                stepId: 0, isCustomProgramm: false, pageId: 0)));
+            builder: (context) =>
+                ExerciseDetails(stepId: 0, isCustomProgram: false, pageId: 0)));
   }
 }

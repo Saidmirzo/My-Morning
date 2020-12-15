@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
+import 'package:morningmagic/features/fitness/data/repositories/fitness_program_repository_impl.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_program_settings.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
@@ -11,7 +12,8 @@ import '../../../../resources/colors.dart';
 
 class FitnessMainPage extends StatelessWidget {
   final int pageId;
-  final FitnessController controller = Get.put(FitnessController());
+  final FitnessController controller =
+      Get.put(FitnessController(repository: FitnessProgramRepositoryImpl()));
 
   FitnessMainPage({Key key, @required this.pageId}) : super(key: key);
 

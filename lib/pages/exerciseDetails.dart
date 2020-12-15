@@ -13,13 +13,13 @@ import 'package:morningmagic/widgets/customBottomExerciseNavigation.dart';
 class ExerciseDetails extends StatefulWidget {
   final int stepId;
   final int pageId;
-  final bool isCustomProgramm;
+  final bool isCustomProgram;
 
   const ExerciseDetails(
       {Key key,
       @required this.stepId,
       @required this.pageId,
-      @required this.isCustomProgramm})
+      @required this.isCustomProgram})
       : super(key: key);
 
   @override
@@ -142,7 +142,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                       timerAppBar.cancelTimer();
                       assetsAudioPlayer.stop();
                       assetsAudioPlayer.dispose();
-                      if (widget.isCustomProgramm) {
+                      if (widget.isCustomProgram) {
                         ExerciseUtils().goNextRoute(context, widget.pageId);
                       } else if (id < 10)
                         Navigator.push(
@@ -151,7 +151,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                 builder: (context) => ExerciseDetails(
                                     stepId: id,
                                     pageId: widget.pageId,
-                                    isCustomProgramm: false)));
+                                    isCustomProgram: false)));
                       else {
                         OrderUtil().getRouteById(2).then((value) {
                           Navigator.push(

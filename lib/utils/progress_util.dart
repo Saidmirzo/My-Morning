@@ -25,28 +25,28 @@ class ExerciseUtils {
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 0, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 0, pageId: pageId, isCustomProgram: true)));
     } else if (equalsIgnoreCase(exerciseName, "Шаги на месте") ||
         equalsIgnoreCase(exerciseName, "March in Place")) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 1, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 1, pageId: pageId, isCustomProgram: true)));
     } else if (equalsIgnoreCase(exerciseName, "Перекаты с носков на пятки") ||
         equalsIgnoreCase(exerciseName, "Heel and Toe Raises")) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 2, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 2, pageId: pageId, isCustomProgram: true)));
     } else if (equalsIgnoreCase(exerciseName, "Вращения") ||
         equalsIgnoreCase(exerciseName, "Rotations")) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 3, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 3, pageId: pageId, isCustomProgram: true)));
     } else if (equalsIgnoreCase(
             exerciseName, "Попеременные наклоны и приседания") ||
         equalsIgnoreCase(exerciseName, "Alternating bend and squats")) {
@@ -54,14 +54,14 @@ class ExerciseUtils {
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 4, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 4, pageId: pageId, isCustomProgram: true)));
     } else if (equalsIgnoreCase(exerciseName, "Наклоны в стороны") ||
         equalsIgnoreCase(exerciseName, "Standing Side Bend")) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 5, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 5, pageId: pageId, isCustomProgram: true)));
     } else if (equalsIgnoreCase(
             exerciseName, "Попеременное подтягивание ног") ||
         equalsIgnoreCase(exerciseName, "Bicycle Crunch")) {
@@ -69,28 +69,28 @@ class ExerciseUtils {
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 6, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 6, pageId: pageId, isCustomProgram: true)));
     } else if (equalsIgnoreCase(exerciseName, "«Кошечка»") ||
         equalsIgnoreCase(exerciseName, "Cat and Dog")) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 7, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 7, pageId: pageId, isCustomProgram: true)));
     } else if (equalsIgnoreCase(exerciseName, "Отжимания") ||
         equalsIgnoreCase(exerciseName, "Press Up")) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 8, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 8, pageId: pageId, isCustomProgram: true)));
     } else if (equalsIgnoreCase(exerciseName, "Потягивания ") ||
         equalsIgnoreCase(exerciseName, "Hand stretching")) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ExerciseDetails(
-                  stepId: 9, pageId: pageId, isCustomProgramm: true)));
+                  stepId: 9, pageId: pageId, isCustomProgram: true)));
     } else {
       Navigator.push(
           context,
@@ -250,7 +250,6 @@ class ExerciseUtils {
                         false)));
       });
     }
-
   }
 
   bool equalsIgnoreCase(String a, String b) =>

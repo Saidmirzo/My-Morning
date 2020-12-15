@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:morningmagic/features/fitness/models/fitness_exercise.dart';
-import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
+import 'package:morningmagic/features/fitness/domain/entities/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialog_header_button.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/create_own_exercise_dialog.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -22,8 +21,9 @@ class AddExerciseDialog extends StatefulWidget {
 
 class _AddExerciseDialogState extends State<AddExerciseDialog> {
 
-  List<FitnessExercise> _defaultExercises =
-      FitnessController.generateDefaultExercises();
+  // TODO get default exercises
+  List<FitnessExercise> _defaultExercises = [];
+      // FitnessController.generateDefaultExercises();
 
   List<FitnessExercise> _initialExercises;
 
@@ -66,6 +66,8 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
               SizedBox(
                 height: 8,
               ),
+              StyledText('Упражнения', fontSize: 20, color: Colors.blueGrey,),
+              SizedBox(height: 8,),
               (_initialExercises.isEmpty)
                   ? Expanded(
                       child: Center(
