@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
-import 'package:morningmagic/features/fitness/domain/entities/fitness_program.dart';
+import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/program_edit_dialog.dart';
@@ -79,7 +79,7 @@ class _FitnessProgramSettingsPageState
         Expanded(
             child: FlatButton(
           color: Colors.white,
-          onPressed: () => _fitnessController.restoreDefaultPrograms(),
+          onPressed: () => restoreDefault(context),
           shape: new RoundedRectangleBorder(
               side: BorderSide(style: BorderStyle.solid, width: 1),
               borderRadius: new BorderRadius.circular(30.0)),
@@ -110,6 +110,30 @@ class _FitnessProgramSettingsPageState
           backgroundColor: AppColors.PINK,
         ),
       ],
+    );
+  }
+
+  void restoreDefault(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Вы действительно хотите восстановить программы по умолчанию?\nПользовательские программы будут удалены',
+        ),
+        actions: [
+          FlatButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Отмена'),
+          ),
+          FlatButton(
+            onPressed: () {
+              _fitnessController.restoreDefaultPrograms();
+              Navigator.pop(context);
+            },
+            child: Text('Восстановить'),
+          )
+        ],
+      ),
     );
   }
 }

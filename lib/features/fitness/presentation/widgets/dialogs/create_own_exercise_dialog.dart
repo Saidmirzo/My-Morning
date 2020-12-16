@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:morningmagic/features/fitness/domain/entities/fitness_exercise.dart';
+import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 import '../dialog_header_button.dart';
@@ -74,10 +74,6 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
               ),
               // TODo Form 2
               TextFormField(
-                // validator: (value) {
-                //   if (value.isEmpty) return 'Шаг упражнения';
-                //   return null;
-                // },
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.VIOLET, width: 2),

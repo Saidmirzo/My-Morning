@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:morningmagic/features/fitness/domain/entities/fitness_exercise.dart';
-import 'package:morningmagic/features/fitness/domain/entities/fitness_program.dart';
+import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
+import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
 
 class FitnessDataGenerator {
   static List<FitnessProgram> generateDefaultPrograms() => [

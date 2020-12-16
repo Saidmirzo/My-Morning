@@ -1,32 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'fitness_programs_model.dart';
+part of 'fitness_program.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class FitnessProgramsModelAdapter extends TypeAdapter<FitnessProgramsModel> {
+class FitnessProgramAdapter extends TypeAdapter<FitnessProgram> {
   @override
   final int typeId = 18;
 
   @override
-  FitnessProgramsModel read(BinaryReader reader) {
+  FitnessProgram read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return FitnessProgramsModel(
-      programs: (fields[0] as List)?.cast<FitnessProgram>(),
+    return FitnessProgram(
+      name: fields[0] as String,
+      isCreatedByUser: fields[1] as bool,
+      exercises: (fields[2] as List)?.cast<FitnessExercise>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, FitnessProgramsModel obj) {
+  void write(BinaryWriter writer, FitnessProgram obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.programs);
+      ..write(obj.name)
+      ..writeByte(1)
+      ..write(obj.isCreatedByUser)
+      ..writeByte(2)
+      ..write(obj.exercises);
   }
 
   @override
@@ -35,7 +41,7 @@ class FitnessProgramsModelAdapter extends TypeAdapter<FitnessProgramsModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is FitnessProgramsModelAdapter &&
+      other is FitnessProgramAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

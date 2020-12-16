@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
-import 'package:morningmagic/features/fitness/domain/entities/fitness_program.dart';
+import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
 import 'package:morningmagic/features/fitness/domain/repositories/fitness_program_repository.dart';
 
 class FitnessController extends GetxController {
@@ -29,28 +29,26 @@ class FitnessController extends GetxController {
     return programs.where((element) => element == program).first;
   }
 
-  void deleteProgram(FitnessProgram program) {
-    // TODO delete program
+  void deleteProgram(FitnessProgram program) async {
     programs.removeWhere((element) => element == program);
-
+    repository.saveFitnessPrograms(programs.value);
   }
 
   int programIndex(FitnessProgram program) => programs.indexOf(program);
 
-  void addProgram(FitnessProgram program) async {
+  void addProgram(FitnessProgram program) {
     programs.add(program);
-    await repository.saveFitnessPrograms(programs.value);
+    repository.saveFitnessPrograms(programs.value);
   }
 
-  // TODO make update program
   void updateProgram(FitnessProgram oldProgram, FitnessProgram newProgram) {
     int _index = programIndex(oldProgram);
     programs.replaceRange(_index, _index + 1, [newProgram]);
+    repository.saveFitnessPrograms(programs.value);
   }
 
-  // TODO make restore programs
   void restoreDefaultPrograms() async {
     programs.clear();
-    programs.addAll(await repository.getFitnessPrograms());
+    programs.addAll(await repository.getDefaultFitnessPrograms());
   }
 }

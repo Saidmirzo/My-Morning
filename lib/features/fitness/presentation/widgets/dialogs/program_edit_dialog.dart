@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
-import 'package:morningmagic/features/fitness/domain/entities/fitness_exercise.dart';
-import 'package:morningmagic/features/fitness/domain/entities/fitness_program.dart';
+import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
+import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialog_footer_button.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialog_header_button.dart';

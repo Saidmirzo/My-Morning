@@ -7,6 +7,8 @@ import 'package:morningmagic/db/model/progress/visualization_progress/visualizat
 import 'package:morningmagic/db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
 import 'package:morningmagic/db/model/visualization/visualization_adapter.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
+import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
 
 import 'model/affirmation_text/affirmation_text_adapter.dart';
 import 'model/app_and_custom_exercises/app_exercise_holder.dart';
@@ -59,6 +61,8 @@ class MyDB {
     Hive.registerAdapter(OrderItemAdapter());
     Hive.registerAdapter(OrderHolderAdapter());
     Hive.registerAdapter(UserProgramAdapter());
+    Hive.registerAdapter(FitnessProgramAdapter());
+    Hive.registerAdapter(FitnessExerciseAdapter());
 
     await this.openMyBox();
   }
