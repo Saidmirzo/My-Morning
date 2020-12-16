@@ -25,7 +25,7 @@ class ExerciseCustomDetailsState extends State<ExerciseCustomDetails> {
 
   @override
   Widget build(BuildContext context) {
-    timerAppBar = TimerAppBar(widget.title);
+    timerAppBar = TimerAppBar(exerciseName: widget.title);
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(

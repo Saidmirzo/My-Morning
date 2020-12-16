@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/day/day.dart';
@@ -18,7 +18,7 @@ class TimerAppBar extends StatefulWidget {
   final String exerciseName;
   final TimeAppBarState timeAppBarState = TimeAppBarState();
 
-  TimerAppBar(this.exerciseName);
+  TimerAppBar({@required this.exerciseName});
 
   @override
   TimeAppBarState createState() {
@@ -37,6 +37,7 @@ class TimeAppBarState extends State<TimerAppBar> {
   DateTime date = DateTime.now();
 
   String time;
+
   @override
   void initState() {
     initAndGet().then((value) {

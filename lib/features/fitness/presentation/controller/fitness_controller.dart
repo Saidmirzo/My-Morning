@@ -1,14 +1,22 @@
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
+import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
 import 'package:morningmagic/features/fitness/domain/repositories/fitness_program_repository.dart';
 
 class FitnessController extends GetxController {
   final FitnessProgramRepository repository;
 
-  Rx<FitnessProgram> _selectedProgram = Rx<FitnessProgram>();
-
   FitnessController({@required this.repository});
+
+  @override
+  void onInit() async {
+    super.onInit();
+    final _result = await repository.getFitnessPrograms();
+    programs.addAll(_result);
+  }
+
+  Rx<FitnessProgram> _selectedProgram = Rx<FitnessProgram>();
 
   FitnessProgram get selectedProgram => _selectedProgram.value;
 
@@ -18,11 +26,21 @@ class FitnessController extends GetxController {
 
   final programs = <FitnessProgram>[].obs;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    final _result = await repository.getFitnessPrograms();
-    programs.addAll(_result);
+  int programIndex(FitnessProgram program) => programs.indexOf(program);
+
+  int step = 0;
+
+  void incrementStep() => step = step + 1;
+
+  FitnessExercise get currentExercise {
+    if (selectedProgram == null || selectedProgram.exercises.isEmpty)
+      return null;
+    else {
+      if (step >= selectedProgram.exercises.length)
+        return null;
+      else
+        return selectedProgram.exercises[step];
+    }
   }
 
   FitnessProgram findProgram(FitnessProgram program) {
@@ -31,20 +49,18 @@ class FitnessController extends GetxController {
 
   void deleteProgram(FitnessProgram program) async {
     programs.removeWhere((element) => element == program);
-    repository.saveFitnessPrograms(programs.value);
+    repository.saveFitnessPrograms(programs);
   }
-
-  int programIndex(FitnessProgram program) => programs.indexOf(program);
 
   void addProgram(FitnessProgram program) {
     programs.add(program);
-    repository.saveFitnessPrograms(programs.value);
+    repository.saveFitnessPrograms(programs);
   }
 
   void updateProgram(FitnessProgram oldProgram, FitnessProgram newProgram) {
     int _index = programIndex(oldProgram);
     programs.replaceRange(_index, _index + 1, [newProgram]);
-    repository.saveFitnessPrograms(programs.value);
+    repository.saveFitnessPrograms(programs);
   }
 
   void restoreDefaultPrograms() async {

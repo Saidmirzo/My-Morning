@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
+import 'package:morningmagic/features/fitness/presentation/pages/exercise_page.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialog_header_button.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/program_dialog_item.dart';
-import 'package:morningmagic/pages/exerciseDetails.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 import '../styled_text.dart';
 
 class ProgramSelectionDialog extends StatelessWidget {
+  final _fitnessController = Get.find<FitnessController>();
+
   @override
   Widget build(BuildContext context) {
-    final _fitnessController = Get.find<FitnessController>();
+    _fitnessController.step = 0;
+
+    final _programs = _fitnessController.programs
+        .where((program) => program.exercises.isNotEmpty)
+        .toList();
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
@@ -35,12 +42,12 @@ class ProgramSelectionDialog extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: _fitnessController.programs.length,
+                  itemCount: _programs.length,
                   itemBuilder: (context, index) => ProgramDialogItem(
-                    program: _fitnessController.programs[index],
+                    program: _programs[index],
                     onItemSelected: () {
                       final FitnessController c = Get.find();
-                      c.selectedProgram = _fitnessController.programs[index];
+                      c.selectedProgram = _programs[index];
                     },
                   ),
                 ),
@@ -72,11 +79,23 @@ class ProgramSelectionDialog extends StatelessWidget {
     );
   }
 
-  void navigateProgramScreen(BuildContext context) {
+  void navigateProgramScreen(BuildContext context) async {
+    // TODO remove old
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) =>
+    //             ExerciseDetails(stepId: 0, isCustomProgram: false, pageId: 0)));
+
+    final _step = _fitnessController.step;
+    final _exercise = _fitnessController.currentExercise;
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                ExerciseDetails(stepId: 0, isCustomProgram: false, pageId: 0)));
+            builder: (context) => ExercisePage(
+                  exercise: _exercise,
+                  step: _step,
+                )));
+    _fitnessController.incrementStep();
   }
 }

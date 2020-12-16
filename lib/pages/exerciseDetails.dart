@@ -10,6 +10,7 @@ import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/customAppBar.dart';
 import 'package:morningmagic/widgets/customBottomExerciseNavigation.dart';
 
+// TODO remove later
 class ExerciseDetails extends StatefulWidget {
   final int stepId;
   final int pageId;
@@ -35,7 +36,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
   @override
   Widget build(BuildContext context) {
     int id = widget.stepId + 1;
-    timerAppBar = TimerAppBar('exercise_${id}_title'.tr());
+    timerAppBar = TimerAppBar(exerciseName: 'exercise_${id}_title'.tr());
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
