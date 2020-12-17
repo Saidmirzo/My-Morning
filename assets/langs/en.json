@@ -267,12 +267,14 @@
   "exercises": "Exercises",
   "add_yours": "Create yours",
   "save": "Save",
-  "delete_program_alert": "Вы действительно хотите удалить программу?",
-  "initial_exercises_empty": "Стандартные упражнения уже добавлены\nПопробуйте создать свое упражнение",
-  "restore_default_dialog_title": "Вы действительно хотите восстановить программы по умолчанию?\nПользовательские программы будут удалены",
-  "name_not_be_empty": "Название не может быть пустым",
-  "type_exercise_name": "Введите название упражнения",
-  "type_exercise_description": "Введите описание упражнения",
-  "hold_to_move_exercise": "Удерживайте упражнение, чтобы перетащить в нужное место"
+  "delete_program_alert": "Are you sure you want to delete a program?",
+  "initial_exercises_empty": "Default exercises are already added\n Try to make your own exercise",
+  "restore_default_dialog_title": " Are you sure you want to restore default exercises?\nUser programs/exercises will be deleted",
+  "name_not_be_empty": "A name can not be empty",
+  "type_exercise_name": "Type an exercise name",
+  "type_program_name": "Type an program name",
+  "type_exercise_description": "Type an exercise description",
+  "hold_to_move_exercise": "Hold to move an exercise",
+  "type_name": "Type a name"
 }
 
