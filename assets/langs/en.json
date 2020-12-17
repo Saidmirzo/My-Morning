@@ -272,7 +272,7 @@
   "restore_default_dialog_title": " Are you sure you want to restore default exercises?\nUser programs/exercises will be deleted",
   "name_not_be_empty": "A name can not be empty",
   "type_exercise_name": "Type an exercise name",
-  "type_program_name": "Type an program name",
+  "type_program_name": "Type a program name",
   "type_exercise_description": "Type an exercise description",
   "hold_to_move_exercise": "Hold to move an exercise",
   "type_name": "Type a name"
