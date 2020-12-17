@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
@@ -68,7 +69,7 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
               ),
               if (exercises.isNotEmpty)
                 Text(
-                  'Удерживайте упражнение, чтобы перетащить в нужное место',
+                  'hold_to_move_exercise'.tr(),
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
@@ -103,7 +104,7 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
   }
 
   Widget _buildAddNewExerciseButton() => DialogFooterButton(
-      text: 'Добавить упражнения',
+      text: 'add_exercises'.tr(),
       onPressed: () => _openAddExerciseDialog(context, exercises));
 
   Widget _buildProgramNameInputForm() =>
@@ -113,12 +114,12 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
     return Row(
       children: [
         DialogHeaderButton(
-          text: 'назад',
+          text: 'back_button'.tr(),
           onTap: () => Navigator.pop(context),
         ),
         Spacer(),
         DialogHeaderButton(
-          text: 'сохранить',
+          text: 'save'.tr(),
           onTap: () => _saveProgram(context),
         ),
       ],
@@ -145,10 +146,8 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
     if (_formKey.currentState.validate()) {
       bool _isCreatedByUser =
           (widget.program != null) ? widget.program.isCreatedByUser : true;
-      final _newProgram = FitnessProgram(
-          name: _textController.text,
-          isCreatedByUser: _isCreatedByUser,
-          exercises: exercises);
+      final _newProgram = FitnessProgram(_textController.text,
+          isCreatedByUser: _isCreatedByUser, exercises: exercises);
       (widget.program != null)
           ? _fitnessController.updateProgram(widget.program, _newProgram)
           : _fitnessController.addProgram(_newProgram);

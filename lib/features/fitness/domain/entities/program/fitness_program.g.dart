@@ -17,7 +17,7 @@ class FitnessProgramAdapter extends TypeAdapter<FitnessProgram> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FitnessProgram(
-      name: fields[0] as String,
+      fields[0] as String,
       isCreatedByUser: fields[1] as bool,
       exercises: (fields[2] as List)?.cast<FitnessExercise>(),
     );
@@ -28,7 +28,7 @@ class FitnessProgramAdapter extends TypeAdapter<FitnessProgram> {
     writer
       ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj._name)
       ..writeByte(1)
       ..write(obj.isCreatedByUser)
       ..writeByte(2)

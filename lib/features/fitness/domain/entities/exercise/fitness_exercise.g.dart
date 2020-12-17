@@ -17,19 +17,22 @@ class FitnessExerciseAdapter extends TypeAdapter<FitnessExercise> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FitnessExercise(
-      name: fields[0] as String,
-      description: fields[2] as String,
+      fields[0] as String,
+      fields[1] as String,
+      isCreatedByUser: fields[2] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, FitnessExercise obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj._name)
+      ..writeByte(1)
+      ..write(obj._description)
       ..writeByte(2)
-      ..write(obj.description);
+      ..write(obj.isCreatedByUser);
   }
 
   @override

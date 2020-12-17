@@ -8,13 +8,14 @@ class FitnessProgramRepositoryImpl implements FitnessProgramRepository {
   @override
   Future<List<FitnessProgram>> getFitnessPrograms() async {
     final List<FitnessProgram> result = [];
-
     final _programs =
         await MyDB().getBox().get(MyResource.FITNESS_PROGRAMS_KEY);
     if (_programs == null) {
       result.addAll(FitnessDataGenerator.generateDefaultPrograms());
     } else {
-      result.addAll(_programs.cast<FitnessProgram>());
+      final List<FitnessProgram> _locallySavedPrograms =
+          _programs.cast<FitnessProgram>();
+      result.addAll(_locallySavedPrograms);
     }
 
     return Future.value(result);

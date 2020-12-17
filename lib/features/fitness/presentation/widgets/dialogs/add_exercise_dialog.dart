@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/features/fitness/data/fitness_data_generator.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
@@ -55,10 +56,11 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
               ),
               Row(children: [
                 DialogHeaderButton(
-                    text: 'назад', onTap: () => Navigator.pop(context)),
+                    text: 'back_button'.tr(),
+                    onTap: () => Navigator.pop(context)),
                 Spacer(),
                 DialogHeaderButton(
-                  text: 'сохранить',
+                  text: 'save'.tr(),
                   onTap: () => Navigator.pop(context, _selectedExercises),
                 ),
               ]),
@@ -66,7 +68,7 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
                 height: 8,
               ),
               StyledText(
-                'Упражнения',
+                'exercises'.tr(),
                 fontSize: 20,
                 color: Colors.blueGrey,
               ),
@@ -77,7 +79,7 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
                   ? Expanded(
                       child: Center(
                           child: StyledText(
-                      'Стандартные упражнения уже добавлены\nПопробуйте создать свое упражнение',
+                      'initial_exercises_empty'.tr(),
                       textAlign: TextAlign.center,
                       fontSize: 18,
                       color: Colors.blueGrey,
@@ -101,7 +103,7 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
                       ),
                     ),
               DialogFooterButton(
-                  text: 'Добавить свое',
+                  text: 'add_yours'.tr(),
                   onPressed: () => _openCreateOwnExerciseDialog(context)),
             ],
           ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
@@ -61,7 +62,7 @@ class _FitnessProgramSettingsPageState
       child: Padding(
         padding: const EdgeInsets.only(top: 16.0, left: 16.0, bottom: 8.0),
         child: StyledText(
-          'Назад',
+          'back_button'.tr(),
           fontSize: 24,
           color: Colors.white,
         ),
@@ -80,14 +81,15 @@ class _FitnessProgramSettingsPageState
             child: FlatButton(
           color: Colors.white,
           onPressed: () => restoreDefault(context),
-          shape: new RoundedRectangleBorder(
+          shape: RoundedRectangleBorder(
               side: BorderSide(style: BorderStyle.solid, width: 1),
               borderRadius: new BorderRadius.circular(30.0)),
           child: Padding(
             padding: const EdgeInsets.only(top: 8.0, bottom: 4),
             child: StyledText(
-              'Восстановить\nпо умолчанию',
+              'restore_default'.tr(),
               fontSize: 16,
+              textAlign: TextAlign.center,
             ),
           ),
         )),
@@ -100,7 +102,7 @@ class _FitnessProgramSettingsPageState
           label: Padding(
             padding: const EdgeInsets.only(top: 4.0),
             child: StyledText(
-              'Создать\nсвою',
+              'create_yours'.tr(),
               color: Colors.white,
               fontSize: 16,
               textAlign: TextAlign.center,
@@ -118,19 +120,19 @@ class _FitnessProgramSettingsPageState
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'Вы действительно хотите восстановить программы по умолчанию?\nПользовательские программы будут удалены',
+          'restore_default_dialog_title'.tr(),
         ),
         actions: [
           FlatButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Отмена'),
+            child: Text('cancellation'.tr()),
           ),
           FlatButton(
             onPressed: () {
               _fitnessController.restoreDefaultPrograms();
               Navigator.pop(context);
             },
-            child: Text('Восстановить'),
+            child: Text('restore'.tr()),
           )
         ],
       ),
@@ -192,14 +194,14 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
                         onPressed: () => showDeleteProgramDialog(context),
                         buttonColor: AppColors.PINK,
                         icon: Icons.delete,
-                        title: 'Удалить'),
+                        title: 'delete'.tr()),
                     SizedBox(width: 8),
                     _buildProgramCardActionButton(
                         onPressed: () =>
                             _showEditProgramDialog(program: widget.program),
                         buttonColor: AppColors.VIOLET,
                         icon: Icons.edit,
-                        title: 'Редактировать'),
+                        title: 'edit'.tr()),
                     SizedBox(width: 8)
                   ],
                 ),
@@ -242,19 +244,19 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
         context: context,
         builder: (context) => AlertDialog(
               title: Text(
-                'Вы действительно хотите удалить программу?',
+                'delete_program_alert'.tr(),
               ),
               actions: [
                 FlatButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('Отмена'),
+                  child: Text('cancellation'.tr()),
                 ),
                 FlatButton(
                   onPressed: () {
                     _fitnessController.deleteProgram(widget.program);
                     Navigator.pop(context);
                   },
-                  child: Text('Удалить'),
+                  child: Text('delete'.tr()),
                 )
               ],
             ));

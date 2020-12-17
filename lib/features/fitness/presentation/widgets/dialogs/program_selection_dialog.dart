@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/exercise_page.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialog_header_button.dart';
@@ -13,8 +15,6 @@ class ProgramSelectionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _fitnessController.step = 0;
-
     final _programs = _fitnessController.programs
         .where((program) => program.exercises.isNotEmpty)
         .toList();
@@ -35,7 +35,8 @@ class ProgramSelectionDialog extends StatelessWidget {
                 height: 8,
               ),
               DialogHeaderButton(
-                  text: 'назад', onTap: () => Navigator.pop(context)),
+                  text: 'back_button'.tr(),
+                  onTap: () => Navigator.pop(context)),
               SizedBox(
                 height: 8,
               ),
@@ -62,7 +63,7 @@ class ProgramSelectionDialog extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 12.0),
-                      child: StyledText('Начать',
+                      child: StyledText('start'.tr(),
                           textAlign: TextAlign.center,
                           fontSize: 23,
                           color: _isActive
@@ -80,13 +81,6 @@ class ProgramSelectionDialog extends StatelessWidget {
   }
 
   void navigateProgramScreen(BuildContext context) async {
-    // TODO remove old
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) =>
-    //             ExerciseDetails(stepId: 0, isCustomProgram: false, pageId: 0)));
-
     final _step = _fitnessController.step;
     final _exercise = _fitnessController.currentExercise;
     Navigator.push(

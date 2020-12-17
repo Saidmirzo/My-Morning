@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -31,10 +32,11 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
               Row(
                 children: [
                   DialogHeaderButton(
-                      text: 'назад', onTap: () => Navigator.pop(context)),
+                      text: 'back_button'.tr(),
+                      onTap: () => Navigator.pop(context)),
                   Spacer(),
                   DialogHeaderButton(
-                    text: 'сохранить',
+                    text: 'save'.tr(),
                     onTap: () => saveExercise(context),
                   ),
                 ],
@@ -42,11 +44,10 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
               SizedBox(
                 height: 16,
               ),
-              // TODO form 1
               TextFormField(
                 textInputAction: TextInputAction.next,
                 validator: (value) {
-                  if (value.isEmpty) return 'Название не может быть пустым';
+                  if (value.isEmpty) return 'name_not_be_empty'.tr();
                   return null;
                 },
                 controller: _nameTextController,
@@ -65,15 +66,15 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
                     onPressed: () => _nameTextController.text = '',
                   ),
                   border: OutlineInputBorder(),
-                  hintText: 'Введите название упражнения',
+                  hintText: 'type_exercise_name'.tr(),
                 ),
                 autofocus: true,
               ),
               SizedBox(
                 height: 16,
               ),
-              // TODo Form 2
               TextFormField(
+                controller: _descriptionController,
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
@@ -89,7 +90,7 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
                     onPressed: () => _descriptionController.text = '',
                   ),
                   border: OutlineInputBorder(),
-                  hintText: 'Введите описание упражнения',
+                  hintText: 'type_exercise_description'.tr(),
                 ),
               )
             ],
@@ -102,8 +103,8 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
   void saveExercise(BuildContext context) {
     if (_formKey.currentState.validate()) {
       final _exercise = FitnessExercise(
-          name: _nameTextController.text,
-          description: _descriptionController.text ??= '');
+          _nameTextController.text, _descriptionController.text ??= '',
+          isCreatedByUser: true);
       Navigator.pop(context, _exercise);
     }
   }

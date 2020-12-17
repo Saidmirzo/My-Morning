@@ -25,7 +25,7 @@ class DialogFooterButton extends StatelessWidget {
           color: AppColors.VIOLET,
         ),
         label: Padding(
-          padding: const EdgeInsets.only(top: 4.0),
+          padding: const EdgeInsets.only(top: 8.0, bottom: 4),
           child: StyledText(
             text,
             fontSize: 16,

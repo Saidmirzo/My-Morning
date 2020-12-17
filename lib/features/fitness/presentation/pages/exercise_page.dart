@@ -2,14 +2,11 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
+import 'package:morningmagic/features/fitness/presentation/pages/fitness_success_page.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
-import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/customAppBar.dart';
 import 'package:morningmagic/widgets/customBottomExerciseNavigation.dart';
 
@@ -32,8 +29,7 @@ class _ExercisePageState extends State<ExercisePage> {
   @override
   Widget build(BuildContext context) {
     final currentStep = widget.step + 1;
-    timerAppBar =
-        TimerAppBar(exerciseName: widget.exercise.name); //program_1_ex_1_name
+    timerAppBar = TimerAppBar(exerciseName: widget.exercise.name);
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -93,19 +89,21 @@ class _ExercisePageState extends State<ExercisePage> {
                               ],
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.only(
-                              bottom: 30,
-                              left: 20,
-                              right: 20,
-                            ),
-                            child: Text(
-                              widget.exercise.description,
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: "JMH",
-                                color: AppColors.VIOLET,
+                          SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                bottom: 30,
+                                left: 20,
+                                right: 20,
+                              ),
+                              child: Text(
+                                widget.exercise.description,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: "JMH",
+                                  color: AppColors.VIOLET,
+                                ),
                               ),
                             ),
                           ),
@@ -130,6 +128,7 @@ class _ExercisePageState extends State<ExercisePage> {
   }
 
   Future<bool> _onWillPop() async {
+    _fitnessController.step = 0;
     _disposeServices();
     return true;
   }
@@ -148,7 +147,7 @@ class _ExercisePageState extends State<ExercisePage> {
     final _exercise = _fitnessController.currentExercise;
     if (_exercise != null) {
       final _step = _fitnessController.step;
-      Navigator.push(
+      Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) =>
@@ -156,15 +155,8 @@ class _ExercisePageState extends State<ExercisePage> {
           ));
       _fitnessController.incrementStep();
     } else {
-      OrderUtil().getRouteById(2).then((value) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => TimerSuccessScreen(() {
-                      Navigator.push(context, value);
-                    }, MyDB().getBox().get(MyResource.FITNESS_TIME_KEY).time,
-                        false)));
-      });
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => FitnessSuccessPage()));
     }
   }
 

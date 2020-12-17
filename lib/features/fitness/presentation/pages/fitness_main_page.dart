@@ -7,6 +7,7 @@ import 'package:morningmagic/features/fitness/presentation/pages/fitness_program
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/program_selection_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/fitness_main_menu_button.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 
 import '../../../../resources/colors.dart';
 
@@ -19,39 +20,38 @@ class FitnessMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AppGradientContainer(
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(
-                height: 48,
-              ),
-              Text(
-                'fitness'.tr(),
-                style: TextStyle(
-                  fontSize: 32,
-                  fontStyle: FontStyle.normal,
-                  fontFamily: "rex",
-                  color: AppColors.WHITE,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        body: AppGradientContainer(
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: 48,
                 ),
-              ),
-              SizedBox(
-                height: 48,
-              ),
-              FitnessMainMenuButton(
-                  onPressed: () => showProgramSelectionDialog(context),
-                  text: 'Начать программу', // начать программу
-                  pageId: pageId),
-              SizedBox(
-                height: 16,
-              ),
-              FitnessMainMenuButton(
-                  onPressed: () => navigateToProgramSettings(context),
-                  text: 'Настройки программ', // создать программу
-                  pageId: pageId),
-            ],
+                StyledText(
+                  'fitness'.tr(),
+                  color: AppColors.WHITE,
+                  fontSize: 32,
+                ),
+                SizedBox(
+                  height: 48,
+                ),
+                FitnessMainMenuButton(
+                    onPressed: () => showProgramSelectionDialog(context),
+                    text: 'start_program'.tr(), // начать программу
+                    pageId: pageId),
+                SizedBox(
+                  height: 16,
+                ),
+                FitnessMainMenuButton(
+                    onPressed: () => navigateToProgramSettings(context),
+                    text: 'program_settings'.tr(), // создать программу
+                    pageId: pageId),
+              ],
+            ),
           ),
         ),
       ),
@@ -65,5 +65,10 @@ class FitnessMainPage extends StatelessWidget {
   void navigateToProgramSettings(BuildContext context) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => FitnessProgramSettingsPage()));
+  }
+
+  Future<bool> _onWillPop() async {
+    Get.delete<FitnessController>();
+    return true;
   }
 }
