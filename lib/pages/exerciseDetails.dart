@@ -135,10 +135,10 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                     bottom: 0,
                     child: BottomExerciseNavigation(soundCallback: () async {
                       // man voice
-                      assetsAudioPlayer.open(
-                        Audio('exercise_${id}_sound'.tr()),
-                      );
-                      assetsAudioPlayer.play();
+                      // assetsAudioPlayer.open(
+                      //   Audio('exercise_${id}_sound'.tr()),
+                      // );
+                      // assetsAudioPlayer.play();
                     }, nextCallback: () {
                       timerAppBar.cancelTimer();
                       assetsAudioPlayer.stop();

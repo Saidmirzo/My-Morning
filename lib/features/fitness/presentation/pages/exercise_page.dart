@@ -134,11 +134,14 @@ class _ExercisePageState extends State<ExercisePage> {
   }
 
   void _onListenClick() async {
-    // TODO audio
-    // assetsAudioPlayer.open(
-    //   Audio('exercise_${id}_sound'.tr()),
-    // );
-    // assetsAudioPlayer.play();
+    final _audioRes = widget.exercise.audioRes;
+    if (_audioRes != null) {
+      final _audioResPath = '$_audioRes'.tr();
+      assetsAudioPlayer.open(
+        Audio(_audioResPath),
+      );
+      assetsAudioPlayer.play();
+    }
   }
 
   void _onNextClick() async {
