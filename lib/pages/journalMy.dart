@@ -31,7 +31,6 @@ class _journalMyState extends State<journalMy> {
   }
 
   AudioPlayer audioPlayer = AudioPlayer();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

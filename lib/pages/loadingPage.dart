@@ -68,6 +68,15 @@ class LoadingPageState extends State<LoadingPage>
     );
   }
 
+  Future<void> _sendAnalyticsEventThirty() async {
+    await AnalyticService.analytics.logEvent(
+      name: 'thirtyLaunches',
+      parameters: <String, dynamic>{
+        'bool': true,
+      },
+    );
+  }
+
   @override
   void dispose() {
     controller.dispose();
@@ -183,6 +192,11 @@ class LoadingPageState extends State<LoadingPage>
       case 10:
         {
           _sendAnalyticsEventTen();
+          break;
+        }
+      case 30:
+        {
+          _sendAnalyticsEventThirty();
           break;
         }
     }

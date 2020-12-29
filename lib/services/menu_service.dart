@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/pages/screenFAQ.dart';
 import 'package:morningmagic/pages/settingsPage.dart';
+import 'package:morningmagic/pages/tutorial_page.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 
 import '../db/hive.dart';
@@ -9,10 +10,10 @@ import '../db/model/exercise/exercise_title.dart';
 import '../db/model/progress/day/day_holder.dart';
 import '../db/resource.dart';
 
-class MenuService{
+class MenuService {
   BuildContext context;
 
-  init(BuildContext _context){
+  init(BuildContext _context) {
     this.context = _context;
   }
 
@@ -23,31 +24,34 @@ class MenuService{
     return dayHolder.listOfDays.length;
   }
 
-  clearExercisesHolder() async{
+  clearExercisesHolder() async {
     print("clear EXERCISE HOLDER");
-    await MyDB().getBox().put(MyResource.EXERCISES_HOLDER, ExerciseHolder(List<ExerciseTitle>(), List<ExerciseTitle>()));
+    await MyDB().getBox().put(MyResource.EXERCISES_HOLDER,
+        ExerciseHolder(List<ExerciseTitle>(), List<ExerciseTitle>()));
   }
 
-  btnStart(){
+  btnStart() {
     OrderUtil().getRouteByPositionInList(0).then((value) {
       Navigator.push(context, value);
     });
   }
 
-  btnProgress(Widget widget){
+  btnProgress(Widget widget) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
   }
 
-  btnSettings(){
+  btnSettings() {
     Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-      builder: (context) => SettingsPage())
-    );
+        context, MaterialPageRoute(builder: (context) => SettingsPage()));
   }
 
-  btnFaq(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => FAQScreen()));
+  btnTutorialPage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TutorialPage()));
   }
 
+  btnFaq() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => FAQScreen()));
+  }
 }

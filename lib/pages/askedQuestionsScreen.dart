@@ -611,11 +611,10 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.assignment,
-                                color: Colors.black54,
-                                size: MediaQuery.of(context).size.width *
-                                    0.064, //24,
+                              SvgPicture.asset(
+                                'assets/images/diary.svg',
+                                width: 23,
+                                color: Colors.grey[600],
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -667,6 +666,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                               SvgPicture.asset(
                                 'assets/images/sport.svg',
                                 width: 23,
+                                color: Colors.grey[600],
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -714,10 +714,10 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.favorite, color: Colors.black54,
-                                size: MediaQuery.of(context).size.width *
-                                    0.064, //24,
+                              SvgPicture.asset(
+                                'assets/images/affirmation.svg',
+                                width: 23,
+                                color: Colors.grey[600],
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -769,6 +769,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                               SvgPicture.asset(
                                 'assets/images/books.svg',
                                 width: 23,
+                                color: Colors.grey[600],
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -821,6 +822,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                               SvgPicture.asset(
                                 'assets/images/visualization.svg',
                                 width: 23,
+                                color: Colors.grey[600],
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
