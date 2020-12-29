@@ -5,6 +5,7 @@ import 'package:morningmagic/db/hive.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:morningmagic/my_const.dart';
+import 'package:morningmagic/pages/tutorial_page.dart';
 import 'package:morningmagic/widgets/my_checkbox.dart';
 import 'package:morningmagic/widgets/my_url.dart';
 import '../db/model/user/user.dart';
@@ -136,7 +137,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            SettingsPage()),
+                                            TutorialPage()),
                                   );
                                 }
                               },

@@ -1,6 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
 import 'package:flutter_visualizers/visualizer.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -18,13 +19,13 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
   LineBox lineBox = LineBox(lines: 36);
   AppStates appStates = Get.put(AppStates());
   List<String> _audioList = [
-    'assets/audios/bell_temple.mp3',
-    'assets/audios/dawn_chorus.mp3',
-    'assets/audios/eclectopedia.mp3',
-    'assets/audios/hommic.mp3',
-    'assets/audios/meditation_space.mp3',
-    'assets/audios/sounds_of_the_forest.mp3',
-    'assets/audios/unlock_your_brainpower.mp3',
+    'https://storage.yandexcloud.net/myaudio/Meditation/Bell%20Temple.mp3',
+    'https://storage.yandexcloud.net/myaudio/Meditation/Dawn%20Chorus.mp3',
+    'https://storage.yandexcloud.net/myaudio/Meditation/Eclectopedia.mp3',
+    'https://storage.yandexcloud.net/myaudio/Meditation/Hommik.mp3',
+    'https://storage.yandexcloud.net/myaudio/Meditation/Meditation%20spa%D1%81e.mp3',
+    'https://storage.yandexcloud.net/myaudio/Meditation/Sounds%20of%20the%20forest.mp3',
+    'https://storage.yandexcloud.net/myaudio/Meditation/Unlock%20Your%20Brainpower.mp3',
   ];
   List<String> listNames = [
     'Bell temple',
@@ -45,8 +46,8 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
         ),
         child: Container(
           height: MediaQuery.of(context).size.height < 668
-                    ? MediaQuery.of(context).size.height / 1.35
-                    : MediaQuery.of(context).size.height / 1.5,
+              ? MediaQuery.of(context).size.height / 1.35
+              : MediaQuery.of(context).size.height / 1.5,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -64,14 +65,14 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                           Navigator.pop(context);
                         },
                         child: Text(
-                            'back_button'.tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 23,
-                                fontFamily: 'rex',
-                                fontStyle: FontStyle.normal,
-                                color: AppColors.VIOLET),
-                          ),
+                          'back_button'.tr(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 23,
+                              fontFamily: 'rex',
+                              fontStyle: FontStyle.normal,
+                              color: AppColors.VIOLET),
+                        ),
                       ),
                       InkWell(
                         onTap: () {
@@ -146,6 +147,10 @@ class _MainAudioMeditationDialogItemState
     extends State<MainAudioMeditationDialogItem> {
   AppStates appStates = Get.put(AppStates());
   bool pauseSwitch = false;
+  Future<String> getFile() async {
+    var file = await DefaultCacheManager().downloadFile(widget.audio);
+    return file.file.path;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,41 +175,45 @@ class _MainAudioMeditationDialogItemState
                 child: Container(
                   child: Row(
                     children: [
-                      AudioWidget.assets(
-                        path: widget.audio,
-                        child: Container(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () async {
-                              widget.modalSetState(() {
-                                pauseSwitch = !pauseSwitch;
-                                appStates.selectedMeditationIndex.value =
-                                    widget.id;
-                              });
-                              widget.player.playOrPause();
-                              if (pauseSwitch) {
-                                widget.lineBox.playAnimation();
-                              } else {
-                                widget.lineBox.stopAnimation();
-                              }
-                            },
-                            child: Icon(
-                              appStates.selectedMeditationIndex.value !=
+                      FutureBuilder<String>(
+                          future: getFile(),
+                          builder: (context, snapshot) {
+                            return AudioWidget.file(
+                              path: snapshot.data,
+                              child: Container(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () async {
+                                    widget.modalSetState(() {
+                                      pauseSwitch = !pauseSwitch;
+                                      appStates.selectedMeditationIndex.value =
+                                          widget.id;
+                                    });
+                                    widget.player.playOrPause();
+                                    if (pauseSwitch) {
+                                      widget.lineBox.playAnimation();
+                                    } else {
+                                      widget.lineBox.stopAnimation();
+                                    }
+                                  },
+                                  child: Icon(
+                                    appStates.selectedMeditationIndex.value !=
+                                            widget.id
+                                        ? Icons.play_arrow
+                                        : pauseSwitch
+                                            ? Icons.pause
+                                            : Icons.play_arrow,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                ),
+                              ),
+                              play: appStates.selectedMeditationIndex.value !=
                                       widget.id
-                                  ? Icons.play_arrow
-                                  : pauseSwitch
-                                      ? Icons.pause
-                                      : Icons.play_arrow,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                        play:
-                            appStates.selectedMeditationIndex.value != widget.id
-                                ? false
-                                : pauseSwitch,
-                      ),
+                                  ? false
+                                  : pauseSwitch,
+                            );
+                          }),
                       SizedBox(width: 10),
                       Text(
                         widget.name,
