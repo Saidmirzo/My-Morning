@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/pages/tutorial_page.dart';
 import 'package:morningmagic/services/menu_service.dart';
 
 import '../pages/screenProgress.dart';
@@ -39,7 +41,7 @@ class StartScreenState extends State<StartScreen> {
           width: MediaQuery.of(context).size.width, // match parent(all screen)
           // height: MediaQuery.of(context).size.height, // match parent(all screen)
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+              gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
@@ -52,35 +54,27 @@ class StartScreenState extends State<StartScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               // Начать
-              AnimatedButton(
-                () => menuService.btnStart(),
-                'sans-serif',
-                'start'.tr(),
-                null, null, null
-              ),
+              AnimatedButton(() => menuService.btnStart(), 'sans-serif',
+                  'start'.tr(), null, null, null),
               SizedBox(height: 15),
               // Прогресс
               AnimatedButton(() => menuService.btnProgress(choseWidget()),
-                "sans-serif",
-                'progress_item'.tr(),
-                null, null, null
-              ),
+                  "sans-serif", 'progress_item'.tr(), null, null, null),
               SizedBox(height: 15),
               // Настройки
-              AnimatedButton(() => menuService.btnSettings(),
-                "sans-serif",
-                'settings'.tr(),
-                null, null, null
-              ),
+              AnimatedButton(() => menuService.btnSettings(), "sans-serif",
+                  'settings'.tr(), null, null, null),
               SizedBox(height: 15),
               // Помощь
               AnimatedButton(
-                () => menuService.btnFaq(),
-                "sans-serif",
-                'faq'.tr(),
-                null, null, null
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height/10),
+                  // () => menuService.btnFaq(),
+                  () => menuService.btnFaq(),
+                  "sans-serif",
+                  'faq'.tr(),
+                  null,
+                  null,
+                  null),
+              SizedBox(height: MediaQuery.of(context).size.height / 10),
             ],
           ),
         ),
