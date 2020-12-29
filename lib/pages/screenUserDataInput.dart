@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:get/instance_manager.dart';
+import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/hive.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -31,6 +34,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +42,8 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
         child: Container(
             width:
                 MediaQuery.of(context).size.width, // match parent(all screen)
-            height: MediaQuery.of(context)
-                .size
-                .height, // match parent(all screen)
+            height:
+                MediaQuery.of(context).size.height, // match parent(all screen)
             decoration: BoxDecoration(
                 gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -73,9 +76,8 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                 Container(
                                   padding: EdgeInsets.only(
                                       bottom: 10,
-                                      top:
-                                          MediaQuery.of(context).size.height /
-                                              3),
+                                      top: MediaQuery.of(context).size.height /
+                                          3),
                                   child: Text(
                                     'your_name'.tr(),
                                     textAlign: TextAlign.center,
@@ -89,8 +91,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                 ),
                                 Container(
                                     decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0),
+                                      borderRadius: BorderRadius.circular(30.0),
                                       color: AppColors.TRANSPARENT_WHITE,
                                     ),
                                     child: Container(
@@ -99,8 +100,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                       child: TextFormField(
                                         controller: myController,
                                         validator: (value) {
-                                          if (value == null ||
-                                              value.isEmpty) {
+                                          if (value == null || value.isEmpty) {
                                             return 'name'.tr();
                                           }
                                           return null;
@@ -136,15 +136,11 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            TutorialPage()),
+                                        builder: (context) => SettingsPage()),
                                   );
                                 }
-                              },
-                                'sans-serif',
-                                'next_button'.tr(),
-                                null, null, null
-                              ),
+                              }, 'sans-serif', 'next_button'.tr(), null, null,
+                                  null),
                             ),
                           ),
                         ],
@@ -158,7 +154,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
     );
   }
 
-  void saveNameToBox() async{
+  void saveNameToBox() async {
     if (myController.text != null && myController.text.isNotEmpty) {
       await MyDB().getBox().put(MyResource.USER_KEY, User(myController.text));
       print(myController.text);

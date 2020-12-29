@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/day/day.dart';
@@ -40,18 +39,16 @@ class TimeAppBarState extends State<TimerAppBar> {
 
   @override
   void initState() {
-    initAndGet().then((value) {
-      ExerciseTime time =
-          value.get(MyResource.FITNESS_TIME_KEY, defaultValue: ExerciseTime(3));
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ExerciseTime time = await MyDB()
+          .getBox()
+          .get(MyResource.FITNESS_TIME_KEY, defaultValue: ExerciseTime(3));
       _time = time.time * 60;
       _startValue = time.time * 60;
+      print('timer start value = $_startValue');
       startTimer();
     });
-    super.initState();
-  }
-
-  Future<Box> initAndGet() async {
-    return await MyDB().getBox();
   }
 
   @override
@@ -154,6 +151,7 @@ class TimeAppBarState extends State<TimerAppBar> {
     } else {}
   }
 
+  //need refactoring
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
     if (timer == null || !timer.isActive) {
@@ -177,11 +175,5 @@ class TimeAppBarState extends State<TimerAppBar> {
     if (timer != null) {
       timer.cancel();
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    cancelTimer();
   }
 }

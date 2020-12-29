@@ -2,10 +2,12 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
+import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/services/timer_service.dart';
 
 import '../resources/colors.dart';
@@ -28,26 +30,23 @@ class TimerPage extends StatefulWidget {
 class TimerPageState extends State<TimerPage> {
   bool isInitialized = false;
   TimerService timerService = TimerService();
-  List<String> _audioList = [
-    'assets/audios/bell_temple.mp3',
-    'assets/audios/dawn_chorus.mp3',
-    'assets/audios/eclectopedia.mp3',
-    'assets/audios/hommic.mp3',
-    'assets/audios/meditation_space.mp3',
-    'assets/audios/sounds_of_the_forest.mp3',
-    'assets/audios/unlock_your_brainpower.mp3',
-  ];
   AppStates appStates = Get.put(AppStates());
   String selectedAudio;
+  List<dynamic> audioList = [];
+  int index = 0;
 
   @override
   void initState() {
     super.initState();
     timerService.init(this, context, widget.pageId);
-    selectedAudio = _audioList[appStates.selectedMeditationIndex.value];
     if (widget.pageId == 0) {
       AnalyticService.screenView('affirmation_timer_page');
     } else if (widget.pageId == 1) {
+      for (String audio in MyDB().getBox().get('musicCache')) {
+        audioList.add(audio);
+      }
+      selectedAudio = audioList[appStates.selectedMeditationIndex.value];
+      index = appStates.selectedMeditationIndex.value;
       AnalyticService.screenView('meditation_timer_page');
     } else if (widget.pageId == 2) {
       print('таймер фитнес');
@@ -93,9 +92,9 @@ class TimerPageState extends State<TimerPage> {
                     widget.pageId == 1
                         ? Container(
                             margin: EdgeInsets.only(top: 50),
-                            child: AudioWidget.assets(
+                            child: AudioWidget(
+                              audio: Audio.file(selectedAudio),
                               loopMode: LoopMode.single,
-                              path: selectedAudio,
                               play: isPlayed,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -111,20 +110,14 @@ class TimerPageState extends State<TimerPage> {
                                         borderRadius:
                                             BorderRadius.circular(30.0)),
                                     onPressed: () {
-                                      if (appStates
-                                              .selectedMeditationIndex.value >
-                                          0) {
-                                        appStates.selectedMeditationIndex
-                                            .value = appStates
-                                                .selectedMeditationIndex.value -
-                                            1;
-                                      } else {
-                                        appStates
-                                            .selectedMeditationIndex.value = 6;
-                                      }
                                       setState(() {
-                                        selectedAudio = _audioList[appStates
-                                            .selectedMeditationIndex.value];
+                                        if (index > 0) {
+                                          index = index - 1;
+                                        } else {
+                                          index = 6;
+                                        }
+                                        selectedAudio = audioList[index];
+                                        print(audioList[index]);
                                       });
                                     },
                                     child: Icon(
@@ -165,19 +158,16 @@ class TimerPageState extends State<TimerPage> {
                                         borderRadius:
                                             BorderRadius.circular(30.0)),
                                     onPressed: () {
-                                      if (appStates
-                                              .selectedMeditationIndex.value <
-                                          6) {
-                                        appStates.selectedMeditationIndex
-                                            .value = appStates
-                                                .selectedMeditationIndex.value +
-                                            1;
-                                      } else {
-                                        appStates
-                                            .selectedMeditationIndex.value = 0;
-                                      }
-                                      selectedAudio = _audioList[appStates
-                                          .selectedMeditationIndex.value];
+                                      setState(() {
+                                        if (index < 6) {
+                                          index = index + 1;
+                                        } else {
+                                          index = 0;
+                                        }
+
+                                        selectedAudio = audioList[index];
+                                        print(audioList[index]);
+                                      });
                                     },
                                     child: Icon(
                                       Icons.fast_forward,

@@ -28,4 +28,5 @@ class AppStates extends GetxController {
     'Sounds of the forest',
     'Unlock your brainpower'
   ].obs;
+  var meditationAudioList = RxList<dynamic>();
 }

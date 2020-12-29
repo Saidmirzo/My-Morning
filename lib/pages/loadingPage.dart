@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
@@ -164,10 +165,13 @@ class LoadingPageState extends State<LoadingPage>
   }
 
   Widget chooseNavigationWidget() {
+    cacheMusic();
     if (myDbBox != null && myDbBox.get(MyResource.USER_KEY) != null) {
+      print(MyDB().getBox().get('musicCache'));
       return chooseSettingsOrStartMenu();
     } else {
       AnalyticService.analytics.logAppOpen();
+
       return UserDataInputScreen();
     }
   }
@@ -206,8 +210,32 @@ class LoadingPageState extends State<LoadingPage>
         myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY) != null) {
       return StartScreen();
     } else {
+      print(MyDB().getBox().get('musicCache'));
       return SettingsPage();
     }
+  }
+
+  void cacheMusic() {
+    AppStates appStates = Get.put(AppStates());
+    List<String> _audioList = [
+      'https://storage.yandexcloud.net/myaudio/Meditation/Bell%20Temple.mp3',
+      'https://storage.yandexcloud.net/myaudio/Meditation/Dawn%20Chorus.mp3',
+      'https://storage.yandexcloud.net/myaudio/Meditation/Eclectopedia.mp3',
+      'https://storage.yandexcloud.net/myaudio/Meditation/Hommik.mp3',
+      'https://storage.yandexcloud.net/myaudio/Meditation/Meditation%20spa%D1%81e.mp3',
+      'https://storage.yandexcloud.net/myaudio/Meditation/Sounds%20of%20the%20forest.mp3',
+      'https://storage.yandexcloud.net/myaudio/Meditation/Unlock%20Your%20Brainpower.mp3',
+    ];
+    Future<String> getFiles(String audio) async {
+      var file = await DefaultCacheManager().getSingleFile(audio);
+      return file.path;
+    }
+
+    for (int i = 0; i < _audioList.length; i++) {
+      getFiles(_audioList[i])
+          .then((value) => appStates.meditationAudioList.add(value));
+    }
+    MyDB().getBox().put('musicCache', appStates.meditationAudioList);
   }
 
   void initController() {
