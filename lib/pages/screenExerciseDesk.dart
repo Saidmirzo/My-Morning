@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/app_exercise_holder.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/custom_exercise_holder.dart';
@@ -35,6 +36,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
   @override
   void initState() {
     init();
+    AnalyticService.screenView('custom_fitness_page');
     super.initState();
   }
 

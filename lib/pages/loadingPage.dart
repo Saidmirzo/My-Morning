@@ -2,6 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
+import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/app_states.dart';
 
 import '../db/hive.dart';
 import '../db/model/user/user.dart';
@@ -26,7 +29,7 @@ class LoadingPageState extends State<LoadingPage>
   bool switcherRay = false;
   bool switcherSun = false;
   bool firstBuild = false;
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  AppStates appStates = Get.put(AppStates());
 
   @override
   void initState() {
@@ -36,6 +39,33 @@ class LoadingPageState extends State<LoadingPage>
     billingService.init();
     initRedirect();
     super.initState();
+  }
+
+  Future<void> _sendAnalyticsEventTwo() async {
+    await AnalyticService.analytics.logEvent(
+      name: 'twoLaunches',
+      parameters: <String, dynamic>{
+        'bool': true,
+      },
+    );
+  }
+
+  Future<void> _sendAnalyticsEventFive() async {
+    await AnalyticService.analytics.logEvent(
+      name: 'fiveLaunches',
+      parameters: <String, dynamic>{
+        'bool': true,
+      },
+    );
+  }
+
+  Future<void> _sendAnalyticsEventTen() async {
+    await AnalyticService.analytics.logEvent(
+      name: 'tenLaunches',
+      parameters: <String, dynamic>{
+        'bool': true,
+      },
+    );
   }
 
   @override
@@ -52,7 +82,7 @@ class LoadingPageState extends State<LoadingPage>
         switcherSun = true;
       });
       firstBuild = true;
-    }
+    } else {}
 
     return Scaffold(
         body: Stack(
@@ -128,12 +158,35 @@ class LoadingPageState extends State<LoadingPage>
     if (myDbBox != null && myDbBox.get(MyResource.USER_KEY) != null) {
       return chooseSettingsOrStartMenu();
     } else {
-      analytics.logAppOpen();
+      AnalyticService.analytics.logAppOpen();
       return UserDataInputScreen();
     }
   }
 
   Widget chooseSettingsOrStartMenu() {
+    MyDB().getBox().put(
+        'countLaunch',
+        MyDB().getBox().get('countLaunch') != null
+            ? (MyDB().getBox().get('countLaunch') + 1)
+            : 1);
+    switch (MyDB().getBox().get('countLaunch')) {
+      case 2:
+        {
+          _sendAnalyticsEventTwo();
+          break;
+        }
+      case 5:
+        {
+          _sendAnalyticsEventFive();
+          break;
+        }
+      case 10:
+        {
+          _sendAnalyticsEventTen();
+          break;
+        }
+    }
+    print(MyDB().getBox().get('countLaunch'));
     if (myDbBox != null &&
         myDbBox.get(MyResource.BOOK_KEY) != null &&
         myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY) != null) {

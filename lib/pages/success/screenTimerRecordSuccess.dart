@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/day/day.dart';
@@ -35,6 +38,8 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
 
   FlutterAudioRecorder _recorder;
   Recording _recording;
+  var result;
+  AudioPlayer audioPlayer = AudioPlayer();
 
   Future<bool> getPermissions() async {
     statusMicrophone = await Permission.microphone.status;
@@ -51,8 +56,10 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
   }
 
   Future<String> get _localPath async {
-    final directory = await getTemporaryDirectory();
-    return directory.path + "/" + randomAlpha(10) + ".m4a";
+    final directory = Platform.isIOS
+        ? await getApplicationDocumentsDirectory()
+        : await getTemporaryDirectory();
+    return directory.path + "/" + randomAlpha(10);
   }
 
   bool isStarted = false;
@@ -70,9 +77,10 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
   }
 
   Future<void> _stopRecording() async {
-    await _recorder.stop();
+    result = await _recorder.stop();
     Recording current = await _recorder.current();
     _recording = current;
+    print(result);
   }
 
   int count;
@@ -211,7 +219,7 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
     _startTime = time.time;
 
     startTimer();
-
+    AnalyticService.screenView('note_voice_page');
     super.initState();
   }
 
@@ -254,6 +262,8 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
     _recorder = FlutterAudioRecorder(await _localPath,
         audioFormat: AudioFormat.AAC, sampleRate: 22050);
     await _recorder.initialized;
+    Recording rec = await _recorder.current();
+    print(rec.path);
   }
 
   @override

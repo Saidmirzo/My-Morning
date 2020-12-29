@@ -1,4 +1,4 @@
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 
@@ -18,22 +18,13 @@ class ProgressPairRecord extends StatefulWidget {
 class ProgressPairRecordState extends State<ProgressPairRecord> {
 
   bool switcher = false;
-  AudioPlayer audioPlayer;
 
   Future<void> playLocal(String path) async {
-    await audioPlayer.play(path, isLocal: true);
   }
 
   @override
   void initState() {
-    AudioPlayer.logEnabled = true;
-    audioPlayer = AudioPlayer();
-    audioPlayer.onPlayerCompletion.listen((event) {
-      setState(() {
-        switcher = !switcher;
-      });
-
-    });
+    
     super.initState();
   }
 
@@ -73,7 +64,6 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
                     print("play")
                   });
                 } else {
-                  audioPlayer.stop();
                 }
                 setState(() {
                   switcher = !switcher;

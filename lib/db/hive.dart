@@ -76,9 +76,8 @@ class MyDB {
       print('Hive == null | need reInit db');
       // await this.initHiveDatabase();
     }
-    if (myDbBox == null) {
+    if (myDbBox == null){
       print('myDbBox == null | need openBox');
-      // myDbBox = await Hive.openBox(MyResource.BOX_NAME);
     }
     // print('return myDbBox');
     return myDbBox;

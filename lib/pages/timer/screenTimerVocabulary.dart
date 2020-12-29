@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -28,7 +27,6 @@ class TimerVocabularyScreenState extends State<TimerVocabularyScreen> {
   int _startTime;
   String buttonText;
 
-  AudioPlayer audioPlayer;
 
   bool isInitialized = false;
 
@@ -46,6 +44,7 @@ class TimerVocabularyScreenState extends State<TimerVocabularyScreen> {
         startTimer();
       });
     });
+    print('экран таймера дневника');
     super.initState();
   }
 

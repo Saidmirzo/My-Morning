@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -48,6 +49,7 @@ class SettingsPageState extends State<SettingsPage> {
     _initOpenDialog();
     initPurchaseListener();
     tableList = wrapTable(false);
+    AnalyticService.screenView('settings_page');
     super.initState();
   }
 

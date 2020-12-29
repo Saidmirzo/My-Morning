@@ -1,8 +1,10 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/notepad.dart';
 import 'package:morningmagic/db/resource.dart';
@@ -27,6 +29,8 @@ class _journalMyState extends State<journalMy> {
     list = MyDB().getBox().get(MyResource.NOTEPADS) ?? [];
     print(MyDB().getBox().get(MyResource.NOTEPADS));
   }
+
+  AudioPlayer audioPlayer = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +62,7 @@ class _journalMyState extends State<journalMy> {
                 children: list.isNotEmpty
                     ? List.generate(
                         list.length,
-                        (index) => !list[index][1].contains('cache')
+                        (index) => !list[index][1].contains('/')
                             ? CategoryItem(
                                 list.isNotEmpty ? list[index][0] : '0',
                                 list.isNotEmpty ? list[index][1] : '0',
@@ -68,6 +72,7 @@ class _journalMyState extends State<journalMy> {
                                 list.isNotEmpty ? list[index][0] : '0',
                                 list.isNotEmpty ? list[index][1] : '0',
                                 list.isNotEmpty ? list[index][2] : '01.01.2020',
+                                audioPlayer,
                               ),
                       )
                     : [],
@@ -234,16 +239,27 @@ class CategoryRecordItem extends StatefulWidget {
   final String id;
   final String text;
   final String date;
+  final AudioPlayer audioPlayer;
 
-  CategoryRecordItem(this.id, this.text, this.date);
+  CategoryRecordItem(this.id, this.text, this.date, this.audioPlayer);
 
   @override
   _CategoryRecordItemState createState() => _CategoryRecordItemState();
 }
 
 class _CategoryRecordItemState extends State<CategoryRecordItem> {
-  bool isPlayed = false;
+  var isPlayed = false.obs;
   final assetsAudioPlayer = AssetsAudioPlayer();
+
+  void onPlayAudio() async {
+    isPlayed.value = true;
+    await widget.audioPlayer.play(widget.text, isLocal: true);
+  }
+
+  void onStopAudio() async {
+    isPlayed.value = false;
+    await widget.audioPlayer.stop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -262,32 +278,27 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.1,
               child: Center(
-                child: AudioWidget.file(
-                  onReadyToPlay: (duration) {
-                    print('ready');
-                  },
-                  onPositionChanged: (current, duration) {
-                    print(duration);
-                    if (current.inSeconds == duration.inSeconds)
-                      setState(() {
-                        isPlayed = false;
-                      });
-                  },
-                  onFinished: () {
-                    print('stop');
-                  },
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isPlayed = !isPlayed;
-                      });
-                    },
-                    child: Icon(isPlayed ? Icons.pause : Icons.play_arrow,
-                        size: 70, color: AppColors.VIOLET),
-                  ),
-                  path: widget.text,
-                  play: isPlayed,
-                ),
+                child: StreamBuilder<AudioPlayerState>(
+                    stream: widget.audioPlayer.onPlayerStateChanged,
+                    builder: (context, snapshot) {
+                      if (snapshot.data == AudioPlayerState.COMPLETED) {
+                        onStopAudio();
+                      }
+                      return GestureDetector(
+                        onTap: () {
+                          onPlayAudio();
+                          if (snapshot.data == AudioPlayerState.STOPPED) {
+                          } else if (snapshot.data ==
+                              AudioPlayerState.PLAYING) {
+                            onStopAudio();
+                          }
+                        },
+                        child: Obx(() => Icon(
+                            isPlayed.value ? Icons.pause : Icons.play_arrow,
+                            size: 70,
+                            color: AppColors.VIOLET)),
+                      );
+                    }),
               ),
             ),
             Spacer(),

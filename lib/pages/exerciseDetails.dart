@@ -1,6 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
@@ -32,6 +33,14 @@ class ExerciseDetails extends StatefulWidget {
 class ExerciseOneScDetails extends State<ExerciseDetails> {
   final assetsAudioPlayer = AssetsAudioPlayer();
   TimerAppBar timerAppBar;
+
+  @override
+  void initState() {
+    if (widget.stepId == 9) {
+      AnalyticService.screenView('fitness_timer_page');
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

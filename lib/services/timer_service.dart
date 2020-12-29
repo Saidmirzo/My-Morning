@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:hive/hive.dart';
+import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/affirmation_text/affirmation_text.dart';
 import 'package:morningmagic/db/model/book/book.dart';
@@ -30,6 +32,7 @@ class TimerService {
   String visualizationText;
   String bookTitle;
   String buttonText;
+  AppStates appStates = Get.put(AppStates());
 
   init(State _state, BuildContext _context, int _pageId) {
     this.state = _state;
@@ -49,6 +52,7 @@ class TimerService {
   }
 
   Function skipTask() {
+    appStates.isPlayed.value = false;
     if (timer != null && timer.isActive) {
       buttonText = 'start'.tr();
       timer.cancel();
@@ -63,6 +67,7 @@ class TimerService {
   }
 
   Function goToHome() {
+    appStates.isPlayed.value = false;
     timer.cancel();
     Navigator.pushNamedAndRemoveUntil(context, '/start', (r) => false);
     // При выходе в меню чтение (id4) не сохраняем
@@ -210,6 +215,7 @@ class TimerService {
   }
 
   getNextPage(Route value) {
+    appStates.isPlayed.value = false;
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         if (pageId == 4)

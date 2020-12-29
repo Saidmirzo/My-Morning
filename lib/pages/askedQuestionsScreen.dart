@@ -6,6 +6,8 @@ import 'package:expandable/expandable.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/myFitnessProgress.dart';
@@ -44,6 +46,7 @@ class AskedQuestionsScreen extends StatefulWidget {
 class _AskedQuestionsState extends State<AskedQuestionsScreen> {
   @override
   void initState() {
+    AnalyticService.screenView('dashboard');
     super.initState();
   }
 
@@ -72,6 +75,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           ],
         )),
         child: SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -219,7 +223,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20))),
-                height: MediaQuery.of(context).size.height * 0.215,
+                height: MediaQuery.of(context).size.height < 668
+                    ? MediaQuery.of(context).size.height * 0.255
+                    : MediaQuery.of(context).size.height * 0.215,
                 margin: const EdgeInsets.only(
                   left: 20.0,
                   right: 20,
@@ -231,8 +237,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   children: [
                     Container(
                       padding: EdgeInsets.only(
-                          left: context.locale == Locale('ru') ? 25 : 30,
-                          right: context.locale == Locale('ru') ? 40 : 35),
+                        left: context.locale == Locale('ru') ? 40 : 40,
+                        right: context.locale == Locale('ru') ? 48 : 42,
+                      ),
                       decoration: BoxDecoration(
                           color: Color(0xffEBC2BE),
                           borderRadius: BorderRadius.only(
@@ -241,7 +248,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                             bottomLeft: Radius.circular(4),
                             bottomRight: Radius.circular(4),
                           )),
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height < 668
+                          ? MediaQuery.of(context).size.height * 0.08
+                          : MediaQuery.of(context).size.height * 0.06,
                       child: Row(
                         //crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -372,9 +381,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(
-                                  Icons.headset,
-                                  color: Colors.black54,
+                                SvgPicture.asset(
+                                  'assets/images/amount_practice.svg',
+                                  width: 23,
                                 ),
                                 Text(
                                   'count_of_sessions'.tr(),
@@ -655,10 +664,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.speaker_notes, color: Colors.black54,
-                                size: MediaQuery.of(context).size.width *
-                                    0.064, //24,
+                              SvgPicture.asset(
+                                'assets/images/sport.svg',
+                                width: 23,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -758,10 +766,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.note_add, color: Colors.black54,
-                                size: MediaQuery.of(context).size.width *
-                                    0.064, //24,
+                              SvgPicture.asset(
+                                'assets/images/books.svg',
+                                width: 23,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -811,10 +818,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.note_add, color: Colors.black54,
-                                size: MediaQuery.of(context).size.width *
-                                    0.064, //24,
+                              SvgPicture.asset(
+                                'assets/images/visualization.svg',
+                                width: 23,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),

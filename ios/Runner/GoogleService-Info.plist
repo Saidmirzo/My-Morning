@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>826588910326-n50nlfrljoc3hift3jjuab2oi7368o7g.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.826588910326-n50nlfrljoc3hift3jjuab2oi7368o7g</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>826588910326-mnl08605fb27jsubopadss1vs6qu8cot.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDIBvSyEXeLkOsAaIn27RR07Bds2irn2ZE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>826588910326</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.wonderfullmoning.morningmagic</string>
+	<key>PROJECT_ID</key>
+	<string>my-morning-b0697</string>
+	<key>STORAGE_BUCKET</key>
+	<string>my-morning-b0697.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:826588910326:ios:9373e6f548ee0254b312d7</string>
+	<key>DATABASE_URL</key>
+	<string>https://my-morning-b0697.firebaseio.com</string>
+</dict>
+</plist>
