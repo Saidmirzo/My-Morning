@@ -1,20 +1,18 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:audioplayer/audioplayer.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/model/notepad.dart';
 import 'package:morningmagic/db/resource.dart';
 
 import '../app_states.dart';
 import '../resources/colors.dart';
-
 import 'journalMyDetailsAdd.dart';
 import 'journalMyDitails.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class journalMy extends StatefulWidget {
   @override
