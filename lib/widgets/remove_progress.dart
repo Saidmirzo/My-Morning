@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
+import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/deleteProgressDialog.dart';
 import 'package:morningmagic/resources/colors.dart';
 
@@ -42,7 +44,9 @@ class RemoveProgressState extends State<RemoveProgress> {
               showDialog(
                   context: context,
                   builder: (BuildContext context) => DeleteProgressDialog(() {
-                        setState(() {});
+                        setState(() {
+                          MyDB().getBox().clear();
+                        });
                       }));
             },
             child: Container(
