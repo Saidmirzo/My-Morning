@@ -49,8 +49,6 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   @override
   void initState() {
     super.initState();
-    assetsAudioPlayer = AssetsAudioPlayer();
-    assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
     isPlayed = false;
 
     MyDB().getBox().put(

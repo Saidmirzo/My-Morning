@@ -136,7 +136,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => SettingsPage()),
+                                        builder: (context) => TutorialPage()),
                                   );
                                 }
                               }, 'sans-serif', 'next_button'.tr(), null, null,

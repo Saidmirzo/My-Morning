@@ -38,6 +38,9 @@ dependencies:
   flutter_cache_manager: ^2.1.0
   vibration: ^1.7.3
   equatable: ^1.2.5
+  in_app_review_play_store: ^0.0.3
+  rate_my_app: ^0.7.2
+  smooth_star_rating: ^1.1.1
 
 dev_dependencies:
   flutter_test:

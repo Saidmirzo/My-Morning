@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/pages/payment.dart';
+import 'package:morningmagic/pages/payment_trial.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'my_const.dart';
@@ -35,4 +36,10 @@ class BillingService {
     await Navigator.push(
         context, MaterialPageRoute(builder: (_) => PaymentPage()));
   }
+
+  startPaymentPageTrial(BuildContext context) async {
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (_) => PaymentPageTrial()));
+  }
+
 }

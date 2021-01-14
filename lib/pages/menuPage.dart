@@ -66,14 +66,8 @@ class StartScreenState extends State<StartScreen> {
                   'settings'.tr(), null, null, null),
               SizedBox(height: 15),
               // Помощь
-              AnimatedButton(
-                  // () => menuService.btnFaq(),
-                  () => menuService.btnFaq(),
-                  "sans-serif",
-                  'faq'.tr(),
-                  null,
-                  null,
-                  null),
+              AnimatedButton(() => menuService.btnFaq(), "sans-serif",
+                  'faq'.tr(), null, null, null),
               SizedBox(height: MediaQuery.of(context).size.height / 10),
             ],
           ),

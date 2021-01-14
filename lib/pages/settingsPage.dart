@@ -296,13 +296,15 @@ class SettingsPageState extends State<SettingsPage> {
                         padding: EdgeInsets.only(top: 5, left: 10, right: 10),
                         child: Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.0),
-                              color: AppColors.TRANSPARENT_WHITE,
-                            ),
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: billingService.isPro()
+                                    ? AppColors.TRANSPARENT_WHITE
+                                    : AppColors.TRANSPARENTS),
                             child: Container(
                               padding: EdgeInsets.only(
                                   top: 11, bottom: 11, right: 20, left: 20),
                               child: TextField(
+                                enabled: billingService.isPro() ? true : false,
                                 controller: bookController,
                                 minLines: 1,
                                 maxLines: 1,
@@ -367,9 +369,6 @@ class SettingsPageState extends State<SettingsPage> {
                       ),
                     ),
                     SliverToBoxAdapter(
-                      child: RemoveProgress(),
-                    ),
-                    SliverToBoxAdapter(
                       child: LanguageSwitcher(Alignment.centerLeft),
                     ),
                     SliverToBoxAdapter(
@@ -404,8 +403,8 @@ class SettingsPageState extends State<SettingsPage> {
 
   Widget wrapTable(bool needReinit) {
     return WrapTable(
-        affirmationTimeController,
         meditationTimeController,
+        affirmationTimeController,
         fitnessTimeController,
         vocabularyTimeController,
         readingTimeController,

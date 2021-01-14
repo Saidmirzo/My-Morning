@@ -90,7 +90,7 @@ class _ReclamaState extends State<Reclama> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('МОЙ ПРОГРЕСС',
+                    Text('my_progress'.tr(),
                         //textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.VIOLET,

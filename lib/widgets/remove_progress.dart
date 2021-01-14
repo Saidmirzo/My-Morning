@@ -18,46 +18,37 @@ class RemoveProgress extends StatefulWidget {
 class RemoveProgressState extends State<RemoveProgress> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(left: 10, top: 15),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'remove_progress'.tr(),
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  color: AppColors.VIOLET,
-                  fontStyle: FontStyle.normal,
-                  fontFamily: 'sans-serif-black',
-                  fontSize: 26),
+    return InkWell(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => DeleteProgressDialog(() {
+                  setState(() {
+                    MyDB().getBox().clear();
+                  });
+                }));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                'remove_progress'.tr(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: AppColors.VIOLET,
+                    fontStyle: FontStyle.normal,
+                    fontFamily: 'sans-serif',
+                    fontSize: 19),
+              ),
             ),
-          ),
+          ],
         ),
-        Container(
-          padding: EdgeInsets.only(top: 15),
-          child: GestureDetector(
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => DeleteProgressDialog(() {
-                        setState(() {
-                          MyDB().getBox().clear();
-                        });
-                      }));
-            },
-            child: Container(
-              width: 45,
-              height: 45,
-              child: SvgPicture.asset("assets/svg/trash.svg",
-                  color: AppColors.WHITE),
-            ),
-          ),
-        )
-      ],
+      ),
     );
   }
 }

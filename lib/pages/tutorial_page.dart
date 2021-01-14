@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,23 +19,32 @@ class TutorialPage extends StatefulWidget {
 
 class _TutorialPageState extends State<TutorialPage> {
   AssetsAudioPlayer player = AssetsAudioPlayer();
+  bool isCloseTutorial = false;
   bool value1 = false;
   bool animateAlign1 = false;
 
   bool value2 = false;
-  bool animateAlign2 = false;
+  bool text1 = false;
 
   bool value3 = false;
-  bool animateAlign3 = false;
+  bool text2 = false;
 
   bool value4 = false;
-  bool animateAlign4 = false;
+  bool text3 = false;
 
   bool value5 = false;
-  bool animateAlign5 = false;
+  bool text4 = false;
 
   bool value6 = false;
-  bool animateAlign6 = false;
+  bool text5 = false;
+
+  bool value7 = false;
+  bool text6 = false;
+
+  closeTutorial() {
+    if (isCloseTutorial) {}
+  }
+
   @override
   void initState() {
     playTutorial();
@@ -56,8 +67,8 @@ class _TutorialPageState extends State<TutorialPage> {
     });
   }
 
-  Future<void> viewIcon1() async {
-    Future.delayed(Duration(seconds: 1), () {
+  viewIcon1() async {
+    await Future.delayed(Duration(seconds: 0), () {
       setState(() {
         value1 = true;
       });
@@ -65,46 +76,66 @@ class _TutorialPageState extends State<TutorialPage> {
     });
   }
 
-  Future<void> viewIcon2() async {
-    Future.delayed(Duration(seconds: 6), () {
+  viewIcon2() async {
+    await Future.delayed(Duration(milliseconds: 4600), () {
       setState(() {
         value2 = true;
+        text1 = true;
       });
+
       viewIcon3();
     });
   }
 
-  Future<void> viewIcon3() async {
-    Future.delayed(Duration(seconds: 6), () {
+  viewIcon3() async {
+    await Future.delayed(Duration(milliseconds: 4600), () {
       setState(() {
         value3 = true;
+        text2 = true;
       });
+
       viewIcon4();
     });
   }
 
-  Future<void> viewIcon4() async {
-    Future.delayed(Duration(seconds: 6), () {
+  viewIcon4() async {
+    await Future.delayed(Duration(milliseconds: 4600), () {
       setState(() {
         value4 = true;
+        text3 = true;
       });
+
       viewIcon5();
     });
   }
 
-  Future<void> viewIcon5() async {
-    Future.delayed(Duration(seconds: 6), () {
+  viewIcon5() async {
+    await Future.delayed(Duration(milliseconds: 4600), () {
       setState(() {
         value5 = true;
+        text4 = true;
       });
+
       viewIcon6();
     });
   }
 
-  Future<void> viewIcon6() async {
-    Future.delayed(Duration(seconds: 6), () {
+  viewIcon6() async {
+    await Future.delayed(Duration(milliseconds: 4600), () {
       setState(() {
         value6 = true;
+        text5 = true;
+      });
+
+      viewIcon7();
+    });
+  }
+
+  viewIcon7() async {
+    await Future.delayed(Duration(milliseconds: 4600), () {
+      setState(() {
+        value7 = true;
+        text6 = true;
       });
     });
   }
@@ -113,7 +144,7 @@ class _TutorialPageState extends State<TutorialPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: 50, left: 15, right: 15, bottom: 30),
+        padding: EdgeInsets.only(top: 30, left: 15, right: 15, bottom: 30),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
@@ -125,7 +156,8 @@ class _TutorialPageState extends State<TutorialPage> {
         child: Stack(
           children: [
             Align(
-              alignment: Alignment.topCenter,
+              alignment:
+                  Alignment.lerp(Alignment.topCenter, Alignment.center, 0.1),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.5,
@@ -146,166 +178,288 @@ class _TutorialPageState extends State<TutorialPage> {
                 ),
               ),
             ),
-            AnimatedAlign(
-              alignment: animateAlign1
-                  ? Alignment.lerp(
-                      Alignment.bottomLeft, Alignment.bottomRight, 0)
-                  : Alignment.lerp(
-                      Alignment.center, Alignment.bottomCenter, 0.2),
-              duration: Duration(seconds: 1),
-              child: AnimatedContainer(
-                height: animateAlign1 ? 50 : 150,
-                width: animateAlign1 ? 50 : 150,
-                duration: Duration(seconds: 1),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.center, Alignment.bottomCenter, 0.25),
+              child: AnimatedOpacity(
+                duration: Duration(seconds: value1 ? 0 : 1),
+                opacity: value1 ? 1 : 0,
+                onEnd: () {
+                  print('end');
+                   setState(() {
+                    value1 = false;
+                  });
+                },
+                child: Text(
+                  'tutorial_text'.tr(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontFamily: 'sans-serif-black',
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.center, Alignment.bottomCenter, 0.25),
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 2400),
+                opacity: text1 ? 1 : 0,
+                onEnd: () {
+                  print('end');
+                  setState(() {
+                    text1 = false;
+                  });
+                },
+                child: Text(
+                  'meditation_small'.tr(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontFamily: 'sans-serif-black',
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.bottomLeft, Alignment.bottomRight, 0),
+              child: Container(
+                height: 50,
+                width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(seconds: 3),
-                  opacity: value1 ? 1 : 0,
+                  duration: Duration(milliseconds: 2400),
+                  opacity: value2 ? 1 : 0,
                   onEnd: () {
                     print('end');
-                    setState(() {
-                      animateAlign1 = true;
-                    });
                   },
                   child: SvgPicture.asset('assets/images/meditation.svg',
                       color: Colors.grey[600]),
                 ),
               ),
             ),
-            AnimatedAlign(
-              alignment: animateAlign2
-                  ? Alignment.lerp(
-                      Alignment.bottomLeft, Alignment.bottomRight, 0.2)
-                  : Alignment.lerp(
-                      Alignment.center, Alignment.bottomCenter, 0.2),
-              duration: Duration(seconds: 1),
-              child: AnimatedContainer(
-                height: animateAlign2 ? 50 : 150,
-                width: animateAlign2 ? 50 : 150,
-                duration: Duration(seconds: 1),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.center, Alignment.bottomCenter, 0.25),
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 2400),
+                opacity: text2 ? 1 : 0,
+                onEnd: () {
+                  print('end');
+                  setState(() {
+                    text2 = false;
+                  });
+                },
+                child: Text(
+                  'affirmation_small'.tr(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontFamily: 'sans-serif-black',
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.bottomLeft, Alignment.bottomRight, 0.2),
+              child: Container(
+                height: 50,
+                width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(seconds: 3),
-                  opacity: value2 ? 1 : 0,
+                  duration: Duration(milliseconds: 2400),
+                  opacity: value3 ? 1 : 0,
                   onEnd: () {
                     print('end');
-                    setState(() {
-                      animateAlign2 = true;
-                    });
+                    setState(() {});
                   },
                   child: SvgPicture.asset('assets/images/affirmation.svg',
                       color: Colors.grey[600]),
                 ),
               ),
             ),
-            AnimatedAlign(
-              alignment: animateAlign3
-                  ? Alignment.lerp(
-                      Alignment.bottomLeft, Alignment.bottomRight, 0.4)
-                  : Alignment.lerp(
-                      Alignment.center, Alignment.bottomCenter, 0.2),
-              duration: Duration(seconds: 1),
-              child: AnimatedContainer(
-                height: animateAlign3 ? 50 : 150,
-                width: animateAlign3 ? 50 : 150,
-                duration: Duration(seconds: 1),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.center, Alignment.bottomCenter, 0.25),
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 2400),
+                opacity: text3 ? 1 : 0,
+                onEnd: () {
+                  print('end');
+                  setState(() {
+                    text3 = false;
+                  });
+                },
+                child: Text(
+                  'visualization_small'.tr(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontFamily: 'sans-serif-black',
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.bottomLeft, Alignment.bottomRight, 0.4),
+              child: Container(
+                height: 50,
+                width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(seconds: 3),
-                  opacity: value3 ? 1 : 0,
+                  duration: Duration(milliseconds: 2400),
+                  opacity: value4 ? 1 : 0,
                   onEnd: () {
                     print('end');
-                    setState(() {
-                      animateAlign3 = true;
-                    });
+                    setState(() {});
                   },
-                  child: SvgPicture.asset('assets/images/books.svg',
+                  child: SvgPicture.asset('assets/images/visualization.svg',
                       color: Colors.grey[600]),
                 ),
               ),
             ),
-            AnimatedAlign(
-              alignment: animateAlign4
-                  ? Alignment.lerp(
-                      Alignment.bottomLeft, Alignment.bottomRight, 0.6)
-                  : Alignment.lerp(
-                      Alignment.center, Alignment.bottomCenter, 0.2),
-              duration: Duration(seconds: 1),
-              child: AnimatedContainer(
-                height: animateAlign4 ? 50 : 150,
-                width: animateAlign4 ? 50 : 150,
-                duration: Duration(seconds: 1),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.center, Alignment.bottomCenter, 0.25),
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 2400),
+                opacity: text4 ? 1 : 0,
+                onEnd: () {
+                  print('end');
+                  setState(() {
+                    text4 = false;
+                  });
+                },
+                child: Text(
+                  'fitness_small'.tr(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontFamily: 'sans-serif-black',
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.bottomLeft, Alignment.bottomRight, 0.6),
+              child: Container(
+                height: 50,
+                width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(seconds: 3),
-                  opacity: value4 ? 1 : 0,
+                  duration: Duration(milliseconds: 2400),
+                  opacity: value5 ? 1 : 0,
                   onEnd: () {
                     print('end');
-                    setState(() {
-                      animateAlign4 = true;
-                    });
+                    setState(() {});
                   },
                   child: SvgPicture.asset('assets/images/sport.svg',
                       color: Colors.grey[600]),
                 ),
               ),
             ),
-            AnimatedAlign(
-              alignment: animateAlign5
-                  ? Alignment.lerp(
-                      Alignment.bottomLeft, Alignment.bottomRight, 0.8)
-                  : Alignment.lerp(
-                      Alignment.center, Alignment.bottomCenter, 0.2),
-              duration: Duration(seconds: 1),
-              child: AnimatedContainer(
-                height: animateAlign5 ? 50 : 150,
-                width: animateAlign5 ? 50 : 150,
-                duration: Duration(seconds: 1),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.center, Alignment.bottomCenter, 0.25),
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 2400),
+                opacity: text5 ? 1 : 0,
+                onEnd: () {
+                  print('end');
+                  setState(() {
+                    text5 = false;
+                  });
+                },
+                child: Text(
+                  'reading_small'.tr(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontFamily: 'sans-serif-black',
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.bottomLeft, Alignment.bottomRight, 0.8),
+              child: Container(
+                height: 50,
+                width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(seconds: 3),
-                  opacity: value5 ? 1 : 0,
+                  duration: Duration(milliseconds: 2400),
+                  opacity: value6 ? 1 : 0,
                   onEnd: () {
                     print('end');
-                    setState(() {
-                      animateAlign5 = true;
-                    });
+                    setState(() {});
                   },
-                  child: SvgPicture.asset('assets/images/diary.svg',
+                  child: SvgPicture.asset('assets/images/books.svg',
                       color: Colors.grey[600]),
                 ),
               ),
             ),
-            AnimatedAlign(
-              alignment: animateAlign6
-                  ? Alignment.lerp(
-                      Alignment.bottomLeft, Alignment.bottomRight, 1)
-                  : Alignment.lerp(
-                      Alignment.center, Alignment.bottomCenter, 0.2),
-              duration: Duration(seconds: 1),
-              child: AnimatedContainer(
-                height: animateAlign6 ? 50 : 150,
-                width: animateAlign6 ? 50 : 150,
-                duration: Duration(seconds: 1),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.center, Alignment.bottomCenter, 0.25),
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 2400),
+                opacity: text6 ? 1 : 0,
+                onEnd: () {
+                  print('end');
+                  setState(() {
+                    text6 = false;
+                  });
+                },
+                child: Text(
+                  'diary_small'.tr(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontFamily: 'sans-serif-black',
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.lerp(
+                  Alignment.bottomLeft, Alignment.bottomRight, 1),
+              child: Container(
+                height: 50,
+                width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(seconds: 3),
-                  opacity: value6 ? 1 : 0,
+                  duration: Duration(milliseconds: 2400),
+                  opacity: value7 ? 1 : 0,
                   onEnd: () {
                     print('end');
-                    setState(() {
-                      animateAlign6 = true;
-                    });
+                    setState(() {});
                   },
                   child: SvgPicture.asset(
-                    'assets/images/visualization.svg',
+                    'assets/images/diary.svg',
                     color: Colors.grey[600],
                   ),
                 ),
               ),
             ),
-            // AnimatedOpacity(
-            //   duration: Duration(seconds: 1),
-            //   opacity: 1,
-            //   child: AnimatedAlign(
-            //       alignment: Alignment.center,
-            //       duration: Duration(seconds: 1),
-            //       child: SvgPicture.asset('assets/images/visualization.svg')),
-            // ),
+            InkWell(
+              onTap: () {
+                player.stop();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                    (route) => false);
+              },
+              child: Container(
+                height: 70,
+                width: 70,
+                child: Icon(
+                  Icons.close,
+                  size: 50,
+                  color: AppColors.GRAY,
+                ),
+              ),
+            ),
           ],
         ),
       ),

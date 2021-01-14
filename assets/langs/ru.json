@@ -315,5 +315,12 @@
   "type_program_name": "Введите название программы",
   "type_exercise_description": "Введите описание упражнения",
   "hold_to_move_exercise": "Удерживайте упражнение, чтобы перетащить в нужное место",
-  "type_name": "Введите название"
+  "type_name": "Введите название",
+  "tutorial_text": "Как легко вставать по утрам?",
+  "rate_app_title": "Оцените приложение",
+  "rate_app_description": "Ваша оценка поможет нам стать лучше",
+  "action_rate": "Оценить",
+  "action_remind": "Напомнить позже",
+  "rate_subject": "Оценка приложения",
+  "my_progress": "МОЙ ПРОГРЕСС"
 }

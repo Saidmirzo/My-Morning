@@ -319,5 +319,12 @@
   "type_program_name": "Type a program name",
   "type_exercise_description": "Type an exercise description",
   "hold_to_move_exercise": "Hold to move an exercise",
-  "type_name": "Type a name"
+  "type_name": "Type a name",
+  "tutorial_text": "How easy is it to get up in the morning?",
+  "rate_app_title": "Rate app",
+  "rate_app_description": "Your rating will help us become better",
+  "action_rate": " Rate",
+  "action_remind": "Remind me later",
+  "rate_subject": "App rating",
+  "my_progress": "MY PROGRESS"
 }

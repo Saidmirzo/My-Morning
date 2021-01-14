@@ -19,14 +19,13 @@ class WrapTable extends StatefulWidget {
   bool hasReinit = false;
 
   WrapTable(
-    this.affirmationTimeController,
-    this.meditationTimeController,
-    this.fitnessTimeController,
-    this.vocabularyTimeController,
-    this.readingTimeController,
-    this.visualizationTimeController,
-    this.needReinit
-  );
+      this.affirmationTimeController,
+      this.meditationTimeController,
+      this.fitnessTimeController,
+      this.vocabularyTimeController,
+      this.readingTimeController,
+      this.visualizationTimeController,
+      this.needReinit);
 
   @override
   State createState() => WrapTableState();
@@ -34,7 +33,7 @@ class WrapTable extends StatefulWidget {
 
 class WrapTableState extends State<WrapTable> {
   List<ExerciseTile> _itemRows = List();
-  
+
   @override
   void initState() {
     super.initState();
@@ -45,7 +44,7 @@ class WrapTableState extends State<WrapTable> {
   Widget build(BuildContext context) {
     print('NeedReinit : ${widget.needReinit}');
     print('HasReinit : ${widget.hasReinit}');
-    if(!widget.hasReinit && widget.needReinit) {
+    if (!widget.hasReinit && widget.needReinit) {
       widget.hasReinit = true;
       initList();
     }
@@ -56,7 +55,7 @@ class WrapTableState extends State<WrapTable> {
     );
   }
 
-  initList(){
+  initList() {
     OrderUtil().getOrderHolder().then((value) {
       setState(() {
         _itemRows = createListOfWidgets(value.list);

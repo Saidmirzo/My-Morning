@@ -476,6 +476,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.19"
+  in_app_review_play_store:
+    dependency: "direct main"
+    description:
+      name: in_app_review_play_store
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   intl:
     dependency: transitive
     description:
@@ -700,6 +707,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  rate_my_app:
+    dependency: "direct main"
+    description:
+      name: rate_my_app
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.2"
   reorderables:
     dependency: "direct main"
     description:
@@ -789,6 +803,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smooth_star_rating:
+    dependency: "direct main"
+    description:
+      name: smooth_star_rating
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   source_gen:
     dependency: transitive
     description:

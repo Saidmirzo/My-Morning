@@ -15,10 +15,10 @@ import '../pages/timerPage.dart';
 import '../widgets/exerciseTile.dart';
 
 class OrderUtil {
-  
   Future<OrderHolder> getOrderHolder() async {
     OrderHolder orderHolder;
-    orderHolder = await MyDB().getBox().get(MyResource.ORDER_PROGRAM_HOLDER, defaultValue: createDefaultHolder());
+    orderHolder = await MyDB().getBox().get(MyResource.ORDER_PROGRAM_HOLDER,
+        defaultValue: createDefaultHolder());
     return orderHolder;
   }
 
@@ -40,9 +40,8 @@ class OrderUtil {
     OrderItem orderVisualization = new OrderItem(5);
 
     List<OrderItem> list = new List();
-
-    list.add(orderAffirmation);
     list.add(orderMeditation);
+    list.add(orderAffirmation);
     list.add(orderFitness);
     list.add(orderDiary);
     list.add(orderReading);
@@ -74,26 +73,31 @@ class OrderUtil {
     int id = orderItem.position;
     print('Open id: $id');
 
-    if (!billingService.isPro() && (id!=0 && id!=1)) {
+    if (!billingService.isPro() && (id != 0 && id != 1)) {
       print('!isPro && (id!=0 || id!=1)');
       return MaterialPageRoute(builder: (context) => Reclama());
     }
 
-    if (id==2) return MaterialPageRoute(builder: (context) => FitnessMainPage(pageId: id));
-    if (id==3) return MaterialPageRoute(builder: (context) => VocabularyScreen());
-    if (id==5) return MaterialPageRoute(builder: (context) => VisualizationScreen());
-    
+    if (id == 2)
+      return MaterialPageRoute(
+          builder: (context) => FitnessMainPage(pageId: id));
+    if (id == 3)
+      return MaterialPageRoute(builder: (context) => VocabularyScreen());
+    if (id == 5)
+      return MaterialPageRoute(builder: (context) => VisualizationScreen());
+
     String expName = this.getExpirienceName(id);
     print('Exp name: $expName');
-    return MaterialPageRoute(builder: (context) => ExerciseStartPage(
-      pageId: id,
-      title: expName,
-      desc: '${expName}_title',
-      btnNext: () => MaterialPageRoute(builder: (context) => TimerPage(pageId: id))
-    ));
+    return MaterialPageRoute(
+        builder: (context) => ExerciseStartPage(
+            pageId: id,
+            title: expName,
+            desc: '${expName}_title',
+            btnNext: () => MaterialPageRoute(
+                builder: (context) => TimerPage(pageId: id))));
   }
 
-  getExpirienceName(int id){
+  getExpirienceName(int id) {
     switch (id) {
       case 0:
         return 'affirmation';
@@ -108,7 +112,7 @@ class OrderUtil {
       case 5:
         return 'visualization';
       default:
-      return 'visualization';
+        return 'visualization';
     }
   }
 

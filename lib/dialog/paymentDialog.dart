@@ -117,7 +117,7 @@ class PaymentDialog extends Dialog {
                       child: Center(
                         child: AnimatedButton(() async {
                           Navigator.pop(context); 
-                          billingService.startPaymentPage(context);
+                          billingService.startPaymentPageTrial(context);
                         },
                           'rex',
                           'buy_days'.tr(),

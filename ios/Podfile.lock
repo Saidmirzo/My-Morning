@@ -3,7 +3,7 @@ PODS:
     - Flutter
   - assets_audio_player_web (0.0.1):
     - Flutter
-  - audioplayer (0.0.1):
+  - audioplayers (0.0.1):
     - Flutter
   - Firebase/Analytics (6.33.0):
     - Firebase/Core
@@ -48,6 +48,9 @@ PODS:
     - Flutter
   - flutter_visualizers (0.0.1):
     - Flutter
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - GoogleAppMeasurement (6.8.3):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
     - GoogleUtilities/MethodSwizzler (~> 6.7)
@@ -93,8 +96,13 @@ PODS:
   - PurchasesCoreSwift (3.7.5)
   - PurchasesHybridCommon (1.4.5):
     - Purchases (= 3.7.5)
+  - rate_my_app (0.7.1):
+    - Flutter
   - shared_preferences (0.0.1):
     - Flutter
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
   - url_launcher (0.0.1):
     - Flutter
   - vibration (1.7.3):
@@ -103,7 +111,7 @@ PODS:
 DEPENDENCIES:
   - assets_audio_player (from `.symlinks/plugins/assets_audio_player/ios`)
   - assets_audio_player_web (from `.symlinks/plugins/assets_audio_player_web/ios`)
-  - audioplayer (from `.symlinks/plugins/audioplayer/ios`)
+  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
@@ -112,7 +120,9 @@ DEPENDENCIES:
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
+  - rate_my_app (from `.symlinks/plugins/rate_my_app/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
 
@@ -123,6 +133,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseInstallations
+    - FMDB
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
@@ -137,8 +148,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/assets_audio_player/ios"
   assets_audio_player_web:
     :path: ".symlinks/plugins/assets_audio_player_web/ios"
-  audioplayer:
-    :path: ".symlinks/plugins/audioplayer/ios"
+  audioplayers:
+    :path: ".symlinks/plugins/audioplayers/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_core:
@@ -155,8 +166,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
   purchases_flutter:
     :path: ".symlinks/plugins/purchases_flutter/ios"
+  rate_my_app:
+    :path: ".symlinks/plugins/rate_my_app/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
   vibration:
@@ -165,7 +180,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   assets_audio_player: edee322b9cb625571b830b35872ead1a295fd917
   assets_audio_player_web: 19826380c44375761aa0b9053665c1e3fbc3b86b
-  audioplayer: 0584f31a697e4b0bbad405ae7903d7a93585e784
+  audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
   Firebase: 8db6f2d1b2c5e2984efba4949a145875a8f65fe5
   firebase_analytics: 36a619088c46224900829f14f4daa71585693a6f
   firebase_core: 5d6a02f3d85acd5f8321c2d6d62877626a670659
@@ -176,6 +191,7 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_audio_recorder: eb998d4e75e59b39d9e3ca1818a5e0f3a82f5836
   flutter_visualizers: 3060007b7bab3f435c5cefd2a5f7f77df960da5b
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleAppMeasurement: 966e88df9d19c15715137bb2ddaf52373f111436
   GoogleDataTransport: f56af7caa4ed338dc8e138a5d7c5973e66440833
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
@@ -187,7 +203,9 @@ SPEC CHECKSUMS:
   purchases_flutter: 63ee1ca7b56bc2b4a75bfe15e9ee230ed98987ab
   PurchasesCoreSwift: 50636e307c1ab76c7a7894a87d042665f2fe0be9
   PurchasesHybridCommon: b1dd1c5125ccf99b9e62b5974d0e5145895e8b87
+  rate_my_app: 3b64dd0876bd286001595ee2e69193e757c4d77c
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   vibration: b5a33e764c3f609a975b9dca73dce20fdde627dc
 

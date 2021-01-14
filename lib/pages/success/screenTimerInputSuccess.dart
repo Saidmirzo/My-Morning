@@ -47,8 +47,6 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   @override
   void initState() {
     super.initState();
-    assetsAudioPlayer = AssetsAudioPlayer();
-    assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });

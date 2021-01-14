@@ -1,33 +1,36 @@
-import 'dart:collection';
+import 'dart:io';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:expandable/expandable.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/route_manager.dart';
+import 'package:hive/hive.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/myFitnessProgress.dart';
 import 'package:morningmagic/pages/myVisualizationProgress.dart';
+import 'package:morningmagic/widgets/remove_progress.dart';
+import 'package:rate_my_app/rate_my_app.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../db/model/progress/affirmation_progress/affirmation_progress.dart';
 import '../db/model/progress/day/day.dart';
 import '../db/model/progress/fitness_porgress/fitness_progress.dart';
 import '../db/model/progress/meditation_progress/meditation_progress.dart';
-import '../db/model/progress/progress_object.dart';
 import '../db/model/progress/reading_progress/reading_progress.dart';
 import '../db/model/progress/visualization_progress/visualization_progress.dart';
 import '../db/model/progress/vocabulary_progress/vocabulary_note_progress.dart';
 import '../db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
-import '../db/progress.dart';
 import '../resources/colors.dart';
 import '../storage.dart';
 import '../widgets/animatedButton.dart';
 import '../widgets/progressItem.dart';
-import '../widgets/progressItemHeader.dart';
 import '../widgets/progressItemRecord.dart';
 
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
@@ -44,10 +47,208 @@ class AskedQuestionsScreen extends StatefulWidget {
 }
 
 class _AskedQuestionsState extends State<AskedQuestionsScreen> {
+  int appRating = 5;
   @override
   void initState() {
     AnalyticService.screenView('dashboard');
     super.initState();
+    Future.delayed(Duration(milliseconds: 200), () {
+      MyDB().getBox().get('countLaunch') == null ? rateApp() : null;
+    });
+
+    switch (MyDB().getBox().get('countLaunch')) {
+      case 4:
+        {
+          Future.delayed(Duration(milliseconds: 200), () {
+            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+              rateApp();
+            }
+          });
+          break;
+        }
+      case 9:
+        {
+          Future.delayed(Duration(milliseconds: 200), () {
+            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+              rateApp();
+            }
+          });
+          break;
+        }
+      case 14:
+        {
+          Future.delayed(Duration(milliseconds: 200), () {
+            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+              rateApp();
+            }
+          });
+          break;
+        }
+      case 19:
+        {
+          Future.delayed(Duration(milliseconds: 200), () {
+            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+              rateApp();
+            }
+          });
+          break;
+        }
+      case 24:
+        {
+          Future.delayed(Duration(milliseconds: 200), () {
+            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+              rateApp();
+            }
+          });
+          break;
+        }
+      case 29:
+        {
+          Future.delayed(Duration(milliseconds: 200), () {
+            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+              rateApp();
+            }
+          });
+          break;
+        }
+    }
+  }
+
+  _launchURL(String toMailId, String subject, String body) async {
+    var url = 'mailto:$toMailId?subject=$subject&body=$body';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  RateMyApp rateMyApp = RateMyApp(
+    preferencesPrefix: 'rateMyApp_',
+    minDays: 0,
+    minLaunches: 0,
+    remindDays: 0,
+    remindLaunches: 0,
+    googlePlayIdentifier: 'com.wonderfullmoning.morningmagic',
+    appStoreIdentifier: '1536435176',
+  );
+
+  rateApp() {
+    rateMyApp.init();
+    if (Platform.isIOS) {
+      showCupertinoDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text('rate_app_title'.tr()),
+              content: Column(
+                children: [
+                  Text('rate_app_description'.tr()),
+                  SmoothStarRating(
+                    allowHalfRating: false,
+                    onRated: (rating) {
+                      appRating = rating.toInt();
+                    },
+                    starCount: 5,
+                    rating: 5,
+                    size: 45.0,
+                    color: Colors.yellow,
+                    borderColor: Colors.yellow,
+                    spacing: 0.0,
+                  )
+                ],
+              ),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text(
+                    'action_remind'.tr(),
+                    style: TextStyle(fontFamily: 'sans-serif'),
+                  ),
+                  isDestructiveAction: true,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                CupertinoDialogAction(
+                  child: Text(
+                    'action_rate'.tr(),
+                    style:
+                        TextStyle(fontFamily: 'sans-serif-black', fontSize: 16),
+                  ),
+                  isDefaultAction: true,
+                  onPressed: () {
+                    if (appRating < 5) {
+                      MyDB().getBox().put('isRated', true);
+                      _launchURL('wonderfulmorningnow@gmail.com',
+                          'rate_subject'.tr(), '');
+                    } else {
+                      MyDB().getBox().put('isRated', true);
+                      rateMyApp.launchStore();
+                    }
+                  },
+                ),
+              ],
+            );
+          });
+    } else if (Platform.isAndroid) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              scrollable: true,
+              title: Text('rate_app_title'.tr()),
+              content: Column(
+                children: [
+                  Text('rate_app_description'.tr()),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  SmoothStarRating(
+                    allowHalfRating: false,
+                    onRated: (rating) {
+                      appRating = rating.toInt();
+                    },
+                    starCount: 5,
+                    rating: 5,
+                    size: 45.0,
+                    color: Colors.yellow,
+                    borderColor: Colors.yellow,
+                    spacing: 0.0,
+                  )
+                ],
+              ),
+              actions: [
+                FlatButton(
+                  child: Text(
+                    'action_remind'.tr(),
+                    style:
+                        TextStyle(color: Colors.red, fontFamily: 'sans-serif'),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                FlatButton(
+                  child: Text(
+                    'action_rate'.tr(),
+                    style:
+                        TextStyle(fontFamily: 'sans-serif-black', fontSize: 16),
+                  ),
+                  onPressed: () {
+                    if (appRating < 5) {
+                      MyDB().getBox().put('isRated', true);
+                      _launchURL('wonderfulmorningnow@gmail.com',
+                          'rate_subject'.tr(), '');
+                    } else {
+                      MyDB().getBox().put('isRated', true);
+                      rateMyApp.launchStore();
+                    }
+                  },
+                ),
+              ],
+            );
+          });
+    }
   }
 
   final GlobalKey<AnimatedCircularChartState> _chartKey =
@@ -56,6 +257,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
   bool _Itog = true;
   bool _Mounth = false;
   bool _Year = false;
+  bool _isAvailable = false;
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +410,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 40,
                                 height: MediaQuery.of(context).size.height *
-                                    0.3, //150,
+                                    0.25, //150,
                                 child: VerticalBarLabelChart.withSampleData(),
                               ),
                             ],
@@ -881,9 +1083,10 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 child: AnimatedButton(() {
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/start', (r) => false); //22 fontSize
-                }, 'sans-serif', 'menu'.tr(),
+                }, 'sans-serif-black', 'menu'.tr(),
                     MediaQuery.of(context).size.width * 0.06, null, null),
               ),
+              RemoveProgress(),
             ],
           ),
         ),

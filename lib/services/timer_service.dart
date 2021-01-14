@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:hive/hive.dart';
@@ -196,6 +197,8 @@ class TimerService {
           (Timer timer) => state.setState(() {
                 if (time < 1) {
                   timer.cancel();
+                  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
+                  assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
                   if (pageId != 4) saveProgress();
                   buttonText = 'start'.tr();
                   OrderUtil()
