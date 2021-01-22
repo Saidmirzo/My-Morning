@@ -4,9 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/deleteProgressDialog.dart';
+import 'package:morningmagic/pages/loadingPage.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:morningmagic/widgets/animatedButton.dart';
+
+import '../main.dart';
 
 class RemoveProgress extends StatefulWidget {
   @override
@@ -18,37 +22,17 @@ class RemoveProgress extends StatefulWidget {
 class RemoveProgressState extends State<RemoveProgress> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) => DeleteProgressDialog(() {
-                  setState(() {
-                    MyDB().getBox().clear();
-                  });
-                }));
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(top: 5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'remove_progress'.tr(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: AppColors.VIOLET,
-                    fontStyle: FontStyle.normal,
-                    fontFamily: 'sans-serif',
-                    fontSize: 19),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return AnimatedButton(() {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => DeleteProgressDialog(() {
+                setState(() {
+                  MyDB().getBox().clear();
+                });
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoadingPage()),
+                    (route) => false);
+              }));
+    }, 'sans-serif', 'remove_progress'.tr(), 19, 100, FontWeight.normal);
   }
 }

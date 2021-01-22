@@ -122,9 +122,9 @@ class WrapTableState extends State<WrapTable> {
 
   TextEditingController getControllerById(int id) {
     if (id == 0) {
-      return widget.affirmationTimeController;
-    } else if (id == 1) {
       return widget.meditationTimeController;
+    } else if (id == 1) {
+      return widget.affirmationTimeController;
     } else if (id == 2) {
       return widget.fitnessTimeController;
     } else if (id == 3) {

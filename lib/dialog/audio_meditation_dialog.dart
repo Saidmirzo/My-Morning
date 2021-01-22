@@ -23,9 +23,11 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
 
   @override
   void initState() {
-    for (String audio in MyDB().getBox().get('musicCache')) {
-      audioList.add(audio);
+    for (int i = 0; i < MyDB().getBox().get('musicCache').length; i++) {
+      audioList.add(MyDB().getBox().get('musicCache')[i]);
+      print(MyDB().getBox().get('musicCache')[i]);
     }
+
     super.initState();
   }
 
@@ -100,18 +102,21 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                 ),
                 ListView.separated(
                   shrinkWrap: true,
-                  itemCount: appStates.meditationAudioList.length,
+                  itemCount: audioList.length,
                   separatorBuilder: (context, index) => SizedBox(height: 10),
-                  itemBuilder: (context, index) => Obx(
-                    () => MainAudioMeditationDialogItem(
-                      audio: audioList[index],
-                      name: listNames[index],
-                      player: appStates.audioList[index],
-                      lineBox: lineBox,
-                      id: index,
-                      modalSetState: modalSetState,
-                    ),
-                  ),
+                  itemBuilder: (context, index) {
+                    print(index);
+                    return Obx(
+                      () => MainAudioMeditationDialogItem(
+                        audio: audioList[index],
+                        name: listNames[index],
+                        player: appStates.audioList[index],
+                        lineBox: lineBox,
+                        id: index,
+                        modalSetState: modalSetState,
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(height: 20),
                 lineBox,

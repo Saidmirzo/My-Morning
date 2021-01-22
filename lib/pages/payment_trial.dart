@@ -104,7 +104,7 @@ class _PaymentPageTrialState extends State<PaymentPageTrial> {
           try {
             await Purchases.purchasePackage(billingService.getMonthlyTarif());
             await AnalyticService.analytics.logEvent(
-              name: 'Buy trial',
+              name: 'buy_trial',
             );
           } on PlatformException catch (e) {
             var errorCode = PurchasesErrorHelper.getErrorCode(e);

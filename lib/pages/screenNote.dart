@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:morningmagic/analyticService.dart';
@@ -157,6 +158,11 @@ class NoteScreenState extends State<NoteScreen> {
                               top: MediaQuery.of(context).size.width / 3,
                               bottom: MediaQuery.of(context).size.width / 5),
                           child: AnimatedButton(() {
+                            AssetsAudioPlayer assetsAudioPlayer =
+                                AssetsAudioPlayer();
+                            assetsAudioPlayer
+                                .open(Audio("assets/audios/success.mp3"));
+                            assetsAudioPlayer.play();
                             saveNoteProgress();
                             OrderUtil().getRouteById(3).then((value) {
                               Navigator.push(
@@ -170,7 +176,8 @@ class NoteScreenState extends State<NoteScreen> {
                                                   .getBox()
                                                   .get(MyResource
                                                       .VOCABULARY_TIME_KEY)
-                                                  .time, false)));
+                                                  .time,
+                                              false)));
                             });
                           }, 'rex', 'next_button'.tr(), 22, null, null),
                         ),

@@ -41,5 +41,4 @@ class BillingService {
     await Navigator.push(
         context, MaterialPageRoute(builder: (_) => PaymentPageTrial()));
   }
-
 }

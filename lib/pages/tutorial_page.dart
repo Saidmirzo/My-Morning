@@ -68,16 +68,19 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon1() async {
-    await Future.delayed(Duration(seconds: 0), () {
-      setState(() {
-        value1 = true;
-      });
+    setState(() {
+      value1 = true;
+    });
+    await Future.delayed(Duration(seconds: 5), () {
       viewIcon2();
     });
   }
 
   viewIcon2() async {
-    await Future.delayed(Duration(milliseconds: 4600), () {
+    setState(() {
+      value1 = false;
+    });
+    await Future.delayed(Duration(milliseconds: 1000), () {
       setState(() {
         value2 = true;
         text1 = true;
@@ -88,7 +91,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon3() async {
-    await Future.delayed(Duration(milliseconds: 4600), () {
+    await Future.delayed(Duration(milliseconds: 4400), () {
       setState(() {
         value3 = true;
         text2 = true;
@@ -99,7 +102,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon4() async {
-    await Future.delayed(Duration(milliseconds: 4600), () {
+    await Future.delayed(Duration(milliseconds: 4400), () {
       setState(() {
         value4 = true;
         text3 = true;
@@ -110,7 +113,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon5() async {
-    await Future.delayed(Duration(milliseconds: 4600), () {
+    await Future.delayed(Duration(milliseconds: 4400), () {
       setState(() {
         value5 = true;
         text4 = true;
@@ -121,7 +124,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon6() async {
-    await Future.delayed(Duration(milliseconds: 4600), () {
+    await Future.delayed(Duration(milliseconds: 4400), () {
       setState(() {
         value6 = true;
         text5 = true;
@@ -132,7 +135,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon7() async {
-    await Future.delayed(Duration(milliseconds: 4600), () {
+    await Future.delayed(Duration(milliseconds: 4400), () {
       setState(() {
         value7 = true;
         text6 = true;
@@ -182,11 +185,11 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(seconds: value1 ? 0 : 1),
+                duration: Duration(milliseconds: value1 ? 0 : 1000),
                 opacity: value1 ? 1 : 0,
                 onEnd: () {
                   print('end');
-                   setState(() {
+                  setState(() {
                     value1 = false;
                   });
                 },
@@ -205,7 +208,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2400),
+                duration: Duration(milliseconds: 2000),
                 opacity: text1 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -230,7 +233,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2400),
+                  duration: Duration(milliseconds: 2000),
                   opacity: value2 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -244,7 +247,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2400),
+                duration: Duration(milliseconds: 2000),
                 opacity: text2 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -269,7 +272,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2400),
+                  duration: Duration(milliseconds: 2000),
                   opacity: value3 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -284,7 +287,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2400),
+                duration: Duration(milliseconds: 2000),
                 opacity: text3 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -309,7 +312,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2400),
+                  duration: Duration(milliseconds: 2000),
                   opacity: value4 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -324,7 +327,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2400),
+                duration: Duration(milliseconds: 2000),
                 opacity: text4 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -349,7 +352,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2400),
+                  duration: Duration(milliseconds: 2000),
                   opacity: value5 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -364,7 +367,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2400),
+                duration: Duration(milliseconds: 2000),
                 opacity: text5 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -389,7 +392,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2400),
+                  duration: Duration(milliseconds: 2000),
                   opacity: value6 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -404,7 +407,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2400),
+                duration: Duration(milliseconds: 2000),
                 opacity: text6 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -429,7 +432,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2400),
+                  duration: Duration(milliseconds: 2000),
                   opacity: value7 ? 1 : 0,
                   onEnd: () {
                     print('end');

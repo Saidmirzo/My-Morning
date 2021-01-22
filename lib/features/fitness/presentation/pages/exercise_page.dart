@@ -100,7 +100,7 @@ class _ExercisePageState extends State<ExercisePage> {
                                 widget.exercise.description,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 16,
                                   fontFamily: "JMH",
                                   color: AppColors.VIOLET,
                                 ),

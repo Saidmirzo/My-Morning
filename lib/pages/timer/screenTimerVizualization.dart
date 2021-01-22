@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/analyticService.dart';
@@ -244,6 +245,9 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
           (Timer timer) => setState(() {
                 if (_time < 1) {
                   timer.cancel();
+                  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
+                  assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
+                  assetsAudioPlayer.play();
                   saveVisualizationProgress();
                   buttonText = 'start'.tr();
                   OrderUtil().getRouteById(5).then((value) {

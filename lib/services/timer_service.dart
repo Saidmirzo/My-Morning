@@ -18,6 +18,7 @@ import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/success/screenTimerInputSuccess.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
+import 'package:morningmagic/pages/timerPage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -34,6 +35,7 @@ class TimerService {
   String bookTitle;
   String buttonText;
   AppStates appStates = Get.put(AppStates());
+  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
 
   init(State _state, BuildContext _context, int _pageId) {
     this.state = _state;
@@ -196,9 +198,10 @@ class TimerService {
           oneSec,
           (Timer timer) => state.setState(() {
                 if (time < 1) {
-                  timer.cancel();
-                  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
                   assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
+                  assetsAudioPlayer.play();
+                  appStates.player.value.stop();
+                  timer.cancel();
                   if (pageId != 4) saveProgress();
                   buttonText = 'start'.tr();
                   OrderUtil()

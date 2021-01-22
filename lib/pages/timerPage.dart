@@ -31,8 +31,10 @@ class TimerPageState extends State<TimerPage> {
   bool isInitialized = false;
   TimerService timerService = TimerService();
   AppStates appStates = Get.put(AppStates());
+  Playlist playlist = Playlist();
+  Playlist _playlist;
+
   String selectedAudio;
-  List<dynamic> audioList = [];
   int index = 0;
 
   @override
@@ -42,11 +44,22 @@ class TimerPageState extends State<TimerPage> {
     if (widget.pageId == 0) {
       AnalyticService.screenView('affirmation_timer_page');
     } else if (widget.pageId == 1) {
+      print('${appStates.selectedMeditationIndex.value} selected');
+
       for (String audio in MyDB().getBox().get('musicCache')) {
-        audioList.add(audio);
+        playlist.add(Audio.file(audio));
       }
-      selectedAudio = audioList[appStates.selectedMeditationIndex.value];
-      index = appStates.selectedMeditationIndex.value;
+      _playlist = Playlist(
+          audios: playlist.audios,
+          startIndex: appStates.selectedMeditationIndex.value);
+      Future.delayed(Duration(milliseconds: 300), () {
+        appStates.player.value.open(
+          _playlist,
+          autoStart: false,
+          loopMode: LoopMode.playlist,
+        );
+      });
+
       AnalyticService.screenView('meditation_timer_page');
     } else if (widget.pageId == 2) {
       print('таймер фитнес');
@@ -92,93 +105,181 @@ class TimerPageState extends State<TimerPage> {
                     widget.pageId == 1
                         ? Container(
                             margin: EdgeInsets.only(top: 50),
-                            child: AudioWidget(
-                              audio: Audio.file(selectedAudio),
-                              loopMode: LoopMode.single,
-                              play: isPlayed,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  RaisedButton(
-                                    color: Colors.transparent,
-                                    elevation: 0,
-                                    autofocus: false,
-                                    hoverColor: AppColors.TRANSPARENT,
-                                    highlightElevation: 0,
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0)),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (index > 0) {
-                                          index = index - 1;
-                                        } else {
-                                          index = 6;
-                                        }
-                                        selectedAudio = audioList[index];
-                                        print(audioList[index]);
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.fast_rewind,
-                                      size: 60,
-                                      color: AppColors.VIOLET,
+                            child: PlayerBuilder.isPlaying(
+                              player: appStates.player.value,
+                              builder: (context, isPlaying) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    RaisedButton(
+                                      color: Colors.transparent,
+                                      elevation: 0,
+                                      autofocus: false,
+                                      hoverColor: AppColors.TRANSPARENT,
+                                      highlightElevation: 0,
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0)),
+                                      onPressed: () {
+                                        appStates.player.value.previous();
+                                      },
+                                      child: Icon(
+                                        Icons.fast_rewind,
+                                        size: 60,
+                                        color: AppColors.VIOLET,
+                                      ),
                                     ),
-                                  ),
-                                  RaisedButton(
-                                    color: Colors.transparent,
-                                    elevation: 0,
-                                    autofocus: false,
-                                    hoverColor: AppColors.TRANSPARENT,
-                                    highlightElevation: 0,
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0)),
-                                    onPressed: () {
-                                      setState(() {
-                                        isPlayed = !isPlayed;
-                                      });
-                                    },
-                                    child: Icon(
-                                      isPlayed ? Icons.pause : Icons.play_arrow,
-                                      size: 60,
-                                      color: AppColors.VIOLET,
+                                    RaisedButton(
+                                      color: Colors.transparent,
+                                      elevation: 0,
+                                      autofocus: false,
+                                      hoverColor: AppColors.TRANSPARENT,
+                                      highlightElevation: 0,
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0)),
+                                      onPressed: () {
+                                        setState(() {
+                                          isPlaying
+                                              ? appStates.player.value.pause()
+                                              : appStates.player.value.play();
+                                        });
+                                        print(selectedAudio);
+                                      },
+                                      child: Icon(
+                                        isPlaying
+                                            ? Icons.pause
+                                            : Icons.play_arrow,
+                                        size: 60,
+                                        color: AppColors.VIOLET,
+                                      ),
                                     ),
-                                  ),
-                                  RaisedButton(
-                                    color: Colors.transparent,
-                                    elevation: 0,
-                                    autofocus: false,
-                                    hoverColor: AppColors.TRANSPARENT,
-                                    highlightElevation: 0,
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0)),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (index < 6) {
-                                          index = index + 1;
-                                        } else {
-                                          index = 0;
-                                        }
-
-                                        selectedAudio = audioList[index];
-                                        print(audioList[index]);
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.fast_forward,
-                                      size: 60,
-                                      color: AppColors.VIOLET,
+                                    RaisedButton(
+                                      color: Colors.transparent,
+                                      elevation: 0,
+                                      autofocus: false,
+                                      hoverColor: AppColors.TRANSPARENT,
+                                      highlightElevation: 0,
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0)),
+                                      onPressed: () {
+                                        appStates.player.value.next();
+                                      },
+                                      child: Icon(
+                                        Icons.fast_forward,
+                                        size: 60,
+                                        color: AppColors.VIOLET,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                );
+                              },
                             ),
                           )
+                        // ? Container(
+                        //     margin: EdgeInsets.only(top: 50),
+                        //     child: AudioWidget(
+                        //       onReadyToPlay: (total) {},
+                        //       onFinished: () {},
+                        //       onPositionChanged: (current, total) {
+                        //         setState(() {
+                        //           isPlayed =
+                        //               timerService.time < 2 ? false : true;
+                        //         });
+                        //         isPlayed = timerService.time < 2 ? false : true;
+                        //         print('positionChanged');
+                        //       },
+                        //       audio: Audio.file(selectedAudio),
+                        //       loopMode: LoopMode.single,
+                        //       play: isPlayed,
+                        //       child: Row(
+                        //         mainAxisAlignment: MainAxisAlignment.center,
+                        //         children: [
+                        //           RaisedButton(
+                        //             color: Colors.transparent,
+                        //             elevation: 0,
+                        //             autofocus: false,
+                        //             hoverColor: AppColors.TRANSPARENT,
+                        //             highlightElevation: 0,
+                        //             padding: EdgeInsets.zero,
+                        //             shape: RoundedRectangleBorder(
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(30.0)),
+                        //             onPressed: () {
+                        //               setState(() {
+                        //                 if (index > 0) {
+                        //                   index = index - 1;
+                        //                 } else {
+                        //                   index = 6;
+                        //                 }
+                        //                 selectedAudio = audioList[index];
+                        //                 print(audioList[index]);
+                        //               });
+                        //             },
+                        //             child: Icon(
+                        //               Icons.fast_rewind,
+                        //               size: 60,
+                        //               color: AppColors.VIOLET,
+                        //             ),
+                        //           ),
+                        //           RaisedButton(
+                        //             color: Colors.transparent,
+                        //             elevation: 0,
+                        //             autofocus: false,
+                        //             hoverColor: AppColors.TRANSPARENT,
+                        //             highlightElevation: 0,
+                        //             padding: EdgeInsets.zero,
+                        //             shape: RoundedRectangleBorder(
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(30.0)),
+                        //             onPressed: () {
+                        //               setState(() {
+                        //                 isPlayed = !isPlayed;
+                        //               });
+                        //               print(selectedAudio);
+                        //             },
+                        //             child: Icon(
+                        //               isPlayed ? Icons.pause : Icons.play_arrow,
+                        //               size: 60,
+                        //               color: AppColors.VIOLET,
+                        //             ),
+                        //           ),
+                        //           RaisedButton(
+                        //             color: Colors.transparent,
+                        //             elevation: 0,
+                        //             autofocus: false,
+                        //             hoverColor: AppColors.TRANSPARENT,
+                        //             highlightElevation: 0,
+                        //             padding: EdgeInsets.zero,
+                        //             shape: RoundedRectangleBorder(
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(30.0)),
+                        //             onPressed: () {
+                        //               setState(() {
+                        //                 if (index < 6) {
+                        //                   index = index + 1;
+                        //                 } else {
+                        //                   index = 0;
+                        //                 }
+
+                        //                 selectedAudio = audioList[index];
+                        //                 print(audioList[index]);
+                        //               });
+                        //             },
+                        //             child: Icon(
+                        //               Icons.fast_forward,
+                        //               size: 60,
+                        //               color: AppColors.VIOLET,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   )
                         : Container(),
                     Column(
                       children: [
@@ -196,15 +297,11 @@ class TimerPageState extends State<TimerPage> {
                           padding: EdgeInsets.only(top: 40),
                           child: StartSkipColumn(
                               () => timerService.startTimer(), () {
-                            setState(() {
-                              isPlayed = false;
-                            });
+                            appStates.player.value.stop();
 
                             timerService.skipTask();
                           }, () {
-                            setState(() {
-                              isPlayed = false;
-                            });
+                            appStates.player.value.stop();
                             timerService.goToHome();
                           }, timerService.buttonText),
                         ),

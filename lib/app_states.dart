@@ -29,4 +29,6 @@ class AppStates extends GetxController {
     'Unlock your brainpower'
   ].obs;
   var meditationAudioList = RxList<dynamic>();
+  var isRating = true.obs;
+  var player = AssetsAudioPlayer().obs;
 }

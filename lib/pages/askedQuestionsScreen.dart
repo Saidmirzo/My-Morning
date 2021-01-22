@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/instance_manager.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -19,6 +20,7 @@ import 'package:rate_my_app/rate_my_app.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../app_states.dart';
 import '../db/model/progress/affirmation_progress/affirmation_progress.dart';
 import '../db/model/progress/day/day.dart';
 import '../db/model/progress/fitness_porgress/fitness_progress.dart';
@@ -47,20 +49,24 @@ class AskedQuestionsScreen extends StatefulWidget {
 }
 
 class _AskedQuestionsState extends State<AskedQuestionsScreen> {
+  AppStates appStates = Get.put(AppStates());
   int appRating = 5;
   @override
   void initState() {
     AnalyticService.screenView('dashboard');
     super.initState();
     Future.delayed(Duration(milliseconds: 200), () {
-      MyDB().getBox().get('countLaunch') == null ? rateApp() : null;
+      MyDB().getBox().get('countLaunch') == null && appStates.isRating.value
+          ? rateApp()
+          : null;
     });
 
     switch (MyDB().getBox().get('countLaunch')) {
       case 4:
         {
           Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
+                appStates.isRating.value) {
               rateApp();
             }
           });
@@ -69,7 +75,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
       case 9:
         {
           Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
+                appStates.isRating.value) {
               rateApp();
             }
           });
@@ -78,7 +85,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
       case 14:
         {
           Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
+                appStates.isRating.value) {
               rateApp();
             }
           });
@@ -87,7 +95,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
       case 19:
         {
           Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
+                appStates.isRating.value) {
               rateApp();
             }
           });
@@ -96,7 +105,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
       case 24:
         {
           Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
+                appStates.isRating.value) {
               rateApp();
             }
           });
@@ -105,7 +115,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
       case 29:
         {
           Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false)) {
+            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
+                appStates.isRating.value) {
               rateApp();
             }
           });
@@ -137,6 +148,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
     rateMyApp.init();
     if (Platform.isIOS) {
       showCupertinoDialog(
+          barrierDismissible: false,
           context: context,
           builder: (context) {
             return CupertinoAlertDialog(
@@ -166,6 +178,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   ),
                   isDestructiveAction: true,
                   onPressed: () {
+                    appStates.isRating.value = false;
                     Navigator.of(context).pop();
                   },
                 ),
@@ -192,6 +205,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           });
     } else if (Platform.isAndroid) {
       showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -225,6 +239,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                         TextStyle(color: Colors.red, fontFamily: 'sans-serif'),
                   ),
                   onPressed: () {
+                    appStates.isRating.value = false;
                     Navigator.of(context).pop();
                   },
                 ),
@@ -1057,22 +1072,6 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   ],
                 ),
               ),
-              // Container(
-              //   padding: EdgeInsets.only(
-              //       top: MediaQuery.of(context).size.height / 15,
-              //       bottom: MediaQuery.of(context).size.height / 50),
-              //   child: Center(
-              //     child: Text(
-              //       'progress'.tr(),
-              //       style: TextStyle(
-              //         fontSize: 32,
-              //         fontFamily: "sans-serif-black",
-              //         fontStyle: FontStyle.normal,
-              //         color: AppColors.WHITE,
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.05,
                 padding: EdgeInsets.only(
@@ -1086,6 +1085,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 }, 'sans-serif-black', 'menu'.tr(),
                     MediaQuery.of(context).size.width * 0.06, null, null),
               ),
+              SizedBox(height: 5),
               RemoveProgress(),
             ],
           ),

@@ -326,5 +326,6 @@
   "action_rate": " Rate",
   "action_remind": "Remind me later",
   "rate_subject": "App rating",
-  "my_progress": "MY PROGRESS"
+  "my_progress": "MY PROGRESS",
+  "exercise_complete": "Exercise complete"
 }
