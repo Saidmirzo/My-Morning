@@ -35,9 +35,9 @@ class NoteScreenState extends State<NoteScreen> {
   void initState() {
     initEditText();
     super.initState();
-    count = MyDB().getBox().get('note_count') ?? 0;
+    count = MyDB().getBox().get(MyResource.NOTE_COUNT) ?? 0;
     Future.delayed(Duration(days: 1), () {
-      MyDB().getBox().put('note_count', 0);
+      MyDB().getBox().put(MyResource.NOTE_COUNT, 0);
     });
     AnalyticService.screenView('text_note_page');
   }

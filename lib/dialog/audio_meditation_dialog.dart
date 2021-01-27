@@ -8,6 +8,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
 
@@ -23,10 +24,12 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
 
   @override
   void initState() {
-    for (int i = 0; i < MyDB().getBox().get('musicCache').length; i++) {
-      audioList.add(MyDB().getBox().get('musicCache')[i]);
-      print(MyDB().getBox().get('musicCache')[i]);
-    }
+    Future.delayed(Duration(milliseconds: 300), () {
+      for (int i = 0; i < 7; i++) {
+        audioList.addAll(List.generate(7,
+            (index) => appStates.meditationPlaylist.value.audios[index].path));
+      }
+    });
 
     super.initState();
   }
@@ -102,15 +105,15 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                 ),
                 ListView.separated(
                   shrinkWrap: true,
-                  itemCount: audioList.length,
+                  itemCount: 7,
                   separatorBuilder: (context, index) => SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     print(index);
                     return Obx(
                       () => MainAudioMeditationDialogItem(
-                        audio: audioList[index],
+                        audio: appStates
+                            .meditationPlaylist.value.audios[index].path,
                         name: listNames[index],
-                        player: appStates.audioList[index],
                         lineBox: lineBox,
                         id: index,
                         modalSetState: modalSetState,
@@ -132,7 +135,6 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
 class MainAudioMeditationDialogItem extends StatefulWidget {
   final String audio;
   final String name;
-  final AssetsAudioPlayer player;
   final int id;
   final LineBox lineBox;
   final void Function(void Function()) modalSetState;
@@ -141,7 +143,6 @@ class MainAudioMeditationDialogItem extends StatefulWidget {
       {Key key,
       @required this.audio,
       @required this.name,
-      this.player,
       this.id,
       this.lineBox,
       this.modalSetState});
@@ -190,13 +191,13 @@ class _MainAudioMeditationDialogItemState
                                 appStates.selectedMeditationIndex.value =
                                     widget.id;
                               });
-                              widget.player.playOrPause();
+                              appStates.player.value.playOrPause();
                               if (pauseSwitch) {
                                 widget.lineBox.playAnimation();
                               } else {
                                 widget.lineBox.stopAnimation();
                               }
-                              print(MyDB().getBox().get('musicCache'));
+                              print(MyDB().getBox().get(MyResource.MUSIC_CASH));
                             },
                             child: Icon(
                               appStates.selectedMeditationIndex.value !=

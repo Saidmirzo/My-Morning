@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/pages/payment.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:morningmagic/services/admob.dart';
 
 import '../resources/colors.dart';
 import 'askedQuestionsScreen.dart';
@@ -82,6 +83,7 @@ class _ReclamaState extends State<Reclama> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => AskedQuestionsScreen()));
+                admobService.showInterstitial();
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,

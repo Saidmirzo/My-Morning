@@ -1,14 +1,18 @@
 import 'dart:async';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
+import 'package:morningmagic/services/admob.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import '../app_states.dart';
 import '../db/model/affirmation_text/affirmation_text.dart';
 import '../db/model/book/book.dart';
 import '../db/model/exercise_time/exercise_time.dart';
@@ -20,7 +24,6 @@ import '../resources/colors.dart';
 import '../storage.dart';
 import '../widgets/animatedButton.dart';
 import '../widgets/language_switcher.dart';
-import '../widgets/remove_progress.dart';
 import '../widgets/subscribe_1_month_button.dart';
 import '../widgets/wrapTable.dart';
 
@@ -42,14 +45,21 @@ class SettingsPageState extends State<SettingsPage> {
   TextEditingController bookController;
   TextEditingController nameController;
   Widget tableList;
+  AppStates appStates = Get.put(AppStates());
 
   @override
   void initState() {
+    admobService.initInterstitial();
+    Future.delayed(Duration(milliseconds: 500), () {
+      appStates.meditationPlaylist.value.addAll(List.generate(
+          7, (index) => Audio(MyDB().getBox().get('musicCache')[index])));
+    });
     _init();
     _initOpenDialog();
     initPurchaseListener();
     tableList = wrapTable(false);
     AnalyticService.screenView('settings_page');
+
     super.initState();
   }
 

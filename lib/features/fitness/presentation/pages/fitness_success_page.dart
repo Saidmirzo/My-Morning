@@ -150,19 +150,19 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   String _getWeekDay() {
     switch (DateTime.now().weekday) {
       case 1:
-        return 'monday';
+        return MyResource.MONDAY;
       case 2:
-        return 'tuesday';
+        return MyResource.TUESDAY;
       case 3:
-        return 'wednesday';
+        return MyResource.WEDNESDAY;
       case 4:
-        return 'thursday';
+        return MyResource.THUSDAY;
       case 5:
-        return 'friday';
+        return MyResource.FRIDAY;
       case 6:
-        return 'saturday';
+        return MyResource.SATURDAY;
       case 7:
-        return 'sunday';
+        return MyResource.SUNDAY;
       default:
         return 'unknown day';
     }

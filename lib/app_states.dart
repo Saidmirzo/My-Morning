@@ -17,6 +17,7 @@ class AppStates extends GetxController {
   var audioList =
       List.generate(7, (index) => AssetsAudioPlayer.withId(index.toString()))
           .obs;
+  // Вылранный трек по умолчанию при запуске таймера
   var selectedMeditationIndex = 0.obs;
   var isPlayed = false.obs;
   var listNames = [
@@ -31,4 +32,5 @@ class AppStates extends GetxController {
   var meditationAudioList = RxList<dynamic>();
   var isRating = true.obs;
   var player = AssetsAudioPlayer().obs;
+  var meditationPlaylist = Playlist().obs;
 }

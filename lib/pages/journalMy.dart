@@ -25,7 +25,7 @@ class _journalMyState extends State<journalMy> {
   void initState() {
     super.initState();
     list = MyDB().getBox().get(MyResource.NOTEPADS) ?? [];
-    print(MyDB().getBox().get(MyResource.NOTEPADS));
+    print(list);
   }
 
   AudioPlayer audioPlayer = AudioPlayer();

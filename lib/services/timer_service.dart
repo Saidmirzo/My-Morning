@@ -4,6 +4,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:hive/hive.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/affirmation_text/affirmation_text.dart';
@@ -36,11 +37,13 @@ class TimerService {
   String buttonText;
   AppStates appStates = Get.put(AppStates());
   AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
+  AudioPlayer _player;
 
-  init(State _state, BuildContext _context, int _pageId) {
+  init(State _state, BuildContext _context, int _pageId, AudioPlayer _player) {
     this.state = _state;
     this.context = _context;
     this.pageId = _pageId;
+    this._player = _player;
     getTimeAndText().then((int value) {
       time = value * 60;
       startValue = value * 60;
@@ -147,7 +150,7 @@ class TimerService {
       // FitnessProgress fitnessProgress;
       switch (pageId) {
         case 0:
-          saveProg('my_affirmation_progress', 'affirmation_small'.tr(),
+          saveProg(MyResource.AFFIRMATION_PROGRESS, 'affirmation_small'.tr(),
               affirmationText);
           affirmation =
               AffirmationProgress(getPassedSeconds(), affirmationText);
@@ -156,13 +159,13 @@ class TimerService {
           meditation = MeditationProgress(getPassedSeconds());
           break;
         case 2:
-          saveProg('my_fitness_progress', 'Упражнения', '');
+          saveProg(MyResource.FITNESS_PROGRESS, 'Упражнения', '');
           break;
         case 4:
-          saveProg('my_reading_progress', 'Чтение', '');
+          saveProg(MyResource.MY_READING_PROGRESS, 'Чтение', '');
           break;
         case 5:
-          saveProg('my_visualization_progress', 'Визуализация', '');
+          saveProg(MyResource.MY_VISUALISATION_PROGRESS, 'Визуализация', '');
           visualizationProgress =
               VisualizationProgress(getPassedSeconds(), visualizationText);
           break;
@@ -201,6 +204,7 @@ class TimerService {
                   assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
                   assetsAudioPlayer.play();
                   appStates.player.value.stop();
+                  _player?.stop();
                   timer.cancel();
                   if (pageId != 4) saveProgress();
                   buttonText = 'start'.tr();
@@ -209,7 +213,7 @@ class TimerService {
                       .then((value) => getNextPage(value));
                 } else {
                   time = time - 1;
-                  print(time);
+                  // print(time);
                 }
               }));
     } else if (timer != null && timer.isActive) {

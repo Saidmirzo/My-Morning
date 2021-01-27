@@ -22,8 +22,8 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get('my_reading_progress') ?? [];
-    print(MyDB().getBox().get('my_reading_progress'));
+    list = MyDB().getBox().get(MyResource.MY_READING_PROGRESS) ?? [];
+    print(list);
   }
 
   @override

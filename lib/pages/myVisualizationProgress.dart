@@ -23,8 +23,8 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get('my_visualization_progress') ?? [];
-    print(MyDB().getBox().get('my_visualization_progress'));
+    list = MyDB().getBox().get(MyResource.MY_VISUALISATION_PROGRESS) ?? [];
+    print(MyDB().getBox().get(MyResource.MY_VISUALISATION_PROGRESS));
   }
 
   @override
@@ -193,7 +193,8 @@ class VisualizationFullProgress extends StatefulWidget {
   VisualizationFullProgress(this.id, this.text, this.date);
 
   @override
-  _VisualizationFullProgressState createState() => _VisualizationFullProgressState();
+  _VisualizationFullProgressState createState() =>
+      _VisualizationFullProgressState();
 }
 
 class _VisualizationFullProgressState extends State<VisualizationFullProgress> {

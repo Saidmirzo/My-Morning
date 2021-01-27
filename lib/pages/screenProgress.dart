@@ -65,12 +65,7 @@ class ProgressScreenState extends State {
                   child: AnimatedButton(() {
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/start', (r) => false);
-                  },
-                      'sans-serif',
-                      'back_button'.tr(),
-                      22,
-                      null,
-                      null),
+                  }, 'sans-serif', 'back_button'.tr(), 22, null, null),
                 )
               ],
             ),

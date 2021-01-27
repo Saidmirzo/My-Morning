@@ -65,21 +65,27 @@ class InputTextColumnState extends State<InputTextColumn> {
         list.add([
           tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
           tempList[tempList.indexOf(tempList.last)][1] +
-                  '\n$type - ${readingProgress.book} (${readingProgress.pages} ' + 'pages_note'.tr() + ')',
+              '\n$type - ${readingProgress.book} (${readingProgress.pages} ' +
+              'pages_note'.tr() +
+              ')',
           '${date.day}.${date.month}.${date.year}'
         ]);
         list.removeAt(list.indexOf(list.last) - 1);
       } else {
         list.add([
           list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
-          '\n$type - ${readingProgress.book} (${readingProgress.pages} ' + 'pages_note'.tr() + ')',
+          '\n$type - ${readingProgress.book} (${readingProgress.pages} ' +
+              'pages_note'.tr() +
+              ')',
           '${date.day}.${date.month}.${date.year}'
         ]);
       }
     } else {
       list.add([
         list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
-        '\n$type - ${readingProgress.book} (${readingProgress.pages} ' + 'pages_note'.tr() + ')',
+        '\n$type - ${readingProgress.book} (${readingProgress.pages} ' +
+            'pages_note'.tr() +
+            ')',
         '${date.day}.${date.month}.${date.year}'
       ]);
     }
@@ -176,7 +182,7 @@ class InputTextColumnState extends State<InputTextColumn> {
       Day day = ProgressUtil()
           .createDay(null, null, null, readingProgress, null, null, null);
       ProgressUtil().updateDayList(day);
-    saveProg('my_reading_progress', 'reading_small'.tr());
+      saveProg(MyResource.MY_READING_PROGRESS, 'reading_small'.tr());
     }
   }
 }

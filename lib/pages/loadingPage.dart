@@ -165,9 +165,8 @@ class LoadingPageState extends State<LoadingPage>
   }
 
   Widget chooseNavigationWidget() {
-    cacheMusic();
     if (myDbBox != null && myDbBox.get(MyResource.USER_KEY) != null) {
-      print(MyDB().getBox().get('musicCache'));
+      print(MyDB().getBox().get(MyResource.MUSIC_CASH));
       return chooseSettingsOrStartMenu();
     } else {
       AnalyticService.analytics.logAppOpen();
@@ -177,12 +176,16 @@ class LoadingPageState extends State<LoadingPage>
   }
 
   Widget chooseSettingsOrStartMenu() {
+    int launchForRate = MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE) ?? 0;
+    launchForRate++;
+    MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE, launchForRate);
+
     MyDB().getBox().put(
-        'countLaunch',
-        MyDB().getBox().get('countLaunch') != null
-            ? (MyDB().getBox().get('countLaunch') + 1)
+        MyResource.COUNT_APP_LAUNCH,
+        MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH) != null
+            ? (MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH) + 1)
             : 1);
-    switch (MyDB().getBox().get('countLaunch')) {
+    switch (MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH)) {
       case 2:
         {
           _sendAnalyticsEventTwo();
@@ -204,38 +207,15 @@ class LoadingPageState extends State<LoadingPage>
           break;
         }
     }
-    print(MyDB().getBox().get('countLaunch'));
+    print(MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH));
     if (myDbBox != null &&
         myDbBox.get(MyResource.BOOK_KEY) != null &&
         myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY) != null) {
       return StartScreen();
     } else {
-      print(MyDB().getBox().get('musicCache'));
+      print(MyDB().getBox().get(MyResource.MUSIC_CASH));
       return SettingsPage();
     }
-  }
-
-  void cacheMusic() {
-    AppStates appStates = Get.put(AppStates());
-    List<String> _audioList = [
-      'https://storage.yandexcloud.net/myaudio/Meditation/Bell%20Temple.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Dawn%20Chorus.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Eclectopedia.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Hommik.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Meditation%20spa%D1%81e.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Sounds%20of%20the%20forest.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Unlock%20Your%20Brainpower.mp3',
-    ];
-    Future<String> getFiles(String audio) async {
-      var file = await DefaultCacheManager().getSingleFile(audio);
-      return file.path;
-    }
-
-    for (int i = 0; i < _audioList.length; i++) {
-      getFiles(_audioList[i])
-          .then((value) => appStates.meditationAudioList.add(value));
-    }
-    MyDB().getBox().put('musicCache', appStates.meditationAudioList);
   }
 
   void initController() {

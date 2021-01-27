@@ -1,16 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/instance_manager.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 
-import '../app_states.dart';
 import '../resources/colors.dart';
-
-import 'journalMyDetailsAdd.dart';
-import 'journalMyDitails.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class MyAffirmationProgress extends StatefulWidget {
   @override
@@ -22,8 +16,8 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get('my_affirmation_progress') ?? [];
-    print(MyDB().getBox().get('my_affirmation_progress'));
+    list = MyDB().getBox().get(MyResource.AFFIRMATION_PROGRESS) ?? [];
+    print(list);
   }
 
   @override

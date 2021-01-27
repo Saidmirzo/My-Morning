@@ -21,7 +21,6 @@ class ExerciseDragTarget extends StatefulWidget {
 }
 
 class ExerciseDragTargetState extends State<ExerciseDragTarget> {
-  
   @override
   void initState() {
     super.initState();
@@ -37,14 +36,14 @@ class ExerciseDragTargetState extends State<ExerciseDragTarget> {
           children: <Widget>[
             Container(
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.2,
-                    bottom: MediaQuery.of(context).size.width * 0.2),
-                decoration: BoxDecoration(
-                    color: candidateData.isEmpty
-                        ? AppColors.TRANSPARENT
-                        : AppColors.TRANSPARENT_WHITE),
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.width * 0.2,
+                      bottom: MediaQuery.of(context).size.width * 0.2),
+                  decoration: BoxDecoration(
+                      color: candidateData.isEmpty
+                          ? AppColors.TRANSPARENT
+                          : AppColors.TRANSPARENT_WHITE),
 //                child: Column(
 //                  crossAxisAlignment: CrossAxisAlignment.center,
 //                  mainAxisSize: MainAxisSize.min,
@@ -52,7 +51,8 @@ class ExerciseDragTargetState extends State<ExerciseDragTarget> {
 //                ),
                   child: FutureBuilder(
                     future: getTrashButtonsList(),
-                    builder: (BuildContext context, AsyncSnapshot<List<ExerciseTrashTag>> snapshot) {
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<ExerciseTrashTag>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           print(snapshot.error);
@@ -67,8 +67,7 @@ class ExerciseDragTargetState extends State<ExerciseDragTarget> {
                         return Container();
                       }
                     },
-                  )
-              ),
+                  )),
             ),
           ],
         );
@@ -110,7 +109,7 @@ class ExerciseDragTargetState extends State<ExerciseDragTarget> {
 
     ExerciseHolder holder = MyDB().getBox().get(MyResource.EXERCISES_HOLDER,
         defaultValue:
-        new ExerciseHolder(List<ExerciseTitle>(), List<ExerciseTitle>()));
+            new ExerciseHolder(List<ExerciseTitle>(), List<ExerciseTitle>()));
 
     holder.freshExercises.clear();
     holder.freshExercises.addAll(program.exercises);
@@ -118,8 +117,8 @@ class ExerciseDragTargetState extends State<ExerciseDragTarget> {
     for (int i = 0; i < holder.freshExercises.length; i++) {
       list.add(new ExerciseTrashTag(holder.freshExercises[i].title,
           holder.freshExercises[i].size, holder.freshExercises[i].key, () {
-            setState(() {});
-          }));
+        setState(() {});
+      }));
     }
     return list;
   }

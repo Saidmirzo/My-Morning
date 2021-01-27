@@ -161,7 +161,7 @@ class TimeAppBarState extends State<TimerAppBar> {
     if (getPassedSeconds() > 0) {
       FitnessProgress fitness =
           FitnessProgress(getPassedSeconds(), widget.exerciseName);
-      saveProg('my_fitness_progress', 'exercises_note'.tr(),
+      saveProg(MyResource.FITNESS_PROGRESS, 'exercises_note'.tr(),
           widget.exerciseName.tr());
       Day day =
           ProgressUtil().createDay(null, null, fitness, null, null, null, null);

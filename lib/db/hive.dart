@@ -33,6 +33,8 @@ import 'model/user_program/user_program.dart';
 Box myDbBox;
 
 class MyDB {
+  static final USER = 'user';
+
   Future<void> initHiveDatabase() async {
     print('initHiveDatabase');
 
@@ -76,10 +78,22 @@ class MyDB {
       print('Hive == null | need reInit db');
       // await this.initHiveDatabase();
     }
-    if (myDbBox == null){
+    if (myDbBox == null) {
       print('myDbBox == null | need openBox');
     }
     // print('return myDbBox');
     return myDbBox;
+  }
+
+  Future<void> clearWIthoutUserName() async {
+    // var tutorial = await myDbBox.get(MyResource.TUTORIAL_VIEWED);
+    // var user = await myDbBox.get(MyResource.USER_KEY);
+    await myDbBox.put(MyResource.AFFIRMATION_PROGRESS, []);
+    await myDbBox.put(MyResource.FITNESS_PROGRESS, []);
+    await myDbBox.put(MyResource.MY_READING_PROGRESS, []);
+    await myDbBox.put(MyResource.MY_VISUALISATION_PROGRESS, []);
+    await myDbBox.put(MyResource.NOTEPADS, []);
+    await myDbBox.put(MyResource.NOTE_KEY, Note(""));
+    await myDbBox.put(MyResource.NOTE_COUNT, 0);
   }
 }

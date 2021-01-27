@@ -1,20 +1,21 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:charts_flutter/flutter.dart' as charts;
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/route_manager.dart';
 import 'package:get/instance_manager.dart';
-import 'package:hive/hive.dart';
+import 'package:get/route_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/myFitnessProgress.dart';
 import 'package:morningmagic/pages/myVisualizationProgress.dart';
+import 'package:morningmagic/utils/other.dart';
 import 'package:morningmagic/widgets/remove_progress.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -34,8 +35,6 @@ import '../storage.dart';
 import '../widgets/animatedButton.dart';
 import '../widgets/progressItem.dart';
 import '../widgets/progressItemRecord.dart';
-
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'Reclama.dart';
 import 'journalMy.dart';
 import 'myAffirmationProgress.dart';
@@ -55,83 +54,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
   void initState() {
     AnalyticService.screenView('dashboard');
     super.initState();
-    Future.delayed(Duration(milliseconds: 200), () {
-      MyDB().getBox().get('countLaunch') == null && appStates.isRating.value
-          ? rateApp()
-          : null;
-    });
-
-    switch (MyDB().getBox().get('countLaunch')) {
-      case 4:
-        {
-          Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
-                appStates.isRating.value) {
-              rateApp();
-            }
-          });
-          break;
-        }
-      case 9:
-        {
-          Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
-                appStates.isRating.value) {
-              rateApp();
-            }
-          });
-          break;
-        }
-      case 14:
-        {
-          Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
-                appStates.isRating.value) {
-              rateApp();
-            }
-          });
-          break;
-        }
-      case 19:
-        {
-          Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
-                appStates.isRating.value) {
-              rateApp();
-            }
-          });
-          break;
-        }
-      case 24:
-        {
-          Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
-                appStates.isRating.value) {
-              rateApp();
-            }
-          });
-          break;
-        }
-      case 29:
-        {
-          Future.delayed(Duration(milliseconds: 200), () {
-            if (!MyDB().getBox().get('isRated', defaultValue: false) &&
-                appStates.isRating.value) {
-              rateApp();
-            }
-          });
-          break;
-        }
-    }
-  }
-
-  _launchURL(String toMailId, String subject, String body) async {
-    var url = 'mailto:$toMailId?subject=$subject&body=$body';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    print('Open _AskedQuestionsState');
   }
 
   RateMyApp rateMyApp = RateMyApp(
@@ -144,13 +67,29 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
     appStoreIdentifier: '1536435176',
   );
 
-  rateApp() {
+  void rateApp(BuildContext widgetContext) async {
+    int launchForRate =
+        await MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0);
+    // Кол-во запусков равно либо больше чем нужно для показа оценки
+    bool needLaunch = launchForRate == 0 || launchForRate >= 5;
+    // Ранее оценили или нет?
+    bool isRated =
+        await MyDB().getBox().get(MyResource.IS_RATED, defaultValue: false);
+    print(
+        'needLaunch ${!needLaunch} && !isRated ${!isRated} && !appStates.isRating.value ${!appStates.isRating.value}');
+    if (!needLaunch || isRated || !appStates.isRating.value) return;
+    // Обнуляем счетчик, чтобы через N запусков показать снова, если нужно
+    if (launchForRate > 0) MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE, 0);
+    print('Запускаем функцию rateApp');
     rateMyApp.init();
     if (Platform.isIOS) {
-      showCupertinoDialog(
+      print('rateApp - Platform.isIOS');
+      appStates.isRating.value = false;
+      try {
+        showCupertinoDialog(
           barrierDismissible: false,
-          context: context,
-          builder: (context) {
+          context: widgetContext,
+          builder: (_context) {
             return CupertinoAlertDialog(
               title: Text('rate_app_title'.tr()),
               content: Column(
@@ -179,7 +118,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   isDestructiveAction: true,
                   onPressed: () {
                     appStates.isRating.value = false;
-                    Navigator.of(context).pop();
+                    Navigator.pop(context);
                   },
                 ),
                 CupertinoDialogAction(
@@ -191,19 +130,25 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   isDefaultAction: true,
                   onPressed: () {
                     if (appRating < 5) {
-                      MyDB().getBox().put('isRated', true);
-                      _launchURL('wonderfulmorningnow@gmail.com',
-                          'rate_subject'.tr(), '');
+                      MyDB().getBox().put(MyResource.IS_RATED, true);
+                      openEmail(
+                          'wonderfulmorningnow@gmail.com', 'rate_subject'.tr());
                     } else {
-                      MyDB().getBox().put('isRated', true);
+                      MyDB().getBox().put(MyResource.IS_RATED, true);
                       rateMyApp.launchStore();
                     }
+                    Navigator.pop(context);
                   },
                 ),
               ],
             );
-          });
+          },
+        );
+      } catch (e) {
+        log(e.toString());
+      }
     } else if (Platform.isAndroid) {
+      print('rateApp - Platform.isAndroid');
       showDialog(
           barrierDismissible: false,
           context: context,
@@ -240,7 +185,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   ),
                   onPressed: () {
                     appStates.isRating.value = false;
-                    Navigator.of(context).pop();
+                    Navigator.pop(context);
                   },
                 ),
                 FlatButton(
@@ -251,13 +196,14 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   ),
                   onPressed: () {
                     if (appRating < 5) {
-                      MyDB().getBox().put('isRated', true);
-                      _launchURL('wonderfulmorningnow@gmail.com',
-                          'rate_subject'.tr(), '');
+                      MyDB().getBox().put(MyResource.IS_RATED, true);
+                      openEmail(
+                          'wonderfulmorningnow@gmail.com', 'rate_subject'.tr());
                     } else {
-                      MyDB().getBox().put('isRated', true);
+                      MyDB().getBox().put(MyResource.IS_RATED, true);
                       rateMyApp.launchStore();
                     }
+                    Navigator.pop(context);
                   },
                 ),
               ],
@@ -276,6 +222,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log('Build askedQuestionScreen');
+    rateApp(context);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width, // match parent(all screen)
@@ -1211,14 +1159,20 @@ class VerticalBarLabelChart extends StatelessWidget {
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     DateTime dateTime = DateTime.now();
     final data = [
-      new OrdinalSales('monday_short'.tr(), MyDB().getBox().get('monday')),
-      new OrdinalSales('tuesday_short'.tr(), MyDB().getBox().get('tuesday')),
       new OrdinalSales(
-          'wednesday_short'.tr(), MyDB().getBox().get('wednesday')),
-      new OrdinalSales('thursday_short'.tr(), MyDB().getBox().get('thursday')),
-      new OrdinalSales('friday_short'.tr(), MyDB().getBox().get('friday')),
-      new OrdinalSales('saturday_short'.tr(), MyDB().getBox().get('saturday')),
-      new OrdinalSales('sunday_short'.tr(), MyDB().getBox().get('sunday')),
+          'monday_short'.tr(), MyDB().getBox().get(MyResource.MONDAY)),
+      new OrdinalSales(
+          'tuesday_short'.tr(), MyDB().getBox().get(MyResource.TUESDAY)),
+      new OrdinalSales(
+          'wednesday_short'.tr(), MyDB().getBox().get(MyResource.WEDNESDAY)),
+      new OrdinalSales(
+          'thursday_short'.tr(), MyDB().getBox().get(MyResource.THUSDAY)),
+      new OrdinalSales(
+          'friday_short'.tr(), MyDB().getBox().get(MyResource.FRIDAY)),
+      new OrdinalSales(
+          'saturday_short'.tr(), MyDB().getBox().get(MyResource.SATURDAY)),
+      new OrdinalSales(
+          'sunday_short'.tr(), MyDB().getBox().get(MyResource.SUNDAY)),
     ];
 
     return [

@@ -61,6 +61,7 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('TimerVisualizationScreenState open');
     if (!isInitialized) {
       isInitialized = true;
       buttonText = 'start'.tr();
@@ -202,7 +203,7 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
 
   void saveVisualizationProgress() {
     if (getPassedSeconds() > 0) {
-      saveProg('my_visualization_progress', 'visualization_small'.tr(),
+      saveProg(MyResource.MY_VISUALISATION_PROGRESS, 'visualization_small'.tr(),
           visualizationText);
       VisualizationProgress visualizationProgress =
           VisualizationProgress(getPassedSeconds(), visualizationText);

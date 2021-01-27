@@ -1,7 +1,7 @@
 name: morningmagic
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.1+1
 
@@ -11,14 +11,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  assets_audio_player: ^2.0.13+1
-  audioplayers: ^0.17.0
+  assets_audio_player: ^2.0.13
+  audioplayers: ^0.17.2
   charts_flutter: ^0.9.0
   cupertino_icons: ^1.0.0
   easy_localization: ^2.3.3
   expandable: ^4.1.4
   firebase_analytics: ^6.3.0
   firebase_core: ^0.5.3
+  firebase_admob: ^0.10.3
   fl_chart: ^0.12.0
   flutter_audio_recorder: ^0.5.5
   flutter_circular_chart: ^0.1.0
@@ -41,6 +42,8 @@ dependencies:
   in_app_review_play_store: ^0.0.3
   rate_my_app: ^0.7.2
   smooth_star_rating: ^1.1.1
+  screen: ^0.0.5
+  just_audio: ^0.6.9
 
 dev_dependencies:
   flutter_test:
@@ -49,7 +52,6 @@ dev_dependencies:
   build_runner:
 
   flutter_launcher_icons: ^0.8.1
-
 
 flutter_icons:
   android: "launcher_icon"
