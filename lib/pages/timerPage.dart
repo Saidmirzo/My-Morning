@@ -8,13 +8,14 @@ import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/services/timer_service.dart';
+import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:screen/screen.dart';
 
 import '../app_states.dart';
 import '../resources/colors.dart';
 import '../utils/string_util.dart';
-import '../widgets/customStartSkipColumn.dart';
 import '../widgets/customText.dart';
 import '../widgets/custom_progress_bar/circleProgressBar.dart';
 
@@ -33,6 +34,7 @@ class TimerPageState extends State<TimerPage> {
   bool isInitialized = false;
   TimerService timerService = TimerService();
   AppStates appStates = Get.put(AppStates());
+  String titleText;
 
   String selectedAudio;
   int index = 0;
@@ -42,7 +44,15 @@ class TimerPageState extends State<TimerPage> {
 
   @override
   void initState() {
-    timerService.init(this, context, widget.pageId, _player);
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await timerService.init(this, context, widget.pageId, _player);
+      if (widget.pageId == 0 && timerService.affirmationText != null)
+        titleText = timerService.affirmationText;
+      else if (widget.pageId == 5 && timerService.visualizationText != null)
+        titleText = timerService.visualizationText;
+    });
+
     if (widget.pageId == 0) {
       AnalyticService.screenView('affirmation_timer_page');
     } else if (widget.pageId == 1) {
@@ -60,7 +70,6 @@ class TimerPageState extends State<TimerPage> {
     } catch (e) {
       log('Screen.keepOn : ' + e.toString());
     }
-    super.initState();
   }
 
   initAudios() async {
@@ -85,153 +94,183 @@ class TimerPageState extends State<TimerPage> {
       timerService.buttonText = 'start'.tr();
     }
 
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: viewportConstraints.maxHeight,
-              ),
-              child: Container(
-                width: MediaQuery.of(context)
-                    .size
-                    .width, // match parent(all screen)
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.TOP_GRADIENT,
-                    AppColors.MIDDLE_GRADIENT,
-                    AppColors.BOTTOM_GRADIENT
-                  ],
-                )),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    widget.pageId == 1
-                        ? Container(
-                            margin: EdgeInsets.only(top: 50),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RaisedButton(
-                                  color: Colors.transparent,
-                                  elevation: 0,
-                                  autofocus: false,
-                                  hoverColor: AppColors.TRANSPARENT,
-                                  highlightElevation: 0,
-                                  padding: EdgeInsets.zero,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  onPressed: _prev,
-                                  child: Icon(
-                                    Icons.fast_rewind,
-                                    size: 60,
-                                    color: AppColors.VIOLET,
+    return SafeArea(
+      child: Scaffold(
+        body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints viewportConstraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                ),
+                child: Container(
+                  width: MediaQuery.of(context)
+                      .size
+                      .width, // match parent(all screen)
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.TOP_GRADIENT,
+                      AppColors.MIDDLE_GRADIENT,
+                      AppColors.BOTTOM_GRADIENT
+                    ],
+                  )),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      widget.pageId == 1
+                          ? Container(
+                              margin: EdgeInsets.only(top: 50),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  RaisedButton(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    autofocus: false,
+                                    hoverColor: AppColors.TRANSPARENT,
+                                    highlightElevation: 0,
+                                    padding: EdgeInsets.zero,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    onPressed: _prev,
+                                    child: Icon(
+                                      Icons.fast_rewind,
+                                      size: 60,
+                                      color: AppColors.VIOLET,
+                                    ),
                                   ),
-                                ),
-                                RaisedButton(
-                                  color: Colors.transparent,
-                                  elevation: 0,
-                                  autofocus: false,
-                                  hoverColor: AppColors.TRANSPARENT,
-                                  highlightElevation: 0,
-                                  padding: EdgeInsets.zero,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  onPressed: _playOrPause,
-                                  child: Icon(
-                                    _player.playing
-                                        ? Icons.pause
-                                        : Icons.play_arrow,
-                                    size: 60,
-                                    color: AppColors.VIOLET,
+                                  RaisedButton(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    autofocus: false,
+                                    hoverColor: AppColors.TRANSPARENT,
+                                    highlightElevation: 0,
+                                    padding: EdgeInsets.zero,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    onPressed: _playOrPause,
+                                    child: Icon(
+                                      _player.playing
+                                          ? Icons.pause
+                                          : Icons.play_arrow,
+                                      size: 60,
+                                      color: AppColors.VIOLET,
+                                    ),
                                   ),
-                                ),
-                                RaisedButton(
-                                  color: Colors.transparent,
-                                  elevation: 0,
-                                  autofocus: false,
-                                  hoverColor: AppColors.TRANSPARENT,
-                                  highlightElevation: 0,
-                                  padding: EdgeInsets.zero,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  onPressed: _next,
-                                  child: Icon(
-                                    Icons.fast_forward,
-                                    size: 60,
-                                    color: AppColors.VIOLET,
+                                  RaisedButton(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    autofocus: false,
+                                    hoverColor: AppColors.TRANSPARENT,
+                                    highlightElevation: 0,
+                                    padding: EdgeInsets.zero,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    onPressed: _next,
+                                    child: Icon(
+                                      Icons.fast_forward,
+                                      size: 60,
+                                      color: AppColors.VIOLET,
+                                    ),
                                   ),
+                                ],
+                              ),
+                            )
+                          : Container(),
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 24,
+                          ),
+                          if (titleText != null) _buildTitleWidget(),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: CircleProgressBar(
+                              text: StringUtil()
+                                  .createTimeString(timerService.time),
+                              foregroundColor: AppColors.WHITE,
+                              value: timerService.createValue(),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 40),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  child: AnimatedButton(
+                                      () => timerService.startTimer(),
+                                      'rex',
+                                      timerService.buttonText,
+                                      15,
+                                      null,
+                                      null),
                                 ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: AnimatedButton(() {
+                                    _player.stop();
+                                    timerService.skipTask();
+                                  }, 'rex', 'skip'.tr(), 15, null, null),
+                                ),
+                                if (widget.pageId == 0)
+                                  Container(
+                                    padding: EdgeInsets.only(top: 10),
+                                    child: AnimatedButton(() async {
+                                      final _affirmation =
+                                          await _showAffirmationCategoryDialog(
+                                              context);
+                                      if (_affirmation != null)
+                                        setState(() {
+                                          titleText = _affirmation;
+                                        });
+                                    }, 'rex', 'Аффирмации'.tr(), 15, null,
+                                        null),
+                                  ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: AnimatedButton(() {
+                                    _player.stop();
+                                    timerService.goToHome();
+                                  }, 'rex', 'menu'.tr(), 15, null, null),
+                                )
                               ],
                             ),
-                          )
-                        : Container(),
-                    Column(
-                      children: [
-                        getAffirmationWidget(),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          child: CircleProgressBar(
-                            text: StringUtil()
-                                .createTimeString(timerService.time),
-                            foregroundColor: AppColors.WHITE,
-                            value: timerService.createValue(),
                           ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 40),
-                          child: StartSkipColumn(
-                              () => timerService.startTimer(), () {
-                            _player.stop();
-
-                            timerService.skipTask();
-                          }, () {
-                            _player.stop();
-                            timerService.goToHome();
-                          }, timerService.buttonText),
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 10),
-                      ],
-                    ),
-                  ],
+                          SizedBox(
+                              height: MediaQuery.of(context).size.height / 10),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
 
-  Widget getAffirmationWidget() {
-    if (widget.pageId == 0 && timerService.affirmationText != null) {
-      return Container(
-        padding: EdgeInsets.only(left: 5, right: 5, bottom: 30),
-        child: CustomText(
-          text: timerService.affirmationText,
-          size: 22,
-        ),
-      );
-    } else if (widget.pageId == 5 && timerService.visualizationText != null) {
-      return Container(
-        padding: EdgeInsets.only(left: 5, right: 5, bottom: 30),
-        child: CustomText(
-          text: timerService.visualizationText,
-          size: 22,
-        ),
-      );
-    } else {
-      return Container();
-    }
+  Future<String> _showAffirmationCategoryDialog(BuildContext context) async {
+    return await showDialog(
+        context: context, child: AffirmationCategoryDialog());
+  }
+
+  Widget _buildTitleWidget() {
+    return Container(
+      padding: EdgeInsets.only(left: 5, right: 5, bottom: 30),
+      child: CustomText(
+        text: titleText,
+        size: 22,
+      ),
+    );
   }
 
   void _next() async {

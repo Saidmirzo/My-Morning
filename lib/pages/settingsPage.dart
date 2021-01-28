@@ -333,52 +333,6 @@ class SettingsPageState extends State<SettingsPage> {
                       ),
                     ),
                     SliverToBoxAdapter(
-                      child: Container(
-                        padding: EdgeInsets.only(left: 10, top: 15),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'enter_your_name'.tr(),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: AppColors.VIOLET,
-                                fontStyle: FontStyle.normal,
-                                fontFamily: 'sans-serif-black',
-                                fontSize: 26),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: Container(
-                        padding: EdgeInsets.only(top: 5, left: 10, right: 10),
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.0),
-                              color: AppColors.TRANSPARENT_WHITE,
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  top: 11, bottom: 11, right: 20, left: 20),
-                              child: TextField(
-                                controller: nameController,
-                                minLines: 1,
-                                maxLines: 1,
-                                cursorColor: AppColors.VIOLET,
-                                keyboardType: TextInputType.text,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontSize: 23,
-                                    fontFamily: "sans-serif",
-                                    fontStyle: FontStyle.normal,
-                                    color: AppColors.VIOLET,
-                                    decoration: TextDecoration.none),
-                                decoration: null,
-                              ),
-                            )),
-                      ),
-                    ),
-                    SliverToBoxAdapter(
                       child: LanguageSwitcher(Alignment.centerLeft),
                     ),
                     SliverToBoxAdapter(

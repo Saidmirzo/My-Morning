@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:hive/hive.dart';
@@ -19,9 +20,7 @@ import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/success/screenTimerInputSuccess.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
-import 'package:morningmagic/pages/timerPage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class TimerService {
   BuildContext context;
@@ -39,7 +38,8 @@ class TimerService {
   AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
   AudioPlayer _player;
 
-  init(State _state, BuildContext _context, int _pageId, AudioPlayer _player) {
+  init(State _state, BuildContext _context, int _pageId,
+      AudioPlayer _player) async {
     this.state = _state;
     this.context = _context;
     this.pageId = _pageId;
