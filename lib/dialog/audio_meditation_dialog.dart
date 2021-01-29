@@ -1,9 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
-import 'package:flutter_visualizers/visualizer.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/app_states.dart';
@@ -105,11 +102,13 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                 ),
                 ListView.separated(
                   shrinkWrap: true,
-                  itemCount: 7,
+                  itemCount:  appStates
+                      .meditationPlaylist.value.audios.length,
                   separatorBuilder: (context, index) => SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     print(index);
                     return Obx(
+                      // TODO make loading audios
                       () => MainAudioMeditationDialogItem(
                         audio: appStates
                             .meditationPlaylist.value.audios[index].path,

@@ -21,6 +21,7 @@ class UserDataInputScreen extends StatefulWidget {
 class UserDataInputScreenState extends State<UserDataInputScreen> {
   TextEditingController myController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     myController.dispose();

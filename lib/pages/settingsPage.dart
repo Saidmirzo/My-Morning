@@ -24,8 +24,8 @@ import '../resources/colors.dart';
 import '../storage.dart';
 import '../widgets/animatedButton.dart';
 import '../widgets/language_switcher.dart';
+import '../widgets/setting_activity_list.dart';
 import '../widgets/subscribe_1_month_button.dart';
-import '../widgets/wrapTable.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage();
@@ -44,7 +44,7 @@ class SettingsPageState extends State<SettingsPage> {
   TextEditingController affirmationTextController;
   TextEditingController bookController;
   TextEditingController nameController;
-  Widget tableList;
+  Widget activityList;
   AppStates appStates = Get.put(AppStates());
 
   @override
@@ -57,7 +57,7 @@ class SettingsPageState extends State<SettingsPage> {
     _init();
     _initOpenDialog();
     initPurchaseListener();
-    tableList = wrapTable(false);
+    activityList = buildActivityList(false);
     AnalyticService.screenView('settings_page');
 
     super.initState();
@@ -133,7 +133,7 @@ class SettingsPageState extends State<SettingsPage> {
                       ),
                     ),
                     SliverPadding(padding: EdgeInsets.only(top: 15)),
-                    tableList,
+                    activityList,
                     SliverToBoxAdapter(
                       child: Container(
                         child: Row(
@@ -365,16 +365,14 @@ class SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget wrapTable(bool needReinit) {
-    return WrapTable(
-        meditationTimeController,
-        affirmationTimeController,
-        fitnessTimeController,
-        vocabularyTimeController,
-        readingTimeController,
-        visualizationTimeController,
-        needReinit);
-  }
+  Widget buildActivityList(bool needReInit) => SettingsActivityList(
+      meditationTimeController,
+      affirmationTimeController,
+      fitnessTimeController,
+      vocabularyTimeController,
+      readingTimeController,
+      visualizationTimeController,
+      needReInit);
 
   void _init() {
     initTimerValue();
@@ -389,7 +387,7 @@ class SettingsPageState extends State<SettingsPage> {
         setState(() {
           billingService.purchaserInfo = _purchaserInfo;
           print('Purchase state updated');
-          tableList = wrapTable(true);
+          activityList = buildActivityList(true);
         });
     });
   }
@@ -462,7 +460,7 @@ class SettingsPageState extends State<SettingsPage> {
         controller.text.contains(" ") ||
         controller.text.length > 2 ||
         (int.tryParse(controller.text) != null &&
-            int.tryParse(controller.text) < 1)) {
+            int.tryParse(controller.text) < 0)) {
       print("CLEAR !!!!!!!!!!");
       controller.clear();
       controller.text = "1";

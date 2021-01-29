@@ -7,32 +7,31 @@ import 'package:reorderables/reorderables.dart';
 
 import 'exerciseTile.dart';
 
-class WrapTable extends StatefulWidget {
+class SettingsActivityList extends StatefulWidget {
   final TextEditingController affirmationTimeController;
   final TextEditingController meditationTimeController;
   final TextEditingController fitnessTimeController;
   final TextEditingController vocabularyTimeController;
   final TextEditingController readingTimeController;
   final TextEditingController visualizationTimeController;
-  final bool needReinit;
-  // Обновили после покупки
-  bool hasReinit = false;
+  final bool needReInit;
 
-  WrapTable(
+  SettingsActivityList(
       this.affirmationTimeController,
       this.meditationTimeController,
       this.fitnessTimeController,
       this.vocabularyTimeController,
       this.readingTimeController,
       this.visualizationTimeController,
-      this.needReinit);
+      this.needReInit);
 
   @override
-  State createState() => WrapTableState();
+  State createState() => SettingsActivityListState();
 }
 
-class WrapTableState extends State<WrapTable> {
+class SettingsActivityListState extends State<SettingsActivityList> {
   List<ExerciseTile> _itemRows = List();
+  bool hasReInit = false;
 
   @override
   void initState() {
@@ -42,10 +41,10 @@ class WrapTableState extends State<WrapTable> {
 
   @override
   Widget build(BuildContext context) {
-    print('NeedReinit : ${widget.needReinit}');
-    print('HasReinit : ${widget.hasReinit}');
-    if (!widget.hasReinit && widget.needReinit) {
-      widget.hasReinit = true;
+    print('NeedReinit : ${widget.needReInit}');
+    print('HasReinit : ${hasReInit}');
+    if (!hasReInit && widget.needReInit) {
+      hasReInit = true;
       initList();
     }
     print('Build wrapTable');
@@ -145,7 +144,9 @@ class WrapTableState extends State<WrapTable> {
   }
 
   void _onReorder(int oldIndex, int newIndex) {
-    if (billingService.isPro()) {
+    if (billingService.isPro() ||
+        (oldIndex == 0 && newIndex == 1) ||
+        (oldIndex == 1 && newIndex == 0)) {
       setState(() {
         Widget row = _itemRows.removeAt(oldIndex);
         _itemRows.insert(newIndex, row);
