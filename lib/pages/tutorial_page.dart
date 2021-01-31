@@ -72,6 +72,7 @@ class _TutorialPageState extends State<TutorialPage> {
       'https://storage.yandexcloud.net/myaudio/Meditation/Sounds%20of%20the%20forest.mp3',
       'https://storage.yandexcloud.net/myaudio/Meditation/Unlock%20Your%20Brainpower.mp3',
     ];
+
     Future<void> getFiles(String audio) async {
       await DefaultCacheManager().downloadFile(audio);
     }

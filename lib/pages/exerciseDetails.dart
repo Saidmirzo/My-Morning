@@ -11,7 +11,6 @@ import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/customAppBar.dart';
 import 'package:morningmagic/widgets/customBottomExerciseNavigation.dart';
 
-// TODO remove later
 class ExerciseDetails extends StatefulWidget {
   final int stepId;
   final int pageId;
