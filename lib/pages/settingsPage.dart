@@ -71,7 +71,6 @@ class SettingsPageState extends State<SettingsPage> {
     vocabularyTimeController.dispose();
     readingTimeController.dispose();
     visualizationTimeController.dispose();
-
     affirmationTextController.dispose();
     bookController.dispose();
 

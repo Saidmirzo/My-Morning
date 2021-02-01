@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/app_states.dart';
-import 'package:morningmagic/dialog/audio_meditation_dialog.dart';
+import 'package:morningmagic/features/audios/data/audio_data.dart';
+import 'package:morningmagic/features/audios/data/repositories/audio_repository_impl.dart';
+import 'package:morningmagic/features/audios/presentation/controller/audio_controller.dart';
+import 'package:morningmagic/features/audios/presentation/dialogs/audio_meditation_dialog.dart';
 import 'package:morningmagic/pages/timerPage.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
@@ -27,7 +29,15 @@ class ExerciseStartPage extends StatefulWidget {
 }
 
 class ExerciseStartPageState extends State<ExerciseStartPage> {
-  AppStates appStates = Get.put(AppStates());
+  final _audioController =
+      Get.put(AudioController(repository: AudioRepositoryImpl()));
+
+  @override
+  void dispose() {
+    super.dispose();
+    Get.delete<AudioController>();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -73,35 +83,7 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  widget.pageId == 1
-                      ? Column(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        AudioMeditationDialog());
-                              },
-                              child: Image.asset('assets/images/music_icon.png',
-                                  width: 40, height: 40),
-                            ),
-                            SizedBox(height: 5),
-                            Obx(
-                              () => Text(
-                                appStates.listNames[
-                                    appStates.selectedMeditationIndex.value],
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "JMH",
-                                  fontStyle: FontStyle.italic,
-                                  color: AppColors.VIOLET,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Container(),
+                  if (widget.pageId == 1) _buildAudioPicker(context),
                 ],
               ),
               Positioned(
@@ -122,6 +104,35 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Column _buildAudioPicker(BuildContext context) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) => AudioMeditationDialog());
+          },
+          child: Image.asset('assets/images/music_icon.png',
+              width: 40, height: 40),
+        ),
+        SizedBox(height: 5),
+        Obx(
+          () => Text(
+            AudioData.audioSources.keys
+                .toList()[_audioController.audioSelectedIndex.value],
+            style: TextStyle(
+              fontSize: 16,
+              fontFamily: "JMH",
+              fontStyle: FontStyle.italic,
+              color: AppColors.VIOLET,
+            ),
+          ),
+        ),
+      ],
     );
   }
 

@@ -4,13 +4,17 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 class AudioFile extends Equatable {
+  final String id;
   final String url;
 
   final File file;
-  final String title;
 
-  AudioFile({@required this.url, @required this.file, @required this.title});
+  AudioFile({
+    @required this.id,
+    @required this.url,
+    @required this.file,
+  });
 
   @override
-  List<Object> get props => [url, title, file];
+  List<Object> get props => [url, id, file];
 }

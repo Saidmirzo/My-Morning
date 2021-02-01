@@ -11,6 +11,10 @@ class AudioRepositoryImpl implements AudioRepository {
     String _url = AudioData.audioSources[key];
     File file = await AudioCacheManager.instance.getSingleFile(_url);
 
-    return AudioFile(url: _url, file: file, title: key);
+    return AudioFile(
+      id: key,
+      url: _url,
+      file: file,
+    );
   }
 }
