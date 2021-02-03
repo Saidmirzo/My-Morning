@@ -1,8 +1,7 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/app_states.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
@@ -25,104 +24,123 @@ class AudioMeditationDialogItem extends StatefulWidget {
 }
 
 class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
-  AppStates appStates = Get.find<AppStates>();
-  AudioController audioController = Get.find<AudioController>();
-  bool pauseSwitch = false;
+  AudioController _audioController = Get.find<AudioController>();
 
-  AssetsAudioPlayer _audioPlayer;
+  AudioPlayer _audioPlayer;
 
   @override
   Widget build(BuildContext context) {
-    _audioPlayer = audioController.audioPlayer.value;
+    _audioPlayer = _audioController.audioPlayer.value;
 
     return Column(
       children: [
         InkWell(
-          onTap: () => audioController.selectedItemIndex.value = widget.id,
-          child: Obx(() => Container(
-                margin: EdgeInsets.only(bottom: 8),
-                padding: EdgeInsets.only(left: 10, right: 10),
-                decoration: BoxDecoration(
-                    color: audioController.selectedItemIndex.value == widget.id
-                        ? AppColors.PINK
-                        : AppColors.LIGHT_VIOLET,
-                    borderRadius: BorderRadius.all(Radius.circular(40))),
-                child: AudioWidget(
-                  play: audioController.isPlaying,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 2),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: IconButton(
-                            onPressed: () async {
-                              if (!audioController.isPlaying) {
-                                final _oldPlayingIndex =
-                                    audioController.playingIndex.value;
-                                audioController.playingIndex.value = widget.id;
-
-                                if (audioController.playingIndex.value == -1 ||
-                                    _oldPlayingIndex != widget.id) {
-                                  playNewTrack(widget.trackId);
-                                } else
-                                  _audioPlayer.play();
-                              } else
-                                audioController.audioPlayer.value.pause();
-
-                              setState(() {
-                                audioController.isPlaying =
-                                    !audioController.isPlaying;
-                              });
-                              if (audioController.isPlaying) {
-                                widget.lineBox.playAnimation();
-                              } else {
-                                widget.lineBox.stopAnimation();
-                              }
-                            },
-                            icon: Icon(
-                              // TODO change icon on playin (only for current item)
-                              (audioController.playingIndex.value ==
-                                          widget.id &&
-                                      audioController.isPlaying)
-                                  ? Icons.pause
-                                  : Icons.play_arrow,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                          ),
+          onTap: () => _audioController.selectedItemIndex.value = widget.id,
+          child: Obx(
+            () => Container(
+              margin: EdgeInsets.only(bottom: 8),
+              padding: EdgeInsets.only(left: 10, right: 10),
+              decoration: BoxDecoration(
+                  color: _audioController.selectedItemIndex.value == widget.id
+                      ? AppColors.PINK
+                      : AppColors.LIGHT_VIOLET,
+                  borderRadius: BorderRadius.all(Radius.circular(40))),
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: IconButton(
+                        onPressed: () => _handlePlayPauseButton(),
+                        icon: Icon(
+                          (_audioController.playingIndex.value == widget.id &&
+                                  _audioController.isPlaying)
+                              ? Icons.pause
+                              : Icons.play_arrow,
+                          color: Colors.white,
+                          size: 30,
                         ),
-                        SizedBox(width: 10),
-                        Text(
-                          widget.trackId,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            decoration: TextDecoration.none,
-                            color: AppColors.WHITE,
-                            fontStyle: FontStyle.normal,
-                            fontFamily: 'rex',
-                            fontSize: 17,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(width: 10),
+                    Text(
+                      widget.trackId,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        decoration: TextDecoration.none,
+                        color: AppColors.WHITE,
+                        fontStyle: FontStyle.normal,
+                        fontFamily: 'rex',
+                        fontSize: 17,
+                      ),
+                    ),
+                  ],
                 ),
-              )),
+              ),
+            ),
+          ),
         ),
       ],
     );
   }
 
-  void playNewTrack(String trackId) async {
-    String _trackUrl = audioController.getAudioUrl(trackId);
-    try {
-      await _audioPlayer.open(
-        Audio.network(_trackUrl),
-      );
-    } catch (e) {
-      // TODO make if not available connection
+  void _handlePlayPauseButton() {
+    if (!_audioController.isPlaying) {
+      final _oldPlayingIndex = _audioController.playingIndex.value;
+      _audioController.playingIndex.value = widget.id;
 
+      if (_audioController.playingIndex.value == -1 ||
+          _oldPlayingIndex != widget.id) {
+        playNewTrack(widget.trackId);
+      } else
+        _audioPlayer.play();
+
+      setIsPlayingState(!_audioController.isPlaying);
+    } else {
+      if (_audioController.playingIndex.value == widget.id) {
+        _audioPlayer.pause();
+
+        setIsPlayingState(!_audioController.isPlaying);
+      } else {
+        playNewTrack(widget.trackId);
+        _audioController.playingIndex.value = widget.id;
+
+        setIsPlayingState(true);
+      }
     }
+
+    animateLineBox();
+  }
+
+  void animateLineBox() {
+    if (_audioController.isPlaying) {
+      widget.lineBox.playAnimation();
+    } else {
+      widget.lineBox.stopAnimation();
+    }
+  }
+
+  void setIsPlayingState(bool newIsPlaying) {
+    setState(() {
+      _audioController.isPlaying = newIsPlaying;
+    });
+  }
+
+  void playNewTrack(String trackId) async {
+    String _trackUrl = _audioController.getAudioUrl(trackId);
+    final _cachedAudioFile = await _audioController.getCachedAudioFile(trackId);
+    if (_cachedAudioFile == null) {
+      print('before await play from internet $_trackUrl');
+      await _audioPlayer.setUrl(_trackUrl);
+      print('play from internet $_trackUrl');
+    } else {
+      print('before await play from path');
+      final _filePath = _cachedAudioFile.path;
+      print('play from path $_filePath');
+      _audioPlayer.setFilePath(_filePath);
+    }
+
+    _audioPlayer.play();
   }
 }
