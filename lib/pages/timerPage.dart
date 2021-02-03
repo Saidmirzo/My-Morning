@@ -55,7 +55,7 @@ class TimerPageState extends State<TimerPage> {
 
     if (widget.pageId == 0) {
       AnalyticService.screenView('affirmation_timer_page');
-    } else if (widget.pageId == 1) {
+    } else if (widget.pageId == 1) { // meditation page TODO make id
       initAudios();
       AnalyticService.screenView('meditation_timer_page');
     } else if (widget.pageId == 2) {

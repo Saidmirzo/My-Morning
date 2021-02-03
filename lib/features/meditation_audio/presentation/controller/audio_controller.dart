@@ -1,13 +1,18 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
-import 'package:morningmagic/features/audios/domain/entities/audio_file.dart';
-import 'package:morningmagic/features/audios/domain/repositories/audio_repository.dart';
+import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
+import 'package:morningmagic/features/meditation_audio/domain/entities/audio_file.dart';
+import 'package:morningmagic/features/meditation_audio/domain/repositories/audio_repository.dart';
 
 class AudioController extends GetxController {
-  final AudioRepository repository;
 
   AudioController({@required this.repository});
+
+  final AudioRepository repository;
+
+  var audioPlayer = AssetsAudioPlayer().obs;
 
   var audios = <AudioFile>[].obs;
 
@@ -16,9 +21,20 @@ class AudioController extends GetxController {
   bool isItemDownloading(String trackName) =>
       downloadIngAudioTracks.contains(trackName);
 
-  RxBool isLoading = RxBool(false);
+  var selectedItemIndex = 0.obs;
 
-  var audioSelectedIndex = 0.obs;
+  var playingIndex = (-1).obs;
+
+  bool isPlaying = false;
+
+
+  @override
+  void onClose() {
+    super.onClose();
+    audioPlayer.value.stop();
+    audioPlayer.value.dispose();
+    print('audiocontroller disposed');
+  }
 
   bool isAudioDownloaded(String audioId) {
     AudioFile audioFile = audios.firstWhere((element) => element.id == audioId,
@@ -28,6 +44,7 @@ class AudioController extends GetxController {
     return audioFile.file != null;
   }
 
+  // TODO remove
   void downloadAudio(String audioId) async {
     downloadIngAudioTracks.add(audioId);
     try {
@@ -41,5 +58,9 @@ class AudioController extends GetxController {
       print(e);
       downloadIngAudioTracks.removeWhere((element) => element == audioId);
     }
+  }
+
+  String getAudioUrl(String trackId) {
+    return MeditationAudioData.audioSources[trackId];
   }
 }

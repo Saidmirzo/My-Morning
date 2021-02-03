@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/features/audios/data/audio_data.dart';
-import 'package:morningmagic/features/audios/data/repositories/audio_repository_impl.dart';
-import 'package:morningmagic/features/audios/presentation/controller/audio_controller.dart';
-import 'package:morningmagic/features/audios/presentation/dialogs/audio_meditation_dialog.dart';
+import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
+import 'package:morningmagic/features/meditation_audio/data/repositories/audio_repository_impl.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/controller/audio_controller.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog.dart';
 import 'package:morningmagic/pages/timerPage.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
@@ -122,8 +122,8 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
         SizedBox(height: 5),
         Obx(
           () => Text(
-            AudioData.audioSources.keys
-                .toList()[_audioController.audioSelectedIndex.value],
+            MeditationAudioData.audioSources.keys
+                .toList()[_audioController.selectedItemIndex.value],
             style: TextStyle(
               fontSize: 16,
               fontFamily: "JMH",

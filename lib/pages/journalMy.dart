@@ -232,6 +232,7 @@ class CategoryItem extends StatelessWidget {
   }
 }
 
+// TODO remove one of players
 class CategoryRecordItem extends StatefulWidget {
   final String id;
   final String text;
@@ -324,6 +325,7 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
     );
   }
 }
+
 
 class CategoriesScreen extends StatefulWidget {
   @override

@@ -203,7 +203,7 @@ class TimerService {
                 if (time < 1) {
                   assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
                   assetsAudioPlayer.play();
-                  appStates.player.value.stop();
+                  appStates.audioPlayer.value.stop();
                   _player?.stop();
                   timer.cancel();
                   if (pageId != 4) saveProgress();

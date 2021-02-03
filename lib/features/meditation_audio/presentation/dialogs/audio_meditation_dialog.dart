@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:morningmagic/features/audios/data/audio_data.dart';
-import 'package:morningmagic/features/audios/presentation/dialogs/audio_meditation_dialog_item.dart';
+import 'package:get/instance_manager.dart';
+import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/controller/audio_controller.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
 
@@ -15,7 +17,7 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final _audioTrackNames = AudioData.audioSources.keys.toList();
+    final _audioTrackNames = MeditationAudioData.audioSources.keys.toList();
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -52,7 +54,12 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                       ),
                     ),
                     InkWell(
-                      onTap: () => Navigator.pop(context),
+                      onTap: () {
+                        Navigator.pop(context);
+                        final _audioController =
+                            Get.find<AudioController>();
+                        _audioController.audioPlayer.value.stop();
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
@@ -69,25 +76,20 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 8,
-              ),
               Expanded(
                 child: ListView.separated(
                   shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                  padding: EdgeInsets.symmetric(vertical: 16),
+
                   itemCount: _audioTrackNames.length,
                   //appStates.meditationPlaylist.value.audios.length,
                   separatorBuilder: (context, index) => SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     print(index);
                     return AudioMeditationDialogItem(
-                      // audio: appStates
-                      //     .meditationPlaylist.value.audios[index].path,
-                      name: _audioTrackNames[index],
-                      lineBox: lineBox,
                       id: index,
-                      // modalSetState: modalSetState,
+                      trackId: _audioTrackNames[index],
+                      lineBox: lineBox,
                     );
                   },
                 ),

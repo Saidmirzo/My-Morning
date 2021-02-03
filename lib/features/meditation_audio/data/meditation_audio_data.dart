@@ -1,4 +1,4 @@
-class AudioData {
+class MeditationAudioData {
   static Map<String, String> audioSources = {
     'Bell temple':
         'https://storage.yandexcloud.net/myaudio/Meditation/Bell%20Temple.mp3',

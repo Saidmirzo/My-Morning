@@ -1,5 +1,6 @@
-import 'package:firebase_admob/firebase_admob.dart';
 import 'dart:io' show Platform;
+
+import 'package:firebase_admob/firebase_admob.dart';
 
 import '../storage.dart';
 
@@ -24,9 +25,6 @@ class AdmobService {
   InterstitialAd createInterstitialAd() {
     return InterstitialAd(
       adUnitId: interstitialId,
-      listener: (MobileAdEvent event) {
-        print("InterstitialAd event $event");
-      },
     );
   }
 
@@ -35,7 +33,6 @@ class AdmobService {
     myInterstitial = InterstitialAd(
       adUnitId: interstitialId,
       listener: (MobileAdEvent event) {
-        print("InterstitialAd event is $event");
         switch (event) {
           case MobileAdEvent.failedToLoad:
           case MobileAdEvent.closed:

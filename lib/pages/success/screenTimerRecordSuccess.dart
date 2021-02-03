@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:morningmagic/analyticService.dart';
@@ -40,7 +39,6 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
   FlutterAudioRecorder _recorder;
   Recording _recording;
   var result;
-  AudioPlayer audioPlayer = AudioPlayer();
 
   Future<bool> getPermissions() async {
     statusMicrophone = await Permission.microphone.status;
