@@ -32,8 +32,7 @@ class ExerciseTile extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            Flexible(
-                flex: 5,
+            Expanded(
                 child: Container(
                   child: Center(
                     child: Text(
@@ -46,54 +45,60 @@ class ExerciseTile extends StatelessWidget {
                     ),
                   ),
                 )),
-            Flexible(
-              flex: 2,
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 4.0, bottom: 10.0, right: 8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'min'.tr(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 11,
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 8),
+              child: Stack(
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        'min'.tr(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 11,
+                            fontFamily: "sans-serif",
+                            fontStyle: FontStyle.normal,
+                            color: AppColors.VIOLET,
+                            decoration: TextDecoration.none),
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Container(
+                          width: 60,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                            color:  trues
+                                ? AppColors.TRANSPARENT_WHITE
+                                : AppColors.TRANSPARENTS,
+                          )),
+                    ],
+                  ),
+                  Container(
+                    height: 57,
+                    width: 60,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: TextField(
+                        enabled: trues ? true : false,
+                        decoration: null,
+                        controller: textEditingController,
+                        maxLines: 1,
+                        cursorColor: AppColors.VIOLET,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
                           fontFamily: "sans-serif",
-                          fontStyle: FontStyle.normal,
                           color: AppColors.VIOLET,
-                          decoration: TextDecoration.none),
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    TextField(
-                      enabled: trues ? true : false,
-                      decoration: InputDecoration(
-                        filled: true,
-                        contentPadding: EdgeInsets.all(12),
-                        isDense: true,
-                        fillColor: trues
-                            ? AppColors.TRANSPARENT_WHITE
-                            : AppColors.TRANSPARENTS,
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(28)),
-                      ),
-                      controller: textEditingController,
-                      maxLines: 1,
-                      cursorColor: AppColors.VIOLET,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: "sans-serif",
-                        color: AppColors.VIOLET,
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             SizedBox(

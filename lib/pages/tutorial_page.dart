@@ -55,7 +55,7 @@ class _TutorialPageState extends State<TutorialPage> {
       player.open(Audio('tutorial_asset'.tr()));
       player.play();
     });
-    player.playlistFinished.forEach((element) {
+    player.playlistFinished.listen((element) {
       if (element) {
         Navigator.pushAndRemoveUntil(
             context,

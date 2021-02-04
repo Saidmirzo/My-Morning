@@ -81,38 +81,27 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           child: SingleChildScrollView(
             padding: EdgeInsets.only(bottom: 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 25.0, right: 25.0, top: 16),
-                  child: InkWell(
-                    onTap: () async {
-                      nameController.text = userName;
-                      final _newName = await _editUserNameDialog();
-                      if (_newName != null) {
-                        setState(() {
-                          userName = _newName;
-                        });
-                        MyDB()
-                            .getBox()
-                            .put(MyResource.USER_KEY, User(userName));
-                      }
-                    },
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          userName,
-                          style:
-                              TextStyle(fontSize: 23, color: AppColors.VIOLET),
-                        ),
-                        SizedBox(width: 4),
-                        Icon(
-                          Icons.edit,
-                          color: Colors.black,
-                          size: 24,
-                        ),
-                      ],
+
+                InkWell(
+                  onTap: () async {
+                    nameController.text = userName;
+                    final _newName = await _editUserNameDialog();
+                    if (_newName != null) {
+                      setState(() {
+                        userName = _newName;
+                      });
+                      MyDB()
+                          .getBox()
+                          .put(MyResource.USER_KEY, User(userName));
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 16,bottom: 16),
+                    child: Text(
+                      userName,
+                      style: TextStyle(fontSize: 23, color: AppColors.VIOLET),
                     ),
                   ),
                 ),
@@ -120,7 +109,6 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   margin: const EdgeInsets.only(
                     left: 20.0,
                     right: 20,
-                    top: 16,
                     bottom: 0,
                   ),
                   padding: const EdgeInsets.only(bottom: 10),
