@@ -146,7 +146,6 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
     }
   }
 
-  // TODO move to util func
   String _getWeekDay() {
     switch (DateTime.now().weekday) {
       case 1:

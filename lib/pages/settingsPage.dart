@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -50,10 +49,6 @@ class SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     admobService.initInterstitial();
-    Future.delayed(Duration(milliseconds: 500), () {
-      appStates.meditationPlaylist.value.addAll(List.generate(
-          7, (index) => Audio(MyDB().getBox().get('musicCache')[index])));
-    });
     _init();
     _initOpenDialog();
     initPurchaseListener();

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:morningmagic/features/meditation_audio/presentation/controller/audio_controller.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
 
@@ -24,7 +24,8 @@ class AudioMeditationDialogItem extends StatefulWidget {
 }
 
 class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
-  AudioController _audioController = Get.find<AudioController>();
+  MediationAudioController _audioController =
+      Get.find<MediationAudioController>();
 
   AudioPlayer _audioPlayer;
 

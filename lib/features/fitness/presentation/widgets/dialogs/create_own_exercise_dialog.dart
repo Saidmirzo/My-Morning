@@ -11,7 +11,6 @@ class CreateOwnExerciseDialog extends StatefulWidget {
       _CreateOwnExerciseDialogState();
 }
 
-// TODO make focus
 class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
   TextEditingController _nameTextController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();

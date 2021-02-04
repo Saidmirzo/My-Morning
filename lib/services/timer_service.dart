@@ -18,6 +18,7 @@ import 'package:morningmagic/db/model/progress/visualization_progress/visualizat
 import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/pages/success/screenTimerInputSuccess.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
@@ -58,7 +59,6 @@ class TimerService {
   }
 
   Function skipTask() {
-    appStates.isPlayed.value = false;
     if (timer != null && timer.isActive) {
       buttonText = 'start'.tr();
       timer.cancel();
@@ -70,10 +70,13 @@ class TimerService {
       else
         Navigator.push(context, value);
     });
+
+    if (pageId == 1) {
+      Get.delete<MediationAudioController>();
+    }
   }
 
   Function goToHome() {
-    appStates.isPlayed.value = false;
     timer.cancel();
     Navigator.pushNamedAndRemoveUntil(context, '/start', (r) => false);
     // При выходе в меню чтение (id4) не сохраняем
@@ -225,7 +228,6 @@ class TimerService {
   }
 
   getNextPage(Route value) {
-    appStates.isPlayed.value = false;
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         if (pageId == 4)

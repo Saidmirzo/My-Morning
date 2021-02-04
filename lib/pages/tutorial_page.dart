@@ -1,19 +1,12 @@
 import 'dart:async';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/route_manager.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/settingsPage.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/tutorial_waves/im_animations.dart';
-import 'package:easy_localization/easy_localization.dart';
-
-import '../app_states.dart';
 
 class TutorialPage extends StatefulWidget {
   @override
@@ -55,40 +48,6 @@ class _TutorialPageState extends State<TutorialPage> {
     playTutorial();
     super.initState();
     viewIcon1();
-    Future.delayed(Duration(milliseconds: 300), () {
-      cacheMusic();
-    });
-  }
-
-  void cacheMusic() async {
-    print('run func cacheMusic');
-    AppStates appStates = Get.put(AppStates());
-    List<String> _audioList = [
-      'https://storage.yandexcloud.net/myaudio/Meditation/Bell%20Temple.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Dawn%20Chorus.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Eclectopedia.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Hommik.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Meditation%20spa%D1%81e.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Sounds%20of%20the%20forest.mp3',
-      'https://storage.yandexcloud.net/myaudio/Meditation/Unlock%20Your%20Brainpower.mp3',
-    ];
-
-    Future<void> getFiles(String audio) async {
-      await DefaultCacheManager().downloadFile(audio);
-    }
-
-    for (int i = 0; i < _audioList.length; i++) {
-      await getFiles(_audioList[i]);
-    }
-    for (int i = 0; i < _audioList.length; i++) {
-      var file = await DefaultCacheManager().getSingleFile(_audioList[i]);
-      appStates.meditationPlaylist.value.add(Audio.file(file.path));
-    }
-    MyDB().getBox().put(
-          MyResource.MUSIC_CASH,
-          List.generate(7,
-              (index) => appStates.meditationPlaylist.value.audios[index].path),
-        );
   }
 
   void playTutorial() {

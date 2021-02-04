@@ -6,14 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
-import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:screen/screen.dart';
 
-import '../app_states.dart';
 import '../resources/colors.dart';
 import '../utils/string_util.dart';
 import '../widgets/customText.dart';
@@ -31,22 +29,22 @@ class TimerPage extends StatefulWidget {
 }
 
 class TimerPageState extends State<TimerPage> {
-  bool isInitialized = false;
+  final _audioController = Get.find<MediationAudioController>();
+
   TimerService timerService = TimerService();
-  AppStates appStates = Get.put(AppStates());
+  AudioPlayer _audioPlayer;
   String titleText;
-
-  String selectedAudio;
+  List<AudioSource> _playList;
+  bool isInitialized = false;
   int index = 0;
-
-  List<String> audios;
-  final _player = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
+    _audioPlayer = _audioController.audioPlayer.value;
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await timerService.init(this, context, widget.pageId, _player);
+      await timerService.init(this, context, widget.pageId, _audioPlayer);
       if (widget.pageId == 0 && timerService.affirmationText != null)
         titleText = timerService.affirmationText;
       else if (widget.pageId == 5 && timerService.visualizationText != null)
@@ -55,8 +53,9 @@ class TimerPageState extends State<TimerPage> {
 
     if (widget.pageId == 0) {
       AnalyticService.screenView('affirmation_timer_page');
-    } else if (widget.pageId == 1) { // meditation page TODO make id
-      initAudios();
+    } else if (widget.pageId == 1) {
+      // meditation page
+      initializeMeditationAudio();
       AnalyticService.screenView('meditation_timer_page');
     } else if (widget.pageId == 2) {
       print('таймер фитнес');
@@ -72,23 +71,23 @@ class TimerPageState extends State<TimerPage> {
     }
   }
 
-  initAudios() async {
-    audios = MyDB().getBox().get(MyResource.MUSIC_CASH);
-    await _player.setAudioSource(
+  initializeMeditationAudio() async {
+    _playList = _audioController.generateMeditationPlayList();
+
+    await _audioPlayer.setAudioSource(
       ConcatenatingAudioSource(
-          useLazyPreparation: true, // default
-          shuffleOrder: DefaultShuffleOrder(), // default
-          children: List.generate(audios.length,
-              (index) => AudioSource.uri(Uri.file(audios[index])))),
-      initialIndex: appStates.selectedMeditationIndex.value, // default
-      initialPosition: Duration.zero, // default
+          children:
+              List.generate(_playList.length, (index) => _playList[index])),
+      initialIndex: _audioController.selectedItemIndex.value,
+      initialPosition: Duration.zero,
     );
-    _player.load();
+
+    _audioPlayer.load();
+    _audioPlayer.play();
   }
 
   @override
   Widget build(BuildContext context) {
-    log('Build timerPage');
     if (!isInitialized) {
       isInitialized = true;
       timerService.buttonText = 'start'.tr();
@@ -156,7 +155,7 @@ class TimerPageState extends State<TimerPage> {
                                             BorderRadius.circular(30.0)),
                                     onPressed: _playOrPause,
                                     child: Icon(
-                                      _player.playing
+                                      _audioPlayer.playing
                                           ? Icons.pause
                                           : Icons.play_arrow,
                                       size: 60,
@@ -215,7 +214,7 @@ class TimerPageState extends State<TimerPage> {
                                 Container(
                                   padding: EdgeInsets.only(top: 10),
                                   child: AnimatedButton(() {
-                                    _player.stop();
+                                    _audioPlayer.stop();
                                     timerService.skipTask();
                                   }, 'rex', 'skip'.tr(), 15, null, null),
                                 ),
@@ -236,7 +235,7 @@ class TimerPageState extends State<TimerPage> {
                                 Container(
                                   padding: EdgeInsets.only(top: 10),
                                   child: AnimatedButton(() {
-                                    _player.stop();
+                                    _audioPlayer.stop();
                                     timerService.goToHome();
                                   }, 'rex', 'menu'.tr(), 15, null, null),
                                 )
@@ -274,30 +273,30 @@ class TimerPageState extends State<TimerPage> {
   }
 
   void _next() async {
-    if (_player.currentIndex >= audios.length - 1) {
-      await _player.seek(new Duration(seconds: 0), index: 0);
+    if (_audioPlayer.currentIndex >= _playList.length - 1) {
+      await _audioPlayer.seek(new Duration(seconds: 0), index: 0);
     } else {
-      await _player.seekToNext();
+      await _audioPlayer.seekToNext();
     }
   }
 
   void _prev() async {
-    if (_player.currentIndex == 0) {
-      await _player.seek(new Duration(seconds: 0), index: audios.length - 1);
+    if (_audioPlayer.currentIndex == 0) {
+      await _audioPlayer.seek(new Duration(seconds: 0),
+          index: _playList.length - 1);
     } else {
-      await _player.seekToPrevious();
+      await _audioPlayer.seekToPrevious();
     }
   }
 
   void _playOrPause() {
-    _player.playing ? _player.stop() : _player.play();
+    _audioPlayer.playing ? _audioPlayer.stop() : _audioPlayer.play();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _player.stop();
-    _player.dispose();
+
     timerService.dispose();
   }
 }

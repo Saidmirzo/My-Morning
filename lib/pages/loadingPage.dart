@@ -1,8 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
@@ -166,7 +163,6 @@ class LoadingPageState extends State<LoadingPage>
 
   Widget chooseNavigationWidget() {
     if (myDbBox != null && myDbBox.get(MyResource.USER_KEY) != null) {
-      print(MyDB().getBox().get(MyResource.MUSIC_CASH));
       return chooseSettingsOrStartMenu();
     } else {
       AnalyticService.analytics.logAppOpen();
@@ -213,7 +209,6 @@ class LoadingPageState extends State<LoadingPage>
         myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY) != null) {
       return StartScreen();
     } else {
-      print(MyDB().getBox().get(MyResource.MUSIC_CASH));
       return SettingsPage();
     }
   }

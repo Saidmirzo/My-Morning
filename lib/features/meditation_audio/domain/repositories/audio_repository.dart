@@ -1,5 +1,7 @@
-import 'package:morningmagic/features/meditation_audio/domain/entities/audio_file.dart';
+import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 
 abstract class AudioRepository {
-  Future<AudioFile> getAudioFile(String key);
+  Future<List<MeditationAudio>> getCachedAudioFiles();
+
+  Future<MeditationAudio> getAudioFile(String key);
 }

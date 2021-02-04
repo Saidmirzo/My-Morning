@@ -4,7 +4,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/data/repositories/audio_repository_impl.dart';
-import 'package:morningmagic/features/meditation_audio/presentation/controller/audio_controller.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog.dart';
 import 'package:morningmagic/pages/timerPage.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -29,13 +29,14 @@ class ExerciseStartPage extends StatefulWidget {
 }
 
 class ExerciseStartPageState extends State<ExerciseStartPage> {
+
   final _audioController =
-      Get.put(AudioController(repository: AudioRepositoryImpl()));
+      Get.put(MediationAudioController(repository: AudioRepositoryImpl()));
 
   @override
   void dispose() {
     super.dispose();
-    Get.delete<AudioController>();
+    Get.delete<MediationAudioController>();
   }
 
   @override

@@ -50,7 +50,6 @@ class MyResource {
   // Кол-во запусков приложения
   static const String COUNT_APP_LAUNCH = 'countAppLaunch';
 
-  static const String MUSIC_CASH = 'music_cash';
 
   // Дни недели
   static const String MONDAY = 'monday';
