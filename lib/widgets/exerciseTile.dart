@@ -31,82 +31,84 @@ class ExerciseTile extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(45)),
         ),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Expanded(
                 child: Container(
-                  child: Center(
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      color: AppColors.VIOLET,
+                      fontSize: 20,
+                      fontFamily: 'sans-serif',
+                      fontStyle: FontStyle.normal),
+                ),
+              ),
+            )),
+            Container(
+              padding: EdgeInsets.only(
+                  right: MediaQuery.of(context).size.width / 12),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(bottom: 3, top: 3),
                     child: Text(
-                      title,
+                      'min'.tr(),
+                      textAlign: TextAlign.center,
                       style: TextStyle(
+                          fontSize: 11,
+                          fontFamily: "sans-serif",
+                          fontStyle: FontStyle.normal,
                           color: AppColors.VIOLET,
-                          fontSize: 20,
-                          fontFamily: 'sans-serif',
-                          fontStyle: FontStyle.normal),
+                          decoration: TextDecoration.none),
                     ),
-                  ),
-                )),
-            Padding(
-              padding:
-                  const EdgeInsets.only(top: 4.0, bottom: 4.0, right: 8),
-              child: Stack(
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        'min'.tr(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 11,
-                            fontFamily: "sans-serif",
-                            fontStyle: FontStyle.normal,
-                            color: AppColors.VIOLET,
-                            decoration: TextDecoration.none),
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Container(
-                          width: 60,
-                          height: 36,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            color:  trues
-                                ? AppColors.TRANSPARENT_WHITE
-                                : AppColors.TRANSPARENTS,
-                          )),
-                    ],
                   ),
                   Container(
-                    height: 57,
-                    width: 60,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 24.0),
-                      child: TextField(
-                        enabled: trues ? true : false,
-                        decoration: null,
-                        controller: textEditingController,
-                        maxLines: 1,
-                        cursorColor: AppColors.VIOLET,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: "sans-serif",
-                          color: AppColors.VIOLET,
-                        ),
-                      ),
-                    ),
+                    width: 64,
+                    padding: EdgeInsets.only(bottom: 8),
+                    child: _buildMinutesTextInput(),
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              width: 8,
-            ),
+            )
           ],
         ),
       ),
+    );
+  }
+
+  TextField _buildMinutesTextInput() {
+    return TextField(
+      controller: textEditingController,
+      minLines: 1,
+      maxLines: 1,
+      cursorColor: AppColors.VIOLET,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.next,
+      textAlign: TextAlign.center,
+      enabled: trues ? true : false,
+      decoration: InputDecoration(
+          filled: true,
+          contentPadding: EdgeInsets.all(6),
+          isDense: true,
+          fillColor:
+              trues ? AppColors.TRANSPARENT_WHITE : AppColors.TRANSPARENTS,
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.VIOLET),
+              borderRadius: BorderRadius.all(Radius.circular(8))),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.CREAM),
+              borderRadius: BorderRadius.all(Radius.circular(8)))),
+      style: TextStyle(
+          fontSize: 18,
+          fontFamily: "sans-serif",
+          fontStyle: FontStyle.normal,
+          color: AppColors.VIOLET,
+          decoration: TextDecoration.none),
     );
   }
 }
