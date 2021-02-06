@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
@@ -36,7 +35,8 @@ class TimerService {
   String bookTitle;
   String buttonText;
   AppStates appStates = Get.put(AppStates());
-  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
+  // TODO one of players
+  AudioPlayer audioPlayer = AudioPlayer();
   AudioPlayer _player;
 
   init(State _state, BuildContext _context, int _pageId,
@@ -204,9 +204,8 @@ class TimerService {
           oneSec,
           (Timer timer) => state.setState(() {
                 if (time < 1) {
-                  assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
-                  assetsAudioPlayer.play();
-                  appStates.audioPlayer.value.stop();
+                  audioPlayer.setAsset("assets/audios/success.mp3");
+                  audioPlayer.play();
                   _player?.stop();
                   timer.cancel();
                   if (pageId != 4) saveProgress();

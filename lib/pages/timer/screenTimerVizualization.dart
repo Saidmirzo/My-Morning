@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
@@ -17,7 +18,6 @@ import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/customStartSkipColumn.dart';
 import 'package:morningmagic/widgets/custom_progress_bar/circleProgressBar.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class TimerVisualizationScreen extends StatefulWidget {
   @override
@@ -246,9 +246,9 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
           (Timer timer) => setState(() {
                 if (_time < 1) {
                   timer.cancel();
-                  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
-                  assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
-                  assetsAudioPlayer.play();
+                  final _audioPlayer = AudioPlayer();
+                  _audioPlayer.setAsset("assets/audios/success.mp3");
+                  _audioPlayer.play();
                   saveVisualizationProgress();
                   buttonText = 'start'.tr();
                   OrderUtil().getRouteById(5).then((value) {

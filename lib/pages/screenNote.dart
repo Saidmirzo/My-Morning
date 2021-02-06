@@ -1,6 +1,6 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/note/note.dart';
@@ -158,11 +158,8 @@ class NoteScreenState extends State<NoteScreen> {
                               top: MediaQuery.of(context).size.width / 3,
                               bottom: MediaQuery.of(context).size.width / 5),
                           child: AnimatedButton(() {
-                            AssetsAudioPlayer assetsAudioPlayer =
-                                AssetsAudioPlayer();
-                            assetsAudioPlayer
-                                .open(Audio("assets/audios/success.mp3"));
-                            assetsAudioPlayer.play();
+                            final _audioPlayer = AudioPlayer();
+                            _audioPlayer.setAsset("assets/audios/success.mp3");
                             saveNoteProgress();
                             OrderUtil().getRouteById(3).then((value) {
                               Navigator.push(

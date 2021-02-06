@@ -1,18 +1,14 @@
 import 'dart:async';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/day/day.dart';
 import 'package:morningmagic/db/model/progress/fitness_porgress/fitness_progress.dart';
 import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
-import 'package:morningmagic/features/fitness/presentation/pages/exercise_page.dart';
-import 'package:morningmagic/features/fitness/presentation/pages/fitness_success_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/string_util.dart';
 
@@ -39,7 +35,6 @@ class TimeAppBarState extends State<TimerAppBar> {
   int _time;
   int _startValue;
   DateTime date = DateTime.now();
-  FitnessController _fitnessController = Get.find<FitnessController>();
   bool isExerciseComplete = false;
 
   String time;
@@ -178,9 +173,9 @@ class TimeAppBarState extends State<TimerAppBar> {
           oneSec,
           (Timer timer) => setState(() {
                 if (_time < 1) {
-                  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
-                  assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
-                  assetsAudioPlayer.play();
+                  final _audioPlayer = AudioPlayer();
+                  _audioPlayer.setAsset("assets/audios/success.mp3");
+                  _audioPlayer.play();
                   setState(() {
                     isExerciseComplete = true;
                   });

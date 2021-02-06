@@ -1,6 +1,6 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
@@ -30,7 +30,7 @@ class ExerciseDetails extends StatefulWidget {
 }
 
 class ExerciseOneScDetails extends State<ExerciseDetails> {
-  final assetsAudioPlayer = AssetsAudioPlayer();
+  final _audioPlayer = AudioPlayer();
   TimerAppBar timerAppBar;
 
   @override
@@ -149,8 +149,8 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                       // assetsAudioPlayer.play();
                     }, nextCallback: () {
                       timerAppBar.cancelTimer();
-                      assetsAudioPlayer.stop();
-                      assetsAudioPlayer.dispose();
+                      _audioPlayer.stop();
+                      _audioPlayer.dispose();
                       if (widget.isCustomProgram) {
                         ExerciseUtils().goNextRoute(context, widget.pageId);
                       } else if (id < 10)
@@ -184,8 +184,8 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
   }
 
   Future<bool> _onWillPop() async {
-    assetsAudioPlayer.stop();
-    assetsAudioPlayer.dispose();
+    _audioPlayer.stop();
+    _audioPlayer.dispose();
     timerAppBar.cancelTimer();
     return true;
   }

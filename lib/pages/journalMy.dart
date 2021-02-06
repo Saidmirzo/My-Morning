@@ -1,7 +1,5 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -21,6 +19,7 @@ class journalMy extends StatefulWidget {
 
 class _journalMyState extends State<journalMy> {
   List<dynamic> list;
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +28,7 @@ class _journalMyState extends State<journalMy> {
   }
 
   AudioPlayer audioPlayer = AudioPlayer();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -247,7 +247,6 @@ class CategoryRecordItem extends StatefulWidget {
 
 class _CategoryRecordItemState extends State<CategoryRecordItem> {
   var isPlayed = false.obs;
-  final assetsAudioPlayer = AssetsAudioPlayer();
 
   void onPlayAudio() async {
     isPlayed.value = true;
@@ -326,7 +325,6 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
   }
 }
 
-
 class CategoriesScreen extends StatefulWidget {
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
@@ -336,6 +334,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   AppStates appStates = Get.put(AppStates());
 
   List<dynamic> list;
+
   @override
   void initState() {
     super.initState();

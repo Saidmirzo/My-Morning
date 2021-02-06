@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/pages/settingsPage.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/tutorial_waves/im_animations.dart';
@@ -14,7 +14,7 @@ class TutorialPage extends StatefulWidget {
 }
 
 class _TutorialPageState extends State<TutorialPage> {
-  AssetsAudioPlayer player = AssetsAudioPlayer();
+  AudioPlayer player = AudioPlayer();
   bool isCloseTutorial = false;
   bool value1 = false;
   bool animateAlign1 = false;
@@ -52,11 +52,14 @@ class _TutorialPageState extends State<TutorialPage> {
 
   void playTutorial() {
     Future.delayed(Duration(milliseconds: 200), () {
-      player.open(Audio('tutorial_asset'.tr()));
+      player.setAsset('tutorial_asset'.tr());
       player.play();
     });
-    player.playlistFinished.listen((element) {
-      if (element) {
+
+    player.playerStateStream.listen((state) {
+      print("${state.processingState.index}, playing = ${state.playing}");
+      if (state.playing &&
+          state.processingState.index == ProcessingState.completed.index) {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => SettingsPage()),

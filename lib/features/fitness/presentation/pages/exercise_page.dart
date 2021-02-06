@@ -1,7 +1,7 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_success_page.dart';
@@ -23,7 +23,7 @@ class ExercisePage extends StatefulWidget {
 
 class _ExercisePageState extends State<ExercisePage> {
   FitnessController _fitnessController = Get.find<FitnessController>();
-  final assetsAudioPlayer = AssetsAudioPlayer();
+  final _audioPlayer = AudioPlayer();
   TimerAppBar timerAppBar;
 
   @override
@@ -137,10 +137,8 @@ class _ExercisePageState extends State<ExercisePage> {
     final _audioRes = widget.exercise.audioRes;
     if (_audioRes != null) {
       final _audioResPath = '$_audioRes'.tr();
-      assetsAudioPlayer.open(
-        Audio(_audioResPath),
-      );
-      assetsAudioPlayer.play();
+      _audioPlayer.setAsset(_audioResPath);
+      _audioPlayer.play();
     }
   }
 
@@ -165,7 +163,7 @@ class _ExercisePageState extends State<ExercisePage> {
 
   void _disposeServices() {
     timerAppBar.cancelTimer();
-    assetsAudioPlayer.stop();
-    assetsAudioPlayer.dispose();
+    _audioPlayer.stop();
+    _audioPlayer.dispose();
   }
 }

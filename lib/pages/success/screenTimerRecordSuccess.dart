@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
@@ -229,9 +229,9 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
           oneSec,
           (Timer timer) => setState(() {
                 if (_time < 1) {
-                  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
-                  assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
-                  assetsAudioPlayer.play();
+                  final _audioPlayer = AudioPlayer();
+                  _audioPlayer.setAsset("assets/audios/success.mp3");
+                  _audioPlayer.play();
                   timer.cancel();
                   Future.microtask(() => stop());
                   OrderUtil().getRouteById(3).then((value) {

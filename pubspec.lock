@@ -29,22 +29,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.0"
-  assets_audio_player:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: c454d02
-      resolved-ref: c454d02ecd3687cf6cc9578d0003a9b7adc66276
-      url: "https://github.com/florent37/Flutter-AssetsAudioPlayer.git"
-    source: git
-    version: "2.0.13+1"
-  assets_audio_player_web:
-    dependency: transitive
-    description:
-      name: assets_audio_player_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.13+1"
   async:
     dependency: transitive
     description:

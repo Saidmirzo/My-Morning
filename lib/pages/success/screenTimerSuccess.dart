@@ -1,6 +1,6 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/timerPage.dart';
@@ -23,7 +23,7 @@ class TimerSuccessScreen extends StatefulWidget {
 }
 
 class TimerSuccessScreenState extends State<TimerSuccessScreen> {
-  AssetsAudioPlayer assetsAudioPlayer;
+  AudioPlayer _audioPlayer;
   DateTime dateTime = DateTime.now();
   int count;
 
@@ -122,7 +122,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
             : 0.5);
 
     MyDB().getBox().put(
-     getWeekDay(),
+        getWeekDay(),
         MyDB().getBox().get(getWeekDay()) != null
             ? (MyDB().getBox().get(getWeekDay()) + widget.minutes)
             : widget.minutes);
@@ -141,9 +141,9 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   @override
   void dispose() {
     super.dispose();
-    if (assetsAudioPlayer != null) {
-      assetsAudioPlayer.stop();
-      assetsAudioPlayer.dispose();
+    if (_audioPlayer != null) {
+      _audioPlayer.stop();
+      _audioPlayer.dispose();
     }
   }
 
@@ -176,9 +176,9 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
               Positioned(
                 bottom: MediaQuery.of(context).size.height / 5.5,
                 child: AnimatedButton(() async {
-                  if (assetsAudioPlayer != null) {
-                    assetsAudioPlayer.stop();
-                    assetsAudioPlayer.dispose();
+                  if (_audioPlayer != null) {
+                    _audioPlayer.stop();
+                    _audioPlayer.dispose();
                   }
                   widget.onPressed();
                 }, 'rex', 'continue'.tr(), 21, null, null),

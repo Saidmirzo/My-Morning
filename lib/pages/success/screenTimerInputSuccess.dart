@@ -1,7 +1,6 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -21,7 +20,7 @@ class TimerInputSuccessScreen extends StatefulWidget {
 }
 
 class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
-  AssetsAudioPlayer assetsAudioPlayer;
+  AudioPlayer _audioPlayer;
   int count;
   DateTime dateTime = DateTime.now();
 
@@ -106,9 +105,9 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   @override
   void dispose() {
     super.dispose();
-    if (assetsAudioPlayer != null) {
-      assetsAudioPlayer.stop();
-      assetsAudioPlayer.dispose();
+    if (_audioPlayer != null) {
+      _audioPlayer.stop();
+      _audioPlayer.dispose();
     }
   }
 
@@ -157,11 +156,10 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
                                 bottom:
                                     MediaQuery.of(context).size.height / 17),
                             child: InputTextColumn(() {
-                              if (assetsAudioPlayer != null) {
-                                assetsAudioPlayer.stop();
-                                assetsAudioPlayer.dispose();
+                              if (_audioPlayer != null) {
+                                _audioPlayer.stop();
+                                _audioPlayer.dispose();
                               }
-//                            }, widget.seconds, widget.bookTitle, widget.box),
                             }),
                           ),
                         ],
@@ -176,9 +174,9 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   }
 
   Future<bool> _onWillPop() async {
-    if (assetsAudioPlayer != null) {
-      assetsAudioPlayer.stop();
-      assetsAudioPlayer.dispose();
+    if (_audioPlayer != null) {
+      _audioPlayer.stop();
+      _audioPlayer.dispose();
     }
     return true;
   }

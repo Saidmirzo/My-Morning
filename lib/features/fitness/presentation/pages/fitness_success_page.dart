@@ -1,7 +1,7 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
@@ -19,7 +19,7 @@ class FitnessSuccessPage extends StatefulWidget {
 }
 
 class FitnessSuccessPageState extends State<FitnessSuccessPage> {
-  AssetsAudioPlayer assetsAudioPlayer;
+  AudioPlayer _audioPlayer;
   DateTime dateTime = DateTime.now();
   int count;
 
@@ -38,9 +38,9 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
 
   @override
   void dispose() {
-    if (assetsAudioPlayer != null) {
-      assetsAudioPlayer.stop();
-      assetsAudioPlayer.dispose();
+    if (_audioPlayer != null) {
+      _audioPlayer.stop();
+      _audioPlayer.dispose();
     }
     super.dispose();
   }
@@ -136,8 +136,8 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   }
 
   void _initializeAudioPlayer() {
-    assetsAudioPlayer = AssetsAudioPlayer();
-    assetsAudioPlayer.open(Audio("assets/audios/success.mp3"));
+    _audioPlayer = AudioPlayer();
+    _audioPlayer.setAsset("assets/audios/success.mp3");
   }
 
   Future<void> _vibrate() async {
