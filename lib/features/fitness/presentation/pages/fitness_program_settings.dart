@@ -21,25 +21,26 @@ class _FitnessProgramSettingsPageState
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        floatingActionButton: _buildFloatingActionButtons(),
-        body: AppGradientContainer(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: _buildBackButton(context),
+    return Scaffold(
+      floatingActionButton: _buildFloatingActionButtons(),
+      body: AppGradientContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SizedBox(
+              height: 16,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: _buildBackButton(context),
+            ),
+            Obx(
+              () => Expanded(
+                child: _buildProgramList(),
               ),
-              Obx(
-                () => Expanded(
-                  child: _buildProgramList(),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

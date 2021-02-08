@@ -65,6 +65,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
   @override
   void initState() {
     super.initState();
+
     AnalyticService.screenView('dashboard');
     userName = _getUserName();
     nameController = TextEditingController(text: userName);
@@ -75,548 +76,540 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
   Widget build(BuildContext context) {
     log('Build askedQuestionScreen');
     rateApp(context);
-    return SafeArea(
-      child: Scaffold(
-        body: AppGradientContainer(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.only(bottom: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                InkWell(
-                  onTap: () async {
-                    nameController.text = userName;
-                    final _newName = await _editUserNameDialog();
-                    if (_newName != null) {
-                      setState(() {
-                        userName = _newName;
-                      });
-                      MyDB().getBox().put(MyResource.USER_KEY, User(userName));
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 25.0, right: 25.0, top: 16, bottom: 16),
-                    child: Text(
-                      userName,
-                      style: TextStyle(fontSize: 23, color: AppColors.VIOLET),
-                    ),
+    return Scaffold(
+      body: AppGradientContainer(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(top: 16, bottom: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              InkWell(
+                onTap: () async {
+                  nameController.text = userName;
+                  final _newName = await _editUserNameDialog();
+                  if (_newName != null) {
+                    setState(() {
+                      userName = _newName;
+                    });
+                    MyDB().getBox().put(MyResource.USER_KEY, User(userName));
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 25.0, right: 25.0, top: 16, bottom: 16),
+                  child: Text(
+                    userName,
+                    style: TextStyle(fontSize: 23, color: AppColors.VIOLET),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20,
-                    bottom: 0,
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20,
+                  bottom: 0,
+                ),
+                padding: const EdgeInsets.only(bottom: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
                   ),
-                  padding: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            padding: EdgeInsets.only(
-                              top: 15,
-                              left: 15,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2,
+                          padding: EdgeInsets.only(
+                            top: 15,
+                            left: 15,
+                          ),
+                          child: Text(
+                            'awareness_meter'.tr(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.064,
+                              color: Color(0xffaAaAaA),
                             ),
-                            child: Text(
-                              'awareness_meter'.tr(),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2 - 50,
+                          padding: EdgeInsets.only(
+                            top: 15,
+                          ),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                                text: 'for_week'.tr(),
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.064,
+                                  color: Color(0xffaAaAaA),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: 'minutes_per_week'.tr(),
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.055,
+                                      color: Color(0xffaAaAaA),
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            AnimatedCircularChart(
+                              //holeRadius: HoleRa,
+                              key: _chartKey,
+                              size: Size(MediaQuery.of(context).size.width / 2,
+                                  MediaQuery.of(context).size.width / 2),
+                              initialChartData: <CircularStackEntry>[
+                                new CircularStackEntry(
+                                  <CircularSegmentEntry>[
+                                    new CircularSegmentEntry(
+                                      MyDB().getBox().get(
+                                                MyResource.PERCENT_OF_AWARENESS,
+                                              ) ??
+                                          0,
+                                      Color(0xff00b2ff),
+                                      rankKey: 'completed',
+                                    ),
+                                    new CircularSegmentEntry(
+                                      MyDB().getBox().get(
+                                                    MyResource
+                                                        .PERCENT_OF_AWARENESS,
+                                                  ) !=
+                                              null
+                                          ? 100 -
+                                              MyDB().getBox().get(MyResource
+                                                  .PERCENT_OF_AWARENESS)
+                                          : 100,
+                                      Color(0xffb3e8ff),
+                                      rankKey: 'remaining',
+                                    ),
+                                  ],
+                                  rankKey: 'progress',
+                                ),
+                              ],
+                              chartType: CircularChartType.Radial,
+                              percentageValues: true,
+                              holeLabel:
+                                  '${MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS) ?? 0} %',
+                              edgeStyle: SegmentEdgeStyle.round,
+                              labelStyle: new TextStyle(
+                                color: Colors.blueGrey[600],
+                                fontWeight: FontWeight.bold,
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.064,
-                                color: Color(0xffaAaAaA),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          child: Column(
+                            //crossAxisAlignment: CrossAxisAlignment.stretch,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 40,
+                                height: MediaQuery.of(context).size.height *
+                                    0.25, //150,
+                                child: VerticalBarLabelChart.withSampleData(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                height: MediaQuery.of(context).size.height < 668
+                    ? MediaQuery.of(context).size.height * 0.255
+                    : MediaQuery.of(context).size.height * 0.215,
+                margin: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20,
+                  top: 12,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                        left: context.locale == Locale('ru') ? 40 : 40,
+                        right: context.locale == Locale('ru') ? 48 : 42,
+                      ),
+                      decoration: BoxDecoration(
+                          color: Color(0xffEBC2BE),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                            bottomLeft: Radius.circular(4),
+                            bottomRight: Radius.circular(4),
+                          )),
+                      height: MediaQuery.of(context).size.height < 668
+                          ? MediaQuery.of(context).size.height * 0.08
+                          : MediaQuery.of(context).size.height * 0.06,
+                      child: Row(
+                        //crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _Itog = true;
+                                _Mounth = false;
+                                _Year = false;
+                              });
+                            },
+                            child: SizedBox(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'total'.tr(),
+                                    style: TextStyle(
+                                      color:
+                                          _Itog ? Colors.white : Colors.black54,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.04, //23,
+                                    ),
+                                  ),
+                                  //bool _Itog = true;
+                                  // bool _Mounth = false;
+                                  // bool _Year = false;
+                                  _Itog
+                                      ? Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.white,
+                                        )
+                                      : Icon(
+                                          Icons.arrow_drop_up,
+                                          color: Colors.black54,
+                                        ),
+                                ],
                               ),
                             ),
                           ),
-                          Container(
-                            width: MediaQuery.of(context).size.width / 2 - 50,
-                            padding: EdgeInsets.only(
-                              top: 15,
-                            ),
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                  text: 'for_week'.tr(),
-                                  style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.064,
-                                    color: Color(0xffaAaAaA),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: 'minutes_per_week'.tr(),
-                                      style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.055,
-                                        color: Color(0xffaAaAaA),
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _Itog = false;
+                                _Mounth = true;
+                                _Year = false;
+                              });
+                            },
+                            child: SizedBox(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'month'.tr(),
+                                    style: TextStyle(
+                                      color: _Mounth
+                                          ? Colors.white
+                                          : Colors.black54,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.04, //23,
                                     ),
-                                  ]),
+                                  ),
+                                  _Mounth
+                                      ? Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.white,
+                                        )
+                                      : Icon(
+                                          Icons.arrow_drop_up,
+                                          color: Colors.black54,
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _Itog = false;
+                                _Mounth = false;
+                                _Year = true;
+                              });
+                            },
+                            child: SizedBox(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'year'.tr(),
+                                    style: TextStyle(
+                                      color:
+                                          _Year ? Colors.white : Colors.black54,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.04, //23,
+                                    ),
+                                  ),
+                                  _Year
+                                      ? Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.white,
+                                        )
+                                      : Icon(
+                                          Icons.arrow_drop_up,
+                                          color: Colors.black54,
+                                        ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(
+                        top: 5,
+                        left: 25,
+                        right: 25,
+                        bottom: 10,
+                      ),
+                      child: Stack(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              AnimatedCircularChart(
-                                //holeRadius: HoleRa,
-                                key: _chartKey,
-                                size: Size(
-                                    MediaQuery.of(context).size.width / 2,
-                                    MediaQuery.of(context).size.width / 2),
-                                initialChartData: <CircularStackEntry>[
-                                  new CircularStackEntry(
-                                    <CircularSegmentEntry>[
-                                      new CircularSegmentEntry(
-                                        MyDB().getBox().get(
-                                                  MyResource
-                                                      .PERCENT_OF_AWARENESS,
-                                                ) ??
-                                            0,
-                                        Color(0xff00b2ff),
-                                        rankKey: 'completed',
-                                      ),
-                                      new CircularSegmentEntry(
-                                        MyDB().getBox().get(
-                                                      MyResource
-                                                          .PERCENT_OF_AWARENESS,
-                                                    ) !=
-                                                null
-                                            ? 100 -
-                                                MyDB().getBox().get(MyResource
-                                                    .PERCENT_OF_AWARENESS)
-                                            : 100,
-                                        Color(0xffb3e8ff),
-                                        rankKey: 'remaining',
-                                      ),
-                                    ],
-                                    rankKey: 'progress',
-                                  ),
-                                ],
-                                chartType: CircularChartType.Radial,
-                                percentageValues: true,
-                                holeLabel:
-                                    '${MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS) ?? 0} %',
-                                edgeStyle: SegmentEdgeStyle.round,
-                                labelStyle: new TextStyle(
-                                  color: Colors.blueGrey[600],
-                                  fontWeight: FontWeight.bold,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.064,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
+                          Align(
+                            alignment: Alignment.topLeft,
                             child: Column(
-                              //crossAxisAlignment: CrossAxisAlignment.stretch,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width / 2 -
-                                      40,
-                                  height: MediaQuery.of(context).size.height *
-                                      0.25, //150,
-                                  child: VerticalBarLabelChart.withSampleData(),
+                                SvgPicture.asset(
+                                  'assets/images/amount_practice.svg',
+                                  width: 23,
+                                ),
+                                Text(
+                                  'count_of_sessions'.tr(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.03, //
+                                  ),
+                                ),
+                                Text(
+                                  _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) ==
+                                          1
+                                      ? MyDB().getBox().get(MyResource
+                                                  .TOTAL_COUNT_OF_SESSIONS) !=
+                                              null
+                                          ? MyDB()
+                                              .getBox()
+                                              .get(MyResource
+                                                  .TOTAL_COUNT_OF_SESSIONS)
+                                              .toString()
+                                          : '0'
+                                      : (_Itogi_Mounth_Year_kol_vo(
+                                                  _Itog, _Mounth, _Year) ==
+                                              2
+                                          ? MyDB().getBox().get(MyResource
+                                                      .TOTAL_COUNT_OF_SESSIONS) !=
+                                                  null
+                                              ? MyDB()
+                                                  .getBox()
+                                                  .get(MyResource
+                                                      .TOTAL_COUNT_OF_SESSIONS)
+                                                  .toString()
+                                              : '0'
+                                          : (_Itogi_Mounth_Year_kol_vo(
+                                                      _Itog, _Mounth, _Year) ==
+                                                  3
+                                              ? MyDB().getBox().get(MyResource
+                                                          .YEAR_COUNT_OF_SESSIONS) !=
+                                                      null
+                                                  ? MyDB()
+                                                      .getBox()
+                                                      .get(MyResource.YEAR_COUNT_OF_SESSIONS)
+                                                      .toString()
+                                                  : '0'
+                                              : '3')),
+                                  style: TextStyle(
+                                    color: Color(0xff832f51),
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.085, //32,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  Icons.timer,
+                                  color: Colors.black54,
+                                ),
+                                Text(
+                                  'minutes_of_awareness_with_myself'.tr(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.03, //
+                                  ),
+                                ),
+                                Text(
+                                  _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) ==
+                                          1
+                                      ? MyDB().getBox().get(MyResource
+                                                  .TOTAL_MINUTES_OF_AWARENESS) !=
+                                              null
+                                          ? MyDB()
+                                              .getBox()
+                                              .get(MyResource
+                                                  .TOTAL_MINUTES_OF_AWARENESS)
+                                              .toString()
+                                          : '0'
+                                      : (_Itogi_Mounth_Year_kol_vo(
+                                                  _Itog, _Mounth, _Year) ==
+                                              2
+                                          ? MyDB().getBox().get(MyResource
+                                                      .TOTAL_MINUTES_OF_AWARENESS) !=
+                                                  null
+                                              ? MyDB()
+                                                  .getBox()
+                                                  .get(MyResource
+                                                      .TOTAL_MINUTES_OF_AWARENESS)
+                                                  .toString()
+                                              : '0'
+                                          : (_Itogi_Mounth_Year_kol_vo(
+                                                      _Itog, _Mounth, _Year) ==
+                                                  3
+                                              ? MyDB().getBox().get(MyResource
+                                                          .YEAR_MINUTES_OF_AWARENESS) !=
+                                                      null
+                                                  ? MyDB()
+                                                      .getBox()
+                                                      .get(MyResource
+                                                          .YEAR_MINUTES_OF_AWARENESS)
+                                                      .toString()
+                                                  : '0'
+                                              : '3')),
+                                  style: TextStyle(
+                                    color: Color(0xff832f51),
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.085, //32,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  Icons.show_chart,
+                                  color: Colors.black54,
+                                ),
+                                Text(
+                                  'count_of_completed_sessions'.tr(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.03, //
+                                  ),
+                                ),
+                                Text(
+                                  _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth,
+                                              _Year) ==
+                                          1
+                                      ? MyDB().getBox().get(MyResource
+                                                  .TOTAL_COUNT_OF_COMPLETED_SESSIONS) !=
+                                              null
+                                          ? MyDB()
+                                              .getBox()
+                                              .get(MyResource
+                                                  .TOTAL_COUNT_OF_COMPLETED_SESSIONS)
+                                              .toString()
+                                          : '0'
+                                      : (_Itogi_Mounth_Year_kol_vo(_Itog,
+                                                  _Mounth, _Year) ==
+                                              2
+                                          ? MyDB().getBox().get(MyResource
+                                                      .TOTAL_COUNT_OF_COMPLETED_SESSIONS) !=
+                                                  null
+                                              ? MyDB()
+                                                  .getBox()
+                                                  .get(MyResource
+                                                      .TOTAL_COUNT_OF_COMPLETED_SESSIONS)
+                                                  .toString()
+                                              : '0'
+                                          : (_Itogi_Mounth_Year_kol_vo(
+                                                      _Itog, _Mounth, _Year) ==
+                                                  3
+                                              ? MyDB().getBox().get(MyResource
+                                                          .YEAR_COUNT_OF_COMPLETED_SESSIONS) !=
+                                                      null
+                                                  ? MyDB()
+                                                      .getBox()
+                                                      .get(MyResource
+                                                          .YEAR_COUNT_OF_COMPLETED_SESSIONS)
+                                                      .toString()
+                                                  : '0'
+                                              : '3')),
+                                  style: TextStyle(
+                                    color: Color(0xff832f51),
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.085, //32,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                      //height: MediaQuery.of(context).size.height * 0.2,
+                    ),
+                  ],
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  height: MediaQuery.of(context).size.height < 668
-                      ? MediaQuery.of(context).size.height * 0.255
-                      : MediaQuery.of(context).size.height * 0.215,
-                  margin: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20,
-                    top: 12,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(
-                          left: context.locale == Locale('ru') ? 40 : 40,
-                          right: context.locale == Locale('ru') ? 48 : 42,
-                        ),
-                        decoration: BoxDecoration(
-                            color: Color(0xffEBC2BE),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                              bottomLeft: Radius.circular(4),
-                              bottomRight: Radius.circular(4),
-                            )),
-                        height: MediaQuery.of(context).size.height < 668
-                            ? MediaQuery.of(context).size.height * 0.08
-                            : MediaQuery.of(context).size.height * 0.06,
-                        child: Row(
-                          //crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _Itog = true;
-                                  _Mounth = false;
-                                  _Year = false;
-                                });
-                              },
-                              child: SizedBox(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'total'.tr(),
-                                      style: TextStyle(
-                                        color: _Itog
-                                            ? Colors.white
-                                            : Colors.black54,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.04, //23,
-                                      ),
-                                    ),
-                                    //bool _Itog = true;
-                                    // bool _Mounth = false;
-                                    // bool _Year = false;
-                                    _Itog
-                                        ? Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Colors.white,
-                                          )
-                                        : Icon(
-                                            Icons.arrow_drop_up,
-                                            color: Colors.black54,
-                                          ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _Itog = false;
-                                  _Mounth = true;
-                                  _Year = false;
-                                });
-                              },
-                              child: SizedBox(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'month'.tr(),
-                                      style: TextStyle(
-                                        color: _Mounth
-                                            ? Colors.white
-                                            : Colors.black54,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.04, //23,
-                                      ),
-                                    ),
-                                    _Mounth
-                                        ? Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Colors.white,
-                                          )
-                                        : Icon(
-                                            Icons.arrow_drop_up,
-                                            color: Colors.black54,
-                                          ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _Itog = false;
-                                  _Mounth = false;
-                                  _Year = true;
-                                });
-                              },
-                              child: SizedBox(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'year'.tr(),
-                                      style: TextStyle(
-                                        color: _Year
-                                            ? Colors.white
-                                            : Colors.black54,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.04, //23,
-                                      ),
-                                    ),
-                                    _Year
-                                        ? Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Colors.white,
-                                          )
-                                        : Icon(
-                                            Icons.arrow_drop_up,
-                                            color: Colors.black54,
-                                          ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(
-                          top: 5,
-                          left: 25,
-                          right: 25,
-                          bottom: 10,
-                        ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images/amount_practice.svg',
-                                    width: 23,
-                                  ),
-                                  Text(
-                                    'count_of_sessions'.tr(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.03, //
-                                    ),
-                                  ),
-                                  Text(
-                                    _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) ==
-                                            1
-                                        ? MyDB().getBox().get(MyResource
-                                                    .TOTAL_COUNT_OF_SESSIONS) !=
-                                                null
-                                            ? MyDB()
-                                                .getBox()
-                                                .get(MyResource
-                                                    .TOTAL_COUNT_OF_SESSIONS)
-                                                .toString()
-                                            : '0'
-                                        : (_Itogi_Mounth_Year_kol_vo(
-                                                    _Itog, _Mounth, _Year) ==
-                                                2
-                                            ? MyDB().getBox().get(MyResource
-                                                        .TOTAL_COUNT_OF_SESSIONS) !=
-                                                    null
-                                                ? MyDB()
-                                                    .getBox()
-                                                    .get(MyResource
-                                                        .TOTAL_COUNT_OF_SESSIONS)
-                                                    .toString()
-                                                : '0'
-                                            : (_Itogi_Mounth_Year_kol_vo(
-                                                        _Itog, _Mounth, _Year) ==
-                                                    3
-                                                ? MyDB().getBox().get(MyResource
-                                                            .YEAR_COUNT_OF_SESSIONS) !=
-                                                        null
-                                                    ? MyDB()
-                                                        .getBox()
-                                                        .get(MyResource.YEAR_COUNT_OF_SESSIONS)
-                                                        .toString()
-                                                    : '0'
-                                                : '3')),
-                                    style: TextStyle(
-                                      color: Color(0xff832f51),
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.085, //32,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Icon(
-                                    Icons.timer,
-                                    color: Colors.black54,
-                                  ),
-                                  Text(
-                                    'minutes_of_awareness_with_myself'.tr(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.03, //
-                                    ),
-                                  ),
-                                  Text(
-                                    _Itogi_Mounth_Year_kol_vo(
-                                                _Itog, _Mounth, _Year) ==
-                                            1
-                                        ? MyDB().getBox().get(MyResource
-                                                    .TOTAL_MINUTES_OF_AWARENESS) !=
-                                                null
-                                            ? MyDB()
-                                                .getBox()
-                                                .get(MyResource
-                                                    .TOTAL_MINUTES_OF_AWARENESS)
-                                                .toString()
-                                            : '0'
-                                        : (_Itogi_Mounth_Year_kol_vo(
-                                                    _Itog, _Mounth, _Year) ==
-                                                2
-                                            ? MyDB().getBox().get(MyResource
-                                                        .TOTAL_MINUTES_OF_AWARENESS) !=
-                                                    null
-                                                ? MyDB()
-                                                    .getBox()
-                                                    .get(MyResource
-                                                        .TOTAL_MINUTES_OF_AWARENESS)
-                                                    .toString()
-                                                : '0'
-                                            : (_Itogi_Mounth_Year_kol_vo(
-                                                        _Itog, _Mounth, _Year) ==
-                                                    3
-                                                ? MyDB().getBox().get(MyResource
-                                                            .YEAR_MINUTES_OF_AWARENESS) !=
-                                                        null
-                                                    ? MyDB()
-                                                        .getBox()
-                                                        .get(MyResource
-                                                            .YEAR_MINUTES_OF_AWARENESS)
-                                                        .toString()
-                                                    : '0'
-                                                : '3')),
-                                    style: TextStyle(
-                                      color: Color(0xff832f51),
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.085, //32,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Icon(
-                                    Icons.show_chart,
-                                    color: Colors.black54,
-                                  ),
-                                  Text(
-                                    'count_of_completed_sessions'.tr(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.03, //
-                                    ),
-                                  ),
-                                  Text(
-                                    _Itogi_Mounth_Year_kol_vo(
-                                                _Itog, _Mounth, _Year) ==
-                                            1
-                                        ? MyDB().getBox().get(MyResource
-                                                    .TOTAL_COUNT_OF_COMPLETED_SESSIONS) !=
-                                                null
-                                            ? MyDB()
-                                                .getBox()
-                                                .get(MyResource
-                                                    .TOTAL_COUNT_OF_COMPLETED_SESSIONS)
-                                                .toString()
-                                            : '0'
-                                        : (_Itogi_Mounth_Year_kol_vo(
-                                                    _Itog, _Mounth, _Year) ==
-                                                2
-                                            ? MyDB().getBox().get(MyResource
-                                                        .TOTAL_COUNT_OF_COMPLETED_SESSIONS) !=
-                                                    null
-                                                ? MyDB()
-                                                    .getBox()
-                                                    .get(MyResource
-                                                        .TOTAL_COUNT_OF_COMPLETED_SESSIONS)
-                                                    .toString()
-                                                : '0'
-                                            : (_Itogi_Mounth_Year_kol_vo(
-                                                        _Itog, _Mounth, _Year) ==
-                                                    3
-                                                ? MyDB().getBox().get(MyResource
-                                                            .YEAR_COUNT_OF_COMPLETED_SESSIONS) !=
-                                                        null
-                                                    ? MyDB()
-                                                        .getBox()
-                                                        .get(MyResource
-                                                            .YEAR_COUNT_OF_COMPLETED_SESSIONS)
-                                                        .toString()
-                                                    : '0'
-                                                : '3')),
-                                    style: TextStyle(
-                                      color: Color(0xff832f51),
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.085, //32,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        //height: MediaQuery.of(context).size.height * 0.2,
-                      ),
-                    ],
-                  ),
-                ),
-                _menuList(context),
-                _menuButton(context),
-                SizedBox(height: 5),
-                RemoveProgress(),
-              ],
-            ),
+              ),
+              _menuList(context),
+              SizedBox(
+                height: 8,
+              ),
+              _menuButton(context),
+              SizedBox(height: 5),
+              RemoveProgress(),
+            ],
           ),
         ),
       ),

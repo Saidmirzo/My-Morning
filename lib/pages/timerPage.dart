@@ -95,44 +95,42 @@ class TimerPageState extends State<TimerPage> {
       timerService.buttonText = 'start'.tr();
     }
 
-    return SafeArea(
-      child: Scaffold(
-        body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints viewportConstraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: viewportConstraints.maxHeight,
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.TOP_GRADIENT,
-                      AppColors.MIDDLE_GRADIENT,
-                      AppColors.BOTTOM_GRADIENT
-                    ],
-                  )),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      if (widget.pageId == 1) _buildPlayerControls(),
-                      _buildTimerProgress(context),
-                      SizedBox(
-                        height: 24,
-                      ),
-                      if (titleText != null) _buildTitleWidget(),
-                      _buildMenuButtons(context),
-                    ],
-                  ),
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: viewportConstraints.maxHeight,
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    AppColors.TOP_GRADIENT,
+                    AppColors.MIDDLE_GRADIENT,
+                    AppColors.BOTTOM_GRADIENT
+                  ],
+                )),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    if (widget.pageId == 1) _buildPlayerControls(),
+                    _buildTimerProgress(context),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    if (titleText != null) _buildTitleWidget(),
+                    _buildMenuButtons(context),
+                  ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

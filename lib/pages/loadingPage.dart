@@ -31,12 +31,12 @@ class LoadingPageState extends State<LoadingPage>
 
   @override
   void initState() {
+    super.initState();
     print('LoadingPage initState');
     initController();
     initAndLoadDb();
     billingService.init();
     initRedirect();
-    super.initState();
   }
 
   Future<void> _sendAnalyticsEventTwo() async {
