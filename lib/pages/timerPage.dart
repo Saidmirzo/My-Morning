@@ -51,7 +51,9 @@ class TimerPageState extends State<TimerPage> {
         titleText = timerService.visualizationText;
     });
 
+    // TODO make enum id for page
     if (widget.pageId == 0) {
+      //affirmation page
       AnalyticService.screenView('affirmation_timer_page');
     } else if (widget.pageId == 1) {
       // meditation page
@@ -103,9 +105,6 @@ class TimerPageState extends State<TimerPage> {
                   minHeight: viewportConstraints.maxHeight,
                 ),
                 child: Container(
-                  width: MediaQuery.of(context)
-                      .size
-                      .width, // match parent(all screen)
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -117,135 +116,16 @@ class TimerPageState extends State<TimerPage> {
                     ],
                   )),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      widget.pageId == 1
-                          ? Container(
-                              margin: EdgeInsets.only(top: 50),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  RaisedButton(
-                                    color: Colors.transparent,
-                                    elevation: 0,
-                                    autofocus: false,
-                                    hoverColor: AppColors.TRANSPARENT,
-                                    highlightElevation: 0,
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0)),
-                                    onPressed: _prev,
-                                    child: Icon(
-                                      Icons.fast_rewind,
-                                      size: 60,
-                                      color: AppColors.VIOLET,
-                                    ),
-                                  ),
-                                  RaisedButton(
-                                    color: Colors.transparent,
-                                    elevation: 0,
-                                    autofocus: false,
-                                    hoverColor: AppColors.TRANSPARENT,
-                                    highlightElevation: 0,
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0)),
-                                    onPressed: _playOrPause,
-                                    child: Icon(
-                                      _audioPlayer.playing
-                                          ? Icons.pause
-                                          : Icons.play_arrow,
-                                      size: 60,
-                                      color: AppColors.VIOLET,
-                                    ),
-                                  ),
-                                  RaisedButton(
-                                    color: Colors.transparent,
-                                    elevation: 0,
-                                    autofocus: false,
-                                    hoverColor: AppColors.TRANSPARENT,
-                                    highlightElevation: 0,
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0)),
-                                    onPressed: _next,
-                                    child: Icon(
-                                      Icons.fast_forward,
-                                      size: 60,
-                                      color: AppColors.VIOLET,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Container(),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 24,
-                          ),
-                          if (titleText != null) _buildTitleWidget(),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: CircleProgressBar(
-                              text: StringUtil()
-                                  .createTimeString(timerService.time),
-                              foregroundColor: AppColors.WHITE,
-                              value: timerService.createValue(),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 40),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  child: AnimatedButton(
-                                      () => timerService.startTimer(),
-                                      'rex',
-                                      timerService.buttonText,
-                                      15,
-                                      null,
-                                      null),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: AnimatedButton(() {
-                                    _audioPlayer.stop();
-                                    timerService.skipTask();
-                                  }, 'rex', 'skip'.tr(), 15, null, null),
-                                ),
-                                if (widget.pageId == 0)
-                                  Container(
-                                    padding: EdgeInsets.only(top: 10),
-                                    child: AnimatedButton(() async {
-                                      final _affirmation =
-                                          await _showAffirmationCategoryDialog(
-                                              context);
-                                      if (_affirmation != null)
-                                        setState(() {
-                                          titleText = _affirmation;
-                                        });
-                                    }, 'rex', 'Аффирмации'.tr(), 15, null,
-                                        null),
-                                  ),
-                                Container(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: AnimatedButton(() {
-                                    _audioPlayer.stop();
-                                    timerService.goToHome();
-                                  }, 'rex', 'menu'.tr(), 15, null, null),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height / 10),
-                        ],
+                      if (widget.pageId == 1) _buildPlayerControls(),
+                      _buildTimerProgress(context),
+                      SizedBox(
+                        height: 24,
                       ),
+                      if (titleText != null) _buildTitleWidget(),
+                      _buildMenuButtons(context),
                     ],
                   ),
                 ),
@@ -254,6 +134,127 @@ class TimerPageState extends State<TimerPage> {
           },
         ),
       ),
+    );
+  }
+
+  Container _buildTimerProgress(BuildContext context) {
+    double _timerSize = 0.0;
+    if (widget.pageId == 0) {
+      //for affirmaiton
+      _timerSize = MediaQuery.of(context).size.width * 0.4;
+    } else {
+      _timerSize = MediaQuery.of(context).size.width * 0.7;
+    }
+
+    return Container(
+      width: _timerSize,
+      child: CircleProgressBar(
+        text: StringUtil().createTimeString(timerService.time),
+        foregroundColor: AppColors.WHITE,
+        value: timerService.createValue(),
+      ),
+    );
+  }
+
+  Container _buildPlayerControls() {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RaisedButton(
+              color: Colors.transparent,
+              elevation: 0,
+              autofocus: false,
+              hoverColor: AppColors.TRANSPARENT,
+              highlightElevation: 0,
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              onPressed: _prev,
+              child: Icon(
+                Icons.fast_rewind,
+                size: 60,
+                color: AppColors.VIOLET,
+              ),
+            ),
+            RaisedButton(
+              color: Colors.transparent,
+              elevation: 0,
+              autofocus: false,
+              hoverColor: AppColors.TRANSPARENT,
+              highlightElevation: 0,
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              onPressed: _playOrPause,
+              child: Icon(
+                _audioPlayer.playing ? Icons.pause : Icons.play_arrow,
+                size: 60,
+                color: AppColors.VIOLET,
+              ),
+            ),
+            RaisedButton(
+              color: Colors.transparent,
+              elevation: 0,
+              autofocus: false,
+              hoverColor: AppColors.TRANSPARENT,
+              highlightElevation: 0,
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              onPressed: _next,
+              child: Icon(
+                Icons.fast_forward,
+                size: 60,
+                color: AppColors.VIOLET,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuButtons(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          child: AnimatedButton(() => timerService.startTimer(), 'rex',
+              timerService.buttonText, 15, null, null),
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 10),
+          child: AnimatedButton(() {
+            _audioPlayer.stop();
+            timerService.skipTask();
+          }, 'rex', 'skip'.tr(), 15, null, null),
+        ),
+        if (widget.pageId == 0)
+          Container(
+            padding: EdgeInsets.only(top: 10),
+            child: AnimatedButton(() async {
+              final _affirmation =
+                  await _showAffirmationCategoryDialog(context);
+              if (_affirmation != null)
+                setState(() {
+                  titleText = _affirmation;
+                });
+            }, 'rex', 'affirmation_timer'.tr(), 15, null, null),
+          ),
+        Container(
+          padding: EdgeInsets.only(top: 10),
+          child: AnimatedButton(() {
+            _audioPlayer.stop();
+            timerService.goToHome();
+          }, 'rex', 'menu'.tr(), 15, null, null),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+      ],
     );
   }
 

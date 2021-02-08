@@ -190,7 +190,7 @@
   "minutes": "minutes",
   "choose_sequence": "Choose\nsequence",
   "choose": "Choose",
-  "choose_title": "Drag and drop to change sequence of exercises and set time on them.",
+  "choose_title": "Drag and drop to change sequence of exercises and set time on them.\n0 min - skip exercise.",
   "exercises_note": "Exercises",
   "visualizations_note": "Visualization",
   "seconds": "seconds",
@@ -327,5 +327,6 @@
   "action_remind": "Remind me later",
   "rate_subject": "App rating",
   "my_progress": "MY PROGRESS",
-  "exercise_complete": "Exercise complete"
+  "exercise_complete": "Exercise complete",
+  "affirmation_timer": "Affirmations"
 }

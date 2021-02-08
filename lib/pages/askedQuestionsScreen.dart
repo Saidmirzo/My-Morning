@@ -83,7 +83,6 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
                 InkWell(
                   onTap: () async {
                     nameController.text = userName;
@@ -92,13 +91,12 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                       setState(() {
                         userName = _newName;
                       });
-                      MyDB()
-                          .getBox()
-                          .put(MyResource.USER_KEY, User(userName));
+                      MyDB().getBox().put(MyResource.USER_KEY, User(userName));
                     }
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 16,bottom: 16),
+                    padding: const EdgeInsets.only(
+                        left: 25.0, right: 25.0, top: 16, bottom: 16),
                     child: Text(
                       userName,
                       style: TextStyle(fontSize: 23, color: AppColors.VIOLET),
@@ -613,293 +611,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.24,
-                  //0.249, //0.23,
-                  margin: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20,
-                    top: 12,
-                    bottom: 5,
-                  ),
-                  padding: const EdgeInsets.only(bottom: 0),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: Column(
-                    children: [
-                      InkWell(
-                        //onTap: () => print('!!!Мои дневник!!!'),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => journalMy()));
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.046,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/diary.svg',
-                                  width: 23,
-                                  color: Colors.grey[600],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    'my_diary'.tr(),
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.044, //24,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Icon(
-                                    Icons.arrow_right_alt,
-                                    color: Colors.black54,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.064, //24,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 1,
-                        color: Color(0xffEBC2BE),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          billingService.isPro()
-                              ? Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => MyFitnessProgress()))
-                              : Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Reclama()));
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.046,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/sport.svg',
-                                  width: 23,
-                                  color: Colors.grey[600],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    'my_exercises'.tr(),
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.044, //24,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Icon(
-                                    Icons.arrow_right_alt,
-                                    color: Colors.black54,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.064, //24,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 1,
-                        color: Color(0xffEBC2BE),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => billingService.isPro()
-                                  ? MyAffirmationProgress()
-                                  : Reclama()));
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.046,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/affirmation.svg',
-                                  width: 23,
-                                  color: Colors.grey[600],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    'my_affirmations'.tr(),
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.044, //24,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Icon(
-                                    Icons.arrow_right_alt,
-                                    color: Colors.black54,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.064, //24,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 1,
-                        color: Color(0xffEBC2BE),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          billingService.isPro()
-                              ? Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => MyReadingProgress()))
-                              : Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Reclama()));
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.046,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/books.svg',
-                                  width: 23,
-                                  color: Colors.grey[600],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    'my_books'.tr(),
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.044, //24,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Icon(
-                                    Icons.arrow_right_alt,
-                                    color: Colors.black54,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.064, //24,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 1,
-                        color: Color(0xffEBC2BE),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          billingService.isPro()
-                              ? Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      MyVisualizationProgress()))
-                              : Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Reclama()));
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.046,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/visualization.svg',
-                                  width: 23,
-                                  color: Colors.grey[600],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    'my_visualization'.tr(),
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.044, //24,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Icon(
-                                    Icons.arrow_right_alt,
-                                    color: Colors.black54,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.064, //24,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  padding: EdgeInsets.only(
-                      top: 0,
-                      left: MediaQuery.of(context).size.width / 4.5,
-                      right: MediaQuery.of(context).size.width / 4.5,
-                      bottom: 0),
-                  child: AnimatedButton(() {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/start', (r) => false); //22 fontSize
-                  }, 'sans-serif-black', 'menu'.tr(),
-                      MediaQuery.of(context).size.width * 0.06, null, null),
-                ),
+                _menuList(context),
+                _menuButton(context),
                 SizedBox(height: 5),
                 RemoveProgress(),
               ],
@@ -907,6 +620,286 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Container _menuList(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.24,
+      //0.249, //0.23,
+      margin: const EdgeInsets.only(
+        left: 20.0,
+        right: 20,
+        top: 12,
+        bottom: 5,
+      ),
+      padding: const EdgeInsets.only(bottom: 0),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      child: Column(
+        children: [
+          InkWell(
+            //onTap: () => print('!!!Мои дневник!!!'),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => journalMy()));
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.046,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/diary.svg',
+                      width: 23,
+                      color: Colors.grey[600],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'my_diary'.tr(),
+                        style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).size.width * 0.044, //24,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.arrow_right_alt,
+                        color: Colors.black54,
+                        size: MediaQuery.of(context).size.width * 0.064, //24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Container(
+            height: 1,
+            color: Color(0xffEBC2BE),
+          ),
+          InkWell(
+            onTap: () {
+              billingService.isPro()
+                  ? Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MyFitnessProgress()))
+                  : Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Reclama()));
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.046,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/sport.svg',
+                      width: 23,
+                      color: Colors.grey[600],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'my_exercises'.tr(),
+                        style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).size.width * 0.044, //24,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.arrow_right_alt,
+                        color: Colors.black54,
+                        size: MediaQuery.of(context).size.width * 0.064, //24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Container(
+            height: 1,
+            color: Color(0xffEBC2BE),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => billingService.isPro()
+                      ? MyAffirmationProgress()
+                      : Reclama()));
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.046,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/affirmation.svg',
+                      width: 23,
+                      color: Colors.grey[600],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'my_affirmations'.tr(),
+                        style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).size.width * 0.044, //24,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.arrow_right_alt,
+                        color: Colors.black54,
+                        size: MediaQuery.of(context).size.width * 0.064, //24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Container(
+            height: 1,
+            color: Color(0xffEBC2BE),
+          ),
+          InkWell(
+            onTap: () {
+              billingService.isPro()
+                  ? Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MyReadingProgress()))
+                  : Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Reclama()));
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.046,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/books.svg',
+                      width: 23,
+                      color: Colors.grey[600],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'my_books'.tr(),
+                        style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).size.width * 0.044, //24,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.arrow_right_alt,
+                        color: Colors.black54,
+                        size: MediaQuery.of(context).size.width * 0.064, //24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Container(
+            height: 1,
+            color: Color(0xffEBC2BE),
+          ),
+          InkWell(
+            onTap: () {
+              billingService.isPro()
+                  ? Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MyVisualizationProgress()))
+                  : Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Reclama()));
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.046,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/visualization.svg',
+                      width: 23,
+                      color: Colors.grey[600],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'my_visualization'.tr(),
+                        style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).size.width * 0.044, //24,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.arrow_right_alt,
+                        color: Colors.black54,
+                        size: MediaQuery.of(context).size.width * 0.064, //24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container _menuButton(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.05,
+      padding: EdgeInsets.only(
+          top: 0,
+          left: MediaQuery.of(context).size.width / 4.5,
+          right: MediaQuery.of(context).size.width / 4.5,
+          bottom: 0),
+      child: AnimatedButton(() {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/start', (r) => false); //22 fontSize
+      }, 'sans-serif-black', 'menu'.tr(),
+          MediaQuery.of(context).size.width * 0.06, null, null),
     );
   }
 
@@ -1154,7 +1147,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'Введите имя',
+          'your_name'.tr(),
         ),
         content: TextField(
           autofocus: true,
@@ -1169,13 +1162,13 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
         actions: [
           FlatButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Отмена'.toUpperCase()),
+            child: Text('cancellation'.tr()),
           ),
           FlatButton(
             onPressed: () {
               Navigator.pop(context, nameController.text);
             },
-            child: Text('Сохранить'.toUpperCase()),
+            child: Text('save'.tr()),
           )
         ],
       ),
