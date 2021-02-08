@@ -138,12 +138,15 @@ class TimerPageState extends State<TimerPage> {
   }
 
   Container _buildTimerProgress(BuildContext context) {
-    double _timerSize = 0.0;
+    double _timerSize, _textSize;
+
     if (widget.pageId == 0) {
       //for affirmaiton
       _timerSize = MediaQuery.of(context).size.width * 0.4;
+      _textSize = 36;
     } else {
       _timerSize = MediaQuery.of(context).size.width * 0.7;
+      _textSize = 55;
     }
 
     return Container(
@@ -152,6 +155,7 @@ class TimerPageState extends State<TimerPage> {
         text: StringUtil().createTimeString(timerService.time),
         foregroundColor: AppColors.WHITE,
         value: timerService.createValue(),
+        textSize: _textSize,
       ),
     );
   }

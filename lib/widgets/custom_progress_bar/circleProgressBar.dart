@@ -6,13 +6,14 @@ class CircleProgressBar extends StatelessWidget {
   final Color foregroundColor;
   final double value;
   final String text;
+  final double textSize;
 
 
   const CircleProgressBar({
     Key key,
     @required this.foregroundColor,
     @required this.value,
-    @required this.text,
+    @required this.text, this.textSize = 55,
   }) : super(key: key);
 
   @override
@@ -25,7 +26,7 @@ class CircleProgressBar extends StatelessWidget {
           child: Text(
             text,
               style: TextStyle(
-                fontSize: 55,
+                fontSize: textSize,
                 fontFamily: "aparaj",
                 fontStyle: FontStyle.normal,
                 color: AppColors.VIOLET,

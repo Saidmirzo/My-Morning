@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/payment.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:morningmagic/services/admob.dart';
@@ -18,23 +19,7 @@ class _ReclamaState extends State<Reclama> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            width:
-                MediaQuery.of(context).size.width, // match parent(all screen)
-            height:
-                MediaQuery.of(context).size.height, // match parent(all screen)
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                tileMode: TileMode.repeated,
-                colors: [
-                  AppColors.TOP_GRADIENT,
-                  AppColors.MIDDLE_GRADIENT,
-                  AppColors.BOTTOM_GRADIENT,
-                ],
-              ),
-            ),
+          AppGradientContainer(
             child: Container(),
           ),
           Positioned(
@@ -124,20 +109,8 @@ _showAlert(BuildContext context) {
         actionsPadding: EdgeInsets.all(0),
         buttonPadding: EdgeInsets.all(0),
         backgroundColor: AppColors.BOTTOM_GRADIENT,
-        // title: Container(
-        //   color: AppColors.VIOLET,
-        //   child: Text(
-        //     'Сообщение !',
-        //     style: TextStyle(
-        //       color: AppColors.VIOLET,
-        //       backgroundColor: AppColors.SHADER_BOTTOM,
-        //       fontSize: 30,
-        //     ),
-        //   ),
-        // ),
         content: Container(
           height: MediaQuery.of(context).size.height * 0.2,
-          width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
               Padding(

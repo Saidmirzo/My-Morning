@@ -22,14 +22,9 @@ class AdmobService {
     initInterstitial();
   }
 
-  InterstitialAd createInterstitialAd() {
-    return InterstitialAd(
-      adUnitId: interstitialId,
-    );
-  }
-
   void initInterstitial() {
     myInterstitial?.dispose();
+
     myInterstitial = InterstitialAd(
       adUnitId: interstitialId,
       listener: (MobileAdEvent event) {
