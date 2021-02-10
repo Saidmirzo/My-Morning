@@ -84,6 +84,8 @@ class TimerPageState extends State<TimerPage> {
       initialPosition: Duration.zero,
     );
 
+    await _audioPlayer.setLoopMode(LoopMode.all);
+
     _audioPlayer.load();
     _audioPlayer.play();
   }
