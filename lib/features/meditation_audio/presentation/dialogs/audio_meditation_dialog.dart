@@ -104,7 +104,7 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
 
   void _stopPlayer() {
     final _audioController = Get.find<MediationAudioController>();
-    _audioController.audioPlayer.value.stop();
+    _audioController.audioPlayer.value.pause();
     _audioController.isPlaying = false;
   }
 }

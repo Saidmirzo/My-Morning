@@ -15,7 +15,7 @@ class MediationAudioController extends GetxController {
 
   var audioPlayer = AudioPlayer().obs;
 
-  List<MeditationAudio> audios;
+  final List<MeditationAudio> audios = <MeditationAudio>[];
 
   var selectedItemIndex = 0.obs;
 
@@ -23,11 +23,32 @@ class MediationAudioController extends GetxController {
 
   bool isPlaying = false;
 
+  var isAudioLoading = false.obs;
+
+  bool get isPlaylistAudioInLocalSource =>
+      audios.isNotEmpty && audios[audioPlayer.value.currentIndex].file != null;
+
   @override
   void onInit() async {
     super.onInit();
-    audios = await repository.getCachedAudioFiles();
+    audios.addAll(await repository.getCachedAudioFiles());
     print('init audio files from cache: length = ${audios.length}');
+
+    audioPlayer.value.playerStateStream.listen((state) {
+      print("${state.processingState.index}, playing = ${state.playing}");
+      // TODO remove
+      // int currentIndex = audioPlayer.value.currentIndex;
+      //
+      // bool isLocalSource =
+      //     audios.isNotEmpty && audios[currentIndex].file != null;
+      // print("Current index = $currentIndex, isAudioSource = $isLocalSource");
+      if (!state.playing &&
+          (state.processingState.index == ProcessingState.loading.index ||
+              state.processingState.index == ProcessingState.buffering.index)) {
+        isAudioLoading.value = true;
+      } else
+        isAudioLoading.value = false;
+    });
   }
 
   @override

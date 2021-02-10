@@ -73,6 +73,18 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                         fontSize: 17,
                       ),
                     ),
+                    Spacer(),
+                    // TODO check
+                    if (_audioController.playingIndex.value == widget.id &&
+                        _audioController.isAudioLoading.value)
+                      Container(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(AppColors.WHITE),
+                        ),
+                      )
                   ],
                 ),
               ),

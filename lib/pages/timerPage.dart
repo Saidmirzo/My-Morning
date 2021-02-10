@@ -1,12 +1,14 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
+import 'package:get/state_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
@@ -85,8 +87,6 @@ class TimerPageState extends State<TimerPage> {
     );
 
     await _audioPlayer.setLoopMode(LoopMode.all);
-
-    _audioPlayer.load();
     _audioPlayer.play();
   }
 
@@ -105,22 +105,20 @@ class TimerPageState extends State<TimerPage> {
               constraints: BoxConstraints(
                 minHeight: viewportConstraints.maxHeight,
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.TOP_GRADIENT,
-                    AppColors.MIDDLE_GRADIENT,
-                    AppColors.BOTTOM_GRADIENT
-                  ],
-                )),
+              child: AppGradientContainer(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    if (widget.pageId == 1) _buildPlayerControls(),
+                    // _buildAudioLoading(),
+                    // _buildPlayerControls(),
+                    if (widget.pageId == 1)
+                      Obx(() {
+                        if (_audioController.isAudioLoading.value && !_audioController.isPlaylistAudioInLocalSource)
+                          return _buildAudioLoading();
+                        else
+                          return _buildPlayerControls();
+                      }),
                     _buildTimerProgress(context),
                     SizedBox(
                       height: 24,
@@ -158,6 +156,27 @@ class TimerPageState extends State<TimerPage> {
         textSize: _textSize,
       ),
     );
+  }
+
+  Widget _buildAudioLoading() {
+    return Container(
+        height: 92,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            StyledText(
+              // TODO loading translate
+              "Аудио загружается...",
+              fontSize: 16,
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+            ),
+          ],
+        ));
   }
 
   Container _buildPlayerControls() {
@@ -232,7 +251,7 @@ class TimerPageState extends State<TimerPage> {
         Container(
           padding: EdgeInsets.only(top: 10),
           child: AnimatedButton(() {
-            _audioPlayer.stop();
+            _audioPlayer.pause();
             timerService.skipTask();
           }, 'rex', 'skip'.tr(), 15, null, null),
         ),
@@ -251,7 +270,7 @@ class TimerPageState extends State<TimerPage> {
         Container(
           padding: EdgeInsets.only(top: 10),
           child: AnimatedButton(() {
-            _audioPlayer.stop();
+            _audioPlayer.pause();
             timerService.goToHome();
           }, 'rex', 'menu'.tr(), 15, null, null),
         ),
@@ -295,7 +314,7 @@ class TimerPageState extends State<TimerPage> {
   }
 
   void _playOrPause() {
-    _audioPlayer.playing ? _audioPlayer.stop() : _audioPlayer.play();
+    _audioPlayer.playing ? _audioPlayer.pause() : _audioPlayer.play();
   }
 
   @override
