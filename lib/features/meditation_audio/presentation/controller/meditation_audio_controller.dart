@@ -25,23 +25,17 @@ class MediationAudioController extends GetxController {
 
   var isAudioLoading = false.obs;
 
-  bool get isPlaylistAudioInLocalSource =>
-      audios.isNotEmpty && audios[audioPlayer.value.currentIndex].file != null;
+  bool get isPlaylistAudioCached =>
+      audioPlayer.value.currentIndex < audios.length &&
+      audios[audioPlayer.value.currentIndex].file != null;
 
   @override
   void onInit() async {
     super.onInit();
     audios.addAll(await repository.getCachedAudioFiles());
-    print('init audio files from cache: length = ${audios.length}');
-
     audioPlayer.value.playerStateStream.listen((state) {
-      print("${state.processingState.index}, playing = ${state.playing}");
-      // TODO remove
-      // int currentIndex = audioPlayer.value.currentIndex;
-      //
-      // bool isLocalSource =
-      //     audios.isNotEmpty && audios[currentIndex].file != null;
-      // print("Current index = $currentIndex, isAudioSource = $isLocalSource");
+      print(
+          "Meditation audio player state = ${state.processingState.index}, playing = ${state.playing}");
       if (!state.playing &&
           (state.processingState.index == ProcessingState.loading.index ||
               state.processingState.index == ProcessingState.buffering.index)) {
@@ -54,7 +48,7 @@ class MediationAudioController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    print('audio controller on close');
+    print('Meditation audio controller closed, player stopped and disposed');
     audioPlayer.value.stop();
     audioPlayer.value.dispose();
   }
@@ -73,9 +67,11 @@ class MediationAudioController extends GetxController {
   Future _cacheAudioFile(String trackId) async {
     try {
       MeditationAudio audioFile = await repository.getAudioFile(trackId);
-      print("AudioCache :: file cached");
+      print("Meditation audio cached: $trackId");
       audios.add(audioFile);
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   String getAudioUrl(String trackId) {

@@ -97,40 +97,48 @@ class TimerPageState extends State<TimerPage> {
       timerService.buttonText = 'start'.tr();
     }
 
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: viewportConstraints.maxHeight,
-              ),
-              child: AppGradientContainer(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    // _buildAudioLoading(),
-                    // _buildPlayerControls(),
-                    if (widget.pageId == 1)
-                      Obx(() {
-                        if (_audioController.isAudioLoading.value && !_audioController.isPlaylistAudioInLocalSource)
-                          return _buildAudioLoading();
-                        else
-                          return _buildPlayerControls();
-                      }),
-                    _buildTimerProgress(context),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    if (titleText != null) _buildTitleWidget(),
-                    _buildMenuButtons(context),
-                  ],
+    return WillPopScope(
+      onWillPop: () async {
+        if (widget.pageId == 1) {
+          _audioPlayer.pause();
+          _audioController.isPlaying = false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints viewportConstraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                ),
+                child: AppGradientContainer(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      if (widget.pageId == 1)
+                        Obx(() {
+                          if (_audioController.isAudioLoading.value &&
+                              !_audioController.isPlaylistAudioCached)
+                            return _buildAudioLoading();
+                          else
+                            return _buildPlayerControls();
+                        }),
+                      _buildTimerProgress(context),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      if (titleText != null) _buildTitleWidget(),
+                      _buildMenuButtons(context),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -165,8 +173,7 @@ class TimerPageState extends State<TimerPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             StyledText(
-              // TODO loading translate
-              "Аудио загружается...",
+              'audio_loading'.tr(),
               fontSize: 16,
             ),
             SizedBox(
@@ -320,7 +327,6 @@ class TimerPageState extends State<TimerPage> {
   @override
   void dispose() {
     super.dispose();
-
     timerService.dispose();
   }
 }

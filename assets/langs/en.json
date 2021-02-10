@@ -328,5 +328,6 @@
   "rate_subject": "App rating",
   "my_progress": "MY PROGRESS",
   "exercise_complete": "Exercise complete",
-  "affirmation_timer": "Affirmations"
+  "affirmation_timer": "Affirmations",
+  "audio_loading": "Audio is loading..."
 }

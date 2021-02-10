@@ -324,5 +324,7 @@
   "rate_subject": "Оценка приложения",
   "my_progress": "МОЙ ПРОГРЕСС",
   "exercise_complete": "Упражнение завершено",
-  "affirmation_timer": "Аффирмации"
+  "affirmation_timer": "Аффирмации",
+  "audio_loading": "Аудио загружается..."
+
 }

@@ -29,7 +29,6 @@ class ExerciseStartPage extends StatefulWidget {
 }
 
 class ExerciseStartPageState extends State<ExerciseStartPage> {
-
   final _audioController =
       Get.put(MediationAudioController(repository: AudioRepositoryImpl()));
 
