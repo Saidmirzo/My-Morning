@@ -5,7 +5,6 @@ import 'package:morningmagic/features/meditation_audio/data/meditation_audio_dat
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
 
 class AudioMeditationDialog extends StatefulWidget {
   @override
@@ -13,7 +12,6 @@ class AudioMeditationDialog extends StatefulWidget {
 }
 
 class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
-  LineBox lineBox = LineBox(lines: 36);
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +29,8 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 12.0, vertical: 12.0),
+                padding: const EdgeInsets.all(
+                    8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -58,10 +56,6 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
               Expanded(
                 child: _buildSelectAudioList(_audioTrackNames),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: lineBox,
-              ),
             ],
           ),
         ),
@@ -82,7 +76,6 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
         return AudioMeditationDialogItem(
           id: index,
           trackId: _audioTrackNames[index],
-          lineBox: lineBox,
         );
       },
     );

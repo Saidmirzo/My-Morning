@@ -4,18 +4,15 @@ import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
 
 class AudioMeditationDialogItem extends StatefulWidget {
   final int id;
   final String trackId;
-  final LineBox lineBox;
 
   const AudioMeditationDialogItem({
     Key key,
     @required this.id,
     @required this.trackId,
-    @required this.lineBox,
   });
 
   @override
@@ -109,16 +106,6 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
 
         setIsPlayingState(true);
       }
-    }
-
-    animateLineBox();
-  }
-
-  void animateLineBox() {
-    if (_audioController.isPlaying) {
-      widget.lineBox.playAnimation();
-    } else {
-      widget.lineBox.stopAnimation();
     }
   }
 
