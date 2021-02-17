@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
+import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/pages/Reclama.dart';
 import 'package:morningmagic/storage.dart';
 
@@ -9,11 +10,11 @@ import '../db/model/reordering_program/order_item.dart';
 import '../db/resource.dart';
 import '../pages/askedQuestionsScreen.dart';
 import '../pages/exerciseStartPage.dart';
-import '../pages/screenVizualization.dart';
 import '../pages/screenVocabulary.dart';
 import '../pages/timerPage.dart';
 import '../widgets/exerciseTile.dart';
 
+// TODO edit
 class OrderUtil {
   Future<OrderHolder> getOrderHolder() async {
     OrderHolder orderHolder;
@@ -84,7 +85,7 @@ class OrderUtil {
     if (id == 3)
       return MaterialPageRoute(builder: (context) => VocabularyScreen());
     if (id == 5)
-      return MaterialPageRoute(builder: (context) => VisualizationScreen());
+      return MaterialPageRoute(builder: (context) => VisualizationMainPage());
 
     String expName = this.getExpirienceName(id);
     print('Exp name: $expName');

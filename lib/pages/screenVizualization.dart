@@ -1,13 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
 
-import 'package:easy_localization/easy_localization.dart';
 import '../db/model/visualization/visualization.dart';
 import '../db/resource.dart';
 import '../pages/timer/screenTimerVizualization.dart';
 import '../resources/colors.dart';
 import '../widgets/animatedButton.dart';
 
+// TODO remove
 class VisualizationScreen extends StatefulWidget {
   @override
   State createState() {
@@ -18,9 +19,10 @@ class VisualizationScreen extends StatefulWidget {
 class VisualizationScreenState extends State<VisualizationScreen> {
   TextEditingController textEditingController;
 
-  String getInputString(){
+  String getInputString() {
     String result = "";
-    Visualization visualization = MyDB().getBox().get(MyResource.VISUALIZATION_KEY);
+    Visualization visualization =
+        MyDB().getBox().get(MyResource.VISUALIZATION_KEY);
     if (visualization != null) {
       result = visualization.visualization;
     }
@@ -42,7 +44,8 @@ class VisualizationScreenState extends State<VisualizationScreen> {
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width, // match parent(all screen)
-          height: MediaQuery.of(context).size.height, // match parent(all screen)
+          height:
+              MediaQuery.of(context).size.height, // match parent(all screen)
           decoration: BoxDecoration(
               gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -58,8 +61,8 @@ class VisualizationScreenState extends State<VisualizationScreen> {
                 (BuildContext context, BoxConstraints viewportConstraints) {
               return SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                      minHeight: viewportConstraints.maxHeight),
+                  constraints:
+                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -145,12 +148,7 @@ class VisualizationScreenState extends State<VisualizationScreen> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       TimerVisualizationScreen()));
-                        },
-                            'rex',
-                            'next_button'.tr(),
-                            22,
-                            null,
-                            null),
+                        }, 'rex', 'next_button'.tr(), 22, null, null),
                       )
                     ],
                   ),
@@ -164,8 +162,10 @@ class VisualizationScreenState extends State<VisualizationScreen> {
   }
 
   void saveVisualization() {
-    if (textEditingController.text != null && textEditingController.text.isNotEmpty) {
-      myDbBox.put(MyResource.VISUALIZATION_KEY, Visualization(textEditingController.text));
+    if (textEditingController.text != null &&
+        textEditingController.text.isNotEmpty) {
+      myDbBox.put(MyResource.VISUALIZATION_KEY,
+          Visualization(textEditingController.text));
     }
   }
 }
