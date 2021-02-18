@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class RoundBorderedButton extends StatelessWidget {
-
   final VoidCallback onTap;
   final Widget child;
 
-  const RoundBorderedButton({Key key, @required this.onTap, @required this.child}) : super(key: key);
+  const RoundBorderedButton(
+      {Key key, @required this.onTap, @required this.child})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +15,7 @@ class RoundBorderedButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         customBorder: const CircleBorder(),
-        onTap: onTap/*() {
-          _saveVisualization();
-          _openVisualizationTargetScreen();
-        }*/,
+        onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
@@ -30,7 +28,7 @@ class RoundBorderedButton extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: child/*SvgPicture.asset('assets/images/arrow.svg')*/,
+              child: child,
             ),
           ),
         ),

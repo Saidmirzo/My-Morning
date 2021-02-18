@@ -20,6 +20,7 @@ class MyResource {
   static const String MY_VISUALISATION_PROGRESS = "my_visualization_progress";
   static const String FITNESS_PROGRAMS_KEY = "fitness_programs";
   static const String FITNESS_PROGRESS = "fitness_progress";
+  static const String VISUALIZTION_TARGETS_KEY = "visualization_targets";
 
   static const String DAYS_HOLDER = 'days_holder';
   static const String EXERCISES_HOLDER = 'big_exercises_holder';

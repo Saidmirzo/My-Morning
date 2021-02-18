@@ -5,6 +5,7 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
+import 'package:morningmagic/features/visualization/data/repositories/visualization_target_repository_impl.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_target_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
@@ -18,8 +19,8 @@ class VisualizationMainPage extends StatefulWidget {
 class _VisualizationMainPageState extends State<VisualizationMainPage> {
   TextEditingController _textEditingController;
 
-  VisualizationController _controller =
-      Get.put(VisualizationController(myDbBox));
+  VisualizationController _controller = Get.put(
+      VisualizationController(myDbBox, VisualizationTargetRepositoryImpl()));
 
   @override
   void initState() {
@@ -142,7 +143,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
           _saveVisualization();
           _openVisualizationTargetScreen();
         },
-        child: SvgPicture.asset('assets/images/arrow.svg'));
+        child: SvgPicture.asset('assets/images/arrow_forward.svg'));
   }
 
   void _saveVisualization() {
