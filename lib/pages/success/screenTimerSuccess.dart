@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/pages/timerPage.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:morningmagic/widgets/custom_progress_bar/arcProgressBar.dart';
@@ -49,7 +48,6 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   @override
   void initState() {
     super.initState();
-    isPlayed = false;
 
     MyDB().getBox().put(
         MyResource.TOTAL_COUNT_OF_SESSIONS,

@@ -3,7 +3,9 @@ import 'package:hive/hive.dart';
 import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
+import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_target_repository.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class VisualizationController extends GetxController {
   final VisualizationTargetRepository repository;
@@ -11,13 +13,9 @@ class VisualizationController extends GetxController {
 
   final targets = <VisualizationTarget>[].obs;
 
-  final List<String> testImageUrls = [
-    'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    'https://homepages.cae.wisc.edu/~ece533/images/arctichare.png',
-    'https://homepages.cae.wisc.edu/~ece533/images/baboon.png',
-    'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
-    'https://homepages.cae.wisc.edu/~ece533/images/cameraman.tif',
-  ];
+  final images = <VisualizationImage>[].obs;
+
+  final List<int> selectedImageIndexes = <int>[].obs;
 
   VisualizationController(Box dbBox, this.repository) {
     _dbBox = dbBox;
@@ -26,8 +24,16 @@ class VisualizationController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
     final _result = await repository.getVisualizationTargets();
     targets.addAll(_result);
+
+    final _defaultImages = targets
+        .map((element) => element.coverAssetPath)
+        .where((element) => element != null)
+        .map((e) => VisualizationImage(assetPath: e))
+        .toList();
+    images.addAll(_defaultImages);
   }
 
   void saveVisualization(String text) {
@@ -77,5 +83,21 @@ class VisualizationController extends GetxController {
       targets.replaceRange(_oldTargetIndex, _oldTargetIndex + 1, [_newTarget]);
       repository.saveVisualizationTargets(targets);
     }
+  }
+
+  void addImageAssetsFromGallery(List<Asset> assetImages) {
+    final _visualizationImages =
+        assetImages.map((e) => VisualizationImage(asset: e)).toList();
+    // TODO maybe need save to loca store
+    // final _byteData = assetImages[0].getByteData();
+
+    images.addAll(_visualizationImages);
+  }
+
+  toggleImageSelected(int index) {
+    if (selectedImageIndexes.contains(index))
+      selectedImageIndexes.remove(index);
+    else
+      selectedImageIndexes.add(index);
   }
 }

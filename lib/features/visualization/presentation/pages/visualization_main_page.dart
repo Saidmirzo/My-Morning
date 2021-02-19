@@ -32,31 +32,34 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: AppGradientContainer(
-          child: LayoutBuilder(
-            builder:
-                (BuildContext context, BoxConstraints viewportConstraints) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      _buildVisualizationTitle(context),
-                      _buildVisualizationSubtitle(context),
-                      _buildVisualizationInput(context),
-                      SizedBox(
-                        height: 24,
-                      ),
-                      _buildNextButton()
-                    ],
+    return WillPopScope(
+      onWillPop: () => Get.delete<VisualizationController>(),
+      child: Scaffold(
+        body: Center(
+          child: AppGradientContainer(
+            child: LayoutBuilder(
+              builder:
+                  (BuildContext context, BoxConstraints viewportConstraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        minHeight: viewportConstraints.maxHeight),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        _buildVisualizationTitle(context),
+                        _buildVisualizationSubtitle(context),
+                        _buildVisualizationInput(context),
+                        SizedBox(
+                          height: 24,
+                        ),
+                        _buildNextButton()
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),

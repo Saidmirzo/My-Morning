@@ -19,8 +19,6 @@ import '../utils/string_util.dart';
 import '../widgets/customText.dart';
 import '../widgets/custom_progress_bar/circleProgressBar.dart';
 
-bool isPlayed = false;
-
 class TimerPage extends StatefulWidget {
   final int pageId;
 

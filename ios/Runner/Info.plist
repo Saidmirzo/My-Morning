@@ -79,5 +79,9 @@
 	<true/>
 	<key>kTCCServiceMediaLibrary</key>
 	<string>media</string>
+	<key>NSCameraUsageDescription</key>
+    <string>Allows you to take a picture</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Allows you to choose a picture</string>
 </dict>
 </plist>

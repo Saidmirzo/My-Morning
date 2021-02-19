@@ -22,6 +22,7 @@ import 'package:morningmagic/pages/success/screenTimerInputSuccess.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 
+// TODO rewrite
 class TimerService {
   BuildContext context;
   State state;

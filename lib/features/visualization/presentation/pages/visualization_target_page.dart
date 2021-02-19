@@ -58,7 +58,6 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
 
   BoxDecoration _buildDecoration(VisualizationTarget _target) {
     final _borderRadius = BorderRadius.circular(10);
-    // TODO for custom and check for null
     if (_target.isCustom) {
       return BoxDecoration(borderRadius: _borderRadius, color: Colors.grey);
     } else
