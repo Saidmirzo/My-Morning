@@ -86,7 +86,7 @@ class _VisualizationSelectImpressionPageState
             _buildActionButton(
                 () => {Navigator.pop(context)}, 'assets/images/arrow_back.svg'),
             _buildActionButton(
-                () async => {await loadAssets()}, 'assets/images/plus.svg'),
+                () async => {await _loadAssets()}, 'assets/images/plus.svg'),
             Obx(() => Opacity(
                   opacity:
                       (_controller.selectedImageIndexes.isEmpty) ? 0.3 : 1.0,
@@ -142,7 +142,7 @@ class _VisualizationSelectImpressionPageState
     );
   }
 
-  Future<void> loadAssets() async {
+  Future<void> _loadAssets() async {
     List<Asset> resultList;
 
     try {

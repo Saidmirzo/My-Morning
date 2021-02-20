@@ -1,16 +1,21 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_target_repository.dart';
+import 'package:morningmagic/utils/string_util.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 
 class VisualizationController extends GetxController {
+  static const int TIMER_TICK_DURATION = 1000;
+
   final VisualizationTargetRepository repository;
 
   final targets = <VisualizationTarget>[].obs;
@@ -19,13 +24,16 @@ class VisualizationController extends GetxController {
 
   final List<int> selectedImageIndexes = <int>[].obs;
 
-  VisualizationController(Box dbBox, this.repository) {
-    _dbBox = dbBox;
-  }
-
   Box _dbBox;
 
   Directory _tempAssetsDir;
+
+  var _timeLeft = 0.obs;
+  Timer _timer;
+
+  VisualizationController(Box dbBox, this.repository) {
+    _dbBox = dbBox;
+  }
 
   List<VisualizationImage> get selectedImages =>
       selectedImageIndexes.map((index) => images[index]).toList();
@@ -34,6 +42,11 @@ class VisualizationController extends GetxController {
       images.where((image) => image.fromGallery).toList();
 
   String get imageCacheDirPath => _tempAssetsDir.path;
+
+  String get timeLeft => StringUtil.createTimeString(_timeLeft.value);
+
+  // TODO make isTimerActive obs
+  bool get isTimerActive => _timer != null && _timer.isActive;
 
   @override
   void onInit() async {
@@ -50,6 +63,15 @@ class VisualizationController extends GetxController {
         .map((e) => VisualizationImage(assetPath: e))
         .toList();
     images.addAll(_defaultImages);
+
+    _getLeftTimeFromPrefs();
+  }
+
+  void _getLeftTimeFromPrefs() {
+    ExerciseTime _exerciseTime = _dbBox.get(MyResource.VISUALIZATION_TIME_KEY,
+        defaultValue: ExerciseTime(0));
+
+    _timeLeft.value = _exerciseTime.time * 60 * 1000; //time in prefs in minutes
   }
 
   @override
@@ -157,4 +179,20 @@ class VisualizationController extends GetxController {
     print('remove image cache directory $imageCacheDirPath');
     _imageTempDirectory.delete(recursive: true);
   }
+
+  toggleStartPauseTimer() {
+    if (_timer == null || !_timer.isActive)
+      _timer =
+          Timer.periodic(Duration(milliseconds: TIMER_TICK_DURATION), (timer) {
+        if (_timeLeft > 0) _timeLeft.value = _timeLeft.value - 1000;
+      });
+    else
+      _timer.cancel();
+  }
+
+  pauseTimer() {
+    _timer.cancel();
+  }
+
+  // TODO make correct time output function (input with millis left)
 }

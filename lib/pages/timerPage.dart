@@ -156,7 +156,7 @@ class TimerPageState extends State<TimerPage> {
     return Container(
       width: _timerSize,
       child: CircleProgressBar(
-        text: StringUtil().createTimeString(timerService.time),
+        text: StringUtil.createTimeString(timerService.time),
         foregroundColor: AppColors.WHITE,
         value: timerService.createValue(),
         textSize: _textSize,

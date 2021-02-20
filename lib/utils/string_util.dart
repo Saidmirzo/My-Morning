@@ -1,5 +1,5 @@
 class StringUtil {
-  String createTimeString(int _time) {
+  static String createTimeString(int _time) {
     int min;
     int sec;
     String seconds;

@@ -36,7 +36,8 @@ class TimerService {
   String bookTitle;
   String buttonText;
   AppStates appStates = Get.put(AppStates());
-  // TODO one of players
+
+  // TODO remove one of players
   AudioPlayer audioPlayer = AudioPlayer();
   AudioPlayer _player;
 
@@ -46,6 +47,7 @@ class TimerService {
     this.context = _context;
     this.pageId = _pageId;
     this._player = _player;
+
     getTimeAndText().then((int value) {
       time = value * 60;
       startValue = value * 60;

@@ -116,7 +116,7 @@ class TimerVisualizationScreenState extends State<TimerVisualizationScreen> {
                           top: MediaQuery.of(context).size.height / 19),
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: CircleProgressBar(
-                        text: StringUtil().createTimeString(_time),
+                        text: StringUtil.createTimeString(_time),
                         foregroundColor: AppColors.WHITE,
                         value: createValue(),
                       ),
