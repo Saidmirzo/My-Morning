@@ -6,9 +6,9 @@ class VisualizationImage extends Equatable {
 
   final Asset asset; // for images picked from gallery
 
-  VisualizationImage({this.assetPath, this.asset});
+  VisualizationImage({this.assetPath, this.asset}) : assert(assetPath != null);
 
-  bool get fromGallery => asset != null && assetPath == null;
+  bool get fromGallery => asset != null;
 
   @override
   List<Object> get props => [assetPath, asset];

@@ -87,14 +87,17 @@ class _VisualizationSelectImpressionPageState
                 () => {Navigator.pop(context)}, 'assets/images/arrow_back.svg'),
             _buildActionButton(
                 () async => {await loadAssets()}, 'assets/images/plus.svg'),
-            _buildActionButton(
-                () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => VisualizationTimerPage()))
-                    },
-                'assets/images/arrow_forward.svg'),
+            Obx(() => Opacity(
+                  opacity:
+                      (_controller.selectedImageIndexes.isEmpty) ? 0.3 : 1.0,
+                  child: _buildActionButton(() {
+                    if (_controller.selectedImageIndexes.isEmpty) return;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => VisualizationTimerPage()));
+                  }, 'assets/images/arrow_forward.svg'),
+                )),
           ],
         ),
       ]),
@@ -121,7 +124,7 @@ class _VisualizationSelectImpressionPageState
     return Padding(
       padding: const EdgeInsets.only(top: 48, bottom: 16.0),
       child: StyledText(
-        // todo
+        // todo translation
         'Выбор образа',
         fontSize: 32,
         color: AppColors.VIOLET,

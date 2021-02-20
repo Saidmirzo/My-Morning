@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/db/model/visualization/visualization.dart';
@@ -6,10 +8,10 @@ import 'package:morningmagic/features/visualization/domain/entities/target/visua
 import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_target_repository.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 class VisualizationController extends GetxController {
   final VisualizationTargetRepository repository;
-  Box _dbBox;
 
   final targets = <VisualizationTarget>[].obs;
 
@@ -21,9 +23,23 @@ class VisualizationController extends GetxController {
     _dbBox = dbBox;
   }
 
+  Box _dbBox;
+
+  Directory _tempAssetsDir;
+
+  List<VisualizationImage> get selectedImages =>
+      selectedImageIndexes.map((index) => images[index]).toList();
+
+  List<VisualizationImage> get galleryImages =>
+      images.where((image) => image.fromGallery).toList();
+
+  String get imageCacheDirPath => _tempAssetsDir.path;
+
   @override
   void onInit() async {
     super.onInit();
+
+    await _createImageTempDirectory();
 
     final _result = await repository.getVisualizationTargets();
     targets.addAll(_result);
@@ -34,6 +50,12 @@ class VisualizationController extends GetxController {
         .map((e) => VisualizationImage(assetPath: e))
         .toList();
     images.addAll(_defaultImages);
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    _removeImageTempDirectory();
   }
 
   void saveVisualization(String text) {
@@ -86,12 +108,27 @@ class VisualizationController extends GetxController {
   }
 
   void addImageAssetsFromGallery(List<Asset> assetImages) {
-    final _visualizationImages =
-        assetImages.map((e) => VisualizationImage(asset: e)).toList();
-    // TODO maybe need save to loca store
-    // final _byteData = assetImages[0].getByteData();
+    int oldLastImageIndex = images.length - 1;
 
-    images.addAll(_visualizationImages);
+    final List<VisualizationImage> _visualizationImagesFromGallery = [];
+
+    assetImages.forEach((asset) {
+      _visualizationImagesFromGallery.add(VisualizationImage(
+          asset: asset, assetPath: '$imageCacheDirPath/${asset.name}'));
+      _saveAssetInTemporaryDirectory(asset);
+    });
+
+    images.addAll(_visualizationImagesFromGallery);
+
+    if (_visualizationImagesFromGallery.isNotEmpty) {
+      int newLastImageIndex = images.length - 1;
+      print(
+          'Select picked images oldIndex = $oldLastImageIndex, newIndex = $newLastImageIndex');
+      final _selectedIndexes = List.generate(
+          newLastImageIndex - oldLastImageIndex,
+          (i) => oldLastImageIndex + 1 + i);
+      selectedImageIndexes.addAll(_selectedIndexes);
+    }
   }
 
   toggleImageSelected(int index) {
@@ -99,5 +136,25 @@ class VisualizationController extends GetxController {
       selectedImageIndexes.remove(index);
     else
       selectedImageIndexes.add(index);
+  }
+
+  Future _createImageTempDirectory() async {
+    final _tempAppDir = await syspaths.getTemporaryDirectory();
+
+    _tempAssetsDir =
+        await Directory(_tempAppDir.path + '/imageAssets').create();
+  }
+
+  _saveAssetInTemporaryDirectory(Asset asset) async {
+    print('save image in temp dir = $imageCacheDirPath/${asset.name}');
+    final assetByteData = await asset.getByteData();
+    File file = File('$imageCacheDirPath/${asset.name}');
+    await file.writeAsBytes(assetByteData.buffer.asUint8List());
+  }
+
+  _removeImageTempDirectory() {
+    final _imageTempDirectory = Directory(imageCacheDirPath);
+    print('remove image cache directory $imageCacheDirPath');
+    _imageTempDirectory.delete(recursive: true);
   }
 }
