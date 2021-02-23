@@ -48,7 +48,8 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
-    admobService.initInterstitial();
+    // TODO revert
+    // admobService.initInterstitial();
     _init();
     _initOpenDialog();
     initPurchaseListener();

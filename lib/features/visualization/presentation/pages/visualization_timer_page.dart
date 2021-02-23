@@ -13,8 +13,7 @@ class VisualizationTimerPage extends StatefulWidget {
   _VisualizationTimerPageState createState() => _VisualizationTimerPageState();
 }
 
-// TODO 1) timer
-// 2) change image
+// TODO // 2) change image
 
 class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
   VisualizationController _controller = Get.find<VisualizationController>();
@@ -55,7 +54,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
                 Obx(() {
                   VoidCallback _toggleStartPauseCallback =
                       () => _controller.toggleStartPauseTimer();
-                  final _imageRes = _controller.isTimerActive
+                  final _imageRes = _controller.isTimerActive.value
                       ? 'assets/images/pause.svg'
                       : 'assets/images/play.svg';
                   return _buildActionButton(
@@ -73,22 +72,20 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
   }
 
   Container _buildTimerProgress(BuildContext context) {
-    double _timerSize, _textSize;
-
-    _timerSize = MediaQuery.of(context).size.width * 0.4;
+    double _timerSize = MediaQuery.of(context).size.width * 0.4;
 
     return Container(
       width: _timerSize,
       child: Obx(() => CircleProgressBar(
-            text: _controller.timeLeft,
+            text: _controller.formattedTimeLeft,
             foregroundColor: AppColors.WHITE,
-            value: 10,
+            value: _controller.timeLeftValue,
             textSize: 36,
           )),
     );
   }
 
-  Padding _buildActionButton(VoidCallback callback, String imageAssetPath) {
+  Widget _buildActionButton(VoidCallback callback, String imageAssetPath) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: RoundBorderedButton(

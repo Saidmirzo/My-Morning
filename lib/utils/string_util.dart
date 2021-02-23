@@ -1,4 +1,5 @@
 class StringUtil {
+  // TODO refactor this (now input time in seconds)
   static String createTimeString(int _time) {
     int min;
     int sec;

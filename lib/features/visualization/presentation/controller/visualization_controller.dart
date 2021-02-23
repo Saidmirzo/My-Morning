@@ -9,7 +9,6 @@ import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_target_repository.dart';
-import 'package:morningmagic/utils/string_util.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 
@@ -24,12 +23,17 @@ class VisualizationController extends GetxController {
 
   final List<int> selectedImageIndexes = <int>[].obs;
 
-  Box _dbBox;
+  var _timeLeft = 0.obs;
+
+  var isTimerActive = false.obs;
 
   Directory _tempAssetsDir;
 
-  var _timeLeft = 0.obs;
   Timer _timer;
+
+  int _initialTimeLeft;
+
+  Box _dbBox;
 
   VisualizationController(Box dbBox, this.repository) {
     _dbBox = dbBox;
@@ -43,10 +47,9 @@ class VisualizationController extends GetxController {
 
   String get imageCacheDirPath => _tempAssetsDir.path;
 
-  String get timeLeft => StringUtil.createTimeString(_timeLeft.value);
+  String get formattedTimeLeft => getFormattedTime(_timeLeft.value);
 
-  // TODO make isTimerActive obs
-  bool get isTimerActive => _timer != null && _timer.isActive;
+  double get timeLeftValue => 1 - _timeLeft / _initialTimeLeft;
 
   @override
   void onInit() async {
@@ -64,14 +67,15 @@ class VisualizationController extends GetxController {
         .toList();
     images.addAll(_defaultImages);
 
-    _getLeftTimeFromPrefs();
+    _getTimeLeftFromPrefs();
   }
 
-  void _getLeftTimeFromPrefs() {
+  void _getTimeLeftFromPrefs() {
     ExerciseTime _exerciseTime = _dbBox.get(MyResource.VISUALIZATION_TIME_KEY,
         defaultValue: ExerciseTime(0));
-
-    _timeLeft.value = _exerciseTime.time * 60 * 1000; //time in prefs in minutes
+    _initialTimeLeft =
+        _exerciseTime.time * 60 * 1000; //time from prefs in minutes
+    _timeLeft.value = _initialTimeLeft;
   }
 
   @override
@@ -181,18 +185,53 @@ class VisualizationController extends GetxController {
   }
 
   toggleStartPauseTimer() {
-    if (_timer == null || !_timer.isActive)
+    if (_timer == null || !_timer.isActive) {
       _timer =
           Timer.periodic(Duration(milliseconds: TIMER_TICK_DURATION), (timer) {
-        if (_timeLeft > 0) _timeLeft.value = _timeLeft.value - 1000;
+        if (_timeLeft > 0) {
+          // print("On timer tick: time left $_timeLeft");
+          _timeLeft.value = _timeLeft.value - TIMER_TICK_DURATION;
+          setTimerStateActive();
+        } else {
+          setTimerStateStopped();
+        }
       });
-    else
+      setTimerStateActive();
+    } else {
       _timer.cancel();
+      setTimerStateStopped();
+    }
   }
 
-  pauseTimer() {
-    _timer.cancel();
+  setTimerStateActive() {
+    _updateTimerIsActive(true);
   }
 
-  // TODO make correct time output function (input with millis left)
+  setTimerStateStopped() {
+    _updateTimerIsActive(false);
+  }
+
+  // TODO move to util functions
+  String getFormattedTime(int timeInMillis) {
+    String _minutesString;
+    String _secondsString;
+    final _minutes = timeInMillis ~/ 60000;
+    final _seconds = (timeInMillis ~/ 1000) % 60;
+
+    if (_minutes < 10) {
+      _minutesString = '0$_minutes';
+    } else
+      _minutesString = '$_minutes';
+
+    if (_seconds < 10) {
+      _secondsString = '0$_seconds';
+    } else
+      _secondsString = '$_seconds';
+
+    return '$_minutesString : $_secondsString';
+  }
+
+  _updateTimerIsActive(bool newValue) {
+    if (newValue != isTimerActive.value) isTimerActive.value = newValue;
+  }
 }
