@@ -1,22 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/route_manager.dart';
 import 'package:get/instance_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/model/notepad.dart';
 import 'package:morningmagic/db/resource.dart';
 
 import '../app_states.dart';
-import '../billing.dart';
 import '../resources/colors.dart';
-import 'Reclama.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:morningmagic/storage.dart';
-
 import 'journalMy.dart';
-import 'journalMyDitails.dart';
 
 class JournalMyDitailsAdd extends StatefulWidget {
   @override

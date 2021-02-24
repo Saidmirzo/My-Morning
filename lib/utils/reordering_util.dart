@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
-import 'package:morningmagic/pages/Reclama.dart';
+import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/storage.dart';
 
 import '../db/model/reordering_program/order_holder.dart';
@@ -76,7 +76,7 @@ class OrderUtil {
 
     if (!billingService.isPro() && (id != 0 && id != 1)) {
       print('!isPro && (id!=0 || id!=1)');
-      return MaterialPageRoute(builder: (context) => Reclama());
+      return MaterialPageRoute(builder: (context) => PaywallPage());
     }
 
     if (id == 2)

@@ -36,7 +36,7 @@ import '../storage.dart';
 import '../widgets/animatedButton.dart';
 import '../widgets/progressItem.dart';
 import '../widgets/progressItemRecord.dart';
-import 'Reclama.dart';
+import 'paywall_page.dart';
 import 'journalMy.dart';
 import 'myAffirmationProgress.dart';
 import 'myReadingProgress.dart';
@@ -686,7 +686,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   ? Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => MyFitnessProgress()))
                   : Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Reclama()));
+                      .push(MaterialPageRoute(builder: (context) => PaywallPage()));
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.046,
@@ -735,7 +735,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => billingService.isPro()
                       ? MyAffirmationProgress()
-                      : Reclama()));
+                      : PaywallPage()));
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.046,
@@ -785,7 +785,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   ? Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => MyReadingProgress()))
                   : Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Reclama()));
+                      .push(MaterialPageRoute(builder: (context) => PaywallPage()));
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.046,
@@ -835,7 +835,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   ? Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => MyVisualizationProgress()))
                   : Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Reclama()));
+                      .push(MaterialPageRoute(builder: (context) => PaywallPage()));
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.046,

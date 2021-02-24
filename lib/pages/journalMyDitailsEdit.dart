@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../resources/colors.dart';
-import 'Reclama.dart';
+import 'paywall_page.dart';
 
 class journalMyDitailsEdit extends StatefulWidget {
   @override
@@ -150,7 +150,7 @@ class _journalMyDitailsEditState extends State<journalMyDitailsEdit> {
               onTap: () {
                 print('!!!save note!!!');
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Reclama()));
+                    MaterialPageRoute(builder: (context) => PaywallPage()));
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
