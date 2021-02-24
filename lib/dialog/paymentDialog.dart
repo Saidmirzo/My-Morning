@@ -1,19 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../resources/colors.dart';
-import '../widgets/animatedButton.dart';
-import '../widgets/is_pro_widget.dart';
 import '../widgets/subscribe_1_month_button.dart';
 
 class PaymentDialog extends Dialog {
-  
   @override
   Widget build(BuildContext context) {
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
@@ -97,35 +93,16 @@ class PaymentDialog extends Dialog {
               Container(
                 padding: EdgeInsets.only(bottom: 5),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: AnimatedButton(() async {
-                        Navigator.pop(context);
-                        billingService.startPaymentPage(context);
-                      },
-                        'rex',
-                        'buy_month'.tr(),
-                        18,
-                        MediaQuery.of(context).size.width / 4,
-                        FontWeight.bold
-                      ),
+                    _buildBuyButton(
+                      title: 'buy_month'.tr(),
+                      onTap: () => _startPaymentSubscription(context),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Center(
-                        child: AnimatedButton(() async {
-                          Navigator.pop(context); 
-                          billingService.startPaymentPageTrial(context);
-                        },
-                          'rex',
-                          'buy_days'.tr(),
-                          18,
-                          MediaQuery.of(context).size.width / 4,
-                          FontWeight.bold
-                        ),
-                      )
+                    SizedBox(height: 8),
+                    _buildBuyButton(
+                      title: 'buy_days'.tr(),
+                      onTap: () => _startPaymentTrial(context),
                     )
                   ],
                 ),
@@ -135,6 +112,35 @@ class PaymentDialog extends Dialog {
         ),
       ),
     );
+  }
+
+  Container _buildBuyButton({@required title, @required VoidCallback onTap}) {
+    return Container(
+        decoration: BoxDecoration(
+            color: AppColors.PINK,
+            borderRadius: BorderRadius.all(Radius.circular(30))),
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: StyledText(
+              title,
+              fontSize: 18,
+              color: AppColors.WHITE,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ));
+  }
+
+  _startPaymentSubscription(BuildContext context) {
+    Navigator.pop(context);
+    billingService.startPaymentPage(context);
+  }
+
+  _startPaymentTrial(BuildContext context) {
+    Navigator.pop(context);
+    billingService.startPaymentPageTrial(context);
   }
 }
 

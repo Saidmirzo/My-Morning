@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class RoundBorderedButton extends StatelessWidget {
   final VoidCallback onTap;
   final Widget child;
+  final Color borderColor;
 
   const RoundBorderedButton(
-      {Key key, @required this.onTap, @required this.child})
+      {Key key,
+      @required this.onTap,
+      @required this.child,
+      this.borderColor = Colors.black})
       : super(key: key);
 
   @override
@@ -22,7 +26,7 @@ class RoundBorderedButton extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              border: Border.all(width: 3, color: Colors.black),
+              border: Border.all(width: 3, color: borderColor),
               borderRadius: BorderRadius.circular(28.0),
               color: Colors.transparent,
             ),

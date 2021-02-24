@@ -107,31 +107,39 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
     );
   }
 
-  Column _buildAudioPicker(BuildContext context) {
-    return Column(
+  Widget _buildAudioPicker(BuildContext context) {
+    return Stack(
       children: [
-        InkWell(
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) => AudioMeditationDialog());
-          },
-          child: Image.asset('assets/images/music_icon.png',
-              width: 40, height: 40),
-        ),
-        SizedBox(height: 5),
-        Obx(
-          () => Text(
-            MeditationAudioData.audioSources.keys
-                .toList()[_audioController.selectedItemIndex.value],
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: "JMH",
-              fontStyle: FontStyle.italic,
-              color: AppColors.VIOLET,
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/music_icon.png', width: 40, height: 40),
+            SizedBox(height: 5),
+            Obx(
+              () => Text(
+                MeditationAudioData.audioSources.keys
+                    .toList()[_audioController.selectedItemIndex.value],
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "JMH",
+                  fontStyle: FontStyle.italic,
+                  color: Colors.black,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
+        Positioned.fill( //ripple effect
+            child: Material(
+          color: Colors.transparent,
+          child: new InkWell(
+            customBorder: CircleBorder(),
+            splashColor: AppColors.VIOLET.withAlpha(120),
+            onTap: () => showDialog(
+                context: context,
+                builder: (context) => AudioMeditationDialog()),
+          ),
+        )),
       ],
     );
   }

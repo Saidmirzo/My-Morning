@@ -40,7 +40,6 @@ class VisualizationTargetRepositoryImpl
           isCustom: false,
           title: 'success_target'.tr(),
           coverAssetPath: 'assets/images/targets/success.png'),
-
       VisualizationTarget(
           id: 1,
           isCustom: false,

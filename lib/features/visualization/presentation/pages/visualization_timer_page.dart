@@ -90,7 +90,11 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: RoundBorderedButton(
         onTap: callback,
-        child: SvgPicture.asset(imageAssetPath),
+        child: SvgPicture.asset(
+          imageAssetPath,
+          color: Colors.white,
+        ),
+        borderColor: Colors.white,
       ),
     );
   }

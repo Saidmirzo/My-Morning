@@ -20,7 +20,7 @@ class BillingService {
   bool isPro() {
     // TODO revert
     return true;
-    return purchaserInfo?.entitlements?.all["all_features"]?.isActive ?? false;
+    // return purchaserInfo?.entitlements?.all["all_features"]?.isActive ?? false;
   }
 
   Package getMonthlyTarif() {
@@ -35,11 +35,13 @@ class BillingService {
   }
 
   startPaymentPage(BuildContext context) async {
+    print('start payemt page');
     await Navigator.push(
         context, MaterialPageRoute(builder: (_) => PaymentPage()));
   }
 
   startPaymentPageTrial(BuildContext context) async {
+    print('start payemt trial page');
     await Navigator.push(
         context, MaterialPageRoute(builder: (_) => PaymentPageTrial()));
   }

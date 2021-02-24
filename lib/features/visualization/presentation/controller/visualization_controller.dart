@@ -60,11 +60,23 @@ class VisualizationController extends GetxController {
     final _result = await repository.getVisualizationTargets();
     targets.addAll(_result);
 
-    final _defaultImages = targets
-        .map((element) => element.coverAssetPath)
-        .where((element) => element != null)
-        .map((e) => VisualizationImage(assetPath: e))
-        .toList();
+    // TODO get def images from
+    // final _defaultImages = targets
+    //     .map((element) => element.coverAssetPath)
+    //     .where((element) => element != null)
+    //     .map((e) => VisualizationImage(assetPath: e))
+    //     .toList();
+
+    final _defaultImages = [
+      VisualizationImage(assetPath: 'assets/images/background_tutorial.jpg'),
+      VisualizationImage(assetPath: 'assets/images/visualization_images/family/beach-1854076_1920.jpg'),
+      VisualizationImage(assetPath: 'assets/images/visualization_images/family/bloom-1836315_1920.jpg'),
+      VisualizationImage(assetPath: 'assets/images/visualization_images/family/couple-498484_1920.jpg'),
+      VisualizationImage(assetPath: 'assets/images/visualization_images/family/family-2610205_1920.jpg'),
+      VisualizationImage(assetPath: 'assets/images/visualization_images/family/family-2811003_1920.jpg'),
+      VisualizationImage(assetPath: 'assets/images/visualization_images/family/people-2597454_1920.jpg'),
+    ];
+
     images.addAll(_defaultImages);
 
     _getTimeLeftFromPrefs();

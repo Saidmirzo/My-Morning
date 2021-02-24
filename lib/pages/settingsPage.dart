@@ -8,7 +8,6 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
-import 'package:morningmagic/services/admob.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../app_states.dart';
@@ -131,50 +130,29 @@ class SettingsPageState extends State<SettingsPage> {
                     activityList,
                     SliverToBoxAdapter(
                       child: Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                        margin: EdgeInsets.only(top: 16, bottom: 8),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                      child: Text(
-                                    'duration'.tr(),
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        color: AppColors.VIOLET,
-                                        fontStyle: FontStyle.normal,
-                                        fontFamily: 'sans-serif',
-                                        fontSize: 14),
-                                  )),
-                                  Container(
-                                    padding: EdgeInsets.only(top: 10),
-                                    child: Text(
-                                      'magic_morning'.tr(),
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          color: AppColors.VIOLET,
-                                          fontStyle: FontStyle.normal,
-                                          fontFamily: 'sans-serif',
-                                          fontSize: 14),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                                child: Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: Text(
-                                      getAndCalculateTime(),
-                                      style: TextStyle(
-                                          color: AppColors.VIOLET,
-                                          fontStyle: FontStyle.normal,
-                                          fontFamily: 'sans-serif',
-                                          fontSize: 21),
-                                    )))
+                                child: Text(
+                              'duration'.tr(),
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  color: AppColors.VIOLET,
+                                  fontStyle: FontStyle.normal,
+                                  fontFamily: 'sans-serif',
+                                  fontSize: 14),
+                            )),
+                            Text(
+                              getAndCalculateTime(),
+                              style: TextStyle(
+                                  color: AppColors.VIOLET,
+                                  fontStyle: FontStyle.normal,
+                                  fontFamily: 'sans-serif',
+                                  fontSize: 21),
+                            )
                           ],
                         ),
                       ),
@@ -448,24 +426,9 @@ class SettingsPageState extends State<SettingsPage> {
     return result;
   }
 
-  void clearTextFunction(TextEditingController controller, String key) {
-    if (controller.text.contains(".") ||
-        controller.text.contains("-") ||
-        controller.text.contains(",") ||
-        controller.text.contains(" ") ||
-        controller.text.length > 2 ||
-        (int.tryParse(controller.text) != null &&
-            int.tryParse(controller.text) < 0)) {
-      print("CLEAR !!!!!!!!!!");
-      controller.clear();
-      controller.text = "1";
-      MyDB().getBox().put(key, ExerciseTime(1));
-    }
-  }
-
   void addListenersToEditText() {
     affirmationTimeController.addListener(() {
-      clearTextFunction(
+      _mutateTextOnValidationFailed(
           affirmationTimeController, MyResource.AFFIRMATION_TIME_KEY);
       if (affirmationTimeController.text != null &&
           affirmationTimeController.text.isNotEmpty) {
@@ -478,10 +441,10 @@ class SettingsPageState extends State<SettingsPage> {
       } else {
         MyDB().getBox().put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(0));
       }
-      setState(() {});
     });
+
     meditationTimeController.addListener(() {
-      clearTextFunction(
+      _mutateTextOnValidationFailed(
           meditationTimeController, MyResource.MEDITATION_TIME_KEY);
       if (meditationTimeController.text != null &&
           meditationTimeController.text.isNotEmpty) {
@@ -494,10 +457,11 @@ class SettingsPageState extends State<SettingsPage> {
       } else {
         MyDB().getBox().put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(0));
       }
-      setState(() {});
     });
+
     fitnessTimeController.addListener(() {
-      clearTextFunction(fitnessTimeController, MyResource.FITNESS_TIME_KEY);
+      _mutateTextOnValidationFailed(
+          fitnessTimeController, MyResource.FITNESS_TIME_KEY);
       if (fitnessTimeController.text != null &&
           fitnessTimeController.text.isNotEmpty) {
         int input = int.tryParse(fitnessTimeController.text);
@@ -507,10 +471,10 @@ class SettingsPageState extends State<SettingsPage> {
       } else {
         MyDB().getBox().put(MyResource.FITNESS_TIME_KEY, ExerciseTime(0));
       }
-      setState(() {});
     });
+
     vocabularyTimeController.addListener(() {
-      clearTextFunction(
+      _mutateTextOnValidationFailed(
           vocabularyTimeController, MyResource.VOCABULARY_TIME_KEY);
       if (vocabularyTimeController.text != null &&
           vocabularyTimeController.text.isNotEmpty) {
@@ -523,10 +487,11 @@ class SettingsPageState extends State<SettingsPage> {
       } else {
         MyDB().getBox().put(MyResource.VOCABULARY_TIME_KEY, ExerciseTime(0));
       }
-      setState(() {});
     });
+
     readingTimeController.addListener(() {
-      clearTextFunction(readingTimeController, MyResource.READING_TIME_KEY);
+      _mutateTextOnValidationFailed(
+          readingTimeController, MyResource.READING_TIME_KEY);
       if (readingTimeController.text != null &&
           readingTimeController.text.isNotEmpty) {
         int input = int.tryParse(readingTimeController.text);
@@ -536,10 +501,10 @@ class SettingsPageState extends State<SettingsPage> {
       } else {
         MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(0));
       }
-      setState(() {});
     });
+
     visualizationTimeController.addListener(() {
-      clearTextFunction(
+      _mutateTextOnValidationFailed(
           visualizationTimeController, MyResource.VISUALIZATION_TIME_KEY);
       if (visualizationTimeController.text != null &&
           visualizationTimeController.text.isNotEmpty) {
@@ -552,8 +517,8 @@ class SettingsPageState extends State<SettingsPage> {
       } else {
         MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(0));
       }
-      setState(() {});
     });
+
     affirmationTextController.addListener(() {
       if (affirmationTextController.text != null &&
           affirmationTextController.text.isNotEmpty) {
@@ -653,5 +618,28 @@ class SettingsPageState extends State<SettingsPage> {
   Future<String> _showAffirmationCategoryDialog(BuildContext context) async {
     return await showDialog(
         context: context, child: AffirmationCategoryDialog());
+  }
+
+  _mutateTextOnValidationFailed(TextEditingController controller, String key) {
+    if (_isInputTimeNotValid(controller.text)) {
+      String _oldValue;
+
+      if (controller.text.length > 1) {
+        _oldValue = controller.text.substring(0, controller.text.length - 1);
+      } else
+        _oldValue = '';
+      controller.clear();
+      controller.text = _oldValue;
+      controller.selection =
+          TextSelection.collapsed(offset: controller.text.length);
+    }
+  }
+
+  bool _isInputTimeNotValid(String text) {
+    return text.contains(".") ||
+        text.contains("-") ||
+        text.contains(",") ||
+        text.contains(" ") ||
+        text.length > 2;
   }
 }
