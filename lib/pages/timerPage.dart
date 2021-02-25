@@ -10,6 +10,7 @@ import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
+import 'package:morningmagic/features/visualization/presentation/widgets/circular_progress_bar.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:screen/screen.dart';
@@ -17,7 +18,6 @@ import 'package:screen/screen.dart';
 import '../resources/colors.dart';
 import '../utils/string_util.dart';
 import '../widgets/customText.dart';
-import '../widgets/custom_progress_bar/circleProgressBar.dart';
 
 class TimerPage extends StatefulWidget {
   final int pageId;
@@ -154,11 +154,12 @@ class TimerPageState extends State<TimerPage> {
 
     return Container(
       width: _timerSize,
-      child: CircleProgressBar(
-        text: StringUtil.createTimeString(timerService.time),
-        foregroundColor: AppColors.WHITE,
+      child: CircularProgressBar(
+        text:  StringUtil.createTimeString(timerService.time),
+        foregroundColor: Colors.white.withOpacity(0.8),
+        backgroundColor: Colors.white.withOpacity(0.4),
         value: timerService.createValue(),
-        textSize: _textSize,
+        fontSize: _textSize,
       ),
     );
   }

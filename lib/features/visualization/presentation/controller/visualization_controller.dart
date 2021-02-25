@@ -27,6 +27,8 @@ class VisualizationController extends GetxController {
 
   var isTimerActive = false.obs;
 
+  var _currentImageIndex = 0.obs;
+
   Directory _tempAssetsDir;
 
   Timer _timer;
@@ -51,6 +53,12 @@ class VisualizationController extends GetxController {
 
   double get timeLeftValue => 1 - _timeLeft / _initialTimeLeft;
 
+  int get currentImageIndex => (_currentImageIndex >= selectedImages.length)
+      ? 0
+      : _currentImageIndex.value;
+
+  setCurrentImageIndex(int value) => _currentImageIndex.value = value;
+
   @override
   void onInit() async {
     super.onInit();
@@ -61,24 +69,29 @@ class VisualizationController extends GetxController {
     targets.addAll(_result);
 
     // TODO get def images from
-    // final _defaultImages = targets
-    //     .map((element) => element.coverAssetPath)
-    //     .where((element) => element != null)
-    //     .map((e) => VisualizationImage(assetPath: e))
-    //     .toList();
-
     final _defaultImages = [
       VisualizationImage(assetPath: 'assets/images/background_tutorial.jpg'),
-      VisualizationImage(assetPath: 'assets/images/visualization_images/family/beach-1854076_1920.jpg'),
-      VisualizationImage(assetPath: 'assets/images/visualization_images/family/bloom-1836315_1920.jpg'),
-      VisualizationImage(assetPath: 'assets/images/visualization_images/family/couple-498484_1920.jpg'),
-      VisualizationImage(assetPath: 'assets/images/visualization_images/family/family-2610205_1920.jpg'),
-      VisualizationImage(assetPath: 'assets/images/visualization_images/family/family-2811003_1920.jpg'),
-      VisualizationImage(assetPath: 'assets/images/visualization_images/family/people-2597454_1920.jpg'),
+      VisualizationImage(
+          assetPath:
+              'assets/images/visualization_images/family/beach-1854076_1920.jpg'),
+      VisualizationImage(
+          assetPath:
+              'assets/images/visualization_images/family/bloom-1836315_1920.jpg'),
+      VisualizationImage(
+          assetPath:
+              'assets/images/visualization_images/family/couple-498484_1920.jpg'),
+      VisualizationImage(
+          assetPath:
+              'assets/images/visualization_images/family/family-2610205_1920.jpg'),
+      VisualizationImage(
+          assetPath:
+              'assets/images/visualization_images/family/family-2811003_1920.jpg'),
+      VisualizationImage(
+          assetPath:
+              'assets/images/visualization_images/family/people-2597454_1920.jpg'),
     ];
 
     images.addAll(_defaultImages);
-
     _getTimeLeftFromPrefs();
   }
 
@@ -100,8 +113,8 @@ class VisualizationController extends GetxController {
     _dbBox.put(MyResource.VISUALIZATION_KEY, Visualization(text));
   }
 
-  String getVisualization() {
-    String _visualizationText = "";
+  String getVisualizationText() {
+    String _visualizationText = '';
 
     Visualization _visualization = _dbBox.get(MyResource.VISUALIZATION_KEY);
 
@@ -205,7 +218,9 @@ class VisualizationController extends GetxController {
           _timeLeft.value = _timeLeft.value - TIMER_TICK_DURATION;
           setTimerStateActive();
         } else {
+          _timer.cancel();
           setTimerStateStopped();
+          _timeLeft.value = _initialTimeLeft;
         }
       });
       setTimerStateActive();

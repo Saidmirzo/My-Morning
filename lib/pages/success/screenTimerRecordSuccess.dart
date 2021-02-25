@@ -11,11 +11,11 @@ import 'package:morningmagic/db/model/progress/day/day.dart';
 import 'package:morningmagic/db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
 import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/features/visualization/presentation/widgets/circular_progress_bar.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/customPlayerColumn.dart';
-import 'package:morningmagic/widgets/custom_progress_bar/circleProgressBar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:random_string/random_string.dart';
@@ -173,7 +173,6 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
   }
 
   void saveVocabularyRecordProgress(String path) {
-    DateTime dateTime = DateTime.now();
     if (path != null) {
       path = path.substring(1);
       VocabularyRecordProgress recordProgress =
@@ -295,21 +294,22 @@ class _TimerRecordSuccessScreenState extends State<TimerRecordSuccessScreen> {
             ],
           )),
           child: Container(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height / 3.7),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(top: 20),
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: CircleProgressBar(
-                    text: StringUtil.createTimeString(_time),
-                    foregroundColor: AppColors.WHITE,
-                    value: createValue(),
-                  ),
+                SizedBox(
+                  height: 24,
                 ),
+                Container(
+                    padding: EdgeInsets.only(top: 20),
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: CircularProgressBar(
+                      text: StringUtil.createTimeString(_time),
+                      foregroundColor: Colors.white.withOpacity(0.8),
+                      backgroundColor: Colors.white.withOpacity(0.4),
+                      value: createValue(),
+                      fontSize: 55,
+                    )),
                 Container(
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height / 17),

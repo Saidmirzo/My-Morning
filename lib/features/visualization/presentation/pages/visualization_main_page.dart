@@ -26,7 +26,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
   void initState() {
     super.initState();
     _textEditingController =
-        TextEditingController(text: _controller.getVisualization());
+        TextEditingController(text: _controller.getVisualizationText());
     _textEditingController.addListener(() => _saveVisualization());
   }
 
