@@ -114,8 +114,9 @@ class TimerPageState extends State<TimerPage> {
                 child: AppGradientContainer(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
+                      SizedBox(height: 36),
                       if (widget.pageId == 1)
                         Obx(() {
                           if (_audioController.isAudioLoading.value &&
@@ -125,10 +126,8 @@ class TimerPageState extends State<TimerPage> {
                             return _buildPlayerControls();
                         }),
                       _buildTimerProgress(context),
-                      SizedBox(
-                        height: 24,
-                      ),
                       if (titleText != null) _buildTitleWidget(),
+                      // Spacer(),
                       _buildMenuButtons(context),
                     ],
                   ),
@@ -260,6 +259,13 @@ class TimerPageState extends State<TimerPage> {
             timerService.skipTask();
           }, 'rex', 'skip'.tr(), 15, null, null),
         ),
+        Container(
+          padding: EdgeInsets.only(top: 10),
+          child: AnimatedButton(() {
+            _audioPlayer.pause();
+            timerService.goToHome();
+          }, 'rex', 'menu'.tr(), 15, null, null),
+        ),
         if (widget.pageId == 0)
           Container(
             padding: EdgeInsets.only(top: 10),
@@ -272,13 +278,6 @@ class TimerPageState extends State<TimerPage> {
                 });
             }, 'rex', 'affirmation_timer'.tr(), 15, null, null),
           ),
-        Container(
-          padding: EdgeInsets.only(top: 10),
-          child: AnimatedButton(() {
-            _audioPlayer.pause();
-            timerService.goToHome();
-          }, 'rex', 'menu'.tr(), 15, null, null),
-        ),
         SizedBox(
           height: 8,
         ),
@@ -293,7 +292,7 @@ class TimerPageState extends State<TimerPage> {
 
   Widget _buildTitleWidget() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 30),
+      width: MediaQuery.of(context).size.width * 3 / 4,
       child: CustomText(
         text: titleText,
         size: 22,
