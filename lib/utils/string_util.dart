@@ -30,6 +30,25 @@ class StringUtil {
     }
   }
 
+  static String getFormattedTimeLeft(int timeInMillis) {
+    String _minutesString;
+    String _secondsString;
+    final _minutes = timeInMillis ~/ 60000;
+    final _seconds = (timeInMillis ~/ 1000) % 60;
+
+    if (_minutes < 10) {
+      _minutesString = '0$_minutes';
+    } else
+      _minutesString = '$_minutes';
+
+    if (_seconds < 10) {
+      _secondsString = '0$_seconds';
+    } else
+      _secondsString = '$_seconds';
+
+    return '$_minutesString : $_secondsString';
+  }
+
   String createTimeAppBarString(int _time) {
     int min;
     int sec;
@@ -59,4 +78,6 @@ class StringUtil {
       return "00 : 00";
     }
   }
+
+
 }

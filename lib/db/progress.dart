@@ -16,23 +16,35 @@ import 'package:morningmagic/db/resource.dart';
 import 'model/progress/vocabulary_progress/vocabulary_note_progress.dart';
 
 class ProgressUtil {
-
   ProgressUtil();
 
   Future<void> updateDayList(Day day) async {
-    DayHolder dayHolder = await MyDB().getBox().get(MyResource.DAYS_HOLDER, defaultValue: DayHolder(new List<Day>()));
+    DayHolder dayHolder = await MyDB()
+        .getBox()
+        .get(MyResource.DAYS_HOLDER, defaultValue: DayHolder(new List<Day>()));
     print("List before update: " + dayHolder.listOfDays.length.toString());
     dayHolder.listOfDays.add(day);
     print("List after update: " + dayHolder.listOfDays.length.toString());
     myDbBox.put(MyResource.DAYS_HOLDER, dayHolder);
   }
 
-  Day createDay(AffirmationProgress affirmationProgress,
-      MeditationProgress meditationProgress, FitnessProgress fitnessProgress,
-      ReadingProgress readingProgress, VocabularyNoteProgress vocabularyNoteProgress, VocabularyRecordProgress vocabularyRecordProgress,
+  Day createDay(
+      AffirmationProgress affirmationProgress,
+      MeditationProgress meditationProgress,
+      FitnessProgress fitnessProgress,
+      ReadingProgress readingProgress,
+      VocabularyNoteProgress vocabularyNoteProgress,
+      VocabularyRecordProgress vocabularyRecordProgress,
       VisualizationProgress visualizationProgress) {
-    return new Day(DBDate().getStringDate(), affirmationProgress, meditationProgress,
-        fitnessProgress, readingProgress, vocabularyNoteProgress, vocabularyRecordProgress, visualizationProgress);
+    return new Day(
+        DBDate().getStringDate(),
+        affirmationProgress,
+        meditationProgress,
+        fitnessProgress,
+        readingProgress,
+        vocabularyNoteProgress,
+        vocabularyRecordProgress,
+        visualizationProgress);
   }
 
   Future<HashMap<String, List<Day>>> getDataMap() async {
@@ -44,7 +56,8 @@ class ProgressUtil {
     return map;
   }
 
-  List<ProgressObject> createProgressObjectsList(HashMap<String, List<Day>> map) {
+  List<ProgressObject> createProgressObjectsList(
+      HashMap<String, List<Day>> map) {
     List<ProgressObject> list;
     list = map?.entries?.map((e) => ProgressObject(e.key, e.value))?.toList();
     list?.sort();
@@ -53,7 +66,7 @@ class ProgressUtil {
 
   List<String> getUniqueDayStrings(List<Day> days) {
     List<String> result = new List<String>();
-    for(int i = 0; i < days.length; i ++) {
+    for (int i = 0; i < days.length; i++) {
       Day day = days[i];
       if (!result.contains(day.date)) {
         result.add(day.date);
@@ -72,16 +85,14 @@ class ProgressUtil {
     return currentDateExercises;
   }
 
-  HashMap<String, List<Day>> getProgressMap(List<String> uniqueStrings,
-      List<Day> allDays) {
-
+  HashMap<String, List<Day>> getProgressMap(
+      List<String> uniqueStrings, List<Day> allDays) {
     HashMap<String, List<Day>> map = new HashMap<String, List<Day>>();
 
-    for (int i = 0; i < uniqueStrings.length; i ++) {
+    for (int i = 0; i < uniqueStrings.length; i++) {
       map[uniqueStrings[i]] = getDaysByDateString(uniqueStrings[i], allDays);
     }
 
     return map;
   }
-
 }

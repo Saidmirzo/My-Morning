@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
+import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_timer_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
@@ -29,7 +30,6 @@ class _VisualizationSelectImpressionPageState
     return Scaffold(
       body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         _buildSelectImpressionTitle(context),
-        //
         Expanded(
           child: Obx(
             () => GridView.builder(
@@ -85,8 +85,8 @@ class _VisualizationSelectImpressionPageState
           children: [
             _buildActionButton(
                 () => {Navigator.pop(context)}, 'assets/images/arrow_back.svg'),
-            _buildActionButton(
-                () async => {await _loadAssets()}, 'assets/images/plus.svg'),
+            _buildActionButton(() async => {await _loadAssets(context)},
+                'assets/images/plus.svg'),
             Obx(() => Opacity(
                   opacity:
                       (_controller.selectedImageIndexes.isEmpty) ? 0.3 : 1.0,
@@ -107,17 +107,29 @@ class _VisualizationSelectImpressionPageState
   Widget _buildImage(int index) {
     final _image = _controller.images[index];
 
-    if (_image.fromGallery)
-      return AssetThumb(
-        width: 300,
-        height: 300,
-        asset: _image.asset,
-      );
-    else
-      return Image.asset(
-        _image.assetPath,
-        fit: BoxFit.cover,
-      );
+    switch (_image.runtimeType) {
+      case VisualizationAssetImage:
+        return Image.asset(
+          _image.path,
+          fit: BoxFit.cover,
+        );
+        break;
+      case VisualizationGalleryImage:
+        return AssetThumb(
+          width: 300,
+          height: 300,
+          asset: (_image as VisualizationGalleryImage).pickedAsset,
+        );
+        break;
+      case VisualizationFileSystemImage:
+        return Image.file(
+          (_image as VisualizationFileSystemImage).file,
+          fit: BoxFit.cover,
+        );
+        break;
+      default:
+        throw new UnsupportedError('unknown image type');
+    }
   }
 
   Widget _buildSelectImpressionTitle(BuildContext context) {
@@ -142,7 +154,7 @@ class _VisualizationSelectImpressionPageState
     );
   }
 
-  Future<void> _loadAssets() async {
+  Future<void> _loadAssets(BuildContext context) async {
     List<Asset> resultList;
 
     try {

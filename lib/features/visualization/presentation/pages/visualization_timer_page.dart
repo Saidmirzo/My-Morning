@@ -9,6 +9,7 @@ import 'package:morningmagic/features/visualization/presentation/controller/visu
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_full_screen_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/circular_progress_bar.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
+import 'package:morningmagic/features/visualization/presentation/widgets/routes/scale_route.dart';
 
 class VisualizationTimerPage extends StatefulWidget {
   @override
@@ -36,8 +37,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(
-                    _images[_controller.currentImageIndex].assetPath),
+                image: AssetImage(_images[_controller.currentImageIndex].path),
                 colorFilter: new ColorFilter.mode(
                     Colors.grey.withOpacity(0.5), BlendMode.exclusion),
                 fit: BoxFit.cover,
@@ -47,24 +47,6 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.image,
-                        size: 36,
-                        color: Colors.white.withOpacity(0.7),
-                      ),
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VisualizationFullScreenPage(),
-                          )),
-                    ),
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0, bottom: 16),
                   child: _buildTimerProgress(context),
@@ -87,10 +69,9 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     _buildActionButton(
-                        () => {
-                              // TODO main menu
-                            },
-                        'assets/images/menu.svg'),
+                        () => Navigator.of(context)
+                            .push(_createFullScreenRoute()),
+                        'assets/images/full_screen.svg'),
                     Obx(() {
                       VoidCallback _toggleStartPauseCallback =
                           () => _controller.toggleStartPauseTimer();
@@ -144,5 +125,9 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
         borderColor: Colors.white,
       ),
     );
+  }
+
+  Route _createFullScreenRoute() {
+    return ScaleRoute(page: VisualizationFullScreenPage());
   }
 }
