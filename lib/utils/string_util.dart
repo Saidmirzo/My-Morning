@@ -78,6 +78,4 @@ class StringUtil {
       return "00 : 00";
     }
   }
-
-
 }

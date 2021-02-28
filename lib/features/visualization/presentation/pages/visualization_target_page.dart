@@ -25,21 +25,37 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
       body: Column(children: [
         _buildSelectTargetTitle(context),
         Expanded(
-            child: Obx(() => ListView.builder(
-                  itemCount: _controller.targets.length,
-                  itemBuilder: (context, index) => _buildTargetItem(index),
-                ))),
-        _buildAddButton(),
+          child: Stack(
+            children: [
+              Obx(() => ListView.builder(
+                    itemCount: _controller.targets.length,
+                    itemBuilder: (context, index) => _buildTargetItem(index),
+                    padding: EdgeInsets.only(top: 16, bottom: 108),
+                  )),
+              _buildAddButton(),
+            ],
+          ),
+        ),
       ]),
     );
   }
 
-  Padding _buildAddButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: RoundBorderedButton(
-        onTap: () => _showAddNewTargetDialog(context),
-        child: SvgPicture.asset('assets/images/plus.svg'),
+  Widget _buildAddButton() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        color: Colors.white,
+        width: MediaQuery.of(context).size.width,
+        height: 108,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: RoundBorderedButton(
+              onTap: () => _showAddNewTargetDialog(context),
+              child: SvgPicture.asset('assets/images/plus.svg'),
+            ),
+          ),
+        ),
       ),
     );
   }
