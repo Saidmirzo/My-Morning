@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
@@ -17,12 +18,16 @@ class VisualizationAssetImage extends VisualizationImage {
 
 class VisualizationGalleryImage extends VisualizationImage {
   final Asset pickedAsset;
+  final ByteData byteData;
 
-  VisualizationGalleryImage({@required String path, @required this.pickedAsset})
+  VisualizationGalleryImage(
+      {@required String path,
+      @required this.pickedAsset,
+      @required this.byteData})
       : super(path: path);
 
   @override
-  List<Object> get props => [path, pickedAsset];
+  List<Object> get props => [path, pickedAsset, byteData];
 }
 
 class VisualizationFileSystemImage extends VisualizationImage {

@@ -4,6 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 
+// TODO make get image from controller
 class VisualizationFullScreenPage extends StatefulWidget {
   @override
   _VisualizationFullScreenPageState createState() =>

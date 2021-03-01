@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
@@ -63,7 +63,7 @@ class VisualizationController extends GetxController {
 
   int get passedTimeSeconds => (_initialTimeLeft - _timeLeft.value) ~/ 1000;
 
-  VoidCallback onTimerFinished;
+  RxBool hasTimerCompleted = RxBool(false);
 
   @override
   void onInit() async {
@@ -129,18 +129,21 @@ class VisualizationController extends GetxController {
     }
   }
 
-  addImageAssetsFromGallery(List<Asset> assetImages) {
+  addImageAssetsFromGallery(List<Asset> assetImages) async {
     int oldLastImageIndex = images.length - 1;
 
     final List<VisualizationImage> _visualizationImagesFromGallery = [];
 
-    assetImages.forEach((asset) {
+    for (Asset asset in assetImages) {
+      final _byteData = await asset.getByteData();
       final _galleryImage = VisualizationGalleryImage(
-          path: '$imageCacheDirPath/${asset.name}', pickedAsset: asset);
+          path: '$imageCacheDirPath/${asset.name}',
+          pickedAsset: asset,
+          byteData: _byteData);
       _visualizationImagesFromGallery.add(_galleryImage);
 
       _saveAssetInTemporaryDirectory(asset);
-    });
+    }
 
     images.addAll(_visualizationImagesFromGallery);
 
@@ -174,8 +177,7 @@ class VisualizationController extends GetxController {
           _setTimerStateStopped();
           _timeLeft.value = _initialTimeLeft;
 
-          if (onTimerFinished != null) onTimerFinished();
-          // TODO open success
+          hasTimerCompleted.value = true;
         }
       });
       _setTimerStateActive();
@@ -237,8 +239,10 @@ class VisualizationController extends GetxController {
   _getTimeLeftFromPrefs() {
     ExerciseTime _exerciseTime = _dbBox.get(MyResource.VISUALIZATION_TIME_KEY,
         defaultValue: ExerciseTime(0));
-    _initialTimeLeft =
-        _exerciseTime.time * 60 * 1000; //time from prefs in minutes
+    // TODO revert
+    _initialTimeLeft = 5000;
+    // _initialTimeLeft =
+    //     _exerciseTime.time * 60 * 1000; //time from prefs in minutes
     _timeLeft.value = _initialTimeLeft;
   }
 
@@ -320,6 +324,32 @@ class VisualizationController extends GetxController {
       ]);
     }
     _dbBox.put(MyResource.MY_VISUALISATION_PROGRESS, list);
+  }
+
+  ImageProvider get getProvidedImage {
+
+    final _image = selectedImages[currentImageIndex];
+
+    switch (_image.runtimeType) {
+      case VisualizationAssetImage:
+        return AssetImage(
+          _image.path,
+        );
+        break;
+      case VisualizationGalleryImage:
+        return MemoryImage((_image as VisualizationGalleryImage)
+            .byteData
+            .buffer
+            .asUint8List());
+        break;
+      case VisualizationFileSystemImage:
+        return FileImage(
+          (_image as VisualizationFileSystemImage).file,
+        );
+        break;
+      default:
+        throw new UnsupportedError('unknown image type');
+    }
   }
 
   _removeImageTempDirectory() {

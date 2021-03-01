@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_full_screen_page.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_success_page.dart';
@@ -20,21 +19,20 @@ class VisualizationTimerPage extends StatefulWidget {
 
 class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
   VisualizationController _controller = Get.find<VisualizationController>();
-  List<VisualizationImage> _images;
 
   @override
   void initState() {
     super.initState();
-    _images = _controller.selectedImages;
     _controller.setCurrentImageIndex(0);
-    _controller.onTimerFinished = () {
+    // TODO check timer
+    _controller.hasTimerCompleted.listen((value) {
+      print('On timer finished VISUALIZAION TIMER PAGE $value');
       _finishVisualization(context);
-    };
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_images[_controller.currentImageIndex].path);
     return SafeArea(
       child: Scaffold(
         body: Obx(
@@ -43,8 +41,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(_images[_controller.currentImageIndex].path),
-                // image: AssetImage('/data/user/0/com.wonderfullmoning.morningmagic/cache/imageAssets/IMG_20210219_103922.jpg'),
+                image: _controller.getProvidedImage,
                 colorFilter: new ColorFilter.mode(
                     Colors.grey.withOpacity(0.5), BlendMode.exclusion),
                 fit: BoxFit.cover,
