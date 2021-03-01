@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
+import 'package:morningmagic/routing/route_values.dart';
 
 import '../db/hive.dart';
 import '../db/model/user/user.dart';
 import '../db/resource.dart';
 import '../resources/colors.dart';
 import '../storage.dart';
-import 'menuPage.dart';
-import 'screenUserDataInput.dart';
-import 'settingsPage.dart';
 
 class LoadingPage extends StatefulWidget {
   @override
@@ -34,7 +32,7 @@ class LoadingPageState extends State<LoadingPage>
     super.initState();
     print('LoadingPage initState');
     initController();
-    initAndLoadDb();
+
     billingService.init();
     initRedirect();
   }
@@ -161,17 +159,16 @@ class LoadingPageState extends State<LoadingPage>
     );
   }
 
-  Widget chooseNavigationWidget() {
+  String chooseNavigationRoute() {
     if (myDbBox != null && myDbBox.get(MyResource.USER_KEY) != null) {
       return chooseSettingsOrStartMenu();
     } else {
       AnalyticService.analytics.logAppOpen();
-
-      return UserDataInputScreen();
+      return userInputDataPageRoute;
     }
   }
 
-  Widget chooseSettingsOrStartMenu() {
+  String chooseSettingsOrStartMenu() {
     int launchForRate = MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE) ?? 0;
     launchForRate++;
     MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE, launchForRate);
@@ -203,13 +200,13 @@ class LoadingPageState extends State<LoadingPage>
           break;
         }
     }
-    print(MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH));
+
     if (myDbBox != null &&
         myDbBox.get(MyResource.BOOK_KEY) != null &&
         myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY) != null) {
-      return StartScreen();
+      return homePageRoute;
     } else {
-      return SettingsPage();
+      return settingsPageRoute;
     }
   }
 
@@ -227,23 +224,15 @@ class LoadingPageState extends State<LoadingPage>
       });
   }
 
-  initAndLoadDb() async {
-    try {
-      await MyDB().initHiveDatabase();
-    } catch (e) {
-      print('Hive error: $e');
-    }
-  }
-
   initRedirect() async {
     await Future.delayed(Duration(seconds: 3));
     _openScreen();
   }
 
   void _openScreen() async {
-    await Navigator.pushReplacement(
+    await Navigator.pushReplacementNamed(
       context,
-      MaterialPageRoute(builder: (context) => chooseNavigationWidget()),
+      chooseNavigationRoute(),
     );
   }
 }

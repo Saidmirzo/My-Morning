@@ -20,6 +20,7 @@ import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/pages/success/screenTimerInputSuccess.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
+import 'package:morningmagic/routing/routing.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 
 // TODO rewrite
@@ -81,7 +82,7 @@ class TimerService {
 
   Function goToHome() {
     timer.cancel();
-    Navigator.pushNamedAndRemoveUntil(context, '/start', (r) => false);
+    Routing.navigateToHomeWithClearHistory(context);
     // При выходе в меню чтение (id4) не сохраняем
     if (pageId != 4) saveProgress();
   }

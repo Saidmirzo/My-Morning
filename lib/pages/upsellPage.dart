@@ -1,13 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:morningmagic/widgets/subscribe_1_month_button.dart';
+import 'package:morningmagic/routing/routing.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-import 'package:easy_localization/easy_localization.dart';
 import '../resources/colors.dart';
 import '../storage.dart';
 import '../widgets/animatedButton.dart';
 import '../widgets/is_pro_widget.dart';
-import 'menuPage.dart';
 
 class UpsellPage extends StatefulWidget {
   UpsellPage({Key key}) : super(key: key);
@@ -56,7 +55,7 @@ class UpsellPageState extends State<UpsellPage> {
               Container(
                 height: 100,
                 child: AnimatedButton(
-                  () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => StartScreen())),
+                  () => Routing.navigateToHomeWithClearHistory(context),
                   'rex', 'menu'.tr(), 22, null, null
                 ),
               ),

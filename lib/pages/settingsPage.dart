@@ -8,6 +8,8 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
+import 'package:morningmagic/routing/route_values.dart';
+import 'package:morningmagic/routing/routing.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../app_states.dart';
@@ -17,7 +19,6 @@ import '../db/model/exercise_time/exercise_time.dart';
 import '../db/model/user/user.dart';
 import '../db/resource.dart';
 import '../dialog/paymentDialog.dart';
-import '../pages/menuPage.dart';
 import '../resources/colors.dart';
 import '../storage.dart';
 import '../widgets/animatedButton.dart';
@@ -26,8 +27,6 @@ import '../widgets/setting_activity_list.dart';
 import '../widgets/subscribe_1_month_button.dart';
 
 class SettingsPage extends StatefulWidget {
-  SettingsPage();
-
   @override
   State createState() => SettingsPageState();
 }
@@ -312,10 +311,7 @@ class SettingsPageState extends State<SettingsPage> {
                       child: Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
                         child: AnimatedButton(
-                            () => Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => StartScreen())),
+                            () => Routing.navigateToHomeWithClearHistory(context),
                             'sans-serif',
                             'continue'.tr(),
                             null,
@@ -611,7 +607,7 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   Future<bool> _onWillPop() async {
-    Navigator.pushNamedAndRemoveUntil(context, '/start', (r) => false);
+    Routing.navigateToHomeWithClearHistory(context);
     return false;
   }
 

@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/routing/route_values.dart';
+import 'package:morningmagic/routing/routing.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 
 class FAQScreen extends StatefulWidget {
@@ -13,13 +15,12 @@ class FAQScreen extends StatefulWidget {
 }
 
 class FAQStateScreen extends State<FAQScreen> {
-
   @override
   void initState() {
-    AnalyticService.screenView('FAQ_page');
     super.initState();
-
+    AnalyticService.screenView('FAQ_page');
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -76,25 +77,20 @@ class FAQStateScreen extends State<FAQScreen> {
                                 bottom:
                                     MediaQuery.of(context).size.height / 15),
                             child: Html(
-                              data: 'faq_desc'.tr(),
-                              defaultTextStyle: TextStyle(
-                                fontSize: 18,
-                                fontFamily: "sans-serif",
-                                fontStyle: FontStyle.normal,
-                                color: AppColors.VIOLET,
-                              )
-                            ),
+                                data: 'faq_desc'.tr(),
+                                defaultTextStyle: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: "sans-serif",
+                                  fontStyle: FontStyle.normal,
+                                  color: AppColors.VIOLET,
+                                )),
                           ),
                           Container(
                             padding: EdgeInsets.only(bottom: 20),
                             child: AnimatedButton(() {
                               Navigator.pushNamedAndRemoveUntil(
-                                  context, '/start', (r) => false);
-                            },
-                                'sans-serif',
-                                'back_button'.tr(),
-                                19,
-                                null,
+                                  context, homePageRoute, (r) => false);
+                            }, 'sans-serif', 'back_button'.tr(), 19, null,
                                 null),
                           )
                         ],
@@ -109,7 +105,7 @@ class FAQStateScreen extends State<FAQScreen> {
   }
 
   Future<bool> _onWillPop() async {
-    Navigator.pushNamedAndRemoveUntil(context, '/start', (r) => false);
+    Routing.navigateToHomeWithClearHistory(context);
     return false;
   }
 }

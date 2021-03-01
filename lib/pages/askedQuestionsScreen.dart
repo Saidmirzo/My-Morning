@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/instance_manager.dart';
-import 'package:get/route_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/user/user.dart';
@@ -18,6 +17,7 @@ import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_
 import 'package:morningmagic/pages/myFitnessProgress.dart';
 import 'package:morningmagic/pages/myVisualizationProgress.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/routing/routing.dart';
 import 'package:morningmagic/utils/other.dart';
 import 'package:morningmagic/widgets/remove_progress.dart';
 import 'package:rate_my_app/rate_my_app.dart';
@@ -36,10 +36,10 @@ import '../storage.dart';
 import '../widgets/animatedButton.dart';
 import '../widgets/progressItem.dart';
 import '../widgets/progressItemRecord.dart';
-import 'paywall_page.dart';
 import 'journalMy.dart';
 import 'myAffirmationProgress.dart';
 import 'myReadingProgress.dart';
+import 'paywall_page.dart';
 
 class AskedQuestionsScreen extends StatefulWidget {
   @override
@@ -685,8 +685,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
               billingService.isPro()
                   ? Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => MyFitnessProgress()))
-                  : Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => PaywallPage()));
+                  : Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => PaywallPage()));
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.046,
@@ -784,8 +784,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
               billingService.isPro()
                   ? Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => MyReadingProgress()))
-                  : Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => PaywallPage()));
+                  : Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => PaywallPage()));
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.046,
@@ -834,8 +834,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
               billingService.isPro()
                   ? Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => MyVisualizationProgress()))
-                  : Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => PaywallPage()));
+                  : Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => PaywallPage()));
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.046,
@@ -889,8 +889,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           right: MediaQuery.of(context).size.width / 4.5,
           bottom: 0),
       child: AnimatedButton(() {
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/start', (r) => false); //22 fontSize
+        Routing.navigateToHomeWithClearHistory(context);
       }, 'sans-serif-black', 'menu'.tr(),
           MediaQuery.of(context).size.width * 0.06, null, null),
     );

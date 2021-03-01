@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
@@ -61,6 +62,8 @@ class VisualizationController extends GetxController {
       : _currentImageIndex.value;
 
   int get passedTimeSeconds => (_initialTimeLeft - _timeLeft.value) ~/ 1000;
+
+  VoidCallback onTimerFinished;
 
   @override
   void onInit() async {
@@ -171,6 +174,7 @@ class VisualizationController extends GetxController {
           _setTimerStateStopped();
           _timeLeft.value = _initialTimeLeft;
 
+          if (onTimerFinished != null) onTimerFinished();
           // TODO open success
         }
       });
@@ -188,7 +192,7 @@ class VisualizationController extends GetxController {
     targets.addAll(_result);
   }
 
-  // TODO refactor
+  // TODO make
   Future _initializeImages() async {
     // TODO get def images from
     final _defaultImages = [
@@ -253,10 +257,9 @@ class VisualizationController extends GetxController {
     await file.writeAsBytes(assetByteData.buffer.asUint8List());
   }
 
-  _removeImageTempDirectory() {
-    final _imageTempDirectory = Directory(imageCacheDirPath);
-    print('remove image cache directory $imageCacheDirPath');
-    _imageTempDirectory.delete(recursive: true);
+  onFinishVisualization() {
+    _saveVisualizationProgress();
+    _timer?.cancel();
   }
 
   // TODO refactor this WTF
@@ -319,26 +322,9 @@ class VisualizationController extends GetxController {
     _dbBox.put(MyResource.MY_VISUALISATION_PROGRESS, list);
   }
 
-// TODO
-// openSuccess() {
-//   final _audioPlayer = AudioPlayer();
-//   _audioPlayer.setAsset("assets/audios/success.mp3");
-//   _audioPlayer.play();
-//   saveVisualizationProgress();
-//   buttonText = 'start'.tr();
-//   OrderUtil().getRouteById(5).then((value) {
-//     Navigator.push(
-//         context,
-//         MaterialPageRoute(
-//           builder: (context) => TimerSuccessScreen(() {
-//             Navigator.push(context, value);
-//           },
-//               MyDB()
-//                   .getBox()
-//                   .get(MyResource.VISUALIZATION_TIME_KEY)
-//                   .time,
-//               true),
-//         ));
-//   });
-// }
+  _removeImageTempDirectory() {
+    final _imageTempDirectory = Directory(imageCacheDirPath);
+    print('remove image cache directory $imageCacheDirPath');
+    _imageTempDirectory.delete(recursive: true);
+  }
 }

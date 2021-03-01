@@ -7,9 +7,11 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_full_screen_page.dart';
+import 'package:morningmagic/features/visualization/presentation/pages/visualization_success_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/circular_progress_bar.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/routes/scale_route.dart';
+import 'package:morningmagic/routing/route_values.dart';
 
 class VisualizationTimerPage extends StatefulWidget {
   @override
@@ -25,10 +27,14 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
     super.initState();
     _images = _controller.selectedImages;
     _controller.setCurrentImageIndex(0);
+    _controller.onTimerFinished = () {
+      _finishVisualization(context);
+    };
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_images[_controller.currentImageIndex].path);
     return SafeArea(
       child: Scaffold(
         body: Obx(
@@ -38,6 +44,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(_images[_controller.currentImageIndex].path),
+                // image: AssetImage('/data/user/0/com.wonderfullmoning.morningmagic/cache/imageAssets/IMG_20210219_103922.jpg'),
                 colorFilter: new ColorFilter.mode(
                     Colors.grey.withOpacity(0.5), BlendMode.exclusion),
                 fit: BoxFit.cover,
@@ -82,7 +89,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
                           _toggleStartPauseCallback, _imageRes);
                     }),
                     _buildActionButton(() {
-                      // TODO skip page
+                      _finishVisualization(context);
                     }, 'assets/images/arrow_forward.svg'),
                   ],
                 ),
@@ -92,6 +99,17 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
         ),
       ),
     );
+  }
+
+  void _finishVisualization(BuildContext context) {
+    _controller.onFinishVisualization();
+
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VisualizationSuccessPage(),
+        ),
+        ModalRoute.withName(homePageRoute));
   }
 
   Container _buildTimerProgress(BuildContext context) {

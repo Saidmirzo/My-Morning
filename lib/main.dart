@@ -4,13 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:morningmagic/pages/loadingPage.dart';
-import 'package:morningmagic/pages/menuPage.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/routing/routing.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  await _initializeHiveStore();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) async {
     runApp(EasyLocalization(
@@ -26,6 +26,14 @@ Future<void> main() async {
   });
 }
 
+_initializeHiveStore() async {
+  try {
+    await MyDB().initHiveDatabase();
+  } catch (e) {
+    print('Hive initialization error: $e');
+  }
+}
+
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() {
@@ -39,9 +47,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {
-        '/start': (context) => StartScreen(),
-      },
+      initialRoute: Routing.initialRoute,
+      onGenerateRoute: (settings) => Routing.generateRoute(settings),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -49,7 +56,6 @@ class _MyAppState extends State<MyApp> {
         EasyLocalization.of(context).delegate,
       ],
       supportedLocales: EasyLocalization.of(context).supportedLocales,
-      home: LoadingPage(),
     );
   }
 }

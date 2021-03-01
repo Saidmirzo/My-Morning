@@ -4,8 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:morningmagic/pages/settingsPage.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/widgets/tutorial_waves/im_animations.dart';
 
 class TutorialPage extends StatefulWidget {
@@ -60,10 +60,8 @@ class _TutorialPageState extends State<TutorialPage> {
       print("${state.processingState.index}, playing = ${state.playing}");
       if (state.playing &&
           state.processingState.index == ProcessingState.completed.index) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => SettingsPage()),
-            (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+            context, homePageRoute, (route) => false);
       }
     });
   }
@@ -451,11 +449,8 @@ class _TutorialPageState extends State<TutorialPage> {
                 ? InkWell(
                     onTap: () {
                       player.stop();
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SettingsPage()),
-                          (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, homePageRoute, (route) => false);
                     },
                     child: Container(
                       height: 70,
