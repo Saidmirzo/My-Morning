@@ -5,7 +5,7 @@ import 'package:morningmagic/pages/screenUserDataInput.dart';
 import 'package:morningmagic/pages/settingsPage.dart';
 import 'package:morningmagic/routing/route_values.dart';
 
-class Routing {
+class AppRouting {
   static const String initialRoute = splashRoute;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {

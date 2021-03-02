@@ -4,8 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/routing/routing.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,9 +47,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: Routing.initialRoute,
-      onGenerateRoute: (settings) => Routing.generateRoute(settings),
+    return GetMaterialApp(
+      initialRoute: AppRouting.initialRoute,
+      onGenerateRoute: (settings) => AppRouting.generateRoute(settings),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

@@ -5,7 +5,7 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
-import 'package:morningmagic/features/visualization/presentation/pages/visualization_select_impression_page.dart';
+import 'package:morningmagic/features/visualization/presentation/pages/visualization_ impression_image_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/dialogs/add_new_target_dialog.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -89,12 +89,15 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
     final _target = _controller.targets[index];
 
     return InkWell(
-      onTap: () => Navigator.push(
+      onTap: () async {
+        await _controller.initializeImages(_target.id);
+        Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                VisualizationSelectImpressionPage(targetId: _target.id),
-          )),
+            builder: (context) => VisualizationImpressionImagePage(),
+          ),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 2),
         child: Container(

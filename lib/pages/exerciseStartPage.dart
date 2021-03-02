@@ -8,7 +8,7 @@ import 'package:morningmagic/features/meditation_audio/presentation/controller/m
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog.dart';
 import 'package:morningmagic/pages/timerPage.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/routing/routing.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 
 class ExerciseStartPage extends StatefulWidget {
@@ -147,7 +147,7 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
   }
 
   Future<bool> _onWillPop() async {
-    Routing.navigateToHomeWithClearHistory(context);
+    AppRouting.navigateToHomeWithClearHistory(context);
     return false;
   }
 }

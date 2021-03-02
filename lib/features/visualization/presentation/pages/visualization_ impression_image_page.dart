@@ -10,19 +10,7 @@ import 'package:morningmagic/features/visualization/presentation/widgets/round_b
 import 'package:morningmagic/resources/colors.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
-class VisualizationSelectImpressionPage extends StatefulWidget {
-  final int targetId;
-
-  const VisualizationSelectImpressionPage({Key key, @required this.targetId})
-      : super(key: key);
-
-  @override
-  _VisualizationSelectImpressionPageState createState() =>
-      _VisualizationSelectImpressionPageState();
-}
-
-class _VisualizationSelectImpressionPageState
-    extends State<VisualizationSelectImpressionPage> {
+class VisualizationImpressionImagePage extends StatelessWidget {
   final _controller = Get.find<VisualizationController>();
 
   @override
@@ -116,8 +104,8 @@ class _VisualizationSelectImpressionPageState
         break;
       case VisualizationGalleryImage:
         return AssetThumb(
-          width: 300,
-          height: 300,
+          width: 150,
+          height: 150,
           asset: (_image as VisualizationGalleryImage).pickedAsset,
         );
         break;
@@ -161,12 +149,11 @@ class _VisualizationSelectImpressionPageState
       resultList = await MultiImagePicker.pickImages(
         maxImages: 10,
       );
-      if (!mounted) return;
       _controller.addImageAssetsFromGallery(resultList);
     } on Exception catch (e) {
       print(e);
       Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Image load error: ${e}')));
+          .showSnackBar(SnackBar(content: Text('Image load error: $e')));
     }
   }
 }

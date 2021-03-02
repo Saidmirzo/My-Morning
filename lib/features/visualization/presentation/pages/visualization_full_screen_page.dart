@@ -4,7 +4,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 
-// TODO make get image from controller
 class VisualizationFullScreenPage extends StatefulWidget {
   @override
   _VisualizationFullScreenPageState createState() =>
@@ -22,7 +21,6 @@ class _VisualizationFullScreenPageState
   @override
   void initState() {
     super.initState();
-
     _pageController =
         PageController(initialPage: _visualizationController.currentImageIndex);
     _pageController.addListener(() {
@@ -59,9 +57,9 @@ class _VisualizationFullScreenPageState
 
   List<Widget> _buildPages() {
     List<Widget> _pages = [];
-    _visualizationController.selectedImages.forEach((element) {
-      _pages.add(_buildVisualizationImageFullScreen(element.path));
-    });
+    for (int i = 0; i < _visualizationController.selectedImages.length; i++) {
+      _pages.add(_buildVisualizationImageFullScreen(i));
+    }
     return _pages;
   }
 
@@ -87,13 +85,13 @@ class _VisualizationFullScreenPageState
     );
   }
 
-  Widget _buildVisualizationImageFullScreen(String assetPath) {
+  Widget _buildVisualizationImageFullScreen(int index) {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(assetPath),
+          image: _visualizationController.getDecorationImage(index),
           fit: BoxFit.cover,
         ),
       ),

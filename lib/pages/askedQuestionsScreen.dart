@@ -17,7 +17,7 @@ import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_
 import 'package:morningmagic/pages/myFitnessProgress.dart';
 import 'package:morningmagic/pages/myVisualizationProgress.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/routing/routing.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/utils/other.dart';
 import 'package:morningmagic/widgets/remove_progress.dart';
 import 'package:rate_my_app/rate_my_app.dart';
@@ -889,7 +889,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           right: MediaQuery.of(context).size.width / 4.5,
           bottom: 0),
       child: AnimatedButton(() {
-        Routing.navigateToHomeWithClearHistory(context);
+        AppRouting.navigateToHomeWithClearHistory(context);
       }, 'sans-serif-black', 'menu'.tr(),
           MediaQuery.of(context).size.width * 0.06, null, null),
     );

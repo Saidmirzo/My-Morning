@@ -4,7 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/route_values.dart';
-import 'package:morningmagic/routing/routing.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 
 class FAQScreen extends StatefulWidget {
@@ -105,7 +105,7 @@ class FAQStateScreen extends State<FAQScreen> {
   }
 
   Future<bool> _onWillPop() async {
-    Routing.navigateToHomeWithClearHistory(context);
+    AppRouting.navigateToHomeWithClearHistory(context);
     return false;
   }
 }

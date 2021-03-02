@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:morningmagic/routing/routing.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../resources/colors.dart';
@@ -16,7 +16,6 @@ class UpsellPage extends StatefulWidget {
 }
 
 class UpsellPageState extends State<UpsellPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +40,12 @@ class UpsellPageState extends State<UpsellPage> {
               Container(
                 child: AnimatedButton(
                   () async {
-                    if (billingService.purchaserInfo == null) return Container();
+                    if (billingService.purchaserInfo == null)
+                      return Container();
                     if (billingService.isPro()) return IsProWidget();
-                    billingService.purchaserInfo = await Purchases.purchasePackage(billingService.getMonthlyTarif());
+                    billingService.purchaserInfo =
+                        await Purchases.purchasePackage(
+                            billingService.getMonthlyTarif());
                   },
                   'rex',
                   'buy_days'.tr(),
@@ -55,9 +57,12 @@ class UpsellPageState extends State<UpsellPage> {
               Container(
                 height: 100,
                 child: AnimatedButton(
-                  () => Routing.navigateToHomeWithClearHistory(context),
-                  'rex', 'menu'.tr(), 22, null, null
-                ),
+                    () => AppRouting.navigateToHomeWithClearHistory(context),
+                    'rex',
+                    'menu'.tr(),
+                    22,
+                    null,
+                    null),
               ),
             ],
           ),

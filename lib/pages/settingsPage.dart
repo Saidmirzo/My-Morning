@@ -8,8 +8,7 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
-import 'package:morningmagic/routing/route_values.dart';
-import 'package:morningmagic/routing/routing.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../app_states.dart';
@@ -311,7 +310,7 @@ class SettingsPageState extends State<SettingsPage> {
                       child: Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
                         child: AnimatedButton(
-                            () => Routing.navigateToHomeWithClearHistory(context),
+                            () => AppRouting.navigateToHomeWithClearHistory(context),
                             'sans-serif',
                             'continue'.tr(),
                             null,
@@ -607,7 +606,7 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   Future<bool> _onWillPop() async {
-    Routing.navigateToHomeWithClearHistory(context);
+    AppRouting.navigateToHomeWithClearHistory(context);
     return false;
   }
 

@@ -6,11 +6,9 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_full_screen_page.dart';
-import 'package:morningmagic/features/visualization/presentation/pages/visualization_success_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/circular_progress_bar.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/routes/scale_route.dart';
-import 'package:morningmagic/routing/route_values.dart';
 
 class VisualizationTimerPage extends StatefulWidget {
   @override
@@ -24,11 +22,6 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
   void initState() {
     super.initState();
     _controller.setCurrentImageIndex(0);
-    // TODO check timer
-    _controller.hasTimerCompleted.listen((value) {
-      print('On timer finished VISUALIZAION TIMER PAGE $value');
-      _finishVisualization(context);
-    });
   }
 
   @override
@@ -41,7 +34,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: _controller.getProvidedImage,
+                image: _controller.getDecorationImage(_controller.currentImageIndex),
                 colorFilter: new ColorFilter.mode(
                     Colors.grey.withOpacity(0.5), BlendMode.exclusion),
                 fit: BoxFit.cover,
@@ -85,9 +78,8 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
                       return _buildActionButton(
                           _toggleStartPauseCallback, _imageRes);
                     }),
-                    _buildActionButton(() {
-                      _finishVisualization(context);
-                    }, 'assets/images/arrow_forward.svg'),
+                    _buildActionButton(() => _controller.finishVisualization(),
+                        'assets/images/arrow_forward.svg'),
                   ],
                 ),
               ],
@@ -96,17 +88,6 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
         ),
       ),
     );
-  }
-
-  void _finishVisualization(BuildContext context) {
-    _controller.onFinishVisualization();
-
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => VisualizationSuccessPage(),
-        ),
-        ModalRoute.withName(homePageRoute));
   }
 
   Container _buildTimerProgress(BuildContext context) {

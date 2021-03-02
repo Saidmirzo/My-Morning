@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:morningmagic/routing/routing.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 
 import '../resources/colors.dart';
 import '../widgets/animatedButton.dart';
@@ -68,7 +68,7 @@ class ProgressScreenState extends State {
                 Positioned(
                   bottom: 75,
                   child: AnimatedButton(() {
-                    Routing.navigateToHomeWithClearHistory(context);
+                    AppRouting.navigateToHomeWithClearHistory(context);
                   }, 'sans-serif', 'back_button'.tr(), 22, null, null),
                 )
               ],
@@ -80,7 +80,7 @@ class ProgressScreenState extends State {
   }
 
   Future<bool> _onWillPop() async {
-    Routing.navigateToHomeWithClearHistory(context);
+    AppRouting.navigateToHomeWithClearHistory(context);
     return false;
   }
 }
