@@ -39,3 +39,11 @@ class VisualizationFileSystemImage extends VisualizationImage {
   @override
   List<Object> get props => [path, file];
 }
+
+class VisualizationNetworkImage extends VisualizationImage {
+  VisualizationNetworkImage({@required String path})
+      : super(path: path);
+
+  @override
+  List<Object> get props => [path];
+}

@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_image_repository.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 
 class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
   Directory _tempAssetsDir;
 
   String get imageCacheDirPath => _tempAssetsDir.path;
@@ -15,7 +19,7 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
   Future<List<VisualizationImage>> getVisualizationImages(String tag) async {
     List<VisualizationImage> _resultImages = [];
 
-    final _defaultImages = _getDefaultImages(tag);
+    final _defaultImages = await _getDefaultImages(tag);
     final _cachedImages = await _getCachedImages();
 
     _resultImages.addAll(_defaultImages);
@@ -46,104 +50,21 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
     return _result;
   }
 
-  // TODO get from network
-  List<VisualizationImage> _getDefaultImages(String imageTag) {
+  Future<List<VisualizationImage>> _getDefaultImages(String imageTag) async {
     List<VisualizationImage> _result = [];
 
-    switch (imageTag) {
-      case 'success': //success
-        _result = [
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/success/success1.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/success/success2.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/success/success3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/success/success4.jpg',
-          ),
-        ];
-        break;
-      case 'family': //family
-        _result = [
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/family/family1.jpg'),
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/family/family2.jpg'),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/family/family3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/family/family4.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/family/family5.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/family/family6.jpg',
-          ),
-        ];
-        break;
-      case 'nature': //nature
-        _result = [
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/nature/nature1.jpg'),
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/nature/nature2.jpg'),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/nature/nature3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/nature/nature4.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/nature/nature5.jpg',
-          ),
-        ];
-        break;
-      case 'rest': //rest
-        _result = [
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/rest/rest1.jpg'),
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/rest/rest2.jpg'),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/rest/rest3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/rest/rest4.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/rest/rest5.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/rest/rest6.jpg',
-          ),
-        ];
-        break;
-      case 'sport': //sport
-        _result = [
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/sport/sport1.jpg'),
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/sport/sport2.jpg'),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/sport/sport3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/sport/sport4.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/sport/sport5.jpg',
-          ),
-        ];
-        break;
-      default:
-    }
-    return _result;
+    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+        .ref('/visualization_images/$imageTag');
+
+    firebase_storage.ListResult result = await ref.listAll();
+
+    // TODO cache downloaded images
+    await Future.forEach(result.items, (firebase_storage.Reference ref) async {
+      final _url = await ref.getDownloadURL();
+      print(_url);
+      _result.add(VisualizationNetworkImage(path: _url));
+    });
+    return Future.value(_result);
   }
 
   @override

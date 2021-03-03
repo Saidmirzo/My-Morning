@@ -115,6 +115,12 @@ class VisualizationImpressionImagePage extends StatelessWidget {
           fit: BoxFit.cover,
         );
         break;
+      case VisualizationNetworkImage:
+        return Image.network(
+          (_image as VisualizationNetworkImage).path,
+          fit: BoxFit.cover,
+        );
+        break;
       default:
         throw new UnsupportedError('unknown image type');
     }

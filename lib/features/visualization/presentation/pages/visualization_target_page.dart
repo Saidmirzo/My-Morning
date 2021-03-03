@@ -24,19 +24,30 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
     return Scaffold(
       body: Column(children: [
         _buildSelectTargetTitle(context),
-        Expanded(
-          child: Stack(
-            children: [
-              Obx(() => ListView.builder(
-                    itemCount: _controller.targets.length,
-                    itemBuilder: (context, index) => _buildTargetItem(index),
-                    padding: EdgeInsets.only(top: 16, bottom: 108),
-                  )),
-              _buildAddButton(),
-            ],
-          ),
-        ),
+        Obx(() {
+          if (_controller.isImagesDownloading.value)
+            return _buildLoading();
+          else
+            return _buildContent();
+        }),
       ]),
+    );
+  }
+
+  Center _buildLoading() => Center(child: Text('downloading'));
+
+  Expanded _buildContent() {
+    return Expanded(
+      child: Stack(
+        children: [
+          Obx(() => ListView.builder(
+                itemCount: _controller.targets.length,
+                itemBuilder: (context, index) => _buildTargetItem(index),
+                padding: EdgeInsets.only(top: 16, bottom: 108),
+              )),
+          _buildAddButton(),
+        ],
+      ),
     );
   }
 
@@ -90,7 +101,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
 
     return InkWell(
       onTap: () async {
-        await _controller.loadImages(_target.tag);
+        _controller.loadImages(_target.tag);
         Navigator.push(
           context,
           MaterialPageRoute(

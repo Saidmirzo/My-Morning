@@ -49,6 +49,9 @@ class VisualizationController extends GetxController {
 
   var isTimerActive = false.obs;
 
+  //TODO show loading until cache finished
+  var isImagesDownloading = false.obs;
+
   Timer _timer;
 
   int _initialTimeLeft;
@@ -135,10 +138,13 @@ class VisualizationController extends GetxController {
   }
 
   Future loadImages(String tag) async {
+    // TODO make as function
+    isImagesDownloading.value = true;
     _currentImageIndex.value = 0;
     selectedImageIndexes.clear();
     images.clear();
     images.addAll(await imageRepository.getVisualizationImages(tag));
+    isImagesDownloading.value = false;
   }
 
   addImageAssetsFromGallery(List<Asset> assetImages) async {
@@ -303,6 +309,8 @@ class VisualizationController extends GetxController {
           (_image as VisualizationFileSystemImage).file,
         );
         break;
+      case VisualizationNetworkImage:
+        return NetworkImage((_image as VisualizationNetworkImage).path);
       default:
         throw new UnsupportedError('unknown image type');
     }
