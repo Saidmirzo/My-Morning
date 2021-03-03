@@ -158,6 +158,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
       _controller.addImageAssetsFromGallery(resultList);
     } on Exception catch (e) {
       print(e);
+      // TODO make with get
       Scaffold.of(context)
           .showSnackBar(SnackBar(content: Text('Image load error: $e')));
     }

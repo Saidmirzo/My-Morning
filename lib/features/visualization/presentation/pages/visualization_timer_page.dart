@@ -34,7 +34,8 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: _controller.getDecorationImage(_controller.currentImageIndex),
+                image: _controller
+                    .getDecorationImage(_controller.currentImageIndex),
                 colorFilter: new ColorFilter.mode(
                     Colors.grey.withOpacity(0.5), BlendMode.exclusion),
                 fit: BoxFit.cover,

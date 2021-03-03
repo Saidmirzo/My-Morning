@@ -5,7 +5,7 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
-import 'package:morningmagic/features/visualization/presentation/pages/visualization_ impression_image_page.dart';
+import 'package:morningmagic/features/visualization/presentation/pages/visualization_impression_image_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/dialogs/add_new_target_dialog.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/resources/colors.dart';
