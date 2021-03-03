@@ -46,6 +46,7 @@ dependencies:
   multi_image_picker: ^4.7.15
   path_provider: ^1.6.27
   dots_indicator: ^1.2.0
+  enum_to_string: ^1.0.14
 
 dev_dependencies:
   flutter_test:

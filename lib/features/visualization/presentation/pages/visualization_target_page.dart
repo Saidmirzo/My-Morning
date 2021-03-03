@@ -90,7 +90,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
 
     return InkWell(
       onTap: () async {
-        await _controller.initializeImages(_target.id);
+        await _controller.loadImages(_target.tag);
         Navigator.push(
           context,
           MaterialPageRoute(

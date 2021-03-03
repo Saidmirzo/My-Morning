@@ -18,7 +18,7 @@ class VisualizationTargetAdapter extends TypeAdapter<VisualizationTarget> {
     };
     return VisualizationTarget(
       id: fields[0] as int,
-      isCustom: fields[1] as bool,
+      tag: fields[1] as String,
       title: fields[2] as String,
       coverAssetPath: fields[3] as String,
     );
@@ -31,7 +31,7 @@ class VisualizationTargetAdapter extends TypeAdapter<VisualizationTarget> {
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.isCustom)
+      ..write(obj.tag)
       ..writeByte(2)
       ..write(obj.title)
       ..writeByte(3)

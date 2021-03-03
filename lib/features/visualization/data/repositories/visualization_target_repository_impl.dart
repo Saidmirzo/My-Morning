@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/features/visualization/domain/entities/image_tag.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_target_repository.dart';
 
@@ -37,28 +39,28 @@ class VisualizationTargetRepositoryImpl
       // TODO translations
       VisualizationTarget(
           id: 0,
-          isCustom: false,
+          tag: EnumToString.convertToString(VisualizationImageTag.success),
           title: 'success_target'.tr(),
           coverAssetPath: 'assets/images/targets/success.png'),
       VisualizationTarget(
           id: 1,
-          isCustom: false,
+          tag: EnumToString.convertToString(VisualizationImageTag.family),
           title: 'family_target'.tr(),
           coverAssetPath: 'assets/images/targets/family.png'),
       VisualizationTarget(
           id: 2,
           title: 'nature_target'.tr(),
-          isCustom: false,
+          tag: EnumToString.convertToString(VisualizationImageTag.nature),
           coverAssetPath: 'assets/images/targets/nature.png'),
       VisualizationTarget(
           id: 3,
           title: 'rest_target'.tr(),
-          isCustom: false,
+          tag: EnumToString.convertToString(VisualizationImageTag.rest),
           coverAssetPath: 'assets/images/targets/rest.png'),
       VisualizationTarget(
           id: 4,
           title: 'sport_target'.tr(),
-          isCustom: false,
+          tag: EnumToString.convertToString(VisualizationImageTag.sport),
           coverAssetPath: 'assets/images/targets/sport.png'),
     ];
   }

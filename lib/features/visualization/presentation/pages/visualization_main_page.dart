@@ -5,6 +5,7 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
+import 'package:morningmagic/features/visualization/data/repositories/visualization_image_repository_impl.dart';
 import 'package:morningmagic/features/visualization/data/repositories/visualization_target_repository_impl.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_target_page.dart';
@@ -19,8 +20,10 @@ class VisualizationMainPage extends StatefulWidget {
 class _VisualizationMainPageState extends State<VisualizationMainPage> {
   TextEditingController _textEditingController;
 
-  VisualizationController _controller = Get.put(
-      VisualizationController(myDbBox, VisualizationTargetRepositoryImpl()));
+  VisualizationController _controller = Get.put(VisualizationController(
+      hiveBox: myDbBox,
+      targetRepository: VisualizationTargetRepositoryImpl(),
+      imageRepository: VisualizationImageRepositoryImpl()));
 
   @override
   void initState() {

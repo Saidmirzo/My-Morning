@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
@@ -12,24 +12,29 @@ import 'package:morningmagic/db/model/progress/visualization_progress/visualizat
 import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/features/visualization/domain/entities/image_tag.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
+import 'package:morningmagic/features/visualization/domain/repositories/visualization_image_repository.dart';
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_target_repository.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_success_page.dart';
 import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:path_provider/path_provider.dart' as syspaths;
 
 class VisualizationController extends GetxController {
   static const int TIMER_TICK_DURATION = 1000;
 
   final VisualizationTargetRepository targetRepository;
+  final VisualizationImageRepository imageRepository;
 
-  Box _dbBox;
+  Box _hiveBox;
 
-  VisualizationController(Box dbBox, this.targetRepository) {
-    _dbBox = dbBox;
+  VisualizationController(
+      {@required Box hiveBox,
+      @required this.targetRepository,
+      @required this.imageRepository}) {
+    _hiveBox = hiveBox;
   }
 
   final targets = <VisualizationTarget>[].obs;
@@ -44,8 +49,6 @@ class VisualizationController extends GetxController {
 
   var isTimerActive = false.obs;
 
-  Directory _tempAssetsDir;
-
   Timer _timer;
 
   int _initialTimeLeft;
@@ -54,8 +57,6 @@ class VisualizationController extends GetxController {
 
   List<VisualizationImage> get selectedImages =>
       selectedImageIndexes.map((index) => images[index]).toList();
-
-  String get imageCacheDirPath => _tempAssetsDir.path;
 
   String get formattedTimeLeft =>
       StringUtil.getFormattedTimeLeft(_timeLeft.value);
@@ -82,13 +83,13 @@ class VisualizationController extends GetxController {
   }
 
   saveVisualization(String text) {
-    _dbBox.put(MyResource.VISUALIZATION_KEY, Visualization(text));
+    _hiveBox.put(MyResource.VISUALIZATION_KEY, Visualization(text));
   }
 
   String getVisualizationText() {
     String _visualizationText = '';
 
-    Visualization _visualization = _dbBox.get(MyResource.VISUALIZATION_KEY);
+    Visualization _visualization = _hiveBox.get(MyResource.VISUALIZATION_KEY);
 
     if (_visualization != null) {
       _visualizationText = _visualization.visualization;
@@ -104,7 +105,10 @@ class VisualizationController extends GetxController {
   saveTarget(String text) {
     final _id = targets.last.id + 1;
     print('saveTarget id = $_id');
-    targets.add(VisualizationTarget(id: _id, isCustom: true, title: text));
+    targets.add(VisualizationTarget(
+        id: _id,
+        tag: EnumToString.convertToString(VisualizationImageTag.custom),
+        title: text));
     targetRepository.saveVisualizationTargets(targets);
   }
 
@@ -122,7 +126,7 @@ class VisualizationController extends GetxController {
     if (_oldTarget != null) {
       final _newTarget = VisualizationTarget(
           id: _oldTarget.id,
-          isCustom: _oldTarget.isCustom,
+          tag: _oldTarget.tag,
           title: title,
           coverAssetPath: _oldTarget.coverAssetPath);
       targets.replaceRange(_oldTargetIndex, _oldTargetIndex + 1, [_newTarget]);
@@ -130,52 +134,21 @@ class VisualizationController extends GetxController {
     }
   }
 
-  // TODO move to separate repository
-  Future initializeImages(int targetId) async {
+  Future loadImages(String tag) async {
     _currentImageIndex.value = 0;
-    images.clear();
     selectedImageIndexes.clear();
-
-    final _defaultImages = getDefaultImages(targetId);
-
-    images.addAll(_defaultImages);
-
-    final _tempAppDir = await syspaths.getTemporaryDirectory();
-    String _tempAssetsDirPath = _tempAppDir.path + '/imageAssets';
-    bool _isTempAssetDirExists = await Directory(_tempAssetsDirPath).exists();
-
-    if (_isTempAssetDirExists) {
-      _tempAssetsDir = Directory(_tempAssetsDirPath);
-      List<VisualizationImage> _imagesFromTempDirectory = _tempAssetsDir
-          .listSync()
-          .map((file) => VisualizationFileSystemImage(
-              path: file.path, file: File(file.path)))
-          .toList();
-      images.addAll(_imagesFromTempDirectory);
-    } else {
-      _tempAssetsDir = await _createImageTempDirectory(_tempAssetsDirPath);
-    }
+    images.clear();
+    images.addAll(await imageRepository.getVisualizationImages(tag));
   }
 
   addImageAssetsFromGallery(List<Asset> assetImages) async {
     int oldLastImageIndex = images.length - 1;
 
-    final List<VisualizationImage> _visualizationImagesFromGallery = [];
+    final _galleryImages =
+        await imageRepository.getPickedFromGalleryImages(assetImages);
 
-    for (Asset asset in assetImages) {
-      final _byteData = await asset.getByteData();
-      final _galleryImage = VisualizationGalleryImage(
-          path: '$imageCacheDirPath/${asset.name}',
-          pickedAsset: asset,
-          byteData: _byteData);
-      _visualizationImagesFromGallery.add(_galleryImage);
-
-      _saveAssetInTemporaryDirectory(asset);
-    }
-
-    images.addAll(_visualizationImagesFromGallery);
-
-    if (_visualizationImagesFromGallery.isNotEmpty) {
+    if (_galleryImages.isNotEmpty) {
+      images.addAll(_galleryImages);
       int newLastImageIndex = images.length - 1;
       print(
           'Select picked images oldIndex = $oldLastImageIndex, newIndex = $newLastImageIndex');
@@ -229,13 +202,8 @@ class VisualizationController extends GetxController {
     targets.addAll(_result);
   }
 
-  Future<Directory> _createImageTempDirectory(String path) async {
-    print('create temp image directory $_tempAssetsDir');
-    return Directory(path).create();
-  }
-
   _getTimeLeftFromPrefs() {
-    ExerciseTime _exerciseTime = _dbBox.get(MyResource.VISUALIZATION_TIME_KEY,
+    ExerciseTime _exerciseTime = _hiveBox.get(MyResource.VISUALIZATION_TIME_KEY,
         defaultValue: ExerciseTime(0));
     // TODO revert
     _initialTimeLeft = 10000;
@@ -251,13 +219,6 @@ class VisualizationController extends GetxController {
   _setTimerStateActive() => _updateTimerIsActive(true);
 
   _setTimerStateStopped() => _updateTimerIsActive(false);
-
-  _saveAssetInTemporaryDirectory(Asset asset) async {
-    print('save image in temp dir = $imageCacheDirPath/${asset.name}');
-    final assetByteData = await asset.getByteData();
-    File file = File('$imageCacheDirPath/${asset.name}');
-    await file.writeAsBytes(assetByteData.buffer.asUint8List());
-  }
 
   // TODO refactor this WTF
   _saveVisualizationProgress() {
@@ -276,7 +237,8 @@ class VisualizationController extends GetxController {
     String type = 'visualization_small'.tr();
     String _visualizationText = getVisualizationText();
     List<dynamic> tempList;
-    List<dynamic> list = _dbBox.get(MyResource.MY_VISUALISATION_PROGRESS) ?? [];
+    List<dynamic> list =
+        _hiveBox.get(MyResource.MY_VISUALISATION_PROGRESS) ?? [];
     tempList = list;
     final _now = DateTime.now();
 
@@ -316,7 +278,7 @@ class VisualizationController extends GetxController {
         '${_now.day}.${_now.month}.${_now.year}'
       ]);
     }
-    _dbBox.put(MyResource.MY_VISUALISATION_PROGRESS, list);
+    _hiveBox.put(MyResource.MY_VISUALISATION_PROGRESS, list);
   }
 
   ImageProvider getDecorationImage(int imageIndex) {
@@ -344,111 +306,5 @@ class VisualizationController extends GetxController {
       default:
         throw new UnsupportedError('unknown image type');
     }
-  }
-
-  _removeImageTempDirectory() {
-    final _imageTempDirectory = Directory(imageCacheDirPath);
-    print('remove image cache directory $imageCacheDirPath');
-    _imageTempDirectory.delete(recursive: true);
-  }
-
-  // TODO move from
-  List<VisualizationImage> getDefaultImages(int targetId) {
-    List<VisualizationImage> _result = [];
-
-    switch (targetId) {
-      case 0: //success
-        _result = [
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/success/success1.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/success/success2.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/success/success3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/success/success4.jpg',
-          ),
-        ];
-        break;
-      case 1: //family
-        _result = [
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/family/family1.jpg'),
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/family/family2.jpg'),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/family/family3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/family/family4.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/family/family5.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/family/family6.jpg',
-          ),
-        ];
-        break;
-      case 2: //nature
-        _result = [
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/nature/nature1.jpg'),
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/nature/nature2.jpg'),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/nature/nature3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/nature/nature4.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/nature/nature5.jpg',
-          ),
-        ];
-        break;
-      case 3: //rest
-        _result = [
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/rest/rest1.jpg'),
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/rest/rest2.jpg'),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/rest/rest3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/rest/rest4.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/rest/rest5.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/rest/rest6.jpg',
-          ),
-        ];
-        break;
-      case 4: //sport
-        _result = [
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/sport/sport1.jpg'),
-          VisualizationAssetImage(
-              path: 'assets/images/visualization_images/sport/sport2.jpg'),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/sport/sport3.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/sport/sport4.jpg',
-          ),
-          VisualizationAssetImage(
-            path: 'assets/images/visualization_images/sport/sport5.jpg',
-          ),
-        ];
-        break;
-      default:
-    }
-    return _result;
   }
 }
