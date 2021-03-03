@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:morningmagic/features/visualization/domain/entities/image_tag.dart';
 import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_image_repository.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -20,7 +22,7 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
     List<VisualizationImage> _resultImages = [];
 
     final _defaultImages = await _getDefaultImages(tag);
-    final _cachedImages = await _getCachedImages();
+    final _cachedImages = await _getCachedPickedImages();
 
     _resultImages.addAll(_defaultImages);
     _resultImages.addAll(_cachedImages);
@@ -28,7 +30,7 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
     return _resultImages;
   }
 
-  Future<List<VisualizationImage>> _getCachedImages() async {
+  Future<List<VisualizationImage>> _getCachedPickedImages() async {
     final _tempAppDir = await syspaths.getTemporaryDirectory();
     String _tempAssetsDirPath = _tempAppDir.path + '/imageAssets';
     bool _isTempAssetDirExists = await Directory(_tempAssetsDirPath).exists();
@@ -51,8 +53,33 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
   }
 
   Future<List<VisualizationImage>> _getDefaultImages(String imageTag) async {
+    
+    if (imageTag == EnumToString.convertToString(VisualizationImageTag.custom)) return Future.value([]);
+    
+    final _cachedDefaultImages = await _getCachedDefaultImages(imageTag);
+    
+    if (_cachedDefaultImages.isEmpty) {
+      return await _getDownloadedFromNetworkImages(imageTag);
+    } else {
+      return _cachedDefaultImages;
+    }
+  }
+
+
+  Future<List<VisualizationImage>> _getCachedDefaultImages(String imageTag) {
+    // TODO get from directory by imageTag in path
+
     List<VisualizationImage> _result = [];
 
+    return Future.value(_result);
+  }
+
+  Future<List<VisualizationImage>> _getDownloadedFromNetworkImages(String imageTag) async {
+
+    List<VisualizationImage> _result = [];
+
+    // TODO 1) download from network  2) cache
+    
     firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
         .ref('/visualization_images/$imageTag');
 
@@ -66,6 +93,7 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
     });
     return Future.value(_result);
   }
+
 
   @override
   Future<List<VisualizationImage>> getPickedFromGalleryImages(
@@ -104,4 +132,6 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
     print('remove image cache directory $imageCacheDirPath');
     _imageTempDirectory.delete(recursive: true);
   }
+
+  
 }
