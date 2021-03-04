@@ -37,7 +37,10 @@ class _AddNewTargetDialogState extends State<AddNewTargetDialog> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.only(
+                left: 16,
+                right: 16,
+                bottom: MediaQuery.of(context).viewInsets.bottom),
             child: TextField(
               controller: _textEditingController,
               textAlign: TextAlign.center,
@@ -48,9 +51,9 @@ class _AddNewTargetDialogState extends State<AddNewTargetDialog> {
               showCursor: true,
             ),
           ),
-          RoundBorderedButton(
-              onTap: () => _saveOrUpdateVisualizationTarget(context),
-              child: SvgPicture.asset('assets/images/plus.svg')),
+          (_textEditingController.text.isEmpty)
+              ? _buildNotActiveAddButton(context)
+              : _buildActiveAddButton(context),
           Text(
             // TODO translation
             'в поле опишите кратко  (в одно предложение) что будете визуализировать',
@@ -60,6 +63,20 @@ class _AddNewTargetDialogState extends State<AddNewTargetDialog> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildActiveAddButton(BuildContext context) {
+    return RoundBorderedButton(
+        onTap: () => _saveOrUpdateVisualizationTarget(context),
+        child: SvgPicture.asset('assets/images/plus.svg'));
+  }
+
+  Widget _buildNotActiveAddButton(BuildContext context) {
+    return Opacity(
+      opacity: 0.3,
+      child: RoundBorderedButton(
+          onTap: () {}, child: SvgPicture.asset('assets/images/plus.svg')),
     );
   }
 

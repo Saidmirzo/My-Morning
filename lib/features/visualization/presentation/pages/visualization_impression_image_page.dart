@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
@@ -22,7 +23,14 @@ class VisualizationImpressionImagePage extends StatelessWidget {
           if (_controller.isImagesDownloading.value) {
             return _buildLoading();
           } else
-            return _buildImageGrid();
+            return Expanded(
+              child: Column(
+                children: [
+                  _buildImageCounter(),
+                  _buildImageGrid(),
+                ],
+              ),
+            );
         }),
         Row(
           mainAxisSize: MainAxisSize.max,
@@ -49,6 +57,22 @@ class VisualizationImpressionImagePage extends StatelessWidget {
     );
   }
 
+  Obx _buildImageCounter() {
+    return Obx(() {
+      if (_controller.selectedImagesCount > 0)
+        return Container(
+          child: StyledText(
+            _controller.selectedImagesCount.toString(),
+            fontSize: 28,
+          ),
+        );
+      else
+        return Container(
+          height: 28,
+        );
+    });
+  }
+
   Expanded _buildImageGrid() {
     return Expanded(
       child: Obx(
@@ -57,7 +81,9 @@ class VisualizationImpressionImagePage extends StatelessWidget {
           gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
           itemBuilder: (context, index) => GestureDetector(
-            onTap: () => _controller.toggleImageSelected(index),
+            onTap: () => _controller.isImageSelected(index)
+                ? _showDialogRemoveImageSelection(index)
+                : _controller.toggleImageSelected(index),
             child: Obx(() => Container(
                   margin: EdgeInsets.all(2),
                   decoration: BoxDecoration(
@@ -174,9 +200,32 @@ class VisualizationImpressionImagePage extends StatelessWidget {
       _controller.addImageAssetsFromGallery(resultList);
     } on Exception catch (e) {
       print(e);
-      // TODO make with get
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Image load error: $e')));
+      Get.snackbar('Image load error:', ' $e');
     }
+  }
+
+  // TODO transl
+  _showDialogRemoveImageSelection(int index) {
+    Get.dialog(
+      AlertDialog(
+        title: Text("Отменить выбор?"),
+        // content: Text(""),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Отмена"),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+          FlatButton(
+            child: Text("Продолжить"),
+            onPressed: () {
+              _controller.toggleImageSelected(index);
+              Get.back();
+            },
+          )
+        ],
+      ),
+    );
   }
 }

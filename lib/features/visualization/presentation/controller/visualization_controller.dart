@@ -71,6 +71,8 @@ class VisualizationController extends GetxController {
 
   int get passedTimeSeconds => (_initialTimeLeft - _timeLeft.value) ~/ 1000;
 
+  int get selectedImagesCount => selectedImageIndexes.length;
+
   @override
   void onInit() async {
     super.onInit();
@@ -169,6 +171,8 @@ class VisualizationController extends GetxController {
     else
       selectedImageIndexes.add(index);
   }
+
+  bool isImageSelected(int index) => selectedImageIndexes.contains(index);
 
   toggleStartPauseTimer() {
     if (_timer == null || !_timer.isActive) {

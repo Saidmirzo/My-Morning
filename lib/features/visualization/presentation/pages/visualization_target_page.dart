@@ -110,7 +110,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
                 children: [
                   if (_target.isCustom)
                     InkWell(
-                      onTap: () => _controller.removeTarget(_target.id),
+                      onTap: () => _showDialogRemoveTarget(_target.id),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child:
@@ -159,6 +159,31 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
       context: context,
       builder: (context) => AddNewTargetDialog(
         targetId: targetId,
+      ),
+    );
+  }
+
+  // TODO tr
+  _showDialogRemoveTarget(int targetId) {
+    Get.dialog(
+      AlertDialog(
+        title: Text("Удалить созданную цель?"),
+        // content: Text(""),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Отмена"),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+          FlatButton(
+            child: Text("Удалить"),
+            onPressed: () {
+              _controller.removeTarget(targetId);
+              Get.back();
+            },
+          )
+        ],
       ),
     );
   }
