@@ -36,7 +36,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
   simple_animations: ^2.4.2
   url_launcher: ^5.7.10
-  flutter_cache_manager: ^2.1.0
+  flutter_cache_manager: ^2.1.1
   vibration: ^1.7.3
   equatable: ^1.2.5
   in_app_review_play_store: ^0.0.3
@@ -48,7 +48,7 @@ dependencies:
   path_provider: ^1.6.27
   dots_indicator: ^1.2.0
   enum_to_string: ^1.0.14
-  image_downloader: ^0.20.1
+  data_connection_checker: ^0.3.4
 
 
 dev_dependencies:

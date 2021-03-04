@@ -18,55 +18,12 @@ class VisualizationImpressionImagePage extends StatelessWidget {
     return Scaffold(
       body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         _buildSelectImpressionTitle(context),
-        Expanded(
-          child: Obx(
-            () => GridView.builder(
-              itemCount: _controller.images.length,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () => _controller.toggleImageSelected(index),
-                child: Obx(() => Container(
-                      margin: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                          border: (_controller.selectedImageIndexes
-                                  .contains(index))
-                              ? Border.all(color: AppColors.VIOLET, width: 2.5)
-                              : null,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          )),
-                      child: Stack(
-                        // clipBehavior: Clip.none,
-                        fit: StackFit.expand,
-                        children: [
-                          ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
-                              child: _buildImage(index)),
-                          if (_controller.selectedImageIndexes.contains(index))
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: InkWell(
-                                onTap: () =>
-                                    _controller.toggleImageSelected(index),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: SvgPicture.asset(
-                                    'assets/images/remove_target.svg',
-                                    height: 24,
-                                    width: 24,
-                                  ),
-                                ),
-                              ),
-                            )
-                        ],
-                      ),
-                    )),
-              ),
-            ),
-          ),
-        ),
+        Obx(() {
+          if (_controller.isImagesDownloading.value) {
+            return _buildLoading();
+          } else
+            return _buildImageGrid();
+        }),
         Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -91,6 +48,65 @@ class VisualizationImpressionImagePage extends StatelessWidget {
       ]),
     );
   }
+
+  Expanded _buildImageGrid() {
+    return Expanded(
+      child: Obx(
+        () => GridView.builder(
+          itemCount: _controller.images.length,
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+          itemBuilder: (context, index) => GestureDetector(
+            onTap: () => _controller.toggleImageSelected(index),
+            child: Obx(() => Container(
+                  margin: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                      border: (_controller.selectedImageIndexes.contains(index))
+                          ? Border.all(color: AppColors.VIOLET, width: 2.5)
+                          : null,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      )),
+                  child: Stack(
+                    // clipBehavior: Clip.none,
+                    fit: StackFit.expand,
+                    children: [
+                      ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          child: _buildImage(index)),
+                      if (_controller.selectedImageIndexes.contains(index))
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: InkWell(
+                            onTap: () => _controller.toggleImageSelected(index),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: SvgPicture.asset(
+                                'assets/images/remove_target.svg',
+                                height: 24,
+                                width: 24,
+                              ),
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
+                )),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoading() => Expanded(
+          child: Center(
+              child: Container(
+        width: 64,
+        height: 64,
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+        ),
+      )));
 
   Widget _buildImage(int index) {
     final _image = _controller.images[index];

@@ -24,30 +24,19 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
     return Scaffold(
       body: Column(children: [
         _buildSelectTargetTitle(context),
-        Obx(() {
-          if (_controller.isImagesDownloading.value)
-            return _buildLoading();
-          else
-            return _buildContent();
-        }),
+        Expanded(
+          child: Stack(
+            children: [
+              Obx(() => ListView.builder(
+                    itemCount: _controller.targets.length,
+                    itemBuilder: (context, index) => _buildTargetItem(index),
+                    padding: EdgeInsets.only(top: 16, bottom: 108),
+                  )),
+              _buildAddButton(),
+            ],
+          ),
+        ),
       ]),
-    );
-  }
-
-  Center _buildLoading() => Center(child: Text('downloading'));
-
-  Expanded _buildContent() {
-    return Expanded(
-      child: Stack(
-        children: [
-          Obx(() => ListView.builder(
-                itemCount: _controller.targets.length,
-                itemBuilder: (context, index) => _buildTargetItem(index),
-                padding: EdgeInsets.only(top: 16, bottom: 108),
-              )),
-          _buildAddButton(),
-        ],
-      ),
     );
   }
 
@@ -100,15 +89,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
     final _target = _controller.targets[index];
 
     return InkWell(
-      onTap: () async {
-        _controller.loadImages(_target.tag);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VisualizationImpressionImagePage(),
-          ),
-        );
-      },
+      onTap: () => _openImpressionSelection(_target),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 2),
         child: Container(
@@ -149,6 +130,17 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _openImpressionSelection(VisualizationTarget _target) {
+    _controller.loadImages(_target.tag, _target.id);
+    _controller.selectedTargetId = _target.id;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VisualizationImpressionImagePage(),
       ),
     );
   }

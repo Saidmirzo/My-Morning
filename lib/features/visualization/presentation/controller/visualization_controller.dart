@@ -49,7 +49,6 @@ class VisualizationController extends GetxController {
 
   var isTimerActive = false.obs;
 
-  //TODO show loading until cache finished
   var isImagesDownloading = false.obs;
 
   Timer _timer;
@@ -107,7 +106,6 @@ class VisualizationController extends GetxController {
 
   saveTarget(String text) {
     final _id = targets.last.id + 1;
-    print('saveTarget id = $_id');
     targets.add(VisualizationTarget(
         id: _id,
         tag: EnumToString.convertToString(VisualizationImageTag.custom),
@@ -116,13 +114,11 @@ class VisualizationController extends GetxController {
   }
 
   removeTarget(int id) {
-    print('removeTarget id = $id');
     targets.removeWhere((element) => element.id == id);
     targetRepository.saveVisualizationTargets(targets);
   }
 
   updateTarget(int id, String title) {
-    print('update target title : $title, id = $id');
     final _oldTarget =
         targets.firstWhere((element) => element.id == id, orElse: () => null);
     final _oldTargetIndex = targets.indexOf(_oldTarget);
@@ -137,32 +133,34 @@ class VisualizationController extends GetxController {
     }
   }
 
-  Future loadImages(String tag) async {
-    // TODO make as function
-    isImagesDownloading.value = true;
+  Future loadImages(String tag, int targetId) async {
+    _setDownloading(true);
+
     _currentImageIndex.value = 0;
     selectedImageIndexes.clear();
     images.clear();
-    images.addAll(await imageRepository.getVisualizationImages(tag));
-    isImagesDownloading.value = false;
+    final _loadedImages =
+        await imageRepository.getVisualizationImages(tag, targetId);
+    images.addAll(_loadedImages);
+
+    _setDownloading(false);
   }
 
   addImageAssetsFromGallery(List<Asset> assetImages) async {
     int oldLastImageIndex = images.length - 1;
 
-    final _galleryImages =
-        await imageRepository.getPickedFromGalleryImages(assetImages);
+    final _galleryImages = await _convertAssetsToVisualizationImage(assetImages);
 
     if (_galleryImages.isNotEmpty) {
       images.addAll(_galleryImages);
       int newLastImageIndex = images.length - 1;
-      print(
-          'Select picked images oldIndex = $oldLastImageIndex, newIndex = $newLastImageIndex');
       final _selectedIndexes = List.generate(
           newLastImageIndex - oldLastImageIndex,
           (i) => oldLastImageIndex + 1 + i);
       selectedImageIndexes.addAll(_selectedIndexes);
     }
+
+    imageRepository.cachePickedFromGalleryAssets(assetImages, selectedTargetId);
   }
 
   toggleImageSelected(int index) {
@@ -225,6 +223,9 @@ class VisualizationController extends GetxController {
   _setTimerStateActive() => _updateTimerIsActive(true);
 
   _setTimerStateStopped() => _updateTimerIsActive(false);
+
+  void _setDownloading(bool isDownloading) =>
+      isImagesDownloading.value = isDownloading;
 
   // TODO refactor this WTF
   _saveVisualizationProgress() {
@@ -314,5 +315,19 @@ class VisualizationController extends GetxController {
       default:
         throw new UnsupportedError('unknown image type');
     }
+  }
+
+  Future<List<VisualizationImage>> _convertAssetsToVisualizationImage(
+      List<Asset> assetImages) async {
+    final List<VisualizationImage> _visualizationImagesFromGallery = [];
+
+    for (Asset asset in assetImages) {
+      final _byteData = await asset.getByteData();
+      final _galleryImage = VisualizationGalleryImage(
+          path: asset.identifier, pickedAsset: asset, byteData: _byteData);
+      _visualizationImagesFromGallery.add(_galleryImage);
+    }
+
+    return _visualizationImagesFromGallery;
   }
 }
