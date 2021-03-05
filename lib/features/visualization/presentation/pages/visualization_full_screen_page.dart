@@ -14,6 +14,7 @@ class _VisualizationFullScreenPageState
     extends State<VisualizationFullScreenPage> {
   final _visualizationController = Get.find<VisualizationController>();
 
+
   PageController _pageController;
 
   final List<Widget> _pages = <Widget>[];
@@ -41,7 +42,8 @@ class _VisualizationFullScreenPageState
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        onTap: () => Navigator.pop(context),
+        onTap: ()  {
+          Navigator.pop(context); },
         child: Stack(
           children: [
             PageView(
@@ -91,7 +93,7 @@ class _VisualizationFullScreenPageState
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: _visualizationController.getDecorationImage(index),
+          image: _visualizationController.getImpressionDecorationImage(index),
           fit: BoxFit.cover,
         ),
       ),

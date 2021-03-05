@@ -148,10 +148,17 @@ class VisualizationController extends GetxController {
     _setDownloading(false);
   }
 
+  Future<List<VisualizationImage>> loadAttachedTargetImages(
+      int targetId) async {
+    return imageRepository.getVisualizationImages(
+        EnumToString.convertToString(VisualizationImageTag.custom), targetId);
+  }
+
   addImageAssetsFromGallery(List<Asset> assetImages) async {
     int oldLastImageIndex = images.length - 1;
 
-    final _galleryImages = await _convertAssetsToVisualizationImage(assetImages);
+    final _galleryImages =
+        await _convertAssetsToVisualizationImage(assetImages);
 
     if (_galleryImages.isNotEmpty) {
       images.addAll(_galleryImages);
@@ -213,10 +220,8 @@ class VisualizationController extends GetxController {
   _getTimeLeftFromPrefs() {
     ExerciseTime _exerciseTime = _hiveBox.get(MyResource.VISUALIZATION_TIME_KEY,
         defaultValue: ExerciseTime(0));
-    // TODO revert
-    _initialTimeLeft = 10000;
-    // _initialTimeLeft =
-    //     _exerciseTime.time * 60 * 1000; //time from prefs in minutes
+    _initialTimeLeft =
+        _exerciseTime.time * 60 * 1000; //time from prefs in minutes
     _timeLeft.value = _initialTimeLeft;
   }
 
@@ -292,30 +297,33 @@ class VisualizationController extends GetxController {
     _hiveBox.put(MyResource.MY_VISUALISATION_PROGRESS, list);
   }
 
-  ImageProvider getDecorationImage(int imageIndex) {
+  ImageProvider getImpressionDecorationImage(int imageIndex) {
     final _image = selectedImages[imageIndex];
+    return _getDecorationImage(_image);
+  }
 
-    print('get provided image $currentImageIndex');
+  ImageProvider getTargetCoverDecorationImage(VisualizationImage image) {
+    return _getDecorationImage(image);
+  }
 
-    switch (_image.runtimeType) {
+  ImageProvider _getDecorationImage(VisualizationImage image) {
+    switch (image.runtimeType) {
       case VisualizationAssetImage:
         return AssetImage(
-          _image.path,
+          image.path,
         );
         break;
       case VisualizationGalleryImage:
-        return MemoryImage((_image as VisualizationGalleryImage)
-            .byteData
-            .buffer
-            .asUint8List());
+        return MemoryImage(
+            (image as VisualizationGalleryImage).byteData.buffer.asUint8List());
         break;
       case VisualizationFileSystemImage:
         return FileImage(
-          (_image as VisualizationFileSystemImage).file,
+          (image as VisualizationFileSystemImage).file,
         );
         break;
       case VisualizationNetworkImage:
-        return NetworkImage((_image as VisualizationNetworkImage).path);
+        return NetworkImage((image as VisualizationNetworkImage).path);
       default:
         throw new UnsupportedError('unknown image type');
     }

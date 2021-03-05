@@ -104,7 +104,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
                         Align(
                           alignment: Alignment.topRight,
                           child: InkWell(
-                            onTap: () => _controller.toggleImageSelected(index),
+                            onTap: () => _showDialogRemoveImageSelection(index),
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: SvgPicture.asset(

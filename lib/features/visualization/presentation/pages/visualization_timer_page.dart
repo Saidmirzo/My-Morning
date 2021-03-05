@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_full_screen_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/circular_progress_bar.dart';
@@ -26,82 +27,94 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Obx(
-          () => Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: _controller
-                    .getDecorationImage(_controller.currentImageIndex),
-                colorFilter: new ColorFilter.mode(
-                    Colors.grey.withOpacity(0.5), BlendMode.exclusion),
-                fit: BoxFit.cover,
+    // TODO back button
+    return Scaffold(
+      body: Stack(
+        children: [
+          Obx(
+            () => Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: _buildPageDecoration(),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  _buildTimerProgress(context),
+                  Expanded(
+                      child: SingleChildScrollView(
+                          child: _buildVisualizationText())),
+                  _buildButtonsRow(context),
+                ],
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0, bottom: 16),
-                  child: _buildTimerProgress(context),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      _controller.getVisualizationText(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildActionButton(
-                        () => Navigator.of(context)
-                            .push(_createFullScreenRoute()),
-                        'assets/images/full_screen.svg'),
-                    Obx(() {
-                      VoidCallback _toggleStartPauseCallback =
-                          () => _controller.toggleStartPauseTimer();
-                      final _imageRes = _controller.isTimerActive.value
-                          ? 'assets/images/pause.svg'
-                          : 'assets/images/play.svg';
-                      return _buildActionButton(
-                          _toggleStartPauseCallback, _imageRes);
-                    }),
-                    _buildActionButton(() => _controller.finishVisualization(),
-                        'assets/images/arrow_forward.svg'),
-                  ],
-                ),
-              ],
-            ),
           ),
-        ),
+          _buildBackButton(context),
+        ],
       ),
     );
   }
 
-  Container _buildTimerProgress(BuildContext context) {
+  BoxDecoration _buildPageDecoration() {
+    return BoxDecoration(
+      image: DecorationImage(
+        image: _controller
+            .getImpressionDecorationImage(_controller.currentImageIndex),
+        colorFilter: new ColorFilter.mode(
+            Colors.grey.withOpacity(0.5), BlendMode.exclusion),
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Row _buildButtonsRow(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        _buildActionButton(
+            () => Navigator.of(context).push(_createFullScreenRoute()),
+            'assets/images/full_screen.svg'),
+        Obx(() {
+          VoidCallback _toggleStartPauseCallback =
+              () => _controller.toggleStartPauseTimer();
+          final _imageRes = _controller.isTimerActive.value
+              ? 'assets/images/pause.svg'
+              : 'assets/images/play.svg';
+          return _buildActionButton(_toggleStartPauseCallback, _imageRes);
+        }),
+        _buildActionButton(() => _controller.finishVisualization(),
+            'assets/images/arrow_forward.svg'),
+      ],
+    );
+  }
+
+  Widget _buildVisualizationText() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: StyledText(
+        _controller.getVisualizationText(),
+        fontSize: 24,
+        color: Colors.white,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget _buildTimerProgress(BuildContext context) {
     double _timerSize = MediaQuery.of(context).size.width * 0.45;
-    return Container(
-      width: _timerSize,
-      child: Obx(
-        () => CircularProgressBar(
-          text: _controller.formattedTimeLeft,
-          foregroundColor: Colors.white.withOpacity(0.8),
-          backgroundColor: Colors.white.withOpacity(0.4),
-          value: _controller.timeLeftValue,
-          fontSize: 40,
+    return Padding(
+      padding: const EdgeInsets.only(top: 54.0, bottom: 16),
+      child: Container(
+        width: _timerSize,
+        child: Obx(
+          () => CircularProgressBar(
+            text: _controller.formattedTimeLeft,
+            foregroundColor: Colors.white.withOpacity(0.8),
+            backgroundColor: Colors.white.withOpacity(0.4),
+            value: _controller.timeLeftValue,
+            fontSize: 40,
+          ),
         ),
       ),
     );
@@ -121,6 +134,19 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
         ),
         borderColor: Colors.white,
       ),
+    );
+  }
+
+  Padding _buildBackButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 24.0),
+      child: IconButton(
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            size: 36,
+            color: Colors.white,
+          ),
+          onPressed: () => Navigator.pop(context)),
     );
   }
 

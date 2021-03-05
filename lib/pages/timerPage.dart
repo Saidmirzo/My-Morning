@@ -113,10 +113,9 @@ class TimerPageState extends State<TimerPage> {
                 ),
                 child: AppGradientContainer(
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      SizedBox(height: 36),
                       if (widget.pageId == 1)
                         Obx(() {
                           if (_audioController.isAudioLoading.value &&
@@ -140,26 +139,29 @@ class TimerPageState extends State<TimerPage> {
     );
   }
 
-  Container _buildTimerProgress(BuildContext context) {
+  Widget _buildTimerProgress(BuildContext context) {
     double _timerSize, _textSize;
 
     if (widget.pageId == 0) {
       //for affirmaiton
-      _timerSize = MediaQuery.of(context).size.width * 0.4;
-      _textSize = 36;
+      _timerSize = MediaQuery.of(context).size.width * 0.45;
+      _textSize = 40;
     } else {
       _timerSize = MediaQuery.of(context).size.width * 0.7;
       _textSize = 55;
     }
 
-    return Container(
-      width: _timerSize,
-      child: CircularProgressBar(
-        text:  StringUtil.createTimeString(timerService.time),
-        foregroundColor: Colors.white.withOpacity(0.8),
-        backgroundColor: Colors.white.withOpacity(0.4),
-        value: timerService.createValue(),
-        fontSize: _textSize,
+    return Padding(
+      padding: const EdgeInsets.only(top: 54.0, bottom: 16),
+      child: Container(
+        width: _timerSize,
+        child: CircularProgressBar(
+          text: StringUtil.createTimeString(timerService.time),
+          foregroundColor: Colors.white.withOpacity(0.8),
+          backgroundColor: Colors.white.withOpacity(0.4),
+          value: timerService.createValue(),
+          fontSize: _textSize,
+        ),
       ),
     );
   }
@@ -187,7 +189,7 @@ class TimerPageState extends State<TimerPage> {
   Container _buildPlayerControls() {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        padding: const EdgeInsets.only(top: 48.0, bottom: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

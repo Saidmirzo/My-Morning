@@ -12,7 +12,6 @@ import 'package:morningmagic/features/visualization/domain/repositories/visualiz
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 
-// TODO wrap try / catch
 class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
@@ -50,6 +49,9 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
   Future<void> cachePickedFromGalleryAssets(
       List<Asset> assetImages, int targetId) async {
     final _tempAppDir = await syspaths.getTemporaryDirectory();
+
+    //create root directory if not exists
+    await _getDirectory('${_tempAppDir.path}/$IMAGE_CACHE_DIR_SEGMENT');
 
     final _imagesCacheDirectory = await _getDirectory(
         '${_tempAppDir.path}/$IMAGE_CACHE_DIR_SEGMENT/$targetId');
