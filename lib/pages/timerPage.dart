@@ -124,9 +124,9 @@ class TimerPageState extends State<TimerPage> {
                           else
                             return _buildPlayerControls();
                         }),
-                      _buildTimerProgress(context),
+                      Expanded(
+                          child: Center(child: _buildTimerProgress(context))),
                       if (titleText != null) _buildTitleWidget(),
-                      // Spacer(),
                       _buildMenuButtons(context),
                     ],
                   ),
@@ -294,12 +294,20 @@ class TimerPageState extends State<TimerPage> {
   }
 
   Widget _buildTitleWidget() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 3 / 4,
-      child: CustomText(
-        text: titleText,
-        size: 22,
-      ),
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 16.0),
+          width: MediaQuery.of(context).size.width * 3 / 4,
+          child: CustomText(
+            text: titleText,
+            size: 22,
+          ),
+        ),
+        SizedBox(
+          height: 24,
+        ),
+      ],
     );
   }
 

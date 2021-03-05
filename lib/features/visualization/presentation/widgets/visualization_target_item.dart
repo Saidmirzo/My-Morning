@@ -2,6 +2,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/instance_manager.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/domain/entities/image_tag.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
@@ -88,9 +89,10 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
                 SizedBox(
                   width: 16,
                 ),
-                Text(
+                StyledText(
                   widget.target.title,
-                  style: TextStyle(color: AppColors.WHITE, fontSize: 32),
+                  color: AppColors.WHITE,
+                  fontSize: 28,
                 ),
                 Spacer(),
                 Column(
@@ -98,7 +100,7 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
                   children: [
                     if (widget.target.isCustom)
                       InkWell(
-                        onTap: () => widget.onRemoveCardTapped,
+                        onTap: widget.onRemoveCardTapped,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SvgPicture.asset(
