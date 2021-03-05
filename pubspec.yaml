@@ -71,11 +71,6 @@ flutter:
     - assets/images/targets/
     - assets/audios/
     - assets/langs/
-    - assets/images/visualization_images/family/
-    - assets/images/visualization_images/nature/
-    - assets/images/visualization_images/sport/
-    - assets/images/visualization_images/success/
-    - assets/images/visualization_images/rest/
 
   fonts:
     - family: Junegull-Regular
