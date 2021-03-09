@@ -41,27 +41,27 @@ class VisualizationTargetRepositoryImpl
           id: 0,
           tag: EnumToString.convertToString(VisualizationImageTag.success),
           title: 'success_target'.tr,
-          coverAssetPath: 'assets/images/targets/success.png'),
+          coverAssetPath: 'assets/images/targets/success.jpg'),
       VisualizationTarget(
           id: 1,
           tag: EnumToString.convertToString(VisualizationImageTag.family),
           title: 'family_target'.tr,
-          coverAssetPath: 'assets/images/targets/family.png'),
+          coverAssetPath: 'assets/images/targets/family.jpg'),
       VisualizationTarget(
           id: 2,
           title: 'nature_target'.tr,
           tag: EnumToString.convertToString(VisualizationImageTag.nature),
-          coverAssetPath: 'assets/images/targets/nature.png'),
+          coverAssetPath: 'assets/images/targets/nature.jpg'),
       VisualizationTarget(
           id: 3,
           title: 'rest_target'.tr,
           tag: EnumToString.convertToString(VisualizationImageTag.rest),
-          coverAssetPath: 'assets/images/targets/rest.png'),
+          coverAssetPath: 'assets/images/targets/rest.jpg'),
       VisualizationTarget(
           id: 4,
           title: 'sport_target'.tr,
           tag: EnumToString.convertToString(VisualizationImageTag.sport),
-          coverAssetPath: 'assets/images/targets/sport.png'),
+          coverAssetPath: 'assets/images/targets/sport.jpg'),
     ];
   }
 }
