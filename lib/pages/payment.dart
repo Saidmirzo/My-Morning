@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,26 +45,26 @@ class _PaymentPageState extends State<PaymentPage> {
               children: [
                 Column(
                   children: [
-                    paragraph('paragraph1'.tr()),
+                    paragraph('paragraph1'.tr),
                     const SizedBox(height: 10),
-                    paragraph('paragraph2'.tr()),
+                    paragraph('paragraph2'.tr),
                     const SizedBox(height: 10),
-                    paragraph('paragraph3'.tr()),
+                    paragraph('paragraph3'.tr),
                     const SizedBox(height: 10),
-                    paragraph('paragraph4'.tr()),
+                    paragraph('paragraph4'.tr),
                   ],
                 ),
                 const SizedBox(height: 50),
                 Column(
                   children: [
                     period(
-                        'vip_price_card'.tr(namedArgs: {'price': monthPrice}),
+                        'vip_price_card'.trParams({'price': monthPrice}),
                         120),
                     const SizedBox(height: 20),
                     Container(
                         width: 300,
                         child: Text(
-                          'try_vip_desc'.tr(namedArgs: {'price': monthPrice}),
+                          'try_vip_desc'.trParams({'price': monthPrice}),
                           textAlign: TextAlign.center,
                         )),
                     const SizedBox(height: 20),
@@ -75,9 +75,9 @@ class _PaymentPageState extends State<PaymentPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    new RichText(text: myUrl('privacy_title'.tr(), UrlPrivacy)),
+                    new RichText(text: myUrl('privacy_title'.tr, UrlPrivacy)),
                     new RichText(
-                        text: myUrl('agreement_title'.tr(), UrlAgreement)),
+                        text: myUrl('agreement_title'.tr, UrlAgreement)),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -97,7 +97,7 @@ class _PaymentPageState extends State<PaymentPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        child: Text('continue'.tr(),
+        child: Text('continue'.tr,
             style: TextStyle(color: Colors.white, fontSize: 23)),
         color: AppColors.PINK,
         onPressed: () async {

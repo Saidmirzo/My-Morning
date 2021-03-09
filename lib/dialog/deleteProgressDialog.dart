@@ -3,7 +3,7 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/progress_util.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 
 class DeleteProgressDialog extends Dialog {
 
@@ -29,7 +29,7 @@ class DeleteProgressDialog extends Dialog {
                 padding: EdgeInsets.only(top: 20),
                 child: Center(
                   child: Text(
-                    'sure_delete_progress'.tr(),
+                    'sure_delete_progress'.tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 23,
@@ -47,7 +47,7 @@ class DeleteProgressDialog extends Dialog {
                     voidCallback();
                   });
                     Navigator.pop(context, true);
-                  }, 'rex', 'yes'.tr(), 22,
+                  }, 'rex', 'yes'.tr, 22,
                       null, null),
                 ),
               ),
@@ -55,7 +55,7 @@ class DeleteProgressDialog extends Dialog {
                 padding: EdgeInsets.only(top: 10),
                 child: AnimatedButton(() {
                     Navigator.pop(context, true);
-                  }, 'rex', 'no'.tr(), 22,
+                  }, 'rex', 'no'.tr, 22,
                   null, null
                 ),
               ),

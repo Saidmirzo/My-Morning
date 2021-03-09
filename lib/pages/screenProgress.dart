@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 
@@ -41,7 +41,7 @@ class ProgressScreenState extends State {
                     Container(
                       padding: EdgeInsets.only(bottom: 35),
                       child: Text(
-                        'progress'.tr(),
+                        'progress'.tr,
                         style: TextStyle(
                           fontSize: 32,
                           fontStyle: FontStyle.normal,
@@ -53,7 +53,7 @@ class ProgressScreenState extends State {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
-                        'progress_title'.tr(),
+                        'progress_title'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 22,
@@ -69,7 +69,7 @@ class ProgressScreenState extends State {
                   bottom: 75,
                   child: AnimatedButton(() {
                     AppRouting.navigateToHomeWithClearHistory(context);
-                  }, 'sans-serif', 'back_button'.tr(), 22, null, null),
+                  }, 'sans-serif', 'back_button'.tr, 22, null, null),
                 )
               ],
             ),

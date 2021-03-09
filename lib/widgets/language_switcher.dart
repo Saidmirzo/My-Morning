@@ -1,5 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/shared_preferences.dart';
 
@@ -16,6 +16,7 @@ class LanguageSwitcher extends StatefulWidget {
 
 class LanguageSwitcherState extends State<LanguageSwitcher> {
   BuildContext rootContext;
+
   @override
   Widget build(BuildContext context) {
     rootContext = context;
@@ -26,7 +27,7 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
           child: Align(
             alignment: widget.alignment,
             child: Text(
-              'language'.tr(),
+              'language'.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: AppColors.VIOLET,
@@ -58,24 +59,13 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
                       }),
                 ),
                 Container(
-                  child: Switch( 
-                    value: context.locale.languageCode =='ru' ? false : true,
-                    inactiveThumbColor: AppColors.PINK,
-                    inactiveTrackColor: AppColors.PINK,
-                    activeColor: AppColors.BLUE,
-                    activeTrackColor: AppColors.BLUE,
-                    onChanged: (bool value) {
-                      setState(() {
-                        Locale ru = Locale('ru');
-                        Locale en = Locale('en');
-                        if (context.locale==en) {
-                          context.locale = ru;
-                        } else {
-                          context.locale = en;
-                        }
-                      });
-                    },
-                  ),
+                  child: Switch(
+                      value: Get.locale.languageCode == 'ru' ? false : true,
+                      inactiveThumbColor: AppColors.PINK,
+                      inactiveTrackColor: AppColors.PINK,
+                      activeColor: AppColors.BLUE,
+                      activeTrackColor: AppColors.BLUE,
+                      onChanged: (bool value) => _switchLanguage()),
                 ),
                 Container(
                   child: FutureBuilder(
@@ -98,6 +88,15 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
         ),
       ],
     );
+  }
+
+  void _switchLanguage() {
+    final _currentLocale = Get.locale;
+    if (_currentLocale.languageCode == 'ru') {
+      Get.updateLocale(Locale('en'));
+    } else if (_currentLocale.languageCode == 'en') {
+      Get.updateLocale(Locale('ru'));
+    }
   }
 
   Color chooseRusColor(bool value) {

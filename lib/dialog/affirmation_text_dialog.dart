@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 
@@ -46,7 +46,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                     child: InkWell(
                       onTap: () => Navigator.pop(context),
                       child: Text(
-                        'back_button'.tr(),
+                        'back_button'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 23,
@@ -68,7 +68,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                                   _affirmationTextList[_selectedItemIndex]);
                             },
                       child: Text(
-                        'choose'.tr(),
+                        'choose'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 23,
@@ -114,86 +114,86 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
     switch (affirmationCategory) {
       case AffirmationCategory.confidence:
         return [
-          "confidence_text_1".tr(),
-          "confidence_text_2".tr(),
-          "confidence_text_3".tr(),
-          "confidence_text_4".tr(),
-          "confidence_text_5".tr(),
-          "confidence_text_6".tr()
+          "confidence_text_1".tr,
+          "confidence_text_2".tr,
+          "confidence_text_3".tr,
+          "confidence_text_4".tr,
+          "confidence_text_5".tr,
+          "confidence_text_6".tr
         ];
         break;
       case AffirmationCategory.health:
         return [
-          "health_text_1".tr(),
-          "health_text_2".tr(),
-          "health_text_3".tr(),
-          "health_text_4".tr(),
-          "health_text_5".tr(),
-          "health_text_6".tr(),
-          "health_text_7".tr(),
-          "health_text_8".tr(),
-          "health_text_9".tr(),
-          "health_text_10".tr(),
+          "health_text_1".tr,
+          "health_text_2".tr,
+          "health_text_3".tr,
+          "health_text_4".tr,
+          "health_text_5".tr,
+          "health_text_6".tr,
+          "health_text_7".tr,
+          "health_text_8".tr,
+          "health_text_9".tr,
+          "health_text_10".tr,
         ];
         break;
       case AffirmationCategory.love:
         return [
-          "love_text_1".tr(),
-          "love_text_2".tr(),
-          "love_text_3".tr(),
-          "love_text_4".tr(),
-          "love_text_5".tr(),
-          "love_text_6".tr(),
-          "love_text_7".tr(),
-          "love_text_8".tr(),
-          "love_text_9".tr(),
-          "love_text_10".tr(),
-          "love_text_11".tr(),
+          "love_text_1".tr,
+          "love_text_2".tr,
+          "love_text_3".tr,
+          "love_text_4".tr,
+          "love_text_5".tr,
+          "love_text_6".tr,
+          "love_text_7".tr,
+          "love_text_8".tr,
+          "love_text_9".tr,
+          "love_text_10".tr,
+          "love_text_11".tr,
         ];
         break;
       case AffirmationCategory.success:
         return [
-          "success_text_1".tr(),
-          "success_text_2".tr(),
-          "success_text_3".tr(),
-          "success_text_4".tr(),
-          "success_text_5".tr(),
-          "success_text_6".tr(),
-          "success_text_7".tr(),
-          "success_text_8".tr(),
-          "success_text_9".tr(),
-          "success_text_10".tr(),
-          "success_text_11".tr(),
+          "success_text_1".tr,
+          "success_text_2".tr,
+          "success_text_3".tr,
+          "success_text_4".tr,
+          "success_text_5".tr,
+          "success_text_6".tr,
+          "success_text_7".tr,
+          "success_text_8".tr,
+          "success_text_9".tr,
+          "success_text_10".tr,
+          "success_text_11".tr,
         ];
         break;
       case AffirmationCategory.career:
         return [
-          "career_text_1".tr(),
-          "career_text_2".tr(),
-          "career_text_3".tr(),
-          "career_text_4".tr(),
-          "career_text_5".tr(),
-          "career_text_6".tr(),
-          "career_text_7".tr(),
-          "career_text_8".tr(),
-          "career_text_9".tr(),
-          "career_text_10".tr(),
-          "career_text_11".tr(),
+          "career_text_1".tr,
+          "career_text_2".tr,
+          "career_text_3".tr,
+          "career_text_4".tr,
+          "career_text_5".tr,
+          "career_text_6".tr,
+          "career_text_7".tr,
+          "career_text_8".tr,
+          "career_text_9".tr,
+          "career_text_10".tr,
+          "career_text_11".tr,
         ];
 
         break;
       case AffirmationCategory.wealth:
         return [
-          "wealth_text_1".tr(),
-          "wealth_text_2".tr(),
-          "wealth_text_3".tr(),
-          "wealth_text_4".tr(),
-          "wealth_text_5".tr(),
-          "wealth_text_6".tr(),
-          "wealth_text_7".tr(),
-          "wealth_text_8".tr(),
-          "wealth_text_9".tr(),
-          "wealth_text_10".tr(),
+          "wealth_text_1".tr,
+          "wealth_text_2".tr,
+          "wealth_text_3".tr,
+          "wealth_text_4".tr,
+          "wealth_text_5".tr,
+          "wealth_text_6".tr,
+          "wealth_text_7".tr,
+          "wealth_text_8".tr,
+          "wealth_text_9".tr,
+          "wealth_text_10".tr,
         ];
         break;
       default:

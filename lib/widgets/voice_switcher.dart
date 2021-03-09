@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/shared_preferences.dart';
@@ -23,7 +23,7 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'player_voice'.tr(),
+              'player_voice'.tr,
               textAlign: TextAlign.left,
               style: TextStyle(
                   color: AppColors.VIOLET,
@@ -48,7 +48,7 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
                       builder: (BuildContext context,
                           AsyncSnapshot<bool> value) {
                         return Text(
-                          'female'.tr(),
+                          'female'.tr,
                           style: TextStyle(
                             color: chooseWomanColor(
                               value.data == null
@@ -96,7 +96,7 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
                       builder: (BuildContext context,
                           AsyncSnapshot<bool> value) {
                         return Text(
-                          'male'.tr(),
+                          'male'.tr,
                           style: TextStyle(
                             color: chooseManColor(
                                 value.data == null

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'exerciseTrashButton.dart';
 
 class ExerciseTrashTarget extends StatefulWidget {
@@ -37,7 +37,7 @@ class ExerciseTrashTargetState extends State<ExerciseTrashTarget> {
                   : AppColors.TRANSPARENT_WHITE),
           child: Center(
             child: Text(
-                'delete_exercise'.tr(),
+                'delete_exercise'.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 23,

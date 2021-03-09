@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
@@ -21,14 +21,14 @@ class FitnessExercise extends Equatable {
 
   String get name {
     if (!this.isCreatedByUser)
-      return _name.tr();
+      return _name.tr;
     else
       return _name;
   }
 
   String get description {
     if (!this.isCreatedByUser)
-      return _description.tr();
+      return _description.tr;
     else
       return _description;
   }

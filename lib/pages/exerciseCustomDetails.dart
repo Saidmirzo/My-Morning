@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/progress_util.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
@@ -92,7 +92,7 @@ class ExerciseCustomDetailsState extends State<ExerciseCustomDetails> {
                           ExerciseUtils().goNextRoute(context, widget.pageId);
                         },
                         "rex",
-                        'next_exercise'.tr(),
+                        'next_exercise'.tr,
                         20,
                         null,
                         null

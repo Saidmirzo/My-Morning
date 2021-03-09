@@ -10,7 +10,7 @@ import '../resources/colors.dart';
 
 import 'journalMyDetailsAdd.dart';
 import 'journalMyDitails.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 
 class MyVisualizationProgress extends StatefulWidget {
   @override
@@ -91,7 +91,7 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.81,
                         child: Text(
-                          'my_visualization'.tr(),
+                          'my_visualization'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.VIOLET,
@@ -305,7 +305,7 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: Text(
-                      'my_visualization'.tr(),
+                      'my_visualization'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.VIOLET,

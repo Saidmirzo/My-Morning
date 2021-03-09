@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
@@ -92,7 +92,7 @@ class TimerPageState extends State<TimerPage> {
   Widget build(BuildContext context) {
     if (!isInitialized) {
       isInitialized = true;
-      timerService.buttonText = 'start'.tr();
+      timerService.buttonText = 'start'.tr;
     }
 
     return WillPopScope(
@@ -173,7 +173,7 @@ class TimerPageState extends State<TimerPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             StyledText(
-              'audio_loading'.tr(),
+              'audio_loading'.tr,
               fontSize: 16,
             ),
             SizedBox(
@@ -260,14 +260,14 @@ class TimerPageState extends State<TimerPage> {
           child: AnimatedButton(() {
             _audioPlayer.pause();
             timerService.skipTask();
-          }, 'rex', 'skip'.tr(), 15, null, null),
+          }, 'rex', 'skip'.tr, 15, null, null),
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
           child: AnimatedButton(() {
             _audioPlayer.pause();
             timerService.goToHome();
-          }, 'rex', 'menu'.tr(), 15, null, null),
+          }, 'rex', 'menu'.tr, 15, null, null),
         ),
         if (widget.pageId == 0)
           Container(
@@ -279,7 +279,7 @@ class TimerPageState extends State<TimerPage> {
                 setState(() {
                   titleText = _affirmation;
                 });
-            }, 'rex', 'affirmation_timer'.tr(), 15, null, null),
+            }, 'rex', 'affirmation_timer'.tr, 15, null, null),
           ),
         SizedBox(
           height: 8,
@@ -290,7 +290,7 @@ class TimerPageState extends State<TimerPage> {
 
   Future<String> _showAffirmationCategoryDialog(BuildContext context) async {
     return await showDialog(
-        context: context, child: AffirmationCategoryDialog());
+        context: context, builder:(context) => AffirmationCategoryDialog());
   }
 
   Widget _buildTitleWidget() {

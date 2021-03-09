@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
@@ -56,7 +56,7 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
             Container(
               width: MediaQuery.of(context).size.width * 0.7,
               child: ArcProgressBar(
-                text: 'success'.tr(),
+                text: 'success'.tr,
               ),
             ),
             SizedBox(
@@ -65,7 +65,7 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
             Positioned(
               bottom: MediaQuery.of(context).size.height / 5.5,
               child: AnimatedButton(_navigateToNextExercise, 'rex',
-                  'continue'.tr(), 21, null, null),
+                  'continue'.tr, 21, null, null),
             ),
           ],
         ),

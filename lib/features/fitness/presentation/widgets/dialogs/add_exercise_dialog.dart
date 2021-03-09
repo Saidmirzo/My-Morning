@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/features/fitness/data/fitness_data_generator.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
@@ -56,11 +56,11 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
               ),
               Row(children: [
                 DialogHeaderButton(
-                    text: 'back_button'.tr(),
+                    text: 'back_button'.tr,
                     onTap: () => Navigator.pop(context)),
                 Spacer(),
                 DialogHeaderButton(
-                  text: 'save'.tr(),
+                  text: 'save'.tr,
                   onTap: () => Navigator.pop(context, _selectedExercises),
                 ),
               ]),
@@ -68,7 +68,7 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
                 height: 8,
               ),
               StyledText(
-                'exercises'.tr(),
+                'exercises'.tr,
                 fontSize: 20,
                 color: Colors.blueGrey,
               ),
@@ -79,7 +79,7 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
                   ? Expanded(
                       child: Center(
                           child: StyledText(
-                      'initial_exercises_empty'.tr(),
+                      'initial_exercises_empty'.tr,
                       textAlign: TextAlign.center,
                       fontSize: 18,
                       color: Colors.blueGrey,
@@ -103,7 +103,7 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
                       ),
                     ),
               DialogFooterButton(
-                  text: 'add_yours'.tr(),
+                  text: 'add_yours'.tr,
                   onPressed: () => _openCreateOwnExerciseDialog(context)),
             ],
           ),

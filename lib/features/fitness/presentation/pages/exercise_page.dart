@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
@@ -64,7 +64,7 @@ class _ExercisePageState extends State<ExercisePage> {
                                       MediaQuery.of(context).size.width * 0.3,
                                   padding: EdgeInsets.only(bottom: 3),
                                   child: Text(
-                                    'exercise'.tr(namedArgs: {
+                                    'exercise'.trParams({
                                       'id': currentStep.toString()
                                     }),
                                     textAlign: TextAlign.center,
@@ -136,7 +136,7 @@ class _ExercisePageState extends State<ExercisePage> {
   void _onListenClick() async {
     final _audioRes = widget.exercise.audioRes;
     if (_audioRes != null) {
-      final _audioResPath = '$_audioRes'.tr();
+      final _audioResPath = '$_audioRes'.tr;
       _audioPlayer.setAsset(_audioResPath);
       _audioPlayer.play();
     }

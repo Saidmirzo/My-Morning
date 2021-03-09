@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/app_exercise_holder.dart';
@@ -153,7 +153,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                         padding: EdgeInsets.only(
                             top: MediaQuery.of(context).size.width / 12),
                         child: Text(
-                          'delete_hint'.tr(),
+                          'delete_hint'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -172,7 +172,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                         padding: EdgeInsets.only(
                             top: MediaQuery.of(context).size.width / 12),
                         child: Text(
-                          'pull_program'.tr(),
+                          'pull_program'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -187,7 +187,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                             top: MediaQuery.of(context).size.width / 5),
                         child: AnimatedButton(() {
                           _openDialog();
-                        }, "rex", 'add_exercises'.tr(), 20, null, null),
+                        }, "rex", 'add_exercises'.tr, 20, null, null),
                       ),
                       Container(
                         child: ExerciseDragTarget(),
@@ -198,7 +198,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                             bottom: MediaQuery.of(context).size.width / 17),
                         child: AnimatedButton(() {
                           goNextPage();
-                        }, 'rex', 'start'.tr(), 20, null, null),
+                        }, 'rex', 'start'.tr, 20, null, null),
                       ),
                     ],
                   ),
@@ -238,7 +238,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
       ExerciseUtils()
           .chooseExerciseAndRoute(context, first.title, widget.pageId);
     } else {
-      ToastUtils.showCustomToast(context, 'add_exercise'.tr());
+      ToastUtils.showCustomToast(context, 'add_exercise'.tr);
     }
   }
 

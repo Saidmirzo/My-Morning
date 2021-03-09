@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/instance_manager.dart';
@@ -76,7 +76,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
         bottom: MediaQuery.of(context).size.height / 26,
       ),
       child: StyledText(
-        'visualization'.tr(),
+        'visualization'.tr,
         fontSize: 32,
         color: AppColors.WHITE,
       ),
@@ -90,7 +90,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
       ),
       child: Container(
         child: Text(
-          'visualization_title'.tr(),
+          'visualization_title'.tr,
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 19,
@@ -131,7 +131,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
                 decoration: TextDecoration.none),
             decoration: InputDecoration(
               hintMaxLines: 4,
-              hintText: 'visualization_hint'.tr(),
+              hintText: 'visualization_hint'.tr,
               hintStyle: TextStyle(
                 color: AppColors.LIGHT_GRAY,
                 fontSize: 16,

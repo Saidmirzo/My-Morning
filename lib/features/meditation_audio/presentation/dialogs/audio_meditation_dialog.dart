@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
@@ -36,7 +36,7 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                   children: [
                     _buildDialogActionButton(
                       context: context,
-                      title: 'back_button'.tr(),
+                      title: 'back_button'.tr,
                       onTap: () {
                         Navigator.pop(context);
                         _stopPlayer();
@@ -44,7 +44,7 @@ class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
                     ),
                     _buildDialogActionButton(
                       context: context,
-                      title: 'choose'.tr(),
+                      title: 'choose'.tr,
                       onTap: () {
                         Navigator.pop(context);
                         _stopPlayer();

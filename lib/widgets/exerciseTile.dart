@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -57,7 +57,7 @@ class ExerciseTile extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.only(bottom: 3, top: 3),
                     child: Text(
-                      'min'.tr(),
+                      'min'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 11,

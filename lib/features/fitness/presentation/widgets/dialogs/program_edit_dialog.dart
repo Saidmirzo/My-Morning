@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
@@ -69,7 +69,7 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
               ),
               if (exercises.isNotEmpty)
                 Text(
-                  'hold_to_move_exercise'.tr(),
+                  'hold_to_move_exercise'.tr,
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
@@ -104,7 +104,7 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
   }
 
   Widget _buildAddNewExerciseButton() => DialogFooterButton(
-      text: 'add_exercises'.tr(),
+      text: 'add_exercises'.tr,
       onPressed: () => _openAddExerciseDialog(context, exercises));
 
   Widget _buildProgramNameInputForm() =>
@@ -114,12 +114,12 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
     return Row(
       children: [
         DialogHeaderButton(
-          text: 'back_button'.tr(),
+          text: 'back_button'.tr,
           onTap: () => Navigator.pop(context),
         ),
         Spacer(),
         DialogHeaderButton(
-          text: 'save'.tr(),
+          text: 'save'.tr,
           onTap: () => _saveProgram(context),
         ),
       ],

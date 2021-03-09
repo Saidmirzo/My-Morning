@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -23,6 +23,6 @@ class RemoveProgressState extends State<RemoveProgress> {
                 await MyDB().clearWIthoutUserName();
                 AppRouting.navigateToHomeWithClearHistory(context);
               }));
-    }, 'sans-serif', 'remove_progress'.tr(), 19, 100, FontWeight.normal);
+    }, 'sans-serif', 'remove_progress'.tr, 19, 100, FontWeight.normal);
   }
 }

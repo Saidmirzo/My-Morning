@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/exercise_name.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/progress_util.dart';
@@ -34,7 +34,7 @@ class ExerciseDialog extends Dialog {
                 padding: EdgeInsets.only(top: 10),
                 child: Center(
                   child: Text(
-                    'enter_your_exercise'.tr(),
+                    'enter_your_exercise'.tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 23,
@@ -61,7 +61,7 @@ class ExerciseDialog extends Dialog {
                       decoration: TextDecoration.none),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'your_exercise'.tr(),
+                    hintText: 'your_exercise'.tr,
                     hintStyle: TextStyle(
                       color: AppColors.LIGHT_GRAY,
                     )
@@ -84,11 +84,11 @@ class ExerciseDialog extends Dialog {
                           });
                         }
 
-                      }, "rex", 'add_exercise'.tr(), 18, null, null),
+                      }, "rex", 'add_exercise'.tr, 18, null, null),
                     ),
                     Container(
                       padding:EdgeInsets.only(top: 10),
-                      child: AnimatedButton(_backCallback, "rex", 'back_button'.tr(), 18, null, null),
+                      child: AnimatedButton(_backCallback, "rex", 'back_button'.tr, 18, null, null),
                     )
                   ],
                 )

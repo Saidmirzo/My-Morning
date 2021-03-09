@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 
@@ -22,7 +22,7 @@ class FitnessNameInputForm extends StatelessWidget {
       key: _formKey,
       child: TextFormField(
         validator: (value) {
-          if (value.isEmpty) return 'type_name'.tr();
+          if (value.isEmpty) return 'type_name'.tr;
           return null;
         },
         controller: _textController,
@@ -41,7 +41,7 @@ class FitnessNameInputForm extends StatelessWidget {
             onPressed: () => _textController.text = '',
           ),
           border: OutlineInputBorder(),
-          hintText: 'type_program_name'.tr(),
+          hintText: 'type_program_name'.tr,
         ),
         autofocus: autoFocus,
       ),

@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/storage.dart';
@@ -26,7 +26,7 @@ class PaymentDialog extends Dialog {
                 padding: EdgeInsets.only(top: 10, bottom: 18),
                 child: Center(
                   child: Text(
-                    'appreciate'.tr(),
+                    'appreciate'.tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 18,
@@ -43,7 +43,7 @@ class PaymentDialog extends Dialog {
                       padding: EdgeInsets.only(bottom: 5),
                       child: Center(
                         child: Text(
-                          'price'.tr(),
+                          'price'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
@@ -96,12 +96,12 @@ class PaymentDialog extends Dialog {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     _buildBuyButton(
-                      title: 'buy_month'.tr(),
+                      title: 'buy_month'.tr,
                       onTap: () => _startPaymentSubscription(context),
                     ),
                     SizedBox(height: 8),
                     _buildBuyButton(
-                      title: 'buy_days'.tr(),
+                      title: 'buy_days'.tr,
                       onTap: () => _startPaymentTrial(context),
                     )
                   ],

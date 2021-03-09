@@ -13,7 +13,7 @@ class _journalMyDitailsEditState extends State<journalMyDitailsEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(

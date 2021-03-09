@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -84,7 +84,7 @@ class _MyFitnessProgressState extends State<MyFitnessProgress> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.81,
                         child: Text(
-                          'my_exercises'.tr(),
+                          'my_exercises'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.VIOLET,
@@ -297,7 +297,7 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: Text(
-                      'my_exercises'.tr(),
+                      'my_exercises'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.VIOLET,

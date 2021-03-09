@@ -8,7 +8,7 @@ import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 
 class InputTextColumn extends StatefulWidget {
   final VoidCallback onPressed;
@@ -66,7 +66,7 @@ class InputTextColumnState extends State<InputTextColumn> {
           tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
           tempList[tempList.indexOf(tempList.last)][1] +
               '\n$type - ${readingProgress.book} (${readingProgress.pages} ' +
-              'pages_note'.tr() +
+              'pages_note'.tr +
               ')',
           '${date.day}.${date.month}.${date.year}'
         ]);
@@ -75,7 +75,7 @@ class InputTextColumnState extends State<InputTextColumn> {
         list.add([
           list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
           '\n$type - ${readingProgress.book} (${readingProgress.pages} ' +
-              'pages_note'.tr() +
+              'pages_note'.tr +
               ')',
           '${date.day}.${date.month}.${date.year}'
         ]);
@@ -84,7 +84,7 @@ class InputTextColumnState extends State<InputTextColumn> {
       list.add([
         list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
         '\n$type - ${readingProgress.book} (${readingProgress.pages} ' +
-            'pages_note'.tr() +
+            'pages_note'.tr +
             ')',
         '${date.day}.${date.month}.${date.year}'
       ]);
@@ -106,7 +106,7 @@ class InputTextColumnState extends State<InputTextColumn> {
           Container(
             padding: EdgeInsets.only(bottom: 15),
             child: Text(
-              'pages'.tr(),
+              'pages'.tr,
               style: TextStyle(
                 color: AppColors.LIGHT_VIOLET,
                 fontStyle: FontStyle.normal,
@@ -160,7 +160,7 @@ class InputTextColumnState extends State<InputTextColumn> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(38.0)),
                 child: Text(
-                  'continue'.tr(),
+                  'continue'.tr,
                   style: TextStyle(
                     color: AppColors.WHITE,
                     fontStyle: FontStyle.normal,
@@ -182,7 +182,7 @@ class InputTextColumnState extends State<InputTextColumn> {
       Day day = ProgressUtil()
           .createDay(null, null, null, readingProgress, null, null, null);
       ProgressUtil().updateDayList(day);
-      saveProg(MyResource.MY_READING_PROGRESS, 'reading_small'.tr());
+      saveProg(MyResource.MY_READING_PROGRESS, 'reading_small'.tr);
     }
   }
 }

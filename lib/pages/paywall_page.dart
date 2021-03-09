@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/pages/askedQuestionsScreen.dart';
@@ -29,7 +29,7 @@ class _PaywallPageState extends State<PaywallPage> {
             Image(image: AssetImage('assets/images/paywall_logo.png')),
             SizedBox(height: 36),
             _buildPaywallButton(
-                title: 'buy_free'.tr(),
+                title: 'buy_free'.tr,
                 actionCallback: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => PaymentPage()));
@@ -38,12 +38,12 @@ class _PaywallPageState extends State<PaywallPage> {
               height: 4,
             ),
             Text(
-              'three_days'.tr(),
+              'three_days'.tr,
               style: TextStyle(color: const Color(0x594A1D72)),
             ),
             SizedBox(height: 16),
             _buildPaywallButton(
-                title: 'my_progress'.tr(),
+                title: 'my_progress'.tr,
                 actionCallback: () {
                   Navigator.push(
                       context,

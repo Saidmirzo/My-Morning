@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:morningmagic/db/model/reordering_program/order_item.dart';
 import 'package:morningmagic/storage.dart';
@@ -71,7 +71,7 @@ class SettingsActivityListState extends State<SettingsActivityList> {
       key: ValueKey(1),
       id: orderItemsList[0].position,
       trues: true,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[0].position).tr(),
+      title: OrderUtil().getStringIdByOrderId(orderItemsList[0].position).tr,
       edgeInsets: EdgeInsets.only(bottom: 15),
       textEditingController: getControllerById(orderItemsList[0].position),
     ));
@@ -79,7 +79,7 @@ class SettingsActivityListState extends State<SettingsActivityList> {
       key: ValueKey(2),
       id: orderItemsList[1].position,
       trues: true,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[1].position).tr(),
+      title: OrderUtil().getStringIdByOrderId(orderItemsList[1].position).tr,
       edgeInsets: EdgeInsets.only(bottom: 15),
       textEditingController: getControllerById(orderItemsList[1].position),
     ));
@@ -87,7 +87,7 @@ class SettingsActivityListState extends State<SettingsActivityList> {
       key: ValueKey(3),
       id: orderItemsList[2].position,
       trues: isPro,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[2].position).tr(),
+      title: OrderUtil().getStringIdByOrderId(orderItemsList[2].position).tr,
       edgeInsets: EdgeInsets.only(bottom: 15),
       textEditingController: getControllerById(orderItemsList[2].position),
     ));
@@ -95,7 +95,7 @@ class SettingsActivityListState extends State<SettingsActivityList> {
       key: ValueKey(4),
       id: orderItemsList[3].position,
       trues: isPro,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[3].position).tr(),
+      title: OrderUtil().getStringIdByOrderId(orderItemsList[3].position).tr,
       edgeInsets: EdgeInsets.only(bottom: 15),
       textEditingController: getControllerById(orderItemsList[3].position),
     ));
@@ -103,7 +103,7 @@ class SettingsActivityListState extends State<SettingsActivityList> {
       key: ValueKey(5),
       id: orderItemsList[4].position,
       trues: isPro,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[4].position).tr(),
+      title: OrderUtil().getStringIdByOrderId(orderItemsList[4].position).tr,
       edgeInsets: EdgeInsets.only(bottom: 15),
       textEditingController: getControllerById(orderItemsList[4].position),
     ));
@@ -111,7 +111,7 @@ class SettingsActivityListState extends State<SettingsActivityList> {
       key: ValueKey(6),
       id: orderItemsList[5].position,
       trues: isPro,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[5].position).tr(),
+      title: OrderUtil().getStringIdByOrderId(orderItemsList[5].position).tr,
       edgeInsets: EdgeInsets.only(bottom: 15),
       textEditingController: getControllerById(orderItemsList[5].position),
     ));

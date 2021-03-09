@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
@@ -149,7 +149,7 @@ class LoadingPageState extends State<LoadingPage>
     User user = myDbBox?.get(MyResource.USER_KEY);
     if (user == null) return Container(width: 0, height: 0);
     return Text(
-      'good_morning'.tr() + user.name + "!",
+      'good_morning'.tr + user.name + "!",
       textAlign: TextAlign.center,
       style: TextStyle(
         color: AppColors.WHITE,

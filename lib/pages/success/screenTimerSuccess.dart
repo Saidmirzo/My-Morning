@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -168,7 +168,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.7,
                 child: ArcProgressBar(
-                  text: 'success'.tr(),
+                  text: 'success'.tr,
                 ),
               ),
               Positioned(
@@ -179,7 +179,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
                     _audioPlayer.dispose();
                   }
                   widget.onPressed();
-                }, 'rex', 'continue'.tr(), 21, null, null),
+                }, 'rex', 'continue'.tr, 21, null, null),
               ),
             ],
           ),

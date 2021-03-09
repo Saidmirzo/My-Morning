@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/exercise_name.dart';
 
 import 'exerciseDeskButton.dart';
@@ -72,7 +72,7 @@ class ExerciseMenuState extends State<ExerciseMenu> {
               EdgeInsets.only(right: MediaQuery.of(context).size.width / 14),
           child: ExerciseDeskButton(
             id: exerciseName.id,
-            text: exerciseName.size == null ? exerciseName.title : exerciseName.title.tr(),
+            text: exerciseName.size == null ? exerciseName.title : exerciseName.title.tr,
             size: sizeOne,
             list: widget.list,
             voidCallback: widget._voidCallback,
@@ -110,7 +110,7 @@ class ExerciseMenuState extends State<ExerciseMenu> {
               left: leftSide ? 0 : MediaQuery.of(context).size.width / 7),
           child: ExerciseDeskButton(
             id: exerciseNameOne.id,
-            text: exerciseNameOne.size == null ? exerciseNameOne.title : exerciseNameOne.title.tr(),
+            text: exerciseNameOne.size == null ? exerciseNameOne.title : exerciseNameOne.title.tr,
             size: sizeOne,
             list: widget.list,
             voidCallback: widget._voidCallback,
@@ -122,7 +122,7 @@ class ExerciseMenuState extends State<ExerciseMenu> {
               left: leftSide ? 0 : MediaQuery.of(context).size.width / 14),
           child: ExerciseDeskButton(
             id: exerciseNameTwo.id,
-            text: exerciseNameTwo.size == null ? exerciseNameTwo.title : exerciseNameTwo.title.tr(),
+            text: exerciseNameTwo.size == null ? exerciseNameTwo.title : exerciseNameTwo.title.tr,
             size: sizeTwo,
             list: widget.list,
             voidCallback: widget._voidCallback,

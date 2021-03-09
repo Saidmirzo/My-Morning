@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
@@ -35,7 +35,7 @@ class ProgramSelectionDialog extends StatelessWidget {
                 height: 8,
               ),
               DialogHeaderButton(
-                  text: 'back_button'.tr(),
+                  text: 'back_button'.tr,
                   onTap: () => Navigator.pop(context)),
               SizedBox(
                 height: 8,
@@ -63,7 +63,7 @@ class ProgramSelectionDialog extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 12.0),
-                      child: StyledText('start'.tr(),
+                      child: StyledText('start'.tr,
                           textAlign: TextAlign.center,
                           fontSize: 23,
                           color: _isActive

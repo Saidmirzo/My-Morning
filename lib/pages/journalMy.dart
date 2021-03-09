@@ -1,5 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -98,7 +98,7 @@ class _journalMyState extends State<journalMy> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: Text(
-                      'my_diary'.tr(),
+                      'my_diary'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.VIOLET,
@@ -138,7 +138,7 @@ class _journalMyState extends State<journalMy> {
                       ),
                       //width: MediaQuery.of(context).size.width * 0.75,
                       child: Text(
-                        'add_note'.tr(),
+                        'add_note'.tr,
                         //textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.VIOLET,

@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/dialog/affirmation_text_dialog.dart';
 import 'package:morningmagic/dialog/models/affirmation_category.dart';
@@ -35,7 +35,7 @@ class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    'back_button'.tr(),
+                    'back_button'.tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 23,
@@ -123,22 +123,22 @@ class _MainAffirmationDialogItemState extends State<MainAffirmationDialogItem> {
   String _getAffirmationCategoryText(AffirmationCategory affirmation) {
     switch (affirmation) {
       case AffirmationCategory.confidence:
-        return 'for_confidence'.tr();
+        return 'for_confidence'.tr;
         break;
       case AffirmationCategory.love:
-        return 'for_love'.tr();
+        return 'for_love'.tr;
         break;
       case AffirmationCategory.health:
-        return 'for_health'.tr();
+        return 'for_health'.tr;
         break;
       case AffirmationCategory.success:
-        return 'for_success'.tr();
+        return 'for_success'.tr;
         break;
       case AffirmationCategory.career:
-        return 'for_career'.tr();
+        return 'for_career'.tr;
         break;
       case AffirmationCategory.wealth:
-        return 'for_wealth'.tr();
+        return 'for_wealth'.tr;
         break;
       default:
         return 'unknown category';

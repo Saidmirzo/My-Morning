@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/data/repositories/fitness_program_repository_impl.dart';
@@ -32,7 +32,7 @@ class FitnessMainPage extends StatelessWidget {
                   height: 48,
                 ),
                 StyledText(
-                  'fitness'.tr(),
+                  'fitness'.tr,
                   color: AppColors.WHITE,
                   fontSize: 32,
                 ),
@@ -41,14 +41,14 @@ class FitnessMainPage extends StatelessWidget {
                 ),
                 FitnessMainMenuButton(
                     onPressed: () => showProgramSelectionDialog(context),
-                    text: 'start_program'.tr(), // начать программу
+                    text: 'start_program'.tr, // начать программу
                     pageId: pageId),
                 SizedBox(
                   height: 16,
                 ),
                 FitnessMainMenuButton(
                     onPressed: () => navigateToProgramSettings(context),
-                    text: 'program_settings'.tr(), // создать программу
+                    text: 'program_settings'.tr, // создать программу
                     pageId: pageId),
               ],
             ),
@@ -59,7 +59,7 @@ class FitnessMainPage extends StatelessWidget {
   }
 
   Future<void> showProgramSelectionDialog(BuildContext context) async {
-    return await showDialog(context: context, child: ProgramSelectionDialog());
+    return await showDialog(context: context, builder: (context) => ProgramSelectionDialog());
   }
 
   void navigateToProgramSettings(BuildContext context) {

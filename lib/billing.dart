@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/pages/payment.dart';
 import 'package:morningmagic/pages/payment_trial.dart';
@@ -31,7 +31,7 @@ class BillingService {
   }
 
   String getPrice(Package package) {
-    return package?.product?.priceString ?? "vip_def_month_price".tr();
+    return package?.product?.priceString ?? "vip_def_month_price".tr;
   }
 
   startPaymentPage(BuildContext context) async {

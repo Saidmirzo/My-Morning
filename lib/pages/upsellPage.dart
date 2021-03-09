@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -48,7 +48,7 @@ class UpsellPageState extends State<UpsellPage> {
                             billingService.getMonthlyTarif());
                   },
                   'rex',
-                  'buy_days'.tr(),
+                  'buy_days'.tr,
                   22,
                   null,
                   null,
@@ -59,7 +59,7 @@ class UpsellPageState extends State<UpsellPage> {
                 child: AnimatedButton(
                     () => AppRouting.navigateToHomeWithClearHistory(context),
                     'rex',
-                    'menu'.tr(),
+                    'menu'.tr,
                     22,
                     null,
                     null),

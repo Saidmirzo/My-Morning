@@ -8,7 +8,7 @@ import 'package:get/get_rx/get_rx.dart';
 
 import '../resources/colors.dart';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 
 import 'journalMy.dart';
 
@@ -176,7 +176,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
-                    child: Text('my_diary'.tr(),
+                    child: Text('my_diary'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.VIOLET,
@@ -219,7 +219,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                         left: 10,
                       ),
                       //width: MediaQuery.of(context).size.width * 0.75,
-                      child: Text('save_diary'.tr(),
+                      child: Text('save_diary'.tr,
                           //textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.VIOLET,
@@ -269,7 +269,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Text(
-                    'sure'.tr(),
+                    'sure'.tr,
                     style: TextStyle(
                       color: AppColors.VIOLET,
                       fontSize: 40,
@@ -281,7 +281,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                   children: [
                     FlatButton(
                       child: Text(
-                        'yes'.tr(),
+                        'yes'.tr,
                         style: TextStyle(
                           color: AppColors.FIX_TOP,
                           fontSize: 40,
@@ -304,7 +304,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                     ),
                     FlatButton(
                       child: Text(
-                        'no'.tr(),
+                        'no'.tr,
                         style: TextStyle(
                           color: AppColors.FIX_TOP,
                           fontSize: 40,

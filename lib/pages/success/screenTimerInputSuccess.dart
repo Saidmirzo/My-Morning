@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -147,7 +147,7 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
                           Container(
                             width: MediaQuery.of(context).size.width * 0.7,
                             child: ArcProgressBar(
-                              text: 'success'.tr(),
+                              text: 'success'.tr,
                             ),
                           ),
                           Container(

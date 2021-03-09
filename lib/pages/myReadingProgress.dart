@@ -10,7 +10,7 @@ import '../resources/colors.dart';
 
 import 'journalMyDetailsAdd.dart';
 import 'journalMyDitails.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 
 class MyReadingProgress extends StatefulWidget {
   @override
@@ -90,7 +90,7 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.81,
                         child: Text(
-                          'my_books'.tr(),
+                          'my_books'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.VIOLET,
@@ -303,7 +303,7 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: Text(
-                      'my_books'.tr(),
+                      'my_books'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.VIOLET,

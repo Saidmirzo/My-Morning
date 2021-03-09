@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -100,7 +100,7 @@ class SettingsPageState extends State<SettingsPage> {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'choose_sequence'.tr(),
+                              'choose_sequence'.tr,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: AppColors.VIOLET,
@@ -114,7 +114,7 @@ class SettingsPageState extends State<SettingsPage> {
                       child: Container(
                         padding: EdgeInsets.only(top: 5, left: 10),
                         child: Text(
-                          'choose_title'.tr(),
+                          'choose_title'.tr,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: AppColors.VIOLET,
@@ -135,7 +135,7 @@ class SettingsPageState extends State<SettingsPage> {
                           children: <Widget>[
                             Container(
                                 child: Text(
-                              'duration'.tr(),
+                              'duration'.tr,
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                   color: AppColors.VIOLET,
@@ -161,7 +161,7 @@ class SettingsPageState extends State<SettingsPage> {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'write_affirmation'.tr(),
+                              'write_affirmation'.tr,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: AppColors.VIOLET,
@@ -201,7 +201,7 @@ class SettingsPageState extends State<SettingsPage> {
                                       padding: EdgeInsets.only(
                                         left: 10,
                                       ),
-                                      child: Text('choose_ready'.tr(),
+                                      child: Text('choose_ready'.tr,
                                           style: TextStyle(
                                             color: AppColors.VIOLET,
                                             fontSize: 30,
@@ -241,7 +241,7 @@ class SettingsPageState extends State<SettingsPage> {
                                         decoration: TextDecoration.none),
                                     decoration: InputDecoration(
                                       hintMaxLines: 8,
-                                      hintText: 'affirmation_hint'.tr(),
+                                      hintText: 'affirmation_hint'.tr,
                                       hintStyle: TextStyle(
                                         color: AppColors.LIGHT_GRAY,
                                         fontSize: 16,
@@ -261,7 +261,7 @@ class SettingsPageState extends State<SettingsPage> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'book_name'.tr(),
+                            'book_name'.tr,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: AppColors.VIOLET,
@@ -310,9 +310,10 @@ class SettingsPageState extends State<SettingsPage> {
                       child: Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
                         child: AnimatedButton(
-                            () => AppRouting.navigateToHomeWithClearHistory(context),
+                            () => AppRouting.navigateToHomeWithClearHistory(
+                                context),
                             'sans-serif',
-                            'continue'.tr(),
+                            'continue'.tr,
                             null,
                             null,
                             null),
@@ -575,7 +576,7 @@ class SettingsPageState extends State<SettingsPage> {
         reading_time +
         visualization_time;
 
-    return 'x_minutes'.tr(namedArgs: {'x': sum.toString()});
+    return 'x_minutes'.trParams({'x': sum.toString()});
   }
 
   String getInitialValueForAffirmationTextField() {
@@ -612,7 +613,7 @@ class SettingsPageState extends State<SettingsPage> {
 
   Future<String> _showAffirmationCategoryDialog(BuildContext context) async {
     return await showDialog(
-        context: context, child: AffirmationCategoryDialog());
+        context: context, builder: (context) => AffirmationCategoryDialog());
   }
 
   _mutateTextOnValidationFailed(TextEditingController controller, String key) {

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:hive/hive.dart';
@@ -64,7 +64,7 @@ class TimerService {
 
   Function skipTask() {
     if (timer != null && timer.isActive) {
-      buttonText = 'start'.tr();
+      buttonText = 'start'.tr;
       timer.cancel();
     }
     if (pageId != 4) saveProgress();
@@ -120,9 +120,9 @@ class TimerService {
           tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
           tempList[tempList.indexOf(tempList.last)][1] +
               (getPassedSeconds() < 5
-                  ? '\n$type - ' + 'skip_note'.tr()
+                  ? '\n$type - ' + 'skip_note'.tr
                   : '\n$type - ${getPassedSeconds()} ' +
-                      'seconds'.tr() +
+                      'seconds'.tr +
                       '($text)'),
           '${date.day}.${date.month}.${date.year}'
         ]);
@@ -131,8 +131,8 @@ class TimerService {
         list.add([
           list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
           getPassedSeconds() < 5
-              ? '\n$type - ' + 'skip_note'.tr()
-              : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($text)',
+              ? '\n$type - ' + 'skip_note'.tr
+              : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr + '($text)',
           '${date.day}.${date.month}.${date.year}'
         ]);
       }
@@ -140,8 +140,8 @@ class TimerService {
       list.add([
         list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
         getPassedSeconds() < 5
-            ? '\n$type - ' + 'skip_note'.tr()
-            : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($text)',
+            ? '\n$type - ' + 'skip_note'.tr
+            : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr + '($text)',
         '${date.day}.${date.month}.${date.year}'
       ]);
     }
@@ -157,7 +157,7 @@ class TimerService {
       // FitnessProgress fitnessProgress;
       switch (pageId) {
         case 0:
-          saveProg(MyResource.AFFIRMATION_PROGRESS, 'affirmation_small'.tr(),
+          saveProg(MyResource.AFFIRMATION_PROGRESS, 'affirmation_small'.tr,
               affirmationText);
           affirmation =
               AffirmationProgress(getPassedSeconds(), affirmationText);
@@ -202,7 +202,7 @@ class TimerService {
     if (timer == null || !timer.isActive) {
       state.setState(() {
         print('set state');
-        buttonText = 'stop'.tr();
+        buttonText = 'stop'.tr;
       });
       timer = Timer.periodic(
           oneSec,
@@ -213,7 +213,7 @@ class TimerService {
                   _player?.stop();
                   timer.cancel();
                   if (pageId != 4) saveProgress();
-                  buttonText = 'start'.tr();
+                  buttonText = 'start'.tr;
                   OrderUtil()
                       .getRouteById(pageId)
                       .then((value) => getNextPage(value));
@@ -225,7 +225,7 @@ class TimerService {
     } else if (timer != null && timer.isActive) {
       timer.cancel();
       state.setState(() {
-        buttonText = 'start'.tr();
+        buttonText = 'start'.tr;
       });
     }
   }

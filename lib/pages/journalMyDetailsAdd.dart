@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
@@ -33,7 +33,7 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -131,7 +131,7 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: Text(
-                      'my_diary'.tr(),
+                      'my_diary'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.VIOLET,
@@ -185,7 +185,7 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                       ),
                       //width: MediaQuery.of(context).size.width * 0.75,
                       child: Text(
-                        'save_diary'.tr(),
+                        'save_diary'.tr,
                         //textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.VIOLET,

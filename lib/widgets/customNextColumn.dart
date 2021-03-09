@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 
 class NextColumn extends StatelessWidget {
 
@@ -21,7 +21,7 @@ class NextColumn extends StatelessWidget {
                   borderRadius: BorderRadius.circular(38.0)
               ),
               child: Text(
-                'continue'.tr(),
+                'continue'.tr,
                 style: TextStyle(
                   color: AppColors.WHITE,
                   fontWeight: FontWeight.normal,

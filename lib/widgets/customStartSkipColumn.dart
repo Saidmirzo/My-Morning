@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import 'animatedButton.dart';
@@ -23,12 +23,12 @@ class StartSkipColumn extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(top: 10),
           child:
-              AnimatedButton(gestureTapCallback, 'rex', 'skip'.tr(), 15, null, null),
+              AnimatedButton(gestureTapCallback, 'rex', 'skip'.tr, 15, null, null),
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
           child:
-              AnimatedButton(mainMenuCallback, 'rex', 'menu'.tr(), 15, null, null),
+              AnimatedButton(mainMenuCallback, 'rex', 'menu'.tr, 15, null, null),
         )
       ],
     );

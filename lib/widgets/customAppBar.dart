@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -69,7 +69,7 @@ class TimeAppBarState extends State<TimerAppBar> {
               Container(
                 padding: EdgeInsets.only(top: 30, bottom: 5),
                 child: Text(
-                  'timer'.tr(),
+                  'timer'.tr,
                   style: TextStyle(
                       color: AppColors.WHITE,
                       fontSize: 14,
@@ -88,7 +88,7 @@ class TimeAppBarState extends State<TimerAppBar> {
               isExerciseComplete
                   ? Container(
                       child: Text(
-                        'exercise_complete'.tr(),
+                        'exercise_complete'.tr,
                         style: TextStyle(
                             color: AppColors.WHITE,
                             fontSize: 14,
@@ -124,9 +124,9 @@ class TimeAppBarState extends State<TimerAppBar> {
           tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
           tempList[tempList.indexOf(tempList.last)][1] +
               (getPassedSeconds() < 5
-                  ? '\n$type - ' + 'skip_note'.tr() + '($name)'
+                  ? '\n$type - ' + 'skip_note'.tr + '($name)'
                   : '\n$type - ${getPassedSeconds()} ' +
-                      'seconds'.tr() +
+                      'seconds'.tr +
                       '($name)'),
           '${date.day}.${date.month}.${date.year}'
         ]);
@@ -135,8 +135,8 @@ class TimeAppBarState extends State<TimerAppBar> {
         list.add([
           list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
           getPassedSeconds() < 5
-              ? '\n$type - ' + 'skip_note'.tr() + '($name)'
-              : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($name)',
+              ? '\n$type - ' + 'skip_note'.tr + '($name)'
+              : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr + '($name)',
           '${date.day}.${date.month}.${date.year}'
         ]);
       }
@@ -144,8 +144,8 @@ class TimeAppBarState extends State<TimerAppBar> {
       list.add([
         list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
         getPassedSeconds() < 5
-            ? '\n$type - ' + 'skip_note'.tr() + '($name)'
-            : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr() + '($name)',
+            ? '\n$type - ' + 'skip_note'.tr + '($name)'
+            : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr + '($name)',
         '${date.day}.${date.month}.${date.year}'
       ]);
     }
@@ -156,8 +156,8 @@ class TimeAppBarState extends State<TimerAppBar> {
     if (getPassedSeconds() > 0) {
       FitnessProgress fitness =
           FitnessProgress(getPassedSeconds(), widget.exerciseName);
-      saveProg(MyResource.FITNESS_PROGRESS, 'exercises_note'.tr(),
-          widget.exerciseName.tr());
+      saveProg(MyResource.FITNESS_PROGRESS, 'exercises_note'.tr,
+          widget.exerciseName.tr);
       Day day =
           ProgressUtil().createDay(null, null, fitness, null, null, null, null);
       ProgressUtil().updateDayList(day);

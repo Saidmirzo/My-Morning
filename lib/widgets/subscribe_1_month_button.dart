@@ -1,5 +1,5 @@
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../storage.dart';
@@ -15,7 +15,7 @@ class Subscribe1MonthButton extends StatelessWidget {
         Center(
           child: AnimatedButton(() async {
             billingService.startPaymentPage(context);
-          }, 'sans-serif', 'pay'.tr(), null, null, null
+          }, 'sans-serif', 'pay'.tr, null, null, null
           ),
         ),
         const SizedBox(height: 15),

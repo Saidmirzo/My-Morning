@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -258,7 +258,7 @@ class VisualizationController extends GetxController {
 
   // TODO refactor this WTF
   void _saveProgressList() {
-    String type = 'visualization_small'.tr();
+    String type = 'visualization_small'.tr;
     String _visualizationText = getVisualizationText();
     List<dynamic> tempList;
     List<dynamic> list =
@@ -273,9 +273,9 @@ class VisualizationController extends GetxController {
           tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
           tempList[tempList.indexOf(tempList.last)][1] +
               (passedTimeSeconds < 5
-                  ? '\n$type - ' + 'skip_note'.tr()
+                  ? '\n$type - ' + 'skip_note'.tr
                   : '\n$type - $passedTimeSeconds ' +
-                      'seconds'.tr() +
+                      'seconds'.tr +
                       '($_visualizationText)'),
           '${_now.day}.${_now.month}.${_now.year}'
         ]);
@@ -284,9 +284,9 @@ class VisualizationController extends GetxController {
         list.add([
           list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
           passedTimeSeconds < 5
-              ? '\n$type - ' + 'skip_note'.tr()
+              ? '\n$type - ' + 'skip_note'.tr
               : '\n$type - $passedTimeSeconds ' +
-                  'seconds'.tr() +
+                  'seconds'.tr +
                   '($_visualizationText)',
           '${_now.day}.${_now.month}.${_now.year}'
         ]);
@@ -295,9 +295,9 @@ class VisualizationController extends GetxController {
       list.add([
         list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
         passedTimeSeconds < 5
-            ? '\n$type - ' + 'skip_note'.tr()
+            ? '\n$type - ' + 'skip_note'.tr
             : '\n$type - $passedTimeSeconds ' +
-                'seconds'.tr() +
+                'seconds'.tr +
                 '($_visualizationText)',
         '${_now.day}.${_now.month}.${_now.year}'
       ]);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import '../pages/screenNote.dart';
 import '../pages/success/screenTimerRecordSuccess.dart';
 import '../resources/colors.dart';
@@ -39,7 +39,7 @@ class VocabularyScreenState extends State<VocabularyScreen> {
               Positioned(
                 bottom: (MediaQuery.of(context).size.height / 2),
                 child: Text(
-                  'diary'.tr(),
+                  'diary'.tr,
                   style: TextStyle(
                     fontSize: 32,
                     fontFamily: "rex",
@@ -64,7 +64,7 @@ class VocabularyScreenState extends State<VocabularyScreen> {
                                     TimerRecordSuccessScreen()));
                       },
                           'rex',
-                          'voice_record'.tr(),
+                          'voice_record'.tr,
                           20,
                           220.0,
                           null),
@@ -76,7 +76,7 @@ class VocabularyScreenState extends State<VocabularyScreen> {
                               builder: (context) => NoteScreen()));
                     },
                         'rex',
-                        'written_record'.tr(),
+                        'written_record'.tr,
                         20,
                         220.0,
                         null)

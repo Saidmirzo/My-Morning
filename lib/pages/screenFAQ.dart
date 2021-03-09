@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:morningmagic/analyticService.dart';
@@ -77,7 +77,7 @@ class FAQStateScreen extends State<FAQScreen> {
                                 bottom:
                                     MediaQuery.of(context).size.height / 15),
                             child: Html(
-                                data: 'faq_desc'.tr(),
+                                data: 'faq_desc'.tr,
                                 defaultTextStyle: TextStyle(
                                   fontSize: 18,
                                   fontFamily: "sans-serif",
@@ -90,7 +90,7 @@ class FAQStateScreen extends State<FAQScreen> {
                             child: AnimatedButton(() {
                               Navigator.pushNamedAndRemoveUntil(
                                   context, homePageRoute, (r) => false);
-                            }, 'sans-serif', 'back_button'.tr(), 19, null,
+                            }, 'sans-serif', 'back_button'.tr, 19, null,
                                 null),
                           )
                         ],

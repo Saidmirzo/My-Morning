@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
@@ -44,7 +44,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
   @override
   Widget build(BuildContext context) {
     int id = widget.stepId + 1;
-    timerAppBar = TimerAppBar(exerciseName: 'exercise_${id}_title'.tr());
+    timerAppBar = TimerAppBar(exerciseName: 'exercise_${id}_title'.tr);
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
@@ -92,8 +92,8 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                           0.3,
                                       padding: EdgeInsets.only(bottom: 3),
                                       child: Text(
-                                        'exercise'.tr(
-                                            namedArgs: {'id': id.toString()}),
+                                        'exercise'.trParams(
+                                            {'id': id.toString()}),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 20,
@@ -104,7 +104,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                       ),
                                     ),
                                     Text(
-                                      'exercise_${id}_title'.tr(),
+                                      'exercise_${id}_title'.tr,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 20,
@@ -123,7 +123,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                   right: 20,
                                 ),
                                 child: Text(
-                                  'exercise_${id}_text'.tr(),
+                                  'exercise_${id}_text'.tr,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontSize: 15,
@@ -144,7 +144,7 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                     child: BottomExerciseNavigation(soundCallback: () async {
                       // man voice
                       // assetsAudioPlayer.open(
-                      //   Audio('exercise_${id}_sound'.tr()),
+                      //   Audio('exercise_${id}_sound'.tr),
                       // );
                       // assetsAudioPlayer.play();
                     }, nextCallback: () {

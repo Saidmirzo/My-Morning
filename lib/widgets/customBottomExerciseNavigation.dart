@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import 'animatedButton.dart';
@@ -18,12 +18,12 @@ class BottomExerciseNavigation extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(bottom: 15),
             child: AnimatedButton(
-                soundCallback, "rex", 'listen_to'.tr(), 20, null, null),
+                soundCallback, "rex", 'listen_to'.tr, 20, null, null),
           ),
           Container(
             padding: EdgeInsets.only(bottom: 16),
             child: AnimatedButton(
-                nextCallback, 'rex', 'next_exercise'.tr(), 19, 270.0, null),
+                nextCallback, 'rex', 'next_exercise'.tr, 19, 270.0, null),
           ),
         ],
       ),

@@ -2,12 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:flutter_circular_chart_two/flutter_circular_chart_two.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -127,7 +127,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                             left: 15,
                           ),
                           child: Text(
-                            'awareness_meter'.tr(),
+                            'awareness_meter'.tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize:
@@ -144,7 +144,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                           child: RichText(
                             textAlign: TextAlign.center,
                             text: TextSpan(
-                                text: 'for_week'.tr(),
+                                text: 'for_week'.tr,
                                 style: TextStyle(
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.064,
@@ -153,7 +153,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: 'minutes_per_week'.tr(),
+                                    text: 'minutes_per_week'.tr,
                                     style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -258,8 +258,8 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                   children: [
                     Container(
                       padding: EdgeInsets.only(
-                        left: context.locale == Locale('ru') ? 40 : 40,
-                        right: context.locale == Locale('ru') ? 48 : 42,
+                        left: Get.locale == Locale('ru') ? 40 : 40,
+                        right: Get.locale == Locale('ru') ? 48 : 42,
                       ),
                       decoration: BoxDecoration(
                           color: Color(0xffEBC2BE),
@@ -289,7 +289,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'total'.tr(),
+                                    'total'.tr,
                                     style: TextStyle(
                                       color:
                                           _Itog ? Colors.white : Colors.black54,
@@ -327,7 +327,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'month'.tr(),
+                                    'month'.tr,
                                     style: TextStyle(
                                       color: _Mounth
                                           ? Colors.white
@@ -363,7 +363,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'year'.tr(),
+                                    'year'.tr,
                                     style: TextStyle(
                                       color:
                                           _Year ? Colors.white : Colors.black54,
@@ -407,7 +407,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                                   width: 23,
                                 ),
                                 Text(
-                                  'count_of_sessions'.tr(),
+                                  'count_of_sessions'.tr,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black54,
@@ -472,7 +472,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                                   color: Colors.black54,
                                 ),
                                 Text(
-                                  'minutes_of_awareness_with_myself'.tr(),
+                                  'minutes_of_awareness_with_myself'.tr,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black54,
@@ -538,7 +538,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                                   color: Colors.black54,
                                 ),
                                 Text(
-                                  'count_of_completed_sessions'.tr(),
+                                  'count_of_completed_sessions'.tr,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black54,
@@ -653,7 +653,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        'my_diary'.tr(),
+                        'my_diary'.tr,
                         style: TextStyle(
                           fontSize:
                               MediaQuery.of(context).size.width * 0.044, //24,
@@ -703,7 +703,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        'my_exercises'.tr(),
+                        'my_exercises'.tr,
                         style: TextStyle(
                           fontSize:
                               MediaQuery.of(context).size.width * 0.044, //24,
@@ -752,7 +752,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        'my_affirmations'.tr(),
+                        'my_affirmations'.tr,
                         style: TextStyle(
                           fontSize:
                               MediaQuery.of(context).size.width * 0.044, //24,
@@ -802,7 +802,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        'my_books'.tr(),
+                        'my_books'.tr,
                         style: TextStyle(
                           fontSize:
                               MediaQuery.of(context).size.width * 0.044, //24,
@@ -852,7 +852,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        'my_visualization'.tr(),
+                        'my_visualization'.tr,
                         style: TextStyle(
                           fontSize:
                               MediaQuery.of(context).size.width * 0.044, //24,
@@ -890,7 +890,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           bottom: 0),
       child: AnimatedButton(() {
         AppRouting.navigateToHomeWithClearHistory(context);
-      }, 'sans-serif-black', 'menu'.tr(),
+      }, 'sans-serif-black', 'menu'.tr,
           MediaQuery.of(context).size.width * 0.06, null, null),
     );
   }
@@ -924,28 +924,28 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
     if (affirmationProgress != null) {
       value = createMinutesStringFromSeconds(affirmationProgress.seconds);
       value = value + ", " + affirmationProgress.text;
-      return ProgressPair('affirmation_small'.tr(), value);
+      return ProgressPair('affirmation_small'.tr, value);
     } else if (meditationProgress != null) {
       value = createMinutesStringFromSeconds(meditationProgress.seconds);
-      return ProgressPair('meditation_small'.tr(), value);
+      return ProgressPair('meditation_small'.tr, value);
     } else if (visualizationProgress != null) {
       value = createMinutesStringFromSeconds(visualizationProgress.seconds);
       value = value + ", " + visualizationProgress.text;
-      return ProgressPair('visualization_small'.tr(), value);
+      return ProgressPair('visualization_small'.tr, value);
     } else if (fitnessProgress != null) {
       value = createMinutesStringFromSeconds(fitnessProgress.seconds);
       value = value + ", " + fitnessProgress.exercise;
-      return ProgressPair('fitness_small'.tr(), value);
+      return ProgressPair('fitness_small'.tr, value);
     } else if (readingProgress != null) {
       value = readingProgress.book;
       value = value + ", " + readingProgress.pages.toString();
-      return ProgressPair('reading_small'.tr(), value);
+      return ProgressPair('reading_small'.tr, value);
     } else if (vocabularyNoteProgress != null) {
       value = vocabularyNoteProgress.note;
-      return ProgressPair('diary_small'.tr(), value);
+      return ProgressPair('diary_small'.tr, value);
     } else if (vocabularyRecordProgress != null) {
       return ProgressPairRecord(
-          'diary_small'.tr(), vocabularyRecordProgress.path);
+          'diary_small'.tr, vocabularyRecordProgress.path);
     }
   }
 
@@ -958,13 +958,13 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
     if (minutes > 0) {
       result = minutes.toString() +
           " " +
-          'min'.tr() +
+          'min'.tr +
           " " +
           seconds.toString() +
           " " +
-          'sec'.tr();
+          'sec'.tr;
     } else {
-      result = sec.toString() + " " + 'sec'.tr();
+      result = sec.toString() + " " + 'sec'.tr;
     }
 
     return result;
@@ -1004,10 +1004,10 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           context: widgetContext,
           builder: (_context) {
             return CupertinoAlertDialog(
-              title: Text('rate_app_title'.tr()),
+              title: Text('rate_app_title'.tr),
               content: Column(
                 children: [
-                  Text('rate_app_description'.tr()),
+                  Text('rate_app_description'.tr),
                   SmoothStarRating(
                     allowHalfRating: false,
                     onRated: (rating) {
@@ -1025,7 +1025,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
               actions: [
                 CupertinoDialogAction(
                   child: Text(
-                    'action_remind'.tr(),
+                    'action_remind'.tr,
                     style: TextStyle(fontFamily: 'sans-serif'),
                   ),
                   isDestructiveAction: true,
@@ -1036,7 +1036,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 ),
                 CupertinoDialogAction(
                   child: Text(
-                    'action_rate'.tr(),
+                    'action_rate'.tr,
                     style:
                         TextStyle(fontFamily: 'sans-serif-black', fontSize: 16),
                   ),
@@ -1045,7 +1045,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                     if (appRating < 5) {
                       MyDB().getBox().put(MyResource.IS_RATED, true);
                       openEmail(
-                          'wonderfulmorningnow@gmail.com', 'rate_subject'.tr());
+                          'wonderfulmorningnow@gmail.com', 'rate_subject'.tr);
                     } else {
                       MyDB().getBox().put(MyResource.IS_RATED, true);
                       rateMyApp.launchStore();
@@ -1068,10 +1068,10 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           builder: (context) {
             return AlertDialog(
               scrollable: true,
-              title: Text('rate_app_title'.tr()),
+              title: Text('rate_app_title'.tr),
               content: Column(
                 children: [
-                  Text('rate_app_description'.tr()),
+                  Text('rate_app_description'.tr),
                   SizedBox(
                     height: 30,
                   ),
@@ -1092,7 +1092,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
               actions: [
                 FlatButton(
                   child: Text(
-                    'action_remind'.tr(),
+                    'action_remind'.tr,
                     style:
                         TextStyle(color: Colors.red, fontFamily: 'sans-serif'),
                   ),
@@ -1103,7 +1103,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 ),
                 FlatButton(
                   child: Text(
-                    'action_rate'.tr(),
+                    'action_rate'.tr,
                     style:
                         TextStyle(fontFamily: 'sans-serif-black', fontSize: 16),
                   ),
@@ -1111,7 +1111,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                     if (appRating < 5) {
                       MyDB().getBox().put(MyResource.IS_RATED, true);
                       openEmail(
-                          'wonderfulmorningnow@gmail.com', 'rate_subject'.tr());
+                          'wonderfulmorningnow@gmail.com', 'rate_subject'.tr);
                     } else {
                       MyDB().getBox().put(MyResource.IS_RATED, true);
                       rateMyApp.launchStore();
@@ -1139,7 +1139,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'your_name'.tr(),
+          'your_name'.tr,
         ),
         content: TextField(
           autofocus: true,
@@ -1154,13 +1154,13 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
         actions: [
           FlatButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('cancellation'.tr()),
+            child: Text('cancellation'.tr),
           ),
           FlatButton(
             onPressed: () {
               Navigator.pop(context, nameController.text);
             },
-            child: Text('save'.tr()),
+            child: Text('save'.tr),
           )
         ],
       ),
@@ -1209,19 +1209,19 @@ class VerticalBarLabelChart extends StatelessWidget {
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final data = [
       new OrdinalSales(
-          'monday_short'.tr(), MyDB().getBox().get(MyResource.MONDAY)),
+          'monday_short'.tr, MyDB().getBox().get(MyResource.MONDAY)),
       new OrdinalSales(
-          'tuesday_short'.tr(), MyDB().getBox().get(MyResource.TUESDAY)),
+          'tuesday_short'.tr, MyDB().getBox().get(MyResource.TUESDAY)),
       new OrdinalSales(
-          'wednesday_short'.tr(), MyDB().getBox().get(MyResource.WEDNESDAY)),
+          'wednesday_short'.tr, MyDB().getBox().get(MyResource.WEDNESDAY)),
       new OrdinalSales(
-          'thursday_short'.tr(), MyDB().getBox().get(MyResource.THUSDAY)),
+          'thursday_short'.tr, MyDB().getBox().get(MyResource.THUSDAY)),
       new OrdinalSales(
-          'friday_short'.tr(), MyDB().getBox().get(MyResource.FRIDAY)),
+          'friday_short'.tr, MyDB().getBox().get(MyResource.FRIDAY)),
       new OrdinalSales(
-          'saturday_short'.tr(), MyDB().getBox().get(MyResource.SATURDAY)),
+          'saturday_short'.tr, MyDB().getBox().get(MyResource.SATURDAY)),
       new OrdinalSales(
-          'sunday_short'.tr(), MyDB().getBox().get(MyResource.SUNDAY)),
+          'sunday_short'.tr, MyDB().getBox().get(MyResource.SUNDAY)),
     ];
 
     return [

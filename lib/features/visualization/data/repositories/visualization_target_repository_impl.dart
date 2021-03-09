@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
@@ -40,26 +40,26 @@ class VisualizationTargetRepositoryImpl
       VisualizationTarget(
           id: 0,
           tag: EnumToString.convertToString(VisualizationImageTag.success),
-          title: 'success_target'.tr(),
+          title: 'success_target'.tr,
           coverAssetPath: 'assets/images/targets/success.png'),
       VisualizationTarget(
           id: 1,
           tag: EnumToString.convertToString(VisualizationImageTag.family),
-          title: 'family_target'.tr(),
+          title: 'family_target'.tr,
           coverAssetPath: 'assets/images/targets/family.png'),
       VisualizationTarget(
           id: 2,
-          title: 'nature_target'.tr(),
+          title: 'nature_target'.tr,
           tag: EnumToString.convertToString(VisualizationImageTag.nature),
           coverAssetPath: 'assets/images/targets/nature.png'),
       VisualizationTarget(
           id: 3,
-          title: 'rest_target'.tr(),
+          title: 'rest_target'.tr,
           tag: EnumToString.convertToString(VisualizationImageTag.rest),
           coverAssetPath: 'assets/images/targets/rest.png'),
       VisualizationTarget(
           id: 4,
-          title: 'sport_target'.tr(),
+          title: 'sport_target'.tr,
           tag: EnumToString.convertToString(VisualizationImageTag.sport),
           coverAssetPath: 'assets/images/targets/sport.png'),
     ];

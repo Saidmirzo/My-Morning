@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
@@ -44,7 +44,7 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
                   Container(
                     padding: EdgeInsets.only(bottom: 35),
                     child: Text(
-                      'fitness'.tr(),
+                      'fitness'.tr,
                       style: TextStyle(
                         fontSize: 32,
                         fontStyle: FontStyle.normal,
@@ -54,7 +54,7 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
                     ),
                   ),
                   Text(
-                    'fitness_title'.tr(),
+                    'fitness_title'.tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 19,
@@ -70,7 +70,7 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
                 child: AnimatedButton(() {
                   Navigator.push( context, MaterialPageRoute( builder: (context) => FitnessMainPage(pageId: widget.pageId))); },
                   'rex',
-                  'next_button'.tr(),
+                  'next_button'.tr,
                   22,
                   null,
                   null

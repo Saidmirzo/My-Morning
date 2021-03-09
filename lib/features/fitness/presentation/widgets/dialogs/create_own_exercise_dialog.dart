@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -31,11 +31,11 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
               Row(
                 children: [
                   DialogHeaderButton(
-                      text: 'back_button'.tr(),
+                      text: 'back_button'.tr,
                       onTap: () => Navigator.pop(context)),
                   Spacer(),
                   DialogHeaderButton(
-                    text: 'save'.tr(),
+                    text: 'save'.tr,
                     onTap: () => saveExercise(context),
                   ),
                 ],
@@ -46,7 +46,7 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
               TextFormField(
                 textInputAction: TextInputAction.next,
                 validator: (value) {
-                  if (value.isEmpty) return 'name_not_be_empty'.tr();
+                  if (value.isEmpty) return 'name_not_be_empty'.tr;
                   return null;
                 },
                 controller: _nameTextController,
@@ -65,7 +65,7 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
                     onPressed: () => _nameTextController.text = '',
                   ),
                   border: OutlineInputBorder(),
-                  hintText: 'type_exercise_name'.tr(),
+                  hintText: 'type_exercise_name'.tr,
                 ),
                 autofocus: true,
               ),
@@ -89,7 +89,7 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
                     onPressed: () => _descriptionController.text = '',
                   ),
                   border: OutlineInputBorder(),
-                  hintText: 'type_exercise_description'.tr(),
+                  hintText: 'type_exercise_description'.tr,
                 ),
               )
             ],

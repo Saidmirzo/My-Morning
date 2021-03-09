@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:just_audio/just_audio.dart';
@@ -52,7 +52,7 @@ class _TutorialPageState extends State<TutorialPage> {
 
   void playTutorial() {
     Future.delayed(Duration(milliseconds: 200), () {
-      player.setAsset('tutorial_asset'.tr());
+      player.setAsset('tutorial_asset'.tr);
       player.play();
     });
 
@@ -194,7 +194,7 @@ class _TutorialPageState extends State<TutorialPage> {
                   });
                 },
                 child: Text(
-                  'tutorial_text'.tr(),
+                  'tutorial_text'.tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -217,7 +217,7 @@ class _TutorialPageState extends State<TutorialPage> {
                   });
                 },
                 child: Text(
-                  'meditation_small'.tr(),
+                  'meditation_small'.tr,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
@@ -256,7 +256,7 @@ class _TutorialPageState extends State<TutorialPage> {
                   });
                 },
                 child: Text(
-                  'affirmation_small'.tr(),
+                  'affirmation_small'.tr,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
@@ -296,7 +296,7 @@ class _TutorialPageState extends State<TutorialPage> {
                   });
                 },
                 child: Text(
-                  'visualization_small'.tr(),
+                  'visualization_small'.tr,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
@@ -336,7 +336,7 @@ class _TutorialPageState extends State<TutorialPage> {
                   });
                 },
                 child: Text(
-                  'fitness_small'.tr(),
+                  'fitness_small'.tr,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
@@ -376,7 +376,7 @@ class _TutorialPageState extends State<TutorialPage> {
                   });
                 },
                 child: Text(
-                  'reading_small'.tr(),
+                  'reading_small'.tr,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
@@ -416,7 +416,7 @@ class _TutorialPageState extends State<TutorialPage> {
                   });
                 },
                 child: Text(
-                  'diary_small'.tr(),
+                  'diary_small'.tr,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,

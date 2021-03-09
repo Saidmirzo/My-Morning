@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -72,7 +72,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                       top: MediaQuery.of(context).size.height /
                                           3),
                                   child: Text(
-                                    'your_name'.tr(),
+                                    'your_name'.tr,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 22,
@@ -94,7 +94,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                         controller: myController,
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'name'.tr();
+                                            return 'name'.tr;
                                           }
                                           return null;
                                         },
@@ -132,7 +132,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                         builder: (context) => TutorialPage()),
                                   );
                                 }
-                              }, 'sans-serif', 'next_button'.tr(), null, null,
+                              }, 'sans-serif', 'next_button'.tr, null, null,
                                   null),
                             ),
                           ),

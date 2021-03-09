@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
@@ -65,7 +65,7 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
                   Container(
                     padding: EdgeInsets.only(bottom: 35),
                     child: Text(
-                      widget.title.tr(),
+                      widget.title.tr,
                       style: TextStyle(
                         fontSize: 32,
                         fontFamily: "rex",
@@ -75,7 +75,7 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
                     ),
                   ),
                   Text(
-                    widget.desc.tr(),
+                    widget.desc.tr,
                     style: TextStyle(
                       fontSize: 19,
                       fontFamily: "JMH",
@@ -98,7 +98,7 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
                         MaterialPageRoute(
                             builder: (context) =>
                                 TimerPage(pageId: widget.pageId ?? 5)));
-                  }, 'rex', 'next_button'.tr(), null, null, null),
+                  }, 'rex', 'next_button'.tr, null, null, null),
                 ),
               )
             ],

@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -154,7 +154,7 @@ class PlayerColumnState extends State<PlayerColumn> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(38.0)),
               child: Text(
-                'continue'.tr(),
+                'continue'.tr,
                 style: TextStyle(
                   color: AppColors.WHITE,
                   fontStyle: FontStyle.normal,

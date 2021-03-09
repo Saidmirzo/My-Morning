@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
@@ -116,7 +116,7 @@ class NoteScreenState extends State<NoteScreen> {
                               top: MediaQuery.of(context).size.width / 2.3,
                               bottom: MediaQuery.of(context).size.width / 7),
                           child: Text(
-                            'note'.tr(),
+                            'note'.tr,
                             style: TextStyle(
                               fontSize: 32,
                               fontStyle: FontStyle.normal,
@@ -176,7 +176,7 @@ class NoteScreenState extends State<NoteScreen> {
                                                   .time,
                                               false)));
                             });
-                          }, 'rex', 'next_button'.tr(), 22, null, null),
+                          }, 'rex', 'next_button'.tr, 22, null, null),
                         ),
                       ],
                     ),
