@@ -221,7 +221,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
   _showDialogRemoveImageSelection(int index) {
     Get.dialog(
       AlertDialog(
-        title: Text("Отменить выбор?"),
+        title: Text("Удалить изображение?"),
         // content: Text(""),
         actions: <Widget>[
           FlatButton(
@@ -231,7 +231,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
             },
           ),
           FlatButton(
-            child: Text("Продолжить"),
+            child: Text("Удалить"),
             onPressed: () {
               _controller.removePickedImage(index);
               Get.back();

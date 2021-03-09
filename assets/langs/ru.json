@@ -325,6 +325,11 @@
   "my_progress": "МОЙ ПРОГРЕСС",
   "exercise_complete": "Упражнение завершено",
   "affirmation_timer": "Аффирмации",
-  "audio_loading": "Аудио загружается..."
+  "success_target": "Успех",
+  "family_target": "Семья",
+  "nature_target": "Природа",
+  "rest_target": "Отдых",
+  "sport_target": "Спорт"
+
 
 }

@@ -329,5 +329,10 @@
   "my_progress": "MY PROGRESS",
   "exercise_complete": "Exercise complete",
   "affirmation_timer": "Affirmations",
-  "audio_loading": "Audio is loading..."
+  "audio_loading": "Audio is loading...",
+  "success_target": "Success",
+  "family_target": "Family",
+  "nature_target": "Nature",
+  "rest_target": "Rest",
+  "sport_target": "Sport"
 }
