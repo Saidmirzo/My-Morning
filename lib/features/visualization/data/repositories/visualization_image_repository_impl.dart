@@ -85,12 +85,18 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
     firebase_storage.ListResult result = await ref.listAll();
 
     await Future.forEach(result.items, (firebase_storage.Reference ref) async {
-      var _file = await FirebaseCacheManager().getSingleFile(
-          '/$FIRE_STORE_DATABASE_REF/$imageTag/${ref.name}',
-          key: ref.name);
-      print(ref.name);
-      _result.add(VisualizationFileSystemImage(
-          path: _file.path, file: _file, isDefault: true));
+      var _fileInfo = await FirebaseCacheManager().getFileFromCache(ref.name);
+
+      if (_fileInfo == null) {
+        final _url = await ref.getDownloadURL();
+        _result.add(VisualizationNetworkImage(path: _url, isDefault: true));
+        FirebaseCacheManager().downloadFile(
+            '/$FIRE_STORE_DATABASE_REF/$imageTag/${ref.name}',
+            key: ref.name);
+      } else {
+        _result.add(VisualizationFileSystemImage(
+            path: _fileInfo.file.path, file: _fileInfo.file, isDefault: true));
+      }
     });
 
     return Future.value(_result);

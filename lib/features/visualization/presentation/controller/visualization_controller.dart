@@ -136,6 +136,7 @@ class VisualizationController extends GetxController {
   }
 
   Future loadImages(String tag, int targetId) async {
+
     _setDownloading(true);
 
     _currentImageIndex.value = 0;
