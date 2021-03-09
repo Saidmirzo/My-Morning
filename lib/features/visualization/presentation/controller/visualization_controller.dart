@@ -210,6 +210,13 @@ class VisualizationController extends GetxController {
         predicate: ModalRoute.withName(homePageRoute));
   }
 
+  void removePickedImage(int index) async {
+    final image = images[index];
+    await imageRepository.removeCachedPickedImage(image);
+    images.remove(image);
+    selectedImageIndexes.remove(index);
+  }
+
   setCurrentImageIndex(int value) => _currentImageIndex.value = value;
 
   Future _initializeTargets() async {
@@ -336,7 +343,10 @@ class VisualizationController extends GetxController {
     for (Asset asset in assetImages) {
       final _byteData = await asset.getByteData();
       final _galleryImage = VisualizationGalleryImage(
-          path: asset.identifier, pickedAsset: asset, byteData: _byteData);
+          path: asset.identifier,
+          pickedAsset: asset,
+          byteData: _byteData,
+          isDefault: false);
       _visualizationImagesFromGallery.add(_galleryImage);
     }
 

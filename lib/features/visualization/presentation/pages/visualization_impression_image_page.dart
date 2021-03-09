@@ -81,9 +81,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
           gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
           itemBuilder: (context, index) => GestureDetector(
-            onTap: () => _controller.isImageSelected(index)
-                ? _showDialogRemoveImageSelection(index)
-                : _controller.toggleImageSelected(index),
+            onTap: () => _controller.toggleImageSelected(index),
             child: Obx(() => Container(
                   margin: EdgeInsets.all(2),
                   decoration: BoxDecoration(
@@ -100,11 +98,13 @@ class VisualizationImpressionImagePage extends StatelessWidget {
                       ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                           child: _buildImage(index)),
-                      if (_controller.selectedImageIndexes.contains(index))
+                      if (!_controller.images[index].isDefault &&
+                          _controller.selectedImageIndexes.contains(index))
                         Align(
                           alignment: Alignment.topRight,
                           child: InkWell(
                             onTap: () => _showDialogRemoveImageSelection(index),
+                            // onTap: () => _controller.toggleImageSelected(index),
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: SvgPicture.asset(
@@ -220,7 +220,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
           FlatButton(
             child: Text("Продолжить"),
             onPressed: () {
-              _controller.toggleImageSelected(index);
+              _controller.removePickedImage(index);
               Get.back();
             },
           )

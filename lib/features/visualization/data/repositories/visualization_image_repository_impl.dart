@@ -63,6 +63,19 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
     }
   }
 
+  @override
+  Future<void> removeCachedPickedImage(VisualizationImage image) async {
+    if (!image.isDefault) {
+      try {
+        if (image is VisualizationFileSystemImage) {
+          await image.file.delete();
+        }
+      } on Exception catch (e) {
+        print(e);
+      }
+    }
+  }
+
   Future<List<VisualizationImage>> _getDefaultImages(String imageTag) async {
     List<VisualizationImage> _result = [];
 
@@ -76,7 +89,8 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
           '/$FIRE_STORE_DATABASE_REF/$imageTag/${ref.name}',
           key: ref.name);
       print(ref.name);
-      _result.add(VisualizationFileSystemImage(path: _file.path, file: _file));
+      _result.add(VisualizationFileSystemImage(
+          path: _file.path, file: _file, isDefault: true));
     });
 
     return Future.value(_result);
@@ -93,7 +107,7 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
     List<VisualizationImage> _imagesFromTempDirectory = _imagesCacheDirectory
         .listSync()
         .map((file) => VisualizationFileSystemImage(
-            path: file.path, file: File(file.path)))
+            path: file.path, file: File(file.path), isDefault: false))
         .toList();
 
     _result.addAll(_imagesFromTempDirectory);

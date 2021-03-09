@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
@@ -5,15 +7,17 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 
 abstract class VisualizationImage extends Equatable {
   final String path;
+  final bool isDefault;
 
-  VisualizationImage({@required this.path});
+  VisualizationImage({@required this.path, this.isDefault});
 }
 
 class VisualizationAssetImage extends VisualizationImage {
-  VisualizationAssetImage({@required String path}) : super(path: path);
+  VisualizationAssetImage({@required String path, @required isDefault})
+      : super(path: path, isDefault: isDefault);
 
   @override
-  List<Object> get props => [path];
+  List<Object> get props => [path, isDefault];
 }
 
 class VisualizationGalleryImage extends VisualizationImage {
@@ -23,27 +27,29 @@ class VisualizationGalleryImage extends VisualizationImage {
   VisualizationGalleryImage(
       {@required String path,
       @required this.pickedAsset,
-      @required this.byteData})
-      : super(path: path);
+      @required this.byteData,
+      @required isDefault})
+      : super(path: path, isDefault: isDefault);
 
   @override
-  List<Object> get props => [path, pickedAsset, byteData];
+  List<Object> get props => [path, pickedAsset, byteData, isDefault];
 }
 
 class VisualizationFileSystemImage extends VisualizationImage {
-  final file;
+  final File file;
 
-  VisualizationFileSystemImage({@required String path, @required this.file})
-      : super(path: path);
+  VisualizationFileSystemImage(
+      {@required String path, @required this.file, @required isDefault})
+      : super(path: path, isDefault: isDefault);
 
   @override
-  List<Object> get props => [path, file];
+  List<Object> get props => [path, file, isDefault];
 }
 
 class VisualizationNetworkImage extends VisualizationImage {
-  VisualizationNetworkImage({@required String path})
-      : super(path: path);
+  VisualizationNetworkImage({@required String path, @required isDefault})
+      : super(path: path, isDefault: isDefault);
 
   @override
-  List<Object> get props => [path];
+  List<Object> get props => [path, isDefault];
 }
