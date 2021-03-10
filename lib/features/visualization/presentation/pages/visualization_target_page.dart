@@ -6,6 +6,7 @@ import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.d
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_impression_image_page.dart';
+import 'package:morningmagic/features/visualization/presentation/widgets/back_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/dialogs/add_new_target_dialog.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/visualization_target_item.dart';
@@ -23,33 +24,40 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        _buildSelectTargetTitle(context),
-        Expanded(
-          child: Stack(
-            children: [
-              Obx(
-                () => ListView.builder(
-                  itemCount: _controller.targets.length,
-                  itemBuilder: (context, index) {
-                    final _target = _controller.targets[index];
-                    return VisualizationTargetItem(
-                      target: _controller.targets[index],
-                      onCardTapped: () => _openImpressionSelection(_target),
-                      onRemoveCardTapped: () =>
-                          _showDialogRemoveTarget(_target.id),
-                      onEditCardTapped: () =>
-                          _showEditTargetDialog(context, _target.id),
-                    );
-                  },
-                  padding: EdgeInsets.only(top: 16, bottom: 108),
-                ),
+      body: Stack(
+        children: [
+          Column(children: [
+            _buildSelectTargetTitle(context),
+            Expanded(
+              child: Stack(
+                children: [
+                  Obx(
+                    () => ListView.builder(
+                      itemCount: _controller.targets.length,
+                      itemBuilder: (context, index) {
+                        final _target = _controller.targets[index];
+                        return VisualizationTargetItem(
+                          target: _controller.targets[index],
+                          onCardTapped: () => _openImpressionSelection(_target),
+                          onRemoveCardTapped: () =>
+                              _showDialogRemoveTarget(_target.id),
+                          onEditCardTapped: () =>
+                              _showEditTargetDialog(context, _target.id),
+                        );
+                      },
+                      padding: EdgeInsets.only(top: 16, bottom: 108),
+                    ),
+                  ),
+                  _buildAddButton(),
+                ],
               ),
-              _buildAddButton(),
-            ],
+            ),
+          ]),
+          VisualizationBackButton(
+            color: AppColors.VIOLET,
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 

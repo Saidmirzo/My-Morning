@@ -344,7 +344,6 @@ class SettingsPageState extends State<SettingsPage> {
       needReInit);
 
   void _init() {
-    initTimerValue();
     initTextEditingControllers();
     addListenersToEditText();
   }
@@ -359,27 +358,6 @@ class SettingsPageState extends State<SettingsPage> {
           activityList = buildActivityList(true);
         });
     });
-  }
-
-  void initTimerValue() {
-    if (MyDB().getBox().get(MyResource.AFFIRMATION_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(3));
-    }
-    if (MyDB().getBox().get(MyResource.MEDITATION_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(3));
-    }
-    if (MyDB().getBox().get(MyResource.FITNESS_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.FITNESS_TIME_KEY, ExerciseTime(3));
-    }
-    if (MyDB().getBox().get(MyResource.VOCABULARY_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.VOCABULARY_TIME_KEY, ExerciseTime(3));
-    }
-    if (MyDB().getBox().get(MyResource.READING_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(3));
-    }
-    if (MyDB().getBox().get(MyResource.VISUALIZATION_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(3));
-    }
   }
 
   void _initOpenDialog() async {

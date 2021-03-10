@@ -1,18 +1,17 @@
 import 'dart:developer';
 
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/analyticService.dart';
-import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
-import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
+import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 import 'package:screen/screen.dart';
 
 import '../resources/colors.dart';
@@ -79,7 +78,7 @@ class TimerPageState extends State<TimerPage> {
       initialPosition: Duration.zero,
     );
 
-    await _audioPlayer.setLoopMode(LoopMode.all);
+    await _audioPlayer.setLoopMode(LoopMode.one);
     _audioPlayer.play();
   }
 
@@ -263,7 +262,6 @@ class TimerPageState extends State<TimerPage> {
       ],
     );
   }
-
 
   Widget _buildTitleWidget() {
     return Column(

@@ -17,7 +17,7 @@ Future<void> main() async {
       initialRoute: AppRouting.initialRoute,
       onGenerateRoute: (settings) => AppRouting.generateRoute(settings),
       translations: Messages(),
-      locale: Locale('ru'),
+      locale: Get.deviceLocale,
       supportedLocales: [
         Locale('en'),
         Locale('ru'),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
+import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/routing/route_values.dart';
 
 import '../db/hive.dart';
@@ -32,7 +33,7 @@ class LoadingPageState extends State<LoadingPage>
     super.initState();
     print('LoadingPage initState');
     initController();
-
+    _initTimerValue();
     billingService.init();
     initRedirect();
   }
@@ -235,4 +236,26 @@ class LoadingPageState extends State<LoadingPage>
       chooseNavigationRoute(),
     );
   }
+
+  void _initTimerValue() {
+    if (MyDB().getBox().get(MyResource.AFFIRMATION_TIME_KEY) == null) {
+      MyDB().getBox().put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(3));
+    }
+    if (MyDB().getBox().get(MyResource.MEDITATION_TIME_KEY) == null) {
+      MyDB().getBox().put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(3));
+    }
+    if (MyDB().getBox().get(MyResource.FITNESS_TIME_KEY) == null) {
+      MyDB().getBox().put(MyResource.FITNESS_TIME_KEY, ExerciseTime(3));
+    }
+    if (MyDB().getBox().get(MyResource.VOCABULARY_TIME_KEY) == null) {
+      MyDB().getBox().put(MyResource.VOCABULARY_TIME_KEY, ExerciseTime(3));
+    }
+    if (MyDB().getBox().get(MyResource.READING_TIME_KEY) == null) {
+      MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(3));
+    }
+    if (MyDB().getBox().get(MyResource.VISUALIZATION_TIME_KEY) == null) {
+      MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(3));
+    }
+  }
+
 }

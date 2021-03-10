@@ -7,9 +7,10 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_full_screen_page.dart';
-import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
+import 'package:morningmagic/features/visualization/presentation/widgets/back_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/routes/scale_route.dart';
+import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 
 class VisualizationTimerPage extends StatefulWidget {
   @override
@@ -56,7 +57,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
               ),
             ),
           ),
-          _buildBackButton(context),
+          VisualizationBackButton(),
         ],
       ),
     );
@@ -138,19 +139,6 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
         ),
         borderColor: Colors.white,
       ),
-    );
-  }
-
-  Padding _buildBackButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 24.0),
-      child: IconButton(
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            size: 36,
-            color: Colors.white,
-          ),
-          onPressed: () => Navigator.pop(context)),
     );
   }
 

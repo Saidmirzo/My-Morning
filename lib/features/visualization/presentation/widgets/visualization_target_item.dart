@@ -1,6 +1,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/domain/entities/image_tag.dart';
@@ -90,7 +91,9 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
                   width: 16,
                 ),
                 StyledText(
-                  widget.target.title,
+                  (widget.target.isCustom)
+                      ? widget.target.title
+                      : (widget.target.title).tr,
                   color: AppColors.WHITE,
                   fontSize: 28,
                 ),
@@ -107,13 +110,14 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
                               'assets/images/remove_target.svg'),
                         ),
                       ),
-                    IconButton(
-                        padding: EdgeInsets.all(0),
-                        icon: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
-                        onPressed: widget.onEditCardTapped)
+                    if (widget.target.isCustom)
+                      IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                          onPressed: widget.onEditCardTapped)
                   ],
                 ),
               ],

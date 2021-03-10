@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
@@ -237,7 +237,7 @@ class TimerService {
           return TimerInputSuccessScreen(
               minutes: MyDB().getBox().get(getBoxTimeKey(4)).time);
         return TimerSuccessScreen(() => Navigator.push(context, value),
-            MyDB().getBox().get(getBoxTimeKey(pageId)).time, false);
+            MyDB().getBox().get(getBoxTimeKey(pageId)).time ?? 3, false);
       },
     ));
   }
