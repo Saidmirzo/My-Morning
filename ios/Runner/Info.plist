@@ -40,6 +40,8 @@
 	<string>Music!</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>The data is used exclusively for the user and is not passed on to third parties</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allows you to take a picture</string>
 	<key>NSContactsUsageDescription</key>
 	<string>User data is collected exclusively for the user and is not passed on to third parties.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -50,6 +52,8 @@
 	<string>microphone</string>
 	<key>NSMotionUsageDescription</key>
 	<string>The data is used exclusively for the user and is not passed on to third parties</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allows you to choose a picture</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>speech</string>
 	<key>UIBackgroundModes</key>
@@ -79,9 +83,5 @@
 	<true/>
 	<key>kTCCServiceMediaLibrary</key>
 	<string>media</string>
-	<key>NSCameraUsageDescription</key>
-    <string>Allows you to take a picture</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Allows you to choose a picture</string>
 </dict>
 </plist>
