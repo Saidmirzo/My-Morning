@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:morningmagic/features/visualization/presentation/widgets/circular_progress_bar_painter.dart';
+import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar_painter.dart';
 
-// TODO move to all widgets
 class CircularProgressBar extends StatelessWidget {
   final Color backgroundColor;
   final Color foregroundColor;

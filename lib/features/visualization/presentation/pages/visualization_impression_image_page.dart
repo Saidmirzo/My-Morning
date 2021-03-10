@@ -185,8 +185,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 48, bottom: 16.0),
       child: StyledText(
-        // todo translation
-        'Выбор образа',
+        'impression_selection'.tr,
         fontSize: 32,
         color: AppColors.VIOLET,
       ),
@@ -217,21 +216,20 @@ class VisualizationImpressionImagePage extends StatelessWidget {
     }
   }
 
-  // TODO transl
   _showDialogRemoveImageSelection(int index) {
     Get.dialog(
       AlertDialog(
-        title: Text("Удалить изображение?"),
+        title: Text('remove_image'.tr),
         // content: Text(""),
         actions: <Widget>[
           FlatButton(
-            child: Text("Отмена"),
+            child: Text('cancellation'.tr),
             onPressed: () {
               Get.back();
             },
           ),
           FlatButton(
-            child: Text("Удалить"),
+            child: Text('delete'.tr),
             onPressed: () {
               _controller.removePickedImage(index);
               Get.back();

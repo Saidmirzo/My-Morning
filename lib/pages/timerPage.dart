@@ -10,7 +10,7 @@ import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
-import 'package:morningmagic/features/visualization/presentation/widgets/circular_progress_bar.dart';
+import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:screen/screen.dart';
@@ -45,17 +45,12 @@ class TimerPageState extends State<TimerPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await timerService.init(this, context, widget.pageId, _audioPlayer);
-      if (widget.pageId == 0 && timerService.affirmationText != null)
-        titleText = timerService.affirmationText;
-      else if (widget.pageId == 5 && timerService.visualizationText != null)
+      if (widget.pageId == 5 && timerService.visualizationText != null)
         titleText = timerService.visualizationText;
     });
 
     // TODO make enum id for page
-    if (widget.pageId == 0) {
-      //affirmation page
-      AnalyticService.screenView('affirmation_timer_page');
-    } else if (widget.pageId == 1) {
+    if (widget.pageId == 1) {
       // meditation page
       initializeMeditationAudio();
       AnalyticService.screenView('meditation_timer_page');
@@ -141,15 +136,8 @@ class TimerPageState extends State<TimerPage> {
 
   Widget _buildTimerProgress(BuildContext context) {
     double _timerSize, _textSize;
-
-    if (widget.pageId == 0) {
-      //for affirmaiton
-      _timerSize = MediaQuery.of(context).size.width * 0.45;
-      _textSize = 40;
-    } else {
-      _timerSize = MediaQuery.of(context).size.width * 0.7;
-      _textSize = 55;
-    }
+    _timerSize = MediaQuery.of(context).size.width * 0.7;
+    _textSize = 55;
 
     return Padding(
       padding: const EdgeInsets.only(top: 54.0, bottom: 16),
@@ -269,18 +257,6 @@ class TimerPageState extends State<TimerPage> {
             timerService.goToHome();
           }, 'rex', 'menu'.tr, 15, null, null),
         ),
-        if (widget.pageId == 0)
-          Container(
-            padding: EdgeInsets.only(top: 10),
-            child: AnimatedButton(() async {
-              final _affirmation =
-                  await _showAffirmationCategoryDialog(context);
-              if (_affirmation != null)
-                setState(() {
-                  titleText = _affirmation;
-                });
-            }, 'rex', 'affirmation_timer'.tr, 15, null, null),
-          ),
         SizedBox(
           height: 8,
         ),
@@ -288,10 +264,6 @@ class TimerPageState extends State<TimerPage> {
     );
   }
 
-  Future<String> _showAffirmationCategoryDialog(BuildContext context) async {
-    return await showDialog(
-        context: context, builder:(context) => AffirmationCategoryDialog());
-  }
 
   Widget _buildTitleWidget() {
     return Column(

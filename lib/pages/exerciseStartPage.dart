@@ -1,7 +1,8 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
+import 'package:morningmagic/features/affirmation/presentation/affirmation_timer_page.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/data/repositories/audio_repository_impl.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
@@ -15,15 +16,13 @@ class ExerciseStartPage extends StatefulWidget {
   final int pageId;
   final String title;
   final String desc;
-  final Function btnNext;
 
-  const ExerciseStartPage(
-      {Key key,
-      @required this.pageId,
-      @required this.title,
-      @required this.desc,
-      @required this.btnNext})
-      : super(key: key);
+  const ExerciseStartPage({
+    Key key,
+    @required this.pageId,
+    @required this.title,
+    @required this.desc,
+  }) : super(key: key);
 
   @override
   State createState() => ExerciseStartPageState();
@@ -94,10 +93,14 @@ class ExerciseStartPageState extends State<ExerciseStartPage> {
                   height: 50.0,
                   child: AnimatedButton(() {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                TimerPage(pageId: widget.pageId ?? 5)));
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        if (widget.pageId == 0)
+                          return AffirmationTimerPage();
+                        else
+                          return TimerPage(pageId: widget.pageId ?? 5);
+                      }),
+                    );
                   }, 'rex', 'next_button'.tr, null, null, null),
                 ),
               )

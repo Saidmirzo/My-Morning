@@ -7,7 +7,7 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_full_screen_page.dart';
-import 'package:morningmagic/features/visualization/presentation/widgets/circular_progress_bar.dart';
+import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/routes/scale_route.dart';
 
@@ -23,11 +23,14 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
   void initState() {
     super.initState();
     _controller.setCurrentImageIndex(0);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.toggleStartPauseTimer();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO back button
     return Scaffold(
       body: Stack(
         children: [
@@ -41,9 +44,13 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   _buildTimerProgress(context),
-                  Expanded(
-                      child: SingleChildScrollView(
-                          child: _buildVisualizationText())),
+                  Flexible(
+                    child: ListView(
+                      padding: const EdgeInsets.all(16.0),
+                      shrinkWrap: true,
+                      children: [_buildVisualizationText()],
+                    ),
+                  ),
                   _buildButtonsRow(context),
                 ],
               ),
@@ -90,14 +97,11 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
   }
 
   Widget _buildVisualizationText() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: StyledText(
-        _controller.getVisualizationText(),
-        fontSize: 24,
-        color: Colors.white,
-        textAlign: TextAlign.center,
-      ),
+    return StyledText(
+      _controller.getVisualizationText(),
+      fontSize: 24,
+      color: Colors.white,
+      textAlign: TextAlign.center,
     );
   }
 

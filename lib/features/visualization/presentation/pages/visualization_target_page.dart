@@ -77,8 +77,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 48, bottom: 16.0),
       child: StyledText(
-        // todo
-        'Выбор цели',
+        'target_selection'.tr,
         fontSize: 32,
         color: AppColors.VIOLET,
       ),
@@ -114,21 +113,20 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
     );
   }
 
-  // TODO tr
   _showDialogRemoveTarget(int targetId) {
     Get.dialog(
       AlertDialog(
-        title: Text("Удалить созданную цель?"),
+        title: Text('remove_created_target'.tr),
         // content: Text(""),
         actions: <Widget>[
           FlatButton(
-            child: Text("Отмена"),
+            child: Text('cancellation'.tr),
             onPressed: () {
               Get.back();
             },
           ),
           FlatButton(
-            child: Text("Удалить"),
+            child: Text('delete'.tr),
             onPressed: () {
               _controller.removeTarget(targetId);
               Get.back();

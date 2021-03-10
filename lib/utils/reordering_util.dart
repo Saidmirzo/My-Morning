@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/features/affirmation/presentation/affirmation_timer_page.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
@@ -14,7 +15,6 @@ import '../pages/screenVocabulary.dart';
 import '../pages/timerPage.dart';
 import '../widgets/exerciseTile.dart';
 
-// TODO edit
 class OrderUtil {
   Future<OrderHolder> getOrderHolder() async {
     OrderHolder orderHolder;
@@ -78,7 +78,6 @@ class OrderUtil {
       print('!isPro && (id!=0 || id!=1)');
       return MaterialPageRoute(builder: (context) => PaywallPage());
     }
-
     if (id == 2)
       return MaterialPageRoute(
           builder: (context) => FitnessMainPage(pageId: id));
@@ -90,12 +89,20 @@ class OrderUtil {
     String expName = this.getExpirienceName(id);
     print('Exp name: $expName');
     return MaterialPageRoute(
-        builder: (context) => ExerciseStartPage(
-            pageId: id,
-            title: expName,
-            desc: '${expName}_title',
-            btnNext: () => MaterialPageRoute(
-                builder: (context) => TimerPage(pageId: id))));
+      builder: (context) => ExerciseStartPage(
+        pageId: id,
+        title: expName,
+        desc: '${expName}_title',
+        // btnNext: () => MaterialPageRoute(
+        //   builder: (context) {
+        //     if (id == 0)
+        //       return TimerPage(pageId: id);
+        //     else
+        //       return AffirmationTimerPage();
+        //   },
+        // ),
+      ),
+    );
   }
 
   getExpirienceName(int id) {

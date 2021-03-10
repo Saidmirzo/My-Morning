@@ -2,7 +2,6 @@ import 'dart:math' as Math;
 
 import 'package:flutter/material.dart';
 
-// TODO move to all widgets
 class CircularProgressBarPainter extends CustomPainter {
   final double percentage;
   final double strokeWidth;

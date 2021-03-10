@@ -36,7 +36,6 @@ class VisualizationTargetRepositoryImpl
 
   List<VisualizationTarget> _generateDefaultTargets() {
     return [
-      // TODO translations
       VisualizationTarget(
           id: 0,
           tag: EnumToString.convertToString(VisualizationImageTag.success),

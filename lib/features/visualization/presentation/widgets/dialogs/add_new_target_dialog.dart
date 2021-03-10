@@ -4,6 +4,7 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
+import 'package:get/get.dart';
 
 class AddNewTargetDialog extends StatefulWidget {
   final int targetId;
@@ -45,8 +46,7 @@ class _AddNewTargetDialogState extends State<AddNewTargetDialog> {
               controller: _textEditingController,
               textAlign: TextAlign.center,
               decoration: InputDecoration(
-                // TODO translation
-                labelText: 'название',
+                labelText: 'target_title'.tr,
               ),
               showCursor: true,
             ),
@@ -55,8 +55,7 @@ class _AddNewTargetDialogState extends State<AddNewTargetDialog> {
               ? _buildNotActiveAddButton(context)
               : _buildActiveAddButton(context),
           Text(
-            // TODO translation
-            'в поле опишите кратко  (в одно предложение) что будете визуализировать',
+            'target_short_desc'.tr,
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
