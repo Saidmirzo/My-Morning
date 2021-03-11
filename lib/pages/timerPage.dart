@@ -281,21 +281,26 @@ class TimerPageState extends State<TimerPage> {
     );
   }
 
-  void _next() async {
-    if (_audioPlayer.currentIndex >= _playList.length - 1) {
-      await _audioPlayer.seek(new Duration(seconds: 0), index: 0);
-    } else {
-      await _audioPlayer.seekToNext();
-    }
+  void _next() {
+    final _playListLength = _playList.length;
+    if (_playListLength == 0) return;
+    int _nextIndex = 0;
+    if (_audioPlayer.currentIndex + 1 >= _playListLength)
+      _nextIndex = 0;
+    else
+      _nextIndex = _audioPlayer.currentIndex + 1;
+    _audioPlayer.seek(Duration(seconds: 0), index: _nextIndex);
   }
 
-  void _prev() async {
-    if (_audioPlayer.currentIndex == 0) {
-      await _audioPlayer.seek(new Duration(seconds: 0),
-          index: _playList.length - 1);
-    } else {
-      await _audioPlayer.seekToPrevious();
-    }
+  void _prev() {
+    final _playListLength = _playList.length;
+    if (_playListLength == 0) return;
+    int _nextIndex = 0;
+    if (_audioPlayer.currentIndex == 0)
+      _nextIndex = _playListLength - 1;
+    else
+      _nextIndex = _audioPlayer.currentIndex - 1;
+    _audioPlayer.seek(Duration(seconds: 0), index: _nextIndex);
   }
 
   void _playOrPause() {
