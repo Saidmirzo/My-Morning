@@ -9,6 +9,7 @@ import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/routing/app_routing.dart';
+import 'package:morningmagic/services/admob.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../app_states.dart';
@@ -45,8 +46,7 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
-    // TODO revert
-    // admobService.initInterstitial();
+    admobService.initInterstitial();
     _init();
     _initOpenDialog();
     initPurchaseListener();

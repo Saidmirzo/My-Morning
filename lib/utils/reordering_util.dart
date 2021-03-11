@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/features/affirmation/presentation/affirmation_timer_page.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
@@ -12,7 +11,6 @@ import '../db/resource.dart';
 import '../pages/askedQuestionsScreen.dart';
 import '../pages/exerciseStartPage.dart';
 import '../pages/screenVocabulary.dart';
-import '../pages/timerPage.dart';
 import '../widgets/exerciseTile.dart';
 
 class OrderUtil {
@@ -40,13 +38,13 @@ class OrderUtil {
     OrderItem orderReading = new OrderItem(4);
     OrderItem orderVisualization = new OrderItem(5);
 
-    List<OrderItem> list = new List();
+    List<OrderItem> list = [];
     list.add(orderMeditation);
     list.add(orderAffirmation);
     list.add(orderFitness);
-    list.add(orderDiary);
-    list.add(orderReading);
     list.add(orderVisualization);
+    list.add(orderReading);
+    list.add(orderDiary);
 
     return new OrderHolder(list);
   }
@@ -93,14 +91,6 @@ class OrderUtil {
         pageId: id,
         title: expName,
         desc: '${expName}_title',
-        // btnNext: () => MaterialPageRoute(
-        //   builder: (context) {
-        //     if (id == 0)
-        //       return TimerPage(pageId: id);
-        //     else
-        //       return AffirmationTimerPage();
-        //   },
-        // ),
       ),
     );
   }
