@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/resources/localization_service.dart';
 import 'package:morningmagic/utils/shared_preferences.dart';
 
 class LanguageSwitcher extends StatefulWidget {
@@ -60,12 +61,12 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
                 ),
                 Container(
                   child: Switch(
-                      value: Get.locale.languageCode == 'ru' ? false : true,
+                      value: Get.locale.languageCode == LocalizationService.RU ? false : true,
                       inactiveThumbColor: AppColors.PINK,
                       inactiveTrackColor: AppColors.PINK,
                       activeColor: AppColors.BLUE,
                       activeTrackColor: AppColors.BLUE,
-                      onChanged: (bool value) => _switchLanguage()),
+                      onChanged: (bool value) => LocalizationService.switchLocale()),
                 ),
                 Container(
                   child: FutureBuilder(
@@ -90,14 +91,14 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
     );
   }
 
-  void _switchLanguage() {
-    final _currentLocale = Get.locale;
-    if (_currentLocale.languageCode == 'ru') {
-      Get.updateLocale(Locale('en'));
-    } else if (_currentLocale.languageCode == 'en') {
-      Get.updateLocale(Locale('ru'));
-    }
-  }
+  // void _switchLanguage() {
+  //   final _currentLocale = Get.locale;
+  //   if (_currentLocale.languageCode == 'ru') {
+  //     Get.updateLocale(Locale('en'));
+  //   } else if (_currentLocale.languageCode == 'en') {
+  //     Get.updateLocale(Locale('ru'));
+  //   }
+  // }
 
   Color chooseRusColor(bool value) {
     return value ? AppColors.TRANSPARENT_WHITE : AppColors.PINK;

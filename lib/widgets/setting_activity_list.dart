@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/model/reordering_program/order_item.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
@@ -30,7 +30,7 @@ class SettingsActivityList extends StatefulWidget {
 }
 
 class SettingsActivityListState extends State<SettingsActivityList> {
-  List<ExerciseTile> _itemRows = List();
+  List<ExerciseTile> _itemRows = [];
   bool hasReInit = false;
 
   @override

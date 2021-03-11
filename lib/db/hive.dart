@@ -87,7 +87,7 @@ class MyDB {
     return myDbBox;
   }
 
-  Future<void> clearWIthoutUserName() async {
+  Future<void> clearWithoutUserName() async {
     // var tutorial = await myDbBox.get(MyResource.TUTORIAL_VIEWED);
     // var user = await myDbBox.get(MyResource.USER_KEY);
     await myDbBox.put(MyResource.AFFIRMATION_PROGRESS, []);

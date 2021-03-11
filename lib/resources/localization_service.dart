@@ -1,9 +1,16 @@
-import 'package:get/get.dart';
+import 'dart:ui';
 
-class Messages extends Translations {
+import 'package:get/get.dart';
+import 'package:morningmagic/db/hive.dart';
+
+class LocalizationService extends Translations {
+  static const String LOCALIZATION_KEY = 'localization_key';
+  static const String RU = 'ru';
+  static const String EN = 'en';
+
   @override
   Map<String, Map<String, String>> get keys => {
-        'ru': {
+        RU: {
           "start": "Начать",
           "progress_item": "Прогресс",
           "settings": "Настройки",
@@ -434,7 +441,7 @@ class Messages extends Translations {
           "target_short_desc":
               "в поле опишите кратко (в одно предложение)  что будете визуализировать",
         },
-        'en': {
+        EN: {
           "start": "Start",
           "progress_item": "Progress",
           "settings": "Settings",
@@ -850,4 +857,25 @@ class Messages extends Translations {
               "in the field describe briefly (in one sentence) what you will visualize",
         }
       };
+
+  static Future<Locale> getInitialLocale() async {
+    String _langCode = await MyDB()
+        .getBox()
+        .get(LOCALIZATION_KEY, defaultValue: Get.deviceLocale.languageCode);
+    return Locale(_langCode);
+  }
+
+  static void switchLocale() {
+    final _currentLocale = Get.locale;
+
+    if (_currentLocale.languageCode == RU) {
+      final _newLocale = Locale(EN);
+      Get.updateLocale(_newLocale);
+      MyDB().getBox().put(LOCALIZATION_KEY, _newLocale.languageCode);
+    } else if (_currentLocale.languageCode == EN) {
+      final _newLocale = Locale(RU);
+      Get.updateLocale(_newLocale);
+      MyDB().getBox().put(LOCALIZATION_KEY, _newLocale.languageCode);
+    }
+  }
 }

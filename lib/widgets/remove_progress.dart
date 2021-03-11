@@ -1,6 +1,6 @@
-import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/deleteProgressDialog.dart';
 import 'package:morningmagic/routing/app_routing.dart';
@@ -20,7 +20,7 @@ class RemoveProgressState extends State<RemoveProgress> {
       showDialog(
           context: context,
           builder: (BuildContext context) => DeleteProgressDialog(() async {
-                await MyDB().clearWIthoutUserName();
+                await MyDB().clearWithoutUserName();
                 AppRouting.navigateToHomeWithClearHistory(context);
               }));
     }, 'sans-serif', 'remove_progress'.tr, 19, 100, FontWeight.normal);

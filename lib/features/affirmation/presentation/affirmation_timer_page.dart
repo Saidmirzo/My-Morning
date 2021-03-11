@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
-import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
+import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 import 'package:morningmagic/widgets/customText.dart';
 
 import '../../../analyticService.dart';
@@ -19,15 +19,18 @@ class AffirmationTimerPage extends StatefulWidget {
 
 class _AffirmationTimerPageState extends State<AffirmationTimerPage> {
   TimerService timerService = TimerService();
-  String titleText;
+  String titleText = '';
   bool isInitialized = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      //page id == 0 for affirmation
       await timerService.init(this, context, 0, null);
+      titleText = timerService.affirmationText;
+      if (titleText.isNotEmpty) {
+        setState(() {});
+      }
     });
     AnalyticService.screenView('affirmation_timer_page');
   }
@@ -53,7 +56,8 @@ class _AffirmationTimerPageState extends State<AffirmationTimerPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     _buildTimerProgress(context),
-                    if (titleText != null) Center(child: _buildTitleWidget()),
+                    if (titleText.isNotEmpty)
+                      Center(child: _buildTitleWidget()),
                     _buildMenuButtons(context),
                   ],
                 ),
