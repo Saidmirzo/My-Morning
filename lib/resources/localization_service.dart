@@ -231,6 +231,8 @@ class LocalizationService extends Translations {
           "pages_note": "страниц",
           "continue": "Продолжить",
           "stop": "Остановить",
+          "push_success": "Успешно!",
+          "action_completed": "действие завершено!",
           "timer_started": "Таймер\nзапущен",
           "appreciate":
               "Мы ценим Ваш уют и комфорт, и поэтому сделали  приложение платным. Чтобы вы могли не отвлекаться на рекламу.",
@@ -652,6 +654,8 @@ class LocalizationService extends Translations {
           "pages": "How many pages ?",
           "continue": "Continue",
           "stop": "Stop",
+          "push_success": "Successfully!",
+          "action_completed": "action completed!",
           "timer_started": "Timer\nstarted",
           "appreciate":
               "We appreciate your coziness and comfort, and therefore made the application paid. So that you can not be distracted by advertising.",

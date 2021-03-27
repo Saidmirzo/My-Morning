@@ -62,6 +62,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_audio_recorder (0.5.4):
     - Flutter
+  - flutter_local_notifications (0.0.1):
+    - Flutter
   - flutter_visualizers (0.0.1):
     - Flutter
   - FMDB (2.7.5):
@@ -145,6 +147,7 @@ DEPENDENCIES:
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
   - flutter_audio_recorder (from `.symlinks/plugins/flutter_audio_recorder/ios`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_visualizers (from `.symlinks/plugins/flutter_visualizers/ios`)
   - Google-Mobile-Ads-SDK (~> 7.69.0)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
@@ -200,6 +203,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_audio_recorder:
     :path: ".symlinks/plugins/flutter_audio_recorder/ios"
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_visualizers:
     :path: ".symlinks/plugins/flutter_visualizers/ios"
   just_audio:
@@ -243,6 +248,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: 5002b1895bfe74a5ce92ad54f966e6162d0da2e5
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_audio_recorder: eb998d4e75e59b39d9e3ca1818a5e0f3a82f5836
+  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_visualizers: 3060007b7bab3f435c5cefd2a5f7f77df960da5b
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110

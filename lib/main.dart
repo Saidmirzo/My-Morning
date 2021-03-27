@@ -6,11 +6,14 @@ import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/resources/localization_service.dart';
 import 'package:morningmagic/routing/app_routing.dart';
+import 'package:morningmagic/services/notifications.dart';
 
 Future<void> main() async {
+  // Для выполнение действия через N время на андроид
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await _initializeHiveStore();
+  pushNotifications = PushNotifications();
 
   final _initialLocale = await LocalizationService.getInitialLocale();
 

@@ -76,6 +76,10 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
   Widget build(BuildContext context) {
     log('Build askedQuestionScreen');
     rateApp(context);
+    // // TODO: только на время теста
+    // pushNotifications.sendNotificationWithSleep(
+    //     'Успешно', 'Тренировка закончена', 10,
+    //     channelId: PushNotifications.channelTreaning);
     return Scaffold(
       body: AppGradientContainer(
         child: SingleChildScrollView(

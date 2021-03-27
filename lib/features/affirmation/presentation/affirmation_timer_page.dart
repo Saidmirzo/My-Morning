@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
+import 'package:morningmagic/services/notifications.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
@@ -17,7 +18,8 @@ class AffirmationTimerPage extends StatefulWidget {
   _AffirmationTimerPageState createState() => _AffirmationTimerPageState();
 }
 
-class _AffirmationTimerPageState extends State<AffirmationTimerPage> {
+class _AffirmationTimerPageState extends State<AffirmationTimerPage>
+    with WidgetsBindingObserver {
   TimerService timerService = TimerService();
   String titleText = '';
   bool isInitialized = false;
@@ -25,6 +27,7 @@ class _AffirmationTimerPageState extends State<AffirmationTimerPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await timerService.init(this, context, 0, null);
       titleText = timerService.affirmationText;
@@ -144,6 +147,15 @@ class _AffirmationTimerPageState extends State<AffirmationTimerPage> {
         ),
       ],
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      timerService.onAppLeft();
+    } else if (state == AppLifecycleState.resumed) {
+      timerService.onAppResume();
+    }
   }
 
   @override

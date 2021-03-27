@@ -9,6 +9,7 @@ import 'package:morningmagic/analyticService.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
+import 'package:morningmagic/services/notifications.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
@@ -27,9 +28,8 @@ class TimerPage extends StatefulWidget {
   State createState() => TimerPageState();
 }
 
-class TimerPageState extends State<TimerPage> {
-  final _audioController = Get.find<MediationAudioController>();
-
+class TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
+  MediationAudioController _audioController = Get.find();
   TimerService timerService = TimerService();
   AudioPlayer _audioPlayer;
   String titleText;
@@ -38,8 +38,18 @@ class TimerPageState extends State<TimerPage> {
   int index = 0;
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      timerService.onAppLeft();
+    } else if (state == AppLifecycleState.resumed) {
+      timerService.onAppResume();
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _audioPlayer = _audioController.audioPlayer.value;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -84,6 +94,7 @@ class TimerPageState extends State<TimerPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('build timer page');
     if (!isInitialized) {
       isInitialized = true;
       timerService.buttonText = 'start'.tr;
@@ -310,6 +321,14 @@ class TimerPageState extends State<TimerPage> {
   @override
   void dispose() {
     super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    print('timerPage dispose');
     timerService.dispose();
+  }
+
+  @override
+  void deactivate() {
+    print('timerPage deactivate');
+    super.deactivate();
   }
 }

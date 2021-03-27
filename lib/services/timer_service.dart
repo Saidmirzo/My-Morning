@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:isolate';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
@@ -23,6 +26,8 @@ import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 
+import 'notifications.dart';
+
 // TODO rewrite
 class TimerService {
   BuildContext context;
@@ -37,6 +42,9 @@ class TimerService {
   String bookTitle;
   String buttonText;
   AppStates appStates = Get.put(AppStates());
+
+  DateTime appLeftTime;
+  int leftSecondsBeforePauseApp = 0;
 
   // TODO remove one of players
   AudioPlayer audioPlayer = AudioPlayer();
@@ -208,6 +216,7 @@ class TimerService {
           oneSec,
           (Timer timer) => state.setState(() {
                 if (time < 1) {
+                  print('timer_service: timer work done');
                   audioPlayer.setAsset("assets/audios/success.mp3");
                   audioPlayer.play();
                   _player?.stop();
@@ -227,6 +236,79 @@ class TimerService {
       state.setState(() {
         buttonText = 'start'.tr;
       });
+    }
+  }
+
+  void onAppLeft() async {
+    print('До завершения осталось ${time} c.');
+    leftSecondsBeforePauseApp = time;
+    // Уведомим о заверщении упражнения через N оставшихся секунд
+    if (time > 0 && timer.isActive) {
+      appLeftTime = DateTime.now();
+      pushNotifications.sendNotificationWithSleep(
+          'push_success'.tr, 'action_completed'.tr, time,
+          id: PushNotifications.pushIdTreaning);
+      if (GetPlatform.isAndroid) {
+        // На андроид пуш не показывает на заблокированном экране
+        // По этому запустим наш звук завершения, чтобы привлечь внимание
+        _startIsolate(time);
+      }
+    } else {
+      print('Пропускаем запуск изолятора т.к. таймер уже неактивен');
+    }
+  }
+
+  void onAppResume() async {
+    int val =
+        DateTime.now().difference(appLeftTime ?? DateTime.now()).inSeconds;
+    print('Разница: $val сек');
+    if (timer.isActive) time = leftSecondsBeforePauseApp - val;
+    pushNotifications.deleteNotification(PushNotifications.pushIdTreaning);
+    _stopIsolate();
+  }
+
+  Isolate _isolate;
+  ReceivePort _receivePort;
+
+  void _startIsolate(int tm) async {
+    print('Запускаем изолятор');
+    _receivePort = ReceivePort();
+    _isolate = await Isolate.spawn(
+        waitAndNotifyInBg, IsolateData(_receivePort.sendPort, tm));
+    _receivePort.listen(_isolateHandleMessage, onDone: () {
+      print('onDone');
+      // Проверка чтобы не срабатывало уведомление
+      // если мы вернулись до окончания таймера и отменили изолятор вручную
+      if (_isolate == null) notifyInBackground();
+    });
+  }
+
+  void notifyInBackground() {
+    print('notifyInBackground');
+    AudioPlayer audioPlayer = AudioPlayer();
+    audioPlayer.setAsset("assets/audios/success.mp3");
+    audioPlayer.play();
+    _player?.stop();
+  }
+
+  static void waitAndNotifyInBg(IsolateData data) async {
+    print('leftSecondsBeforePauseApp : ${data.time}');
+    Timer.periodic(new Duration(seconds: 5), (Timer t) {
+      String msg = 'notification ${DateTime.now()}';
+      data.sendPort.send(msg);
+    });
+  }
+
+  void _isolateHandleMessage(dynamic data) {
+    print('RECEIVED: ' + data);
+  }
+
+  void _stopIsolate() {
+    if (_isolate != null) {
+      print('_stopIsolate');
+      _receivePort.close();
+      _isolate.kill(priority: Isolate.immediate);
+      _isolate = null;
     }
   }
 
@@ -263,4 +345,10 @@ class TimerService {
         return MyResource.VISUALIZATION_TIME_KEY;
     }
   }
+}
+
+class IsolateData {
+  SendPort sendPort;
+  int time;
+  IsolateData(this.sendPort, this.time);
 }

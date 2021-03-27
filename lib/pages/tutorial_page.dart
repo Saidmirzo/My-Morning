@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/route_values.dart';
+import 'package:morningmagic/services/notifications.dart';
 import 'package:morningmagic/widgets/tutorial_waves/im_animations.dart';
 
 class TutorialPage extends StatefulWidget {

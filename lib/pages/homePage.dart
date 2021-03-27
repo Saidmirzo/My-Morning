@@ -5,6 +5,7 @@ import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/screenFAQ.dart';
 import 'package:morningmagic/routing/route_values.dart';
+import 'package:morningmagic/services/notifications.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 
 import '../db/hive.dart';
@@ -54,8 +55,8 @@ class HomePageState extends State<HomePage> {
                   "sans-serif", 'progress_item'.tr, null, null, null),
               SizedBox(height: 15),
               // Настройки
-              AnimatedButton(() => _openSettings(), "sans-serif",
-                  'settings'.tr, null, null, null),
+              AnimatedButton(() => _openSettings(), "sans-serif", 'settings'.tr,
+                  null, null, null),
               SizedBox(height: 15),
               // Помощь
               AnimatedButton(

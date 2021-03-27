@@ -56,6 +56,8 @@
 	<string>Allows you to choose a picture</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>speech</string>
+	<key>PermissionGroupNotification</key>
+	<string>Exercise completion notification, important news and updates</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
