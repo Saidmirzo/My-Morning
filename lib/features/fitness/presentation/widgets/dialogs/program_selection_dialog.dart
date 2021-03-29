@@ -35,8 +35,7 @@ class ProgramSelectionDialog extends StatelessWidget {
                 height: 8,
               ),
               DialogHeaderButton(
-                  text: 'back_button'.tr,
-                  onTap: () => Navigator.pop(context)),
+                  text: 'back_button'.tr, onTap: () => Navigator.pop(context)),
               SizedBox(
                 height: 8,
               ),

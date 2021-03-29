@@ -205,7 +205,7 @@ class LocalizationService extends Translations {
           "fitness_my_program": "Составить свою",
           "visualization": "ВИЗУАЛИЗАЦИЯ",
           "visualization_title":
-              "Закройте глаза и представьте\nжелаемое. Трогайте, осязайте\nсвою цель, продумайте путь\nк её достижению по шагам.",
+              "Закройте глаза и представьте желаемое. Трогайте, осязайте свою цель, продумайте путь к её достижению по шагам.",
           "visualization_hint":
               "В поле опишите кратко (в одно предложение), что будете визуализировать",
           "diary": "ДНЕВНИК",
@@ -442,6 +442,9 @@ class LocalizationService extends Translations {
           "target_title": "название",
           "target_short_desc":
               "в поле опишите кратко (в одно предложение)  что будете визуализировать",
+          "music_menu_music": "Музыка",
+          "music_menu_sounds": "Звуки",
+          "music_menu_favorite": "Избранное",
         },
         EN: {
           "start": "Start",
@@ -631,7 +634,7 @@ class LocalizationService extends Translations {
           "fitness_my_program": "Make my program",
           "visualization": "VISUALIZATION",
           "visualization_title":
-              "Close your eyes, imagine\n your desire, touch it,\n feel it, picture your way\n to it step by step ",
+              "Close your eyes, imagine your desire, touch it, feel it, picture your way to it step by step ",
           "visualization_hint": "Type your visualization, briefly describe it",
           "diary": "DIARY",
           "voice_record": "A voice record",
@@ -859,6 +862,9 @@ class LocalizationService extends Translations {
           "target_title": "title",
           "target_short_desc":
               "in the field describe briefly (in one sentence) what you will visualize",
+          "music_menu_music": "Music",
+          "music_menu_sounds": "Sounds",
+          "music_menu_favorite": "Favorite",
         }
       };
 

@@ -24,6 +24,7 @@ Future<void> main() async {
       onGenerateRoute: (settings) => AppRouting.generateRoute(settings),
       translations: LocalizationService(),
       locale: _initialLocale,
+      theme: ThemeData(fontFamily: 'Montserrat'),
       supportedLocales: [
         Locale(LocalizationService.EN),
         Locale(LocalizationService.RU),

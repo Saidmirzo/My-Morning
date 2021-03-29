@@ -143,7 +143,8 @@ class PlayerColumnState extends State<PlayerColumn> {
                                   MyDB()
                                       .getBox()
                                       .get(MyResource.VOCABULARY_TIME_KEY)
-                                      .time, false)));
+                                      .time,
+                                  false)));
                 });
                 visibleDiagram = false;
                 widget.onPressed();
@@ -158,7 +159,6 @@ class PlayerColumnState extends State<PlayerColumn> {
                 style: TextStyle(
                   color: AppColors.WHITE,
                   fontStyle: FontStyle.normal,
-                  fontFamily: 'rex',
                   fontSize: 21,
                 ),
               ),

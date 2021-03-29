@@ -50,7 +50,6 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 23,
-                            fontFamily: 'rex',
                             fontStyle: FontStyle.normal,
                             color: AppColors.VIOLET),
                       ),
@@ -72,7 +71,6 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 23,
-                            fontFamily: 'rex',
                             fontStyle: FontStyle.normal,
                             color: _selectedItemIndex == null
                                 ? AppColors.VIOLET.withAlpha(70)
@@ -237,7 +235,6 @@ class AffirmationTextItem extends StatelessWidget {
                   decoration: TextDecoration.none,
                   color: AppColors.WHITE,
                   fontStyle: FontStyle.normal,
-                  fontFamily: 'rex',
                   fontSize: 18,
                 ),
               ),

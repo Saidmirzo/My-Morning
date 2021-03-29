@@ -47,20 +47,19 @@ class HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               // Начать
-              AnimatedButton(() => _startExercise(), 'sans-serif', 'start'.tr,
-                  null, null, null),
+              AnimatedButton(
+                  () => _startExercise(), 'start'.tr, null, null, null),
               SizedBox(height: 15),
               // Прогресс
               AnimatedButton(() => _openProgress(_selectProgressPage()),
-                  "sans-serif", 'progress_item'.tr, null, null, null),
+                  'progress_item'.tr, null, null, null),
               SizedBox(height: 15),
               // Настройки
-              AnimatedButton(() => _openSettings(), "sans-serif", 'settings'.tr,
-                  null, null, null),
+              AnimatedButton(
+                  () => _openSettings(), 'settings'.tr, null, null, null),
               SizedBox(height: 15),
               // Помощь
-              AnimatedButton(
-                  () => _openFaq(), "sans-serif", 'faq'.tr, null, null, null),
+              AnimatedButton(() => _openFaq(), 'faq'.tr, null, null, null),
               SizedBox(height: MediaQuery.of(context).size.height / 10),
             ],
           ),

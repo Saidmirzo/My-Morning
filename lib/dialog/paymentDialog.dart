@@ -30,7 +30,6 @@ class PaymentDialog extends Dialog {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 18,
-                        fontFamily: 'rex',
                         fontWeight: FontWeight.normal,
                         color: AppColors.VIOLET),
                   ),
@@ -47,7 +46,6 @@ class PaymentDialog extends Dialog {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
-                            fontFamily: 'rex',
                             fontWeight: FontWeight.normal,
                             color: AppColors.VIOLET,
                           ),
@@ -66,7 +64,6 @@ class PaymentDialog extends Dialog {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 21,
-                                  fontFamily: 'rex',
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.PINK,
                                   decoration: TextDecoration.lineThrough),
@@ -79,7 +76,6 @@ class PaymentDialog extends Dialog {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 21,
-                                  fontFamily: 'rex',
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.VIOLET),
                             ),

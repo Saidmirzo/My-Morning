@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 class ProgressPairRecord extends StatefulWidget {
-
   final String exerciseTitle;
   final String path;
 
@@ -16,19 +14,14 @@ class ProgressPairRecord extends StatefulWidget {
 }
 
 class ProgressPairRecordState extends State<ProgressPairRecord> {
-
   bool switcher = false;
 
-  Future<void> playLocal(String path) async {
-  }
+  Future<void> playLocal(String path) async {}
 
   @override
   void initState() {
-    
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +35,6 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
             child: Text(
               widget.exerciseTitle,
               style: TextStyle(
-                fontFamily: 'sans-serif-black',
                 fontSize: 16,
                 color: AppColors.VIOLET,
                 fontStyle: FontStyle.normal,
@@ -50,9 +42,7 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
             ),
           ),
           Container(
-            child: Text(
-                ' – '
-            ),
+            child: Text(' – '),
           ),
           Container(
             child: FloatingActionButton(
@@ -60,11 +50,8 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
               elevation: 0,
               onPressed: () {
                 if (!switcher) {
-                  playLocal(widget.path).then((value) => {
-                    print("play")
-                  });
-                } else {
-                }
+                  playLocal(widget.path).then((value) => {print("play")});
+                } else {}
                 setState(() {
                   switcher = !switcher;
                 });

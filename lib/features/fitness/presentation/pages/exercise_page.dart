@@ -64,14 +64,12 @@ class _ExercisePageState extends State<ExercisePage> {
                                       MediaQuery.of(context).size.width * 0.3,
                                   padding: EdgeInsets.only(bottom: 3),
                                   child: Text(
-                                    'exercise'.trParams({
-                                      'id': currentStep.toString()
-                                    }),
+                                    'exercise'.trParams(
+                                        {'id': currentStep.toString()}),
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontStyle: FontStyle.normal,
-                                      fontFamily: "rex",
                                       color: AppColors.WHITE,
                                     ),
                                   ),
@@ -82,7 +80,6 @@ class _ExercisePageState extends State<ExercisePage> {
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontStyle: FontStyle.normal,
-                                    fontFamily: "rex",
                                     color: AppColors.WHITE,
                                   ),
                                 ),
@@ -101,7 +98,6 @@ class _ExercisePageState extends State<ExercisePage> {
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: "JMH",
                                   color: AppColors.VIOLET,
                                 ),
                               ),

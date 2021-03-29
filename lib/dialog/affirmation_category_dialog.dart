@@ -39,7 +39,6 @@ class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 23,
-                        fontFamily: 'rex',
                         fontStyle: FontStyle.normal,
                         color: AppColors.VIOLET),
                   ),
@@ -104,7 +103,6 @@ class _MainAffirmationDialogItemState extends State<MainAffirmationDialogItem> {
                   decoration: TextDecoration.none,
                   color: AppColors.WHITE,
                   fontStyle: FontStyle.normal,
-                  fontFamily: 'rex',
                   fontSize: 18,
                 ),
               ),

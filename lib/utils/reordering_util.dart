@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
+import 'package:morningmagic/pages/diary/diary_page.dart';
+import 'package:morningmagic/pages/meditation/meditation_page.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
+import 'package:morningmagic/pages/reading/reading_page.dart';
 import 'package:morningmagic/storage.dart';
 
 import '../db/model/reordering_program/order_holder.dart';
 import '../db/model/reordering_program/order_item.dart';
 import '../db/resource.dart';
 import '../pages/askedQuestionsScreen.dart';
-import '../pages/exerciseStartPage.dart';
-import '../pages/screenVocabulary.dart';
 import '../widgets/exerciseTile.dart';
 
 class OrderUtil {
@@ -22,7 +25,7 @@ class OrderUtil {
   }
 
   Future<void> saveOrderHolder(List<ExerciseTile> exerciseList) async {
-    List<OrderItem> orderItemsList = List<OrderItem>();
+    List<OrderItem> orderItemsList = [];
     for (int i = 0; i < exerciseList.length; i++) {
       orderItemsList.add(OrderItem(exerciseList[i].id));
     }
@@ -38,13 +41,14 @@ class OrderUtil {
     OrderItem orderReading = new OrderItem(4);
     OrderItem orderVisualization = new OrderItem(5);
 
-    List<OrderItem> list = [];
-    list.add(orderMeditation);
-    list.add(orderAffirmation);
-    list.add(orderFitness);
-    list.add(orderVisualization);
-    list.add(orderReading);
-    list.add(orderDiary);
+    List<OrderItem> list = [
+      orderMeditation,
+      orderAffirmation,
+      orderFitness,
+      orderVisualization,
+      orderReading,
+      orderDiary
+    ];
 
     return new OrderHolder(list);
   }
@@ -72,46 +76,16 @@ class OrderUtil {
     int id = orderItem.position;
     print('Open id: $id');
 
-    if (!billingService.isPro() && (id != 0 && id != 1)) {
-      print('!isPro && (id!=0 || id!=1)');
-      return MaterialPageRoute(builder: (context) => PaywallPage());
+    if (!billingService.isPro() && ![0, 1].contains(id)) {
+      print('!isPro && ![0,1].contains(id)');
+      return Get.to(PaywallPage());
     }
-    if (id == 2)
-      return MaterialPageRoute(
-          builder: (context) => FitnessMainPage(pageId: id));
-    if (id == 3)
-      return MaterialPageRoute(builder: (context) => VocabularyScreen());
-    if (id == 5)
-      return MaterialPageRoute(builder: (context) => VisualizationMainPage());
-
-    String expName = this.getExpirienceName(id);
-    print('Exp name: $expName');
-    return MaterialPageRoute(
-      builder: (context) => ExerciseStartPage(
-        pageId: id,
-        title: expName,
-        desc: '${expName}_title',
-      ),
-    );
-  }
-
-  getExpirienceName(int id) {
-    switch (id) {
-      case 0:
-        return 'affirmation';
-      case 1:
-        return 'meditation';
-      case 2:
-        return 'fitness';
-      case 3:
-        return 'diary';
-      case 4:
-        return 'reading';
-      case 5:
-        return 'visualization';
-      default:
-        return 'visualization';
-    }
+    if (id == 0) return Get.to(AffirmationPage());
+    if (id == 1) return Get.to(MeditationPage());
+    if (id == 2) return Get.to(FitnessMainPage(pageId: id));
+    if (id == 3) return Get.to(DiaryPage());
+    if (id == 4) return Get.to(ReadingPage());
+    if (id == 5) return Get.to(VisualizationMainPage());
   }
 
   Future<MaterialPageRoute> getRouteById(int id) async {

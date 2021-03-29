@@ -64,7 +64,6 @@ class FAQStateScreen extends State<FAQScreen> {
                               style: TextStyle(
                                 fontSize: 32,
                                 fontStyle: FontStyle.normal,
-                                fontFamily: "sans-serif-black",
                                 color: AppColors.WHITE,
                               ),
                             ),
@@ -80,7 +79,6 @@ class FAQStateScreen extends State<FAQScreen> {
                                 data: 'faq_desc'.tr,
                                 defaultTextStyle: TextStyle(
                                   fontSize: 18,
-                                  fontFamily: "sans-serif",
                                   fontStyle: FontStyle.normal,
                                   color: AppColors.VIOLET,
                                 )),
@@ -90,8 +88,7 @@ class FAQStateScreen extends State<FAQScreen> {
                             child: AnimatedButton(() {
                               Navigator.pushNamedAndRemoveUntil(
                                   context, homePageRoute, (r) => false);
-                            }, 'sans-serif', 'back_button'.tr, 19, null,
-                                null),
+                            }, 'back_button'.tr, 19, null, null),
                           )
                         ],
                       ),

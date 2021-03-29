@@ -200,7 +200,6 @@ class _TutorialPageState extends State<TutorialPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
-                    fontFamily: 'sans-serif-black',
                   ),
                 ),
               ),
@@ -222,7 +221,6 @@ class _TutorialPageState extends State<TutorialPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
-                    fontFamily: 'sans-serif-black',
                   ),
                 ),
               ),
@@ -261,7 +259,6 @@ class _TutorialPageState extends State<TutorialPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
-                    fontFamily: 'sans-serif-black',
                   ),
                 ),
               ),
@@ -301,7 +298,6 @@ class _TutorialPageState extends State<TutorialPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
-                    fontFamily: 'sans-serif-black',
                   ),
                 ),
               ),
@@ -341,7 +337,6 @@ class _TutorialPageState extends State<TutorialPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
-                    fontFamily: 'sans-serif-black',
                   ),
                 ),
               ),
@@ -381,7 +376,6 @@ class _TutorialPageState extends State<TutorialPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
-                    fontFamily: 'sans-serif-black',
                   ),
                 ),
               ),
@@ -421,7 +415,6 @@ class _TutorialPageState extends State<TutorialPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
-                    fontFamily: 'sans-serif-black',
                   ),
                 ),
               ),

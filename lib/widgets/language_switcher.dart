@@ -33,7 +33,6 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
               style: TextStyle(
                   color: AppColors.VIOLET,
                   fontStyle: FontStyle.normal,
-                  fontFamily: 'sans-serif-black',
                   fontSize: 26),
             ),
           ),
@@ -55,18 +54,20 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
                                   value.data == null ? true : value.data),
                               fontStyle: FontStyle.normal,
                               fontSize: 25,
-                              fontFamily: 'sans-serif',
                             ));
                       }),
                 ),
                 Container(
                   child: Switch(
-                      value: Get.locale.languageCode == LocalizationService.RU ? false : true,
+                      value: Get.locale.languageCode == LocalizationService.RU
+                          ? false
+                          : true,
                       inactiveThumbColor: AppColors.PINK,
                       inactiveTrackColor: AppColors.PINK,
                       activeColor: AppColors.BLUE,
                       activeTrackColor: AppColors.BLUE,
-                      onChanged: (bool value) => LocalizationService.switchLocale()),
+                      onChanged: (bool value) =>
+                          LocalizationService.switchLocale()),
                 ),
                 Container(
                   child: FutureBuilder(
@@ -79,7 +80,6 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
                                   value.data == null ? false : value.data),
                               fontStyle: FontStyle.normal,
                               fontSize: 25,
-                              fontFamily: 'sans-serif',
                             ));
                       }),
                 ),

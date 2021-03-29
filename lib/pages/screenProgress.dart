@@ -45,7 +45,6 @@ class ProgressScreenState extends State {
                         style: TextStyle(
                           fontSize: 32,
                           fontStyle: FontStyle.normal,
-                          fontFamily: "sans-serif-black",
                           color: AppColors.WHITE,
                         ),
                       ),
@@ -57,7 +56,6 @@ class ProgressScreenState extends State {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 22,
-                          fontFamily: "sans-serif",
                           fontStyle: FontStyle.normal,
                           color: AppColors.VIOLET,
                         ),
@@ -69,7 +67,7 @@ class ProgressScreenState extends State {
                   bottom: 75,
                   child: AnimatedButton(() {
                     AppRouting.navigateToHomeWithClearHistory(context);
-                  }, 'sans-serif', 'back_button'.tr, 22, null, null),
+                  }, 'back_button'.tr, 22, null, null),
                 )
               ],
             ),

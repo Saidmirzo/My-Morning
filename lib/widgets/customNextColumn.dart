@@ -4,7 +4,6 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:get/get.dart';
 
 class NextColumn extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,14 +17,12 @@ class NextColumn extends StatelessWidget {
               elevation: 0,
               onPressed: () {},
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(38.0)
-              ),
+                  borderRadius: BorderRadius.circular(38.0)),
               child: Text(
                 'continue'.tr,
                 style: TextStyle(
                   color: AppColors.WHITE,
                   fontWeight: FontWeight.normal,
-                  fontFamily: 'rex',
                   fontSize: 21,
                 ),
               ),

@@ -42,7 +42,6 @@ class ExerciseTile extends StatelessWidget {
                   style: TextStyle(
                       color: AppColors.VIOLET,
                       fontSize: 20,
-                      fontFamily: 'sans-serif',
                       fontStyle: FontStyle.normal),
                 ),
               ),
@@ -61,7 +60,6 @@ class ExerciseTile extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 11,
-                          fontFamily: "sans-serif",
                           fontStyle: FontStyle.normal,
                           color: AppColors.VIOLET,
                           decoration: TextDecoration.none),
@@ -105,7 +103,6 @@ class ExerciseTile extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8)))),
       style: TextStyle(
           fontSize: 18,
-          fontFamily: "sans-serif",
           fontStyle: FontStyle.normal,
           color: AppColors.VIOLET,
           decoration: TextDecoration.none),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/progress_util.dart';
 
-
 class ExerciseTrashTag extends StatefulWidget {
   ExerciseTrashTag(this.text, this.size, this.myKey, this.callback);
 
@@ -19,13 +18,16 @@ class ExerciseTrashTag extends StatefulWidget {
 }
 
 class ExerciseTrashTagState extends State<ExerciseTrashTag> {
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        ExerciseUtils().deleteSelectedExerciseFromDB(widget.myKey).then((value) {
-          ExerciseUtils().deleteSelectedExerciseProgramFromDB(widget.myKey).then((value) {
+        ExerciseUtils()
+            .deleteSelectedExerciseFromDB(widget.myKey)
+            .then((value) {
+          ExerciseUtils()
+              .deleteSelectedExerciseProgramFromDB(widget.myKey)
+              .then((value) {
             widget.callback();
           });
         });
@@ -36,8 +38,7 @@ class ExerciseTrashTagState extends State<ExerciseTrashTag> {
         margin: EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
             color: AppColors.PINK,
-            borderRadius: BorderRadius.all(Radius.circular(40))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(40))),
         child: Container(
           padding: EdgeInsets.only(top: 2),
           child: Center(
@@ -48,7 +49,6 @@ class ExerciseTrashTagState extends State<ExerciseTrashTag> {
                 decoration: TextDecoration.none,
                 color: AppColors.WHITE,
                 fontStyle: FontStyle.normal,
-                fontFamily: 'rex',
                 fontSize: widget.size,
               ),
             ),

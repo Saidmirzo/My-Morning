@@ -9,10 +9,9 @@ class ExerciseCustomDetails extends StatefulWidget {
   final String title;
   final int pageId;
 
-  const ExerciseCustomDetails({Key key, 
-    @required this.title,
-    @required this.pageId
-  }) : super(key: key);
+  const ExerciseCustomDetails(
+      {Key key, @required this.title, @required this.pageId})
+      : super(key: key);
 
   @override
   ExerciseCustomDetailsState createState() {
@@ -70,7 +69,6 @@ class ExerciseCustomDetailsState extends State<ExerciseCustomDetails> {
                                 style: TextStyle(
                                   fontSize: 30,
                                   fontStyle: FontStyle.normal,
-                                  fontFamily: "rex",
                                   color: AppColors.VIOLET,
                                 ),
                               ),
@@ -81,24 +79,16 @@ class ExerciseCustomDetailsState extends State<ExerciseCustomDetails> {
                     ),
                   ),
                   Positioned(
-                    bottom: 0,
-                    child: Container(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: AnimatedButton(
-                        () {
+                      bottom: 0,
+                      child: Container(
+                        padding: EdgeInsets.only(bottom: 20),
+                        child: AnimatedButton(() {
                           if (timerAppBar != null) {
                             timerAppBar.cancelTimer();
                           }
                           ExerciseUtils().goNextRoute(context, widget.pageId);
-                        },
-                        "rex",
-                        'next_exercise'.tr,
-                        20,
-                        null,
-                        null
-                        ),
-                    )
-                  )
+                        }, 'next_exercise'.tr, 20, null, null),
+                      ))
                 ],
               )),
         ),

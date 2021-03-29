@@ -23,6 +23,6 @@ class RemoveProgressState extends State<RemoveProgress> {
                 await MyDB().clearWithoutUserName();
                 AppRouting.navigateToHomeWithClearHistory(context);
               }));
-    }, 'sans-serif', 'remove_progress'.tr, 19, 100, FontWeight.normal);
+    }, 'remove_progress'.tr, 19, 100, FontWeight.normal);
   }
 }

@@ -64,8 +64,8 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
             ),
             Positioned(
               bottom: MediaQuery.of(context).size.height / 5.5,
-              child: AnimatedButton(_navigateToNextExercise, 'rex',
-                  'continue'.tr, 21, null, null),
+              child: AnimatedButton(
+                  _navigateToNextExercise, 'continue'.tr, 21, null, null),
             ),
           ],
         ),

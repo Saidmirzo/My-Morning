@@ -154,7 +154,6 @@ class LoadingPageState extends State<LoadingPage>
       textAlign: TextAlign.center,
       style: TextStyle(
         color: AppColors.WHITE,
-        fontFamily: 'rex',
         fontSize: 26,
       ),
     );
@@ -257,5 +256,4 @@ class LoadingPageState extends State<LoadingPage>
       MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(3));
     }
   }
-
 }

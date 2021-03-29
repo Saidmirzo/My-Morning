@@ -110,7 +110,6 @@ class InputTextColumnState extends State<InputTextColumn> {
               style: TextStyle(
                 color: AppColors.LIGHT_VIOLET,
                 fontStyle: FontStyle.normal,
-                fontFamily: 'rex',
                 fontSize: 20,
               ),
             ),
@@ -136,7 +135,6 @@ class InputTextColumnState extends State<InputTextColumn> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: 27,
-                        fontFamily: "rex",
                         fontStyle: FontStyle.normal,
                         color: AppColors.VIOLET,
                         decoration: TextDecoration.none),
@@ -164,7 +162,6 @@ class InputTextColumnState extends State<InputTextColumn> {
                   style: TextStyle(
                     color: AppColors.WHITE,
                     fontStyle: FontStyle.normal,
-                    fontFamily: 'rex',
                     fontSize: 21,
                   ),
                 ),

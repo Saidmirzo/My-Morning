@@ -1,10 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
+
+import '../../../../resources/colors.dart';
+import '../../../../resources/colors.dart';
+import '../../../../resources/colors.dart';
+import '../../../../widgets/primary_circle_button.dart';
 
 class AudioMeditationDialogItem extends StatefulWidget {
   final int id;
@@ -35,16 +41,15 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     return Column(
       children: [
         InkWell(
-          onTap: () => _audioController.selectedItemIndex.value = widget.id,
+          onTap: () => _handlePlayPauseButton(),
           child: Obx(
             () => Container(
               margin: EdgeInsets.only(bottom: 8),
-              padding: EdgeInsets.only(left: 10, right: 10),
               decoration: BoxDecoration(
                   color: _audioController.selectedItemIndex.value == widget.id
-                      ? AppColors.PINK
-                      : AppColors.LIGHT_VIOLET,
-                  borderRadius: BorderRadius.all(Radius.circular(40))),
+                      ? AppColors.audiuSelected
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.all(Radius.circular(17))),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 2),
                 child: Row(
@@ -52,16 +57,20 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                   children: [
                     _buildAudioControlButton(),
                     SizedBox(width: 10),
-                    StyledText(
-                      widget.trackId,
-                      fontSize: 17,
-                      color: AppColors.WHITE,
+                    Container(
+                      width: Get.width * 0.5,
+                      child: StyledText(
+                        widget.trackId,
+                        fontSize: 17,
+                        color: AppColors.primary,
+                      ),
                     ),
                     Spacer(),
                     if (_audioController.playingIndex.value == widget.id &&
                         !playCached &&
                         _audioController.isAudioLoading.value)
-                      _buildLoadingAudioIndicator()
+                      _buildLoadingAudioIndicator(),
+                    buildFavoriteButton()
                   ],
                 ),
               ),
@@ -72,18 +81,26 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     );
   }
 
-  Container _buildAudioControlButton() {
-    return Container(
-      child: IconButton(
-        onPressed: () => _handlePlayPauseButton(),
-        icon: Icon(
-          (_audioController.playingIndex.value == widget.id &&
-                  _audioController.isPlaying)
-              ? Icons.pause
-              : Icons.play_arrow,
-          color: Colors.white,
-          size: 30,
+  Widget buildFavoriteButton() {
+    return CupertinoButton(
+        child: Icon(
+          Icons.star_border,
+          color: AppColors.primary,
         ),
+        onPressed: () {});
+  }
+
+  Widget _buildAudioControlButton() {
+    return PrimaryCircleButton(
+      onPressed: () => _handlePlayPauseButton(),
+      bgColor: AppColors.primary,
+      icon: Icon(
+        (_audioController.playingIndex.value == widget.id &&
+                _audioController.isPlaying)
+            ? Icons.pause
+            : Icons.play_arrow,
+        color: AppColors.WHITE,
+        size: 30,
       ),
     );
   }
@@ -99,6 +116,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
   }
 
   void _handlePlayPauseButton() {
+    _audioController.selectedItemIndex.value = widget.id;
     if (!_audioController.isPlaying) {
       final _oldPlayingIndex = _audioController.playingIndex.value;
       _audioController.playingIndex.value = widget.id;

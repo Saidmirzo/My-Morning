@@ -120,7 +120,6 @@ class NoteScreenState extends State<NoteScreen> {
                             style: TextStyle(
                               fontSize: 32,
                               fontStyle: FontStyle.normal,
-                              fontFamily: "rex",
                               color: AppColors.WHITE,
                             ),
                           ),
@@ -146,7 +145,6 @@ class NoteScreenState extends State<NoteScreen> {
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         fontSize: 27,
-                                        fontFamily: "rex",
                                         fontStyle: FontStyle.normal,
                                         color: AppColors.VIOLET,
                                         decoration: TextDecoration.none),
@@ -176,7 +174,7 @@ class NoteScreenState extends State<NoteScreen> {
                                                   .time,
                                               false)));
                             });
-                          }, 'rex', 'next_button'.tr, 22, null, null),
+                          }, 'next_button'.tr, 22, null, null),
                         ),
                       ],
                     ),

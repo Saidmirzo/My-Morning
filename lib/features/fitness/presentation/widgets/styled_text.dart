@@ -8,13 +8,16 @@ class StyledText extends StatelessWidget {
   final double fontSize;
   final Color color;
   final TextAlign textAlign;
+  final FontWeight fontWeight;
 
-  const StyledText(this.data,
-      {Key key,
-      this.fontSize = 12,
-      this.color = AppColors.VIOLET,
-      this.textAlign = TextAlign.start})
-      : super(key: key);
+  const StyledText(
+    this.data, {
+    Key key,
+    this.fontSize = 12,
+    this.color = AppColors.VIOLET,
+    this.textAlign = TextAlign.start,
+    this.fontWeight = FontWeight.w400,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +26,9 @@ class StyledText extends StatelessWidget {
       textAlign: textAlign,
       style: TextStyle(
         fontSize: fontSize,
-        fontFamily: 'rex',
         fontStyle: FontStyle.normal,
         color: color,
+        fontWeight: fontWeight,
       ),
     );
   }

@@ -98,20 +98,20 @@ class _AffirmationTimerPageState extends State<AffirmationTimerPage>
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          child: AnimatedButton(() => timerService.startTimer(), 'rex',
+          child: AnimatedButton(() => timerService.startTimer(),
               timerService.buttonText, 15, null, null),
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
           child: AnimatedButton(() {
             timerService.skipTask();
-          }, 'rex', 'skip'.tr, 15, null, null),
+          }, 'skip'.tr, 15, null, null),
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
           child: AnimatedButton(() {
             timerService.goToHome();
-          }, 'rex', 'menu'.tr, 15, null, null),
+          }, 'menu'.tr, 15, null, null),
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
@@ -121,7 +121,7 @@ class _AffirmationTimerPageState extends State<AffirmationTimerPage>
               setState(() {
                 titleText = _affirmation;
               });
-          }, 'rex', 'affirmation_timer'.tr, 15, null, null),
+          }, 'affirmation_timer'.tr, 15, null, null),
         ),
         SizedBox(
           height: 8,

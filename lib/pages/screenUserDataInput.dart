@@ -76,7 +76,6 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 22,
-                                      fontFamily: "sans-serif",
                                       fontStyle: FontStyle.normal,
                                       color: AppColors.VIOLET,
                                     ),
@@ -105,7 +104,6 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             fontSize: 16,
-                                            fontFamily: "sans-serif",
                                             fontStyle: FontStyle.normal,
                                             color: AppColors.VIOLET,
                                             decoration: TextDecoration.none),
@@ -132,8 +130,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                                         builder: (context) => TutorialPage()),
                                   );
                                 }
-                              }, 'sans-serif', 'next_button'.tr, null, null,
-                                  null),
+                              }, 'next_button'.tr, null, null, null),
                             ),
                           ),
                         ],

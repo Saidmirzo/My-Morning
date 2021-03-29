@@ -894,8 +894,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           bottom: 0),
       child: AnimatedButton(() {
         AppRouting.navigateToHomeWithClearHistory(context);
-      }, 'sans-serif-black', 'menu'.tr,
-          MediaQuery.of(context).size.width * 0.06, null, null),
+      }, 'menu'.tr, MediaQuery.of(context).size.width * 0.06, null, null),
     );
   }
 
@@ -1030,7 +1029,6 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 CupertinoDialogAction(
                   child: Text(
                     'action_remind'.tr,
-                    style: TextStyle(fontFamily: 'sans-serif'),
                   ),
                   isDestructiveAction: true,
                   onPressed: () {
@@ -1041,8 +1039,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 CupertinoDialogAction(
                   child: Text(
                     'action_rate'.tr,
-                    style:
-                        TextStyle(fontFamily: 'sans-serif-black', fontSize: 16),
+                    style: TextStyle(fontSize: 16),
                   ),
                   isDefaultAction: true,
                   onPressed: () {
@@ -1097,8 +1094,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 FlatButton(
                   child: Text(
                     'action_remind'.tr,
-                    style:
-                        TextStyle(color: Colors.red, fontFamily: 'sans-serif'),
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
                   ),
                   onPressed: () {
                     appStates.isRating.value = false;
@@ -1108,8 +1106,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 FlatButton(
                   child: Text(
                     'action_rate'.tr,
-                    style:
-                        TextStyle(fontFamily: 'sans-serif-black', fontSize: 16),
+                    style: TextStyle(fontSize: 16),
                   ),
                   onPressed: () {
                     if (appRating < 5) {

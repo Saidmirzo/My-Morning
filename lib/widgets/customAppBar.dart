@@ -73,7 +73,6 @@ class TimeAppBarState extends State<TimerAppBar> {
                   style: TextStyle(
                       color: AppColors.WHITE,
                       fontSize: 14,
-                      fontFamily: "rex",
                       fontStyle: FontStyle.normal),
                 ),
               ),
@@ -82,7 +81,6 @@ class TimeAppBarState extends State<TimerAppBar> {
                 style: TextStyle(
                     color: AppColors.WHITE,
                     fontSize: 27,
-                    fontFamily: "aparaj",
                     fontStyle: FontStyle.normal),
               ),
               isExerciseComplete
@@ -92,7 +90,6 @@ class TimeAppBarState extends State<TimerAppBar> {
                         style: TextStyle(
                             color: AppColors.WHITE,
                             fontSize: 14,
-                            fontFamily: "rex",
                             fontStyle: FontStyle.normal),
                       ),
                     )

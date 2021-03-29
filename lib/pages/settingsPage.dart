@@ -104,7 +104,6 @@ class SettingsPageState extends State<SettingsPage> {
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: AppColors.VIOLET,
-                                  fontFamily: 'sans-serif-black',
                                   fontStyle: FontStyle.normal,
                                   fontSize: 24),
                             ),
@@ -119,7 +118,6 @@ class SettingsPageState extends State<SettingsPage> {
                           style: TextStyle(
                               color: AppColors.VIOLET,
                               fontStyle: FontStyle.normal,
-                              fontFamily: 'sans-serif',
                               fontSize: 14),
                         ),
                       ),
@@ -140,7 +138,6 @@ class SettingsPageState extends State<SettingsPage> {
                               style: TextStyle(
                                   color: AppColors.VIOLET,
                                   fontStyle: FontStyle.normal,
-                                  fontFamily: 'sans-serif',
                                   fontSize: 14),
                             )),
                             Text(
@@ -148,7 +145,6 @@ class SettingsPageState extends State<SettingsPage> {
                               style: TextStyle(
                                   color: AppColors.VIOLET,
                                   fontStyle: FontStyle.normal,
-                                  fontFamily: 'sans-serif',
                                   fontSize: 21),
                             )
                           ],
@@ -166,7 +162,6 @@ class SettingsPageState extends State<SettingsPage> {
                               style: TextStyle(
                                   color: AppColors.VIOLET,
                                   fontStyle: FontStyle.normal,
-                                  fontFamily: 'sans-serif-black',
                                   fontSize: 26),
                             ),
                           )),
@@ -235,7 +230,6 @@ class SettingsPageState extends State<SettingsPage> {
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         fontSize: 20,
-                                        fontFamily: "sans-serif",
                                         fontStyle: FontStyle.normal,
                                         color: AppColors.VIOLET,
                                         decoration: TextDecoration.none),
@@ -245,7 +239,6 @@ class SettingsPageState extends State<SettingsPage> {
                                       hintStyle: TextStyle(
                                         color: AppColors.LIGHT_GRAY,
                                         fontSize: 16,
-                                        fontFamily: "sans-serif",
                                       ),
                                       border: InputBorder.none,
                                     ),
@@ -266,7 +259,6 @@ class SettingsPageState extends State<SettingsPage> {
                             style: TextStyle(
                                 color: AppColors.VIOLET,
                                 fontStyle: FontStyle.normal,
-                                fontFamily: 'sans-serif-black',
                                 fontSize: 26),
                           ),
                         ),
@@ -294,7 +286,6 @@ class SettingsPageState extends State<SettingsPage> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 23,
-                                    fontFamily: "sans-serif",
                                     fontStyle: FontStyle.normal,
                                     color: AppColors.VIOLET,
                                     decoration: TextDecoration.none),
@@ -312,7 +303,6 @@ class SettingsPageState extends State<SettingsPage> {
                         child: AnimatedButton(
                             () => AppRouting.navigateToHomeWithClearHistory(
                                 context),
-                            'sans-serif',
                             'continue'.tr,
                             null,
                             null,

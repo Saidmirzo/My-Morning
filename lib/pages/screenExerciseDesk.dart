@@ -158,7 +158,6 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                           style: TextStyle(
                             fontSize: 20,
                             fontStyle: FontStyle.italic,
-                            fontFamily: "rex",
                             color: AppColors.VIOLET,
                           ),
                         ),
@@ -177,7 +176,6 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                           style: TextStyle(
                             fontSize: 20,
                             fontStyle: FontStyle.italic,
-                            fontFamily: "rex",
                             color: AppColors.VIOLET,
                           ),
                         ),
@@ -187,7 +185,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                             top: MediaQuery.of(context).size.width / 5),
                         child: AnimatedButton(() {
                           _openDialog();
-                        }, "rex", 'add_exercises'.tr, 20, null, null),
+                        }, 'add_exercises'.tr, 20, null, null),
                       ),
                       Container(
                         child: ExerciseDragTarget(),
@@ -198,7 +196,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                             bottom: MediaQuery.of(context).size.width / 17),
                         child: AnimatedButton(() {
                           goNextPage();
-                        }, 'rex', 'start'.tr, 20, null, null),
+                        }, 'start'.tr, 20, null, null),
                       ),
                     ],
                   ),

@@ -33,7 +33,6 @@ class DeleteExerciseDialog extends Dialog {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 23,
-                        fontFamily: 'rex',
                         fontStyle: FontStyle.normal,
                         color: AppColors.VIOLET),
                   ),
@@ -45,16 +44,14 @@ class DeleteExerciseDialog extends Dialog {
                   child: AnimatedButton(() {
                     voidCallback();
                     Navigator.pop(context, true);
-                  }, 'rex', 'yes'.tr, 22,
-                      null, null),
+                  }, 'yes'.tr, 22, null, null),
                 ),
               ),
               Container(
                 padding: EdgeInsets.only(top: 10),
                 child: AnimatedButton(() {
                   Navigator.pop(context, true);
-                }, 'rex', 'no'.tr, 22,
-                    null, null),
+                }, 'no'.tr, 22, null, null),
               ),
             ],
           ),

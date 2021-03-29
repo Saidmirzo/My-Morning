@@ -92,13 +92,12 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                           0.3,
                                       padding: EdgeInsets.only(bottom: 3),
                                       child: Text(
-                                        'exercise'.trParams(
-                                            {'id': id.toString()}),
+                                        'exercise'
+                                            .trParams({'id': id.toString()}),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontStyle: FontStyle.normal,
-                                          fontFamily: "rex",
                                           color: AppColors.WHITE,
                                         ),
                                       ),
@@ -109,7 +108,6 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontStyle: FontStyle.normal,
-                                        fontFamily: "rex",
                                         color: AppColors.WHITE,
                                       ),
                                     ),
@@ -127,7 +125,6 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontSize: 15,
-                                    fontFamily: "JMH",
                                     color: AppColors.VIOLET,
                                   ),
                                 ),

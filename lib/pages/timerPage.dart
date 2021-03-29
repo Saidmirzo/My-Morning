@@ -15,6 +15,7 @@ import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 import 'package:screen/screen.dart';
 
+import '../features/meditation_audio/data/repositories/audio_repository_impl.dart';
 import '../resources/colors.dart';
 import '../utils/string_util.dart';
 import '../widgets/customText.dart';
@@ -29,7 +30,7 @@ class TimerPage extends StatefulWidget {
 }
 
 class TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
-  MediationAudioController _audioController = Get.find();
+  MediationAudioController _audioController;
   TimerService timerService = TimerService();
   AudioPlayer _audioPlayer;
   String titleText;
@@ -50,7 +51,10 @@ class TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _audioPlayer = _audioController.audioPlayer.value;
+    if (widget.pageId == 1) {
+      _audioController = Get.find();
+      _audioPlayer = _audioController.audioPlayer.value;
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await timerService.init(this, context, widget.pageId, _audioPlayer);
@@ -250,22 +254,22 @@ class TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          child: AnimatedButton(() => timerService.startTimer(), 'rex',
+          child: AnimatedButton(() => timerService.startTimer(),
               timerService.buttonText, 15, null, null),
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
           child: AnimatedButton(() {
-            _audioPlayer.pause();
+            if (widget.pageId == 1) _audioPlayer.pause();
             timerService.skipTask();
-          }, 'rex', 'skip'.tr, 15, null, null),
+          }, 'skip'.tr, 15, null, null),
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
           child: AnimatedButton(() {
-            _audioPlayer.pause();
+            if (widget.pageId == 1) _audioPlayer.pause();
             timerService.goToHome();
-          }, 'rex', 'menu'.tr, 15, null, null),
+          }, 'menu'.tr, 15, null, null),
         ),
         SizedBox(
           height: 8,
