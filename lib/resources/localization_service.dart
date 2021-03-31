@@ -295,8 +295,8 @@ class LocalizationService extends Translations {
           "paragraph3": "Получайте вдохновение из книг по утрам",
           "paragraph4": "Визуализируйте свой успех",
           "try_vip_desc":
-              "Попробуйте в течение 3 дней бесплатно, а затем цена составит @price в месяц. Можете отменить в любое время",
-          "vip_price_card": "1 \n месяц \n @price",
+              "Попробуйте в течение 3 дней бесплатно, а затем цена составит @price в месяц. \n\nПодписку можно отменить в любой момент",
+          "vip_price_card": "1 месяц",
           "vip_def_month_price": "75 руб",
           "confidence_text_1":
               "Мне нравится расширять зону комфорта и идти к новому",
@@ -445,6 +445,8 @@ class LocalizationService extends Translations {
           "music_menu_music": "Музыка",
           "music_menu_sounds": "Звуки",
           "music_menu_favorite": "Избранное",
+          "purchase_page_title": "Бесплатная пробная версия",
+          "purchase_page_desc": "3 дня бесплатно",
         },
         EN: {
           "start": "Start",
@@ -723,8 +725,8 @@ class LocalizationService extends Translations {
           "paragraph3": "Get inspiration from books in the morning",
           "paragraph4": "Visualize your success",
           "try_vip_desc":
-              "Try it for 3 days for free and then the price will be @price per month. You can cancel at any time",
-          "vip_price_card": "1 \n month \n @price",
+              "Try it for 3 days for free and then the price will be @price per month. \n\nYou can cancel your subscription at any time",
+          "vip_price_card": "1 month",
           "vip_def_month_price": "0.99 \$",
           "for_confidence": "For confidence",
           "for_health": "For health",
@@ -865,6 +867,8 @@ class LocalizationService extends Translations {
           "music_menu_music": "Music",
           "music_menu_sounds": "Sounds",
           "music_menu_favorite": "Favorite",
+          "purchase_page_title": "Free trial",
+          "purchase_page_desc": "3 days free",
         }
       };
 

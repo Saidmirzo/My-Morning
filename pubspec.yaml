@@ -83,6 +83,7 @@ flutter:
     - assets/images/diary/
     - assets/images/meditation/
     - assets/images/affirmation/
+    - assets/images/purchase/
     - assets/images/svg/
     - assets/audios/
 

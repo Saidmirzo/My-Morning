@@ -22,6 +22,7 @@ class AppColors {
   static const btnText = Color(0xff592F72);
   static const inputHintText = Color(0xff592F72);
   static const audiuSelected = Color(0xffFAF1FF);
+  static const purchaseDesc = Color(0xffB994DA);
 
   static const FIX_TOP = Color(0xFFa0b2fa);
   static const FIX_BOTTOM = Color(0xFFf8d9da);
@@ -51,6 +52,15 @@ class AppColors {
     colors: [
       const Color(0xffDA90AA),
       const Color(0xffB994DA),
+    ],
+  );
+  static const Bg_Gradient_Payments = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffB994DA),
+      const Color(0xffFFB5C3),
+      const Color(0xffFFF9EF),
     ],
   );
 }
