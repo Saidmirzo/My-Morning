@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/widgets/primary_button.dart';
 
-import '../../pages/screenNote.dart';
-import '../../pages/success/screenTimerRecordSuccess.dart';
+import 'timer/note_page.dart';
+import 'timer/audio_record_page.dart';
 import '../../resources/colors.dart';
 import 'components/bg.dart';
 
@@ -33,12 +33,12 @@ class _DiaryPageState extends State<DiaryPage> {
                   PrimaryButton(
                       text: 'voice_record'.tr,
                       pWidth: 0.5,
-                      onPressed: () => Get.to(TimerRecordSuccessScreen())),
+                      onPressed: () => Get.to(TimerRecordPage())),
                   SizedBox(height: Get.height * 0.04),
                   PrimaryButton(
                       text: 'written_record'.tr,
                       pWidth: 0.5,
-                      onPressed: () => Get.to(NoteScreen()))
+                      onPressed: () => Get.to(TimerNotePage()))
                 ],
               ),
             ],

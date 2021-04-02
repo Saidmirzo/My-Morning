@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/affirmation/timer/timer_page.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
-import '../../features/affirmation/presentation/affirmation_timer_page.dart';
 import '../../resources/colors.dart';
 import '../../routing/app_routing.dart';
 import 'components/bg.dart';
@@ -54,7 +54,7 @@ class AffirmationPageState extends State<AffirmationPage> {
   }
 
   Future<bool> _onWillPop() async {
-    AppRouting.navigateToHomeWithClearHistory(context);
+    AppRouting.navigateToHomeWithClearHistory();
     return false;
   }
 }

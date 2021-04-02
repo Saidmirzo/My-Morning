@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/routing/route_values.dart';

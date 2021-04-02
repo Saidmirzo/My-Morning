@@ -39,7 +39,7 @@ class _AudioMeditationContainerState extends State<AudioMeditationContainer> {
 
   void _stopPlayer() {
     final _audioController = Get.find<MediationAudioController>();
-    _audioController.audioPlayer.value.pause();
-    _audioController.isPlaying = false;
+    _audioController.player.pause();
+    _audioController.isPlaying.value = false;
   }
 }

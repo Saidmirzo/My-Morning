@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/reading/timer/timer_page.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 import '../../resources/colors.dart';
-import '../../resources/colors.dart';
-import '../timerPage.dart';
 import 'components/bg.dart';
 
 class ReadingPage extends StatefulWidget {
@@ -39,7 +38,7 @@ class _ReadingPageState extends State<ReadingPage> {
                   SizedBox(height: Get.height * 0.1),
                   PrimaryCircleButton(
                       icon: Icon(Icons.arrow_forward, color: AppColors.primary),
-                      onPressed: () => Get.to(TimerPage(pageId: 4))),
+                      onPressed: () => Get.to(ReadingTimerPage())),
                 ],
               ),
             ],

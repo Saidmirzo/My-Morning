@@ -150,7 +150,7 @@ class InputTextColumnState extends State<InputTextColumn> {
                 elevation: 0,
                 onPressed: () {
                   OrderUtil().getRouteById(4).then((value) {
-                    Navigator.push(context, value);
+                    Get.off(value);
                   });
                   saveReadingProgress();
                   widget.onPressed();

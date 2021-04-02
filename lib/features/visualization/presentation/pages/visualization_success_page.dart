@@ -75,6 +75,6 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
 
   void _navigateToNextExercise() async {
     final _routeValue = await OrderUtil().getRouteById(5);
-    Navigator.pushReplacement(context, _routeValue);
+    Get.off(_routeValue);
   }
 }

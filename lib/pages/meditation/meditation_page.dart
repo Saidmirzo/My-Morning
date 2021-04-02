@@ -7,9 +7,9 @@ import 'package:morningmagic/widgets/primary_circle_button.dart';
 import '../../features/meditation_audio/data/repositories/audio_repository_impl.dart';
 import '../../features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import '../../resources/colors.dart';
-import '../timerPage.dart';
 import 'components/bg.dart';
 import 'meditation_audio_page.dart';
+import 'timer/meditation_timer_page.dart';
 
 class MeditationPage extends StatefulWidget {
   _MeditationPageState createState() => _MeditationPageState();
@@ -47,7 +47,7 @@ class _MeditationPageState extends State<MeditationPage> {
                 PrimaryCircleButton(
                     size: 54,
                     icon: Icon(Icons.arrow_forward, color: AppColors.primary),
-                    onPressed: () => Get.to(TimerPage(pageId: 1))),
+                    onPressed: () => Get.to(MeditationTimerPage())),
               ],
             ),
           ],

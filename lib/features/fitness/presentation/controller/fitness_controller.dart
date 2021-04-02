@@ -30,13 +30,25 @@ class FitnessController extends GetxController {
 
   int step = 0;
 
-  void incrementStep() => step = step + 1;
+  void incrementStep() => step++;
+  void dicrementStep() => step--;
 
   FitnessExercise get currentExercise {
     if (selectedProgram == null || selectedProgram.exercises.isEmpty)
       return null;
     else {
       if (step >= selectedProgram.exercises.length)
+        return null;
+      else
+        return selectedProgram.exercises[step];
+    }
+  }
+
+  FitnessExercise get prevExercise {
+    if (selectedProgram == null || selectedProgram.exercises.isEmpty)
+      return null;
+    else {
+      if (step < 0)
         return null;
       else
         return selectedProgram.exercises[step];

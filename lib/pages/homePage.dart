@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/screenFAQ.dart';
@@ -88,9 +88,9 @@ class HomePageState extends State<HomePage> {
     }
   }
 
-  _startExercise() {
-    OrderUtil().getRouteByPositionInList(0).then((value) {
-      Navigator.push(context, value);
+  _startExercise() async {
+    await OrderUtil().getRouteByPositionInList(0).then((value) {
+      Get.off(value);
     });
   }
 

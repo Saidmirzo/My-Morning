@@ -9,7 +9,7 @@ import 'package:flutter_circular_chart_two/flutter_circular_chart_two.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/user/user.dart';
 import 'package:morningmagic/db/resource.dart';
@@ -893,7 +893,7 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           right: MediaQuery.of(context).size.width / 4.5,
           bottom: 0),
       child: AnimatedButton(() {
-        AppRouting.navigateToHomeWithClearHistory(context);
+        AppRouting.navigateToHomeWithClearHistory();
       }, 'menu'.tr, MediaQuery.of(context).size.width * 0.06, null, null),
     );
   }

@@ -1,16 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 
-import '../app_states.dart';
 import '../resources/colors.dart';
-
-import 'journalMyDetailsAdd.dart';
-import 'journalMyDitails.dart';
-import 'package:get/get.dart';
 
 class MyReadingProgress extends StatefulWidget {
   @override

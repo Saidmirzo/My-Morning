@@ -21,7 +21,7 @@ class RemoveProgressState extends State<RemoveProgress> {
           context: context,
           builder: (BuildContext context) => DeleteProgressDialog(() async {
                 await MyDB().clearWithoutUserName();
-                AppRouting.navigateToHomeWithClearHistory(context);
+                AppRouting.navigateToHomeWithClearHistory();
               }));
     }, 'remove_progress'.tr, 19, 100, FontWeight.normal);
   }

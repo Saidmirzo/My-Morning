@@ -8,6 +8,7 @@ import 'package:morningmagic/pages/diary/diary_page.dart';
 import 'package:morningmagic/pages/meditation/meditation_page.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/reading/reading_page.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/storage.dart';
 
 import '../db/model/reordering_program/order_holder.dart';
@@ -54,22 +55,22 @@ class OrderUtil {
   }
 
   String getStringIdByOrderId(int id) {
-    if (id == 0) {
+    if (id == TimerPageId.Affirmation) {
       return "affirmation_small";
-    } else if (id == 1) {
+    } else if (id == TimerPageId.Meditation) {
       return "meditation_small";
-    } else if (id == 2) {
+    } else if (id == TimerPageId.Fitness) {
       return "fitness_small";
-    } else if (id == 3) {
+    } else if (id == TimerPageId.Diary) {
       return "diary_small";
-    } else if (id == 4) {
+    } else if (id == TimerPageId.Reading) {
       return "reading_small";
     } else {
       return "visualization_small";
     }
   }
 
-  Future<MaterialPageRoute> getRouteByPositionInList(int position) async {
+  Future<dynamic> getRouteByPositionInList(int position) async {
     OrderHolder orderHolder = await getOrderHolder();
 
     OrderItem orderItem = orderHolder.list[position];
@@ -80,21 +81,21 @@ class OrderUtil {
       print('!isPro && ![0,1].contains(id)');
       return Get.to(PaywallPage());
     }
-    if (id == 0) return Get.to(AffirmationPage());
-    if (id == 1) return Get.to(MeditationPage());
-    if (id == 2) return Get.to(FitnessMainPage(pageId: id));
-    if (id == 3) return Get.to(DiaryPage());
-    if (id == 4) return Get.to(ReadingPage());
-    if (id == 5) return Get.to(VisualizationMainPage());
+    if (id == TimerPageId.Affirmation) return AffirmationPage();
+    if (id == TimerPageId.Meditation) return MeditationPage();
+    if (id == TimerPageId.Fitness) return FitnessMainPage(pageId: id);
+    if (id == TimerPageId.Diary) return DiaryPage();
+    if (id == TimerPageId.Reading) return ReadingPage();
+    if (id == TimerPageId.Visualization) return VisualizationMainPage();
   }
 
-  Future<MaterialPageRoute> getRouteById(int id) async {
+  Future<dynamic> getRouteById(int id) async {
     int currentProgramPosition = await getPositionById(id);
     print('currentPage = $currentProgramPosition');
     currentProgramPosition = currentProgramPosition + 1;
     print('nextPage = $currentProgramPosition');
     if (currentProgramPosition == 6) {
-      return MaterialPageRoute(builder: (context) => AskedQuestionsScreen());
+      return AskedQuestionsScreen();
     } else {
       return getRouteByPositionInList(currentProgramPosition);
     }

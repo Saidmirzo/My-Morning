@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/pages/payment.dart';
 import 'package:morningmagic/pages/payment_trial.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-import 'my_const.dart';
+import '../resources/my_const.dart';
 
 class BillingService {
   PurchaserInfo purchaserInfo;
@@ -18,7 +19,9 @@ class BillingService {
   }
 
   bool isPro() {
-    return purchaserInfo?.entitlements?.all["all_features"]?.isActive ?? false;
+    return kDebugMode
+        ? true
+        : purchaserInfo?.entitlements?.all["all_features"]?.isActive ?? false;
   }
 
   Package getMonthlyTarif() {

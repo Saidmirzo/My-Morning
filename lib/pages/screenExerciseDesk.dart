@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/app_exercise_holder.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/custom_exercise_holder.dart';

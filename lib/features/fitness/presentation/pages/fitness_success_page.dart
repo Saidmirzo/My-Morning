@@ -82,8 +82,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   void _continueClicked() async {
     Get.delete<FitnessController>();
     final _routeValue = await OrderUtil().getRouteById(2);
-
-    Navigator.push(context, _routeValue);
+    Get.off(_routeValue);
   }
 
   void _updateLocalData(int minutes) {

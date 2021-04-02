@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryCircleButton extends StatelessWidget {
@@ -18,18 +19,20 @@ class PrimaryCircleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return CupertinoButton(
       onPressed: onPressed,
-      child: Container(
-        child: icon,
+      child: SizedBox(
         width: size,
         height: size,
-        alignment: Alignment.center,
-        padding: padding,
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: CircleBorder(),
-        primary: bgColor,
+        child: Container(
+          child: icon,
+          alignment: Alignment.center,
+          padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: bgColor,
+          ),
+        ),
       ),
     );
   }

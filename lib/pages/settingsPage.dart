@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/routing/app_routing.dart';
@@ -104,7 +104,7 @@ class SettingsPageState extends State<SettingsPage> {
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: AppColors.VIOLET,
-                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 24),
                             ),
                           )),
@@ -161,7 +161,7 @@ class SettingsPageState extends State<SettingsPage> {
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: AppColors.VIOLET,
-                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 26),
                             ),
                           )),
@@ -199,7 +199,7 @@ class SettingsPageState extends State<SettingsPage> {
                                       child: Text('choose_ready'.tr,
                                           style: TextStyle(
                                             color: AppColors.VIOLET,
-                                            fontSize: 30,
+                                            fontSize: Get.height * 0.028,
                                             fontWeight: FontWeight.normal,
                                           )),
                                     ),
@@ -258,7 +258,7 @@ class SettingsPageState extends State<SettingsPage> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: AppColors.VIOLET,
-                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 26),
                           ),
                         ),
@@ -301,8 +301,7 @@ class SettingsPageState extends State<SettingsPage> {
                       child: Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
                         child: AnimatedButton(
-                            () => AppRouting.navigateToHomeWithClearHistory(
-                                context),
+                            () => AppRouting.navigateToHomeWithClearHistory(),
                             'continue'.tr,
                             null,
                             null,
@@ -575,7 +574,7 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   Future<bool> _onWillPop() async {
-    AppRouting.navigateToHomeWithClearHistory(context);
+    AppRouting.navigateToHomeWithClearHistory();
     return false;
   }
 

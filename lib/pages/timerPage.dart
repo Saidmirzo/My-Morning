@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
@@ -53,11 +53,10 @@ class TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     if (widget.pageId == 1) {
       _audioController = Get.find();
-      _audioPlayer = _audioController.audioPlayer.value;
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await timerService.init(this, context, widget.pageId, _audioPlayer);
+      await timerService.init(widget.pageId, _audioPlayer);
       if (widget.pageId == 5 && timerService.visualizationText != null)
         titleText = timerService.visualizationText;
     });
@@ -101,14 +100,13 @@ class TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
     print('build timer page');
     if (!isInitialized) {
       isInitialized = true;
-      timerService.buttonText = 'start'.tr;
     }
 
     return WillPopScope(
       onWillPop: () async {
         if (widget.pageId == 1) {
           _audioPlayer.pause();
-          _audioController.isPlaying = false;
+          _audioController.isPlaying.value = false;
         }
         return true;
       },
@@ -161,7 +159,7 @@ class TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
           text: StringUtil.createTimeString(timerService.time),
           foregroundColor: Colors.white.withOpacity(0.8),
           backgroundColor: Colors.white.withOpacity(0.4),
-          value: timerService.createValue(),
+          value: timerService.createValue,
           fontSize: _textSize,
         ),
       ),
@@ -253,10 +251,8 @@ class TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Container(
-          child: AnimatedButton(() => timerService.startTimer(),
-              timerService.buttonText, 15, null, null),
-        ),
+        Obx(() => AnimatedButton(() => timerService.startTimer(),
+            timerService.buttonText.value.toString(), 15, null, null)),
         Container(
           padding: EdgeInsets.only(top: 10),
           child: AnimatedButton(() {

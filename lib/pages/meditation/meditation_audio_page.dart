@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/meditation/components/menu.dart';
-import 'package:morningmagic/widgets/primary_square_button.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
 import '../../features/meditation_audio/presentation/dialogs/audio_meditation_dialog.dart';
 import '../../resources/colors.dart';
 import '../../widgets/primary_circle_button.dart';
-import '../timerPage.dart';
 import 'controllers/menu_controller.dart';
+import 'timer/meditation_timer_page.dart';
 
 class MeditationAudioPage extends StatefulWidget {
   @override
@@ -61,15 +60,15 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                             child: Icon(Icons.arrow_back, color: Colors.white),
                             onPressed: () => Get.back()),
                         Spacer(),
-                        buildDownloadButton(),
+                        // buildDownloadButton(),
                       ],
                     ),
-                    SizedBox(height: Get.height * 0.03),
+                    SizedBox(height: Get.height * 0.02),
                     PrimaryCircleButton(
                         size: 54,
                         icon:
                             Icon(Icons.arrow_forward, color: AppColors.primary),
-                        onPressed: () => Get.to(TimerPage(pageId: 1))),
+                        onPressed: () => Get.to(MeditationTimerPage())),
                   ],
                 ),
               ],

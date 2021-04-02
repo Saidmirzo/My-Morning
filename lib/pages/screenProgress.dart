@@ -66,7 +66,7 @@ class ProgressScreenState extends State {
                 Positioned(
                   bottom: 75,
                   child: AnimatedButton(() {
-                    AppRouting.navigateToHomeWithClearHistory(context);
+                    AppRouting.navigateToHomeWithClearHistory();
                   }, 'back_button'.tr, 22, null, null),
                 )
               ],
@@ -78,7 +78,7 @@ class ProgressScreenState extends State {
   }
 
   Future<bool> _onWillPop() async {
-    AppRouting.navigateToHomeWithClearHistory(context);
+    AppRouting.navigateToHomeWithClearHistory();
     return false;
   }
 }

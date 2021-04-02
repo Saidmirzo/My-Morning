@@ -15,27 +15,28 @@ class MediationAudioController extends GetxController {
 
   var audioPlayer = AudioPlayer().obs;
 
+  get player => audioPlayer.value;
+
   final List<MeditationAudio> audios = <MeditationAudio>[];
 
   var selectedItemIndex = 0.obs;
 
   var playingIndex = (-1).obs;
 
-  bool isPlaying = false;
-
+  RxBool isPlaying = false.obs;
   var isAudioLoading = false.obs;
 
+  List<AudioSource> playList;
+
   bool get isPlaylistAudioCached =>
-      audioPlayer.value.currentIndex < audios.length &&
-      audios[audioPlayer.value.currentIndex].file != null;
+      player.currentIndex < audios.length &&
+      audios[player.currentIndex].file != null;
 
   @override
   void onInit() async {
     super.onInit();
     audios.addAll(await repository.getCachedAudioFiles());
-    audioPlayer.value.playerStateStream.listen((state) {
-      print(
-          "Meditation audio player state = ${state.processingState.index}, playing = ${state.playing}");
+    player.playerStateStream.listen((state) {
       if (!state.playing &&
           (state.processingState.index == ProcessingState.loading.index ||
               state.processingState.index == ProcessingState.buffering.index)) {
@@ -49,8 +50,8 @@ class MediationAudioController extends GetxController {
   void onClose() {
     super.onClose();
     print('Meditation audio controller closed, player stopped and disposed');
-    audioPlayer.value.stop();
-    audioPlayer.value.dispose();
+    player.stop();
+    player.dispose();
   }
 
   Future<File> getCachedAudioFile(String trackId) async {
@@ -93,5 +94,48 @@ class MediationAudioController extends GetxController {
       }
     });
     return _result;
+  }
+
+  void initializeMeditationAudio() async {
+    playList = generateMeditationPlayList();
+    await player.setAudioSource(
+      ConcatenatingAudioSource(
+          children: List.generate(playList.length, (index) => playList[index])),
+      initialIndex: selectedItemIndex.value,
+      initialPosition: Duration.zero,
+    );
+    await player.setLoopMode(LoopMode.one);
+    player.playingStream.listen((event) {
+      if (isPlaying.value != event) isPlaying.value = event;
+    });
+    player.play();
+  }
+
+  void next() {
+    final _playListLength = playList.length;
+    if (_playListLength == 0) return;
+    int _nextIndex = 0;
+    if (player.currentIndex + 1 >= _playListLength)
+      _nextIndex = 0;
+    else
+      _nextIndex = player.currentIndex + 1;
+    player.seek(Duration(seconds: 0), index: _nextIndex);
+    if (!player.playing) player.play();
+  }
+
+  void prev() {
+    final _playListLength = playList.length;
+    if (_playListLength == 0) return;
+    int _nextIndex = 0;
+    if (player.currentIndex == 0)
+      _nextIndex = _playListLength - 1;
+    else
+      _nextIndex = player.currentIndex - 1;
+    player.seek(Duration(seconds: 0), index: _nextIndex);
+    if (!player.playing) player.play();
+  }
+
+  void playOrPause() {
+    player.playing ? player.pause() : player.play();
   }
 }

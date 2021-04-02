@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:isolate';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
@@ -21,26 +19,26 @@ import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
-import 'package:morningmagic/pages/success/screenTimerInputSuccess.dart';
+import 'package:morningmagic/pages/reading/timer/timer_note_page.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/routing/app_routing.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 
 import 'notifications.dart';
 
 // TODO rewrite
 class TimerService {
-  BuildContext context;
-  State state;
   Timer timer;
-  int time;
+  RxInt _time = 0.obs;
+  int get time => _time.value;
   int startTime;
   int startValue;
   int pageId;
-  String affirmationText;
+  RxString affirmationText = ''.obs;
   String visualizationText;
   String bookTitle;
-  String buttonText;
+  RxString buttonText = 'start'.tr.obs;
   AppStates appStates = Get.put(AppStates());
 
   DateTime appLeftTime;
@@ -50,15 +48,13 @@ class TimerService {
   AudioPlayer audioPlayer = AudioPlayer();
   AudioPlayer _player;
 
-  init(State _state, BuildContext _context, int _pageId,
-      AudioPlayer _player) async {
-    this.state = _state;
-    this.context = _context;
+  init(int _pageId, AudioPlayer _player) async {
+    print('timerService: init');
     this.pageId = _pageId;
     this._player = _player;
 
     getTimeAndText().then((int value) {
-      time = value * 60;
+      _time.value = value * 60;
       startValue = value * 60;
       startTime = value;
       startTimer();
@@ -70,29 +66,33 @@ class TimerService {
     if (timer != null) timer.cancel();
   }
 
-  Function skipTask() {
+  Future<void> skipTask() async {
+    print('skipTask: run');
     if (timer != null && timer.isActive) {
-      buttonText = 'start'.tr;
+      buttonText.value = 'start'.tr;
       timer.cancel();
     }
-    if (pageId != 4) saveProgress();
-    OrderUtil().getRouteById(pageId).then((value) {
-      if (pageId == 4)
+    print('skipTask: 2');
+    if (pageId != TimerPageId.Reading) saveProgress();
+    print('skipTask: 3');
+    await OrderUtil().getRouteById(pageId).then((value) {
+      print('skipTask pageId: $pageId');
+      if (pageId == TimerPageId.Reading)
         getNextPage(value);
       else
-        Navigator.push(context, value);
+        Get.off(value);
     });
-
-    if (pageId == 1) {
+    print('skipTask: 4');
+    if (pageId == TimerPageId.Meditation) {
       Get.delete<MediationAudioController>();
     }
   }
 
   Function goToHome() {
-    timer.cancel();
-    AppRouting.navigateToHomeWithClearHistory(context);
-    // При выходе в меню чтение (id4) не сохраняем
-    if (pageId != 4) saveProgress();
+    timer?.cancel();
+    AppRouting?.navigateToHomeWithClearHistory();
+    // При выходе в меню чтение не сохраняем
+    if (pageId != TimerPageId.Reading) saveProgress();
   }
 
   Future<int> getTimeAndText() async {
@@ -101,7 +101,7 @@ class TimerService {
         box.get(this.getBoxTimeKey(pageId), defaultValue: ExerciseTime(0));
     AffirmationText text = box.get(MyResource.AFFIRMATION_TEXT_KEY,
         defaultValue: AffirmationText(""));
-    affirmationText = text.affirmationText;
+    affirmationText.value = text.affirmationText;
     Visualization visualization =
         box.get(MyResource.VISUALIZATION_KEY, defaultValue: Visualization(""));
     visualizationText = visualization.visualization;
@@ -164,22 +164,22 @@ class TimerService {
       VisualizationProgress visualizationProgress;
       // FitnessProgress fitnessProgress;
       switch (pageId) {
-        case 0:
+        case TimerPageId.Affirmation:
           saveProg(MyResource.AFFIRMATION_PROGRESS, 'affirmation_small'.tr,
-              affirmationText);
+              affirmationText.value);
           affirmation =
-              AffirmationProgress(getPassedSeconds(), affirmationText);
+              AffirmationProgress(getPassedSeconds(), affirmationText.value);
           break;
-        case 1:
+        case TimerPageId.Meditation:
           meditation = MeditationProgress(getPassedSeconds());
           break;
-        case 2:
+        case TimerPageId.Fitness:
           saveProg(MyResource.FITNESS_PROGRESS, 'Упражнения', '');
           break;
-        case 4:
+        case TimerPageId.Reading:
           saveProg(MyResource.MY_READING_PROGRESS, 'Чтение', '');
           break;
-        case 5:
+        case TimerPageId.Visualization:
           saveProg(MyResource.MY_VISUALISATION_PROGRESS, 'Визуализация', '');
           visualizationProgress =
               VisualizationProgress(getPassedSeconds(), visualizationText);
@@ -191,51 +191,39 @@ class TimerService {
           null, null, visualizationProgress);
       ProgressUtil().updateDayList(day);
       print('SaveTimerPage id$pageId : $day');
-      time = startValue;
+      _time.value = startValue;
     } else {
       print('Dont save');
     }
   }
 
-  double createValue() {
-    if (startTime != null) {
-      return 1 - time / (startTime * 60);
-    } else {
-      return 0;
-    }
-  }
+  double get createValue =>
+      startTime != null ? 1 - time / (startTime * 60) : time.toDouble();
 
+  RxBool isActive = false.obs;
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
     if (timer == null || !timer.isActive) {
-      state.setState(() {
-        print('set state');
-        buttonText = 'stop'.tr;
+      buttonText.value = 'stop'.tr;
+      isActive.toggle();
+      timer = Timer.periodic(oneSec, (Timer timer) {
+        if (time < 1) {
+          print('timer_service: timer work done');
+          audioPlayer.setAsset("assets/audios/success.mp3");
+          audioPlayer.play();
+          _player?.stop();
+          timer.cancel();
+          if (pageId != TimerPageId.Reading) saveProgress();
+          buttonText.value = 'start'.tr;
+          OrderUtil().getRouteById(pageId).then((value) => getNextPage(value));
+        } else {
+          _time.value--;
+        }
       });
-      timer = Timer.periodic(
-          oneSec,
-          (Timer timer) => state.setState(() {
-                if (time < 1) {
-                  print('timer_service: timer work done');
-                  audioPlayer.setAsset("assets/audios/success.mp3");
-                  audioPlayer.play();
-                  _player?.stop();
-                  timer.cancel();
-                  if (pageId != 4) saveProgress();
-                  buttonText = 'start'.tr;
-                  OrderUtil()
-                      .getRouteById(pageId)
-                      .then((value) => getNextPage(value));
-                } else {
-                  time = time - 1;
-                  // print(time);
-                }
-              }));
     } else if (timer != null && timer.isActive) {
       timer.cancel();
-      state.setState(() {
-        buttonText = 'start'.tr;
-      });
+      buttonText.value = 'start'.tr;
+      isActive.toggle();
     }
   }
 
@@ -262,7 +250,7 @@ class TimerService {
     int val =
         DateTime.now().difference(appLeftTime ?? DateTime.now()).inSeconds;
     print('Разница: $val сек');
-    if (timer.isActive) time = leftSecondsBeforePauseApp - val;
+    if (timer.isActive) _time.value = leftSecondsBeforePauseApp - val;
     pushNotifications.deleteNotification(PushNotifications.pushIdTreaning);
     _stopIsolate();
   }
@@ -312,33 +300,30 @@ class TimerService {
     }
   }
 
-  getNextPage(Route value) {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) {
-        if (pageId == 4)
-          return TimerInputSuccessScreen(
-              minutes: MyDB().getBox().get(getBoxTimeKey(4)).time);
-        return TimerSuccessScreen(() => Navigator.push(context, value),
-            MyDB().getBox().get(getBoxTimeKey(pageId)).time ?? 3, false);
-      },
-    ));
+  getNextPage(dynamic value) {
+    Get.off(pageId == TimerPageId.Reading
+        ? TimerInputSuccessScreen(
+            minutes:
+                MyDB().getBox().get(getBoxTimeKey(TimerPageId.Reading)).time)
+        : TimerSuccessScreen(() => Get.to(value),
+            MyDB().getBox().get(getBoxTimeKey(pageId)).time ?? 3, false));
   }
 
   getBoxTimeKey(int pageId) {
     switch (pageId) {
-      case 0:
+      case TimerPageId.Affirmation:
         return MyResource.AFFIRMATION_TIME_KEY;
         break;
-      case 1:
+      case TimerPageId.Meditation:
         return MyResource.MEDITATION_TIME_KEY;
         break;
-      case 2:
+      case TimerPageId.Fitness:
         return MyResource.FITNESS_TIME_KEY;
         break;
-      case 4:
+      case TimerPageId.Reading:
         return MyResource.READING_TIME_KEY;
         break;
-      case 5:
+      case TimerPageId.Visualization:
         return MyResource.VISUALIZATION_TIME_KEY;
         break;
       default:

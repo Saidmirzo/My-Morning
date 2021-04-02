@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
-import 'package:morningmagic/my_const.dart';
+import 'package:morningmagic/resources/my_const.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/my_url.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -57,8 +57,7 @@ class _PaymentPageTrialState extends State<PaymentPageTrial> {
                 Column(
                   children: [
                     period(
-                        'vip_price_card'.trParams({'price': monthPrice}),
-                        120),
+                        'vip_price_card'.trParams({'price': monthPrice}), 120),
                     const SizedBox(height: 20),
                     Container(
                         width: 300,

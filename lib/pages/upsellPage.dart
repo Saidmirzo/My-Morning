@@ -56,7 +56,7 @@ class UpsellPageState extends State<UpsellPage> {
               Container(
                 height: 100,
                 child: AnimatedButton(
-                    () => AppRouting.navigateToHomeWithClearHistory(context),
+                    () => AppRouting.navigateToHomeWithClearHistory(),
                     'menu'.tr,
                     22,
                     null,

@@ -15,9 +15,11 @@ class FitnessExercise extends Equatable {
   final bool isCreatedByUser;
   @HiveField(3)
   final String audioRes;
+  @HiveField(4)
+  final String imageRes;
 
   FitnessExercise(this._name, this._description,
-      {@required this.isCreatedByUser, this.audioRes});
+      {this.isCreatedByUser = false, this.audioRes, this.imageRes});
 
   String get name {
     if (!this.isCreatedByUser)

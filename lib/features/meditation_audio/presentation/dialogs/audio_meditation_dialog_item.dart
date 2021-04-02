@@ -8,8 +8,6 @@ import 'package:morningmagic/features/meditation_audio/presentation/controller/m
 import 'package:morningmagic/resources/colors.dart';
 
 import '../../../../resources/colors.dart';
-import '../../../../resources/colors.dart';
-import '../../../../resources/colors.dart';
 import '../../../../widgets/primary_circle_button.dart';
 
 class AudioMeditationDialogItem extends StatefulWidget {
@@ -31,13 +29,10 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
   MediationAudioController _audioController =
       Get.find<MediationAudioController>();
 
-  AudioPlayer _audioPlayer;
   bool playCached = false;
 
   @override
   Widget build(BuildContext context) {
-    _audioPlayer = _audioController.audioPlayer.value;
-
     return Column(
       children: [
         InkWell(
@@ -96,7 +91,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
       bgColor: AppColors.primary,
       icon: Icon(
         (_audioController.playingIndex.value == widget.id &&
-                _audioController.isPlaying)
+                _audioController.isPlaying.value)
             ? Icons.pause
             : Icons.play_arrow,
         color: AppColors.WHITE,
@@ -117,7 +112,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
 
   void _handlePlayPauseButton() {
     _audioController.selectedItemIndex.value = widget.id;
-    if (!_audioController.isPlaying) {
+    if (!_audioController.isPlaying.value) {
       final _oldPlayingIndex = _audioController.playingIndex.value;
       _audioController.playingIndex.value = widget.id;
 
@@ -125,12 +120,12 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
           _oldPlayingIndex != widget.id) {
         _playNewTrack(widget.trackId);
       } else
-        _audioPlayer.play();
-      _setIsPlayingState(!_audioController.isPlaying);
+        _audioController.player.play();
+      _setIsPlayingState(!_audioController.isPlaying.value);
     } else {
       if (_audioController.playingIndex.value == widget.id) {
-        _audioPlayer.pause();
-        _setIsPlayingState(!_audioController.isPlaying);
+        _audioController.player.pause();
+        _setIsPlayingState(!_audioController.isPlaying.value);
       } else {
         _playNewTrack(widget.trackId);
         _audioController.playingIndex.value = widget.id;
@@ -141,7 +136,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
 
   void _setIsPlayingState(bool newIsPlaying) {
     setState(() {
-      _audioController.isPlaying = newIsPlaying;
+      _audioController.isPlaying.value = newIsPlaying;
     });
   }
 
@@ -150,15 +145,15 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     final _cachedAudioFile = await _audioController.getCachedAudioFile(trackId);
     if (_cachedAudioFile == null) {
       playCached = false;
-      await _audioPlayer.setUrl(_trackUrl);
+      await _audioController.player.setUrl(_trackUrl);
       print('Play from url $_trackUrl, isFile cached = $playCached');
     } else {
       playCached = true;
       final _filePath = _cachedAudioFile.path;
-      await _audioPlayer.setFilePath(_filePath);
+      await _audioController.player.setFilePath(_filePath);
       print('Play from path $_filePath, isFile cached = $playCached');
     }
 
-    _audioPlayer.play();
+    _audioController.player.play();
   }
 }

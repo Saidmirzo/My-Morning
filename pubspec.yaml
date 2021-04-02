@@ -50,6 +50,7 @@ dependencies:
   data_connection_checker: ^0.3.4
   flutter_local_notifications: ^4.0.1+2
   sliding_sheet: ^0.4.0
+  percent_indicator: ^3.0.1
 
   flutter_localizations:
     sdk: flutter
@@ -74,17 +75,23 @@ flutter_icons:
 
 flutter:
   assets:
-    - assets/svg/
     - assets/images/
     - assets/images/targets/
     - assets/images/fitnes/
+    - assets/images/fitnes/ex/
+    - assets/images/fitnes/ex/program_1/
+    - assets/images/fitnes/ex/program_2/
+    - assets/images/fitnes/ex/program_3/
+    - assets/images/fitnes/ex/program_4/
     - assets/images/visualisation/
     - assets/images/reading/
     - assets/images/diary/
+    - assets/images/diary/note/
     - assets/images/meditation/
     - assets/images/affirmation/
     - assets/images/purchase/
     - assets/images/svg/
+    - assets/images/timer/
     - assets/audios/
 
   fonts:
