@@ -14,13 +14,12 @@ import '../../../../resources/colors.dart';
 
 class FitnessMainPage extends StatelessWidget {
   final int pageId;
-  final FitnessController controller =
-      Get.put(FitnessController(repository: FitnessProgramRepositoryImpl()));
 
   FitnessMainPage({Key key, @required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Get.put(FitnessController(repository: FitnessProgramRepositoryImpl()));
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(

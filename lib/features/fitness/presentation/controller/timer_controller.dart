@@ -106,6 +106,7 @@ class TimerFitnesController {
         (Timer timer) {
           if (time.value < 1) {
             final _audioPlayer = AudioPlayer();
+
             _audioPlayer.setAsset("assets/audios/success.mp3");
             _audioPlayer.play();
             timer.cancel();

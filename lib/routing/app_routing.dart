@@ -32,7 +32,18 @@ class AppRouting {
   }
 
   static void navigateToHomeWithClearHistory() {
-    // Navigator?.pushNamedAndRemoveUntil(context, homePageRoute, (r) => false);
-    Get.offAndToNamed(homePageRoute, result: false);
+    Navigator.pushAndRemoveUntil(
+      Get.context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  static void replace(Widget page) {
+    Navigator.pushAndRemoveUntil(
+      Get.context,
+      MaterialPageRoute(builder: (context) => page),
+      (Route<dynamic> route) => false,
+    );
   }
 }

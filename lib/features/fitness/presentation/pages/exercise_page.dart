@@ -10,6 +10,7 @@ import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_pa
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_success_page.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/timer.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
@@ -240,7 +241,7 @@ class _ExercisePageState extends State<ExercisePage> {
       exercise.value = _exercise;
     } else {
       _fitnessController.step = 0;
-      Get.off(FitnessSuccessPage());
+      AppRouting.replace(FitnessSuccessPage());
     }
   }
 

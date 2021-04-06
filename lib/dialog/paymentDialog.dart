@@ -130,13 +130,16 @@ class PaymentDialog extends Dialog {
   }
 
   _startPaymentSubscription(BuildContext context) {
-    Navigator.pop(context);
+    Get.back();
     billingService.startPaymentPage(context);
   }
 
   _startPaymentTrial(BuildContext context) {
-    Navigator.pop(context);
-    billingService.startPaymentPageTrial(context);
+    Get.back();
+    billingService.startPaymentPage(context);
+    // Непонятно зачем вызывается другая страница с тем дже функционалом что и основная
+    // заказчик тоже этого не понял, по этому я заменил на основную
+    // billingService.startPaymentPageTrial(context);
   }
 }
 

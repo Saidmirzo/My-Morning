@@ -19,6 +19,7 @@ class BillingService {
   }
 
   bool isPro() {
+    // return purchaserInfo?.entitlements?.all["all_features"]?.isActive ?? false;
     return kDebugMode
         ? true
         : purchaserInfo?.entitlements?.all["all_features"]?.isActive ?? false;

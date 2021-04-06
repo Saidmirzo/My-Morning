@@ -351,15 +351,12 @@ class SettingsPageState extends State<SettingsPage> {
 
   void _initOpenDialog() async {
     await Future.delayed(Duration(seconds: 3));
-    if (context != null) {
-      _openDialog();
-    }
+    _openDialog();
   }
 
   void _openDialog() async {
     if (!billingService.isPro()) {
-      showDialog(
-          context: context, builder: (BuildContext context) => PaymentDialog());
+      Get.dialog(PaymentDialog());
     }
   }
 

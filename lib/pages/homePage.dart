@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/screenFAQ.dart';
 import 'package:morningmagic/routing/route_values.dart';
-import 'package:morningmagic/services/notifications.dart';
+import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 
 import '../db/hive.dart';

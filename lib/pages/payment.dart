@@ -109,7 +109,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 icon: Icon(Icons.arrow_back, color: AppColors.primary),
                 onPressed: () => Get.back()),
             Container(
-              width: Get.width * 0.55,
+              width: Get.width * 0.40,
               child: Text(
                 'purchase_page_title'.tr,
                 textAlign: TextAlign.center,
@@ -140,19 +140,19 @@ class _PaymentPageState extends State<PaymentPage> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18), color: Colors.white),
       width: Get.width * 0.28,
-      height: Get.height * 0.15,
+      height: Get.height * 0.16,
       padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (image != null) Image.asset(image, height: 30, width: 30),
+          if (image != null) Image.asset(image, height: Get.height * 0.03),
           const SizedBox(height: 10),
           Text(title,
               style: TextStyle(
                   fontSize: Get.height * 0.011,
                   fontWeight: FontWeight.w700,
                   color: AppColors.primary)),
-          const SizedBox(height: 10),
+          const SizedBox(height: 6),
           Text(desc,
               style: TextStyle(
                 fontSize: Get.height * 0.011,
@@ -180,10 +180,10 @@ class _PaymentPageState extends State<PaymentPage> {
               children: [
                 Text(title,
                     style: TextStyle(
-                        fontSize: Get.height * 0.011,
+                        fontSize: Get.height * 0.013,
                         fontWeight: FontWeight.w700,
                         color: AppColors.primary)),
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
                 Text(desc,
                     style: TextStyle(
                       fontSize: Get.height * 0.013,
@@ -193,7 +193,7 @@ class _PaymentPageState extends State<PaymentPage> {
               ],
             ),
           ),
-          if (image != null) Image.asset(image, height: 60, width: 90),
+          if (image != null) Image.asset(image, height: Get.height * 0.05),
         ],
       ),
     );
@@ -208,14 +208,18 @@ class _PaymentPageState extends State<PaymentPage> {
             period,
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w700, fontSize: 20),
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: Get.height * 0.022),
           ),
           Spacer(),
           Text(
             price,
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w700, fontSize: 20),
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: Get.height * 0.022),
           )
         ],
       ),
@@ -230,11 +234,11 @@ class _PaymentPageState extends State<PaymentPage> {
         decoration: BoxDecoration(
             color: AppColors.purchaseDesc.withOpacity(0.64),
             borderRadius: BorderRadius.circular(20)),
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text(
           'try_vip_desc'.trParams({'price': monthPrice}),
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: Get.height * 0.015),
         ));
   }
 
