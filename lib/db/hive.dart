@@ -9,6 +9,7 @@ import 'package:morningmagic/db/model/visualization/visualization_adapter.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
+import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 
 import 'model/affirmation_text/affirmation_text_adapter.dart';
@@ -67,6 +68,7 @@ class MyDB {
     Hive.registerAdapter(FitnessProgramAdapter());
     Hive.registerAdapter(FitnessExerciseAdapter());
     Hive.registerAdapter(VisualizationTargetAdapter());
+    Hive.registerAdapter(MeditationAudioAdapter());
 
     await this.openMyBox();
   }
@@ -97,5 +99,6 @@ class MyDB {
     await myDbBox.put(MyResource.NOTEPADS, []);
     await myDbBox.put(MyResource.NOTE_KEY, Note(""));
     await myDbBox.put(MyResource.NOTE_COUNT, 0);
+    await myDbBox.put(MyResource.MEDITATION_AUDIO_FAVORITE, []);
   }
 }

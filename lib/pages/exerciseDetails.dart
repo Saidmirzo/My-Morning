@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:morningmagic/services/analyticService.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';

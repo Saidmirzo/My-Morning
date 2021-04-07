@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
+import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
 
@@ -12,12 +13,12 @@ import '../../../../widgets/primary_circle_button.dart';
 
 class AudioMeditationDialogItem extends StatefulWidget {
   final int id;
-  final String trackId;
+  final MeditationAudio audio;
 
   const AudioMeditationDialogItem({
     Key key,
     @required this.id,
-    @required this.trackId,
+    @required this.audio,
   });
 
   @override
@@ -36,7 +37,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     return Column(
       children: [
         InkWell(
-          onTap: () => _handlePlayPauseButton(),
+          onTap: () => _audioController.selectedItemIndex.value = widget.id,
           child: Obx(
             () => Container(
               margin: EdgeInsets.only(bottom: 8),
@@ -55,7 +56,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                     Container(
                       width: Get.width * 0.5,
                       child: StyledText(
-                        widget.trackId,
+                        widget.audio.id,
                         fontSize: 17,
                         color: AppColors.primary,
                       ),
@@ -78,11 +79,15 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
 
   Widget buildFavoriteButton() {
     return CupertinoButton(
-        child: Icon(
-          Icons.star_border,
-          color: AppColors.primary,
-        ),
-        onPressed: () {});
+        child: Obx(() => Icon(
+              _audioController.favoriteAudios.value.contains(widget.audio)
+                  ? Icons.star_outlined
+                  : Icons.star_border,
+              color: AppColors.primary,
+            )),
+        onPressed: () {
+          _audioController.setAudioFavorite(widget.audio);
+        });
   }
 
   Widget _buildAudioControlButton() {
@@ -111,14 +116,13 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
   }
 
   void _handlePlayPauseButton() {
-    _audioController.selectedItemIndex.value = widget.id;
     if (!_audioController.isPlaying.value) {
       final _oldPlayingIndex = _audioController.playingIndex.value;
       _audioController.playingIndex.value = widget.id;
 
       if (_audioController.playingIndex.value == -1 ||
           _oldPlayingIndex != widget.id) {
-        _playNewTrack(widget.trackId);
+        _playNewTrack(widget.audio.id);
       } else
         _audioController.player.play();
       _setIsPlayingState(!_audioController.isPlaying.value);
@@ -127,7 +131,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
         _audioController.player.pause();
         _setIsPlayingState(!_audioController.isPlaying.value);
       } else {
-        _playNewTrack(widget.trackId);
+        _playNewTrack(widget.audio.id);
         _audioController.playingIndex.value = widget.id;
         _setIsPlayingState(true);
       }

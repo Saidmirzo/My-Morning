@@ -38,7 +38,6 @@ class TimerService {
   RxString affirmationText = ''.obs;
   String visualizationText;
   String bookTitle;
-  RxString buttonText = 'start'.tr.obs;
   AppStates appStates = Get.put(AppStates());
 
   DateTime appLeftTime;
@@ -69,7 +68,6 @@ class TimerService {
   Future<void> skipTask() async {
     print('skipTask: run');
     if (timer != null && timer.isActive) {
-      buttonText.value = 'start'.tr;
       timer.cancel();
     }
     print('skipTask: 2');
@@ -204,7 +202,6 @@ class TimerService {
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
     if (timer == null || !timer.isActive) {
-      buttonText.value = 'stop'.tr;
       isActive.toggle();
       timer = Timer.periodic(oneSec, (Timer timer) {
         if (time < 1) {
@@ -214,7 +211,6 @@ class TimerService {
           _player?.stop();
           timer.cancel();
           if (pageId != TimerPageId.Reading) saveProgress();
-          buttonText.value = 'start'.tr;
           OrderUtil().getRouteById(pageId).then((value) => getNextPage(value));
         } else {
           _time.value--;
@@ -222,7 +218,6 @@ class TimerService {
       });
     } else if (timer != null && timer.isActive) {
       timer.cancel();
-      buttonText.value = 'start'.tr;
       isActive.toggle();
     }
   }

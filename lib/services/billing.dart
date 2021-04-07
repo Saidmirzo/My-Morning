@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/pages/payment.dart';
-import 'package:morningmagic/pages/payment_trial.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../resources/my_const.dart';
@@ -40,11 +39,5 @@ class BillingService {
     print('start payemt page');
     await Navigator.push(
         context, MaterialPageRoute(builder: (_) => PaymentPage()));
-  }
-
-  startPaymentPageTrial(BuildContext context) async {
-    print('start payemt trial page');
-    await Navigator.push(
-        context, MaterialPageRoute(builder: (_) => PaymentPageTrial()));
   }
 }

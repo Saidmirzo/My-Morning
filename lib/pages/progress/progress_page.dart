@@ -9,46 +9,45 @@ import 'package:flutter_circular_chart_two/flutter_circular_chart_two.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/services/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/user/user.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
-import 'package:morningmagic/pages/myFitnessProgress.dart';
-import 'package:morningmagic/pages/myVisualizationProgress.dart';
+import 'package:morningmagic/pages/progress/components/remove_button.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/routing/app_routing.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/utils/other.dart';
-import 'package:morningmagic/widgets/remove_progress.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-import '../app_states.dart';
-import '../db/model/progress/affirmation_progress/affirmation_progress.dart';
-import '../db/model/progress/day/day.dart';
-import '../db/model/progress/fitness_porgress/fitness_progress.dart';
-import '../db/model/progress/meditation_progress/meditation_progress.dart';
-import '../db/model/progress/reading_progress/reading_progress.dart';
-import '../db/model/progress/visualization_progress/visualization_progress.dart';
-import '../db/model/progress/vocabulary_progress/vocabulary_note_progress.dart';
-import '../db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
-import '../storage.dart';
-import '../widgets/animatedButton.dart';
-import '../widgets/progressItem.dart';
-import '../widgets/progressItemRecord.dart';
-import 'journalMy.dart';
+import '../../app_states.dart';
+import '../../db/model/progress/affirmation_progress/affirmation_progress.dart';
+import '../../db/model/progress/day/day.dart';
+import '../../db/model/progress/fitness_porgress/fitness_progress.dart';
+import '../../db/model/progress/meditation_progress/meditation_progress.dart';
+import '../../db/model/progress/reading_progress/reading_progress.dart';
+import '../../db/model/progress/visualization_progress/visualization_progress.dart';
+import '../../db/model/progress/vocabulary_progress/vocabulary_note_progress.dart';
+import '../../db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
+import '../../storage.dart';
+import '../../widgets/progressItem.dart';
+import '../../widgets/progressItemRecord.dart';
+import '../paywall_page.dart';
+import 'components/menu_button.dart';
+import 'journal/journalMy.dart';
 import 'myAffirmationProgress.dart';
+import 'myFitnessProgress.dart';
 import 'myReadingProgress.dart';
-import 'paywall_page.dart';
+import 'myVisualizationProgress.dart';
 
-class AskedQuestionsScreen extends StatefulWidget {
+class ProgressPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _AskedQuestionsState();
+    return _ProgressPageState();
   }
 }
 
-class _AskedQuestionsState extends State<AskedQuestionsScreen> {
+class _ProgressPageState extends State<ProgressPage> {
   AppStates appStates = Get.put(AppStates());
   int appRating = 5;
 
@@ -85,25 +84,29 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
         child: SingleChildScrollView(
           padding: EdgeInsets.only(top: 16, bottom: 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              InkWell(
-                onTap: () async {
-                  nameController.text = userName;
-                  final _newName = await _editUserNameDialog();
-                  if (_newName != null) {
-                    setState(() {
-                      userName = _newName;
-                    });
-                    MyDB().getBox().put(MyResource.USER_KEY, User(userName));
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 25.0, right: 25.0, top: 16, bottom: 16),
-                  child: Text(
-                    userName,
-                    style: TextStyle(fontSize: 23, color: AppColors.VIOLET),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: InkWell(
+                  onTap: () async {
+                    nameController.text = userName;
+                    final _newName = await _editUserNameDialog();
+                    if (_newName != null) {
+                      setState(() {
+                        userName = _newName;
+                      });
+                      MyDB().getBox().put(MyResource.USER_KEY, User(userName));
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 25.0, right: 25.0, top: 16, bottom: 16),
+                    child: Text(
+                      userName,
+                      style: TextStyle(fontSize: 23, color: AppColors.VIOLET),
+                    ),
                   ),
                 ),
               ),
@@ -249,9 +252,11 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20))),
-                height: MediaQuery.of(context).size.height < 668
-                    ? MediaQuery.of(context).size.height * 0.255
-                    : MediaQuery.of(context).size.height * 0.215,
+                // Из-за ограничения на маленьких экранах ошибка RenderFlex overflowed
+                // Считаю что здесь не нужно ограничивать высоту, пусть подстраивается под размер контента
+                // height: MediaQuery.of(context).size.height < 668
+                //     ? MediaQuery.of(context).size.height * 0.255
+                //     : MediaQuery.of(context).size.height * 0.215,
                 margin: const EdgeInsets.only(
                   left: 20.0,
                   right: 20,
@@ -273,9 +278,11 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
                             bottomLeft: Radius.circular(4),
                             bottomRight: Radius.circular(4),
                           )),
-                      height: MediaQuery.of(context).size.height < 668
-                          ? MediaQuery.of(context).size.height * 0.08
-                          : MediaQuery.of(context).size.height * 0.06,
+                      // Из-за ограничения на маленьких экранах ошибка RenderFlex overflowed
+                      // Считаю что здесь не нужно ограничивать высоту, пусть подстраивается под размер контента
+                      // height: MediaQuery.of(context).size.height < 668
+                      //     ? MediaQuery.of(context).size.height * 0.08
+                      //     : MediaQuery.of(context).size.height * 0.06,
                       child: Row(
                         //crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -610,9 +617,9 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
               SizedBox(
                 height: 8,
               ),
-              _menuButton(context),
-              SizedBox(height: 5),
-              RemoveProgress(),
+              menuButton(),
+              SizedBox(height: 10),
+              removeButton(),
             ],
           ),
         ),
@@ -881,20 +888,6 @@ class _AskedQuestionsState extends State<AskedQuestionsScreen> {
           ),
         ],
       ),
-    );
-  }
-
-  Container _menuButton(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.05,
-      padding: EdgeInsets.only(
-          top: 0,
-          left: MediaQuery.of(context).size.width / 4.5,
-          right: MediaQuery.of(context).size.width / 4.5,
-          bottom: 0),
-      child: AnimatedButton(() {
-        AppRouting.navigateToHomeWithClearHistory();
-      }, 'menu'.tr, MediaQuery.of(context).size.width * 0.06, null, null),
     );
   }
 

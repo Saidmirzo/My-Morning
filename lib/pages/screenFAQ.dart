@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:morningmagic/services/analyticService.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/routing/app_routing.dart';

@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_favorite.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/dialogs/music_meditation_dialog.dart';
 import 'package:morningmagic/pages/meditation/components/menu.dart';
+import 'package:morningmagic/services/analitics/all.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
 import '../../features/meditation_audio/presentation/dialogs/audio_meditation_dialog.dart';
@@ -68,7 +72,10 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                         size: 54,
                         icon:
                             Icon(Icons.arrow_forward, color: AppColors.primary),
-                        onPressed: () => Get.to(MeditationTimerPage())),
+                        onPressed: () {
+                          Get.to(MeditationTimerPage());
+                          appAnalitics.logEvent('first_music_next');
+                        }),
                   ],
                 ),
               ],
@@ -81,7 +88,13 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                 child: Container(
                   // height: Get.height,
                   padding: const EdgeInsetsDirectional.only(bottom: 50),
-                  child: AudioMeditationContainer(),
+                  child: Obx(() {
+                    return cMenu.currentPage.value == MenuItems.favorite
+                        ? AudioMeditationFavoriteContainer()
+                        : cMenu.currentPage.value == MenuItems.music
+                            ? MusicMeditationContainer()
+                            : AudioMeditationContainer();
+                  }),
                 ),
               );
             },

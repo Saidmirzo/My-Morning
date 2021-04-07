@@ -68,73 +68,117 @@ class LocalizationService extends Translations {
           "next_exercise": "Следующее упражнение",
           "program_1": "Йога.«Приветствие солнцу – Сурья намаскар»",
           "program_1_ex_1_name": "Хаста Уттанасана",
+          "program_1_ex_1_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%A5%D0%B0%D1%81%D1%82%D0%B0%20%D0%A3%D1%82%D1%82%D0%B0%D0%BD%D0%B0%D1%81%D0%B0%D0%BD%D0%B0.mp3',
           "program_1_ex_1_desc":
               "1. Встаньте ровно, подтяните живот, \n2. ягодицы и коленные чашечки. \n2. На вдохе поднимите руки вверх, делая 3. небольшой прогиб назад. \n3. Вернитесь в исходное положение",
           "program_1_ex_2_name": "Уттанасана",
+          "program_1_ex_2_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%A3%D1%82%D1%82%D0%B0%D0%BD%D0%B0%D1%81%D0%B0%D0%BD%D0%B0.mp3',
           "program_1_ex_2_desc":
               "1. Стойте ровно и сделайте вдох. \n2. На выдохе тянитесь руками вниз, сгибаясь в тазобедренных. \n3. Следите за тем, чтобы спина была прямая, шея расслаблена и руки все время тянулись вниз.",
           "program_1_ex_3_name": "Ашва Санчаланасана",
+          "program_1_ex_3_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%90%D1%88%D0%B2%D0%B0%20%D0%A1%D0%B0%D0%BD%D1%87%D0%B0%D0%BB%D0%B0%D0%BD%D0%B0%D1%81%D0%B0%D0%BD%D0%B0.mp3',
           "program_1_ex_3_desc":
               "1. Встаньте на четвереньки, колени под тазом, руки выпрямлены и находятся под плечами. \n2. На вдохе сделайте выпад правой ногой вперед. Нога должна быть строго 90 градусов. \n3. Потянитесь, вернитесь в исходное положение и повторите с другой ноги.",
           "program_1_ex_4_name": "Адхо Мукха Шванасана",
+          "program_1_ex_4_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%90%D0%B4%D1%85%D0%BE%20%D0%9C%D1%83%D0%BA%D1%85%D0%B0%20%D0%A8%D0%B2%D0%B0%D0%BD%D0%B0%D1%81%D0%B0%D0%BD%D0%B0.mp3',
           "program_1_ex_4_desc":
               "1. Встаньте на четвереньки, колени под тазом, руки выпрямлены и находятся под плечами. \n2. Сделайте вдох. На выдохе примите позу «собаки мордой вниз», выпрямляя руки и ноги. Колени могут быть согнуты \n3. Вернитесь в исходное положение.",
           "program_1_ex_5_name": "Бхуджангасана",
+          "program_1_ex_5_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%91%D1%85%D1%83%D0%B4%D0%B6%D0%B0%D0%BD%D0%B3%D0%B0%D1%81%D0%B0%D0%BD%D0%B0.mp3',
           "program_1_ex_5_desc":
               "1. Лягте на пол животом вниз. \n2. Поставьте руки немного сбоку от груди с обеих сторон. \n3. На вдохе вытягивайте руки, поднимая корпус. Ягодицы и ноги должны быть подтянуты.",
           "program_1_ex_6_name": "Гомукхасана",
+          "program_1_ex_6_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%93%D0%BE%D0%BC%D1%83%D0%BA%D1%85%D0%B0%D1%81%D0%B0%D0%BD%D0%B0.mp3',
           "program_1_ex_6_desc":
               "1. Сядьте на пол, ноги и спина выпрямлены. \n2. Скрестите ноги либо постарайтесь положить одну ногу сверху, как показано на рисунке. \n3. Поднимите руки вверх, сделайте вдох. На выдохе скрестите руки сзади за спиной, одна сверху, другая снизу. \n4. Вернитесь в исходное положение и повторите все с другой ноги и руки.",
           "program_2": "Программа «Бодрость»",
-          "program_2_ex_1_name": "Шаги на месте",
+          "program_2_ex_1_name": "Наклоны",
+          "program_2_ex_1_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9D%D0%B0%D0%BA%D0%BB%D0%BE%D0%BD%D1%8B.mp3',
           "program_2_ex_1_desc":
               "1. Встаньте прямо, руки по швам.\n2. Начинайте поочередно поднимать ноги, шагая на месте, следите за дыханием.",
-          "program_2_ex_2_name": "Наклоны",
+          "program_2_ex_2_name": "Шаги на месте",
+          "program_2_ex_2_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%A8%D0%B0%D0%B3%D0%B8%20%D0%BD%D0%B0%20%D0%BC%D0%B5%D1%81%D1%82%D0%B5.mp3',
           "program_2_ex_2_desc":
               "1. Встаньте прямо, ноги шире плеч.\n2. Выполняйте поочередные наклоны в разные стороны. Правая рука наверху, левая согнута на боку, наклон вправо. И наоборот.",
           "program_2_ex_3_name": "Приседания с поворотом туловища",
+          "program_2_ex_3_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9F%D1%80%D0%B8%D1%81%D0%B5%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F%20%D1%81%20%D0%BF%D0%BE%D0%B2%D0%BE%D1%80%D0%BE%D1%82%D0%BE%D0%BC%20%D1%82%D1%83%D0%BB%D0%BE%D0%B2%D0%B8%D1%89%D0%B0.mp3',
           "program_2_ex_3_desc":
               "1. Встаньте прямо, ноги на ширине плеч. \n2. Выполните приседание. Ваши колени не должны выходить вперед уровня стоп. \n3. Из этого положения выпрямитесь с поворотом направо, руки вверх. Вес на правой передней ноге, левая нога сзади на носке. \n4. Вернитесь в присед и выпрямитесь в другую сторону.",
           "program_2_ex_4_name": "Баланс",
+          "program_2_ex_4_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%91%D0%B0%D0%BB%D0%B0%D0%BD%D1%81.mp3',
           "program_2_ex_4_desc":
               "1. Встаньте ровно, руки по швам. Поднимите правую ногу, согнув колено.\n2. Оставаясь на левой ноге, одновременно вытягивайте прямые руки вперед, а правую ногу назад.\n3. Задержитесь в этой позиции на какое-то время и вернитесь в исходное положение.\n4. Повторите с другой ноги.",
           "program_2_ex_5_name": "Поднятие таза из упора лежа на спине",
+          "program_2_ex_5_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9F%D0%BE%D0%B4%D0%BD%D1%8F%D1%82%D0%B8%D0%B5_%D1%82%D0%B0%D0%B7%D0%B0_%D0%B8%D0%B7_%D1%83%D0%BF%D0%BE%D1%80%D0%B0_%D0%BB%D0%B5%D0%B6%D0%B0_%D0%BD%D0%B0_%D1%81%D0%BF%D0%B8%D0%BD%D0%B5.mp3',
           "program_2_ex_5_desc":
               "1. Лягте на спину, ноги согнуты в коленях, стопы стоят на полу.\n2. Начинайте поднимать корпус, напрягая мышцы ягодиц и ног.\n3. Повторите 20 раз.",
           "program_3": "Свернуть горы",
           "program_3_ex_1_name": "Наклоны",
+          "program_3_ex_1_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9D%D0%B0%D0%BA%D0%BB%D0%BE%D0%BD%D1%8B.mp3',
           "program_3_ex_1_desc":
               "1. Встаньте прямо, ноги шире плеч. \n2. Выполняйте поочередные наклоны в разные стороны. Правая сторона рука, левая согнута на боку, наклон вправо. И наоборот.",
           "program_3_ex_2_name": "Прыжки",
+          "program_3_ex_2_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9F%D1%80%D1%8B%D0%B6%D0%BA%D0%B8.mp3',
           "program_3_ex_2_desc":
               "1. Встаньте прямо, ноги шире плеч, стопы развернуты в стороны. \n2. Выполните приседание с ровной спиной, руки вниз. \n3. Из этого положения выпрыгните вверх, руки на груди. \n4. Повторите несколько раз.",
           "program_3_ex_3_name": "Отжимания от пола",
+          "program_3_ex_3_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9E%D1%82%D0%B6%D0%B8%D0%BC%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BE%D1%82%20%D0%BF%D0%BE%D0%BB%D0%B0.mp3',
           "program_3_ex_3_desc":
               "1. Встаньте в планку с выпрямленными руками и ногами. \n2. Сгибая руки, выполните отжимание от пола. \n3. Повторите несколько раз. \n4. Если делать отжимания \nслишком тяжело, опустите колени на пол.",
           "program_3_ex_4_name": "Планка с поворотом туловища",
+          "program_3_ex_4_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9F%D0%BB%D0%B0%D0%BD%D0%BA%D0%B0%20%D1%81%20%D0%BF%D0%BE%D0%B2%D0%BE%D1%80%D0%BE%D1%82%D0%BE%D0%BC%20%D1%82%D1%83%D0%BB%D0%BE%D0%B2%D0%B8%D1%89%D0%B0.mp3',
           "program_3_ex_4_desc":
               "1. Встаньте в планку с выпрямленными руками и ногами. \n2. Поверните туловище вправо, вес на левой руке и ногах, правая рука вверх. \n3. Вернитесь в исходное положение и повторите в другую сторону.",
           "program_3_ex_5_name": "Кошечка",
+          "program_3_ex_5_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9A%D0%BE%D1%88%D0%B5%D1%87%D0%BA%D0%B0.mp3',
           "program_3_ex_5_desc":
-              "1. Встаньте на четвереньки, колени под тазом, руки выпрямлены и находятся под плечами, спина прямая. \n2. На вдохе прогните спину, поднимая голову вверх. \n3. На выходе округлите спину, раздвигая лопатки, подбородок к груди. \n4. Повторите несколько раз.",
+              "1. Встаньте на четвереньки, колени под тазом, руки выпрямлены и находятся под плечами, спина прямая. \n2. На вдохе прогните спину, поднимая голову вверх. \n3. На выдохе округлите спину, раздвигая лопатки, подбородок к груди. \n4. Повторите несколько раз.",
           "program_4": "Здоровая шея",
           "program_4_ex_1_name": "Наклоны к плечам",
+          "program_4_ex_1_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9D%D0%B0%D0%BA%D0%BB%D0%BE%D0%BD%D1%8B%20%D0%BA%20%D0%BF%D0%BB%D0%B5%D1%87%D0%B0%D0%BC.mp3',
           "program_4_ex_1_desc":
               "1. Исходное положение голова прямо. \n2. Положите правую руку на левое ухо и позвольте голове тянуться к правому плечу, без лишнего дискомфорта. \n3. Повторите в другую сторону другой рукой.",
           "program_4_ex_2_name": "Наклоны вперед-назад",
+          "program_4_ex_2_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9D%D0%B0%D0%BA%D0%BB%D0%BE%D0%BD%D1%8B%20%D0%B2%D0%BF%D0%B5%D1%80%D0%B5%D0%B4-%D0%BD%D0%B0%D0%B7%D0%B0%D0%B4.mp3',
           "program_4_ex_2_desc":
               "1. Исходное положение голова прямо. \n2. Опустите голову на грудь и вернитесь в исходное положение. \n3. Опустите голову назад и верните в исходное положение. \n4. Повторите несколько раз.",
           "program_4_ex_3_name": "Поворот головы влево-вправо",
+          "program_4_ex_3_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9D%D0%B0%D0%BA%D0%BB%D0%BE%D0%BD%D1%8B%20%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B%20%D0%B2%D0%BB%D0%B5%D0%B2%D0%BE-%D0%B2%D0%BF%D1%80%D0%B0%D0%B2%D0%BE.mp3',
           "program_4_ex_3_desc":
               "1. Исходное положение голова прямо. \n2. Начинайте поочередные плавные повороты головы вправо-влево.",
           "program_4_ex_4_name":
               "Полное вращение головой в одну и другую сторону",
+          "program_4_ex_4_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5_%D0%B2%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BE%D0%B9_%D0%B2_%D0%BE%D0%B4%D0%BD%D1%83_%D0%B8_%D0%B4%D1%80%D1%83%D0%B3%D1%83%D1%8E_%D1%81%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D1%83.mp3',
           "program_4_ex_4_desc":
               "1. Исходное положение голова прямо. \n2. Начинайте круговые вращения головой 3 раза в одну сторону, 3 раза в другую.",
           "program_4_ex_5_name": "Движение плечами вверх-вниз",
+          "program_4_ex_5_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%94%D0%B2%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BF%D0%BB%D0%B5%D1%87%D0%B0%D0%BC%D0%B8%20%D0%B2%D0%B2%D0%B5%D1%80%D1%85-%D0%B2%D0%BD%D0%B8%D0%B7.mp3',
           "program_4_ex_5_desc":
               "1. Встаньте в исходное положение: голова прямо, плечи расслаблены. \n2. Плавно поднимайте плечи к ушам и возвращайтесь в исходное положение.",
           "program_4_ex_6_name": "Скрещивание рук за спиной",
+          "program_4_ex_6_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%A1%D0%BA%D1%80%D0%B5%D1%89%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D1%83%D0%BA%20%D0%B7%D0%B0%20%D1%81%D0%BF%D0%B8%D0%BD%D0%BE%D0%B9.mp3',
           "program_4_ex_6_desc":
               "1. Встаньте в исходное положение: голова прямо, плечи расслаблены. \n2. Сомкните руки за спиной таким образом, чтобы одна была сверху, а вторая снизу. Почувствуйте вытяжение. \n3. Поменяйте руки и повторите еще раз.",
           "exercise_1_title": "Потягивания",
@@ -423,6 +467,7 @@ class LocalizationService extends Translations {
           "purchase_page_desc": "3 дня бесплатно",
           "go_start_record": "Нажмите, чтобы начать запись",
           "go_stop_record": "Идёт запись, нажмите чтобы остановить",
+          "empty_favorite_list": "У вас нет сохраненной музыки",
         },
         EN: {
           "start": "Start",
@@ -478,70 +523,114 @@ class LocalizationService extends Translations {
           "program_1_ex_1_name": "Hasta Uttanasana",
           "program_1_ex_1_desc":
               "•	Stand erect and raise both the hands above the head. Let there be shoulders length between the two arms.\n•	Raising the arms and bending the trunk backwards is done at the same time. Breathe in deeply while raising the arms. \n•	Stand back to the starting position.",
+          "program_1_ex_1_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Hasta%20Uttanasana.mp3',
           "program_1_ex_2_name": "Uttanasana",
           "program_1_ex_2_desc":
               "•	Stand up tall and take a deep breath\n•	On an exhalation, extend your torso down.\n•	Stay long throughout your neck without rounding your back.",
+          "program_1_ex_2_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Uttanasana.mp3',
           "program_1_ex_3_name": "Ashwa Sanchalanasana",
           "program_1_ex_3_desc":
               "•	Get in the downward face dog pose.\n•	Exhale and bring your right knee toward your nose. Keep your right knee bent at a 90-degree angle\n•	Raise your arms towards the sky, lower your left knee down and slide the right knee back into the Table position, or alternatively step the right foot back into Downward Facing Dog.  ",
+          "program_1_ex_3_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Ashwa%20Sanchalanasana.mp3',
           "program_1_ex_4_name": "Adho Mukha Svanasana",
           "program_1_ex_4_desc":
               "•	Set up on all fours with your hands about 3 inches ahead of your shoulders and shoulder-width apart.\n•	Inhale. Exhale and get in the downward-facing dog pose. Press down firmly with your fingertips to pull your forearms toward the front of the room. You can bend your knees.\n•	Go back in the starting position.​",
+          "program_1_ex_4_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Adho%20Mukha%20Svanasana.mp3',
           "program_1_ex_5_name": "Bhujangasana",
           "program_1_ex_5_desc":
               "1. Lie down flat on your stomach.\n2. Place your palms flat on the ground directly under your shoulders\n3. Inhale to lift your chest off the floor. Keep your buttocks and legs stretched.",
+          "program_1_ex_5_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Bhujangasana.mp3',
           "program_1_ex_6_name": "Gomukhasana",
           "program_1_ex_6_desc":
               "Begin in a seated cross-legged position as it is in the picture\n•	Inhale and bring your arms straight up toward the ceiling. Exhale and clasp hands behind your back.\n•	Get back in the starting position and alternate your legs and arms. ",
+          "program_1_ex_6_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Gomukhasana.mp3',
           "program_2": "Good spirits",
           "program_2_ex_1_name": "Walk-in-Place",
+          "program_2_ex_1_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Walk-in-Place.mp3',
           "program_2_ex_1_desc":
               "•	Stand upright, arms at side \n•	Lift right leg, lower right leg; lift left leg, lower left leg",
           "program_2_ex_2_name": "Standing Side Bend",
+          "program_2_ex_2_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Standing%20Side%20Bend.mp3',
           "program_2_ex_2_desc":
               "	•	Stand tall with feet and legs shoulder width apart.\n•	Lower your right arm down the right side of your body and exhale as you lengthen the left arm over the head, bending body gently to the right. Exhale as you repeat on the left side.",
           "program_2_ex_3_name": "Squats with body-rotation",
+          "program_2_ex_3_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Squats%20with%20body-rotation.mp3',
           "program_2_ex_3_desc":
               "•	Stand straight with feet shoulder width apart. \n•	Do a squat. \n•	Then, drive through heels to stand up, lifting arms overhead to the right. Transfer the weight to the right feet, left feet on raised toes. \n•	Bend knees into a squat, stand up to a different side.​",
           "program_2_ex_4_name": "Balance",
+          "program_2_ex_4_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Balance.mp3',
           "program_2_ex_4_desc":
               "	•	Stand upright, arms at side. Take the right leg up and bend it.​ \n•	Stand on the left leg stretch your hands upfront and lift your left leg behind you. ​\n•	Hold the position for some time and stand straight. \n•	Replace the legs. ",
           "program_2_ex_5_name": "Bridge",
+          "program_2_ex_5_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Bridge.mp3',
           "program_2_ex_5_desc":
               "•	Lie on your back with your hands at your sides, knees bent, and feet flat on the floor under your knees. \n•	Raise your hips to create a straight line from your knees to shoulders. Tighten your abdominal and buttock muscles \n•	Complete at least 20 reps.​",
           "program_3": "Move mountains",
           "program_3_ex_1_name": "Standing Side Bends ",
+          "program_3_ex_1_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Standing%20Side%20Bend.mp3',
           "program_3_ex_1_desc":
               "	•	Stand tall with feet and legs shoulder width apart. \n•	Put your right arm the right hip and exhale as you lengthen the left arm over the head, bending body gently to the right. Exhale as you repeat on the left side.",
           "program_3_ex_2_name": "Squats with Jumps",
+          "program_3_ex_2_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Squats%20with%20Jumps.mp3',
           "program_3_ex_2_desc":
               "	•	Stand with heels wider than shoulder-distance apart, toes turned out slightly \n•	Bend at knees, sit hips back, and lower down into a squat, dropping arms down to touch floor between legs. \n•	Then, drive through heels to jump up, holding hands crossed on the chest. \n•	Perform some reps.​",
           "program_3_ex_3_name": "Pushups",
+          "program_3_ex_3_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Pushups.mp3',
           "program_3_ex_3_desc":
               "	•	Start in a standard push-up position \n•	Bend your elbows \n•	Perform some reps.​ \n•	If it is too difficult step your knees back behind and do the exercise. ",
           "program_3_ex_4_name": "Plank Twists",
+          "program_3_ex_4_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Plank%20Twists.mp3',
           "program_3_ex_4_desc":
               "	•	Start in a plank position. \n•	Pull your belly button in towards your spine as firm as you can. \n•	Then begin to raise your chest and one arm towards the ceiling. \n•	Return back to plank. Repeat on the other side",
           "program_3_ex_5_name": "Cats Dogs exercise",
+          "program_3_ex_5_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Cats%20Dogs%20exercise.mp3',
           "program_3_ex_5_desc":
               "	•	Get down on all fours with your weight evenly distributed. Knees under your hips. Your head and neck in a straight line with your spine. \n•	Inhale and lift your head until you’re looking forwards. \n•	Exhale and pull your belly button to your spine, bring your hips forwards. Tuck your chin into your chest. \n•	Repeat for the desired number of repetitions.",
           "program_4": "Healthy Neck",
           "program_4_ex_1_name": "Side Tilt",
+          "program_4_ex_1_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Side%20Tilt.mp3',
           "program_4_ex_1_desc":
               "•	Hold your head straight. \n•	Put your right hand on the left ear and gently bend your head to the right shoulder, stop if you feel discomfort. \n•	Change hands. ",
           "program_4_ex_2_name": "Forward and Backward Tilt",
+          "program_4_ex_2_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Forward%20and%20Backward%20Tilt.mp3',
           "program_4_ex_2_desc":
               "•	Start with your head and back straight. \n•	Lower your chin toward your chest and get back to the start position. \n•	Tilt your chin up toward the ceiling and bring the base of your skull toward your back. \n•	Repeat the set several times.",
           "program_4_ex_3_name": "Side Rotation",
+          "program_4_ex_3_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Side%20Rotation.mp3',
           "program_4_ex_3_desc":
               "•	Keep your head squarely over your shoulders and your back straight. \n•	Slowly turn your head to the right and left until you feel a stretch in the side of your neck and shoulder.",
           "program_4_ex_4_name": "Head rotation",
+          "program_4_ex_4_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Head%20rotation.mp3',
           "program_4_ex_4_desc":
               "•	Sit or stand with your head and back straight. \n•	Rotate your head clockwise and counter clockwise 3 times.",
           "program_4_ex_5_name": "Shoulders rotation",
+          "program_4_ex_5_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Shoulders%20rotation.mp3',
           "program_4_ex_5_desc":
               "•	Place your legs at shoulder-width, keep your arms relaxed. \n•	Gently perform both shoulders rotation clockwise and counter clockwise.",
           "program_4_ex_6_name": "Cow Face Pose",
+          "program_4_ex_6_audio":
+              'https://storage.yandexcloud.net/myaudio/Fitness/Cow%20Face%20Pose.mp3',
           "program_4_ex_6_desc":
               "•	Stand straight, keep your shoulders relaxed. \n•	Clasp hands behind your back, so one arm is up, another is down. Feel the stretch. \n•	Change hands and do again. ",
           "exercise_1_title": "Stretching",
@@ -574,12 +663,6 @@ class LocalizationService extends Translations {
           "exercise_10_title": "Hand stretching",
           "exercise_10_text":
               "1. Extend your arms with your palms facing up toward the ceiling.\n\n2. Exhale as you extend your arms toward the ceiling.\n\n3. Inhale as you stand on the heel and relax.\n\n4. Repeat up to 5 times, each time extend your hands for 10 seconds.",
-          "program_1_ex_1_audio": "assets/audios/pr1_ex1_en.mp3",
-          "program_1_ex_2_audio": "assets/audios/pr1_ex2_en.mp3",
-          "program_1_ex_3_audio": "assets/audios/pr1_ex3_en.mp3",
-          "program_1_ex_4_audio": "assets/audios/pr1_ex4_en.mp3",
-          "program_1_ex_5_audio": "assets/audios/pr1_ex5_en.mp3",
-          "program_1_ex_6_audio": "assets/audios/pr1_ex6_en.mp3",
           "fitness": "FITNESS",
           "fitness_title":
               "Prepare for exercises which\n will restore your physical\n health",
@@ -827,6 +910,7 @@ class LocalizationService extends Translations {
           "purchase_page_desc": "3 days free",
           "go_start_record": "Click to start recording",
           "go_stop_record": "Recording in progress, click to stop",
+          "empty_favorite_list": "You have no saved music",
         }
       };
 

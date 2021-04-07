@@ -7,6 +7,7 @@ import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
 import 'package:morningmagic/pages/diary/diary_page.dart';
 import 'package:morningmagic/pages/meditation/meditation_page.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
+import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/reading/reading_page.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/storage.dart';
@@ -14,7 +15,6 @@ import 'package:morningmagic/storage.dart';
 import '../db/model/reordering_program/order_holder.dart';
 import '../db/model/reordering_program/order_item.dart';
 import '../db/resource.dart';
-import '../pages/askedQuestionsScreen.dart';
 import '../widgets/exerciseTile.dart';
 
 class OrderUtil {
@@ -95,7 +95,7 @@ class OrderUtil {
     currentProgramPosition = currentProgramPosition + 1;
     print('nextPage = $currentProgramPosition');
     if (currentProgramPosition == 6) {
-      return AskedQuestionsScreen();
+      return ProgressPage();
     } else {
       return getRouteByPositionInList(currentProgramPosition);
     }

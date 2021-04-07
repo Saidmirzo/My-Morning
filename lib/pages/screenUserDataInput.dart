@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/pages/tutorial_page.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/services/analitics/facebook_analitics.dart';
+import 'package:morningmagic/widgets/primary_button.dart';
 
 import '../db/model/user/user.dart';
 import '../db/resource.dart';
@@ -121,16 +125,20 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
                             child: ButtonTheme(
                               minWidth: 180.0,
                               height: 50.0,
-                              child: AnimatedButton(() {
-                                if (_formKey.currentState.validate()) {
-                                  saveNameToBox();
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => TutorialPage()),
-                                  );
-                                }
-                              }, 'next_button'.tr, null, null, null),
+                              child: PrimaryButton(
+                                onPressed: () {
+                                  if (_formKey.currentState.validate()) {
+                                    saveNameToBox();
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => TutorialPage()),
+                                    );
+                                  }
+                                },
+                                text: 'next_button'.tr,
+                                pWidth: .4,
+                              ),
                             ),
                           ),
                         ],
@@ -148,6 +156,7 @@ class UserDataInputScreenState extends State<UserDataInputScreen> {
     if (myController.text != null && myController.text.isNotEmpty) {
       await MyDB().getBox().put(MyResource.USER_KEY, User(myController.text));
       print(myController.text);
+      appAnalitics.logEvent('first_name');
     }
   }
 }

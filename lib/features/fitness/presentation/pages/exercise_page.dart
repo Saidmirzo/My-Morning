@@ -12,6 +12,7 @@ import 'package:morningmagic/features/fitness/presentation/widgets/timer.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
@@ -26,7 +27,7 @@ class ExercisePage extends StatefulWidget {
 
 class _ExercisePageState extends State<ExercisePage> {
   FitnessController _fitnessController = Get.find<FitnessController>();
-  final _audioPlayer = AudioPlayer();
+  AudioPlayer _audioPlayer;
   Rx<FitnessExercise> exercise;
   var cTimer = Get.put(TimerFitnesController());
 
@@ -34,6 +35,12 @@ class _ExercisePageState extends State<ExercisePage> {
   void initState() {
     exercise = widget.exercise.obs;
     super.initState();
+  }
+
+  void initAudioAndPlay(String url) {
+    _audioPlayer = AudioPlayer();
+    _audioPlayer.setUrl(url);
+    // if (isAudioActive.isTrue) _audioPlayer.play();
   }
 
   @override
@@ -47,6 +54,10 @@ class _ExercisePageState extends State<ExercisePage> {
           child: Obx(() {
             print('rebuild fitnes timer page');
             cTimer.exerciseName = exercise.value.name;
+            _audioRes = exercise.value.audioRes;
+            if (_audioRes != null) {
+              initAudioAndPlay(_audioRes);
+            }
             return SlidingSheet(
               elevation: 5,
               cornerRadius: 16,
@@ -135,13 +146,14 @@ class _ExercisePageState extends State<ExercisePage> {
           ),
           const SizedBox(height: 15),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (exercise.value.audioRes != null)
                 Obx(() => CupertinoButton(
                     child: Icon(
                         isAudioActive.isTrue
-                            ? Icons.volume_off
-                            : Icons.volume_up,
+                            ? Icons.volume_up
+                            : Icons.volume_off,
                         size: 30,
                         color: AppColors.primary),
                     onPressed: () {
@@ -215,19 +227,16 @@ class _ExercisePageState extends State<ExercisePage> {
   String _audioRes;
   RxBool isAudioActive = false.obs;
   void playPauseAudio() async {
-    if (_audioPlayer.playing) {
+    if (isAudioActive.isTrue) {
+      print('Останавливаем аудио');
       _audioPlayer.pause();
       isAudioActive.value = false;
-    } else if (_audioRes == null) {
-      _audioRes = exercise.value.audioRes;
+    } else {
       if (_audioRes != null) {
-        final _audioResPath = '$_audioRes'.tr;
-        _audioPlayer.setAsset(_audioResPath);
-        _audioPlayer.play();
-      } else {
-        _audioPlayer.play();
+        print('Запускаем аудио');
+        if (!_audioPlayer.playing) _audioPlayer.play();
+        isAudioActive.value = true;
       }
-      isAudioActive.value = true;
     }
   }
 
@@ -242,6 +251,7 @@ class _ExercisePageState extends State<ExercisePage> {
     } else {
       _fitnessController.step = 0;
       AppRouting.replace(FitnessSuccessPage());
+      appAnalitics.logEvent('first_fitnes_next');
     }
   }
 
@@ -263,5 +273,6 @@ class _ExercisePageState extends State<ExercisePage> {
     cTimer.cancelTimer();
     _audioPlayer?.stop();
     _audioPlayer?.dispose();
+    isAudioActive.value = false;
   }
 }

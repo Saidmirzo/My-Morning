@@ -1,15 +1,35 @@
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/instance_manager.dart';
+import 'package:get/route_manager.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 
-import '../resources/colors.dart';
-import 'paywall_page.dart';
+import 'package:morningmagic/resources/colors.dart';
+import '../../../app_states.dart';
+import 'journalMy.dart';
 
-class journalMyDitailsEdit extends StatefulWidget {
+class JournalMyDitailsAdd extends StatefulWidget {
   @override
-  _journalMyDitailsEditState createState() => _journalMyDitailsEditState();
+  _JournalMyDitailsAddState createState() => _JournalMyDitailsAddState();
 }
 
-class _journalMyDitailsEditState extends State<journalMyDitailsEdit> {
+class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
+  DateTime date = DateTime.now();
+  AppStates appStates = Get.put(AppStates());
+  RxString text = ''.obs;
+  TextEditingController controller;
+
+  List<dynamic> list;
+  @override
+  void initState() {
+    controller = TextEditingController();
+    list = MyDB().getBox().get(MyResource.NOTEPADS) ?? [];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +62,7 @@ class _journalMyDitailsEditState extends State<journalMyDitailsEdit> {
                   Container(
                     padding: EdgeInsets.only(bottom: 10),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       //crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
@@ -52,33 +73,8 @@ class _journalMyDitailsEditState extends State<journalMyDitailsEdit> {
                           width: 10,
                         ),
                         Text(
-                          'дата',
+                          '${date.day}.${date.month}.${date.year}',
                           style: TextStyle(),
-                        ),
-                        Spacer(),
-                        InkWell(
-                          onTap: () {
-                            print('!!!edite!!!');
-                          },
-                          child: Icon(
-                            Icons.edit_outlined,
-                            //size: 40,
-                            //color: AppColors.VIOLET,
-                          ),
-                        ),
-                        Container(
-                          width: 10,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            print('!!!delete_outline!!!');
-                            _showAlert(context);
-                          },
-                          child: Icon(
-                            Icons.delete_outline,
-                            //size: 40,
-                            //color: AppColors.VIOLET,
-                          ),
                         ),
                       ],
                     ),
@@ -93,9 +89,11 @@ class _journalMyDitailsEditState extends State<journalMyDitailsEdit> {
                         //controller: nameController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Full Name',
+                          labelText: 'Text',
                         ),
-                        onChanged: (text) {},
+                        onChanged: (value) {
+                          text.value = value;
+                        },
                       ),
                     ),
                     // Text(
@@ -132,13 +130,15 @@ class _journalMyDitailsEditState extends State<journalMyDitailsEdit> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
-                    child: Text('мой дневник',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.VIOLET,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        )),
+                    child: Text(
+                      'my_diary'.tr,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.VIOLET,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -149,8 +149,23 @@ class _journalMyDitailsEditState extends State<journalMyDitailsEdit> {
             child: InkWell(
               onTap: () {
                 print('!!!save note!!!');
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PaywallPage()));
+                setState(() {
+                  list.add([
+                    list.isNotEmpty
+                        ? (int.parse(list.last[0]) + 1).toString()
+                        : '0',
+                    text.value,
+                    '${date.day}.${date.month}.${date.year}',
+                  ]);
+                });
+                print(list);
+                setState(() {
+                  MyDB().getBox().put(MyResource.NOTEPADS, list);
+                });
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => journalMy()));
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -169,13 +184,15 @@ class _journalMyDitailsEditState extends State<journalMyDitailsEdit> {
                         left: 10,
                       ),
                       //width: MediaQuery.of(context).size.width * 0.75,
-                      child: Text('Сохранить заметку',
-                          //textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.VIOLET,
-                            fontSize: 30,
-                            fontWeight: FontWeight.normal,
-                          )),
+                      child: Text(
+                        'save_diary'.tr,
+                        //textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.VIOLET,
+                          fontSize: 30,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
                     ),
                   ],
                 ),

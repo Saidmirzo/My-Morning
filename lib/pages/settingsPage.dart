@@ -1,16 +1,19 @@
 import 'dart:async';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/services/analyticService.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/admob.dart';
 import 'package:morningmagic/services/notifications.dart';
+import 'package:morningmagic/widgets/primary_button.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../app_states.dart';
@@ -53,6 +56,13 @@ class SettingsPageState extends State<SettingsPage> {
     initPurchaseListener();
     activityList = buildActivityList(false);
     AnalyticService.screenView('settings_page');
+
+    if (GetPlatform.isIOS) {
+      // Show tracking authorization dialog and ask for permission
+      Future.delayed(2.seconds, () async {
+        await AppTrackingTransparency.requestTrackingAuthorization();
+      });
+    }
     super.initState();
   }
 
@@ -300,12 +310,13 @@ class SettingsPageState extends State<SettingsPage> {
                     SliverToBoxAdapter(
                       child: Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
-                        child: AnimatedButton(
-                            () => AppRouting.navigateToHomeWithClearHistory(),
-                            'continue'.tr,
-                            null,
-                            null,
-                            null),
+                        child: PrimaryButton(
+                          onPressed: () {
+                            appAnalitics.logEvent('first_menu');
+                            AppRouting.navigateToHomeWithClearHistory();
+                          },
+                          text: 'continue'.tr,
+                        ),
                       ),
                     ),
                     SliverToBoxAdapter(

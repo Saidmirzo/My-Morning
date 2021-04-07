@@ -10,6 +10,7 @@ import 'package:morningmagic/features/visualization/presentation/pages/visualiza
 import 'package:morningmagic/features/visualization/presentation/widgets/back_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/routes/scale_route.dart';
+import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 
 class VisualizationTimerPage extends StatefulWidget {
@@ -91,8 +92,10 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
               : 'assets/images/play.svg';
           return _buildActionButton(_toggleStartPauseCallback, _imageRes);
         }),
-        _buildActionButton(() => _controller.finishVisualization(),
-            'assets/images/arrow_forward.svg'),
+        _buildActionButton(() {
+          _controller.finishVisualization();
+          appAnalitics.logEvent('first_visualisation_next');
+        }, 'assets/images/arrow_forward.svg'),
       ],
     );
   }

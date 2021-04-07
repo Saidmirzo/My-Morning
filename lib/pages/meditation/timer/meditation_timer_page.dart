@@ -7,7 +7,7 @@ import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/services/analyticService.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:screen/screen.dart';
@@ -38,9 +38,9 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _audioController = Get.find();
-    _audioController.initializeMeditationAudio();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _audioController.initializeMeditationAudio();
       await timerService.init(1, _audioController.player);
     });
 
@@ -98,6 +98,14 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                     else
                       return buildPlayerControls();
                   }),
+                  Container(
+                      width: Get.width * 0.8,
+                      alignment: Alignment.center,
+                      child: Obx(() => Text(
+                            _audioController.currAudioName.value,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.clip,
+                          ))),
                   Spacer(),
                   buildMenuButtons(timerService),
                 ],
@@ -114,5 +122,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
     timerService.dispose();
+    MediationAudioController cAudio = Get.find();
+    cAudio.dispose();
   }
 }

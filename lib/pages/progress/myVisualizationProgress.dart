@@ -1,23 +1,23 @@
-import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/resources/colors.dart';
 
-import '../resources/colors.dart';
-
-class MyAffirmationProgress extends StatefulWidget {
+class MyVisualizationProgress extends StatefulWidget {
   @override
-  _MyAffirmationProgressState createState() => _MyAffirmationProgressState();
+  _MyVisualizationProgressState createState() =>
+      _MyVisualizationProgressState();
 }
 
-class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
+class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
   List<dynamic> list;
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get(MyResource.AFFIRMATION_PROGRESS) ?? [];
-    print(list);
+    list = MyDB().getBox().get(MyResource.MY_VISUALISATION_PROGRESS) ?? [];
+    print(MyDB().getBox().get(MyResource.MY_VISUALISATION_PROGRESS));
   }
 
   @override
@@ -50,7 +50,7 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
                 children: list.isNotEmpty
                     ? List.generate(
                         list.length,
-                        (index) => AffirmationMiniProgress(
+                        (index) => VisualizationMiniProgress(
                           list.isNotEmpty ? list[index][0] : '0',
                           list.isNotEmpty ? list[index][1] : '',
                           list.isNotEmpty ? list[index][2] : '01.01.2020',
@@ -84,7 +84,7 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.81,
                         child: Text(
-                          'my_affirmations'.tr,
+                          'my_visualization'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.VIOLET,
@@ -105,18 +105,18 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
   }
 }
 
-class AffirmationMiniProgress extends StatelessWidget {
+class VisualizationMiniProgress extends StatelessWidget {
   final String id;
   final String text;
   final String date;
 
-  AffirmationMiniProgress(this.id, this.text, this.date);
+  VisualizationMiniProgress(this.id, this.text, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
         ctx,
         MaterialPageRoute(
-            builder: (context) => AffirmationFullProgress(id, text, date)));
+            builder: (context) => VisualizationFullProgress(id, text, date)));
   }
 
   @override
@@ -178,19 +178,19 @@ class AffirmationMiniProgress extends StatelessWidget {
   }
 }
 
-class AffirmationFullProgress extends StatefulWidget {
+class VisualizationFullProgress extends StatefulWidget {
   String id;
   String text;
   String date;
 
-  AffirmationFullProgress(this.id, this.text, this.date);
+  VisualizationFullProgress(this.id, this.text, this.date);
 
   @override
-  _AffirmationFullProgressState createState() =>
-      _AffirmationFullProgressState();
+  _VisualizationFullProgressState createState() =>
+      _VisualizationFullProgressState();
 }
 
-class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
+class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
   List<dynamic> list;
   List<dynamic> tempList;
   TextEditingController controller;
@@ -298,7 +298,7 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: Text(
-                      'my_affirmations'.tr,
+                      'my_visualization'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.VIOLET,

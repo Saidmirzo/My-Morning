@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/styles.dart';
+import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 import '../../features/meditation_audio/data/repositories/audio_repository_impl.dart';
@@ -42,12 +43,18 @@ class _MeditationPageState extends State<MeditationPage> {
                 PrimaryCircleButton(
                     size: 54,
                     icon: SvgPicture.asset('assets/images/svg/add_music.svg'),
-                    onPressed: () => Get.to(MeditationAudioPage())),
+                    onPressed: () {
+                      Get.to(MeditationAudioPage());
+                      appAnalitics.logEvent('first_music');
+                    }),
                 SizedBox(height: Get.height * 0.04),
                 PrimaryCircleButton(
                     size: 54,
                     icon: Icon(Icons.arrow_forward, color: AppColors.primary),
-                    onPressed: () => Get.to(MeditationTimerPage())),
+                    onPressed: () {
+                      Get.to(MeditationTimerPage());
+                      appAnalitics.logEvent('first_meditation_start');
+                    }),
               ],
             ),
           ],

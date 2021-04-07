@@ -1,30 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/resources/colors.dart';
 
-import '../app_states.dart';
-import '../resources/colors.dart';
-
-import 'journalMyDetailsAdd.dart';
-import 'journalMyDitails.dart';
-import 'package:get/get.dart';
-
-class MyVisualizationProgress extends StatefulWidget {
+class MyReadingProgress extends StatefulWidget {
   @override
-  _MyVisualizationProgressState createState() =>
-      _MyVisualizationProgressState();
+  _MyReadingProgressState createState() => _MyReadingProgressState();
 }
 
-class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
+class _MyReadingProgressState extends State<MyReadingProgress> {
   List<dynamic> list;
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get(MyResource.MY_VISUALISATION_PROGRESS) ?? [];
-    print(MyDB().getBox().get(MyResource.MY_VISUALISATION_PROGRESS));
+    list = MyDB().getBox().get(MyResource.MY_READING_PROGRESS) ?? [];
+    print(list);
   }
 
   @override
@@ -57,7 +49,7 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
                 children: list.isNotEmpty
                     ? List.generate(
                         list.length,
-                        (index) => VisualizationMiniProgress(
+                        (index) => ReadingMiniProgress(
                           list.isNotEmpty ? list[index][0] : '0',
                           list.isNotEmpty ? list[index][1] : '',
                           list.isNotEmpty ? list[index][2] : '01.01.2020',
@@ -91,7 +83,7 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.81,
                         child: Text(
-                          'my_visualization'.tr,
+                          'my_books'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.VIOLET,
@@ -112,18 +104,18 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
   }
 }
 
-class VisualizationMiniProgress extends StatelessWidget {
+class ReadingMiniProgress extends StatelessWidget {
   final String id;
   final String text;
   final String date;
 
-  VisualizationMiniProgress(this.id, this.text, this.date);
+  ReadingMiniProgress(this.id, this.text, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
         ctx,
         MaterialPageRoute(
-            builder: (context) => VisualizationFullProgress(id, text, date)));
+            builder: (context) => ReadingFullProgress(id, text, date)));
   }
 
   @override
@@ -185,19 +177,18 @@ class VisualizationMiniProgress extends StatelessWidget {
   }
 }
 
-class VisualizationFullProgress extends StatefulWidget {
+class ReadingFullProgress extends StatefulWidget {
   String id;
   String text;
   String date;
 
-  VisualizationFullProgress(this.id, this.text, this.date);
+  ReadingFullProgress(this.id, this.text, this.date);
 
   @override
-  _VisualizationFullProgressState createState() =>
-      _VisualizationFullProgressState();
+  _ReadingFullProgressState createState() => _ReadingFullProgressState();
 }
 
-class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
+class _ReadingFullProgressState extends State<ReadingFullProgress> {
   List<dynamic> list;
   List<dynamic> tempList;
   TextEditingController controller;
@@ -305,7 +296,7 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: Text(
-                      'my_visualization'.tr,
+                      'my_books'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.VIOLET,

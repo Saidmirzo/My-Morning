@@ -17,7 +17,9 @@ import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/routing/app_routing.dart';
-import 'package:morningmagic/services/analyticService.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
@@ -469,11 +471,10 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                 onPressed: () async {
                   _timer?.cancel();
                   await stop();
-                  OrderUtil().getRouteById(3).then(
+                  OrderUtil().getRouteById(TimerPageId.Diary).then(
                     (value) {
-                      Get.off(TimerSuccessScreen(() {
-                        Navigator.push(context, value);
-                      },
+                      Get.off(TimerSuccessScreen(
+                          () => Get.to(value),
                           MyDB()
                               .getBox()
                               .get(MyResource.VOCABULARY_TIME_KEY)
@@ -481,6 +482,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                           false));
                     },
                   );
+                  appAnalitics.logEvent('first_dnevnik_next');
                 }),
           ],
         ),

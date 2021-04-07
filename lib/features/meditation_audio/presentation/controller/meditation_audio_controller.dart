@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:meta/meta.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/domain/repositories/audio_repository.dart';
+import 'package:morningmagic/pages/meditation/components/menu.dart';
+import 'package:morningmagic/pages/meditation/controllers/menu_controller.dart';
 
 class MediationAudioController extends GetxController {
   MediationAudioController({@required this.repository});
@@ -18,6 +22,7 @@ class MediationAudioController extends GetxController {
   get player => audioPlayer.value;
 
   final List<MeditationAudio> audios = <MeditationAudio>[];
+  var favoriteAudios = RxList<MeditationAudio>().obs;
 
   var selectedItemIndex = 0.obs;
 
@@ -25,25 +30,24 @@ class MediationAudioController extends GetxController {
 
   RxBool isPlaying = false.obs;
   var isAudioLoading = false.obs;
+  var isAudioListLoading = false.obs;
+
+  bool playFromFavorite = false;
 
   List<AudioSource> playList;
+  RxString currAudioName = ''.obs;
+  List<String> audioNames = [];
+
+  Map<String, String> audioSource = MeditationAudioData.musicSource;
 
   bool get isPlaylistAudioCached =>
       player.currentIndex < audios.length &&
-      audios[player.currentIndex].file != null;
+      audios[player.currentIndex].filePath != null;
 
   @override
   void onInit() async {
     super.onInit();
-    audios.addAll(await repository.getCachedAudioFiles());
-    player.playerStateStream.listen((state) {
-      if (!state.playing &&
-          (state.processingState.index == ProcessingState.loading.index ||
-              state.processingState.index == ProcessingState.buffering.index)) {
-        isAudioLoading.value = true;
-      } else
-        isAudioLoading.value = false;
-    });
+    print('audioController: onInit');
   }
 
   @override
@@ -54,11 +58,42 @@ class MediationAudioController extends GetxController {
     player.dispose();
   }
 
+  Future<void> reinitAudioSource() async {
+    audios.clear();
+    player.playerStateStream.listen((state) {
+      if (!state.playing &&
+          (state.processingState.index == ProcessingState.loading.index ||
+              state.processingState.index == ProcessingState.buffering.index)) {
+        isAudioLoading.value = true;
+      } else
+        isAudioLoading.value = false;
+    });
+    if (playFromFavorite) {
+      audios.addAll(favoriteAudios.value);
+    } else {
+      audios.addAll(await repository.getCachedAudioFiles(audioSource));
+    }
+    print('audios  lng: ${audios.length}');
+    (await repository.getFavoriteAudioFiles()).forEach((element) {
+      if (!favoriteAudios.value.contains(element))
+        favoriteAudios.value.add(element);
+    });
+  }
+
+  void setAudioFavorite(MeditationAudio audio) async {
+    favoriteAudios.value.contains(audio)
+        ? favoriteAudios.value.remove(audio)
+        : favoriteAudios.value.add(audio);
+    await MyDB()
+        .getBox()
+        .put(MyResource.MEDITATION_AUDIO_FAVORITE, favoriteAudios.value);
+  }
+
   Future<File> getCachedAudioFile(String trackId) async {
     final audioFile = audios.firstWhere((element) => element.id == trackId,
         orElse: () => null);
     if (audioFile != null) {
-      return audioFile.file;
+      return File(audioFile.filePath);
     } else {
       _cacheAudioFile(trackId);
       return Future.value(null);
@@ -67,7 +102,8 @@ class MediationAudioController extends GetxController {
 
   Future _cacheAudioFile(String trackId) async {
     try {
-      MeditationAudio audioFile = await repository.getAudioFile(trackId);
+      MeditationAudio audioFile =
+          await repository.getAudioFile(trackId, audioSource);
       print("Meditation audio cached: $trackId");
       audios.add(audioFile);
     } catch (e) {
@@ -76,28 +112,66 @@ class MediationAudioController extends GetxController {
   }
 
   String getAudioUrl(String trackId) {
-    return MeditationAudioData.audioSources[trackId];
+    AudioMenuController cMenu = Get.find();
+    switch (cMenu.currentPage.value) {
+      case MenuItems.music:
+        return MeditationAudioData.musicSource[trackId];
+        break;
+      case MenuItems.sounds:
+        return MeditationAudioData.soundSource[trackId];
+        break;
+      default:
+        return MeditationAudioData.musicSource[trackId];
+    }
   }
 
-  List<AudioSource> generateMeditationPlayList() {
+  Future<List<AudioSource>> generateMeditationPlayList() async {
     List<AudioSource> _result = [];
-    MeditationAudioData.audioSources.forEach((trackId, url) {
-      final _cachedAudio = audios.firstWhere(
-        (cachedAudio) => cachedAudio.id == trackId,
-        orElse: () => null,
-      );
-      if (_cachedAudio != null && _cachedAudio.file != null) {
-        _result.add(AudioSource.uri(Uri.file(_cachedAudio.file.path)));
-      } else {
-        _result.add(ProgressiveAudioSource(Uri.parse(url)));
-        _cacheAudioFile(trackId);
-      }
-    });
+    if (playFromFavorite) {
+      currAudioName.value =
+          favoriteAudios.value.toList().elementAt(selectedItemIndex.value).id;
+      favoriteAudios.value.forEach((value) {
+        audioNames.add(value.id);
+        final _cachedAudio = audios.firstWhere(
+          (cachedAudio) => cachedAudio.id == value.id,
+          orElse: () => null,
+        );
+        if (_cachedAudio != null && _cachedAudio.filePath != null) {
+          print('_cachedAudio.filePath: ${_cachedAudio.filePath}');
+          _result.add(AudioSource.uri(Uri.file(_cachedAudio.filePath)));
+        } else {
+          print('url: ${value.url}');
+          _result.add(ProgressiveAudioSource(Uri.parse(value.url)));
+          _cacheAudioFile(value.id);
+        }
+      });
+    } else {
+      audioNames = audioSource == null || audioSource.isEmpty
+          ? MeditationAudioData.musicSource.keys.toList()
+          : audioSource.keys.toList();
+      currAudioName.value = audioNames[selectedItemIndex.value];
+      audioSource.forEach((trackId, url) {
+        final _cachedAudio = audios.firstWhere(
+          (cachedAudio) => cachedAudio.id == trackId,
+          orElse: () => null,
+        );
+        if (_cachedAudio != null && _cachedAudio.filePath != null) {
+          _result.add(AudioSource.uri(Uri.file(_cachedAudio.filePath)));
+        } else {
+          _result.add(ProgressiveAudioSource(Uri.parse(url)));
+          _cacheAudioFile(trackId);
+        }
+      });
+    }
+
     return _result;
   }
 
-  void initializeMeditationAudio() async {
-    playList = generateMeditationPlayList();
+  void initializeMeditationAudio({bool autoplay = true}) async {
+    isAudioListLoading.value = true;
+    await reinitAudioSource();
+    playList = await generateMeditationPlayList();
+    print('playlist length: ${playList.length}');
     await player.setAudioSource(
       ConcatenatingAudioSource(
           children: List.generate(playList.length, (index) => playList[index])),
@@ -105,10 +179,11 @@ class MediationAudioController extends GetxController {
       initialPosition: Duration.zero,
     );
     await player.setLoopMode(LoopMode.one);
+    isAudioListLoading.value = false;
     player.playingStream.listen((event) {
       if (isPlaying.value != event) isPlaying.value = event;
     });
-    player.play();
+    if (autoplay) player.play();
   }
 
   void next() {
@@ -120,6 +195,7 @@ class MediationAudioController extends GetxController {
     else
       _nextIndex = player.currentIndex + 1;
     player.seek(Duration(seconds: 0), index: _nextIndex);
+    currAudioName.value = audioNames[_nextIndex];
     if (!player.playing) player.play();
   }
 
@@ -132,6 +208,7 @@ class MediationAudioController extends GetxController {
     else
       _nextIndex = player.currentIndex - 1;
     player.seek(Duration(seconds: 0), index: _nextIndex);
+    currAudioName.value = audioNames[_nextIndex];
     if (!player.playing) player.play();
   }
 

@@ -51,6 +51,8 @@ dependencies:
   flutter_local_notifications: ^4.0.1+2
   sliding_sheet: ^0.4.0
   percent_indicator: ^3.0.1
+  facebook_app_events: ^0.11.2
+  app_tracking_transparency: ^2.0.0
 
   flutter_localizations:
     sdk: flutter

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
+import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/timer_service.dart';
 
 Widget buildMenuButtons(TimerService timerService) {
@@ -46,6 +47,7 @@ Widget buildMenuButtons(TimerService timerService) {
               ),
               onPressed: () {
                 timerService.skipTask();
+                appAnalitics.logEvent('first_affirmation_next');
               }),
         ],
       ),

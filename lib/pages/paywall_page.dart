@@ -1,11 +1,12 @@
-import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:morningmagic/pages/askedQuestionsScreen.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/pages/payment.dart';
 import 'package:morningmagic/services/admob.dart';
+import 'package:morningmagic/services/analitics/all.dart';
 
 import '../resources/colors.dart';
+import 'progress/progress_page.dart';
 
 class PaywallPage extends StatefulWidget {
   @override
@@ -33,6 +34,7 @@ class _PaywallPageState extends State<PaywallPage> {
                 actionCallback: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => PaymentPage()));
+                  appAnalitics.logEvent('first_polnyi_complex');
                 }),
             SizedBox(
               height: 4,
@@ -45,10 +47,9 @@ class _PaywallPageState extends State<PaywallPage> {
             _buildPaywallButton(
                 title: 'my_progress'.tr,
                 actionCallback: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AskedQuestionsScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ProgressPage()));
+                  appAnalitics.logEvent('first_reklama');
                   admobService.showInterstitial();
                 }),
           ],

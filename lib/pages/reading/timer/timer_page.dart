@@ -7,7 +7,7 @@ import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
-import 'package:morningmagic/services/analyticService.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:screen/screen.dart';

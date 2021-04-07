@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
+import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -93,12 +94,18 @@ class PaymentDialog extends Dialog {
                   children: <Widget>[
                     _buildBuyButton(
                       title: 'buy_month'.tr,
-                      onTap: () => _startPaymentSubscription(context),
+                      onTap: () {
+                        _startPaymentSubscription(context);
+                        appAnalitics.logEvent('first_popap_pay');
+                      },
                     ),
                     SizedBox(height: 8),
                     _buildBuyButton(
                       title: 'buy_days'.tr,
-                      onTap: () => _startPaymentTrial(context),
+                      onTap: () {
+                        _startPaymentTrial(context);
+                        appAnalitics.logEvent('first_popap_trial');
+                      },
                     )
                   ],
                 ),
@@ -137,9 +144,6 @@ class PaymentDialog extends Dialog {
   _startPaymentTrial(BuildContext context) {
     Get.back();
     billingService.startPaymentPage(context);
-    // Непонятно зачем вызывается другая страница с тем дже функционалом что и основная
-    // заказчик тоже этого не понял, по этому я заменил на основную
-    // billingService.startPaymentPageTrial(context);
   }
 }
 

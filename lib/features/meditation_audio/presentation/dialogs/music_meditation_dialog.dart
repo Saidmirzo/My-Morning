@@ -7,13 +7,13 @@ import 'package:morningmagic/features/meditation_audio/presentation/controller/m
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
 import 'package:morningmagic/pages/meditation/components/menu.dart';
 
-class AudioMeditationContainer extends StatefulWidget {
+class MusicMeditationContainer extends StatefulWidget {
   @override
-  _AudioMeditationContainerState createState() =>
-      _AudioMeditationContainerState();
+  _MusicMeditationContainerState createState() =>
+      _MusicMeditationContainerState();
 }
 
-class _AudioMeditationContainerState extends State<AudioMeditationContainer> {
+class _MusicMeditationContainerState extends State<MusicMeditationContainer> {
   MediationAudioController _audioController;
 
   @override
@@ -52,7 +52,7 @@ class _AudioMeditationContainerState extends State<AudioMeditationContainer> {
   @override
   void initState() {
     _audioController = Get.find();
-    _audioController.audioSource = MeditationAudioData.soundSource;
+    _audioController.audioSource = MeditationAudioData.musicSource;
     _audioController.playFromFavorite = false;
     _audioController.initializeMeditationAudio(autoplay: false);
     _stopPlayer();

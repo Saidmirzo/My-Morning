@@ -1,22 +1,21 @@
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/resources/colors.dart';
 
-import '../resources/colors.dart';
-
-class MyReadingProgress extends StatefulWidget {
+class MyAffirmationProgress extends StatefulWidget {
   @override
-  _MyReadingProgressState createState() => _MyReadingProgressState();
+  _MyAffirmationProgressState createState() => _MyAffirmationProgressState();
 }
 
-class _MyReadingProgressState extends State<MyReadingProgress> {
+class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
   List<dynamic> list;
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get(MyResource.MY_READING_PROGRESS) ?? [];
+    list = MyDB().getBox().get(MyResource.AFFIRMATION_PROGRESS) ?? [];
     print(list);
   }
 
@@ -50,7 +49,7 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
                 children: list.isNotEmpty
                     ? List.generate(
                         list.length,
-                        (index) => ReadingMiniProgress(
+                        (index) => AffirmationMiniProgress(
                           list.isNotEmpty ? list[index][0] : '0',
                           list.isNotEmpty ? list[index][1] : '',
                           list.isNotEmpty ? list[index][2] : '01.01.2020',
@@ -84,7 +83,7 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.81,
                         child: Text(
-                          'my_books'.tr,
+                          'my_affirmations'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.VIOLET,
@@ -105,18 +104,18 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
   }
 }
 
-class ReadingMiniProgress extends StatelessWidget {
+class AffirmationMiniProgress extends StatelessWidget {
   final String id;
   final String text;
   final String date;
 
-  ReadingMiniProgress(this.id, this.text, this.date);
+  AffirmationMiniProgress(this.id, this.text, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
         ctx,
         MaterialPageRoute(
-            builder: (context) => ReadingFullProgress(id, text, date)));
+            builder: (context) => AffirmationFullProgress(id, text, date)));
   }
 
   @override
@@ -178,18 +177,19 @@ class ReadingMiniProgress extends StatelessWidget {
   }
 }
 
-class ReadingFullProgress extends StatefulWidget {
+class AffirmationFullProgress extends StatefulWidget {
   String id;
   String text;
   String date;
 
-  ReadingFullProgress(this.id, this.text, this.date);
+  AffirmationFullProgress(this.id, this.text, this.date);
 
   @override
-  _ReadingFullProgressState createState() => _ReadingFullProgressState();
+  _AffirmationFullProgressState createState() =>
+      _AffirmationFullProgressState();
 }
 
-class _ReadingFullProgressState extends State<ReadingFullProgress> {
+class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
   List<dynamic> list;
   List<dynamic> tempList;
   TextEditingController controller;
@@ -297,7 +297,7 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: Text(
-                      'my_books'.tr,
+                      'my_affirmations'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.VIOLET,

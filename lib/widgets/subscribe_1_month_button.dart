@@ -1,8 +1,9 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/widgets/primary_button.dart';
 
 import '../storage.dart';
-import 'animatedButton.dart';
 import 'is_pro_widget.dart';
 
 class Subscribe1MonthButton extends StatelessWidget {
@@ -12,9 +13,13 @@ class Subscribe1MonthButton extends StatelessWidget {
     return Column(
       children: [
         Center(
-          child: AnimatedButton(() async {
-            billingService.startPaymentPage(context);
-          }, 'pay'.tr, null, null, null),
+          child: PrimaryButton(
+            onPressed: () async {
+              appAnalitics.logEvent('first_pay');
+              billingService.startPaymentPage(context);
+            },
+            text: 'pay'.tr,
+          ),
         ),
         const SizedBox(height: 15),
       ],

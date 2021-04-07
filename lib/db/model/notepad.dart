@@ -1,6 +1,5 @@
-
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+
 part 'notepad.g.dart';
 
 @HiveType(typeId: 150)

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/services/analyticService.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/resources/my_const.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -107,7 +108,10 @@ class _PaymentPageState extends State<PaymentPage> {
           children: [
             PrimaryCircleButton(
                 icon: Icon(Icons.arrow_back, color: AppColors.primary),
-                onPressed: () => Get.back()),
+                onPressed: () {
+                  Get.back();
+                  appAnalitics.logEvent('first_skip_pay');
+                }),
             Container(
               width: Get.width * 0.40,
               child: Text(
@@ -249,6 +253,7 @@ class _PaymentPageState extends State<PaymentPage> {
       onPressed: () async {
         try {
           await Purchases.purchasePackage(billingService.getMonthlyTarif());
+          appAnalitics.logEvent('first_trial');
           await AnalyticService.analytics
               .logEcommercePurchase(value: 75, currency: 'RUB');
         } on PlatformException catch (e) {

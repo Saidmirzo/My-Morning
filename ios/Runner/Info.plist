@@ -85,5 +85,27 @@
 	<true/>
 	<key>kTCCServiceMediaLibrary</key>
 	<string>media</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+	<dict>
+	<key>CFBundleURLSchemes</key>
+	<array>
+		<string>fb580432019597568</string>
+	</array>
+	</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>580432019597568</string>
+	<key>FacebookDisplayName</key>
+	<string>My Morning</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized ads to you.</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+		<key>SKAdNetworkIdentifier</key>
+		<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+	</array>
 </dict>
 </plist>

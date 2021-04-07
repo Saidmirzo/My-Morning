@@ -6,8 +6,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/route_values.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/services/analitics/facebook_analitics.dart';
 import 'package:morningmagic/services/notifications.dart';
 import 'package:morningmagic/widgets/tutorial_waves/im_animations.dart';
+
+import '../routing/app_routing.dart';
+import 'settingsPage.dart';
 
 class TutorialPage extends StatefulWidget {
   @override
@@ -61,8 +67,9 @@ class _TutorialPageState extends State<TutorialPage> {
       print("${state.processingState.index}, playing = ${state.playing}");
       if (state.playing &&
           state.processingState.index == ProcessingState.completed.index) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, homePageRoute, (route) => false);
+        AppRouting.replace(SettingsPage());
+        // Navigator.pushNamedAndRemoveUntil(
+        //     context, homePageRoute, (route) => false);
       }
     });
   }
@@ -443,8 +450,8 @@ class _TutorialPageState extends State<TutorialPage> {
                 ? InkWell(
                     onTap: () {
                       player.stop();
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, homePageRoute, (route) => false);
+                      AppRouting.replace(SettingsPage());
+                      appAnalitics.logEvent('first_skip_tutorial');
                     },
                     child: Container(
                       height: 70,
