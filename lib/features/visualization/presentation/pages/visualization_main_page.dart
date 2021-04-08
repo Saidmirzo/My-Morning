@@ -1,15 +1,12 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/data/repositories/visualization_image_repository_impl.dart';
 import 'package:morningmagic/features/visualization/data/repositories/visualization_target_repository_impl.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_target_page.dart';
-import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
@@ -29,8 +26,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
   @override
   void initState() {
     super.initState();
-    _textEditingController =
-        TextEditingController(text: _controller.getVisualizationText());
+    _textEditingController = TextEditingController();
     _textEditingController.addListener(() => _saveVisualization());
   }
 
@@ -165,7 +161,6 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
 
   void _saveVisualization() {
     final _visualizationText = _textEditingController.text;
-
     if (_visualizationText != null && _visualizationText.isNotEmpty) {
       _controller.saveVisualization(_visualizationText);
     }

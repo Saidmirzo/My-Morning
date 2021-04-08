@@ -53,15 +53,16 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                   children: [
                     _buildAudioControlButton(),
                     SizedBox(width: 10),
-                    Container(
-                      width: Get.width * 0.5,
-                      child: StyledText(
-                        widget.audio.id,
-                        fontSize: 17,
-                        color: AppColors.primary,
+                    Expanded(
+                      child: Container(
+                        width: Get.width * 0.5,
+                        child: StyledText(
+                          widget.audio.id,
+                          fontSize: 17,
+                          color: AppColors.primary,
+                        ),
                       ),
                     ),
-                    Spacer(),
                     if (_audioController.playingIndex.value == widget.id &&
                         !playCached &&
                         _audioController.isAudioLoading.value)
@@ -122,7 +123,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
 
       if (_audioController.playingIndex.value == -1 ||
           _oldPlayingIndex != widget.id) {
-        _playNewTrack(widget.audio.id);
+        _playNewTrack(widget.audio);
       } else
         _audioController.player.play();
       _setIsPlayingState(!_audioController.isPlaying.value);
@@ -131,7 +132,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
         _audioController.player.pause();
         _setIsPlayingState(!_audioController.isPlaying.value);
       } else {
-        _playNewTrack(widget.audio.id);
+        _playNewTrack(widget.audio);
         _audioController.playingIndex.value = widget.id;
         _setIsPlayingState(true);
       }
@@ -144,20 +145,18 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     });
   }
 
-  void _playNewTrack(String trackId) async {
-    String _trackUrl = _audioController.getAudioUrl(trackId);
-    final _cachedAudioFile = await _audioController.getCachedAudioFile(trackId);
+  void _playNewTrack(MeditationAudio track) async {
+    final _cachedAudioFile = await _audioController.getCachedAudioFile(track);
     if (_cachedAudioFile == null) {
       playCached = false;
-      await _audioController.player.setUrl(_trackUrl);
-      print('Play from url $_trackUrl, isFile cached = $playCached');
+      await _audioController.player.setUrl(track.url);
+      print('Play from url ${track.url}, isFile cached = $playCached');
     } else {
       playCached = true;
       final _filePath = _cachedAudioFile.path;
       await _audioController.player.setFilePath(_filePath);
       print('Play from path $_filePath, isFile cached = $playCached');
     }
-
     _audioController.player.play();
   }
 }

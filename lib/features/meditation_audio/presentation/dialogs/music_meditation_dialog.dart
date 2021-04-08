@@ -54,7 +54,7 @@ class _MusicMeditationContainerState extends State<MusicMeditationContainer> {
     _audioController = Get.find();
     _audioController.audioSource = MeditationAudioData.musicSource;
     _audioController.playFromFavorite = false;
-    _audioController.initializeMeditationAudio(autoplay: false);
+    _audioController.reinitAudioSource(fromDialog: true);
     _stopPlayer();
     super.initState();
   }

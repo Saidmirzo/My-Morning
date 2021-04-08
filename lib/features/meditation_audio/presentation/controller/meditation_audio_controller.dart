@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -9,8 +11,19 @@ import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/domain/repositories/audio_repository.dart';
-import 'package:morningmagic/pages/meditation/components/menu.dart';
-import 'package:morningmagic/pages/meditation/controllers/menu_controller.dart';
+
+import '../../domain/entities/meditation_audio.dart';
+
+// Для работы изолятора функция должна находиться вне класса
+// В этой функции готовим список треков для диалога,
+// без изолятора подтормаживает при открытии
+List<MeditationAudio> getAudios(Map audioSource) {
+  List<MeditationAudio> _audios = [];
+  audioSource.forEach((key, value) {
+    _audios.add(MeditationAudio(id: key, url: value, filePath: null));
+  });
+  return _audios;
+}
 
 class MediationAudioController extends GetxController {
   MediationAudioController({@required this.repository});
@@ -21,7 +34,7 @@ class MediationAudioController extends GetxController {
 
   get player => audioPlayer.value;
 
-  final List<MeditationAudio> audios = <MeditationAudio>[];
+  List<MeditationAudio> audios = <MeditationAudio>[];
   var favoriteAudios = RxList<MeditationAudio>().obs;
 
   var selectedItemIndex = 0.obs;
@@ -58,7 +71,8 @@ class MediationAudioController extends GetxController {
     player.dispose();
   }
 
-  Future<void> reinitAudioSource() async {
+  Future<void> reinitAudioSource({bool fromDialog = false}) async {
+    isAudioListLoading.value = true;
     audios.clear();
     player.playerStateStream.listen((state) {
       if (!state.playing &&
@@ -69,15 +83,22 @@ class MediationAudioController extends GetxController {
         isAudioLoading.value = false;
     });
     if (playFromFavorite) {
+      print('playFromFavorite');
       audios.addAll(favoriteAudios.value);
     } else {
-      audios.addAll(await repository.getCachedAudioFiles(audioSource));
+      print('play From audioSource');
+      if (fromDialog)
+        audios = await compute(getAudios, audioSource);
+      else
+        audios.addAll(await repository.getCachedAudioFiles(audioSource));
+      print('new audios lng: ${audios.length}');
     }
     print('audios  lng: ${audios.length}');
     (await repository.getFavoriteAudioFiles()).forEach((element) {
       if (!favoriteAudios.value.contains(element))
         favoriteAudios.value.add(element);
     });
+    isAudioListLoading.value = false;
   }
 
   void setAudioFavorite(MeditationAudio audio) async {
@@ -89,47 +110,33 @@ class MediationAudioController extends GetxController {
         .put(MyResource.MEDITATION_AUDIO_FAVORITE, favoriteAudios.value);
   }
 
-  Future<File> getCachedAudioFile(String trackId) async {
-    final audioFile = audios.firstWhere((element) => element.id == trackId,
-        orElse: () => null);
-    if (audioFile != null) {
+  Future<File> getCachedAudioFile(MeditationAudio track) async {
+    final audioFile =
+        audios.firstWhere((element) => element == track, orElse: () => null);
+    if (audioFile?.filePath != null) {
       return File(audioFile.filePath);
     } else {
-      _cacheAudioFile(trackId);
-      return Future.value(null);
+      var fl = await cacheAudioFile(track);
+      return fl != null ? File(fl.filePath) : null;
     }
   }
 
-  Future _cacheAudioFile(String trackId) async {
+  Future<MeditationAudio> cacheAudioFile(MeditationAudio track) async {
     try {
-      MeditationAudio audioFile =
-          await repository.getAudioFile(trackId, audioSource);
-      print("Meditation audio cached: $trackId");
+      MeditationAudio audioFile = await repository.getAudioFile(track);
       audios.add(audioFile);
+      return audioFile;
     } catch (e) {
       print(e);
     }
-  }
-
-  String getAudioUrl(String trackId) {
-    AudioMenuController cMenu = Get.find();
-    switch (cMenu.currentPage.value) {
-      case MenuItems.music:
-        return MeditationAudioData.musicSource[trackId];
-        break;
-      case MenuItems.sounds:
-        return MeditationAudioData.soundSource[trackId];
-        break;
-      default:
-        return MeditationAudioData.musicSource[trackId];
-    }
+    return null;
   }
 
   Future<List<AudioSource>> generateMeditationPlayList() async {
     List<AudioSource> _result = [];
+    audioNames.clear();
     if (playFromFavorite) {
-      currAudioName.value =
-          favoriteAudios.value.toList().elementAt(selectedItemIndex.value).id;
+      print('generateMeditationPlayList: playFromFavorite');
       favoriteAudios.value.forEach((value) {
         audioNames.add(value.id);
         final _cachedAudio = audios.firstWhere(
@@ -142,9 +149,11 @@ class MediationAudioController extends GetxController {
         } else {
           print('url: ${value.url}');
           _result.add(ProgressiveAudioSource(Uri.parse(value.url)));
-          _cacheAudioFile(value.id);
+          cacheAudioFile(value);
         }
       });
+      print('audioNames: ${audioNames.toList()}');
+      currAudioName.value = audioNames[selectedItemIndex.value];
     } else {
       audioNames = audioSource == null || audioSource.isEmpty
           ? MeditationAudioData.musicSource.keys.toList()
@@ -159,7 +168,8 @@ class MediationAudioController extends GetxController {
           _result.add(AudioSource.uri(Uri.file(_cachedAudio.filePath)));
         } else {
           _result.add(ProgressiveAudioSource(Uri.parse(url)));
-          _cacheAudioFile(trackId);
+          cacheAudioFile(
+              MeditationAudio(id: trackId, url: url, filePath: null));
         }
       });
     }
@@ -168,7 +178,6 @@ class MediationAudioController extends GetxController {
   }
 
   void initializeMeditationAudio({bool autoplay = true}) async {
-    isAudioListLoading.value = true;
     await reinitAudioSource();
     playList = await generateMeditationPlayList();
     print('playlist length: ${playList.length}');
@@ -179,7 +188,6 @@ class MediationAudioController extends GetxController {
       initialPosition: Duration.zero,
     );
     await player.setLoopMode(LoopMode.one);
-    isAudioListLoading.value = false;
     player.playingStream.listen((event) {
       if (isPlaying.value != event) isPlaying.value = event;
     });

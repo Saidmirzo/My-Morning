@@ -7,6 +7,8 @@ import 'package:morningmagic/features/meditation_audio/data/mediation_audio_cach
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/domain/repositories/audio_repository.dart';
 
+import '../../domain/entities/meditation_audio.dart';
+
 class AudioRepositoryImpl implements AudioRepository {
   @override
   Future<List<MeditationAudio>> getCachedAudioFiles(
@@ -28,14 +30,13 @@ class AudioRepositoryImpl implements AudioRepository {
   }
 
   @override
-  Future<MeditationAudio> getAudioFile(String key, Map source) async {
-    String _url = source[key];
+  Future<MeditationAudio> getAudioFile(MeditationAudio track) async {
     File file = await MeditationAudioCacheManager.instance
-        .getSingleFile(_url, key: key);
+        .getSingleFile(track.url, key: track.id);
 
     return MeditationAudio(
-      id: key,
-      url: _url,
+      id: track.id,
+      url: track.url,
       filePath: file.path,
     );
   }
