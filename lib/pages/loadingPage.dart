@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/routing/route_values.dart';
@@ -154,7 +154,6 @@ class LoadingPageState extends State<LoadingPage>
       textAlign: TextAlign.center,
       style: TextStyle(
         color: AppColors.WHITE,
-        fontFamily: 'rex',
         fontSize: 26,
       ),
     );
@@ -257,5 +256,4 @@ class LoadingPageState extends State<LoadingPage>
       MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(3));
     }
   }
-
 }

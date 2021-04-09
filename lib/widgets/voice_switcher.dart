@@ -4,7 +4,6 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/shared_preferences.dart';
 
 class VoiceSwitcher extends StatefulWidget {
-
   @override
   VoiceSwitcherState createState() {
     return VoiceSwitcherState();
@@ -12,14 +11,12 @@ class VoiceSwitcher extends StatefulWidget {
 }
 
 class VoiceSwitcherState extends State<VoiceSwitcher> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(
-              left: 10, top: 10, bottom: 5),
+          padding: EdgeInsets.only(left: 10, top: 10, bottom: 5),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -28,61 +25,43 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
               style: TextStyle(
                   color: AppColors.VIOLET,
                   fontStyle: FontStyle.normal,
-                  fontFamily: 'sans-serif-black',
                   fontSize: 26),
             ),
           ),
         ),
         Container(
           child: Padding(
-            padding:
-            EdgeInsets.only(left: 20, right: 20),
+            padding: EdgeInsets.only(left: 20, right: 20),
             child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
                   child: FutureBuilder(
-                      future: CustomSharedPreferences()
-                          .getVoice(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<bool> value) {
-                        return Text(
-                          'female'.tr,
-                          style: TextStyle(
-                            color: chooseWomanColor(
-                              value.data == null
-                                ? true
-                                : value.data),
-                            fontStyle:
-                            FontStyle.normal,
-                            fontSize: 20,
-                            fontFamily: 'sans-serif',
-                          )
-                        );
+                      future: CustomSharedPreferences().getVoice(),
+                      builder:
+                          (BuildContext context, AsyncSnapshot<bool> value) {
+                        return Text('female'.tr,
+                            style: TextStyle(
+                              color: chooseWomanColor(
+                                  value.data == null ? true : value.data),
+                              fontStyle: FontStyle.normal,
+                              fontSize: 20,
+                            ));
                       }),
                 ),
                 Container(
                   child: FutureBuilder(
-                    future: CustomSharedPreferences()
-                        .getVoice(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<bool> value) {
+                    future: CustomSharedPreferences().getVoice(),
+                    builder: (BuildContext context, AsyncSnapshot<bool> value) {
                       return Switch(
-                        value: value.data == null
-                            ? true
-                            : value.data,
-                        inactiveThumbColor:
-                        AppColors.PINK,
-                        inactiveTrackColor:
-                        AppColors.PINK,
+                        value: value.data == null ? true : value.data,
+                        inactiveThumbColor: AppColors.PINK,
+                        inactiveTrackColor: AppColors.PINK,
                         activeColor: AppColors.BLUE,
-                        activeTrackColor:
-                        AppColors.BLUE,
+                        activeTrackColor: AppColors.BLUE,
                         onChanged: (bool value) {
                           setState(() {
-                            CustomSharedPreferences()
-                                .setVoice(value);
+                            CustomSharedPreferences().setVoice(value);
                           });
                         },
                       );
@@ -91,23 +70,16 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
                 ),
                 Container(
                   child: FutureBuilder(
-                      future: CustomSharedPreferences()
-                          .getVoice(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<bool> value) {
-                        return Text(
-                          'male'.tr,
-                          style: TextStyle(
-                            color: chooseManColor(
-                                value.data == null
-                                    ? true
-                                    : value.data),
-                            fontStyle:
-                            FontStyle.normal,
-                            fontSize: 20,
-                            fontFamily: 'sans-serif',
-                          )
-                        );
+                      future: CustomSharedPreferences().getVoice(),
+                      builder:
+                          (BuildContext context, AsyncSnapshot<bool> value) {
+                        return Text('male'.tr,
+                            style: TextStyle(
+                              color: chooseManColor(
+                                  value.data == null ? true : value.data),
+                              fontStyle: FontStyle.normal,
+                              fontSize: 20,
+                            ));
                       }),
                 ),
               ],

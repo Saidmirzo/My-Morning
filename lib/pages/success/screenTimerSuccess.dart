@@ -179,7 +179,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
                     _audioPlayer.dispose();
                   }
                   widget.onPressed();
-                }, 'rex', 'continue'.tr, 21, null, null),
+                }, 'continue'.tr, 21, null, null),
               ),
             ],
           ),

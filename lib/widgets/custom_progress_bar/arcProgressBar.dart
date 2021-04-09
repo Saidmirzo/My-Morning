@@ -21,7 +21,6 @@ class ArcProgressBar extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: 45,
-              fontFamily: "rex",
               fontStyle: FontStyle.normal,
               color: AppColors.LIGHT_VIOLET,
             ),

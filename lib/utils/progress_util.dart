@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/app_exercise_holder.dart';
@@ -241,13 +242,9 @@ class ExerciseUtils {
         holder.freshExercises.length == 0 &&
         holder.skipExercises.length > 0) {
       OrderUtil().getRouteById(2).then((value) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => TimerSuccessScreen(() {
-                      Navigator.push(context, value);
-                    }, MyDB().getBox().get(MyResource.FITNESS_TIME_KEY).time,
-                        false)));
+        Get.off(TimerSuccessScreen(() {
+          Get.off(value);
+        }, MyDB().getBox().get(MyResource.FITNESS_TIME_KEY).time, false));
       });
     }
   }

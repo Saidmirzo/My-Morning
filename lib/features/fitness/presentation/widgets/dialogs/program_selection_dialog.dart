@@ -35,8 +35,7 @@ class ProgramSelectionDialog extends StatelessWidget {
                 height: 8,
               ),
               DialogHeaderButton(
-                  text: 'back_button'.tr,
-                  onTap: () => Navigator.pop(context)),
+                  text: 'back_button'.tr, onTap: () => Navigator.pop(context)),
               SizedBox(
                 height: 8,
               ),
@@ -81,15 +80,11 @@ class ProgramSelectionDialog extends StatelessWidget {
   }
 
   void navigateProgramScreen(BuildContext context) async {
-    final _step = _fitnessController.step;
+    _fitnessController.step = 0;
     final _exercise = _fitnessController.currentExercise;
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ExercisePage(
-                  exercise: _exercise,
-                  step: _step,
-                )));
-    _fitnessController.incrementStep();
+            builder: (context) => ExercisePage(exercise: _exercise)));
   }
 }

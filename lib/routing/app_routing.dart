@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/pages/loadingPage.dart';
 import 'package:morningmagic/pages/homePage.dart';
 import 'package:morningmagic/pages/screenUserDataInput.dart';
@@ -11,10 +12,13 @@ class AppRouting {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splashRoute:
-        return MaterialPageRoute(builder: (_) => LoadingPage(),);
+        return MaterialPageRoute(
+          builder: (_) => LoadingPage(),
+        );
         break;
       case homePageRoute:
-        return MaterialPageRoute(builder: (_) => HomePage(), settings: settings);
+        return MaterialPageRoute(
+            builder: (_) => HomePage(), settings: settings);
         break;
       case settingsPageRoute:
         return MaterialPageRoute(builder: (_) => SettingsPage());
@@ -27,7 +31,19 @@ class AppRouting {
     }
   }
 
-  static void navigateToHomeWithClearHistory(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, homePageRoute, (r) => false);
+  static void navigateToHomeWithClearHistory() {
+    Navigator.pushAndRemoveUntil(
+      Get.context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  static void replace(Widget page) {
+    Navigator.pushAndRemoveUntil(
+      Get.context,
+      MaterialPageRoute(builder: (context) => page),
+      (Route<dynamic> route) => false,
+    );
   }
 }

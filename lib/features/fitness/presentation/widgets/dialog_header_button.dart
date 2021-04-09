@@ -19,7 +19,6 @@ class DialogHeaderButton extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 23,
-              fontFamily: 'rex',
               fontStyle: FontStyle.normal,
               color: AppColors.VIOLET),
         ),

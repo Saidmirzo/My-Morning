@@ -25,19 +25,16 @@ class StartAgainDialog extends Dialog {
                     'sure'.tr,
                     style: TextStyle(
                         fontSize: 23,
-                        fontFamily: 'rex',
                         fontStyle: FontStyle.normal,
                         color: AppColors.VIOLET),
                   ),
                 ),
               ),
               Container(
-                  padding: EdgeInsets.only(top: 10),
-                  child: AnimatedButton(
-                  () {
-                        Navigator.pop(context, true);
-                      }, 'rex', 'cancel'.tr, 22, null, null
-                  ),
+                padding: EdgeInsets.only(top: 10),
+                child: AnimatedButton(() {
+                  Navigator.pop(context, true);
+                }, 'cancel'.tr, 22, null, null),
               ),
             ],
           ),

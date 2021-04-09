@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/app_exercise_holder.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/custom_exercise_holder.dart';
@@ -158,7 +158,6 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                           style: TextStyle(
                             fontSize: 20,
                             fontStyle: FontStyle.italic,
-                            fontFamily: "rex",
                             color: AppColors.VIOLET,
                           ),
                         ),
@@ -177,7 +176,6 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                           style: TextStyle(
                             fontSize: 20,
                             fontStyle: FontStyle.italic,
-                            fontFamily: "rex",
                             color: AppColors.VIOLET,
                           ),
                         ),
@@ -187,7 +185,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                             top: MediaQuery.of(context).size.width / 5),
                         child: AnimatedButton(() {
                           _openDialog();
-                        }, "rex", 'add_exercises'.tr, 20, null, null),
+                        }, 'add_exercises'.tr, 20, null, null),
                       ),
                       Container(
                         child: ExerciseDragTarget(),
@@ -198,7 +196,7 @@ class ExerciseDeskScreenState extends State<ExerciseDeskScreen> {
                             bottom: MediaQuery.of(context).size.width / 17),
                         child: AnimatedButton(() {
                           goNextPage();
-                        }, 'rex', 'start'.tr, 20, null, null),
+                        }, 'start'.tr, 20, null, null),
                       ),
                     ],
                   ),

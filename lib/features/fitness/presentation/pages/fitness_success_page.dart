@@ -70,7 +70,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
               Positioned(
                 bottom: MediaQuery.of(context).size.height / 5.5,
                 child: AnimatedButton(
-                    _continueClicked, 'rex', 'continue'.tr, 21, null, null),
+                    _continueClicked, 'continue'.tr, 21, null, null),
               ),
             ],
           ),
@@ -82,8 +82,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   void _continueClicked() async {
     Get.delete<FitnessController>();
     final _routeValue = await OrderUtil().getRouteById(2);
-
-    Navigator.push(context, _routeValue);
+    Get.off(_routeValue);
   }
 
   void _updateLocalData(int minutes) {

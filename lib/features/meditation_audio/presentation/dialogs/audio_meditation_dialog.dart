@@ -1,110 +1,71 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
-import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/pages/meditation/components/menu.dart';
 
-class AudioMeditationDialog extends StatefulWidget {
+class AudioMeditationContainer extends StatefulWidget {
   @override
-  _AudioMeditationDialogState createState() => _AudioMeditationDialogState();
+  _AudioMeditationContainerState createState() =>
+      _AudioMeditationContainerState();
 }
 
-class _AudioMeditationDialogState extends State<AudioMeditationDialog> {
+class _AudioMeditationContainerState extends State<AudioMeditationContainer>
+    with WidgetsBindingObserver {
+  MediationAudioController _audioController;
 
   @override
   Widget build(BuildContext context) {
-    final _audioTrackNames = MeditationAudioData.audioSources.keys.toList();
-
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(
-                    8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildDialogActionButton(
-                      context: context,
-                      title: 'back_button'.tr,
-                      onTap: () {
-                        Navigator.pop(context);
-                        _stopPlayer();
-                      },
-                    ),
-                    _buildDialogActionButton(
-                      context: context,
-                      title: 'choose'.tr,
-                      onTap: () {
-                        Navigator.pop(context);
-                        _stopPlayer();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: _buildSelectAudioList(_audioTrackNames),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: _buildSelectAudioList(),
     );
   }
 
-  ListView _buildSelectAudioList(List<String> _audioTrackNames) {
-    return ListView.separated(
-      shrinkWrap: true,
-      padding: EdgeInsets.symmetric(vertical: 16),
-
-      itemCount: _audioTrackNames.length,
-      //appStates.meditationPlaylist.value.audios.length,
-      separatorBuilder: (context, index) => SizedBox(height: 10),
-      itemBuilder: (context, index) {
-        print(index);
-        return AudioMeditationDialogItem(
-          id: index,
-          trackId: _audioTrackNames[index],
-        );
-      },
-    );
-  }
-
-  InkWell _buildDialogActionButton(
-      {@required BuildContext context,
-      @required String title,
-      @required VoidCallback onTap}) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 23,
-              fontFamily: 'rex',
-              fontStyle: FontStyle.normal,
-              color: AppColors.VIOLET),
-        ),
-      ),
-    );
+  Widget _buildSelectAudioList() {
+    return Obx(() {
+      return _audioController.isAudioListLoading.value
+          ? Center(child: CupertinoActivityIndicator())
+          : ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(vertical: 16),
+              itemCount: _audioController.audios.length,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return AudioMeditationDialogItem(
+                  id: index,
+                  audio: _audioController.audios[index],
+                );
+              },
+            );
+    });
   }
 
   void _stopPlayer() {
-    final _audioController = Get.find<MediationAudioController>();
-    _audioController.audioPlayer.value.pause();
-    _audioController.isPlaying = false;
+    _audioController.player.stop();
+    _audioController.isPlaying.value = false;
+    _audioController.playingIndex.value = -1;
+    _audioController.selectedItemIndex.value = 0;
+  }
+
+  @override
+  void initState() {
+    _audioController = Get.find();
+    _audioController.audioSource = MeditationAudioData.soundSource;
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _stopPlayer();
+      _audioController.playFromFavorite = false;
+      _audioController.reinitAudioSource(fromDialog: true);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

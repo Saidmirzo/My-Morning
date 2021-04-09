@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 class ProgressPair extends StatelessWidget {
-
   final String exerciseTitle;
   final String exerciseValue;
 
@@ -21,7 +20,6 @@ class ProgressPair extends StatelessWidget {
             child: Text(
               exerciseTitle,
               style: TextStyle(
-                fontFamily: 'sans-serif-black',
                 fontSize: 16,
                 color: AppColors.VIOLET,
                 fontStyle: FontStyle.normal,
@@ -29,16 +27,13 @@ class ProgressPair extends StatelessWidget {
             ),
           ),
           Container(
-            child: Text(
-                ' – '
-            ),
+            child: Text(' – '),
           ),
           Flexible(
             child: Container(
               child: Text(
                 exerciseValue,
                 style: TextStyle(
-                  fontFamily: 'sans-serif',
                   fontSize: 16,
                   color: AppColors.VIOLET,
                   fontStyle: FontStyle.normal,

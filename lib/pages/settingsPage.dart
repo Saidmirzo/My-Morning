@@ -1,15 +1,19 @@
 import 'dart:async';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/admob.dart';
+import 'package:morningmagic/services/notifications.dart';
+import 'package:morningmagic/widgets/primary_button.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../app_states.dart';
@@ -53,6 +57,12 @@ class SettingsPageState extends State<SettingsPage> {
     activityList = buildActivityList(false);
     AnalyticService.screenView('settings_page');
 
+    if (GetPlatform.isIOS) {
+      // Show tracking authorization dialog and ask for permission
+      Future.delayed(2.seconds, () async {
+        await AppTrackingTransparency.requestTrackingAuthorization();
+      });
+    }
     super.initState();
   }
 
@@ -104,8 +114,7 @@ class SettingsPageState extends State<SettingsPage> {
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: AppColors.VIOLET,
-                                  fontFamily: 'sans-serif-black',
-                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 24),
                             ),
                           )),
@@ -119,7 +128,6 @@ class SettingsPageState extends State<SettingsPage> {
                           style: TextStyle(
                               color: AppColors.VIOLET,
                               fontStyle: FontStyle.normal,
-                              fontFamily: 'sans-serif',
                               fontSize: 14),
                         ),
                       ),
@@ -140,7 +148,6 @@ class SettingsPageState extends State<SettingsPage> {
                               style: TextStyle(
                                   color: AppColors.VIOLET,
                                   fontStyle: FontStyle.normal,
-                                  fontFamily: 'sans-serif',
                                   fontSize: 14),
                             )),
                             Text(
@@ -148,7 +155,6 @@ class SettingsPageState extends State<SettingsPage> {
                               style: TextStyle(
                                   color: AppColors.VIOLET,
                                   fontStyle: FontStyle.normal,
-                                  fontFamily: 'sans-serif',
                                   fontSize: 21),
                             )
                           ],
@@ -165,8 +171,7 @@ class SettingsPageState extends State<SettingsPage> {
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: AppColors.VIOLET,
-                                  fontStyle: FontStyle.normal,
-                                  fontFamily: 'sans-serif-black',
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 26),
                             ),
                           )),
@@ -204,7 +209,7 @@ class SettingsPageState extends State<SettingsPage> {
                                       child: Text('choose_ready'.tr,
                                           style: TextStyle(
                                             color: AppColors.VIOLET,
-                                            fontSize: 30,
+                                            fontSize: Get.height * 0.028,
                                             fontWeight: FontWeight.normal,
                                           )),
                                     ),
@@ -235,7 +240,6 @@ class SettingsPageState extends State<SettingsPage> {
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         fontSize: 20,
-                                        fontFamily: "sans-serif",
                                         fontStyle: FontStyle.normal,
                                         color: AppColors.VIOLET,
                                         decoration: TextDecoration.none),
@@ -245,7 +249,6 @@ class SettingsPageState extends State<SettingsPage> {
                                       hintStyle: TextStyle(
                                         color: AppColors.LIGHT_GRAY,
                                         fontSize: 16,
-                                        fontFamily: "sans-serif",
                                       ),
                                       border: InputBorder.none,
                                     ),
@@ -265,8 +268,7 @@ class SettingsPageState extends State<SettingsPage> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: AppColors.VIOLET,
-                                fontStyle: FontStyle.normal,
-                                fontFamily: 'sans-serif-black',
+                                fontWeight: FontWeight.w600,
                                 fontSize: 26),
                           ),
                         ),
@@ -294,7 +296,6 @@ class SettingsPageState extends State<SettingsPage> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 23,
-                                    fontFamily: "sans-serif",
                                     fontStyle: FontStyle.normal,
                                     color: AppColors.VIOLET,
                                     decoration: TextDecoration.none),
@@ -309,14 +310,13 @@ class SettingsPageState extends State<SettingsPage> {
                     SliverToBoxAdapter(
                       child: Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
-                        child: AnimatedButton(
-                            () => AppRouting.navigateToHomeWithClearHistory(
-                                context),
-                            'sans-serif',
-                            'continue'.tr,
-                            null,
-                            null,
-                            null),
+                        child: PrimaryButton(
+                          onPressed: () {
+                            appAnalitics.logEvent('first_menu');
+                            AppRouting.navigateToHomeWithClearHistory();
+                          },
+                          text: 'continue'.tr,
+                        ),
                       ),
                     ),
                     SliverToBoxAdapter(
@@ -362,15 +362,12 @@ class SettingsPageState extends State<SettingsPage> {
 
   void _initOpenDialog() async {
     await Future.delayed(Duration(seconds: 3));
-    if (context != null) {
-      _openDialog();
-    }
+    _openDialog();
   }
 
   void _openDialog() async {
     if (!billingService.isPro()) {
-      showDialog(
-          context: context, builder: (BuildContext context) => PaymentDialog());
+      Get.dialog(PaymentDialog());
     }
   }
 
@@ -585,7 +582,7 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   Future<bool> _onWillPop() async {
-    AppRouting.navigateToHomeWithClearHistory(context);
+    AppRouting.navigateToHomeWithClearHistory();
     return false;
   }
 

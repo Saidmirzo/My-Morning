@@ -10,6 +10,7 @@ class MyResource {
   static const String NOTEPADS = "notepads";
   static const String NOTE_COUNT = "note_count";
   static const String MEDITATION_TIME_KEY = "meditation_time";
+  static const String MEDITATION_AUDIO_FAVORITE = "meditation_audio_favorite";
   static const String AFFIRMATION_TIME_KEY = "affirmation_time";
   static const String AFFIRMATION_PROGRESS = "affirmation_progress";
   static const String FITNESS_TIME_KEY = "fitness_time";
@@ -50,7 +51,6 @@ class MyResource {
 
   // Кол-во запусков приложения
   static const String COUNT_APP_LAUNCH = 'countAppLaunch';
-
 
   // Дни недели
   static const String MONDAY = 'monday';

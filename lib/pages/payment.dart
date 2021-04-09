@@ -1,16 +1,19 @@
-import 'package:get/get.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
-import 'package:morningmagic/my_const.dart';
+import 'package:morningmagic/resources/my_const.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/my_url.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import '../resources/colors.dart';
 import '../storage.dart';
+import '../widgets/primary_button.dart';
+import '../widgets/primary_circle_button.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -18,145 +21,261 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  Size size;
   AppStates appStates = Get.put(AppStates());
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
     String monthPrice =
         billingService.getPrice(billingService.getMonthlyTarif());
     return Scaffold(
-      backgroundColor: AppColors.CREAM,
-      appBar: AppBar(
-        backgroundColor: AppColors.CREAM,
-        elevation: 0,
-        iconTheme: IconThemeData(
-          color: AppColors.GRAY,
+      body: Container(
+        width: Get.width,
+        height: Get.height,
+        decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_Payments),
+        child: SafeArea(
+          bottom: false,
+          child: Stack(
+            children: [
+              Positioned(
+                  bottom: 0,
+                  width: Get.width,
+                  child: Image.asset(
+                    'assets/images/purchase/clouds1.png',
+                    fit: BoxFit.cover,
+                  )),
+              Positioned(
+                  bottom: 0,
+                  width: Get.width,
+                  child: Image.asset(
+                    'assets/images/purchase/clouds2.png',
+                    fit: BoxFit.cover,
+                  )),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Column(
+                  children: [
+                    buildHeader(),
+                    Spacer(),
+                    buildBonuses(),
+                    // Spacer(),
+                    const SizedBox(height: 10),
+                    period('vip_price_card'.tr, monthPrice),
+                    const SizedBox(height: 10),
+                    // Spacer(),
+                    buildDesc(monthPrice),
+                    Spacer(),
+                    btnBuy(),
+                    Spacer(),
+                    buildFooter(),
+                    Spacer(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            width: size.width,
-            height: size.height,
+    );
+  }
+
+  Column buildBonuses() {
+    return Column(
+      children: [
+        bonusLine('fitness'.tr, 'paragraph2'.tr,
+            image: 'assets/images/purchase/fitness.png'),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            bonusSquare('visualization'.tr, 'paragraph4'.tr,
+                image: 'assets/images/purchase/eye.png'),
+            const SizedBox(height: 10),
+            bonusSquare('reading'.tr, 'paragraph3'.tr,
+                image: 'assets/images/purchase/book.png'),
+            const SizedBox(height: 10),
+            bonusSquare('note'.tr, 'paragraph1'.tr,
+                image: 'assets/images/purchase/note.png'),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildHeader() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            PrimaryCircleButton(
+                icon: Icon(Icons.arrow_back, color: AppColors.primary),
+                onPressed: () {
+                  Get.back();
+                  appAnalitics.logEvent('first_skip_pay');
+                }),
+            Container(
+              width: Get.width * 0.40,
+              child: Text(
+                'purchase_page_title'.tr,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    fontSize: Get.height * 0.022),
+              ),
+            ),
+            const SizedBox(width: 70),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'purchase_page_desc'.tr,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+              fontSize: Get.height * 0.017),
+        ),
+      ],
+    );
+  }
+
+  Widget bonusSquare(String title, String desc, {String image}) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18), color: Colors.white),
+      width: Get.width * 0.28,
+      height: Get.height * 0.16,
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (image != null) Image.asset(image, height: Get.height * 0.03),
+          const SizedBox(height: 10),
+          Text(title,
+              style: TextStyle(
+                  fontSize: Get.height * 0.011,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primary)),
+          const SizedBox(height: 6),
+          Text(desc,
+              style: TextStyle(
+                fontSize: Get.height * 0.011,
+                fontWeight: FontWeight.w500,
+                color: AppColors.primary,
+              )),
+        ],
+      ),
+    );
+  }
+
+  Widget bonusLine(String title, String desc, {String image}) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18), color: Colors.white),
+      width: Get.width,
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: Get.width * 0.5,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  children: [
-                    paragraph('paragraph1'.tr),
-                    const SizedBox(height: 10),
-                    paragraph('paragraph2'.tr),
-                    const SizedBox(height: 10),
-                    paragraph('paragraph3'.tr),
-                    const SizedBox(height: 10),
-                    paragraph('paragraph4'.tr),
-                  ],
-                ),
-                const SizedBox(height: 50),
-                Column(
-                  children: [
-                    period(
-                        'vip_price_card'.trParams({'price': monthPrice}),
-                        120),
-                    const SizedBox(height: 20),
-                    Container(
-                        width: 300,
-                        child: Text(
-                          'try_vip_desc'.trParams({'price': monthPrice}),
-                          textAlign: TextAlign.center,
-                        )),
-                    const SizedBox(height: 20),
-                    btnBuy()
-                  ],
-                ),
-                const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    new RichText(text: myUrl('privacy_title'.tr, UrlPrivacy)),
-                    new RichText(
-                        text: myUrl('agreement_title'.tr, UrlAgreement)),
-                  ],
-                ),
-                const SizedBox(height: 30),
+                Text(title,
+                    style: TextStyle(
+                        fontSize: Get.height * 0.013,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary)),
+                const SizedBox(height: 8),
+                Text(desc,
+                    style: TextStyle(
+                      fontSize: Get.height * 0.013,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
+                    )),
               ],
             ),
           ),
-        ),
+          if (image != null) Image.asset(image, height: Get.height * 0.05),
+        ],
       ),
     );
+  }
+
+  Widget period(String period, String price) {
+    return Container(
+      alignment: Alignment.center,
+      child: Row(
+        children: [
+          Text(
+            period,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: Get.height * 0.022),
+          ),
+          Spacer(),
+          Text(
+            price,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: Get.height * 0.022),
+          )
+        ],
+      ),
+      decoration: BoxDecoration(
+          color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+    );
+  }
+
+  Container buildDesc(String monthPrice) {
+    return Container(
+        decoration: BoxDecoration(
+            color: AppColors.purchaseDesc.withOpacity(0.64),
+            borderRadius: BorderRadius.circular(20)),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Text(
+          'try_vip_desc'.trParams({'price': monthPrice}),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontSize: Get.height * 0.015),
+        ));
   }
 
   Widget btnBuy() {
-    return Container(
-      width: size.width * 0.7,
-      height: 60,
-      child: FlatButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        child: Text('continue'.tr,
-            style: TextStyle(color: Colors.white, fontSize: 23)),
-        color: AppColors.PINK,
-        onPressed: () async {
-          try {
-            await Purchases.purchasePackage(billingService.getMonthlyTarif());
-            await AnalyticService.analytics.logEcommercePurchase(
-              value: 75,
-              currency: 'RUB',
-            );
-          } on PlatformException catch (e) {
-            var errorCode = PurchasesErrorHelper.getErrorCode(e);
-            if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
-              print("User cancelled");
-            } else if (errorCode ==
-                PurchasesErrorCode.purchaseNotAllowedError) {
-              print("User not allowed to purchase");
-            } else {
-              print('Error purchase, code $errorCode');
-            }
+    return PrimaryButton(
+      text: 'continue'.tr,
+      pWidth: 0.5,
+      onPressed: () async {
+        try {
+          await Purchases.purchasePackage(billingService.getMonthlyTarif());
+          appAnalitics.logEvent('first_trial');
+          await AnalyticService.analytics
+              .logEcommercePurchase(value: 75, currency: 'RUB');
+        } on PlatformException catch (e) {
+          var errorCode = PurchasesErrorHelper.getErrorCode(e);
+          if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+            print("User cancelled");
+          } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
+            print("User not allowed to purchase");
+          } else {
+            print('Error purchase, code $errorCode');
           }
-        },
-      ),
+        }
+      },
     );
   }
 
-  Widget period(String text, double size) {
-    return Container(
-      alignment: Alignment.center,
-      width: size,
-      height: size,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            color: AppColors.VIOLET, fontWeight: FontWeight.w600, fontSize: 20),
-      ),
-      decoration: BoxDecoration(
-          color: AppColors.LIGHT_CREAM,
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: Colors.black)),
-    );
-  }
-
-  Widget paragraph(String text) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Column buildFooter() {
+    return Column(
       children: [
-        Icon(Icons.done),
-        const SizedBox(width: 10),
-        Container(
-          width: size.width * 0.8,
-          child: Text(
-            text,
-            textAlign: TextAlign.left,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: TextStyle(fontSize: 17),
-          ),
-        )
+        new RichText(text: myUrl('privacy_title'.tr, UrlPrivacy)),
+        const SizedBox(height: 5),
+        new RichText(text: myUrl('agreement_title'.tr, UrlAgreement)),
       ],
     );
   }

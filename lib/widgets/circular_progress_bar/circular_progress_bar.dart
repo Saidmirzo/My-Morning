@@ -30,7 +30,6 @@ class CircularProgressBar extends StatelessWidget {
               text,
               style: TextStyle(
                 fontSize: fontSize,
-                fontFamily: "aparaj",
                 color: foregroundColor,
               ),
             ),

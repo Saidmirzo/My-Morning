@@ -21,13 +21,14 @@ class FitnessExerciseAdapter extends TypeAdapter<FitnessExercise> {
       fields[1] as String,
       isCreatedByUser: fields[2] as bool,
       audioRes: fields[3] as String,
+      imageRes: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, FitnessExercise obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj._name)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class FitnessExerciseAdapter extends TypeAdapter<FitnessExercise> {
       ..writeByte(2)
       ..write(obj.isCreatedByUser)
       ..writeByte(3)
-      ..write(obj.audioRes);
+      ..write(obj.audioRes)
+      ..writeByte(4)
+      ..write(obj.imageRes);
   }
 
   @override

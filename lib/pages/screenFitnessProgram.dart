@@ -7,8 +7,9 @@ import 'package:morningmagic/widgets/animatedButton.dart';
 class FitnessProgramScreen extends StatefulWidget {
   final int pageId;
 
-  const FitnessProgramScreen({Key key, @required this.pageId}) : super(key: key);
-  
+  const FitnessProgramScreen({Key key, @required this.pageId})
+      : super(key: key);
+
   @override
   State createState() {
     return FitnessProgramScreenState();
@@ -21,8 +22,7 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
     return Scaffold(
       body: Center(
         child: Container(
-          width:
-              MediaQuery.of(context).size.width, // match parent(all screen)
+          width: MediaQuery.of(context).size.width, // match parent(all screen)
           height:
               MediaQuery.of(context).size.height, // match parent(all screen)
           decoration: BoxDecoration(
@@ -48,7 +48,6 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
                       style: TextStyle(
                         fontSize: 32,
                         fontStyle: FontStyle.normal,
-                        fontFamily: "rex",
                         color: AppColors.WHITE,
                       ),
                     ),
@@ -58,7 +57,6 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 19,
-                      fontFamily: "JMH",
                       fontStyle: FontStyle.italic,
                       color: AppColors.VIOLET,
                     ),
@@ -68,13 +66,12 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
               Positioned(
                 bottom: 70,
                 child: AnimatedButton(() {
-                  Navigator.push( context, MaterialPageRoute( builder: (context) => FitnessMainPage(pageId: widget.pageId))); },
-                  'rex',
-                  'next_button'.tr,
-                  22,
-                  null,
-                  null
-                ),
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FitnessMainPage(pageId: widget.pageId)));
+                }, 'next_button'.tr, 22, null, null),
               )
             ],
           ),

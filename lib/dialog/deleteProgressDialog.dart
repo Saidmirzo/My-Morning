@@ -6,7 +6,6 @@ import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:get/get.dart';
 
 class DeleteProgressDialog extends Dialog {
-
   DeleteProgressDialog(this.voidCallback);
 
   final VoidCallback voidCallback;
@@ -33,7 +32,6 @@ class DeleteProgressDialog extends Dialog {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 23,
-                        fontFamily: 'rex',
                         fontStyle: FontStyle.normal,
                         color: AppColors.VIOLET),
                   ),
@@ -43,21 +41,18 @@ class DeleteProgressDialog extends Dialog {
                 padding: EdgeInsets.only(top: 20),
                 child: Center(
                   child: AnimatedButton(() {
-                  ExerciseUtils().deleteAllProgress().then((value) {
-                    voidCallback();
-                  });
+                    ExerciseUtils().deleteAllProgress().then((value) {
+                      voidCallback();
+                    });
                     Navigator.pop(context, true);
-                  }, 'rex', 'yes'.tr, 22,
-                      null, null),
+                  }, 'yes'.tr, 22, null, null),
                 ),
               ),
               Container(
                 padding: EdgeInsets.only(top: 10),
                 child: AnimatedButton(() {
-                    Navigator.pop(context, true);
-                  }, 'rex', 'no'.tr, 22,
-                  null, null
-                ),
+                  Navigator.pop(context, true);
+                }, 'no'.tr, 22, null, null),
               ),
             ],
           ),

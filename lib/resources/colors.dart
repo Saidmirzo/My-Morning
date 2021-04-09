@@ -18,7 +18,158 @@ class AppColors {
   static const TRANSPARENT_VIOLET = Color(0xFF59502e82);
   static const TRANSPARENT = Color(0);
   static const TRANSPARENTS = Color(0x3dffffff);
+  static const primary = Color(0xff592F72);
+  static const btnText = Color(0xff592F72);
+  static const inputHintText = Color(0xff592F72);
+  static const audiuSelected = Color(0xffFAF1FF);
+  static const purchaseDesc = Color(0xffB994DA);
 
   static const FIX_TOP = Color(0xFFa0b2fa);
   static const FIX_BOTTOM = Color(0xFFf8d9da);
+
+  // Gradients
+  static const Bg_Gradient_1 = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffF8D199),
+      const Color(0xffDA90AA),
+      const Color(0xffB994DA),
+    ],
+  );
+  static const Bg_Gradient_2 = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffAE80D6),
+      const Color(0xffD892AB),
+      const Color(0xffE4C596),
+    ],
+  );
+  static const Bg_Gradient_3 = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffDA90AA),
+      const Color(0xffB994DA),
+    ],
+  );
+  static const Bg_Gradient_Payments = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffB994DA),
+      const Color(0xffFFB5C3),
+      const Color(0xffFFF9EF),
+    ],
+  );
+
+  ///
+  ///
+  /// Таймеры
+  ///
+  ///
+
+  static const Bg_Gradient_Timer_Meditation = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffFFA0C2),
+      const Color(0xffFFE3BA),
+    ],
+  );
+  static const Progress_Gradient_Timer_Meditation = LinearGradient(
+    begin: Alignment.bottomCenter,
+    end: Alignment.topCenter,
+    colors: [
+      const Color(0xffFFE6C1),
+      const Color(0xffFFD3DB),
+    ],
+  );
+
+  static const Bg_Gradient_Timer_Reading = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffB994DA),
+      const Color(0xffFFA8C1),
+    ],
+  );
+  static const Progress_Gradient_Timer_Reading = LinearGradient(
+    begin: Alignment.bottomCenter,
+    end: Alignment.topCenter,
+    colors: [
+      const Color(0xff592F72),
+      const Color(0xffEEA6C8),
+    ],
+  );
+
+  static const Bg_Gradient_Timer_Affirmation = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffAE80D6),
+      const Color(0xffD68FA8),
+      const Color(0xffFFE3BA),
+    ],
+  );
+  static const Progress_Gradient_Timer_Affirmation = LinearGradient(
+    begin: Alignment.bottomCenter,
+    end: Alignment.topCenter,
+    colors: [
+      const Color(0xffB994DA),
+      const Color(0xff592F72),
+    ],
+  );
+
+  static const Bg_Gradient_Timer_Diary = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffFFB5C3),
+      const Color(0xffAE80D6),
+    ],
+  );
+  static const Bg_Gradient_Timer_Diary_Note = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffFFF0D9),
+      const Color(0xffFFB5C3),
+      const Color(0xffB994DA),
+    ],
+  );
+  static const Progress_Gradient_Timer_Diary = LinearGradient(
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
+    colors: [
+      const Color(0xffFFF0D9),
+      const Color(0xffB994DA),
+    ],
+  );
+  static const Progress_Gradient_Timer_Diary_Note = LinearGradient(
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
+    colors: [
+      const Color(0xff592F72),
+      const Color(0xffEEA6C8),
+    ],
+  );
+
+  static const Bg_Gradient_Timer_Fitnes = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xff9F71C8),
+      const Color(0xffDA90AA),
+    ],
+  );
+  static const Progress_Gradient_Timer_Fitnes = LinearGradient(
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
+    colors: [
+      const Color(0xff592F72),
+      const Color(0xffEEA6C8),
+    ],
+  );
 }

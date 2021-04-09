@@ -1,21 +1,24 @@
-
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/widgets/primary_button.dart';
 
 import '../storage.dart';
-import 'animatedButton.dart';
 import 'is_pro_widget.dart';
 
 class Subscribe1MonthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if(billingService.isPro()) return IsProWidget();
+    if (billingService.isPro()) return IsProWidget();
     return Column(
       children: [
         Center(
-          child: AnimatedButton(() async {
-            billingService.startPaymentPage(context);
-          }, 'sans-serif', 'pay'.tr, null, null, null
+          child: PrimaryButton(
+            onPressed: () async {
+              appAnalitics.logEvent('first_pay');
+              billingService.startPaymentPage(context);
+            },
+            text: 'pay'.tr,
           ),
         ),
         const SizedBox(height: 15),

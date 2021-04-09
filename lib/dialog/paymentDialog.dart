@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
+import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -30,7 +31,6 @@ class PaymentDialog extends Dialog {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 18,
-                        fontFamily: 'rex',
                         fontWeight: FontWeight.normal,
                         color: AppColors.VIOLET),
                   ),
@@ -47,7 +47,6 @@ class PaymentDialog extends Dialog {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
-                            fontFamily: 'rex',
                             fontWeight: FontWeight.normal,
                             color: AppColors.VIOLET,
                           ),
@@ -66,7 +65,6 @@ class PaymentDialog extends Dialog {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 21,
-                                  fontFamily: 'rex',
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.PINK,
                                   decoration: TextDecoration.lineThrough),
@@ -79,7 +77,6 @@ class PaymentDialog extends Dialog {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 21,
-                                  fontFamily: 'rex',
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.VIOLET),
                             ),
@@ -97,12 +94,18 @@ class PaymentDialog extends Dialog {
                   children: <Widget>[
                     _buildBuyButton(
                       title: 'buy_month'.tr,
-                      onTap: () => _startPaymentSubscription(context),
+                      onTap: () {
+                        _startPaymentSubscription(context);
+                        appAnalitics.logEvent('first_popap_pay');
+                      },
                     ),
                     SizedBox(height: 8),
                     _buildBuyButton(
                       title: 'buy_days'.tr,
-                      onTap: () => _startPaymentTrial(context),
+                      onTap: () {
+                        _startPaymentTrial(context);
+                        appAnalitics.logEvent('first_popap_trial');
+                      },
                     )
                   ],
                 ),
@@ -134,13 +137,13 @@ class PaymentDialog extends Dialog {
   }
 
   _startPaymentSubscription(BuildContext context) {
-    Navigator.pop(context);
+    Get.back();
     billingService.startPaymentPage(context);
   }
 
   _startPaymentTrial(BuildContext context) {
-    Navigator.pop(context);
-    billingService.startPaymentPageTrial(context);
+    Get.back();
+    billingService.startPaymentPage(context);
   }
 }
 

@@ -7,14 +7,13 @@ import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:random_string/random_string.dart';
 
 class ExerciseDialog extends Dialog {
-
   final TextEditingController _controller;
   final VoidCallback _backCallback;
   final VoidCallback _addCallback;
   final List<ExerciseName> list;
 
-
-  ExerciseDialog(this._controller, this._backCallback, this._addCallback, this.list);
+  ExerciseDialog(
+      this._controller, this._backCallback, this._addCallback, this.list);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,6 @@ class ExerciseDialog extends Dialog {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 23,
-                        fontFamily: 'rex',
                         fontStyle: FontStyle.normal,
                         color: AppColors.VIOLET),
                   ),
@@ -55,44 +53,44 @@ class ExerciseDialog extends Dialog {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 23,
-                      fontFamily: "sans-serif",
                       fontStyle: FontStyle.normal,
                       color: AppColors.VIOLET,
                       decoration: TextDecoration.none),
                   decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'your_exercise'.tr,
-                    hintStyle: TextStyle(
-                      color: AppColors.LIGHT_GRAY,
-                    )
-                  ),
+                      border: InputBorder.none,
+                      hintText: 'your_exercise'.tr,
+                      hintStyle: TextStyle(
+                        color: AppColors.LIGHT_GRAY,
+                      )),
                 ),
               ),
               Container(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Container(
-                      child: AnimatedButton(() {
-                        if (_controller.text.isNotEmpty) {
-                          print(_controller.text);
-                          ExerciseName exerciseName = ExerciseName(randomAlpha(10), _controller.text, null);
-                          list.add(exerciseName);
-                          ExerciseUtils().saveCustomExerciseToDB(exerciseName).then((value) {
-                            _addCallback();
-                            _backCallback();
-                          });
-                        }
-
-                      }, "rex", 'add_exercise'.tr, 18, null, null),
-                    ),
-                    Container(
-                      padding:EdgeInsets.only(top: 10),
-                      child: AnimatedButton(_backCallback, "rex", 'back_button'.tr, 18, null, null),
-                    )
-                  ],
-                )
-              ),
+                  child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    child: AnimatedButton(() {
+                      if (_controller.text.isNotEmpty) {
+                        print(_controller.text);
+                        ExerciseName exerciseName = ExerciseName(
+                            randomAlpha(10), _controller.text, null);
+                        list.add(exerciseName);
+                        ExerciseUtils()
+                            .saveCustomExerciseToDB(exerciseName)
+                            .then((value) {
+                          _addCallback();
+                          _backCallback();
+                        });
+                      }
+                    }, 'add_exercise'.tr, 18, null, null),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 10),
+                    child: AnimatedButton(
+                        _backCallback, 'back_button'.tr, 18, null, null),
+                  )
+                ],
+              )),
             ],
           ),
         ),

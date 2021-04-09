@@ -47,7 +47,6 @@ class UpsellPageState extends State<UpsellPage> {
                         await Purchases.purchasePackage(
                             billingService.getMonthlyTarif());
                   },
-                  'rex',
                   'buy_days'.tr,
                   22,
                   null,
@@ -57,8 +56,7 @@ class UpsellPageState extends State<UpsellPage> {
               Container(
                 height: 100,
                 child: AnimatedButton(
-                    () => AppRouting.navigateToHomeWithClearHistory(context),
-                    'rex',
+                    () => AppRouting.navigateToHomeWithClearHistory(),
                     'menu'.tr,
                     22,
                     null,

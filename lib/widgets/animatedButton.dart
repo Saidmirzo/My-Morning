@@ -5,20 +5,13 @@ const _duration = Duration(milliseconds: 500);
 
 class AnimatedButton extends StatefulWidget {
   final VoidCallback onPressed;
-  final String fontFamily;
   final String title;
   final double fontSize;
   final double width;
   final FontWeight fontWeight;
 
   AnimatedButton(
-    this.onPressed, 
-    this.fontFamily, 
-    this.title, 
-    this.fontSize,
-    this.width,
-    this.fontWeight
-  );
+      this.onPressed, this.title, this.fontSize, this.width, this.fontWeight);
 
   _AnimatedButtonState createState() => _AnimatedButtonState();
 }
@@ -84,7 +77,6 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                   fontWeight: widget.fontWeight != null
                       ? widget.fontWeight
                       : FontWeight.w400,
-                  fontFamily: widget.fontFamily,
                   fontSize: widget.fontSize != null ? widget.fontSize : 23,
                 ),
               ),

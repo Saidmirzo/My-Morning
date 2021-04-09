@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'exerciseTrashButton.dart';
 
 class ExerciseTrashTarget extends StatefulWidget {
-
   ExerciseTrashTarget(this.callback);
 
   final VoidCallback callback;
@@ -17,7 +16,6 @@ class ExerciseTrashTarget extends StatefulWidget {
 }
 
 class ExerciseTrashTargetState extends State<ExerciseTrashTarget> {
-
   @override
   void initState() {
     super.initState();
@@ -36,23 +34,18 @@ class ExerciseTrashTargetState extends State<ExerciseTrashTarget> {
                   ? AppColors.TRANSPARENT
                   : AppColors.TRANSPARENT_WHITE),
           child: Center(
-            child: Text(
-                'delete_exercise'.tr,
+            child: Text('delete_exercise'.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 23,
                     fontStyle: FontStyle.normal,
-                    fontFamily: 'rex',
                     color: AppColors.TRANSPARENT_VIOLET)),
           ),
         );
       },
       onAccept: (ExerciseTrashTag tag) {
-
         widget.callback();
       },
     );
   }
-
-
 }

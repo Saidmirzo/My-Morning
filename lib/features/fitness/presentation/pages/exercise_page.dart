@@ -1,21 +1,25 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
+import 'package:morningmagic/features/fitness/presentation/controller/timer_controller.dart';
+import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_success_page.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/timer.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/widgets/customAppBar.dart';
-import 'package:morningmagic/widgets/customBottomExerciseNavigation.dart';
+import 'package:morningmagic/routing/app_routing.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/widgets/primary_circle_button.dart';
+import 'package:sliding_sheet/sliding_sheet.dart';
 
 class ExercisePage extends StatefulWidget {
   final FitnessExercise exercise;
-  final int step;
 
-  const ExercisePage({Key key, @required this.exercise, @required this.step})
-      : super(key: key);
+  const ExercisePage({Key key, @required this.exercise}) : super(key: key);
 
   @override
   _ExercisePageState createState() => _ExercisePageState();
@@ -23,107 +27,194 @@ class ExercisePage extends StatefulWidget {
 
 class _ExercisePageState extends State<ExercisePage> {
   FitnessController _fitnessController = Get.find<FitnessController>();
-  final _audioPlayer = AudioPlayer();
-  TimerAppBar timerAppBar;
+  AudioPlayer _audioPlayer;
+  Rx<FitnessExercise> exercise;
+  var cTimer = Get.put(TimerFitnesController());
+
+  @override
+  void initState() {
+    exercise = widget.exercise.obs;
+    super.initState();
+  }
+
+  void initAudioAndPlay(String url) {
+    _audioPlayer = AudioPlayer();
+    _audioPlayer.setUrl(url);
+    // if (isAudioActive.isTrue) _audioPlayer.play();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final currentStep = widget.step + 1;
-    timerAppBar = TimerAppBar(exerciseName: widget.exercise.name);
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(80.0),
-          child: timerAppBar,
+        body: Container(
+          decoration:
+              BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Fitnes),
+          child: Obx(() {
+            print('rebuild fitnes timer page');
+            cTimer.exerciseName = exercise.value.name;
+            _audioRes = exercise.value.audioRes;
+            if (_audioRes != null) {
+              initAudioAndPlay(_audioRes);
+            }
+            return SlidingSheet(
+              elevation: 5,
+              cornerRadius: 16,
+              snapSpec: SnapSpec(
+                // Enable snapping. This is true by default.
+                snap: true,
+                // Set custom snapping points.
+                snappings: [0.15, 0.5],
+                // Define to what the snappings relate to. In this case,
+                // the total available space that the sheet can expand to.
+                positioning: SnapPositioning.relativeToAvailableSpace,
+              ),
+              body: Stack(
+                alignment: Alignment.topCenter,
+                children: <Widget>[
+                  Positioned(bottom: 0, child: bg()),
+                  if (exercise.value.imageRes != null)
+                    Positioned(top: Get.height * 0.1, child: img()),
+                  Container(
+                    width: Get.width,
+                    child: SafeArea(
+                        bottom: false,
+                        child: Column(
+                          children: <Widget>[
+                            title(),
+                            subtitle(),
+                            Spacer(),
+                            timerWithNavigation(),
+                            SizedBox(height: Get.height * 0.15)
+                          ],
+                        )),
+                  ),
+                ],
+              ),
+              builder: (context, state) {
+                return ConstrainedBox(
+                  constraints: new BoxConstraints(
+                    minHeight: Get.height,
+                  ),
+                  child: Container(
+                    // height: Get.height,
+                    padding: const EdgeInsetsDirectional.only(bottom: 50),
+                    child: exDesc(),
+                  ),
+                );
+              },
+            );
+          }),
         ),
-        body: AppGradientContainer(
-            child: Stack(
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 270,
-              child: LayoutBuilder(
-                builder:
-                    (BuildContext context, BoxConstraints viewportConstraints) {
-                  return SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: viewportConstraints.maxHeight,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.only(top: 15, bottom: 30),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  padding: EdgeInsets.only(bottom: 3),
-                                  child: Text(
-                                    'exercise'.trParams({
-                                      'id': currentStep.toString()
-                                    }),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontStyle: FontStyle.normal,
-                                      fontFamily: "rex",
-                                      color: AppColors.WHITE,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  widget.exercise.name,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontStyle: FontStyle.normal,
-                                    fontFamily: "rex",
-                                    color: AppColors.WHITE,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SingleChildScrollView(
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                bottom: 30,
-                                left: 20,
-                                right: 20,
-                              ),
-                              child: Text(
-                                widget.exercise.description,
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "JMH",
-                                  color: AppColors.VIOLET,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              child: BottomExerciseNavigation(
-                soundCallback: _onListenClick,
-                nextCallback: _onNextClick,
-              ),
-            ),
-          ],
-        )),
       ),
+    );
+  }
+
+  Widget timerWithNavigation() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        PrimaryCircleButton(
+          icon: Icon(Icons.arrow_back, color: AppColors.primary, size: 18),
+          onPressed: _onPrev,
+        ),
+        TimerFitnes(exerciseName: exercise.value.name),
+        PrimaryCircleButton(
+          icon: Icon(Icons.arrow_forward, color: AppColors.primary, size: 18),
+          onPressed: _onNext,
+        ),
+      ],
+    );
+  }
+
+  Widget exDesc() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          color: Colors.white),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 4,
+            width: 50,
+            decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(50)),
+          ),
+          const SizedBox(height: 15),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (exercise.value.audioRes != null)
+                Obx(() => CupertinoButton(
+                    child: Icon(
+                        isAudioActive.isTrue
+                            ? Icons.volume_up
+                            : Icons.volume_off,
+                        size: 30,
+                        color: AppColors.primary),
+                    onPressed: () {
+                      playPauseAudio();
+                    })),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  exercise.value.description,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.VIOLET,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container title() {
+    return Container(
+      padding: EdgeInsets.only(top: 15, bottom: 20),
+      child: Text(
+        exercise.value.name,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: Get.height * 0.03,
+          fontWeight: FontWeight.w600,
+          color: AppColors.WHITE,
+        ),
+      ),
+    );
+  }
+
+  Widget subtitle() {
+    return Text(
+      cTimer.isExDone.value ? 'exercise_complete'.tr : '',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: Get.height * 0.023,
+        fontWeight: FontWeight.w500,
+        color: AppColors.WHITE,
+      ),
+    );
+  }
+
+  Widget bg() {
+    return Image.asset('assets/images/fitnes/ex/clouds.png', width: Get.width);
+  }
+
+  Widget img() {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Image.asset('assets/images/fitnes/ex/exp_shape.png', width: Get.width),
+        Image.asset(exercise.value.imageRes, height: Get.width / 1.7),
+      ],
     );
   }
 
@@ -133,37 +224,55 @@ class _ExercisePageState extends State<ExercisePage> {
     return true;
   }
 
-  void _onListenClick() async {
-    final _audioRes = widget.exercise.audioRes;
-    if (_audioRes != null) {
-      final _audioResPath = '$_audioRes'.tr;
-      _audioPlayer.setAsset(_audioResPath);
-      _audioPlayer.play();
+  String _audioRes;
+  RxBool isAudioActive = false.obs;
+  void playPauseAudio() async {
+    if (isAudioActive.isTrue) {
+      print('Останавливаем аудио');
+      _audioPlayer.pause();
+      isAudioActive.value = false;
+    } else {
+      if (_audioRes != null) {
+        print('Запускаем аудио');
+        if (!_audioPlayer.playing) _audioPlayer.play();
+        isAudioActive.value = true;
+      }
     }
   }
 
-  void _onNextClick() async {
+  void _onNext() async {
+    print('_onNext');
+    cTimer.isExDone.value = false;
     _disposeServices();
-
+    _fitnessController.incrementStep();
     final _exercise = _fitnessController.currentExercise;
     if (_exercise != null) {
-      final _step = _fitnessController.step;
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                ExercisePage(exercise: _exercise, step: _step),
-          ));
-      _fitnessController.incrementStep();
+      exercise.value = _exercise;
     } else {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => FitnessSuccessPage()));
+      _fitnessController.step = 0;
+      AppRouting.replace(FitnessSuccessPage());
+      appAnalitics.logEvent('first_fitnes_next');
+    }
+  }
+
+  void _onPrev() async {
+    print('_onPrev');
+    cTimer.isExDone.value = false;
+    _disposeServices();
+    _fitnessController.dicrementStep();
+    final _exercise = _fitnessController.prevExercise;
+    if (_exercise != null) {
+      exercise.value = _exercise;
+    } else {
+      _fitnessController.step = 0;
+      Get.off(FitnessMainPage(pageId: TimerPageId.Fitness));
     }
   }
 
   void _disposeServices() {
-    timerAppBar.cancelTimer();
-    _audioPlayer.stop();
-    _audioPlayer.dispose();
+    cTimer.cancelTimer();
+    _audioPlayer?.stop();
+    _audioPlayer?.dispose();
+    isAudioActive.value = false;
   }
 }

@@ -64,8 +64,8 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
             ),
             Positioned(
               bottom: MediaQuery.of(context).size.height / 5.5,
-              child: AnimatedButton(_navigateToNextExercise, 'rex',
-                  'continue'.tr, 21, null, null),
+              child: AnimatedButton(
+                  _navigateToNextExercise, 'continue'.tr, 21, null, null),
             ),
           ],
         ),
@@ -75,6 +75,6 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
 
   void _navigateToNextExercise() async {
     final _routeValue = await OrderUtil().getRouteById(5);
-    Navigator.pushReplacement(context, _routeValue);
+    Get.off(_routeValue);
   }
 }

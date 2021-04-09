@@ -5,7 +5,6 @@ class CustomText extends StatelessWidget {
   final String text;
   final double size;
 
-
   CustomText({
     @required this.text,
     @required this.size,
@@ -19,7 +18,6 @@ class CustomText extends StatelessWidget {
       style: TextStyle(
         color: AppColors.WHITE,
         fontStyle: FontStyle.normal,
-        fontFamily: 'rex',
         fontSize: size,
       ),
     );

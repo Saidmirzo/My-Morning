@@ -25,8 +25,21 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>com.wonderfullmoning.morningmagic</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb580432019597568</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>580432019597568</string>
+	<key>FacebookDisplayName</key>
+	<string>My Morning</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-8444251353824953~3943846765</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -56,6 +69,17 @@
 	<string>Allows you to choose a picture</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>speech</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized ads to you.</string>
+	<key>PermissionGroupNotification</key>
+	<string>Exercise completion notification, important news and updates</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

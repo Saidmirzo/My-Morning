@@ -29,24 +29,23 @@ class ExerciseDeskButton extends StatelessWidget {
       ),
       onLongPress: () async {
         await showDialog(
-          context: context,
-          builder: (BuildContext context) => DeleteExerciseDialog(() async {
-            for (int i = 0; i < list.length; i++) {
-              if (list[i].id == id) {
-                if (list[i].size == null) {
-                  // if size null it means it's a custom exercise
-                  await ExerciseUtils()
-                      .deleteCustomExerciseFromDB(list[i]);
-                }
+            context: context,
+            builder: (BuildContext context) => DeleteExerciseDialog(() async {
+                  for (int i = 0; i < list.length; i++) {
+                    if (list[i].id == id) {
+                      if (list[i].size == null) {
+                        // if size null it means it's a custom exercise
+                        await ExerciseUtils()
+                            .deleteCustomExerciseFromDB(list[i]);
+                      }
 
-                list.removeAt(i);
-                print("removed " + i.toString());
-                break;
-              }
-            }
-            voidCallback();
-          })
-        );
+                      list.removeAt(i);
+                      print("removed " + i.toString());
+                      break;
+                    }
+                  }
+                  voidCallback();
+                }));
       },
     );
   }
@@ -65,9 +64,8 @@ class ExerciseDeskTag extends StatelessWidget {
       height: 28.0,
       margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: AppColors.PINK,
-        borderRadius: BorderRadius.all(Radius.circular(40))
-      ),
+          color: AppColors.PINK,
+          borderRadius: BorderRadius.all(Radius.circular(40))),
       child: Container(
         padding: EdgeInsets.only(top: 2),
         child: Center(
@@ -78,7 +76,6 @@ class ExerciseDeskTag extends StatelessWidget {
               decoration: TextDecoration.none,
               color: AppColors.WHITE,
               fontStyle: FontStyle.normal,
-              fontFamily: 'rex',
               fontSize: size != null ? size : 14,
             ),
           ),

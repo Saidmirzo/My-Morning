@@ -17,18 +17,15 @@ class StartSkipColumn extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          child:
-              AnimatedButton(startCallback, 'rex', buttonText, 15, null, null),
+          child: AnimatedButton(startCallback, buttonText, 15, null, null),
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
-          child:
-              AnimatedButton(gestureTapCallback, 'rex', 'skip'.tr, 15, null, null),
+          child: AnimatedButton(gestureTapCallback, 'skip'.tr, 15, null, null),
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
-          child:
-              AnimatedButton(mainMenuCallback, 'rex', 'menu'.tr, 15, null, null),
+          child: AnimatedButton(mainMenuCallback, 'menu'.tr, 15, null, null),
         )
       ],
     );

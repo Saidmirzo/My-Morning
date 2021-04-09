@@ -1,57 +1,58 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/data/repositories/fitness_program_repository_impl.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_program_settings.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
+import 'package:morningmagic/features/fitness/presentation/widgets/bg.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/program_selection_dialog.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/fitness_main_menu_button.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
+import 'package:morningmagic/widgets/primary_button.dart';
 
 import '../../../../resources/colors.dart';
 
 class FitnessMainPage extends StatelessWidget {
   final int pageId;
-  final FitnessController controller =
-      Get.put(FitnessController(repository: FitnessProgramRepositoryImpl()));
 
   FitnessMainPage({Key key, @required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Get.put(FitnessController(repository: FitnessProgramRepositoryImpl()));
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: AppGradientContainer(
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                SizedBox(
-                  height: 48,
+          child: Stack(
+            children: [
+              bg(),
+              Container(
+                width: Get.width,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: Get.height * 0.30),
+                    StyledText('fitness'.tr,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.WHITE,
+                        fontSize: Get.height * 0.024),
+                    SizedBox(height: 48),
+                    PrimaryButton(
+                      onPressed: () => showProgramSelectionDialog(context),
+                      text: 'start_program'.tr,
+                      pWidth: 0.5,
+                    ), // начать программу
+                    SizedBox(height: 16),
+                    PrimaryButton(
+                      onPressed: () => navigateToProgramSettings(context),
+                      text: 'program_settings'.tr,
+                      pWidth: 0.5,
+                    ), // создать программу),
+                  ],
                 ),
-                StyledText(
-                  'fitness'.tr,
-                  color: AppColors.WHITE,
-                  fontSize: 32,
-                ),
-                SizedBox(
-                  height: 48,
-                ),
-                FitnessMainMenuButton(
-                    onPressed: () => showProgramSelectionDialog(context),
-                    text: 'start_program'.tr, // начать программу
-                    pageId: pageId),
-                SizedBox(
-                  height: 16,
-                ),
-                FitnessMainMenuButton(
-                    onPressed: () => navigateToProgramSettings(context),
-                    text: 'program_settings'.tr, // создать программу
-                    pageId: pageId),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -59,7 +60,8 @@ class FitnessMainPage extends StatelessWidget {
   }
 
   Future<void> showProgramSelectionDialog(BuildContext context) async {
-    return await showDialog(context: context, builder: (context) => ProgramSelectionDialog());
+    return await showDialog(
+        context: context, builder: (context) => ProgramSelectionDialog());
   }
 
   void navigateToProgramSettings(BuildContext context) {

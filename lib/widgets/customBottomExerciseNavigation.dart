@@ -17,13 +17,13 @@ class BottomExerciseNavigation extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(bottom: 15),
-            child: AnimatedButton(
-                soundCallback, "rex", 'listen_to'.tr, 20, null, null),
+            child:
+                AnimatedButton(soundCallback, 'listen_to'.tr, 20, null, null),
           ),
           Container(
             padding: EdgeInsets.only(bottom: 16),
             child: AnimatedButton(
-                nextCallback, 'rex', 'next_exercise'.tr, 19, 270.0, null),
+                nextCallback, 'next_exercise'.tr, 19, 270.0, null),
           ),
         ],
       ),

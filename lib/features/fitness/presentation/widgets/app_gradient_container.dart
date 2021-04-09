@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 class AppGradientContainer extends StatelessWidget {
@@ -9,18 +10,9 @@ class AppGradientContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          AppColors.TOP_GRADIENT,
-          AppColors.MIDDLE_GRADIENT,
-          AppColors.BOTTOM_GRADIENT
-        ],
-      )),
+      height: Get.height,
+      width: Get.width,
+      decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_1),
       child: child,
     );
   }

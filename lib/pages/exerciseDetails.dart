@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:morningmagic/analyticService.dart';
+import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
@@ -92,13 +92,12 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                           0.3,
                                       padding: EdgeInsets.only(bottom: 3),
                                       child: Text(
-                                        'exercise'.trParams(
-                                            {'id': id.toString()}),
+                                        'exercise'
+                                            .trParams({'id': id.toString()}),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontStyle: FontStyle.normal,
-                                          fontFamily: "rex",
                                           color: AppColors.WHITE,
                                         ),
                                       ),
@@ -109,7 +108,6 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontStyle: FontStyle.normal,
-                                        fontFamily: "rex",
                                         color: AppColors.WHITE,
                                       ),
                                     ),
@@ -127,7 +125,6 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontSize: 15,
-                                    fontFamily: "JMH",
                                     color: AppColors.VIOLET,
                                   ),
                                 ),
@@ -163,17 +160,14 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                                     isCustomProgram: false)));
                       else {
                         OrderUtil().getRouteById(2).then((value) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => TimerSuccessScreen(() {
-                                        Navigator.push(context, value);
-                                      },
-                                          MyDB()
-                                              .getBox()
-                                              .get(MyResource.FITNESS_TIME_KEY)
-                                              .time,
-                                          false)));
+                          Get.off(TimerSuccessScreen(() {
+                            Get.off(value);
+                          },
+                              MyDB()
+                                  .getBox()
+                                  .get(MyResource.FITNESS_TIME_KEY)
+                                  .time,
+                              false));
                         });
                       }
                     }))
