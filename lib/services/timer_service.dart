@@ -41,7 +41,7 @@ class TimerService {
   AppStates appStates = Get.put(AppStates());
 
   DateTime appLeftTime;
-  int leftSecondsBeforePauseApp = 0;
+  int leftSecondsBeforePauseApp = -1;
 
   // TODO remove one of players
   AudioPlayer audioPlayer = AudioPlayer();
@@ -245,7 +245,8 @@ class TimerService {
     int val =
         DateTime.now().difference(appLeftTime ?? DateTime.now()).inSeconds;
     print('Разница: $val сек');
-    if (timer.isActive) _time.value = leftSecondsBeforePauseApp - val;
+    if (timer.isActive && leftSecondsBeforePauseApp > 0)
+      _time.value = leftSecondsBeforePauseApp - val;
     pushNotifications.deleteNotification(PushNotifications.pushIdTreaning);
     _stopIsolate();
   }

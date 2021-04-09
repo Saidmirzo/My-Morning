@@ -5,7 +5,6 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
-import 'package:morningmagic/pages/meditation/components/menu.dart';
 
 class MusicMeditationContainer extends StatefulWidget {
   @override
@@ -13,7 +12,8 @@ class MusicMeditationContainer extends StatefulWidget {
       _MusicMeditationContainerState();
 }
 
-class _MusicMeditationContainerState extends State<MusicMeditationContainer> {
+class _MusicMeditationContainerState extends State<MusicMeditationContainer>
+    with WidgetsBindingObserver {
   MediationAudioController _audioController;
 
   @override
@@ -26,7 +26,7 @@ class _MusicMeditationContainerState extends State<MusicMeditationContainer> {
 
   Widget _buildSelectAudioList() {
     return Obx(() {
-      return _audioController.isAudioListLoading.value
+      return _audioController.isAudioListLoading?.value ?? false
           ? Center(child: CupertinoActivityIndicator())
           : ListView.builder(
               shrinkWrap: true,
@@ -47,20 +47,25 @@ class _MusicMeditationContainerState extends State<MusicMeditationContainer> {
     _audioController.player.stop();
     _audioController.isPlaying.value = false;
     _audioController.playingIndex.value = -1;
+    _audioController.selectedItemIndex.value = 0;
   }
 
   @override
   void initState() {
     _audioController = Get.find();
     _audioController.audioSource = MeditationAudioData.musicSource;
-    _audioController.playFromFavorite = false;
-    _audioController.reinitAudioSource(fromDialog: true);
-    _stopPlayer();
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _stopPlayer();
+      _audioController.playFromFavorite = false;
+      _audioController.reinitAudioSource(fromDialog: true);
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
 }

@@ -102,12 +102,12 @@ class LocalizationService extends Translations {
           "program_2_ex_1_audio":
               'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9D%D0%B0%D0%BA%D0%BB%D0%BE%D0%BD%D1%8B.mp3',
           "program_2_ex_1_desc":
-              "1. Встаньте прямо, руки по швам.\n2. Начинайте поочередно поднимать ноги, шагая на месте, следите за дыханием.",
+              "1. Встаньте прямо, ноги шире плеч.\n2. Выполняйте поочередные наклоны в разные стороны. Правая рука наверху, левая согнута на боку, наклон вправо. И наоборот.",
           "program_2_ex_2_name": "Шаги на месте",
           "program_2_ex_2_audio":
               'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%A8%D0%B0%D0%B3%D0%B8%20%D0%BD%D0%B0%20%D0%BC%D0%B5%D1%81%D1%82%D0%B5.mp3',
           "program_2_ex_2_desc":
-              "1. Встаньте прямо, ноги шире плеч.\n2. Выполняйте поочередные наклоны в разные стороны. Правая рука наверху, левая согнута на боку, наклон вправо. И наоборот.",
+              "1. Встаньте прямо, руки по швам.\n2. Начинайте поочередно поднимать ноги, шагая на месте, следите за дыханием.",
           "program_2_ex_3_name": "Приседания с поворотом туловища",
           "program_2_ex_3_audio":
               'https://storage.yandexcloud.net/myaudio/Fitness_ru/%D0%9F%D1%80%D0%B8%D1%81%D0%B5%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F%20%D1%81%20%D0%BF%D0%BE%D0%B2%D0%BE%D1%80%D0%BE%D1%82%D0%BE%D0%BC%20%D1%82%D1%83%D0%BB%D0%BE%D0%B2%D0%B8%D1%89%D0%B0.mp3',

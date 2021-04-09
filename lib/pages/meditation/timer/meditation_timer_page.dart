@@ -15,6 +15,10 @@ import 'package:screen/screen.dart';
 import 'components/components.dart';
 
 class MeditationTimerPage extends StatefulWidget {
+  final bool fromAudio;
+
+  const MeditationTimerPage({Key key, this.fromAudio = false})
+      : super(key: key);
   @override
   State createState() => MeditationTimerPageState();
 }
@@ -40,7 +44,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
     _audioController = Get.find();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _audioController.initializeMeditationAudio();
+      _audioController.initializeMeditationAudio(autoplay: widget.fromAudio);
       await timerService.init(1, _audioController.player);
     });
 
@@ -122,7 +126,6 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
     timerService.dispose();
-    MediationAudioController cAudio = Get.find();
-    cAudio.dispose();
+    // _audioController.dispose();
   }
 }

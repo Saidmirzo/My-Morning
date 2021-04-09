@@ -12,7 +12,8 @@ class AudioMeditationFavoriteContainer extends StatefulWidget {
 }
 
 class _AudioMeditationFavoriteContainerState
-    extends State<AudioMeditationFavoriteContainer> {
+    extends State<AudioMeditationFavoriteContainer>
+    with WidgetsBindingObserver {
   MediationAudioController _audioController;
   @override
   Widget build(BuildContext context) {
@@ -54,9 +55,12 @@ class _AudioMeditationFavoriteContainerState
 
   @override
   void initState() {
-    _audioController = Get.find();
-    _stopPlayer();
     super.initState();
+    _audioController = Get.find();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _stopPlayer();
+    });
   }
 
   @override

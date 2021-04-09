@@ -7,6 +7,8 @@ import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/timer_service.dart';
 
+import '../../meditation_audio_page.dart';
+
 Widget buildMenuButtons(TimerService timerService) {
   MediationAudioController cAudio = Get.find();
   double btnSize = 30;
@@ -35,7 +37,12 @@ Widget buildMenuButtons(TimerService timerService) {
                 width: btnSize,
                 height: btnSize,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                cAudio.player.pause();
+                timerService.timer.cancel();
+                timerService.isActive.value = false;
+                Get.to(MeditationAudioPage());
+              }),
           CupertinoButton(
               child: SvgPicture.asset(
                 SvgAssets.forward,

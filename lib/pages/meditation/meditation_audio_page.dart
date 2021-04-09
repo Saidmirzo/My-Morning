@@ -2,13 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_favorite.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/music_meditation_dialog.dart';
 import 'package:morningmagic/pages/meditation/components/menu.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
+import '../../features/meditation_audio/data/repositories/audio_repository_impl.dart';
+import '../../features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
+import '../../features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import '../../features/meditation_audio/presentation/dialogs/audio_meditation_dialog.dart';
 import '../../resources/colors.dart';
 import '../../widgets/primary_circle_button.dart';
@@ -21,7 +23,17 @@ class MeditationAudioPage extends StatefulWidget {
 }
 
 class _MeditationAudioPageState extends State<MeditationAudioPage> {
-  final cMenu = Get.put(AudioMenuController());
+  AudioMenuController cMenu;
+  MediationAudioController cAudio;
+
+  @override
+  void initState() {
+    cMenu = Get.put(AudioMenuController());
+    cAudio =
+        Get.put(MediationAudioController(repository: AudioRepositoryImpl()));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +74,12 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                       children: [
                         CupertinoButton(
                             child: Icon(Icons.arrow_back, color: Colors.white),
-                            onPressed: () => Get.back()),
+                            onPressed: () async {
+                              cAudio.initializeMeditationAudio(
+                                  autoplay: false, fromDialog: true);
+                              Get.back();
+                            }),
                         Spacer(),
-                        // buildDownloadButton(),
                       ],
                     ),
                     SizedBox(height: Get.height * 0.02),
@@ -73,7 +88,7 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                         icon:
                             Icon(Icons.arrow_forward, color: AppColors.primary),
                         onPressed: () {
-                          Get.to(MeditationTimerPage());
+                          Get.to(MeditationTimerPage(fromAudio: true));
                           appAnalitics.logEvent('first_music_next');
                         }),
                   ],
@@ -89,11 +104,13 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                   // height: Get.height,
                   padding: const EdgeInsetsDirectional.only(bottom: 50),
                   child: Obx(() {
-                    return cMenu.currentPage.value == MenuItems.favorite
-                        ? AudioMeditationFavoriteContainer()
-                        : cMenu.currentPage.value == MenuItems.music
-                            ? MusicMeditationContainer()
-                            : AudioMeditationContainer();
+                    return cMenu == null
+                        ? CircularProgressIndicator()
+                        : cMenu.currentPage.value == MenuItems.favorite
+                            ? AudioMeditationFavoriteContainer()
+                            : cMenu.currentPage.value == MenuItems.music
+                                ? MusicMeditationContainer()
+                                : AudioMeditationContainer();
                   }),
                 ),
               );
@@ -108,18 +125,9 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
     );
   }
 
-  Widget buildDownloadButton() {
-    return CupertinoButton(
-      onPressed: () {},
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(7)),
-        padding: const EdgeInsets.all(5),
-        child: SvgPicture.asset('assets/images/svg/download.svg',
-            color: AppColors.primary),
-      ),
-    );
+  @override
+  void dispose() {
+    Get.delete<AudioMenuController>();
+    super.dispose();
   }
 }

@@ -177,8 +177,9 @@ class MediationAudioController extends GetxController {
     return _result;
   }
 
-  void initializeMeditationAudio({bool autoplay = true}) async {
-    await reinitAudioSource();
+  void initializeMeditationAudio(
+      {bool autoplay = true, bool fromDialog = false}) async {
+    await reinitAudioSource(fromDialog: fromDialog);
     playList = await generateMeditationPlayList();
     print('playlist length: ${playList.length}');
     await player.setAudioSource(

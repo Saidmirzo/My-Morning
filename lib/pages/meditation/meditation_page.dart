@@ -17,8 +17,12 @@ class MeditationPage extends StatefulWidget {
 }
 
 class _MeditationPageState extends State<MeditationPage> {
-  final _audioController =
-      Get.put(MediationAudioController(repository: AudioRepositoryImpl()));
+  @override
+  void initState() {
+    super.initState();
+    Get.put(MediationAudioController(repository: AudioRepositoryImpl()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

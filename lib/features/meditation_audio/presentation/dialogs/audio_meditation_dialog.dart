@@ -13,7 +13,8 @@ class AudioMeditationContainer extends StatefulWidget {
       _AudioMeditationContainerState();
 }
 
-class _AudioMeditationContainerState extends State<AudioMeditationContainer> {
+class _AudioMeditationContainerState extends State<AudioMeditationContainer>
+    with WidgetsBindingObserver {
   MediationAudioController _audioController;
 
   @override
@@ -47,16 +48,20 @@ class _AudioMeditationContainerState extends State<AudioMeditationContainer> {
     _audioController.player.stop();
     _audioController.isPlaying.value = false;
     _audioController.playingIndex.value = -1;
+    _audioController.selectedItemIndex.value = 0;
   }
 
   @override
   void initState() {
     _audioController = Get.find();
     _audioController.audioSource = MeditationAudioData.soundSource;
-    _audioController.playFromFavorite = false;
-    _audioController.reinitAudioSource(fromDialog: true);
-    _stopPlayer();
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _stopPlayer();
+      _audioController.playFromFavorite = false;
+      _audioController.reinitAudioSource(fromDialog: true);
+    });
   }
 
   @override
