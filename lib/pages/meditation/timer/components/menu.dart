@@ -41,7 +41,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 cAudio.player.pause();
                 timerService.timer.cancel();
                 timerService.isActive.value = false;
-                Get.to(MeditationAudioPage());
+                Get.to(MeditationAudioPage(fromTimerPage: true));
               }),
           CupertinoButton(
               child: SvgPicture.asset(

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_favorite.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/music_meditation_dialog.dart';
@@ -10,7 +9,6 @@ import 'package:sliding_sheet/sliding_sheet.dart';
 
 import '../../features/meditation_audio/data/repositories/audio_repository_impl.dart';
 import '../../features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
-import '../../features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import '../../features/meditation_audio/presentation/dialogs/audio_meditation_dialog.dart';
 import '../../resources/colors.dart';
 import '../../widgets/primary_circle_button.dart';
@@ -18,6 +16,11 @@ import 'controllers/menu_controller.dart';
 import 'timer/meditation_timer_page.dart';
 
 class MeditationAudioPage extends StatefulWidget {
+  final bool fromTimerPage;
+
+  const MeditationAudioPage({Key key, this.fromTimerPage = false})
+      : super(key: key);
+
   @override
   _MeditationAudioPageState createState() => _MeditationAudioPageState();
 }
@@ -88,8 +91,14 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                         icon:
                             Icon(Icons.arrow_forward, color: AppColors.primary),
                         onPressed: () {
-                          Get.to(MeditationTimerPage(fromAudio: true));
-                          appAnalitics.logEvent('first_music_next');
+                          if (widget.fromTimerPage) {
+                            cAudio.initializeMeditationAudio(
+                                autoplay: false, fromDialog: true);
+                            Get.back();
+                          } else {
+                            Get.to(MeditationTimerPage(fromAudio: true));
+                            appAnalitics.logEvent('first_music_next');
+                          }
                         }),
                   ],
                 ),
