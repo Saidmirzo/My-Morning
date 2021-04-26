@@ -48,6 +48,8 @@ class MyResource {
   // Оценка
   static const String LAUNCH_FOR_RATE = 'launchForRate';
   static const String IS_RATED = 'isRated';
+  static const String LAUNCH_FOR_INTERVIEW = 'launchForInterview';
+  static const String IS_DONE_INTERVIEW = 'isDoneInterview';
 
   // Кол-во запусков приложения
   static const String COUNT_APP_LAUNCH = 'countAppLaunch';

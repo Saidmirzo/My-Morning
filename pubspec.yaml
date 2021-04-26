@@ -19,6 +19,7 @@ dependencies:
   firebase_core: ^0.7.0
   firebase_admob: ^0.11.0+1
   firebase_storage: ^7.0.0
+  cloud_firestore: ^0.16.0
   fl_chart: ^0.12.0
   flutter_audio_recorder: ^0.5.5
   flutter_circular_chart_two: ^0.1.2
@@ -78,6 +79,7 @@ flutter_icons:
 flutter:
   assets:
     - assets/images/
+    - assets/images/interview/
     - assets/images/targets/
     - assets/images/fitnes/
     - assets/images/fitnes/ex/

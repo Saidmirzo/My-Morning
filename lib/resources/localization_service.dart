@@ -11,6 +11,7 @@ class LocalizationService extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         RU: {
+          "start_input": "Начните писать...",
           "start": "Начать",
           "progress_item": "Прогресс",
           "settings": "Настройки",
@@ -299,6 +300,7 @@ class LocalizationService extends Translations {
           "add_permission": "Предоставьте разрешение для записи аудио",
           "yes": "Да",
           "no": "Нет",
+          "other": "Другое",
           "enter_your_name": "Введите ваше имя",
           "remove_progress": "Удалить прогресс",
           "sure_delete_progress":
@@ -313,7 +315,7 @@ class LocalizationService extends Translations {
           "paragraph3": "Получайте вдохновение из книг по утрам",
           "paragraph4": "Визуализируйте свой успех",
           "try_vip_desc":
-              "Попробуйте в течение 3 дней бесплатно, а затем цена составит @price в месяц. \n\nПодписку можно отменить в любой момент",
+              "Попробуйте в течение @days дней бесплатно, а затем цена составит @price в месяц. \n\nПодписку можно отменить в любой момент",
           "vip_price_card": "1 месяц",
           "vip_def_month_price": "75 руб",
           "confidence_text_1":
@@ -464,12 +466,68 @@ class LocalizationService extends Translations {
           "music_menu_sounds": "Звуки",
           "music_menu_favorite": "Избранное",
           "purchase_page_title": "Бесплатная пробная версия",
-          "purchase_page_desc": "3 дня бесплатно",
+          "purchase_page_desc": "@days дня бесплатно",
           "go_start_record": "Нажмите, чтобы начать запись",
           "go_stop_record": "Идёт запись, нажмите чтобы остановить",
           "empty_favorite_list": "У вас нет сохраненной музыки",
+          "please_fill_all_fields": "Пожалуйста, заполните все поля",
+          "question_1":
+              "Давайте познакомимся. Расскажите немного о себе: Имя (по желанию), возраст, пол, страну",
+          "question_2": "Вам тяжело просыпаться по утрам?",
+          "question_2_subquestion_1": "Если да, то почему?",
+          "question_3": "Используете ли Вы приложения для снятия стресса?",
+          "question_3_subquestion_1": "Если да, то какие?",
+          "question_4": "Нравятся ли Вам наши бесплатные функции?",
+          "question_5": "Какие функции Вам нужны?",
+          "question_6":
+              "Что бы Вы добавили? Что бы Вы убрали? Что бы Вы поменяли?",
+          "question_7": "По Вашему мнению, стоит ли вводить дневные практики?",
+          "question_7_subquestion_1":
+              "Если да, то какие? (дыхание, дневной фитнес, дневные медитации)",
+          "question_8": "По Вашему мнению, стоит ли вводить ночные практики?",
+          "question_8_subquestion_1":
+              "Если да, то какие? (звуки для сна, подготовка ко сну, чтение)",
+          "question_9":
+              "Порекомендовали ли Вы наше приложение друзьям/знакомым?",
+          "question_10":
+              "Сколько Вы готовы платить за наше приложение (в месяц)",
+          "question_11":
+              "Если бы Вы хотели принять участие в интервью, оставьте, пожалуйста, свою электронную почту для дальнейшей связи",
+          "interview_dialog_text":
+              "Привет! Хочешь 14 дней бесплатного пользования? \n\n Тогда пройди опрос и помоги нам сделать это приложение лучше!",
+          "help_us": "Помочь нам",
+          "more_not_show": "Больше не показывать",
         },
         EN: {
+          "help_us": "Help us",
+          "more_not_show": "Do not show again",
+          "interview_dialog_text":
+              "Hey! Do you want 14 days of free trial? \n\n Then take the survey and help us make this app better!",
+          "question_1":
+              "Let's get acquainted. Tell me about yourself: Name (optional), age, gender.",
+          "question_2": "Is it hard for you to wake up in the morning?",
+          "question_2_subquestion_1": "If so, why?",
+          "question_3": "Is it hard for you to wake up in the morning?",
+          "question_3_subquestion_1": "If so, what?",
+          "question_4": "Do you like our free features?",
+          "question_5": "What functions do you need?",
+          "question_6":
+              "What would you add? What would you remove? What would you change?",
+          "question_7":
+              "In your opinion, is it good idea to introduce day practices?",
+          "question_7_subquestion_1":
+              "If so, what? (breathing, daytime fitness)",
+          "question_8":
+              "In your opinion, is it good idea to introduce night practices",
+          "question_8_subquestion_1":
+              "If so, what? (sleep sounds, sleep preparation)",
+          "question_9": "Would you recommend our app to friends/acquaintances?",
+          "question_10":
+              "How much are you ready to pay for our app (per month)",
+          "question_11":
+              "If you would like to participate in an interview with us, please leave your e-mail for further communication",
+          "please_fill_all_fields": "Please fill in all fields",
+          "start_input": "Start writing ...",
           "start": "Start",
           "progress_item": "Progress",
           "settings": "Settings",
@@ -750,6 +808,7 @@ class LocalizationService extends Translations {
           "add_permission": "Grant permission to record audio",
           "yes": "Yes",
           "no": "No",
+          "other": "Other",
           "save_diary": "Save note",
           "enter_your_name": "Enter your name",
           "remove_progress": "Remove progress",
@@ -764,7 +823,7 @@ class LocalizationService extends Translations {
           "paragraph3": "Get inspiration from books in the morning",
           "paragraph4": "Visualize your success",
           "try_vip_desc":
-              "Try it for 3 days for free and then the price will be @price per month. \n\nYou can cancel your subscription at any time",
+              "Try it for @days days for free and then the price will be @price per month. \n\nYou can cancel your subscription at any time",
           "vip_price_card": "1 month",
           "vip_def_month_price": "0.99 \$",
           "for_confidence": "For confidence",
@@ -907,7 +966,7 @@ class LocalizationService extends Translations {
           "music_menu_sounds": "Sounds",
           "music_menu_favorite": "Favorite",
           "purchase_page_title": "Free trial",
-          "purchase_page_desc": "3 days free",
+          "purchase_page_desc": "@days days free",
           "go_start_record": "Click to start recording",
           "go_stop_record": "Recording in progress, click to stop",
           "empty_favorite_list": "You have no saved music",

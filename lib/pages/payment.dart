@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
@@ -22,8 +24,13 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   AppStates appStates = Get.put(AppStates());
+  bool isInterviewed = false;
+  int tryalDays = 3;
   @override
   Widget build(BuildContext context) {
+    isInterviewed =
+        MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
+    tryalDays = isInterviewed ? 14 : 3;
     String monthPrice =
         billingService.getPrice(billingService.getMonthlyTarif());
     return Scaffold(
@@ -128,7 +135,7 @@ class _PaymentPageState extends State<PaymentPage> {
         ),
         const SizedBox(height: 10),
         Text(
-          'purchase_page_desc'.tr,
+          'purchase_page_desc'.trParams({'days': '$tryalDays'}),
           textAlign: TextAlign.center,
           style: TextStyle(
               fontWeight: FontWeight.w500,
@@ -240,7 +247,7 @@ class _PaymentPageState extends State<PaymentPage> {
             borderRadius: BorderRadius.circular(20)),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text(
-          'try_vip_desc'.trParams({'price': monthPrice}),
+          'try_vip_desc'.trParams({'price': monthPrice, 'days': '$tryalDays'}),
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontSize: Get.height * 0.015),
         ));

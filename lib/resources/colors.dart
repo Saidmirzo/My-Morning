@@ -172,4 +172,13 @@ class AppColors {
       const Color(0xffEEA6C8),
     ],
   );
+
+  static const Interview_Gradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xffE2AABE),
+      const Color(0xffB994DA),
+    ],
+  );
 }

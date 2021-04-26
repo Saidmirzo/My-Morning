@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/resources/localization_service.dart';
 import 'package:morningmagic/routing/app_routing.dart';
-import 'package:morningmagic/services/analitics/analyticService.dart';
-import 'package:morningmagic/services/analitics/facebook_analitics.dart';
 import 'package:morningmagic/services/notifications.dart';
 
 Future<void> main() async {

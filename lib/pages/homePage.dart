@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/dialog/interviewDialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/screenFAQ.dart';
 import 'package:morningmagic/routing/route_values.dart';
@@ -14,7 +15,6 @@ import '../db/model/exercise/exercise_holder.dart';
 import '../db/model/progress/day/day_holder.dart';
 import '../db/resource.dart';
 import '../pages/screenProgress.dart';
-import '../widgets/animatedButton.dart';
 import 'progress/progress_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,6 +26,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int dayHolderSize;
+  int launchForinterview = 0;
 
   @override
   void initState() {
@@ -41,6 +42,8 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    launchForinterview =
+        MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
     return Scaffold(
       body: Center(
         child: AppGradientContainer(
@@ -94,10 +97,24 @@ class HomePageState extends State<HomePage> {
   }
 
   _startExercise() async {
+    var _cntBeforInterview = launchForinterview + 1;
+    await MyDB()
+        .getBox()
+        .put(MyResource.LAUNCH_FOR_INTERVIEW, _cntBeforInterview);
+    openInterviewModel(_cntBeforInterview);
     appAnalitics.logEvent('first_start');
     await OrderUtil().getRouteByPositionInList(0).then((value) {
       Get.off(value);
     });
+  }
+
+  void openInterviewModel(int _cntBeforInterview) async {
+    bool isInterviewed = await MyDB()
+        .getBox()
+        .get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
+    if (_cntBeforInterview > 2 && !isInterviewed)
+      Future.delayed(Duration(seconds: 1),
+          () => Get.dialog(InterviewDialog(), barrierDismissible: false));
   }
 
   _openProgress(Widget widget) {
