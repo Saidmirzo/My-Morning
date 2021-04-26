@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/pages/interview/components/multiline_input.dart';
 import 'package:morningmagic/pages/interview/questions/question_frame.dart';
 
+import '../components/multiline_input.dart';
 import '../interview_controller.dart';
 
 Widget q9() {
@@ -11,43 +11,26 @@ Widget q9() {
     index: 9,
     title: 'question_9'.tr,
     child: Obx(() => Column(
-          children: <Widget>[
-            SizedBox(
-              height: 40,
-              child: RadioListTile<YesNoOther>(
-                title: Text('yes'.tr),
-                value: YesNoOther.yes,
-                groupValue: _controller.q9val.value,
-                onChanged: (YesNoOther value) {
-                  _controller.q9val.value = value;
-                },
-              ),
-            ),
-            SizedBox(
-              height: 40,
-              child: RadioListTile<YesNoOther>(
-                title: Text('no'.tr),
-                value: YesNoOther.no,
-                groupValue: _controller.q9val.value,
-                onChanged: (YesNoOther value) {
-                  _controller.q9val.value = value;
-                },
-              ),
-            ),
-            SizedBox(
-              height: 40,
-              child: RadioListTile<YesNoOther>(
-                title: Text('other'.tr),
-                value: YesNoOther.other,
-                groupValue: _controller.q9val.value,
-                onChanged: (YesNoOther value) {
-                  _controller.q9val.value = value;
-                },
-              ),
-            ),
+          children: [
+            ...List.generate(_controller.q9Futures.value.length, (index) {
+              final _item = _controller.q9Futures.value[index];
+              return SizedBox(
+                height: 40,
+                child: CheckboxListTile(
+                  value: _item.isActive,
+                  title: Text(_item.name),
+                  onChanged: (_val) {
+                    _item.isActive = _val;
+                    _controller.q9Futures.refresh();
+                  },
+                ),
+              );
+            }),
             const SizedBox(height: 20),
-            if (_controller.q9val.value == YesNoOther.other)
-              multilineInput(_controller.q9TextControllerOther,
+            if (_controller.q9Futures.value
+                .firstWhere((element) => element.name == 'other'.tr)
+                .isActive)
+              multilineInput(_controller.q9TextController,
                   hint: 'start_input'.tr),
           ],
         )),

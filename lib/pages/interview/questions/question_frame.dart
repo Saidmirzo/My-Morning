@@ -27,13 +27,28 @@ class QuestionFrame extends StatelessWidget {
             titleQuestion(title),
             const SizedBox(height: 20),
             child,
-            PrimaryCircleButton(
-                onPressed: () async {
-                  FocusScope.of(context).unfocus();
-                  _controller.next(index);
-                },
-                icon: Icon(Icons.arrow_forward),
-                size: 50),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Obx(() {
+                  return ![0, _controller.countPages - 1]
+                          .contains(_controller.currQuestion.value)
+                      ? PrimaryCircleButton(
+                          icon: Icon(Icons.arrow_back),
+                          onPressed: _controller.slideBack,
+                          size: 50)
+                      : SizedBox();
+                }),
+                PrimaryCircleButton(
+                    onPressed: () async {
+                      FocusScope.of(context).unfocus();
+                      _controller.next(index);
+                    },
+                    icon: Icon(Icons.arrow_forward),
+                    size: 50),
+              ],
+            ),
           ],
         ),
       ),

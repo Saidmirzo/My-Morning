@@ -47,7 +47,7 @@ android {
         applicationId "com.wonderfullmoning.morningmagic"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 17
+        versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 

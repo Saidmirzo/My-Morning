@@ -2,21 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/interview/questions/question10.dart';
-import 'package:morningmagic/pages/interview/questions/question11.dart';
+import 'package:morningmagic/pages/interview/questions/question12.dart';
+import 'package:morningmagic/pages/interview/questions/question13.dart';
 import 'package:morningmagic/pages/interview/questions/question5.dart';
 import 'package:morningmagic/pages/interview/questions/question6.dart';
 import 'package:morningmagic/pages/interview/questions/question7.dart';
 import 'package:morningmagic/pages/interview/questions/question8.dart';
 import 'package:morningmagic/pages/interview/questions/question9.dart';
+import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 import '../../resources/colors.dart';
 import 'components/bg.dart';
 import 'components/dot_panel.dart';
 import 'interview_controller.dart';
 import 'questions/question1.dart';
+import 'questions/question11.dart';
 import 'questions/question2.dart';
 import 'questions/question3.dart';
 import 'questions/question4.dart';
+import 'questions/thanks_screen.dart';
 
 class InterviewPage extends StatefulWidget {
   @override
@@ -24,7 +28,7 @@ class InterviewPage extends StatefulWidget {
 }
 
 class _InterviewPageState extends State<InterviewPage> {
-  InterviewController _controller = Get.put(InterviewController());
+  InterviewController _controller = Get.put(InterviewController(14));
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,8 @@ class _InterviewPageState extends State<InterviewPage> {
           children: [
             bg(),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 dotPanel(_pages.length),
                 Expanded(
@@ -66,5 +72,8 @@ class _InterviewPageState extends State<InterviewPage> {
     q9(),
     q10(),
     q11(),
+    q12(),
+    q13(),
+    thanksScreen(),
   ];
 }

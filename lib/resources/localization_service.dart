@@ -259,7 +259,7 @@ class LocalizationService extends Translations {
               "Подписка предоставит возможность выполнять такие упражнения как: Фитнес, Дневник, Чтение и Визуализация. Она продляется каждый месяц автоматически, но отменить ее можете в любое время.",
           "price": "Стоимость",
           "buy_month": "Оплатить подписку",
-          "buy_days": "Попробуйте 3 дня бесплатно",
+          "buy_days": "Попробуйте @days дня бесплатно",
           "buy_free": "ПОПРОБОВАТЬ ПОЛНЫЙ\nКОМПЛЕКС",
           "three_days": "3 дня бесплатно",
           "choose_sequence": "Выберите\nпоследовательность",
@@ -472,59 +472,72 @@ class LocalizationService extends Translations {
           "empty_favorite_list": "У вас нет сохраненной музыки",
           "please_fill_all_fields": "Пожалуйста, заполните все поля",
           "question_1":
-              "Давайте познакомимся. Расскажите немного о себе: Имя (по желанию), возраст, пол, страну",
+              "Давайте познакомимся. Расскажите немного о себе: возраст, пол, страну (по желанию)",
           "question_2": "Вам тяжело просыпаться по утрам?",
           "question_2_subquestion_1": "Если да, то почему?",
-          "question_3": "Используете ли Вы приложения для снятия стресса?",
+          "question_3":
+              "Пользуетесь ли Вы приложениями для улучшения своего ментального и физического состояния?",
           "question_3_subquestion_1": "Если да, то какие?",
-          "question_4": "Нравятся ли Вам наши бесплатные функции?",
-          "question_5": "Какие функции Вам нужны?",
-          "question_6":
-              "Что бы Вы добавили? Что бы Вы убрали? Что бы Вы поменяли?",
-          "question_7": "По Вашему мнению, стоит ли вводить дневные практики?",
-          "question_7_subquestion_1":
-              "Если да, то какие? (дыхание, дневной фитнес, дневные медитации)",
-          "question_8": "По Вашему мнению, стоит ли вводить ночные практики?",
-          "question_8_subquestion_1":
-              "Если да, то какие? (звуки для сна, подготовка ко сну, чтение)",
-          "question_9":
-              "Порекомендовали ли Вы наше приложение друзьям/знакомым?",
+          "question_4":
+              "Нравятся ли Вам наши бесплатные функции (медитации, аффирмации)?",
+          "question_5": "Почему Вы выбрали именно наш продукт?",
+          "question_6": "Что Вам было нужно, когда искали наш продукт?",
+          "question_7": "Нашли то, что искали?",
+          "question_8": "Какую пользу вы получаете от нашего приложения?",
+          "question_9": "Какие функции Вам нужны?",
           "question_10":
-              "Сколько Вы готовы платить за наше приложение (в месяц)",
-          "question_11":
-              "Если бы Вы хотели принять участие в интервью, оставьте, пожалуйста, свою электронную почту для дальнейшей связи",
+              "Что бы Вы добавили? Что бы Вы убрали? Что бы Вы поменяли?",
+          "question_11": "Стоит ли вводить дневные практики?",
+          "question_11_subquestion_1":
+              "Если да, то какие? (дыхание, дневной фитнес, дневные медитации)",
+          "question_12": "Стоит ли вводить ночные практики?",
+          "question_12_subquestion_1":
+              "Если да, то какие? (звуки для сна, подготовка ко сну, чтение)",
+          "question_13":
+              "Приглашаем принять участие в интервью, оставьте, пожалуйста, свою электронную почту для дальнейшей связи ( по желанию укажите дополнительный канал связи)",
           "interview_dialog_text":
               "Привет! Хочешь 14 дней бесплатного пользования? \n\n Тогда пройди опрос и помоги нам сделать это приложение лучше!",
-          "help_us": "Помочь нам",
+          "interview_dialog_text_vip":
+              "Привет!  Спасибо, что используете полную версию приложения, Мы хотим сделать её лучше, поэтому будем благодарны за пройденный опрос.",
           "more_not_show": "Больше не показывать",
+          "help_us": "Помочь нам",
+          "thanks_to_interview":
+              "Большое спасибо, мы обязательно к Вам прислушаемся!",
         },
         EN: {
+          "thanks_to_interview":
+              "Thank you very much, we will definitely listen to you!",
           "help_us": "Help us",
           "more_not_show": "Do not show again",
           "interview_dialog_text":
               "Hey! Do you want 14 days of free trial? \n\n Then take the survey and help us make this app better!",
+          "interview_dialog_text_vip":
+              "Hey! Thank you for using the full version of the application, We want to make it better, so we will be grateful for the survey we took.",
           "question_1":
-              "Let's get acquainted. Tell me about yourself: Name (optional), age, gender.",
+              "Let's get acquainted. Tell me about yourself: age, gender, country (optional)",
           "question_2": "Is it hard for you to wake up in the morning?",
           "question_2_subquestion_1": "If so, why?",
-          "question_3": "Is it hard for you to wake up in the morning?",
+          "question_3":
+              "Do you use apps to improve your mental and physical health?",
           "question_3_subquestion_1": "If so, what?",
           "question_4": "Do you like our free features?",
-          "question_5": "What functions do you need?",
+          "question_5": "Why did you choose our product?",
           "question_6":
-              "What would you add? What would you remove? What would you change?",
-          "question_7":
-              "In your opinion, is it good idea to introduce day practices?",
-          "question_7_subquestion_1":
-              "If so, what? (breathing, daytime fitness)",
-          "question_8":
-              "In your opinion, is it good idea to introduce night practices",
-          "question_8_subquestion_1":
-              "If so, what? (sleep sounds, sleep preparation)",
-          "question_9": "Would you recommend our app to friends/acquaintances?",
+              "What did you need when you were looking for our product?",
+          "question_7": "Did you find what you were looking for?",
+          "question_8": "What benefits do you get from our app?",
+          "question_9": "What functions do you need?",
           "question_10":
-              "How much are you ready to pay for our app (per month)",
+              "What would you add? What would you remove? What would you change?",
           "question_11":
+              "In your opinion, is it good idea to introduce day practices?",
+          "question_11_subquestion_1":
+              "If so, what? (breathing, daytime fitness)",
+          "question_12":
+              "In your opinion, is it good idea to introduce night practices",
+          "question_12_subquestion_1":
+              "If so, what? (sleep sounds, sleep preparation)",
+          "question_13":
               "If you would like to participate in an interview with us, please leave your e-mail for further communication",
           "please_fill_all_fields": "Please fill in all fields",
           "start_input": "Start writing ...",
@@ -767,7 +780,7 @@ class LocalizationService extends Translations {
           "buy_month": "Pay for subscription",
           "buy_free": "TRY THE FULL COMPLEX",
           "three_days": "3 days free",
-          "buy_days": "Try 3 days for free",
+          "buy_days": "Try @days days for free",
           "sure": "Are you sure ?",
           "sure_delete": "Are you sure you want to delete the exercise?",
           "cancel": "Cancel",

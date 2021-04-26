@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -18,6 +20,9 @@ class UpsellPage extends StatefulWidget {
 class UpsellPageState extends State<UpsellPage> {
   @override
   Widget build(BuildContext context) {
+    var isInterviewed =
+        MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
+    var tryalDays = isInterviewed ? 14 : 3;
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -47,7 +52,7 @@ class UpsellPageState extends State<UpsellPage> {
                         await Purchases.purchasePackage(
                             billingService.getMonthlyTarif());
                   },
-                  'buy_days'.tr,
+                  'buy_days'.trParams({'days': '$tryalDays'}),
                   22,
                   null,
                   null,

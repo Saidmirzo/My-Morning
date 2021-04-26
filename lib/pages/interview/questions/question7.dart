@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:morningmagic/pages/interview/components/multiline_input.dart';
-import 'package:morningmagic/pages/interview/components/title_question.dart';
-import 'package:morningmagic/pages/interview/questions/question_frame.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/interview/components/multiline_input.dart';
+import 'package:morningmagic/pages/interview/questions/question_frame.dart';
 
 import '../interview_controller.dart';
 
@@ -50,12 +49,6 @@ Widget q7() {
             if (_controller.q7val.value == YesNoOther.other)
               multilineInput(_controller.q7TextController,
                   hint: 'start_input'.tr),
-            if (_controller.q7val.value == YesNoOther.yes) ...[
-              titleQuestion('question_7_subquestion_1'.tr),
-              const SizedBox(height: 20),
-              multilineInput(_controller.q7TextController2,
-                  hint: 'start_input'.tr),
-            ],
           ],
         )),
   );

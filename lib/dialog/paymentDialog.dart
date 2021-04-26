@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/storage.dart';
@@ -11,6 +13,9 @@ import '../widgets/subscribe_1_month_button.dart';
 class PaymentDialog extends Dialog {
   @override
   Widget build(BuildContext context) {
+    var isInterviewed =
+        MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
+    var tryalDays = isInterviewed ? 14 : 3;
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
@@ -101,7 +106,7 @@ class PaymentDialog extends Dialog {
                     ),
                     SizedBox(height: 8),
                     _buildBuyButton(
-                      title: 'buy_days'.tr,
+                      title: 'buy_days'.trParams({'days': '$tryalDays'}),
                       onTap: () {
                         _startPaymentTrial(context);
                         appAnalitics.logEvent('first_popap_trial');

@@ -5,12 +5,11 @@ import 'package:get/get.dart';
 
 import '../interview_controller.dart';
 
-Widget q10() {
+Widget q13() {
   InterviewController _controller = Get.find();
   return QuestionFrame(
-    index: 10,
-    title: 'question_10'.tr,
-    child:
-        multilineInput(_controller.q10TextController, hint: 'start_input'.tr),
+    index: 13,
+    title: 'question_13'.tr,
+    child: multilineInput(_controller.q13Controller, hint: 'start_input'.tr),
   );
 }
