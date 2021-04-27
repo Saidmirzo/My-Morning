@@ -32,9 +32,8 @@ class BillingService {
   }
 
   bool isPro() {
-    return kDebugMode
-        ? true
-        : purchaserInfo?.entitlements?.all[monthTarif]?.isActive ?? false;
+    bool isActive = (purchaserInfo?.entitlements?.active?.length ?? 0) > 0;
+    return kDebugMode ? true : isActive;
   }
 
   Package getMonthlyTarif() {
