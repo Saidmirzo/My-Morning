@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
@@ -25,15 +26,19 @@ class ExercisePage extends StatefulWidget {
   _ExercisePageState createState() => _ExercisePageState();
 }
 
-class _ExercisePageState extends State<ExercisePage> {
+class _ExercisePageState extends State<ExercisePage>
+    with TickerProviderStateMixin {
+  GifController _gifController;
   FitnessController _fitnessController = Get.find<FitnessController>();
   AudioPlayer _audioPlayer;
   Rx<FitnessExercise> exercise;
-  var cTimer = Get.put(TimerFitnesController());
+  TimerFitnesController cTimer;
 
   @override
   void initState() {
     exercise = widget.exercise.obs;
+    _gifController = GifController(vsync: this, duration: 2.seconds);
+    cTimer = Get.put(TimerFitnesController(_gifController));
     super.initState();
   }
 
@@ -52,6 +57,9 @@ class _ExercisePageState extends State<ExercisePage> {
           decoration:
               BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Fitnes),
           child: Obx(() {
+            _gifController = GifController(vsync: this, duration: 2.seconds);
+            cTimer.gifController = _gifController;
+
             print('rebuild fitnes timer page');
             cTimer.exerciseName = exercise.value.name;
             _audioRes = exercise.value.audioRes;
@@ -213,7 +221,12 @@ class _ExercisePageState extends State<ExercisePage> {
       alignment: Alignment.center,
       children: [
         Image.asset('assets/images/fitnes/ex/exp_shape.png', width: Get.width),
-        Image.asset(exercise.value.imageRes, height: Get.width / 1.7),
+        exercise.value.imageRes.split('.').last.contains('gif')
+            ? GifImage(
+                controller: _gifController,
+                image: AssetImage(exercise.value.imageRes),
+              )
+            : Image.asset(exercise.value.imageRes, height: Get.width / 1.7),
       ],
     );
   }

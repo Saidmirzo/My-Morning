@@ -1,20 +1,25 @@
 import 'dart:io' show Platform;
 
 import 'package:firebase_admob/firebase_admob.dart';
+import 'package:flutter/foundation.dart';
 
 import '../storage.dart';
 
 class AdmobService {
-  static final String appId = Platform.isAndroid
-      ? 'ca-app-pub-8444251353824953~3273634678'
-      : Platform.isIOS
-          ? 'ca-app-pub-8444251353824953~3943846765'
-          : FirebaseAdMob.testAppId;
-  static final String interstitialId = Platform.isAndroid
-      ? 'ca-app-pub-8444251353824953/5675746746'
-      : Platform.isIOS
-          ? 'ca-app-pub-8444251353824953/8111156632'
-          : InterstitialAd.testAdUnitId;
+  static final String appId = kDebugMode
+      ? FirebaseAdMob.testAppId
+      : Platform.isAndroid
+          ? 'ca-app-pub-8444251353824953~3273634678'
+          : Platform.isIOS
+              ? 'ca-app-pub-8444251353824953~3943846765'
+              : FirebaseAdMob.testAppId;
+  static final String interstitialId = kDebugMode
+      ? InterstitialAd.testAdUnitId
+      : Platform.isAndroid
+          ? 'ca-app-pub-8444251353824953/5675746746'
+          : Platform.isIOS
+              ? 'ca-app-pub-8444251353824953/8111156632'
+              : InterstitialAd.testAdUnitId;
 
   InterstitialAd myInterstitial;
 

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 import 'arcProgressBarPainter.dart';
 
 class ArcProgressBar extends StatelessWidget {
   final String text;
+  final Color textColor;
 
   const ArcProgressBar({
     Key key,
     @required this.text,
+    this.textColor = AppColors.LIGHT_VIOLET,
   }) : super(key: key);
 
   @override
@@ -20,10 +23,10 @@ class ArcProgressBar extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 45,
-              fontStyle: FontStyle.normal,
-              color: AppColors.LIGHT_VIOLET,
-            ),
+                fontSize: Get.height * 0.04,
+                fontStyle: FontStyle.normal,
+                color: textColor,
+                fontWeight: FontWeight.w600),
           ),
         ),
         foregroundPainter: ArcProgressBarPainter(),

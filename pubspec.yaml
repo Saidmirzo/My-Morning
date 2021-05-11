@@ -30,7 +30,7 @@ dependencies:
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   permission_handler: ^5.0.1+1
-  purchases_flutter: ^1.4.3
+  purchases_flutter: ^3.2.2
   random_string: ^2.1.0
   reorderables: ^0.3.2
   shared_preferences: ^0.5.12+4
@@ -54,6 +54,8 @@ dependencies:
   percent_indicator: ^3.0.1
   facebook_app_events: ^0.11.2
   app_tracking_transparency: ^2.0.0
+  intl: "^0.16.1"
+  flutter_gifimage: ^1.0.1
 
   flutter_localizations:
     sdk: flutter
@@ -79,6 +81,10 @@ flutter_icons:
 flutter:
   assets:
     - assets/images/
+    - assets/images/auth/
+    - assets/images/startscreen/morning/
+    - assets/images/startscreen/afternoon/
+    - assets/images/startscreen/evening/
     - assets/images/interview/
     - assets/images/targets/
     - assets/images/fitnes/

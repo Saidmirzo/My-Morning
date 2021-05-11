@@ -28,6 +28,63 @@ class AppColors {
   static const FIX_BOTTOM = Color(0xFFf8d9da);
 
   // Gradients
+  // страница загрузки
+  static const gradient_settings_page = RadialGradient(
+    colors: [AppColors.LIGHT_CREAM, AppColors.CREAM],
+    radius: 0.6,
+    center: Alignment(0.6, -0.2),
+  );
+  static const gradient_morning_sun = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xffFFF0D9),
+      const Color(0xffFFB5C3),
+    ],
+  );
+  static const gradient_evening_sun = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xffFFF7EA),
+      const Color(0xffFFB8F8),
+    ],
+  );
+  static const gradient_loading_morning_bg = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffAE80D6),
+      const Color(0xffD68FA8),
+      const Color(0xffFFE3BA),
+    ],
+  );
+  static const gradient_loading_afternoon_bg = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffFFE3BA),
+      const Color(0xffFFB5C3),
+      const Color(0xffB994DA),
+    ],
+  );
+  static const gradient_loading_evening_bg = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffAE80D6),
+      const Color(0xffD68FA8),
+    ],
+  );
+
+  static const gradient_afternoon_sun = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xffFFFAFB),
+      const Color(0xffFFF0D9),
+    ],
+  );
   static const Bg_Gradient_1 = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -179,6 +236,17 @@ class AppColors {
     colors: [
       const Color(0xffE2AABE),
       const Color(0xffB994DA),
+    ],
+  );
+
+  // Форма входа
+  static const Bg_gradient_auth_page = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      const Color(0xffAE80D6),
+      const Color(0xffD68FA8),
+      const Color(0xffFFE3BA),
     ],
   );
 }

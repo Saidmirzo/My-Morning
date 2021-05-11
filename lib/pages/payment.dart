@@ -25,14 +25,24 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   AppStates appStates = Get.put(AppStates());
   bool isInterviewed = false;
-  int tryalDays = 3;
+  int tryalDays = 7;
+  PageController _pageController =
+      PageController(viewportFraction: .9, initialPage: 1);
+  int _page = 0;
+
+  @override
+  void initState() {
+    _pageController.addListener(() {
+      _page = _pageController.page.round();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     isInterviewed =
         MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
-    tryalDays = isInterviewed ? 14 : 3;
-    String monthPrice =
-        billingService.getPrice(billingService.getMonthlyTarif());
+    tryalDays = isInterviewed ? 14 : 7;
     return Scaffold(
       body: Container(
         width: Get.width,
@@ -56,26 +66,23 @@ class _PaymentPageState extends State<PaymentPage> {
                     'assets/images/purchase/clouds2.png',
                     fit: BoxFit.cover,
                   )),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  children: [
-                    buildHeader(),
-                    Spacer(),
-                    buildBonuses(),
-                    // Spacer(),
-                    const SizedBox(height: 10),
-                    period('vip_price_card'.tr, monthPrice),
-                    const SizedBox(height: 10),
-                    // Spacer(),
-                    buildDesc(monthPrice),
-                    Spacer(),
-                    btnBuy(),
-                    Spacer(),
-                    buildFooter(),
-                    Spacer(),
-                  ],
-                ),
+              Column(
+                children: [
+                  buildHeader(),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Image.asset('assets/images/purchase/bonuses_ru.png',
+                        fit: BoxFit.fitWidth),
+                  ),
+                  Spacer(),
+                  buildDesc(),
+                  Spacer(),
+                  btnBuy(),
+                  Spacer(),
+                  buildFooter(),
+                  Spacer(),
+                ],
               ),
             ],
           ),
@@ -84,173 +91,82 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-  Column buildBonuses() {
-    return Column(
-      children: [
-        bonusLine('fitness'.tr, 'paragraph2'.tr,
-            image: 'assets/images/purchase/fitness.png'),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            bonusSquare('visualization'.tr, 'paragraph4'.tr,
-                image: 'assets/images/purchase/eye.png'),
-            const SizedBox(height: 10),
-            bonusSquare('reading'.tr, 'paragraph3'.tr,
-                image: 'assets/images/purchase/book.png'),
-            const SizedBox(height: 10),
-            bonusSquare('note'.tr, 'paragraph1'.tr,
-                image: 'assets/images/purchase/note.png'),
-          ],
-        ),
-      ],
-    );
-  }
-
   Widget buildHeader() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            PrimaryCircleButton(
-                icon: Icon(Icons.arrow_back, color: AppColors.primary),
-                onPressed: () {
-                  Get.back();
-                  appAnalitics.logEvent('first_skip_pay');
-                }),
-            Container(
-              width: Get.width * 0.40,
+    return Container(
+      width: Get.width * 0.9,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PrimaryCircleButton(
+            icon: Icon(Icons.arrow_back, color: AppColors.primary),
+            size: 30,
+            onPressed: () {
+              Get.back();
+              appAnalitics.logEvent('first_skip_pay');
+            },
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              width: Get.width * 0.6,
               child: Text(
                 'purchase_page_title'.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
-                    fontSize: Get.height * 0.022),
+                    fontSize: Get.height * 0.025),
               ),
             ),
-            const SizedBox(width: 70),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Text(
-          'purchase_page_desc'.trParams({'days': '$tryalDays'}),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-              fontSize: Get.height * 0.017),
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 
-  Widget bonusSquare(String title, String desc, {String image}) {
+  Widget buildDesc() {
+    return Container(
+      width: Get.width,
+      height: Get.height * 0.2,
+      child: PageView(
+        controller: _pageController,
+        children: [
+          tarif(billingService.monthlyTarif),
+          tarif(billingService.yearTarif),
+        ],
+      ),
+    );
+  }
+
+  Widget tarif(Package _package) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18), color: Colors.white),
-      width: Get.width * 0.28,
-      height: Get.height * 0.16,
-      padding: const EdgeInsets.all(10),
+          color: AppColors.purchaseDesc.withOpacity(0.64),
+          borderRadius: BorderRadius.circular(20)),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (image != null) Image.asset(image, height: Get.height * 0.03),
+          Text(
+            '$tryalDays дней бесплатно',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: Get.height * 0.023,
+                fontWeight: FontWeight.w700),
+          ),
           const SizedBox(height: 10),
-          Text(title,
-              style: TextStyle(
-                  fontSize: Get.height * 0.011,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primary)),
-          const SizedBox(height: 6),
-          Text(desc,
-              style: TextStyle(
-                fontSize: Get.height * 0.011,
-                fontWeight: FontWeight.w500,
-                color: AppColors.primary,
-              )),
-        ],
-      ),
-    );
-  }
-
-  Widget bonusLine(String title, String desc, {String image}) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18), color: Colors.white),
-      width: Get.width,
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: Get.width * 0.5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title,
-                    style: TextStyle(
-                        fontSize: Get.height * 0.013,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primary)),
-                const SizedBox(height: 8),
-                Text(desc,
-                    style: TextStyle(
-                      fontSize: Get.height * 0.013,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primary,
-                    )),
-              ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              '• ${_package?.product?.price} рублей в месяц после триала\n• Отмена в любое время бесплатно',
+              style:
+                  TextStyle(color: Colors.white, fontSize: Get.height * 0.017),
             ),
-          ),
-          if (image != null) Image.asset(image, height: Get.height * 0.05),
-        ],
-      ),
-    );
-  }
-
-  Widget period(String period, String price) {
-    return Container(
-      alignment: Alignment.center,
-      child: Row(
-        children: [
-          Text(
-            period,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: Get.height * 0.022),
-          ),
-          Spacer(),
-          Text(
-            price,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: Get.height * 0.022),
           )
         ],
       ),
-      decoration: BoxDecoration(
-          color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
     );
-  }
-
-  Container buildDesc(String monthPrice) {
-    return Container(
-        decoration: BoxDecoration(
-            color: AppColors.purchaseDesc.withOpacity(0.64),
-            borderRadius: BorderRadius.circular(20)),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text(
-          'try_vip_desc'.trParams({'price': monthPrice, 'days': '$tryalDays'}),
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: Get.height * 0.015),
-        ));
   }
 
   Widget btnBuy() {
@@ -258,20 +174,25 @@ class _PaymentPageState extends State<PaymentPage> {
       text: 'continue'.tr,
       pWidth: 0.5,
       onPressed: () async {
+        Package _package;
         try {
-          await Purchases.purchasePackage(billingService.getMonthlyTarif());
+          switch (_page) {
+            case 0:
+              _package = billingService.monthlyTarif;
+              break;
+            case 1:
+              _package = billingService.yearTarif;
+              break;
+            default:
+          }
+          await Purchases.purchasePackage(_package);
           appAnalitics.logEvent('first_trial');
+          //TODO: статистика будет кривой.
+          // Это нужно переделать, цена и валюта всегда разная может быть
           await AnalyticService.analytics
               .logEcommercePurchase(value: 75, currency: 'RUB');
-        } on PlatformException catch (e) {
-          var errorCode = PurchasesErrorHelper.getErrorCode(e);
-          if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
-            print("User cancelled");
-          } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
-            print("User not allowed to purchase");
-          } else {
-            print('Error purchase, code $errorCode');
-          }
+        } catch (e) {
+          print("Payment error: $e");
         }
       },
     );
@@ -280,9 +201,13 @@ class _PaymentPageState extends State<PaymentPage> {
   Column buildFooter() {
     return Column(
       children: [
-        new RichText(text: myUrl('privacy_title'.tr, UrlPrivacy)),
+        new RichText(
+            text: myUrl('privacy_title'.tr, UrlPrivacy,
+                textColor: Colors.white, underline: false)),
         const SizedBox(height: 5),
-        new RichText(text: myUrl('agreement_title'.tr, UrlAgreement)),
+        new RichText(
+            text: myUrl('agreement_title'.tr, UrlAgreement,
+                textColor: Colors.white, underline: false)),
       ],
     );
   }

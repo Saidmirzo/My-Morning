@@ -9,7 +9,11 @@ import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:morningmagic/widgets/custom_progress_bar/arcProgressBar.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
+
+import '../../../../resources/colors.dart';
+import '../../../../widgets/primary_circle_button.dart';
 
 class FitnessSuccessPage extends StatefulWidget {
   @override
@@ -54,28 +58,70 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
         return true;
       },
       child: Scaffold(
-        body: AppGradientContainer(
+        body: Container(
+          width: Get.width,
+          height: Get.height,
+          decoration:
+              BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
           child: Stack(
             alignment: Alignment.center,
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width * 0.7,
-                child: ArcProgressBar(
-                  text: 'success'.tr,
-                ),
-              ),
-              SizedBox(
-                height: 36,
-              ),
-              Positioned(
-                bottom: MediaQuery.of(context).size.height / 5.5,
-                child: AnimatedButton(
-                    _continueClicked, 'continue'.tr, 21, null, null),
-              ),
+            children: [
+              bg(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildProgress(),
+                  SizedBox(height: 20),
+                  const SizedBox(height: 50),
+                  buildButton(),
+                ],
+              )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildButton() {
+    return PrimaryCircleButton(
+      size: 45,
+      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+      onPressed: _continueClicked,
+    );
+  }
+
+  Positioned bg() {
+    return Positioned(
+      bottom: 0,
+      child: Container(
+        width: Get.width,
+        child: Image.asset(
+          'assets/images/timer/clouds_timer.png',
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget buildProgress() {
+    return CircularPercentIndicator(
+      radius: Get.height * 0.35,
+      lineWidth: 27.0,
+      reverse: true,
+      animation: false,
+      percent: 0.4,
+      center: Text(
+        'success'.tr,
+        style: TextStyle(
+            fontSize: Get.height * 0.04,
+            fontStyle: FontStyle.normal,
+            color: Colors.white,
+            fontWeight: FontWeight.w600),
+      ),
+      circularStrokeCap: CircularStrokeCap.round,
+      linearGradient: AppColors.Progress_Gradient_Timer_Reading,
+      backgroundColor: Colors.white,
     );
   }
 

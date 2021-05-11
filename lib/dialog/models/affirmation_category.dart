@@ -1,1 +1,0 @@
-enum AffirmationCategory { confidence, love, health, success, career, wealth }

@@ -4,9 +4,12 @@ import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/widgets/customInputNextColumn.dart';
+import 'package:morningmagic/pages/reading/timer/components/customInputNextColumn.dart';
 import 'package:morningmagic/widgets/custom_progress_bar/arcProgressBar.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
+
+import '../../../resources/colors.dart';
 
 class TimerInputSuccessScreen extends StatefulWidget {
   final int minutes;
@@ -117,58 +120,66 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
       onWillPop: () => _onWillPop(),
       child: Scaffold(
         body: Container(
-            width:
-                MediaQuery.of(context).size.width, // match parent(all screen)
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AppColors.TOP_GRADIENT,
-                AppColors.MIDDLE_GRADIENT,
-                AppColors.BOTTOM_GRADIENT
-              ],
-            )),
-            child: LayoutBuilder(
-              builder:
-                  (BuildContext context, BoxConstraints viewportConstraints) {
-                return SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minHeight: viewportConstraints.maxHeight),
-                    child: Container(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height / 3.7,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: ArcProgressBar(
-                              text: 'success'.tr,
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height / 17,
-                                bottom:
-                                    MediaQuery.of(context).size.height / 17),
-                            child: InputTextColumn(() {
-                              if (_audioPlayer != null) {
-                                _audioPlayer.stop();
-                                _audioPlayer.dispose();
-                              }
-                            }),
-                          ),
-                        ],
-                      ),
-                    ),
+          width: Get.width,
+          height: Get.height,
+          decoration:
+              BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              bg(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildProgress(context),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: Get.height / 17),
+                    child: InputTextColumn(() {
+                      if (_audioPlayer != null) {
+                        _audioPlayer.stop();
+                        _audioPlayer.dispose();
+                      }
+                    }),
                   ),
-                );
-              },
-            )),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildProgress(BuildContext context) {
+    return CircularPercentIndicator(
+      radius: Get.height * 0.25,
+      lineWidth: 18.0,
+      reverse: true,
+      animation: false,
+      percent: 0.4,
+      center: Text(
+        'success'.tr,
+        style: TextStyle(
+            fontSize: Get.height * 0.04,
+            fontStyle: FontStyle.normal,
+            color: Colors.white,
+            fontWeight: FontWeight.w600),
+      ),
+      circularStrokeCap: CircularStrokeCap.round,
+      linearGradient: AppColors.Progress_Gradient_Timer_Reading,
+      backgroundColor: Colors.white,
+    );
+  }
+
+  Positioned bg() {
+    return Positioned(
+      bottom: 0,
+      child: Container(
+        width: Get.width,
+        child: Image.asset(
+          'assets/images/timer/clouds_timer.png',
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

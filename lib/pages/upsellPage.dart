@@ -50,7 +50,7 @@ class UpsellPageState extends State<UpsellPage> {
                     if (billingService.isPro()) return IsProWidget();
                     billingService.purchaserInfo =
                         await Purchases.purchasePackage(
-                            billingService.getMonthlyTarif());
+                            billingService.monthlyTarif);
                   },
                   'buy_days'.trParams({'days': '$tryalDays'}),
                   22,

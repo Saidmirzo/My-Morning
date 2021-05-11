@@ -22,7 +22,7 @@ class LocalizationService extends Translations {
           "loading_buy": "Загрузка",
           "loading_buy_app_bar": "Загрузка",
           "start_fitness_my_program": "Начать свою программу",
-          "awareness_meter": "Измеритель осознанности",
+          "awareness_meter": "Измеритель\nосознанности",
           "month": "Месяц",
           "year": "Год",
           "save_diary": "Сохранить заметку",
@@ -216,6 +216,9 @@ class LocalizationService extends Translations {
           "fitness_title":
               "Подготовтесь к\n оздоровлению Вашего\n организма, благодаря\n упражнениям  ",
           "good_morning": "Доброе утро,\n",
+          "good_afternoon": "Добрый день,\n",
+          "good_evening": "Добрый вечер,\n",
+          "good_night": "Добрый ночи,\n",
           "meditation": "МЕДИТАЦИЯ",
           "meditation_title":
               "Примите наиболее удобную\n позу, успокойте ум, \nследите за дыханием.",
@@ -249,6 +252,7 @@ class LocalizationService extends Translations {
           "pages": "Сколько страниц ?",
           "pages_note": "страниц",
           "continue": "Продолжить",
+          "reminders_page": "Напоминания",
           "stop": "Остановить",
           "push_success": "Успешно!",
           "action_completed": "действие завершено!",
@@ -284,6 +288,8 @@ class LocalizationService extends Translations {
           "affirmation_hint":
               "Фразы должны быть четкими, утвердительными, короткими и происходить в настоящем времени:\"Все решения, которые я принимаю ведут меня к счастливому будущему\"",
           "book_name": "Введите название\nкниги",
+          "input_cat_name": "Введите название категории",
+          "input_desc": "Введите описание",
           "player_voice": "Голос озвучки",
           "female": "Женский",
           "male": "Мужский",
@@ -292,7 +298,8 @@ class LocalizationService extends Translations {
           "faq_desc":
               "<b>1. ПРИЛОЖЕНИЕ:</b><br><br>Для людей которые хотят <b>изменить свою жизнь, но не знают с чего начать.</b> <br><br><b>«Магическое утро»</b> зарядит энергией и поможет осознанно подойти к планированию своего дня.<br><br><b>2. «МАГИЧЕСКОЕ УТРО»:</b><br><br>Состоит из <b>6</b> блоков<br><br><b>Медитация</b> – поможет не спеша пробудить разум<br><br><b>Аффирмации</b> – заряжают разум положительными эмоциями<br><br><b>Визуализации</b> – позволяют точно представить желаемый успех<br><br><b>Фитнес</b> – заряжают ваше тело энергией<br><br><b>Чтение</b> – развивайтесь уже с самого утра! (особенно если не хватает времени вечером)<br><br><b>Дневник</b> - запомните что сделали и чему научились, запишите самые важные мысли<br><br><b>3. КАК ПОЛЬЗОВАТЬСЯ:</b><br><br>√ Начните с <b>«настроек»</b> там можно выставить:<br><br>- <b>Время </b>каждого из блоков<br><br>- <b>Последовательность</b> блоков<br><br>- <b>Аффирмацию</b> по умолчанию<br><br>- <b>Книгу</b> которую читаете<br><br> Настройки можно поменять в любое время.<br><br>√ Теперь Вы можете приступить к выполнению своего великолепного утра, нажав кнопку «Начать», всё будет проходить в соответствии с заданными настройками.<br><br><b>√ Прогресс будет показывать:</b><br><br>- <b>Время</b> по каждому дню<br><br>- <b>Количество</b> страниц прочитанных книг<br><br>- <b>Ваши</b> Аффирмации<br><br><b>4. ЕСЛИ ОСТАЛИСЬ ВОПРОСЫ:</b><br><br><a href='mailto:wonderfulmorningnow@gmail.com'>wonderfulmorningnow@gmail.com</a><br><br>с радостью отвечу на все ваши вопросы",
           "add_exercise": "Добавьте упражнение",
-          "name": "Пожалуйста, введите Ваше имя",
+          "name": "Имя",
+          "please_input_name": "Пожалуйста, введите Ваше имя",
           "delete_exercise": "Удалите упражнение",
           "delete_hint": "Зажмите и удерживайте\n что бы удалить",
           "your_exercise": "Ваше упражнение",
@@ -465,7 +472,7 @@ class LocalizationService extends Translations {
           "music_menu_music": "Музыка",
           "music_menu_sounds": "Звуки",
           "music_menu_favorite": "Избранное",
-          "purchase_page_title": "Бесплатная пробная версия",
+          "purchase_page_title": "Открой для себя утро по новому",
           "purchase_page_desc": "@days дня бесплатно",
           "go_start_record": "Нажмите, чтобы начать запись",
           "go_stop_record": "Идёт запись, нажмите чтобы остановить",
@@ -551,7 +558,7 @@ class LocalizationService extends Translations {
           "loading_buy": "Loading",
           "loading_buy_app_bar": "Loading...",
           "start_fitness_my_program": "Start your program",
-          "awareness_meter": "Awareness meter",
+          "awareness_meter": "Awareness\nmeter",
           "month": "Month",
           "year": "Year",
           "total": "Total",
@@ -738,6 +745,9 @@ class LocalizationService extends Translations {
           "fitness_title":
               "Prepare for exercises which\n will restore your physical\n health",
           "good_morning": "Good morning,\n",
+          "good_afternoon": "Good afternoon,\n",
+          "good_evening": "Good evening,\n",
+          "good_night": "Good night,\n",
           "meditation": "MEDITATION",
           "meditation_title":
               "Sit in a comfortable position,\n calm down, pay attention\n to your breath.",
@@ -768,6 +778,7 @@ class LocalizationService extends Translations {
           "success": "Success!",
           "pages": "How many pages ?",
           "continue": "Continue",
+          "reminders_page": "Reminders",
           "stop": "Stop",
           "push_success": "Successfully!",
           "action_completed": "action completed!",
@@ -805,6 +816,8 @@ class LocalizationService extends Translations {
           "affirmation_hint":
               "1. Start with the words “I am.”\n2. Use the present tense.\n3. State it in the positive. Affirm what you want, not what you don’t want.\n4. Keep it brief.\n5. Include an action word ending with –ing.\n\nYou can use the following simple formula: “I am so happy and grateful that I am now …” and then fill in the blank.",
           "book_name": "Write name\nof book",
+          "input_cat_name": "Input category name",
+          "input_desc": "Input a description",
           "player_voice": "Voice",
           "female": "Female",
           "male": "Male",
@@ -813,7 +826,8 @@ class LocalizationService extends Translations {
           "faq_desc":
               "<b>1. APPENDIX: </b><br> <br> For people who want to <b> change their lives, but don't know where to start. </b><br><br><b>«Magic Morning» </b> will energize and help you to consciously plan your day. <br> <br> <b>2. «MAGIC MORNING»: </b><br> <br> Consists of <b> 6 </b> blocks <br> <br> <b>Meditation </b> - will help to slowly awaken the mind <br> <br> <b>Affirmations </b> - charge the mind with positive emotions <br> <br> <b>Visualizations</b> - allow you to accurately represent the desired success <br> <br> <b>Fitness</b> - charge your body with energy <br> <br> <b>Reading</b> - develop from the very morning! (especially if there is not enough time in the evening) <br> <br> <b>Diary </b> - remember what you did and what you learned, write down the most important thoughts <br> <br> <b>3. HOW TO USE:</b> <br> <br>√ Start with <b> «settings»</b> there you can set: <br> <br>- <b>Time </b> of each block <br> <br>- <b>Sequence </b> blocks <br> <br> - <b> Default Affirmation </b> <br> <br> - <b>The book</b> you are reading <br> <br> Settings can be changed at any time. <br> <br> √ Now you can start making your great morning by clicking the <b> «Start» </b> button, everything will go according to the specified settings. <br> <br> <b>√ Progress will show:</b> <br> <br> - <b>Time</b> for each day <br> <br> - <b>Number</b> of pages of books read <br> <br> - <b>Yours</b>Affirmations <br> <br> <b>4. IF YOU HAVE ANY QUESTIONS:</b> <br> <br> <a href='mailto:wonderfulmorningnow@gmail.com'>wonderfulmorningnow@gmail.com</a> <br><br>I will gladly answer all your questions",
           "add_exercise": "Add exercise",
-          "name": "Please enter your name",
+          "name": "Name",
+          "please_input_name": "Please enter your name",
           "delete_exercise": "Delete exercise",
           "delete_hint": "Clamp and hold\n to delete",
           "your_exercise": "Your exercise",
@@ -978,7 +992,7 @@ class LocalizationService extends Translations {
           "music_menu_music": "Music",
           "music_menu_sounds": "Sounds",
           "music_menu_favorite": "Favorite",
-          "purchase_page_title": "Free trial",
+          "purchase_page_title": "Discover the morning in a new way",
           "purchase_page_desc": "@days days free",
           "go_start_record": "Click to start recording",
           "go_stop_record": "Recording in progress, click to stop",
@@ -993,17 +1007,9 @@ class LocalizationService extends Translations {
     return Locale(_langCode);
   }
 
-  static void switchLocale() {
-    final _currentLocale = Get.locale;
-
-    if (_currentLocale.languageCode == RU) {
-      final _newLocale = Locale(EN);
-      Get.updateLocale(_newLocale);
-      MyDB().getBox().put(LOCALIZATION_KEY, _newLocale.languageCode);
-    } else if (_currentLocale.languageCode == EN) {
-      final _newLocale = Locale(RU);
-      Get.updateLocale(_newLocale);
-      MyDB().getBox().put(LOCALIZATION_KEY, _newLocale.languageCode);
-    }
+  static void switchLocale(String newLangCode) {
+    final _newLocale = Locale(newLangCode);
+    Get.updateLocale(_newLocale);
+    MyDB().getBox().put(LOCALIZATION_KEY, newLangCode);
   }
 }

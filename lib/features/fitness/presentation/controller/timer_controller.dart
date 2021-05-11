@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -18,10 +20,12 @@ class TimerFitnesController {
   // Когда упражнение завершено
   RxBool isExDone = false.obs;
 
+  GifController gifController;
+
   DateTime date = DateTime.now();
   String timeStr;
 
-  TimerFitnesController() {
+  TimerFitnesController(this.gifController) {
     init();
   }
 
@@ -117,7 +121,11 @@ class TimerFitnesController {
           }
         },
       );
+      log('startTimer');
+      gifController.repeat(min: 0, max: 2, period: 4.seconds);
     } else if (timer != null && timer.isActive) {
+      gifController.stop();
+      // gifController.stop();
       isRuning.value = false;
       timer.cancel();
     }

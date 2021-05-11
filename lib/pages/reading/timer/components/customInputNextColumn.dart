@@ -10,6 +10,9 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:get/get.dart';
 
+import '../../../../resources/colors.dart';
+import '../../../../widgets/primary_circle_button.dart';
+
 class InputTextColumn extends StatefulWidget {
   final VoidCallback onPressed;
   InputTextColumn(this.onPressed);
@@ -108,7 +111,7 @@ class InputTextColumnState extends State<InputTextColumn> {
             child: Text(
               'pages'.tr,
               style: TextStyle(
-                color: AppColors.LIGHT_VIOLET,
+                color: Colors.white,
                 fontStyle: FontStyle.normal,
                 fontSize: 20,
               ),
@@ -116,11 +119,10 @@ class InputTextColumnState extends State<InputTextColumn> {
           ),
           Container(
             width: MediaQuery.of(context).size.width / 3.2,
-            padding: EdgeInsets.only(bottom: 20),
             child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
-                  color: AppColors.TRANSPARENT_WHITE,
+                  color: Colors.white,
                 ),
                 child: Container(
                   padding:
@@ -132,42 +134,26 @@ class InputTextColumnState extends State<InputTextColumn> {
                     cursorColor: AppColors.VIOLET,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 27,
                         fontStyle: FontStyle.normal,
-                        color: AppColors.VIOLET,
+                        color: AppColors.primary,
                         decoration: TextDecoration.none),
                     decoration: null,
                   ),
                 )),
           ),
-          Container(
-            child: ButtonTheme(
-              minWidth: 170.0,
-              height: 50.0,
-              child: RaisedButton(
-                elevation: 0,
-                onPressed: () {
-                  OrderUtil().getRouteById(4).then((value) {
-                    Get.off(value);
-                  });
-                  saveReadingProgress();
-                  widget.onPressed();
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(38.0)),
-                child: Text(
-                  'continue'.tr,
-                  style: TextStyle(
-                    color: AppColors.WHITE,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 21,
-                  ),
-                ),
-                color: AppColors.PINK,
-              ),
-            ),
+          const SizedBox(height: 40),
+          PrimaryCircleButton(
+            icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+            onPressed: () {
+              OrderUtil().getRouteById(4).then((value) {
+                Get.off(value);
+              });
+              saveReadingProgress();
+              widget.onPressed();
+            },
           ),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/pages/loadingPage.dart';
+import 'package:morningmagic/pages/loading/loadingPage.dart';
 import 'package:morningmagic/pages/homePage.dart';
 import 'package:morningmagic/pages/screenUserDataInput.dart';
 import 'package:morningmagic/pages/settingsPage.dart';

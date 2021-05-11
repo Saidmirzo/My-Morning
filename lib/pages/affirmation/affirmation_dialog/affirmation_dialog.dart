@@ -1,8 +1,13 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:morningmagic/dialog/affirmation_text_dialog.dart';
-import 'package:morningmagic/dialog/models/affirmation_category.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_controller.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_text_dialog.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_model.dart';
+// import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_category.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/widgets/primary_circle_button.dart';
+
+import 'add_category.dart';
 
 class AffirmationCategoryDialog extends StatefulWidget {
   @override
@@ -11,7 +16,7 @@ class AffirmationCategoryDialog extends StatefulWidget {
 }
 
 class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
-  final _affirmationList = AffirmationCategory.values.toList();
+  final AffirmationController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +49,24 @@ class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 8,
+              SizedBox(height: 8),
+              Expanded(
+                child: Obx(() {
+                  var _af = _controller.affirmations.value;
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _af.length,
+                    itemBuilder: (context, index) => item(_af[index]),
+                  );
+                }),
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: _affirmationList.length,
-                itemBuilder: (context, index) => MainAffirmationDialogItem(
-                    affirmationCategory: _affirmationList[index]),
+              Align(
+                alignment: Alignment.center,
+                child: PrimaryCircleButton(
+                  onPressed: () => Get.dialog(AddCategoryAffirmation()),
+                  icon: Icon(Icons.add, color: Colors.black54),
+                  bgColor: Colors.black12,
+                ),
               ),
             ],
           ),
@@ -59,28 +74,14 @@ class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
       ),
     );
   }
-}
 
-class MainAffirmationDialogItem extends StatefulWidget {
-  final AffirmationCategory affirmationCategory;
-
-  const MainAffirmationDialogItem({Key key, @required this.affirmationCategory})
-      : super(key: key);
-
-  @override
-  _MainAffirmationDialogItemState createState() =>
-      _MainAffirmationDialogItemState();
-}
-
-class _MainAffirmationDialogItemState extends State<MainAffirmationDialogItem> {
-  @override
-  Widget build(BuildContext context) {
+  Widget item(AffirmationyModel _affirmation) {
     return InkWell(
       onTap: () async {
-        String affirmationText = await _showAffirmationSelectionDialog(
-            context, widget.affirmationCategory);
+        _controller.selectedAffirmation = _affirmation.obs;
+        String affirmationText = await Get.dialog(AffirmationTextDialog());
         if (affirmationText != null) {
-          Navigator.pop(context, affirmationText);
+          Get.back(result: affirmationText);
         }
         print('affirmation text result $affirmationText');
       },
@@ -97,7 +98,7 @@ class _MainAffirmationDialogItemState extends State<MainAffirmationDialogItem> {
           child: Row(
             children: [
               Text(
-                _getAffirmationCategoryText(widget.affirmationCategory),
+                _affirmation.name,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   decoration: TextDecoration.none,
@@ -116,38 +117,5 @@ class _MainAffirmationDialogItemState extends State<MainAffirmationDialogItem> {
         ),
       ),
     );
-  }
-
-  String _getAffirmationCategoryText(AffirmationCategory affirmation) {
-    switch (affirmation) {
-      case AffirmationCategory.confidence:
-        return 'for_confidence'.tr;
-        break;
-      case AffirmationCategory.love:
-        return 'for_love'.tr;
-        break;
-      case AffirmationCategory.health:
-        return 'for_health'.tr;
-        break;
-      case AffirmationCategory.success:
-        return 'for_success'.tr;
-        break;
-      case AffirmationCategory.career:
-        return 'for_career'.tr;
-        break;
-      case AffirmationCategory.wealth:
-        return 'for_wealth'.tr;
-        break;
-      default:
-        return 'unknown category';
-    }
-  }
-
-  Future<String> _showAffirmationSelectionDialog(
-      BuildContext context, AffirmationCategory affirmationCategory) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) =>
-            AffirmationTextDialog(affirmationCategory: affirmationCategory));
   }
 }

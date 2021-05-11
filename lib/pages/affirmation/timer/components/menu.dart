@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_dialog.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/timer_service.dart';

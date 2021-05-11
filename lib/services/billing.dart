@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,45 +11,32 @@ import '../resources/my_const.dart';
 class BillingService {
   PurchaserInfo purchaserInfo;
   Offerings offerings;
-  String monthTarif;
+  String oferingName;
+  Offering _offering;
 
   init() async {
-    await Purchases.setDebugLogsEnabled(false);
     await Purchases.setup(REVENUE_KEY);
+    await Purchases.setDebugLogsEnabled(true);
     purchaserInfo = await Purchases.getPurchaserInfo();
     offerings = await Purchases.getOfferings();
+    _offering = offerings.getOffering(oferingName);
     bool isInterviewed =
         MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
-    monthTarif = GetPlatform.isAndroid
-        ? isInterviewed
-            ? 'vip_token_key_14'
-            : 'default'
-        : isInterviewed
-            ? "all_features_14"
-            : "all_features";
+    oferingName = !isInterviewed ? 'default' : 'vip_trial_14_days';
   }
 
   bool isPro() {
     bool isActive = (purchaserInfo?.entitlements?.active?.length ?? 0) > 0;
-    return kDebugMode ? true : isActive;
+    return /* kDebugMode ? true : */ isActive;
   }
 
-  Package getMonthlyTarif() {
-    if (offerings == null) return null;
-    print('offerings: $offerings');
-    print('monthtarif: $monthTarif');
-    final offering = offerings.getOffering(monthTarif);
-    print('offering: $offering');
-    if (offering == null) return null;
-    return offering.monthly;
-  }
+  Package get monthlyTarif => _offering?.monthly;
+  Package get yearTarif => _offering?.annual;
 
-  String getPrice(Package package) {
-    return package?.product?.priceString ?? "vip_def_month_price".tr;
-  }
+  String getPrice(Package package) =>
+      package?.product?.priceString ?? "vip_def_month_price".tr;
 
   startPaymentPage(BuildContext context) async {
-    print('start payemt page');
     await Navigator.push(
         context, MaterialPageRoute(builder: (_) => PaymentPage()));
   }

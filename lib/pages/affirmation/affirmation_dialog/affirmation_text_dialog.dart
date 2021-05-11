@@ -1,27 +1,23 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/widgets/primary_circle_button.dart';
 
-import 'models/affirmation_category.dart';
+import 'add_text.dart';
+import 'affirmation_controller.dart';
 
 class AffirmationTextDialog extends StatefulWidget {
-  final AffirmationCategory affirmationCategory;
-
-  const AffirmationTextDialog({Key key, @required this.affirmationCategory})
-      : super(key: key);
-
   @override
   _AffirmationTextDialogState createState() => _AffirmationTextDialogState();
 }
 
 class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
-  List<String> _affirmationTextList;
+  final AffirmationController _controller = Get.find();
   int _selectedItemIndex;
 
   @override
   void initState() {
     super.initState();
-    _affirmationTextList = _getAffirmationTextList(widget.affirmationCategory);
   }
 
   @override
@@ -63,8 +59,9 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                       onTap: (_selectedItemIndex == null)
                           ? null
                           : () {
-                              Navigator.pop(context,
-                                  _affirmationTextList[_selectedItemIndex]);
+                              Get.back(
+                                  result: _controller.selectedAffirmation.value
+                                      .affirmations[_selectedItemIndex]);
                             },
                       child: Text(
                         'choose'.tr,
@@ -84,20 +81,32 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                 height: 8,
               ),
               Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: _affirmationTextList.length,
-                  itemBuilder: (context, index) => AffirmationTextItem(
-                    text: _affirmationTextList[index],
-                    onItemSelected: () {
-                      setState(() {
-                        (_selectedItemIndex == index)
-                            ? _selectedItemIndex = null
-                            : _selectedItemIndex = index;
-                      });
-                    },
-                    isSelected: _selectedItemIndex == index ? true : false,
+                child: Obx(
+                  () => ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _controller
+                        .selectedAffirmation.value.affirmations.length,
+                    itemBuilder: (context, index) => AffirmationTextItem(
+                      text: _controller
+                          .selectedAffirmation.value.affirmations[index],
+                      onItemSelected: () {
+                        setState(() {
+                          (_selectedItemIndex == index)
+                              ? _selectedItemIndex = null
+                              : _selectedItemIndex = index;
+                        });
+                      },
+                      isSelected: _selectedItemIndex == index ? true : false,
+                    ),
                   ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: PrimaryCircleButton(
+                  onPressed: () => Get.dialog(AddTextAffirmation()),
+                  icon: Icon(Icons.add, color: Colors.black54),
+                  bgColor: Colors.black12,
                 ),
               ),
             ],
@@ -105,98 +114,6 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
         ),
       ),
     );
-  }
-
-  List<String> _getAffirmationTextList(
-      AffirmationCategory affirmationCategory) {
-    switch (affirmationCategory) {
-      case AffirmationCategory.confidence:
-        return [
-          "confidence_text_1".tr,
-          "confidence_text_2".tr,
-          "confidence_text_3".tr,
-          "confidence_text_4".tr,
-          "confidence_text_5".tr,
-          "confidence_text_6".tr
-        ];
-        break;
-      case AffirmationCategory.health:
-        return [
-          "health_text_1".tr,
-          "health_text_2".tr,
-          "health_text_3".tr,
-          "health_text_4".tr,
-          "health_text_5".tr,
-          "health_text_6".tr,
-          "health_text_7".tr,
-          "health_text_8".tr,
-          "health_text_9".tr,
-          "health_text_10".tr,
-        ];
-        break;
-      case AffirmationCategory.love:
-        return [
-          "love_text_1".tr,
-          "love_text_2".tr,
-          "love_text_3".tr,
-          "love_text_4".tr,
-          "love_text_5".tr,
-          "love_text_6".tr,
-          "love_text_7".tr,
-          "love_text_8".tr,
-          "love_text_9".tr,
-          "love_text_10".tr,
-          "love_text_11".tr,
-        ];
-        break;
-      case AffirmationCategory.success:
-        return [
-          "success_text_1".tr,
-          "success_text_2".tr,
-          "success_text_3".tr,
-          "success_text_4".tr,
-          "success_text_5".tr,
-          "success_text_6".tr,
-          "success_text_7".tr,
-          "success_text_8".tr,
-          "success_text_9".tr,
-          "success_text_10".tr,
-          "success_text_11".tr,
-        ];
-        break;
-      case AffirmationCategory.career:
-        return [
-          "career_text_1".tr,
-          "career_text_2".tr,
-          "career_text_3".tr,
-          "career_text_4".tr,
-          "career_text_5".tr,
-          "career_text_6".tr,
-          "career_text_7".tr,
-          "career_text_8".tr,
-          "career_text_9".tr,
-          "career_text_10".tr,
-          "career_text_11".tr,
-        ];
-
-        break;
-      case AffirmationCategory.wealth:
-        return [
-          "wealth_text_1".tr,
-          "wealth_text_2".tr,
-          "wealth_text_3".tr,
-          "wealth_text_4".tr,
-          "wealth_text_5".tr,
-          "wealth_text_6".tr,
-          "wealth_text_7".tr,
-          "wealth_text_8".tr,
-          "wealth_text_9".tr,
-          "wealth_text_10".tr,
-        ];
-        break;
-      default:
-        throw UnsupportedError("unknown affirmation category");
-    }
   }
 }
 

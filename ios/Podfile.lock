@@ -255,7 +255,7 @@ PODS:
   - Firebase/Storage (7.3.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 7.3.0)
-  - firebase_admob (0.11.0-1):
+  - firebase_admob (0.11.0-2):
     - firebase_core
     - Flutter
     - Google-Mobile-Ads-SDK
@@ -387,17 +387,17 @@ PODS:
   - nanopb/encode (2.30906.0)
   - path_provider (0.0.1):
     - Flutter
-  - "permission_handler (5.0.1+1)":
+  - "permission_handler (5.1.0+2)":
     - Flutter
   - PromisesObjC (1.2.12)
-  - Purchases (3.7.5):
-    - PurchasesCoreSwift (= 3.7.5)
-  - purchases_flutter (1.4.3):
+  - Purchases (3.11.1):
+    - PurchasesCoreSwift (= 3.11.1)
+  - purchases_flutter (3.2.2):
     - Flutter
-    - PurchasesHybridCommon (= 1.4.5)
-  - PurchasesCoreSwift (3.7.5)
-  - PurchasesHybridCommon (1.4.5):
-    - Purchases (= 3.7.5)
+    - PurchasesHybridCommon (= 1.6.3)
+  - PurchasesCoreSwift (3.11.1)
+  - PurchasesHybridCommon (1.6.3):
+    - Purchases (= 3.11.1)
   - rate_my_app (0.7.1):
     - Flutter
   - screen (0.0.1):
@@ -533,7 +533,7 @@ SPEC CHECKSUMS:
   facebook_app_events: 432ce4d1291c5eab4df38a5415a78405ef7b28d3
   FBSDKCoreKit: fada1a6a0076724678993ff05a633848765ff18c
   Firebase: 26223c695fe322633274198cb19dca8cb7e54416
-  firebase_admob: 51c3b41eac429d09237eba8add1a3886942e8006
+  firebase_admob: 95df5c81107409d7fd7133e5f8d11bd25a116a65
   firebase_analytics: 41043f6e14fc9bc27c3f05217ab7f2b0ad9b41eb
   firebase_core: 91b27774a52f41f8b58484a75edf71197ac01c59
   firebase_storage: 554b8ce9192bfe0bd35f63da42d0d1f6ae819ccc
@@ -561,12 +561,12 @@ SPEC CHECKSUMS:
   multi_image_picker: 6dfd22d7e6441a1cb06f6876fe8cc5f32f7f6610
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Purchases: 7ebce9418bc16732c3c3bb4b6ff7e7e397de024e
-  purchases_flutter: 63ee1ca7b56bc2b4a75bfe15e9ee230ed98987ab
-  PurchasesCoreSwift: 50636e307c1ab76c7a7894a87d042665f2fe0be9
-  PurchasesHybridCommon: b1dd1c5125ccf99b9e62b5974d0e5145895e8b87
+  Purchases: 6351f9ff6bd514e5ec5aa0f989ea181effa94bf5
+  purchases_flutter: 627527b070d80cdaf486fabe8b3d1dbe8d5cad92
+  PurchasesCoreSwift: ee857e4c21e6254b09d7e303a756fcf2b9164408
+  PurchasesHybridCommon: d65a799a61d688588534b80338edbcbf604ca93d
   rate_my_app: 3b64dd0876bd286001595ee2e69193e757c4d77c
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d

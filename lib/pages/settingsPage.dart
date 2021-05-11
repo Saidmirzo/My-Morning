@@ -7,9 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/dialog/affirmation_category_dialog.dart';
-import 'package:morningmagic/dialog/interviewDialog.dart';
-import 'package:morningmagic/pages/interview/interview_page.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_controller.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_model.dart';
+import 'package:morningmagic/pages/reminders/reminders_page.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/admob.dart';
 import 'package:morningmagic/services/analitics/all.dart';
@@ -26,9 +26,9 @@ import '../db/resource.dart';
 import '../dialog/paymentDialog.dart';
 import '../resources/colors.dart';
 import '../storage.dart';
-import '../widgets/language_switcher.dart';
 import '../widgets/setting_activity_list.dart';
 import '../widgets/subscribe_1_month_button.dart';
+import 'affirmation/affirmation_dialog/affirmation_dialog.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -50,6 +50,7 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
+    Get.put(AffirmationController());
     admobService.initInterstitial();
     _init();
     _initOpenDialog();
@@ -90,14 +91,9 @@ class SettingsPageState extends State<SettingsPage> {
       child: Scaffold(
         body: Container(
             padding: EdgeInsets.only(top: 35),
-            width:
-                MediaQuery.of(context).size.width, // match parent(all screen)
-            decoration: BoxDecoration(
-                gradient: RadialGradient(
-              colors: [AppColors.LIGHT_CREAM, AppColors.CREAM],
-              radius: 0.6,
-              center: Alignment(0.6, -0.2),
-            )),
+            width: Get.width,
+            decoration:
+                BoxDecoration(gradient: AppColors.gradient_settings_page),
             child: Padding(
               padding: EdgeInsets.only(left: 20, right: 20),
               child: Form(
@@ -304,8 +300,15 @@ class SettingsPageState extends State<SettingsPage> {
                             )),
                       ),
                     ),
+                    SliverToBoxAdapter(child: SizedBox(height: 20)),
                     SliverToBoxAdapter(
-                      child: LanguageSwitcher(Alignment.centerLeft),
+                      child: Container(
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        child: PrimaryButton(
+                          onPressed: () => Get.to(RemindersPage()),
+                          text: 'reminders_page'.tr,
+                        ),
+                      ),
                     ),
                     SliverToBoxAdapter(
                       child: Container(

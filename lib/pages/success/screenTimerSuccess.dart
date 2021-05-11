@@ -6,7 +6,10 @@ import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 import 'package:morningmagic/widgets/custom_progress_bar/arcProgressBar.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
+
+import '../../widgets/primary_circle_button.dart';
 
 class TimerSuccessScreen extends StatefulWidget {
   final VoidCallback onPressed;
@@ -29,19 +32,21 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   String getWeekDay() {
     switch (DateTime.now().weekday) {
       case 1:
-        return 'monday';
+        return MyResource.MONDAY;
       case 2:
-        return 'tuesday';
+        return MyResource.TUESDAY;
       case 3:
-        return 'wednesday';
+        return MyResource.WEDNESDAY;
       case 4:
-        return 'thursday';
+        return MyResource.THUSDAY;
       case 5:
-        return 'friday';
+        return MyResource.FRIDAY;
       case 6:
-        return 'saturday';
+        return MyResource.SATURDAY;
       case 7:
-        return 'sunday';
+        return MyResource.SUNDAY;
+      default:
+        return 'unknown day';
     }
   }
 
@@ -150,41 +155,75 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
     return Scaffold(
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColors.TOP_GRADIENT,
-              AppColors.MIDDLE_GRADIENT,
-              AppColors.BOTTOM_GRADIENT
-            ],
-          )),
+          width: Get.width,
+          height: Get.height,
+          decoration:
+              BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
           child: Stack(
             alignment: Alignment.center,
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width * 0.7,
-                child: ArcProgressBar(
-                  text: 'success'.tr,
-                ),
-              ),
-              Positioned(
-                bottom: MediaQuery.of(context).size.height / 5.5,
-                child: AnimatedButton(() async {
-                  if (_audioPlayer != null) {
-                    _audioPlayer.stop();
-                    _audioPlayer.dispose();
-                  }
-                  widget.onPressed();
-                }, 'continue'.tr, 21, null, null),
-              ),
+            children: [
+              bg(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildProgress(),
+                  SizedBox(height: 20),
+                  const SizedBox(height: 50),
+                  buildButton(),
+                ],
+              )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildButton() {
+    return PrimaryCircleButton(
+      size: 45,
+      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+      onPressed: () {
+        if (_audioPlayer != null) {
+          _audioPlayer.stop();
+          _audioPlayer.dispose();
+        }
+        widget.onPressed();
+      },
+    );
+  }
+
+  Positioned bg() {
+    return Positioned(
+      bottom: 0,
+      child: Container(
+        width: Get.width,
+        child: Image.asset(
+          'assets/images/timer/clouds_timer.png',
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget buildProgress() {
+    return CircularPercentIndicator(
+      radius: Get.height * 0.35,
+      lineWidth: 27.0,
+      reverse: true,
+      animation: false,
+      percent: 0.4,
+      center: Text(
+        'success'.tr,
+        style: TextStyle(
+            fontSize: Get.height * 0.04,
+            fontStyle: FontStyle.normal,
+            color: Colors.white,
+            fontWeight: FontWeight.w600),
+      ),
+      circularStrokeCap: CircularStrokeCap.round,
+      linearGradient: AppColors.Progress_Gradient_Timer_Reading,
+      backgroundColor: Colors.white,
     );
   }
 }
