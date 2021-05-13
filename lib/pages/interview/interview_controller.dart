@@ -256,12 +256,13 @@ class InterviewController extends GetxController {
         duration: Duration(milliseconds: 200), curve: Curves.easeIn);
   }
 
-  void save() {
+  void save() async {
     _collection
         .doc('${_user?.name} ${DateTime.now()}')
         .set(_data)
         .then((value) => print("Interview Added"))
         .catchError((error) => print("Failed to add user: $error"));
-    MyDB().getBox().put(MyResource.IS_DONE_INTERVIEW, true);
+    await MyDB().getBox().put(MyResource.IS_DONE_INTERVIEW, true);
+    billingService.getOfering();
   }
 }

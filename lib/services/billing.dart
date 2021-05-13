@@ -18,6 +18,10 @@ class BillingService {
     await Purchases.setup(REVENUE_KEY);
     await Purchases.setDebugLogsEnabled(true);
     purchaserInfo = await Purchases.getPurchaserInfo();
+    getOfering();
+  }
+
+  void getOfering() async {
     bool isInterviewed =
         MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
     oferingName = !isInterviewed ? 'default' : 'vip_trial_14_days';
