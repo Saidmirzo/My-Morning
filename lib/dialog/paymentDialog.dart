@@ -15,7 +15,7 @@ class PaymentDialog extends Dialog {
   Widget build(BuildContext context) {
     var isInterviewed =
         MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
-    var tryalDays = isInterviewed ? 14 : 3;
+    var tryalDays = isInterviewed ? 14 : 7;
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
@@ -143,12 +143,12 @@ class PaymentDialog extends Dialog {
 
   _startPaymentSubscription(BuildContext context) {
     Get.back();
-    billingService.startPaymentPage(context);
+    billingService.startPaymentPage();
   }
 
   _startPaymentTrial(BuildContext context) {
     Get.back();
-    billingService.startPaymentPage(context);
+    billingService.startPaymentPage();
   }
 }
 

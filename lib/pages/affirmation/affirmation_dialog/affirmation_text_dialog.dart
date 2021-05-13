@@ -88,7 +88,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                         .selectedAffirmation.value.affirmations.length,
                     itemBuilder: (context, index) => AffirmationTextItem(
                       text: _controller
-                          .selectedAffirmation.value.affirmations[index],
+                          .selectedAffirmation.value.affirmations[index].text,
                       onItemSelected: () {
                         setState(() {
                           (_selectedItemIndex == index)

@@ -126,7 +126,26 @@ class PushNotifications {
             UILocalNotificationDateInterpretation.absoluteTime);
   }
 
+  Future<void> sendWeekleRepeat(String title, String msg, DateTime dateTime,
+      {int id = 0}) async {
+    print('Добавили еженедельный пуш, начиная с $dateTime');
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        id,
+        title,
+        msg,
+        tz.TZDateTime.from(dateTime, tz.local),
+        NotificationDetails(
+            android: AndroidNotificationDetails('your channel id',
+                'your channel name', 'your channel description')),
+        androidAllowWhileIdle: true,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime);
+  }
+
   Future<void> deleteNotification(int id) async {
+    print('Удалили локальный пуш');
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 }

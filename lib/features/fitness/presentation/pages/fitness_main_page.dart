@@ -8,7 +8,10 @@ import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_
 import 'package:morningmagic/features/fitness/presentation/widgets/bg.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/program_selection_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_button.dart';
+import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 import '../../../../resources/colors.dart';
 
@@ -30,26 +33,43 @@ class FitnessMainPage extends StatelessWidget {
               bg(),
               Container(
                 width: Get.width,
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: Get.height * 0.30),
-                    StyledText('fitness'.tr,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.WHITE,
-                        fontSize: Get.height * 0.024),
-                    SizedBox(height: 48),
-                    PrimaryButton(
-                      onPressed: () => showProgramSelectionDialog(context),
-                      text: 'start_program'.tr,
-                      pWidth: 0.5,
-                    ), // начать программу
-                    SizedBox(height: 16),
-                    PrimaryButton(
-                      onPressed: () => navigateToProgramSettings(context),
-                      text: 'program_settings'.tr,
-                      pWidth: 0.5,
-                    ), // создать программу),
-                  ],
+                child: SafeArea(
+                  bottom: false,
+                  child: Column(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: PrimaryCircleButton(
+                          icon:
+                              Icon(Icons.arrow_back, color: AppColors.primary),
+                          onPressed: () {
+                            OrderUtil()
+                                .getPreviousRouteById(TimerPageId.Fitness)
+                                .then((value) {
+                              Get.off(value);
+                            });
+                          },
+                        ),
+                      ),
+                      SizedBox(height: Get.height * 0.30),
+                      StyledText('fitness'.tr,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.WHITE,
+                          fontSize: Get.height * 0.024),
+                      SizedBox(height: 48),
+                      PrimaryButton(
+                        onPressed: () => showProgramSelectionDialog(context),
+                        text: 'start_program'.tr,
+                        pWidth: 0.5,
+                      ), // начать программу
+                      SizedBox(height: 16),
+                      PrimaryButton(
+                        onPressed: () => navigateToProgramSettings(context),
+                        text: 'program_settings'.tr,
+                        pWidth: 0.5,
+                      ), // создать программу),
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -252,7 +252,11 @@ class LocalizationService extends Translations {
           "pages": "Сколько страниц ?",
           "pages_note": "страниц",
           "continue": "Продолжить",
-          "reminders_page": "Напоминания",
+          "change_tarif": "Сменить тариф",
+          "reminders": "Напоминания",
+          "set_reminders": "Установить напоминание",
+          "add_first_reminder": "Добавьте свое первое напоминание",
+          "select_week_day": "Выберите дни недели",
           "stop": "Остановить",
           "push_success": "Успешно!",
           "action_completed": "действие завершено!",
@@ -262,6 +266,12 @@ class LocalizationService extends Translations {
           "subscribe_futures":
               "Подписка предоставит возможность выполнять такие упражнения как: Фитнес, Дневник, Чтение и Визуализация. Она продляется каждый месяц автоматически, но отменить ее можете в любое время.",
           "price": "Стоимость",
+          "tarif_month_title": "@days дней бесплатно",
+          "tarif_month_desc":
+              "@price в месяц после триала\n\nОтмена бесплатна в течении триала",
+          "tarif_annual_title": "@price / год",
+          "tarif_annual_desc":
+              "-50% скидка на подписку\n\n@price экономите за 12 мес",
           "buy_month": "Оплатить подписку",
           "buy_days": "Попробуйте @days дня бесплатно",
           "buy_free": "ПОПРОБОВАТЬ ПОЛНЫЙ\nКОМПЛЕКС",
@@ -274,6 +284,7 @@ class LocalizationService extends Translations {
           "skip_note": "пропуск",
           "minutes": "минут",
           "choose": "Выбрать",
+          "done": "Готово",
           "choose_title":
               "Зажмите и удерживайте, чтобы изменить порядок упражнений.\nВыставите удобное для Вас время.\n0 мин – пропуск упражнения.",
           "affirmation_small": "Аффирмации",
@@ -778,7 +789,11 @@ class LocalizationService extends Translations {
           "success": "Success!",
           "pages": "How many pages ?",
           "continue": "Continue",
-          "reminders_page": "Reminders",
+          "change_tarif": "Change tarif",
+          "reminders": "Reminders",
+          "add_first_reminder": "Add your first reminder",
+          "select_week_day": "Select days of the week",
+          "set_reminders": "Set a reminder",
           "stop": "Stop",
           "push_success": "Successfully!",
           "action_completed": "action completed!",
@@ -788,6 +803,12 @@ class LocalizationService extends Translations {
           "subscribe_futures":
               "Subscription will provide the opportunity to perform exercises such as: Fitness, Diary, Reading and Visualization. It renews automatically every month, but you can cancel it at any time.",
           "price": "Price",
+          "tarif_month_title": "@days days free",
+          "tarif_month_desc":
+              "@price per month after the trial \n\nCancellation is free during the trial",
+          "tarif_annual_title": "@price / year",
+          "tarif_annual_desc":
+              "-50% discount on subscription \n\n@price save for 12 months",
           "buy_month": "Pay for subscription",
           "buy_free": "TRY THE FULL COMPLEX",
           "three_days": "3 days free",
@@ -799,6 +820,7 @@ class LocalizationService extends Translations {
           "minutes": "minutes",
           "choose_sequence": "Choose\nsequence",
           "choose": "Choose",
+          "done": "Done",
           "choose_title":
               "Drag and drop to change sequence of exercises and set time on them.\n0 min - skip exercise.",
           "exercises_note": "Exercises",

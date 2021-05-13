@@ -4,12 +4,14 @@ import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_controller.dart';
-import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_model.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_cat_model.dart';
 import 'package:morningmagic/pages/reminders/reminders_page.dart';
+import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/admob.dart';
 import 'package:morningmagic/services/analitics/all.dart';
@@ -301,15 +303,7 @@ class SettingsPageState extends State<SettingsPage> {
                       ),
                     ),
                     SliverToBoxAdapter(child: SizedBox(height: 20)),
-                    SliverToBoxAdapter(
-                      child: Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        child: PrimaryButton(
-                          onPressed: () => Get.to(RemindersPage()),
-                          text: 'reminders_page'.tr,
-                        ),
-                      ),
-                    ),
+                    btnSetReminders(),
                     SliverToBoxAdapter(
                       child: Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -333,6 +327,35 @@ class SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             )),
+      ),
+    );
+  }
+
+  SliverToBoxAdapter btnSetReminders() {
+    return SliverToBoxAdapter(
+      child: GestureDetector(
+        onTap: () => Get.to(RemindersPage()),
+        child: Container(
+          padding: EdgeInsets.only(left: 8, top: 5, bottom: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(SvgAssets.notification, width: 40),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text('set_reminders'.tr,
+                      style: TextStyle(
+                        color: AppColors.VIOLET,
+                        fontSize: Get.height * 0.028,
+                        fontWeight: FontWeight.normal,
+                      )),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

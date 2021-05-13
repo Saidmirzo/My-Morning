@@ -24,6 +24,7 @@ class MyResource {
   static const String VISUALIZTION_TARGETS_KEY = "visualization_targets";
 
   static const String My_Affirmations = "my_affirmations";
+  static const String My_Reminders = "my_reminders";
 
   static const String DAYS_HOLDER = 'days_holder';
   static const String EXERCISES_HOLDER = 'big_exercises_holder';

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_controller.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_text_dialog.dart';
-import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_model.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_cat_model.dart';
 // import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_category.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
@@ -75,7 +75,7 @@ class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
     );
   }
 
-  Widget item(AffirmationyModel _affirmation) {
+  Widget item(AffirmationCategoryModel _affirmation) {
     return InkWell(
       onTap: () async {
         _controller.selectedAffirmation = _affirmation.obs;

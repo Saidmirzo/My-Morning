@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/affirmation/timer/timer_page.dart';
 import 'package:morningmagic/resources/styles.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 import '../../resources/colors.dart';
@@ -32,6 +34,19 @@ class AffirmationPageState extends State<AffirmationPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: PrimaryCircleButton(
+                        icon: Icon(Icons.arrow_back, color: AppColors.primary),
+                        onPressed: () {
+                          OrderUtil()
+                              .getPreviousRouteById(TimerPageId.Affirmation)
+                              .then((value) {
+                            Get.off(value);
+                          });
+                        },
+                      ),
+                    ),
                     SizedBox(height: Get.height * 0.15),
                     Text('affirmation'.tr, style: AppStyles.treaningTitle),
                     SizedBox(height: Get.height * 0.05),

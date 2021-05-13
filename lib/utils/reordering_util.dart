@@ -5,6 +5,7 @@ import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_pa
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
 import 'package:morningmagic/pages/diary/diary_page.dart';
+import 'package:morningmagic/pages/homePage.dart';
 import 'package:morningmagic/pages/meditation/meditation_page.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
@@ -87,6 +88,18 @@ class OrderUtil {
     if (id == TimerPageId.Diary) return DiaryPage();
     if (id == TimerPageId.Reading) return ReadingPage();
     if (id == TimerPageId.Visualization) return VisualizationMainPage();
+  }
+
+  Future<dynamic> getPreviousRouteById(int id) async {
+    int currentProgramPosition = await getPositionById(id);
+    print('currentPage = $currentProgramPosition');
+    currentProgramPosition = currentProgramPosition - 1;
+    print('nextPage = $currentProgramPosition');
+    if (currentProgramPosition < 0) {
+      return HomePage();
+    } else {
+      return getRouteByPositionInList(currentProgramPosition);
+    }
   }
 
   Future<dynamic> getRouteById(int id) async {

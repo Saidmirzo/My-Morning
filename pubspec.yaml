@@ -56,6 +56,7 @@ dependencies:
   app_tracking_transparency: ^2.0.0
   intl: "^0.16.1"
   flutter_gifimage: ^1.0.1
+  day_night_time_picker: ^1.0.2
 
   flutter_localizations:
     sdk: flutter

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_model.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_cat_model.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 import 'affirmation_controller.dart';

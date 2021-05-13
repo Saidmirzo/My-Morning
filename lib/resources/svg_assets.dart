@@ -6,4 +6,5 @@ class SvgAssets {
   static const trash = '$path/trash.svg';
   static const clouds_done = '$path/clouds_done.svg';
   static const microphone = '$path/microphone.svg';
+  static const notification = '$path/notification.svg';
 }

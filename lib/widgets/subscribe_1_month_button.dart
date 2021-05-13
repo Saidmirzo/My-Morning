@@ -9,14 +9,18 @@ import 'is_pro_widget.dart';
 class Subscribe1MonthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (billingService.isPro()) return IsProWidget();
+    if (billingService.isPro())
+      return GestureDetector(
+        child: IsProWidget(),
+        onTap: () => billingService.startPaymentPage(),
+      );
     return Column(
       children: [
         Center(
           child: PrimaryButton(
             onPressed: () async {
               appAnalitics.logEvent('first_pay');
-              billingService.startPaymentPage(context);
+              billingService.startPaymentPage();
             },
             text: 'pay'.tr,
           ),

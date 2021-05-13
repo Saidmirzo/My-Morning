@@ -66,13 +66,10 @@ class TimerService {
   }
 
   Future<void> skipTask() async {
-    print('skipTask: run');
     if (timer != null && timer.isActive) {
       timer.cancel();
     }
-    print('skipTask: 2');
     if (pageId != TimerPageId.Reading) saveProgress();
-    print('skipTask: 3');
     await OrderUtil().getRouteById(pageId).then((value) {
       print('skipTask pageId: $pageId');
       if (pageId == TimerPageId.Reading)
@@ -80,7 +77,6 @@ class TimerService {
       else
         Get.off(value);
     });
-    print('skipTask: 4');
     if (pageId == TimerPageId.Meditation) {
       Get.delete<MediationAudioController>();
     }

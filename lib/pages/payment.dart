@@ -27,13 +27,13 @@ class _PaymentPageState extends State<PaymentPage> {
   bool isInterviewed = false;
   int tryalDays = 7;
   PageController _pageController =
-      PageController(viewportFraction: .9, initialPage: 1);
-  int _page = 0;
+      PageController(viewportFraction: .9, initialPage: 0);
+  RxInt _page = 0.obs;
 
   @override
   void initState() {
     _pageController.addListener(() {
-      _page = _pageController.page.round();
+      _page.value = _pageController.page.round();
     });
     super.initState();
   }
@@ -108,7 +108,7 @@ class _PaymentPageState extends State<PaymentPage> {
           Align(
             alignment: Alignment.center,
             child: Container(
-              width: Get.width * 0.6,
+              width: Get.width * 0.62,
               child: Text(
                 'purchase_page_title'.tr,
                 textAlign: TextAlign.center,
@@ -125,20 +125,52 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Widget buildDesc() {
-    return Container(
-      width: Get.width,
-      height: Get.height * 0.2,
-      child: PageView(
-        controller: _pageController,
-        children: [
-          tarif(billingService.monthlyTarif),
-          tarif(billingService.yearTarif),
-        ],
-      ),
+    var monthProd = billingService.monthlyTarif?.product;
+    var annualProd = billingService.yearTarif?.product;
+    List<Widget> tarifs = [
+      tarif('tarif_month_title'.trParams({'days': tryalDays.toString()}),
+          'tarif_month_desc'.trParams({'price': '${monthProd?.priceString}'})),
+      tarif(
+          'tarif_annual_title'
+              .trParams({'price': '${annualProd?.priceString}'}),
+          'tarif_annual_desc'
+              .trParams({'price': '${annualProd?.priceString}'})),
+    ];
+    return Column(
+      children: [
+        Container(
+          width: Get.width,
+          height: Get.height * 0.2,
+          child: PageView(
+            controller: _pageController,
+            children: tarifs,
+          ),
+        ),
+        const SizedBox(height: 5),
+        Obx(
+          () => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              tarifs.length,
+              (index) {
+                bool isActive = index == _page.value;
+                return Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: CircleAvatar(
+                    radius: isActive ? 5 : 4,
+                    backgroundColor:
+                        isActive ? AppColors.primary : Colors.black26,
+                  ),
+                );
+              },
+            ),
+          ),
+        )
+      ],
     );
   }
 
-  Widget tarif(Package _package) {
+  Widget tarif(String title, String desc) {
     return Container(
       decoration: BoxDecoration(
           color: AppColors.purchaseDesc.withOpacity(0.64),
@@ -149,7 +181,7 @@ class _PaymentPageState extends State<PaymentPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$tryalDays дней бесплатно',
+            title,
             style: TextStyle(
                 color: Colors.white,
                 fontSize: Get.height * 0.023,
@@ -159,7 +191,7 @@ class _PaymentPageState extends State<PaymentPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              '• ${_package?.product?.price} рублей в месяц после триала\n• Отмена в любое время бесплатно',
+              desc,
               style:
                   TextStyle(color: Colors.white, fontSize: Get.height * 0.017),
             ),
@@ -171,12 +203,12 @@ class _PaymentPageState extends State<PaymentPage> {
 
   Widget btnBuy() {
     return PrimaryButton(
-      text: 'continue'.tr,
+      text: billingService.isPro() ? 'change_tarif'.tr : 'continue'.tr,
       pWidth: 0.5,
       onPressed: () async {
         Package _package;
         try {
-          switch (_page) {
+          switch (_page.value) {
             case 0:
               _package = billingService.monthlyTarif;
               break;

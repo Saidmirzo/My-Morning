@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/reading/timer/timer_page.dart';
 import 'package:morningmagic/resources/styles.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 import '../../resources/colors.dart';
@@ -29,6 +31,19 @@ class _ReadingPageState extends State<ReadingPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: PrimaryCircleButton(
+                      icon: Icon(Icons.arrow_back, color: AppColors.primary),
+                      onPressed: () {
+                        OrderUtil()
+                            .getPreviousRouteById(TimerPageId.Reading)
+                            .then((value) {
+                          Get.off(value);
+                        });
+                      },
+                    ),
+                  ),
                   SizedBox(height: Get.height * 0.15),
                   Text('reading'.tr, style: AppStyles.treaningTitle),
                   SizedBox(height: Get.height * 0.05),

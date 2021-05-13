@@ -11,7 +11,9 @@ import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_e
 import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
-import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_model.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_cat_model.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_text_model.dart';
+import 'package:morningmagic/pages/reminders/models/reminder.dart';
 
 import 'model/affirmation_text/affirmation_text_adapter.dart';
 import 'model/app_and_custom_exercises/app_exercise_holder.dart';
@@ -42,7 +44,9 @@ class MyDB {
     print('initHiveDatabase');
 
     await Hive.initFlutter();
-    Hive.registerAdapter(AffirmationyModelAdapter());
+    Hive.registerAdapter(ReminderModelAdapter());
+    Hive.registerAdapter(AffirmationCategoryModelAdapter());
+    Hive.registerAdapter(AffirmationTextModelAdapter());
     Hive.registerAdapter(NotepadAdapter());
     Hive.registerAdapter(UserAdapter());
     Hive.registerAdapter(AffirmationTextAdapter());

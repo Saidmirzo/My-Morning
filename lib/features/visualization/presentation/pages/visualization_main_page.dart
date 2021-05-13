@@ -8,6 +8,8 @@ import 'package:morningmagic/features/visualization/data/repositories/visualizat
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_target_page.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 class VisualizationMainPage extends StatefulWidget {
@@ -48,6 +50,20 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
                   padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
                     children: <Widget>[
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: PrimaryCircleButton(
+                          icon:
+                              Icon(Icons.arrow_back, color: AppColors.primary),
+                          onPressed: () {
+                            OrderUtil()
+                                .getPreviousRouteById(TimerPageId.Visualization)
+                                .then((value) {
+                              Get.off(value);
+                            });
+                          },
+                        ),
+                      ),
                       SizedBox(height: Get.height * 0.05),
                       _buildVisualizationTitle(context),
                       SizedBox(height: Get.height * 0.01),

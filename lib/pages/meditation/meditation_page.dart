@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/styles.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 import '../../features/meditation_audio/data/repositories/audio_repository_impl.dart';
@@ -35,31 +37,47 @@ class _MeditationPageState extends State<MeditationPage> {
           alignment: Alignment.center,
           children: <Widget>[
             bg(),
-            Column(
-              children: <Widget>[
-                SizedBox(height: Get.height * 0.12),
-                Text('meditation'.tr, style: AppStyles.treaningTitle),
-                SizedBox(height: Get.height * 0.06),
-                Text('meditation_title'.tr,
-                    style: AppStyles.treaningSubtitle,
-                    textAlign: TextAlign.center),
-                SizedBox(height: Get.height * 0.06),
-                PrimaryCircleButton(
-                    size: 54,
-                    icon: SvgPicture.asset('assets/images/svg/add_music.svg'),
-                    onPressed: () {
-                      Get.to(MeditationAudioPage());
-                      appAnalitics.logEvent('first_music');
-                    }),
-                SizedBox(height: Get.height * 0.04),
-                PrimaryCircleButton(
-                    size: 54,
-                    icon: Icon(Icons.arrow_forward, color: AppColors.primary),
-                    onPressed: () {
-                      Get.to(MeditationTimerPage());
-                      appAnalitics.logEvent('first_meditation_start');
-                    }),
-              ],
+            SafeArea(
+              bottom: false,
+              child: Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: PrimaryCircleButton(
+                      icon: Icon(Icons.arrow_back, color: AppColors.primary),
+                      onPressed: () {
+                        OrderUtil()
+                            .getPreviousRouteById(TimerPageId.Meditation)
+                            .then((value) {
+                          Get.off(value);
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(height: Get.height * 0.12),
+                  Text('meditation'.tr, style: AppStyles.treaningTitle),
+                  SizedBox(height: Get.height * 0.06),
+                  Text('meditation_title'.tr,
+                      style: AppStyles.treaningSubtitle,
+                      textAlign: TextAlign.center),
+                  SizedBox(height: Get.height * 0.06),
+                  PrimaryCircleButton(
+                      size: 54,
+                      icon: SvgPicture.asset('assets/images/svg/add_music.svg'),
+                      onPressed: () {
+                        Get.to(MeditationAudioPage());
+                        appAnalitics.logEvent('first_music');
+                      }),
+                  SizedBox(height: Get.height * 0.04),
+                  PrimaryCircleButton(
+                      size: 54,
+                      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+                      onPressed: () {
+                        Get.to(MeditationTimerPage());
+                        appAnalitics.logEvent('first_meditation_start');
+                      }),
+                ],
+              ),
             ),
           ],
         ),
