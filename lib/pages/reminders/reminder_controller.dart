@@ -32,6 +32,14 @@ class ReminderController extends GetxController {
     }
   }
 
+  int getLastPushId() {
+    return MyDB().getBox().get(MyResource.Last_Push_Id, defaultValue: 1);
+  }
+
+  void saveLastPushId(int _id) {
+    MyDB().getBox().put(MyResource.Last_Push_Id, _id);
+  }
+
   void addReminder() async {
     activeDays.value.clear();
     // Выбор дней недели и времени
@@ -41,6 +49,8 @@ class ReminderController extends GetxController {
 
     String _text = await Get.dialog(AddTextReminder());
 
+    // Последний ид который был использован
+    int lastPushId = getLastPushId() + 1;
     List<int> _ll = [];
     // Перед добавлением переносим в обычный список,
     // иначе Rx заменит и предыдущие данные
@@ -48,8 +58,8 @@ class ReminderController extends GetxController {
     // Теперь можно добавить
     reminders.value.add(
       ReminderModel(
-        id: (reminders.value.length > 0 ? reminders.value.last.id : 0) + 1,
-        date: getStartDate(),
+        id: lastPushId,
+        date: getStartDate(time: selectedTime),
         text: _text ?? 'reminders'.tr,
         activeDays: _ll,
       ),
@@ -60,51 +70,74 @@ class ReminderController extends GetxController {
     save();
   }
 
-  List<DateTime> getStartDates(DateTime _date) {
+  List<DateTime> getStartDates(DateTime _date, List<int> _activeDays) {
     // Ищем следующий ближайший день в качестве стартовой даты
     // (под каждый выбранный день недели)
     List<DateTime> _startDates = [];
     int _weekday = DateTime.now().weekday;
-    activeDays.value.forEach((element) {
+    for (var element in _activeDays) {
       int _days = 0;
       if (element < _weekday)
         _days = _weekday + element + 1;
       else
         _days = element - _weekday;
       _startDates.add(_date.add(_days.days));
-    });
+    }
     return _startDates;
   }
 
-  DateTime getStartDate({DateTime startDate}) {
+  DateTime getStartDate({DateTime startDate, TimeOfDay time}) {
     DateTime _selectedDate = startDate ?? DateTime.now();
-    var newDateTime = new DateTime(_selectedDate.year, _selectedDate.month,
-        _selectedDate.day, selectedTime.hour, selectedTime.minute, 0, 0, 0);
+    var newDateTime = new DateTime(
+      _selectedDate.year,
+      _selectedDate.month,
+      _selectedDate.day,
+      time.hour,
+      time.minute,
+      0,
+      0,
+      0,
+    );
     print('newDate: $newDateTime');
     return newDateTime;
   }
 
   void addAllPush(ReminderModel _reminder) {
-    var _dates = getStartDates(getStartDate(startDate: _reminder.date));
-    _dates.forEach((element) {
+    var _dates = getStartDates(
+      getStartDate(
+          startDate: _reminder.date,
+          time: TimeOfDay(
+              hour: _reminder.date.hour, minute: _reminder.date.minute)),
+      _reminder.activeDays,
+    );
+    for (var i = 0; i < _dates.length; i++) {
       pushNotifications.sendWeekleRepeat(
-          'reminders'.tr, _reminder.text, element);
-    });
+        'reminders'.tr,
+        _reminder.text,
+        _dates[i],
+        id: _reminder.id + i,
+      );
+    }
+    saveLastPushId(_reminder.id + _dates.length);
   }
 
   void removeReminder(ReminderModel _reminder) {
     reminders.value.remove(_reminder);
-    pushNotifications.deleteNotification(_reminder.id);
+    disablePush(_reminder);
     save();
   }
 
   void setActive(ReminderModel _reminder, bool value) {
     _reminder.isActive = value;
-    value
-        ? addAllPush(_reminder)
-        : pushNotifications.deleteNotification(_reminder.id);
     reminders.refresh();
+    value ? addAllPush(_reminder) : disablePush(_reminder);
     save();
+  }
+
+  void disablePush(ReminderModel _reminder) {
+    for (var i = 0; i < _reminder.activeDays.length; i++) {
+      pushNotifications.deleteNotification(_reminder.id + i);
+    }
   }
 
   void save() async {

@@ -128,7 +128,7 @@ class PushNotifications {
 
   Future<void> sendWeekleRepeat(String title, String msg, DateTime dateTime,
       {int id = 0}) async {
-    print('Добавили еженедельный пуш, начиная с $dateTime');
+    print('Добавили еженедельный пуш id $id начиная с $dateTime');
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
         id,
@@ -145,7 +145,7 @@ class PushNotifications {
   }
 
   Future<void> deleteNotification(int id) async {
-    print('Удалили локальный пуш');
+    print('Удалили локальный пуш id $id');
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 }

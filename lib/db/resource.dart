@@ -25,6 +25,7 @@ class MyResource {
 
   static const String My_Affirmations = "my_affirmations";
   static const String My_Reminders = "my_reminders";
+  static const String Last_Push_Id = "last_push_id";
 
   static const String DAYS_HOLDER = 'days_holder';
   static const String EXERCISES_HOLDER = 'big_exercises_holder';
