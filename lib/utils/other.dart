@@ -4,7 +4,7 @@ openEmail(String email, String subject) async {
   final Uri params = Uri(
     scheme: 'mailto',
     path: email,
-    query: 'subject=$subject', // Добавить нужный текст здесь
+    query: 'subject=$subject',
   );
   var url = params.toString();
   if (await canLaunch(url))

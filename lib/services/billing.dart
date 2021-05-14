@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
@@ -18,10 +17,10 @@ class BillingService {
     await Purchases.setup(REVENUE_KEY);
     await Purchases.setDebugLogsEnabled(true);
     purchaserInfo = await Purchases.getPurchaserInfo();
-    getOfering();
+    await getOfering();
   }
 
-  void getOfering() async {
+  Future<void> getOfering() async {
     bool isInterviewed =
         MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
     oferingName = !isInterviewed ? 'default' : 'vip_trial_14_days';
@@ -40,5 +39,13 @@ class BillingService {
 
   startPaymentPage() async {
     await Get.to(PaymentPage());
+  }
+
+  void restore() async {
+    // У нас автоматически восстанавливаются покупки
+    // Но для большего спокойствия пользователей добавили кнопку
+    // Эта кнопка повторно инициализирует сервис и проверяет наличие покупок
+    await init();
+    Get.snackbar('success'.tr, 'vip_restored'.tr);
   }
 }

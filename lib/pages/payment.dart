@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -79,6 +80,8 @@ class _PaymentPageState extends State<PaymentPage> {
                   buildDesc(),
                   Spacer(),
                   btnBuy(),
+                  const SizedBox(height: 5),
+                  restoreBtn(),
                   Spacer(),
                   buildFooter(),
                   Spacer(),
@@ -226,6 +229,20 @@ class _PaymentPageState extends State<PaymentPage> {
         } catch (e) {
           print("Payment error: $e");
         }
+      },
+    );
+  }
+
+  Widget restoreBtn() {
+    return CupertinoButton(
+      child: Text(
+        'restore'.tr,
+        style: TextStyle(
+            color: AppColors.primary, decoration: TextDecoration.underline),
+      ),
+      onPressed: () async {
+        billingService.restore();
+        appAnalitics.logEvent('restore_click');
       },
     );
   }

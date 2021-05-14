@@ -5,7 +5,9 @@ import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/routing/app_routing.dart';
+import 'package:morningmagic/utils/other.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FAQScreen extends StatefulWidget {
   @override
@@ -76,12 +78,17 @@ class FAQStateScreen extends State<FAQScreen> {
                                 bottom:
                                     MediaQuery.of(context).size.height / 15),
                             child: Html(
-                                data: 'faq_desc'.tr,
-                                defaultTextStyle: TextStyle(
-                                  fontSize: 18,
-                                  fontStyle: FontStyle.normal,
-                                  color: AppColors.VIOLET,
-                                )),
+                              data: 'faq_desc'.tr,
+                              defaultTextStyle: TextStyle(
+                                fontSize: 18,
+                                fontStyle: FontStyle.normal,
+                                color: AppColors.VIOLET,
+                              ),
+                              onLinkTap: (url) async {
+                                if (url.contains('mailto'))
+                                  openEmail(url.split(':').last, '');
+                              },
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(bottom: 20),

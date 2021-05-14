@@ -14,7 +14,6 @@ import '../db/hive.dart';
 import '../db/model/exercise/exercise_holder.dart';
 import '../db/model/progress/day/day_holder.dart';
 import '../db/resource.dart';
-import '../pages/screenProgress.dart';
 import 'progress/progress_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -89,11 +88,7 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget _selectProgressPage() {
-    if (dayHolderSize != null && dayHolderSize > 0) {
-      return ProgressPage();
-    } else {
-      return ProgressScreen();
-    }
+    return ProgressPage();
   }
 
   _startExercise() async {

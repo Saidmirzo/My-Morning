@@ -46,34 +46,37 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
             child: Stack(
               children: [
                 bg(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: PrimaryCircleButton(
-                          icon:
-                              Icon(Icons.arrow_back, color: AppColors.primary),
-                          onPressed: () {
-                            OrderUtil()
-                                .getPreviousRouteById(TimerPageId.Visualization)
-                                .then((value) {
-                              Get.off(value);
-                            });
-                          },
-                        ),
+                Column(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: PrimaryCircleButton(
+                        icon: Icon(Icons.arrow_back, color: AppColors.primary),
+                        onPressed: () {
+                          OrderUtil()
+                              .getPreviousRouteById(TimerPageId.Visualization)
+                              .then((value) {
+                            Get.off(value);
+                          });
+                        },
                       ),
-                      SizedBox(height: Get.height * 0.05),
-                      _buildVisualizationTitle(context),
-                      SizedBox(height: Get.height * 0.01),
-                      _buildVisualizationSubtitle(context),
-                      SizedBox(height: Get.height * 0.01),
-                      _buildVisualizationInput(context),
-                      SizedBox(height: 24),
-                      _buildNextButton()
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: Get.height * 0.05),
+                    _buildVisualizationTitle(context),
+                    SizedBox(height: Get.height * 0.01),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
+                        children: [
+                          _buildVisualizationSubtitle(context),
+                          SizedBox(height: Get.height * 0.01),
+                          _buildVisualizationInput(context),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    _buildNextButton()
+                  ],
                 ),
               ],
             ),

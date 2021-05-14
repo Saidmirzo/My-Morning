@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/payment.dart';
 import 'package:morningmagic/services/admob.dart';
 import 'package:morningmagic/services/analitics/all.dart';
@@ -40,7 +42,13 @@ class _PaywallPageState extends State<PaywallPage> {
               height: 4,
             ),
             Text(
-              'three_days'.tr,
+              'days_free'.trParams({
+                'days': (MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW,
+                            defaultValue: false)
+                        ? 14
+                        : 7)
+                    .toString()
+              }),
               style: TextStyle(color: const Color(0x594A1D72)),
             ),
             SizedBox(height: 16),
