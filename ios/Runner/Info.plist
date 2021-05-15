@@ -12,11 +12,6 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>https</string>
-		<string>http</string>
-	</array>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
@@ -47,6 +42,11 @@
 	<string>My Morning</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-8444251353824953~3943846765</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>http</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
