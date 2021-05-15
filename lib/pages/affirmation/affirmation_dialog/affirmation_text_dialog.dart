@@ -61,7 +61,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                           : () {
                               Get.back(
                                   result: _controller.selectedAffirmation.value
-                                      .affirmations[_selectedItemIndex]);
+                                      .affirmations[_selectedItemIndex].text);
                             },
                       child: Text(
                         'choose'.tr,
