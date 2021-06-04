@@ -5,7 +5,7 @@ import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_pa
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
 import 'package:morningmagic/pages/diary/diary_page.dart';
-import 'package:morningmagic/pages/homePage.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/meditation/meditation_page.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
@@ -29,7 +29,7 @@ class OrderUtil {
   Future<void> saveOrderHolder(List<ExerciseTile> exerciseList) async {
     List<OrderItem> orderItemsList = [];
     for (int i = 0; i < exerciseList.length; i++) {
-      orderItemsList.add(OrderItem(exerciseList[i].id));
+      orderItemsList.add(OrderItem(exerciseList[i].orderItemList[i].position));
     }
     OrderHolder orderHolder = OrderHolder(orderItemsList);
     await MyDB().getBox().put(MyResource.ORDER_PROGRAM_HOLDER, orderHolder);
@@ -96,7 +96,7 @@ class OrderUtil {
     currentProgramPosition = currentProgramPosition - 1;
     print('nextPage = $currentProgramPosition');
     if (currentProgramPosition < 0) {
-      return HomePage();
+      return MainMenuPage();
     } else {
       return getRouteByPositionInList(currentProgramPosition);
     }

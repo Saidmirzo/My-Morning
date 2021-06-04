@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/all.dart';
@@ -15,6 +16,9 @@ import 'meditation_audio_page.dart';
 import 'timer/meditation_timer_page.dart';
 
 class MeditationPage extends StatefulWidget {
+  bool fromHomeMenu;
+  MeditationPage({Key key, this.fromHomeMenu = false}) : super(key: key);
+
   _MeditationPageState createState() => _MeditationPageState();
 }
 
@@ -46,6 +50,8 @@ class _MeditationPageState extends State<MeditationPage> {
                     child: PrimaryCircleButton(
                       icon: Icon(Icons.arrow_back, color: AppColors.primary),
                       onPressed: () {
+                        if (widget.fromHomeMenu)
+                          return Get.off(MainMenuPage(), opaque: true);
                         OrderUtil()
                             .getPreviousRouteById(TimerPageId.Meditation)
                             .then((value) {
@@ -65,7 +71,8 @@ class _MeditationPageState extends State<MeditationPage> {
                       size: 54,
                       icon: SvgPicture.asset('assets/images/svg/add_music.svg'),
                       onPressed: () {
-                        Get.to(MeditationAudioPage());
+                        Get.to(MeditationAudioPage(
+                            fromHomeMenu: widget.fromHomeMenu));
                         appAnalitics.logEvent('first_music');
                       }),
                   SizedBox(height: Get.height * 0.04),
@@ -73,7 +80,8 @@ class _MeditationPageState extends State<MeditationPage> {
                       size: 54,
                       icon: Icon(Icons.arrow_forward, color: AppColors.primary),
                       onPressed: () {
-                        Get.to(MeditationTimerPage());
+                        Get.to(MeditationTimerPage(
+                            fromHomeMenu: widget.fromHomeMenu));
                         appAnalitics.logEvent('first_meditation_start');
                       }),
                 ],

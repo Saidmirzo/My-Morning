@@ -48,4 +48,13 @@ class MeditationAudioData {
     'Om Marapa Tsanati':
         'https://storage.yandexcloud.net/myaudio/Meditation/Om%20Marapa%20Tsanati.mp3',
   };
+
+  static Map<String, String> yogaSource = {
+    'Yoga test 1':
+        'https://storage.yandexcloud.net/myaudio/Meditation/Bell%20Temple.mp3',
+    'Yoga test 2':
+        'https://storage.yandexcloud.net/myaudio/Meditation/Elf%20meditation.mp3',
+    'Yoga test 3':
+        'https://storage.yandexcloud.net/myaudio/Meditation/Unlock%20Your%20Brainpower.mp3',
+  };
 }

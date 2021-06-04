@@ -6,14 +6,16 @@ import 'package:morningmagic/features/fitness/domain/repositories/fitness_progra
 
 class FitnessController extends GetxController {
   final FitnessProgramRepository repository;
+  final bool fromHomeMenu;
 
-  FitnessController({@required this.repository});
+  FitnessController({@required this.repository, this.fromHomeMenu = false});
 
   @override
   void onInit() async {
     super.onInit();
     final _result = await repository.getFitnessPrograms();
     programs.addAll(_result);
+    print('FitnessController fromHomeMenu : $fromHomeMenu');
   }
 
   Rx<FitnessProgram> _selectedProgram = Rx<FitnessProgram>();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/affirmation/timer/timer_page.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
@@ -11,6 +12,8 @@ import '../../routing/app_routing.dart';
 import 'components/bg.dart';
 
 class AffirmationPage extends StatefulWidget {
+  final bool fromHomeMenu;
+  AffirmationPage({Key key, this.fromHomeMenu = false}) : super(key: key);
   AffirmationPageState createState() => AffirmationPageState();
 }
 
@@ -39,6 +42,8 @@ class AffirmationPageState extends State<AffirmationPage> {
                       child: PrimaryCircleButton(
                         icon: Icon(Icons.arrow_back, color: AppColors.primary),
                         onPressed: () {
+                          if (widget.fromHomeMenu)
+                            return Get.off(MainMenuPage(), opaque: true);
                           OrderUtil()
                               .getPreviousRouteById(TimerPageId.Affirmation)
                               .then((value) {
@@ -57,7 +62,8 @@ class AffirmationPageState extends State<AffirmationPage> {
                     PrimaryCircleButton(
                         icon:
                             Icon(Icons.arrow_forward, color: AppColors.primary),
-                        onPressed: () => Get.to(AffirmationTimerPage())),
+                        onPressed: () => Get.to(AffirmationTimerPage(
+                            fromHomeMenu: widget.fromHomeMenu))),
                   ],
                 ),
               ],

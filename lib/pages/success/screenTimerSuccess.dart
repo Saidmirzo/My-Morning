@@ -144,9 +144,13 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   @override
   void dispose() {
     super.dispose();
+    dispAudio();
+  }
+
+  dispAudio() async {
     if (_audioPlayer != null) {
-      _audioPlayer.stop();
-      _audioPlayer.dispose();
+      await _audioPlayer.stop();
+      await _audioPlayer.dispose();
     }
   }
 

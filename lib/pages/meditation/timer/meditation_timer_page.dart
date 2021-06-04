@@ -16,8 +16,10 @@ import 'components/components.dart';
 
 class MeditationTimerPage extends StatefulWidget {
   final bool fromAudio;
+  final bool fromHomeMenu;
 
-  const MeditationTimerPage({Key key, this.fromAudio = false})
+  const MeditationTimerPage(
+      {Key key, this.fromAudio = false, this.fromHomeMenu = false})
       : super(key: key);
   @override
   State createState() => MeditationTimerPageState();
@@ -46,6 +48,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _audioController.initializeMeditationAudio(autoplay: widget.fromAudio);
       await timerService.init(1, _audioController.player);
+      timerService.fromHomeMenu = widget.fromHomeMenu;
     });
 
     AnalyticService.screenView('meditation_timer_page');
@@ -96,7 +99,8 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                       ))),
                   Spacer(),
                   Obx(() {
-                    if (_audioController.isAudioLoading.value &&
+                    if (_audioController != null &&
+                        _audioController.isAudioLoading.value &&
                         !_audioController.isPlaylistAudioCached)
                       return buildAudioLoading();
                     else

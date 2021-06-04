@@ -19,10 +19,13 @@ import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
+import 'package:morningmagic/pages/paywall_page.dart';
+import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/reading/timer/timer_note_page.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 
 import 'notifications.dart';
@@ -39,6 +42,7 @@ class TimerService {
   String visualizationText;
   String bookTitle;
   AppStates appStates = Get.put(AppStates());
+  bool fromHomeMenu = false;
 
   DateTime appLeftTime;
   int leftSecondsBeforePauseApp = -1;
@@ -65,6 +69,15 @@ class TimerService {
     if (timer != null) timer.cancel();
   }
 
+  double get createValue =>
+      startTime != null ? 1 - time / (startTime * 60) : time.toDouble();
+
+  void addTime(int min) {
+    startTime += min;
+    startValue += min * 60;
+    _time += min * 60;
+  }
+
   Future<void> skipTask() async {
     if (timer != null && timer.isActive) {
       timer.cancel();
@@ -75,7 +88,13 @@ class TimerService {
       if (pageId == TimerPageId.Reading)
         getNextPage(value);
       else
-        Get.off(value);
+        Get.off(
+          fromHomeMenu
+              ? billingService.isVip.value
+                  ? ProgressPage()
+                  : PaywallPage()
+              : value,
+        );
     });
     if (pageId == TimerPageId.Meditation) {
       Get.delete<MediationAudioController>();
@@ -191,20 +210,17 @@ class TimerService {
     }
   }
 
-  double get createValue =>
-      startTime != null ? 1 - time / (startTime * 60) : time.toDouble();
-
   RxBool isActive = false.obs;
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
     if (timer == null || !timer.isActive) {
       isActive.toggle();
-      timer = Timer.periodic(oneSec, (Timer timer) {
+      timer = Timer.periodic(oneSec, (Timer timer) async {
         if (time < 1) {
           print('timer_service: timer work done');
-          audioPlayer.setAsset("assets/audios/success.mp3");
-          audioPlayer.play();
-          _player?.stop();
+          await audioPlayer.setAsset("assets/audios/success.mp3");
+          await audioPlayer.play();
+          await _player?.stop();
           timer.cancel();
           if (pageId != TimerPageId.Reading) saveProgress();
           OrderUtil().getRouteById(pageId).then((value) => getNextPage(value));
@@ -263,12 +279,12 @@ class TimerService {
     });
   }
 
-  void notifyInBackground() {
+  void notifyInBackground() async {
     print('notifyInBackground');
     AudioPlayer audioPlayer = AudioPlayer();
-    audioPlayer.setAsset("assets/audios/success.mp3");
-    audioPlayer.play();
-    _player?.stop();
+    await audioPlayer.setAsset("assets/audios/success.mp3");
+    await audioPlayer.play();
+    await _player?.stop();
   }
 
   static void waitAndNotifyInBg(IsolateData data) async {
@@ -293,12 +309,22 @@ class TimerService {
   }
 
   getNextPage(dynamic value) {
+    print('getnextPage fromHomeMenu: ${fromHomeMenu}');
     Get.off(pageId == TimerPageId.Reading
         ? TimerInputSuccessScreen(
+            fromHomeMenu: fromHomeMenu,
             minutes:
                 MyDB().getBox().get(getBoxTimeKey(TimerPageId.Reading)).time)
-        : TimerSuccessScreen(() => Get.to(value),
-            MyDB().getBox().get(getBoxTimeKey(pageId)).time ?? 3, false));
+        : TimerSuccessScreen(
+            () => Get.off(
+                  fromHomeMenu
+                      ? billingService.isVip.value
+                          ? ProgressPage()
+                          : PaywallPage()
+                      : value,
+                ),
+            MyDB().getBox().get(getBoxTimeKey(pageId)).time ?? 3,
+            false));
   }
 
   getBoxTimeKey(int pageId) {

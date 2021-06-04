@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/reading/timer/timer_page.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
@@ -10,6 +11,9 @@ import '../../resources/colors.dart';
 import 'components/bg.dart';
 
 class ReadingPage extends StatefulWidget {
+  final bool fromHomeMenu;
+  ReadingPage({Key key, this.fromHomeMenu = false}) : super(key: key);
+
   _ReadingPageState createState() => _ReadingPageState();
 }
 
@@ -36,6 +40,8 @@ class _ReadingPageState extends State<ReadingPage> {
                     child: PrimaryCircleButton(
                       icon: Icon(Icons.arrow_back, color: AppColors.primary),
                       onPressed: () {
+                        if (widget.fromHomeMenu)
+                          return Get.off(MainMenuPage(), opaque: true);
                         OrderUtil()
                             .getPreviousRouteById(TimerPageId.Reading)
                             .then((value) {
@@ -53,7 +59,8 @@ class _ReadingPageState extends State<ReadingPage> {
                   SizedBox(height: Get.height * 0.1),
                   PrimaryCircleButton(
                       icon: Icon(Icons.arrow_forward, color: AppColors.primary),
-                      onPressed: () => Get.to(ReadingTimerPage())),
+                      onPressed: () => Get.to(
+                          ReadingTimerPage(fromHomeMenu: widget.fromHomeMenu))),
                 ],
               ),
             ],

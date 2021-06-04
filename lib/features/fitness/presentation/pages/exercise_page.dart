@@ -42,9 +42,9 @@ class _ExercisePageState extends State<ExercisePage>
     super.initState();
   }
 
-  void initAudioAndPlay(String url) {
+  void initAudioAndPlay(String url) async {
     _audioPlayer = AudioPlayer();
-    _audioPlayer.setUrl(url);
+    await _audioPlayer.setUrl(url);
     // if (isAudioActive.isTrue) _audioPlayer.play();
   }
 
@@ -242,12 +242,12 @@ class _ExercisePageState extends State<ExercisePage>
   void playPauseAudio() async {
     if (isAudioActive.isTrue) {
       print('Останавливаем аудио');
-      _audioPlayer.pause();
+      await _audioPlayer.pause();
       isAudioActive.value = false;
     } else {
       if (_audioRes != null) {
         print('Запускаем аудио');
-        if (!_audioPlayer.playing) _audioPlayer.play();
+        if (!_audioPlayer.playing) await _audioPlayer.play();
         isAudioActive.value = true;
       }
     }
@@ -282,10 +282,10 @@ class _ExercisePageState extends State<ExercisePage>
     }
   }
 
-  void _disposeServices() {
+  void _disposeServices() async {
     cTimer.cancelTimer();
-    _audioPlayer?.stop();
-    _audioPlayer?.dispose();
+    await _audioPlayer?.stop();
+    await _audioPlayer?.dispose();
     isAudioActive.value = false;
   }
 }

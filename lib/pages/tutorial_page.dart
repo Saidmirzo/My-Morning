@@ -1,19 +1,15 @@
 import 'dart:async';
 
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/services/analitics/all.dart';
-import 'package:morningmagic/services/analitics/analyticService.dart';
-import 'package:morningmagic/services/analitics/facebook_analitics.dart';
-import 'package:morningmagic/services/notifications.dart';
 import 'package:morningmagic/widgets/tutorial_waves/im_animations.dart';
 
 import '../routing/app_routing.dart';
-import 'settingsPage.dart';
+import 'settings/settingsPage.dart';
 
 class TutorialPage extends StatefulWidget {
   @override
@@ -58,9 +54,9 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   void playTutorial() {
-    Future.delayed(Duration(milliseconds: 200), () {
-      player.setAsset('tutorial_asset'.tr);
-      player.play();
+    Future.delayed(Duration(milliseconds: 200), () async {
+      await player.setAsset('tutorial_asset'.tr);
+      await player.play();
     });
 
     player.playerStateStream.listen((state) {
@@ -448,8 +444,8 @@ class _TutorialPageState extends State<TutorialPage> {
             ),
             isClose
                 ? InkWell(
-                    onTap: () {
-                      player.stop();
+                    onTap: () async {
+                      await player.stop();
                       AppRouting.replace(SettingsPage());
                       appAnalitics.logEvent('first_skip_tutorial');
                     },

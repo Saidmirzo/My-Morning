@@ -13,11 +13,19 @@ class BillingService {
   String oferingName;
   Offering _offering;
 
+  var isVip = false.obs;
+
   init() async {
     await Purchases.setup(REVENUE_KEY);
     await Purchases.setDebugLogsEnabled(true);
     purchaserInfo = await Purchases.getPurchaserInfo();
     await getOfering();
+    isVip.value = isPro();
+  }
+
+  Future<void> purchase(Package _package) async {
+    purchaserInfo = await Purchases.purchasePackage(_package);
+    isVip.value = isPro();
   }
 
   Future<void> getOfering() async {
@@ -30,8 +38,12 @@ class BillingService {
   }
 
   bool isPro() {
-    bool isActive = (purchaserInfo?.entitlements?.active?.length ?? 0) > 0;
-    return kDebugMode ? true : isActive;
+    // Old, оставлю на время теста, может придется вернуь
+    // bool isActive = (purchaserInfo?.entitlements?.active?.length ?? 0) > 0;
+    // New
+    bool isActive = (purchaserInfo?.activeSubscriptions?.length ?? 0) > 0;
+    print('activeSubscriptions: ${purchaserInfo.activeSubscriptions}');
+    return /* kDebugMode ? true : */ isActive;
   }
 
   Package get monthlyTarif => _offering?.monthly;

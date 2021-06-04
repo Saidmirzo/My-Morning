@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/timer_service.dart';
+
+import '../../../add_time_page/add_time_period.dart';
 
 Widget buildMenuButtons(TimerService timerService) {
   double btnSize = 30;
@@ -16,6 +19,14 @@ Widget buildMenuButtons(TimerService timerService) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          CupertinoButton(
+              child: SvgPicture.asset(
+                SvgAssets.clock,
+                width: btnSize,
+                height: btnSize,
+              ),
+              onPressed: () =>
+                  Get.to(AddTimePeriod(timerService: timerService))),
           CupertinoButton(
               child: SvgPicture.asset(
                 SvgAssets.home,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
@@ -12,6 +13,8 @@ import '../../resources/colors.dart';
 import 'components/bg.dart';
 
 class DiaryPage extends StatefulWidget {
+  final bool fromHomeMenu;
+  DiaryPage({Key key, this.fromHomeMenu = false}) : super(key: key);
   _DiaryPageState createState() => _DiaryPageState();
 }
 
@@ -35,6 +38,8 @@ class _DiaryPageState extends State<DiaryPage> {
                     child: PrimaryCircleButton(
                       icon: Icon(Icons.arrow_back, color: AppColors.primary),
                       onPressed: () {
+                        if (widget.fromHomeMenu)
+                          return Get.off(MainMenuPage(), opaque: true);
                         OrderUtil()
                             .getPreviousRouteById(TimerPageId.Diary)
                             .then((value) {
@@ -49,12 +54,14 @@ class _DiaryPageState extends State<DiaryPage> {
                   PrimaryButton(
                       text: 'voice_record'.tr,
                       pWidth: 0.5,
-                      onPressed: () => Get.to(TimerRecordPage())),
+                      onPressed: () => Get.to(
+                          TimerRecordPage(fromHomeMenu: widget.fromHomeMenu))),
                   SizedBox(height: Get.height * 0.04),
                   PrimaryButton(
                       text: 'written_record'.tr,
                       pWidth: 0.5,
-                      onPressed: () => Get.to(TimerNotePage()))
+                      onPressed: () => Get.to(
+                          TimerNotePage(fromHomeMenu: widget.fromHomeMenu)))
                 ],
               ),
             ],

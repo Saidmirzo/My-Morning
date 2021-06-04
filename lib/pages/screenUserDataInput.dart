@@ -12,7 +12,6 @@ import '../resources/colors.dart';
 import '../routing/app_routing.dart';
 import '../widgets/language_switcher.dart';
 import '../widgets/primary_circle_button.dart';
-import 'success/screenTimerSuccess.dart';
 
 class UserDataInputScreen extends StatefulWidget {
   @override

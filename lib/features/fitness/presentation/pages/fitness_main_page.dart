@@ -8,6 +8,7 @@ import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_
 import 'package:morningmagic/features/fitness/presentation/widgets/bg.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/program_selection_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_button.dart';
@@ -17,12 +18,17 @@ import '../../../../resources/colors.dart';
 
 class FitnessMainPage extends StatelessWidget {
   final int pageId;
+  final bool fromHomeMenu;
 
-  FitnessMainPage({Key key, @required this.pageId}) : super(key: key);
+  FitnessMainPage({Key key, @required this.pageId, this.fromHomeMenu = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(FitnessController(repository: FitnessProgramRepositoryImpl()));
+    Get.put(FitnessController(
+      repository: FitnessProgramRepositoryImpl(),
+      fromHomeMenu: fromHomeMenu,
+    ));
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -43,6 +49,9 @@ class FitnessMainPage extends StatelessWidget {
                           icon:
                               Icon(Icons.arrow_back, color: AppColors.primary),
                           onPressed: () {
+                            Get.delete<FitnessController>();
+                            if (fromHomeMenu)
+                              return Get.off(MainMenuPage(), opaque: true);
                             OrderUtil()
                                 .getPreviousRouteById(TimerPageId.Fitness)
                                 .then((value) {

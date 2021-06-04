@@ -144,10 +144,10 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
                       //   Audio('exercise_${id}_sound'.tr),
                       // );
                       // assetsAudioPlayer.play();
-                    }, nextCallback: () {
+                    }, nextCallback: () async {
                       timerAppBar.cancelTimer();
-                      _audioPlayer.stop();
-                      _audioPlayer.dispose();
+                      await _audioPlayer.stop();
+                      await _audioPlayer.dispose();
                       if (widget.isCustomProgram) {
                         ExerciseUtils().goNextRoute(context, widget.pageId);
                       } else if (id < 10)
@@ -178,8 +178,8 @@ class ExerciseOneScDetails extends State<ExerciseDetails> {
   }
 
   Future<bool> _onWillPop() async {
-    _audioPlayer.stop();
-    _audioPlayer.dispose();
+    await _audioPlayer.stop();
+    await _audioPlayer.dispose();
     timerAppBar.cancelTimer();
     return true;
   }

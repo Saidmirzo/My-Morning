@@ -14,6 +14,10 @@ import 'package:screen/screen.dart';
 import 'components/components.dart';
 
 class AffirmationTimerPage extends StatefulWidget {
+  final bool fromHomeMenu;
+
+  const AffirmationTimerPage({Key key, this.fromHomeMenu = false})
+      : super(key: key);
   @override
   State createState() => AffirmationTimerPageState();
 }
@@ -37,6 +41,7 @@ class AffirmationTimerPageState extends State<AffirmationTimerPage>
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await timerService.init(0, null);
+      timerService.fromHomeMenu = widget.fromHomeMenu;
     });
     AnalyticService.screenView('affirmation_timer_page');
     try {

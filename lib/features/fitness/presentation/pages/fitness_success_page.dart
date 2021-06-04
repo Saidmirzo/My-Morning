@@ -1,14 +1,13 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
+import 'package:morningmagic/features/fitness/presentation/controller/timer_controller.dart';
+import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
-import 'package:morningmagic/widgets/animatedButton.dart';
-import 'package:morningmagic/widgets/custom_progress_bar/arcProgressBar.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
 
@@ -25,11 +24,13 @@ class FitnessSuccessPage extends StatefulWidget {
 class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   AudioPlayer _audioPlayer;
   DateTime dateTime = DateTime.now();
+  FitnessController controller = Get.find();
   int count;
 
   @override
   void initState() {
     super.initState();
+    Get.delete<TimerFitnesController>();
     _initializeAudioPlayer();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -126,9 +127,15 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   }
 
   void _continueClicked() async {
+    Widget _routeValue;
+    print('fromHome: ${controller.fromHomeMenu}');
+    if (controller.fromHomeMenu) {
+      _routeValue = ProgressPage();
+    } else {
+      _routeValue = await OrderUtil().getRouteById(2);
+    }
     Get.delete<FitnessController>();
-    final _routeValue = await OrderUtil().getRouteById(2);
-    Get.off(_routeValue);
+    Get.off(_routeValue, opaque: true);
   }
 
   void _updateLocalData(int minutes) {

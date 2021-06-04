@@ -1,11 +1,10 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/pages/reading/timer/components/customInputNextColumn.dart';
-import 'package:morningmagic/widgets/custom_progress_bar/arcProgressBar.dart';
+import 'package:morningmagic/resources/colors.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
 
@@ -13,8 +12,9 @@ import '../../../resources/colors.dart';
 
 class TimerInputSuccessScreen extends StatefulWidget {
   final int minutes;
+  final bool fromHomeMenu;
 
-  TimerInputSuccessScreen({this.minutes});
+  TimerInputSuccessScreen({this.minutes, this.fromHomeMenu = false});
 
   @override
   State createState() {
@@ -108,9 +108,13 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   @override
   void dispose() {
     super.dispose();
+    dispAudio();
+  }
+
+  dispAudio() async {
     if (_audioPlayer != null) {
-      _audioPlayer.stop();
-      _audioPlayer.dispose();
+      await _audioPlayer.stop();
+      await _audioPlayer.dispose();
     }
   }
 
@@ -134,12 +138,12 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
                   buildProgress(context),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: Get.height / 17),
-                    child: InputTextColumn(() {
-                      if (_audioPlayer != null) {
-                        _audioPlayer.stop();
-                        _audioPlayer.dispose();
-                      }
-                    }),
+                    child: InputTextColumn(
+                      () {
+                        dispAudio();
+                      },
+                      fromHomeMenu: widget.fromHomeMenu,
+                    ),
                   ),
                 ],
               ),
@@ -185,10 +189,7 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   }
 
   Future<bool> _onWillPop() async {
-    if (_audioPlayer != null) {
-      _audioPlayer.stop();
-      _audioPlayer.dispose();
-    }
+    dispAudio();
     return true;
   }
 }

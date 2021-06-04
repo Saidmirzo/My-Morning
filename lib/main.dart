@@ -23,6 +23,7 @@ Future<void> main() async {
       initialRoute: AppRouting.initialRoute,
       onGenerateRoute: (settings) => AppRouting.generateRoute(settings),
       translations: LocalizationService(),
+      // debugShowCheckedModeBanner: false,
       locale: _initialLocale,
       theme: ThemeData(fontFamily: 'Montserrat'),
       supportedLocales: [

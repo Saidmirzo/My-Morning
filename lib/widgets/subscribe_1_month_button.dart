@@ -4,16 +4,16 @@ import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/widgets/primary_button.dart';
 
 import '../storage.dart';
-import 'is_pro_widget.dart';
 
 class Subscribe1MonthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (billingService.isPro())
+    if (billingService.isPro()) {
       return GestureDetector(
-        child: IsProWidget(),
+        child: Text('tarif_plans'.tr, textAlign: TextAlign.center),
         onTap: () => billingService.startPaymentPage(),
       );
+    }
     return Column(
       children: [
         Center(

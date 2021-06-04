@@ -1,12 +1,10 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
+import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
-import 'package:morningmagic/widgets/animatedButton.dart';
-import 'package:morningmagic/widgets/custom_progress_bar/arcProgressBar.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
 
@@ -14,6 +12,11 @@ import '../../../../resources/colors.dart';
 import '../../../../widgets/primary_circle_button.dart';
 
 class VisualizationSuccessPage extends StatefulWidget {
+  final bool fromHomeMenu;
+
+  const VisualizationSuccessPage({Key key, this.fromHomeMenu = false})
+      : super(key: key);
+
   @override
   _VisualizationSuccessPageState createState() =>
       _VisualizationSuccessPageState();
@@ -31,17 +34,21 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
 
   @override
   void dispose() {
-    if (_audioPlayer != null) {
-      _audioPlayer.stop();
-      _audioPlayer.dispose();
-    }
     super.dispose();
+    dispAudio();
   }
 
-  void _initializeAudioPlayer() {
+  dispAudio() async {
+    if (_audioPlayer != null) {
+      await _audioPlayer.stop();
+      await _audioPlayer.dispose();
+    }
+  }
+
+  void _initializeAudioPlayer() async {
     _audioPlayer = AudioPlayer();
-    _audioPlayer.setAsset("assets/audios/success.mp3");
-    _audioPlayer.play();
+    await _audioPlayer.setAsset("assets/audios/success.mp3");
+    await _audioPlayer.play();
   }
 
   Future<void> _vibrate() async {
@@ -126,6 +133,6 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
 
   void _navigateToNextExercise() async {
     final _routeValue = await OrderUtil().getRouteById(5);
-    Get.off(_routeValue);
+    Get.off(widget.fromHomeMenu ? ProgressPage() : _routeValue);
   }
 }

@@ -76,6 +76,14 @@ class AppColors {
       const Color(0xffD68FA8),
     ],
   );
+  static const gradient_loading_night_bg = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xff7F88ED),
+      const Color(0xff96B0ED),
+    ],
+  );
 
   static const gradient_afternoon_sun = LinearGradient(
     begin: Alignment.topCenter,
@@ -118,6 +126,15 @@ class AppColors {
       const Color(0xffB994DA),
       const Color(0xffFFB5C3),
       const Color(0xffFFF9EF),
+    ],
+  );
+  // главное меню
+  static const Bg_Gradient_Menu = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xffFFB5C3),
+      const Color(0xffAE80D6),
     ],
   );
 

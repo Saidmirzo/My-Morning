@@ -13,6 +13,7 @@ import 'package:morningmagic/db/model/progress/day/day.dart';
 import 'package:morningmagic/db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
 import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
@@ -30,6 +31,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:random_string/random_string.dart';
 
 class TimerRecordPage extends StatefulWidget {
+  final bool fromHomeMenu;
+
+  const TimerRecordPage({Key key, this.fromHomeMenu = false}) : super(key: key);
   @override
   State createState() {
     return _TimerRecordPageState();
@@ -244,11 +248,11 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
       isActive.toggle();
       _timer = Timer.periodic(
           1.seconds,
-          (Timer timer) => setState(() {
+          (Timer timer) => setState(() async {
                 if (_time.value < 1) {
                   final _audioPlayer = AudioPlayer();
-                  _audioPlayer.setAsset("assets/audios/success.mp3");
-                  _audioPlayer.play();
+                  await _audioPlayer.setAsset("assets/audios/success.mp3");
+                  await _audioPlayer.play();
                   _timer.cancel();
                   Future.microtask(() => stop());
                   OrderUtil().getRouteById(3).then((value) {
@@ -474,7 +478,8 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                   OrderUtil().getRouteById(TimerPageId.Diary).then(
                     (value) {
                       Get.off(TimerSuccessScreen(
-                          () => Get.to(value),
+                          () => Get.to(
+                              widget.fromHomeMenu ? ProgressPage() : value),
                           MyDB()
                               .getBox()
                               .get(MyResource.VOCABULARY_TIME_KEY)

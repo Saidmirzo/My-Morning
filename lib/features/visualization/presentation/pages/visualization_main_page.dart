@@ -7,12 +7,15 @@ import 'package:morningmagic/features/visualization/data/repositories/visualizat
 import 'package:morningmagic/features/visualization/data/repositories/visualization_target_repository_impl.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_target_page.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 class VisualizationMainPage extends StatefulWidget {
+  final bool fromHomeMenu;
+  VisualizationMainPage({Key key, this.fromHomeMenu = false}) : super(key: key);
   @override
   _VisualizationMainPageState createState() => _VisualizationMainPageState();
 }
@@ -20,14 +23,16 @@ class VisualizationMainPage extends StatefulWidget {
 class _VisualizationMainPageState extends State<VisualizationMainPage> {
   TextEditingController _textEditingController;
 
-  VisualizationController _controller = Get.put(VisualizationController(
-      hiveBox: myDbBox,
-      targetRepository: VisualizationTargetRepositoryImpl(),
-      imageRepository: VisualizationImageRepositoryImpl()));
+  VisualizationController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = Get.put(VisualizationController(
+        hiveBox: myDbBox,
+        targetRepository: VisualizationTargetRepositoryImpl(),
+        imageRepository: VisualizationImageRepositoryImpl()));
+    _controller.fromHomeMenu = widget.fromHomeMenu;
     _textEditingController = TextEditingController();
     _textEditingController.addListener(() => _saveVisualization());
   }
@@ -53,6 +58,8 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
                       child: PrimaryCircleButton(
                         icon: Icon(Icons.arrow_back, color: AppColors.primary),
                         onPressed: () {
+                          if (widget.fromHomeMenu)
+                            return Get.off(MainMenuPage(), opaque: true);
                           OrderUtil()
                               .getPreviousRouteById(TimerPageId.Visualization)
                               .then((value) {
@@ -185,9 +192,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
     }
   }
 
-  void _openVisualizationTargetScreen() => Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => VisualizationTargetPage(),
-      ));
+  void _openVisualizationTargetScreen() => Get.to(
+        VisualizationTargetPage(),
+      );
 }

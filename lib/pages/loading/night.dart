@@ -4,9 +4,6 @@ import 'package:morningmagic/resources/colors.dart';
 
 import 'components/name.dart';
 
-//TODO: по задумке заказчика здесь будет ночной экран,
-// дизайнер его еще не закончил по этому оставляю заглушку
-
 class NightPage extends StatefulWidget {
   final Function onDone;
 
@@ -49,51 +46,25 @@ class _NightPageState extends State<NightPage>
       controller.forward();
     });
     return Container(
-      decoration:
-          BoxDecoration(gradient: AppColors.gradient_loading_evening_bg),
+      decoration: BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          buildClouds2(),
-          buildSun(),
           buildClouds(),
-          buildBg(),
-          nameWidget('good_night'),
+          buildSun(),
+          nameWidget('good_night', top: Get.height * .4),
         ],
       ),
     );
   }
 
-  Widget buildBg() {
-    return Positioned(
-      child: Container(
-        width: Get.width,
-        child: Image.asset('assets/images/startscreen/evening/trees.png',
-            fit: BoxFit.fitWidth),
-      ),
-      bottom: 0,
-    );
-  }
-
   Positioned buildClouds() {
     return Positioned(
-      top: Get.height * 0.2,
+      bottom: 0,
       child: Container(
         width: Get.width,
         child: Image.asset(
-          'assets/images/startscreen/evening/clouds.png',
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-
-  Positioned buildClouds2() {
-    return Positioned(
-      child: Container(
-        width: Get.width,
-        child: Image.asset(
-          'assets/images/startscreen/evening/clouds2.png',
+          'assets/images/startscreen/night/clouds.png',
           fit: BoxFit.cover,
         ),
       ),
@@ -101,18 +72,17 @@ class _NightPageState extends State<NightPage>
   }
 
   Widget buildSun() {
-    return Obx(() {
-      return Align(
-        alignment: Alignment(-0.05, animValue.value),
-        child: Container(
-          width: Get.width * 0.8,
-          height: Get.width * 0.8,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(180),
-              gradient: AppColors.gradient_evening_sun),
-        ),
-      );
-    });
+    return Positioned(
+      top: Get.width * .3,
+      left: Get.width * .15,
+      child: Container(
+        width: Get.width * 0.25,
+        height: Get.width * 0.25,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(180),
+            color: Colors.white.withOpacity(.61)),
+      ),
+    );
   }
 
   @override

@@ -168,11 +168,11 @@ class TimeAppBarState extends State<TimerAppBar> {
     if (timer == null || !timer.isActive) {
       timer = Timer.periodic(
           oneSec,
-          (Timer timer) => setState(() {
+          (Timer timer) => setState(() async {
                 if (_time < 1) {
                   final _audioPlayer = AudioPlayer();
-                  _audioPlayer.setAsset("assets/audios/success.mp3");
-                  _audioPlayer.play();
+                  await _audioPlayer.setAsset("assets/audios/success.mp3");
+                  await _audioPlayer.play();
                   setState(() {
                     isExerciseComplete = true;
                   });

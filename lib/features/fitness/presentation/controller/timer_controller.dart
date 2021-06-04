@@ -107,12 +107,12 @@ class TimerFitnesController {
       isRuning.value = true;
       timer = Timer.periodic(
         1.seconds,
-        (Timer timer) {
+        (Timer timer) async {
           if (time.value < 1) {
             final _audioPlayer = AudioPlayer();
 
-            _audioPlayer.setAsset("assets/audios/success.mp3");
-            _audioPlayer.play();
+            await _audioPlayer.setAsset("assets/audios/success.mp3");
+            await _audioPlayer.play();
             timer.cancel();
             saveFitnessProgress();
             isExDone.value = true;

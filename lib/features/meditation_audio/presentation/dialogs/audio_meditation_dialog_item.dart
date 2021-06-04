@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
@@ -116,7 +115,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     );
   }
 
-  void _handlePlayPauseButton() {
+  void _handlePlayPauseButton() async {
     if (!_audioController.isPlaying.value) {
       final _oldPlayingIndex = _audioController.playingIndex.value;
       _audioController.playingIndex.value = widget.id;
@@ -125,11 +124,11 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
           _oldPlayingIndex != widget.id) {
         _playNewTrack(widget.audio);
       } else
-        _audioController.player.play();
+        await _audioController.player.play();
       _setIsPlayingState(!_audioController.isPlaying.value);
     } else {
       if (_audioController.playingIndex.value == widget.id) {
-        _audioController.player.pause();
+        await _audioController.player.pause();
         _setIsPlayingState(!_audioController.isPlaying.value);
       } else {
         _playNewTrack(widget.audio);

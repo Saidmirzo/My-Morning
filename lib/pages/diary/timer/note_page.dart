@@ -10,6 +10,7 @@ import 'package:morningmagic/db/model/progress/day/day.dart';
 import 'package:morningmagic/db/model/progress/vocabulary_progress/vocabulary_note_progress.dart';
 import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
@@ -22,6 +23,10 @@ import 'package:morningmagic/widgets/timer_circle_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class TimerNotePage extends StatefulWidget {
+  final bool fromHomeMenu;
+
+  const TimerNotePage({Key key, this.fromHomeMenu = false}) : super(key: key);
+
   @override
   State createState() {
     return TimerNotePageState();
@@ -105,14 +110,14 @@ class TimerNotePageState extends State<TimerNotePage> {
     }
   }
 
-  void next() {
+  void next() async {
     if (_timer?.isActive ?? false) _timer.cancel();
     final _audioPlayer = AudioPlayer();
-    _audioPlayer.setAsset("assets/audios/success.mp3");
+    await _audioPlayer.setAsset("assets/audios/success.mp3");
     saveNoteProgress();
     OrderUtil().getRouteById(TimerPageId.Diary).then((value) {
       Get.off(TimerSuccessScreen(() {
-        Get.off(value);
+        Get.off(widget.fromHomeMenu ? ProgressPage() : value);
       }, MyDB().getBox().get(MyResource.VOCABULARY_TIME_KEY).time, false));
     });
     appAnalitics.logEvent('first_dnevnik_next');

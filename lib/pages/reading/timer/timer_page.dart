@@ -15,6 +15,10 @@ import 'package:screen/screen.dart';
 import 'components/components.dart';
 
 class ReadingTimerPage extends StatefulWidget {
+  final bool fromHomeMenu;
+
+  const ReadingTimerPage({Key key, this.fromHomeMenu = false})
+      : super(key: key);
   @override
   State createState() => ReadingTimerPageState();
 }
@@ -38,6 +42,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await timerService.init(TimerPageId.Reading, null);
+      timerService.fromHomeMenu = widget.fromHomeMenu;
     });
     AnalyticService.screenView('reading_timer_page');
     try {

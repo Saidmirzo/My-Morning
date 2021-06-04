@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_favorite.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/music_meditation_dialog.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/dialogs/yoga_meditation_dialog.dart';
 import 'package:morningmagic/pages/meditation/components/menu.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
@@ -17,8 +18,10 @@ import 'timer/meditation_timer_page.dart';
 
 class MeditationAudioPage extends StatefulWidget {
   final bool fromTimerPage;
+  final bool fromHomeMenu;
 
-  const MeditationAudioPage({Key key, this.fromTimerPage = false})
+  const MeditationAudioPage(
+      {Key key, this.fromTimerPage = false, this.fromHomeMenu = false})
       : super(key: key);
 
   @override
@@ -66,7 +69,9 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                           ? '$path/audio_bg1.png'
                           : cMenu.currentPage.value == MenuItems.sounds
                               ? '$path/audio_bg2.png'
-                              : '$path/audio_bg3.png';
+                              : cMenu.currentPage.value == MenuItems.yoga
+                                  ? '$path/audio_bg3.png'
+                                  : '$path/audio_bg4.png';
                       return Image.asset(bg,
                           width: Get.width, fit: BoxFit.cover);
                     })),
@@ -96,7 +101,9 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                                 autoplay: false, fromDialog: true);
                             Get.back();
                           } else {
-                            Get.to(MeditationTimerPage(fromAudio: true));
+                            Get.to(MeditationTimerPage(
+                                fromAudio: true,
+                                fromHomeMenu: widget.fromHomeMenu));
                             appAnalitics.logEvent('first_music_next');
                           }
                         }),
@@ -119,7 +126,9 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                             ? AudioMeditationFavoriteContainer()
                             : cMenu.currentPage.value == MenuItems.music
                                 ? MusicMeditationContainer()
-                                : AudioMeditationContainer();
+                                : cMenu.currentPage.value == MenuItems.yoga
+                                    ? YogaMeditationContainer()
+                                    : AudioMeditationContainer();
                   }),
                 ),
               );

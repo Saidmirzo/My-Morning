@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/loading/loadingPage.dart';
-import 'package:morningmagic/pages/homePage.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/screenUserDataInput.dart';
-import 'package:morningmagic/pages/settingsPage.dart';
+import 'package:morningmagic/pages/settings/settingsPage.dart';
 import 'package:morningmagic/routing/route_values.dart';
 
 class AppRouting {
@@ -18,7 +18,7 @@ class AppRouting {
         break;
       case homePageRoute:
         return MaterialPageRoute(
-            builder: (_) => HomePage(), settings: settings);
+            builder: (_) => MainMenuPage(), settings: settings);
         break;
       case settingsPageRoute:
         return MaterialPageRoute(builder: (_) => SettingsPage());
@@ -27,14 +27,14 @@ class AppRouting {
         return MaterialPageRoute(builder: (_) => UserDataInputScreen());
         break;
       default:
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return MaterialPageRoute(builder: (_) => MainMenuPage());
     }
   }
 
   static void navigateToHomeWithClearHistory() {
     Navigator.pushAndRemoveUntil(
       Get.context,
-      MaterialPageRoute(builder: (context) => HomePage()),
+      MaterialPageRoute(builder: (context) => MainMenuPage()),
       (Route<dynamic> route) => false,
     );
   }

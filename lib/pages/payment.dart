@@ -73,7 +73,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Image.asset('assets/images/purchase/bonuses_ru.png',
+                    child: Image.asset('purchase_bonuses_image'.tr,
                         fit: BoxFit.fitWidth),
                   ),
                   Spacer(),
@@ -178,7 +178,7 @@ class _PaymentPageState extends State<PaymentPage> {
       decoration: BoxDecoration(
           color: AppColors.purchaseDesc.withOpacity(0.64),
           borderRadius: BorderRadius.circular(20)),
-      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
       margin: const EdgeInsets.symmetric(horizontal: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,11 +192,10 @@ class _PaymentPageState extends State<PaymentPage> {
           ),
           const SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(
               desc,
-              style:
-                  TextStyle(color: Colors.white, fontSize: Get.height * 0.017),
+              style: TextStyle(color: Colors.white, fontSize: Get.width * .033),
             ),
           )
         ],
@@ -220,7 +219,7 @@ class _PaymentPageState extends State<PaymentPage> {
               break;
             default:
           }
-          await Purchases.purchasePackage(_package);
+          await billingService.purchase(_package);
           appAnalitics.logEvent('first_trial');
           //TODO: статистика будет кривой.
           // Это нужно переделать, цена и валюта всегда разная может быть

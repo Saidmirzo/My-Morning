@@ -37,6 +37,8 @@ class VisualizationController extends GetxController {
     _hiveBox = hiveBox;
   }
 
+  bool fromHomeMenu = false;
+
   final targets = <VisualizationTarget>[].obs;
 
   final images = <VisualizationImage>[].obs;
@@ -206,7 +208,7 @@ class VisualizationController extends GetxController {
   finishVisualization() {
     _saveVisualizationProgress();
     _timer?.cancel();
-    Get.offAll(VisualizationSuccessPage(),
+    Get.offAll(VisualizationSuccessPage(fromHomeMenu: fromHomeMenu),
         predicate: ModalRoute.withName(homePageRoute));
   }
 

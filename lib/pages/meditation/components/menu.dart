@@ -6,7 +6,8 @@ import 'menu_item.dart';
 class MenuItems {
   static const int music = 1;
   static const int sounds = 2;
-  static const int favorite = 3;
+  static const int yoga = 3;
+  static const int favorite = 4;
 }
 
 class AudioMenu extends StatelessWidget {
@@ -43,6 +44,11 @@ class AudioMenu extends StatelessWidget {
           title: 'music_menu_sounds'.tr,
           svgPath: 'assets/images/svg/forest.svg',
           itemIndex: MenuItems.sounds,
+        ),
+        MenuItem(
+          title: 'music_menu_yoga'.tr,
+          svgPath: 'assets/images/svg/yoga.svg',
+          itemIndex: MenuItems.yoga,
         ),
         MenuItem(
           title: 'music_menu_favorite'.tr,

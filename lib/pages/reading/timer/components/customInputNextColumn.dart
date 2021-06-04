@@ -6,6 +6,7 @@ import 'package:morningmagic/db/model/progress/day/day.dart';
 import 'package:morningmagic/db/model/progress/reading_progress/reading_progress.dart';
 import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,8 @@ import '../../../../widgets/primary_circle_button.dart';
 
 class InputTextColumn extends StatefulWidget {
   final VoidCallback onPressed;
-  InputTextColumn(this.onPressed);
+  final bool fromHomeMenu;
+  InputTextColumn(this.onPressed, {this.fromHomeMenu = false});
 
   @override
   State createState() {
@@ -149,7 +151,7 @@ class InputTextColumnState extends State<InputTextColumn> {
             icon: Icon(Icons.arrow_forward, color: AppColors.primary),
             onPressed: () {
               OrderUtil().getRouteById(4).then((value) {
-                Get.off(value);
+                Get.off(widget.fromHomeMenu ? ProgressPage() : value);
               });
               saveReadingProgress();
               widget.onPressed();

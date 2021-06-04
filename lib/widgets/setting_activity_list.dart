@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/model/reordering_program/order_item.dart';
+import 'package:morningmagic/pages/settings/settings_controller.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:reorderables/reorderables.dart';
@@ -32,6 +33,7 @@ class SettingsActivityList extends StatefulWidget {
 class SettingsActivityListState extends State<SettingsActivityList> {
   List<ExerciseTile> _itemRows = [];
   bool hasReInit = false;
+  SettingsController settingsController = Get.find();
 
   @override
   void initState() {
@@ -64,57 +66,23 @@ class SettingsActivityListState extends State<SettingsActivityList> {
   }
 
   List<ExerciseTile> createListOfWidgets(List<OrderItem> orderItemsList) {
-    List<ExerciseTile> list = new List<ExerciseTile>();
-    bool isPro = billingService.isPro();
+    List<ExerciseTile> list = [];
 
-    list.add(ExerciseTile(
-      key: ValueKey(1),
-      id: orderItemsList[0].position,
-      trues: true,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[0].position).tr,
-      edgeInsets: EdgeInsets.only(bottom: 15),
-      textEditingController: getControllerById(orderItemsList[0].position),
-    ));
-    list.add(ExerciseTile(
-      key: ValueKey(2),
-      id: orderItemsList[1].position,
-      trues: true,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[1].position).tr,
-      edgeInsets: EdgeInsets.only(bottom: 15),
-      textEditingController: getControllerById(orderItemsList[1].position),
-    ));
-    list.add(ExerciseTile(
-      key: ValueKey(3),
-      id: orderItemsList[2].position,
-      trues: isPro,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[2].position).tr,
-      edgeInsets: EdgeInsets.only(bottom: 15),
-      textEditingController: getControllerById(orderItemsList[2].position),
-    ));
-    list.add(ExerciseTile(
-      key: ValueKey(4),
-      id: orderItemsList[3].position,
-      trues: isPro,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[3].position).tr,
-      edgeInsets: EdgeInsets.only(bottom: 15),
-      textEditingController: getControllerById(orderItemsList[3].position),
-    ));
-    list.add(ExerciseTile(
-      key: ValueKey(5),
-      id: orderItemsList[4].position,
-      trues: isPro,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[4].position).tr,
-      edgeInsets: EdgeInsets.only(bottom: 15),
-      textEditingController: getControllerById(orderItemsList[4].position),
-    ));
-    list.add(ExerciseTile(
-      key: ValueKey(6),
-      id: orderItemsList[5].position,
-      trues: isPro,
-      title: OrderUtil().getStringIdByOrderId(orderItemsList[5].position).tr,
-      edgeInsets: EdgeInsets.only(bottom: 15),
-      textEditingController: getControllerById(orderItemsList[5].position),
-    ));
+    calculateNewTime();
+
+    list = List.generate(
+      6,
+      (index) => ExerciseTile(
+        key: ValueKey(index),
+        index: index,
+        orderItemList: orderItemsList,
+        title:
+            OrderUtil().getStringIdByOrderId(orderItemsList[index].position).tr,
+        edgeInsets: EdgeInsets.only(bottom: 15),
+        textEditingController:
+            getControllerById(orderItemsList[index].position),
+      ),
+    );
 
     return list;
   }
@@ -135,14 +103,6 @@ class SettingsActivityListState extends State<SettingsActivityList> {
     }
   }
 
-  List<OrderItem> reGenerateList(List<ExerciseTile> exerciseList) {
-    List<OrderItem> orderItemsList = List<OrderItem>();
-    for (int i = 0; i < exerciseList.length; i++) {
-      orderItemsList.add(OrderItem(exerciseList[i].id));
-    }
-    return orderItemsList;
-  }
-
   void _onReorder(int oldIndex, int newIndex) {
     if (billingService.isPro() ||
         (oldIndex == 0 && newIndex == 1) ||
@@ -155,5 +115,59 @@ class SettingsActivityListState extends State<SettingsActivityList> {
         print("REORDERING SAVED !!!");
       });
     }
+    calculateNewTime();
   }
+
+  void calculateNewTime() {
+    OrderUtil().getOrderHolder().then((value) {
+      int time = 0;
+      for (var i = 0; i < value.list.length; i++) {
+        var val =
+            int.tryParse(getControllerById(value.list[i].position).text) ?? 0;
+        if (billingService.isPro() || i < 2) time += val;
+      }
+      settingsController.countAvailableMinutes.value = time;
+    });
+  }
+
+  // String getAndCalculateTime() {
+  //   ExerciseTime affirmation = MyDB()
+  //       .getBox()
+  //       .get(MyResource.AFFIRMATION_TIME_KEY, defaultValue: ExerciseTime(3));
+  //   int affirmation_time = affirmation.time;
+
+  //   ExerciseTime meditation = MyDB()
+  //       .getBox()
+  //       .get(MyResource.MEDITATION_TIME_KEY, defaultValue: ExerciseTime(3));
+  //   int meditation_time = meditation.time;
+
+  //   ExerciseTime fitness = MyDB()
+  //       .getBox()
+  //       .get(MyResource.FITNESS_TIME_KEY, defaultValue: ExerciseTime(3));
+  //   int fitness_time = fitness.time;
+
+  //   ExerciseTime vocabulary = MyDB()
+  //       .getBox()
+  //       .get(MyResource.VOCABULARY_TIME_KEY, defaultValue: ExerciseTime(3));
+  //   int vocabulary_time = vocabulary.time;
+
+  //   ExerciseTime reading = MyDB()
+  //       .getBox()
+  //       .get(MyResource.READING_TIME_KEY, defaultValue: ExerciseTime(3));
+  //   int reading_time = reading.time;
+
+  //   ExerciseTime visualization = MyDB()
+  //       .getBox()
+  //       .get(MyResource.VISUALIZATION_TIME_KEY, defaultValue: ExerciseTime(3));
+  //   int visualization_time = visualization.time;
+
+  //   int sum = affirmation_time +
+  //       meditation_time +
+  //       fitness_time +
+  //       vocabulary_time +
+  //       reading_time +
+  //       visualization_time;
+
+  //   return 'x_minutes'.trParams({'x': sum.toString()});
+  // }
 }

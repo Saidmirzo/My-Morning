@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 1.1.0+36
+version: 1.1.0+37
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -57,6 +57,7 @@ dependencies:
   intl: "^0.16.1"
   flutter_gifimage: ^1.0.1
   day_night_time_picker: ^1.0.2
+  duration_picker: ^1.0.1
 
   flutter_localizations:
     sdk: flutter
@@ -82,9 +83,11 @@ flutter:
   assets:
     - assets/images/
     - assets/images/auth/
+    - assets/images/home_menu/
     - assets/images/startscreen/morning/
     - assets/images/startscreen/afternoon/
     - assets/images/startscreen/evening/
+    - assets/images/startscreen/night/
     - assets/images/interview/
     - assets/images/targets/
     - assets/images/fitnes/
