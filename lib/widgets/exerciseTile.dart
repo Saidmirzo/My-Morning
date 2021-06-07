@@ -12,7 +12,7 @@ import 'package:morningmagic/storage.dart';
 
 class ExerciseTile extends StatelessWidget {
   final int index;
-  final List<OrderItem> orderItemList;
+  final OrderItem orderItem;
   final String title;
   final EdgeInsets edgeInsets;
   final TextEditingController textEditingController;
@@ -20,7 +20,7 @@ class ExerciseTile extends StatelessWidget {
   const ExerciseTile(
       {Key key,
       @required this.index,
-      @required this.orderItemList,
+      @required this.orderItem,
       @required this.title,
       @required this.edgeInsets,
       @required this.textEditingController})
@@ -44,7 +44,7 @@ class ExerciseTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               const SizedBox(width: 20),
-              orderItemList[index].position == TimerPageId.Fitness
+              orderItem.position == TimerPageId.Fitness
                   ? GestureDetector(
                       child: Icon(
                         Icons.settings,

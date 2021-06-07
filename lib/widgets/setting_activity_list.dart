@@ -56,13 +56,13 @@ class SettingsActivityListState extends State<SettingsActivityList> {
     );
   }
 
-  initList() {
-    OrderUtil().getOrderHolder().then((value) {
-      setState(() {
-        _itemRows = createListOfWidgets(value.list);
-        print('Init wrap list');
-      });
+  initList() async {
+    _itemRows = createListOfWidgets((await OrderUtil().getOrderHolder()).list);
+    print('ЧТЕНИЕ УПРАЖНЕНИЙ');
+    _itemRows.forEach((element) {
+      print(element.title);
     });
+    setState(() {});
   }
 
   List<ExerciseTile> createListOfWidgets(List<OrderItem> orderItemsList) {
@@ -73,9 +73,9 @@ class SettingsActivityListState extends State<SettingsActivityList> {
     list = List.generate(
       6,
       (index) => ExerciseTile(
-        key: ValueKey(index),
+        key: ValueKey(index + 1),
         index: index,
-        orderItemList: orderItemsList,
+        orderItem: orderItemsList[index],
         title:
             OrderUtil().getStringIdByOrderId(orderItemsList[index].position).tr,
         edgeInsets: EdgeInsets.only(bottom: 15),
@@ -104,15 +104,18 @@ class SettingsActivityListState extends State<SettingsActivityList> {
   }
 
   void _onReorder(int oldIndex, int newIndex) {
-    if (billingService.isPro() ||
+    if (billingService.isVip.value ||
         (oldIndex == 0 && newIndex == 1) ||
         (oldIndex == 1 && newIndex == 0)) {
-      setState(() {
-        Widget row = _itemRows.removeAt(oldIndex);
-        _itemRows.insert(newIndex, row);
+      ExerciseTile row = _itemRows.removeAt(oldIndex);
+      _itemRows.insert(newIndex, row);
+      print('ЗАПИСЬ УПРАЖНЕНИЙ');
+      _itemRows.forEach((element) {
+        print(element.title);
       });
       OrderUtil().saveOrderHolder(_itemRows).then((value) {
         print("REORDERING SAVED !!!");
+        setState(() {});
       });
     }
     calculateNewTime();

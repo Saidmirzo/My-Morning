@@ -63,7 +63,7 @@ class SettingsPageState extends State<SettingsPage> {
     _init();
     _initOpenDialog();
     initPurchaseListener();
-    activityList = buildActivityList(false);
+    activityList = buildActivityList(true);
     AnalyticService.screenView('settings_page');
 
     if (GetPlatform.isIOS) {

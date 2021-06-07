@@ -6,6 +6,7 @@ import 'package:morningmagic/pages/payment.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../resources/my_const.dart';
+import 'analitics/all.dart';
 
 class BillingService {
   PurchaserInfo purchaserInfo;
@@ -53,11 +54,15 @@ class BillingService {
     await Get.to(PaymentPage());
   }
 
+  var isRestoring = false.obs;
   void restore() async {
+    isRestoring.value = true;
     // У нас автоматически восстанавливаются покупки
     // Но для большего спокойствия пользователей добавили кнопку
     // Эта кнопка повторно инициализирует сервис и проверяет наличие покупок
     await init();
     Get.snackbar('success'.tr, 'vip_restored'.tr);
+    appAnalitics.logEvent('restore_click');
+    isRestoring.value = false;
   }
 }

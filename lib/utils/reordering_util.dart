@@ -29,7 +29,8 @@ class OrderUtil {
   Future<void> saveOrderHolder(List<ExerciseTile> exerciseList) async {
     List<OrderItem> orderItemsList = [];
     for (int i = 0; i < exerciseList.length; i++) {
-      orderItemsList.add(OrderItem(exerciseList[i].orderItemList[i].position));
+      orderItemsList.add(OrderItem(exerciseList[i].orderItem.position));
+      print('save: ${exerciseList[i].title}');
     }
     OrderHolder orderHolder = OrderHolder(orderItemsList);
     await MyDB().getBox().put(MyResource.ORDER_PROGRAM_HOLDER, orderHolder);

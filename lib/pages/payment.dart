@@ -233,16 +233,21 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Widget restoreBtn() {
-    return CupertinoButton(
-      child: Text(
-        'restore'.tr,
-        style: TextStyle(
-            color: AppColors.primary, decoration: TextDecoration.underline),
-      ),
-      onPressed: () async {
-        billingService.restore();
-        appAnalitics.logEvent('restore_click');
-      },
+    return Obx(
+      () => billingService.isRestoring.value
+          ? Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: CupertinoActivityIndicator(),
+            )
+          : CupertinoButton(
+              child: Text(
+                'restore'.tr,
+                style: TextStyle(
+                    color: AppColors.primary,
+                    decoration: TextDecoration.underline),
+              ),
+              onPressed: billingService.restore,
+            ),
     );
   }
 
