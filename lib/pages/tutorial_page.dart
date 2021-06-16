@@ -1,3 +1,5 @@
+//TODO: Нужно удалить после настройки страницы WelcomePage
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';

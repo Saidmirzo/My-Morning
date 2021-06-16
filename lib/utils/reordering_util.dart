@@ -72,7 +72,34 @@ class OrderUtil {
     }
   }
 
+  getBoxTimeKey(int pageId) {
+    print('getBoxTimeKey: $pageId');
+    switch (pageId) {
+      case TimerPageId.Affirmation:
+        return MyResource.AFFIRMATION_TIME_KEY;
+        break;
+      case TimerPageId.Meditation:
+        return MyResource.MEDITATION_TIME_KEY;
+        break;
+      case TimerPageId.Fitness:
+        return MyResource.FITNESS_TIME_KEY;
+        break;
+      case TimerPageId.Diary:
+        return MyResource.DIARY_TIME_KEY;
+        break;
+      case TimerPageId.Reading:
+        return MyResource.READING_TIME_KEY;
+        break;
+      case TimerPageId.Visualization:
+        return MyResource.VISUALIZATION_TIME_KEY;
+        break;
+      default:
+        return MyResource.VISUALIZATION_TIME_KEY;
+    }
+  }
+
   Future<dynamic> getRouteByPositionInList(int position) async {
+    if (position == 6) return ProgressPage();
     OrderHolder orderHolder = await getOrderHolder();
 
     OrderItem orderItem = orderHolder.list[position];
@@ -92,27 +119,68 @@ class OrderUtil {
   }
 
   Future<dynamic> getPreviousRouteById(int id) async {
-    int currentProgramPosition = await getPositionById(id);
-    print('currentPage = $currentProgramPosition');
-    currentProgramPosition = currentProgramPosition - 1;
-    print('nextPage = $currentProgramPosition');
-    if (currentProgramPosition < 0) {
+    print('getPreviousRouteById');
+    int pos = await getPositionById(id);
+    pos--;
+    pos = await getPreviousPos(pos);
+    if (pos < 0) {
       return MainMenuPage();
     } else {
-      return getRouteByPositionInList(currentProgramPosition);
+      return getRouteByPositionInList(pos);
     }
   }
 
   Future<dynamic> getRouteById(int id) async {
-    int currentProgramPosition = await getPositionById(id);
-    print('currentPage = $currentProgramPosition');
-    currentProgramPosition = currentProgramPosition + 1;
-    print('nextPage = $currentProgramPosition');
-    if (currentProgramPosition == 6) {
+    OrderHolder orderHolder = await getOrderHolder();
+    int pos = await getPositionById(id);
+    print('currentPage = $pos');
+    pos++;
+    pos = await getNextPos(pos);
+    var next = pos == 6
+        ? 0
+        : MyDB()
+            .getBox()
+            .get(getBoxTimeKey(orderHolder.list[pos].position))
+            .time;
+    print('next time: $next');
+
+    if (pos == 6 || next == 0) {
       return ProgressPage();
     } else {
-      return getRouteByPositionInList(currentProgramPosition);
+      return getRouteByPositionInList(pos);
     }
+  }
+
+  Future<int> getNextPos(int _pos) async {
+    OrderHolder orderHolder = await getOrderHolder();
+    var pos = _pos;
+    for (var i = pos; i < 6; i++) {
+      var time =
+          MyDB().getBox().get(getBoxTimeKey(orderHolder.list[i].position)).time;
+      if (time > 0) {
+        pos = i;
+        break;
+      }
+      pos = 6;
+    }
+    return pos;
+  }
+
+  Future<int> getPreviousPos(int _pos) async {
+    OrderHolder orderHolder = await getOrderHolder();
+    var pos = _pos;
+    for (var i = pos; i >= 0; i--) {
+      var time =
+          MyDB().getBox().get(getBoxTimeKey(orderHolder.list[i].position)).time;
+      print(getBoxTimeKey(orderHolder.list[i].position));
+      print(time);
+      if (time > 0) {
+        pos = i;
+        break;
+      }
+      pos = -1;
+    }
+    return pos;
   }
 
   Future<int> getPositionById(int id) async {

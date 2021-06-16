@@ -21,6 +21,7 @@ class PrimaryCircleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoButton(
       onPressed: onPressed,
+      padding: padding,
       child: SizedBox(
         width: size,
         height: size,

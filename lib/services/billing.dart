@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/features/visualization/data/repositories/visualization_image_repository_impl.dart';
+import 'package:morningmagic/features/visualization/data/repositories/visualization_target_repository_impl.dart';
+import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/pages/payment.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -27,6 +30,13 @@ class BillingService {
   Future<void> purchase(Package _package) async {
     purchaserInfo = await Purchases.purchasePackage(_package);
     isVip.value = isPro();
+    if (isVip.value) {
+      var c = Get.put(VisualizationController(
+          hiveBox: myDbBox,
+          targetRepository: VisualizationTargetRepositoryImpl(),
+          imageRepository: VisualizationImageRepositoryImpl()));
+      c.loadAllTargets();
+    }
   }
 
   Future<void> getOfering() async {

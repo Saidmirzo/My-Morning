@@ -6,7 +6,7 @@ import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 
-import '../../screenFAQ.dart';
+import '../../faq/faq_menu.dart';
 
 class BottomMenu extends StatelessWidget {
   final double btnSize = 30;
@@ -58,7 +58,7 @@ class BottomMenu extends StatelessWidget {
 
   _openFaq() {
     appAnalitics.logEvent('first_faq');
-    Get.to(FAQScreen());
+    Get.to(FaqMenuPage());
   }
 
   _openProgress() {

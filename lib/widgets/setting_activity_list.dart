@@ -58,10 +58,6 @@ class SettingsActivityListState extends State<SettingsActivityList> {
 
   initList() async {
     _itemRows = createListOfWidgets((await OrderUtil().getOrderHolder()).list);
-    print('ЧТЕНИЕ УПРАЖНЕНИЙ');
-    _itemRows.forEach((element) {
-      print(element.title);
-    });
     setState(() {});
   }
 
@@ -151,7 +147,7 @@ class SettingsActivityListState extends State<SettingsActivityList> {
 
   //   ExerciseTime vocabulary = MyDB()
   //       .getBox()
-  //       .get(MyResource.VOCABULARY_TIME_KEY, defaultValue: ExerciseTime(3));
+  //       .get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
   //   int vocabulary_time = vocabulary.time;
 
   //   ExerciseTime reading = MyDB()

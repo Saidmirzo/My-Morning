@@ -17,19 +17,21 @@ class _NightPageState extends State<NightPage>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
-  RxDouble animValue = .9.obs;
+  RxDouble animX = (-1.5).obs;
+  RxDouble animY = (-.3).obs;
 
   void initController() {
     controller = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
+        duration: const Duration(milliseconds: 1500), vsync: this);
     controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         widget.onDone();
       }
     });
-    animation = Tween<double>(begin: .9, end: 1.2).animate(controller)
+    animation = Tween<double>(begin: -.3, end: -.7).animate(controller)
       ..addListener(() {
-        animValue.value = animation.value;
+        animY.value = animation.value;
+        animX.value -= animation.value * .02;
       });
   }
 
@@ -50,8 +52,8 @@ class _NightPageState extends State<NightPage>
       child: Stack(
         alignment: Alignment.center,
         children: [
+          buildMoon(),
           buildClouds(),
-          buildSun(),
           nameWidget('good_night', top: Get.height * .4),
         ],
       ),
@@ -71,16 +73,17 @@ class _NightPageState extends State<NightPage>
     );
   }
 
-  Widget buildSun() {
-    return Positioned(
-      top: Get.width * .3,
-      left: Get.width * .15,
-      child: Container(
-        width: Get.width * 0.25,
-        height: Get.width * 0.25,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(180),
-            color: Colors.white.withOpacity(.61)),
+  Widget buildMoon() {
+    return Obx(
+      () => Align(
+        alignment: Alignment(animX.value, animY.value),
+        child: Container(
+          width: Get.width * 0.25,
+          height: Get.width * 0.25,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(180),
+              color: Colors.white.withOpacity(.61)),
+        ),
       ),
     );
   }

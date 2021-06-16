@@ -1,12 +1,14 @@
 import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/resources/colors.dart';
 
 import '../reminder_controller.dart';
 
 class AddTimeDialog extends StatelessWidget {
   ReminderController _controller = Get.find();
+  final TimeOfDay initTime;
+
+  AddTimeDialog({Key key, this.initTime}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class AddTimeDialog extends StatelessWidget {
         children: [
           createInlinePicker(
             context: Get.context,
-            value: TimeOfDay.now(),
+            value: initTime ?? TimeOfDay.now(),
             onChange: (TimeOfDay _time) {
               _controller.selectedTime = _time;
               Get.back();
@@ -36,10 +38,7 @@ class AddTimeDialog extends StatelessWidget {
               () => Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  dayBtn(
-                    'monday_short'.tr,
-                    1,
-                  ),
+                  dayBtn('monday_short'.tr, 1),
                   dayBtn('tuesday_short'.tr, 2),
                   dayBtn('wednesday_short'.tr, 3),
                   dayBtn('thursday_short'.tr, 4),

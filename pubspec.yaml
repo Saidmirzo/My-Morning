@@ -14,7 +14,7 @@ dependencies:
   audioplayers: ^0.17.2
   charts_flutter: ^0.9.0
   cupertino_icons: ^1.0.0
-  expandable: ^4.1.4
+  expandable: ^5.0.1
   firebase_analytics: ^7.0.1
   firebase_core: ^0.7.0
   firebase_admob: ^0.11.0+1
@@ -23,7 +23,7 @@ dependencies:
   fl_chart: ^0.12.0
   flutter_audio_recorder: ^0.5.5
   flutter_circular_chart_two: ^0.1.2
-  flutter_html: ^0.8.2
+  flutter_html: ^1.2.0
   flutter_svg: ^0.19.3
   flutter_visualizers: ^0.0.2
   get: ^3.26.0
@@ -58,6 +58,7 @@ dependencies:
   flutter_gifimage: ^1.0.1
   day_night_time_picker: ^1.0.2
   duration_picker: ^1.0.1
+  numberpicker: ^2.1.1
 
   flutter_localizations:
     sdk: flutter
@@ -83,6 +84,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/auth/
+    - assets/images/faq/
     - assets/images/home_menu/
     - assets/images/startscreen/morning/
     - assets/images/startscreen/afternoon/

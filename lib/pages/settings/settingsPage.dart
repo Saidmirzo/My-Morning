@@ -55,24 +55,36 @@ class SettingsPageState extends State<SettingsPage> {
 
   GlobalKey scaffoldKey = GlobalKey();
 
+  // Количество запусков экрана настроек
+  int countLaunchesSettingsPage = 0;
+
   @override
   void initState() {
     Get.put(AffirmationController());
     settingsController = Get.put(SettingsController());
     admobService.initInterstitial();
     _init();
-    _initOpenDialog();
+    _initTarifDialog();
     initPurchaseListener();
     activityList = buildActivityList(true);
     AnalyticService.screenView('settings_page');
 
     if (GetPlatform.isIOS) {
       // Show tracking authorization dialog and ask for permission
-      Future.delayed(2.seconds, () async {
-        await AppTrackingTransparency.requestTrackingAuthorization();
-      });
+      AppTrackingTransparency.requestTrackingAuthorization();
     }
+    getAndSetCountLaunches();
     super.initState();
+  }
+
+  void getAndSetCountLaunches() {
+    countLaunchesSettingsPage =
+        MyDB().getBox().get(MyResource.LAUNCH_SETTINGS_PAGE, defaultValue: 0) +
+            1;
+    MyDB()
+        .getBox()
+        .put(MyResource.LAUNCH_SETTINGS_PAGE, countLaunchesSettingsPage);
+    print('countLaunchesSettingsPage: $countLaunchesSettingsPage');
   }
 
   @override
@@ -391,13 +403,9 @@ class SettingsPageState extends State<SettingsPage> {
     });
   }
 
-  void _initOpenDialog() async {
+  void _initTarifDialog() async {
     await Future.delayed(Duration(seconds: 3));
-    _openDialog();
-  }
-
-  void _openDialog() async {
-    if (!billingService.isPro()) {
+    if (!billingService.isPro() && countLaunchesSettingsPage % 3 == 0) {
       Get.dialog(PaymentDialog());
     }
   }
@@ -410,7 +418,7 @@ class SettingsPageState extends State<SettingsPage> {
     fitnessTimeController = TextEditingController(
         text: getInitialValueForTimeField(MyResource.FITNESS_TIME_KEY));
     vocabularyTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.VOCABULARY_TIME_KEY));
+        text: getInitialValueForTimeField(MyResource.DIARY_TIME_KEY));
     readingTimeController = TextEditingController(
         text: getInitialValueForTimeField(MyResource.READING_TIME_KEY));
     visualizationTimeController = TextEditingController(
@@ -477,17 +485,15 @@ class SettingsPageState extends State<SettingsPage> {
 
     vocabularyTimeController.addListener(() {
       _mutateTextOnValidationFailed(
-          vocabularyTimeController, MyResource.VOCABULARY_TIME_KEY);
+          vocabularyTimeController, MyResource.DIARY_TIME_KEY);
       if (vocabularyTimeController.text != null &&
           vocabularyTimeController.text.isNotEmpty) {
         int input = int.tryParse(vocabularyTimeController.text);
         if (input != null) {
-          MyDB()
-              .getBox()
-              .put(MyResource.VOCABULARY_TIME_KEY, ExerciseTime(input));
+          MyDB().getBox().put(MyResource.DIARY_TIME_KEY, ExerciseTime(input));
         }
       } else {
-        MyDB().getBox().put(MyResource.VOCABULARY_TIME_KEY, ExerciseTime(0));
+        MyDB().getBox().put(MyResource.DIARY_TIME_KEY, ExerciseTime(0));
       }
     });
 

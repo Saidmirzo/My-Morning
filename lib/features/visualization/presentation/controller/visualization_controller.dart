@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -137,17 +138,26 @@ class VisualizationController extends GetxController {
     }
   }
 
-  Future loadImages(String tag, int targetId) async {
+  Future loadImages(VisualizationTarget target) async {
     _setDownloading(true);
 
     _currentImageIndex.value = 0;
     selectedImageIndexes.clear();
     images.clear();
     final _loadedImages =
-        await imageRepository.getVisualizationImages(tag, targetId);
+        await imageRepository.getVisualizationImages(target.tag, target.id);
     images.addAll(_loadedImages);
 
     _setDownloading(false);
+  }
+
+  void loadAllTargets() async {
+    print('loadAllImages: start');
+    print('targets lengthL: ${targets.length}');
+    targets.forEach((element) {
+      print('loadAllImages: load ${element.toString()}');
+      loadImages(element);
+    });
   }
 
   Future<List<VisualizationImage>> loadAttachedTargetImages(

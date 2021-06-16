@@ -12,3 +12,10 @@ openEmail(String email, String subject) async {
   else
     print('Can\'t launch email: $url');
 }
+
+openUrl(String url) async {
+  if (await canLaunch(url))
+    await launch(url);
+  else
+    print('Can\'t launch url: $url');
+}

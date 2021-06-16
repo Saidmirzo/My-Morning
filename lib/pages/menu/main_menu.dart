@@ -268,38 +268,51 @@ class MainMenuPageState extends State<MainMenuPage> {
       padding: const EdgeInsets.all(15),
       margin: const EdgeInsets.all(5),
       onPressed: onPressed,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Container(
-            height: 45,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(image, width: Get.width * .1),
-                SvgPicture.asset('$imagePath/crown.svg'),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: Get.width * .047,
-              fontWeight: FontWeight.w700,
-              color: AppColors.primary,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Flexible(
-            child: Text(
-              subtitle,
-              style: TextStyle(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 45,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(image, width: Get.width * .1),
+                    SvgPicture.asset('$imagePath/crown.svg'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: Get.width * .047,
+                  fontWeight: FontWeight.w700,
                   color: AppColors.primary,
-                  fontSize: Get.width * .04,
-                  fontWeight: FontWeight.w400),
-            ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Flexible(
+                child: Text(
+                  subtitle,
+                  style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: Get.width * .04,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+            ],
           ),
+          Obx(
+            () => !billingService.isVip.value
+                ? Positioned(
+                    bottom: 0,
+                    right: 5,
+                    child: Icon(Icons.lock, color: Colors.black87),
+                  )
+                : SizedBox(),
+          )
         ],
       ),
       radius: 28,
@@ -460,7 +473,9 @@ class MainMenuPageState extends State<MainMenuPage> {
         .put(MyResource.LAUNCH_FOR_INTERVIEW, _cntBeforInterview);
     openInterviewModel(_cntBeforInterview);
     appAnalitics.logEvent('first_start');
-    await OrderUtil().getRouteByPositionInList(0).then((value) {
+    await OrderUtil()
+        .getRouteByPositionInList(await OrderUtil().getNextPos(0))
+        .then((value) {
       Get.off(value);
     });
   }

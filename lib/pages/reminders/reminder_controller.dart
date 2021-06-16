@@ -40,10 +40,16 @@ class ReminderController extends GetxController {
     MyDB().getBox().put(MyResource.Last_Push_Id, _id);
   }
 
-  void addReminder() async {
+  void addReminder(
+      {Function onAction,
+      bool activeAllDaysByDefault = false,
+      TimeOfDay timeOfDay}) async {
     activeDays.value.clear();
+    if (activeAllDaysByDefault) {
+      for (var i = 1; i <= 7; i++) activeDays.value.add(i);
+    }
     // Выбор дней недели и времени
-    await Get.dialog(AddTimeDialog());
+    await Get.dialog(AddTimeDialog(initTime: timeOfDay));
     // Если время не выбрал пропустим
     if (selectedTime == null) return;
 
@@ -68,6 +74,7 @@ class ReminderController extends GetxController {
     addAllPush(reminders.value.last);
 
     save();
+    if (onAction != null) onAction();
   }
 
   List<DateTime> getStartDates(DateTime _date, List<int> _activeDays) {

@@ -53,7 +53,9 @@ class _YogaMeditationContainerState extends State<YogaMeditationContainer>
   @override
   void initState() {
     _audioController = Get.find();
-    _audioController.audioSource = MeditationAudioData.yogaSource;
+    _audioController.audioSource = Get.locale.languageCode == 'ru'
+        ? MeditationAudioData.meditationRuSource
+        : MeditationAudioData.meditationEnSource;
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {

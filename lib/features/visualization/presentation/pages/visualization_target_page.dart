@@ -93,7 +93,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
   }
 
   void _openImpressionSelection(VisualizationTarget _target) {
-    _controller.loadImages(_target.tag, _target.id);
+    _controller.loadImages(_target);
     _controller.selectedTargetId = _target.id;
     Navigator.push(
       context,

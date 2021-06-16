@@ -56,7 +56,7 @@ class AddTimePeriod extends StatelessWidget {
                       initialTime: Duration(minutes: 10),
                     );
                     if (_duration != null) {
-                      timerService.addTime(_duration.inMinutes ?? 0);
+                      timerService.setTime(_duration.inMinutes ?? 0);
                       Get.back();
                     }
                   }),
@@ -74,7 +74,7 @@ class AddTimePeriod extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       onPressed: onPressed ??
           () {
-            timerService.addTime(min ?? 0);
+            timerService.setTime(min ?? 0);
             Get.back();
           },
       child: Container(

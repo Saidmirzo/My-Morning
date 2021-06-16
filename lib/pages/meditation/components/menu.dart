@@ -46,7 +46,7 @@ class AudioMenu extends StatelessWidget {
           itemIndex: MenuItems.sounds,
         ),
         MenuItem(
-          title: 'music_menu_yoga'.tr,
+          title: 'music_menu_meditations'.tr,
           svgPath: 'assets/images/svg/yoga.svg',
           itemIndex: MenuItems.yoga,
         ),

@@ -4,6 +4,10 @@ import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:morningmagic/pages/loading/evening.dart';
 import 'package:morningmagic/pages/loading/morning.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
+import 'package:morningmagic/pages/settings/settingsPage.dart';
+import 'package:morningmagic/pages/welcome/welcome_page.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
@@ -73,23 +77,23 @@ class LoadingPageState extends State<LoadingPage>
                 ? AfternoonPage(onDone: _redirect)
                 : timeType == TimeType.evening
                     ? EveningPage(
-                        onDone: () => Navigator.pushReplacementNamed(
-                            context, chooseNavigationRoute()))
+                        onDone: () =>
+                            AppRouting.replace(chooseNavigationRoute()))
                     : NightPage(onDone: _redirect),
       ],
     ));
   }
 
-  String chooseNavigationRoute() {
+  Widget chooseNavigationRoute() {
     if (myDbBox != null && myDbBox.get(MyResource.USER_KEY) != null) {
       return chooseSettingsOrStartMenu();
     } else {
       AnalyticService.analytics.logAppOpen();
-      return userInputDataPageRoute;
+      return WelcomePage();
     }
   }
 
-  String chooseSettingsOrStartMenu() {
+  Widget chooseSettingsOrStartMenu() {
     int launchForRate = MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE) ?? 0;
     launchForRate++;
     MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE, launchForRate);
@@ -125,15 +129,15 @@ class LoadingPageState extends State<LoadingPage>
     if (myDbBox != null &&
         myDbBox.get(MyResource.BOOK_KEY) != null &&
         myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY) != null) {
-      return homePageRoute;
+      return MainMenuPage();
     } else {
-      return settingsPageRoute;
+      return SettingsPage();
     }
   }
 
   _redirect() async {
     await Future.delayed(1.seconds);
-    Navigator.pushReplacementNamed(context, chooseNavigationRoute());
+    AppRouting.replace(chooseNavigationRoute());
   }
 
   void _initTimerValue() {
@@ -146,8 +150,8 @@ class LoadingPageState extends State<LoadingPage>
     if (MyDB().getBox().get(MyResource.FITNESS_TIME_KEY) == null) {
       MyDB().getBox().put(MyResource.FITNESS_TIME_KEY, ExerciseTime(3));
     }
-    if (MyDB().getBox().get(MyResource.VOCABULARY_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.VOCABULARY_TIME_KEY, ExerciseTime(3));
+    if (MyDB().getBox().get(MyResource.DIARY_TIME_KEY) == null) {
+      MyDB().getBox().put(MyResource.DIARY_TIME_KEY, ExerciseTime(3));
     }
     if (MyDB().getBox().get(MyResource.READING_TIME_KEY) == null) {
       MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(3));

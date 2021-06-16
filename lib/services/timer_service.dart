@@ -72,10 +72,10 @@ class TimerService {
   double get createValue =>
       startTime != null ? 1 - time / (startTime * 60) : time.toDouble();
 
-  void addTime(int min) {
-    startTime += min;
-    startValue += min * 60;
-    _time += min * 60;
+  void setTime(int min) {
+    startTime = min;
+    startValue = min * 60;
+    _time.value = min * 60;
   }
 
   Future<void> skipTask() async {

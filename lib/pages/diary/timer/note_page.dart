@@ -118,13 +118,13 @@ class TimerNotePageState extends State<TimerNotePage> {
     OrderUtil().getRouteById(TimerPageId.Diary).then((value) {
       Get.off(TimerSuccessScreen(() {
         Get.off(widget.fromHomeMenu ? ProgressPage() : value);
-      }, MyDB().getBox().get(MyResource.VOCABULARY_TIME_KEY).time, false));
+      }, MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time, false));
     });
     appAnalitics.logEvent('first_dnevnik_next');
   }
 
   void initTimer() {
-    ExerciseTime time = MyDB().getBox().get(MyResource.VOCABULARY_TIME_KEY,
+    ExerciseTime time = MyDB().getBox().get(MyResource.DIARY_TIME_KEY,
         defaultValue: ExerciseTime(TimerPageId.Diary));
     _time.value = time.time * 60;
     _startTime = time.time;

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/resources/localization_service.dart';
+import 'package:morningmagic/services/localization/localization_service.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/notifications.dart';
 

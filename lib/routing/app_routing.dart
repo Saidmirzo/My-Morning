@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/loading/loadingPage.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
-import 'package:morningmagic/pages/screenUserDataInput.dart';
+import 'package:morningmagic/pages/welcome/slides/name_input_slide.dart';
 import 'package:morningmagic/pages/settings/settingsPage.dart';
+import 'package:morningmagic/pages/welcome/welcome_page.dart';
 import 'package:morningmagic/routing/route_values.dart';
 
 class AppRouting {
@@ -23,8 +24,8 @@ class AppRouting {
       case settingsPageRoute:
         return MaterialPageRoute(builder: (_) => SettingsPage());
         break;
-      case userInputDataPageRoute:
-        return MaterialPageRoute(builder: (_) => UserDataInputScreen());
+      case welcomePageRoute:
+        return MaterialPageRoute(builder: (_) => WelcomePage());
         break;
       default:
         return MaterialPageRoute(builder: (_) => MainMenuPage());

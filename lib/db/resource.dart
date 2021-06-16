@@ -14,7 +14,7 @@ class MyResource {
   static const String AFFIRMATION_TIME_KEY = "affirmation_time";
   static const String AFFIRMATION_PROGRESS = "affirmation_progress";
   static const String FITNESS_TIME_KEY = "fitness_time";
-  static const String VOCABULARY_TIME_KEY = "vocabulary_time";
+  static const String DIARY_TIME_KEY = "diary_time";
   static const String READING_TIME_KEY = "reading_time";
   static const String MY_READING_PROGRESS = "my_reading_progress";
   static const String VISUALIZATION_TIME_KEY = "visualization_time";
@@ -54,6 +54,9 @@ class MyResource {
   static const String IS_RATED = 'isRated';
   static const String LAUNCH_FOR_INTERVIEW = 'launchForInterview';
   static const String IS_DONE_INTERVIEW = 'isDoneInterview';
+
+  // Количество запусков экрана настроек
+  static const String LAUNCH_SETTINGS_PAGE = 'launchSettingsPage';
 
   // Кол-во запусков приложения
   static const String COUNT_APP_LAUNCH = 'countAppLaunch';

@@ -233,7 +233,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   void initTimer() {
     ExerciseTime time = MyDB()
         .getBox()
-        .get(MyResource.VOCABULARY_TIME_KEY, defaultValue: ExerciseTime(3));
+        .get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
     _time.value = time.time * 60;
     _startTime = time.time;
 
@@ -480,10 +480,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                       Get.off(TimerSuccessScreen(
                           () => Get.to(
                               widget.fromHomeMenu ? ProgressPage() : value),
-                          MyDB()
-                              .getBox()
-                              .get(MyResource.VOCABULARY_TIME_KEY)
-                              .time,
+                          MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time,
                           false));
                     },
                   );

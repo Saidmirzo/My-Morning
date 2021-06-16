@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/pages/interview/interview_page.dart';
+import 'package:morningmagic/pages/interview/interview1/interview_page.dart';
 
 import '../resources/colors.dart';
 import '../storage.dart';
