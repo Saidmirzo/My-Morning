@@ -3,7 +3,7 @@ import 'package:morningmagic/features/meditation_audio/domain/entities/meditatio
 import '../entities/meditation_audio.dart';
 
 abstract class AudioRepository {
-  Future<List<MeditationAudio>> getCachedAudioFiles(Map<String, String> map);
+  Future<List<MeditationAudio>> getCachedAudioFiles(List<MeditationAudio> map);
 
   Future<List<dynamic>> getFavoriteAudioFiles();
 

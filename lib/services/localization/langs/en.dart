@@ -531,7 +531,7 @@ Map<String, String> translations_en = {
       "<p>1. Go to the <a href='screen:tarifs'>«tariff plan»</a> tab (you can click) <br>2. Select the needful tariff <br>3. Click change the tariff <br>4. Next month the tariff will change</p>",
   "faq_tarifs_title_4": "How to restore a subscription?",
   "faq_tarifs_desc_4":
-      "<p>Recovery works only if you have an active subscription You can click on the \"restore subscription\" button Or do it manually <br>1. Go to the <a href='screen:tarifs'>«tariff plan»</a> tab (you can click) <br>2. Click on the bottom to restore <br>3. Click change the tariff <br>4. Next month the tariff will change</p>",
+      "<p>Recovery works only if you have an active subscription You can click on the \"restore subscription\" button Or do it manually <br>1. Go to the <a href='screen:tarifs'>«tariff plan»</a> tab (you can click) <br>2. Click on the bottom to restore</p>",
   "faq_tarifs_title_5": "How to cancel a subscription?",
   "faq_tarifs_desc_5":
       "<p>You can do it manually or click on the button <a href='screen:unsubscribe'>«Unsubscribe»</a></p>",
@@ -550,8 +550,8 @@ Map<String, String> translations_en = {
       "<p>After 10 days, it will be possible to develop a habit <br>After a month of using, you will be able to feel that it has become much easier to wake up, and stress has become noticeably less.</p>",
   "faq_about_title_5": "How to set up fitness?",
   "faq_about_desc_5":
-      "<p>1. Click on (gear icon) in settings <br>2. Select the program you want to edit <br>3. Click edit <br>There is a problem? <a href='screen:support'>support</a></p>",
+      "<p>1. Click on <img alt='settings' src='https://storage.yandexcloud.net/myaudio/Nastavnik/kartinki/02-min.png'> in settings <br>2. Select the program you want to edit <br>3. Click edit <br>There is a problem? <a href='screen:support'>support</a></p>",
   "faq_about_title_6": "How to set up visualizations?",
   "faq_about_desc_6":
-      "<p>1. To add a target, click on the (plus sign) in the target selection <br>2. Then select the image from those saved in your phone <br>3. Wait while the pictures are loaded <br>4. You can use ready-made goals and images, or add your own images to goals using the same instructions. <br>There is a problem? <a href='screen:support'>support</a></p>",
+      "<p>1. To add a target, click on the <img alt='settings' src='https://storage.yandexcloud.net/myaudio/Nastavnik/kartinki/01-min.png'> in the target selection <br>2. Then select the image from those saved in your phone <br>3. Wait while the pictures are loaded <br>4. You can use ready-made goals and images, or add your own images to goals using the same instructions. <br>There is a problem? <a href='screen:support'>support</a></p>",
 };

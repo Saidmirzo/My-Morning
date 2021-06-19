@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +8,7 @@ import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.d
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/utils/other.dart';
 
 import '../../../../resources/colors.dart';
 import '../../../../widgets/primary_circle_button.dart';
@@ -13,11 +16,13 @@ import '../../../../widgets/primary_circle_button.dart';
 class AudioMeditationDialogItem extends StatefulWidget {
   final int id;
   final MeditationAudio audio;
+  final bool isYoga;
 
   const AudioMeditationDialogItem({
     Key key,
     @required this.id,
     @required this.audio,
+    this.isYoga = false,
   });
 
   @override
@@ -36,12 +41,18 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     return Column(
       children: [
         InkWell(
-          onTap: () => _audioController.selectedItemIndex.value = widget.id,
+          onTap: () {
+            if (widget.isYoga)
+              _audioController.selectedItemIndex.value = widget.id;
+            else
+              _audioController.changeItem(widget.id);
+            _audioController.bufIdSelected.value = widget.id;
+          },
           child: Obx(
             () => Container(
               margin: EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(
-                  color: _audioController.selectedItemIndex.value == widget.id
+                  color: _audioController.bufIdSelected.value == widget.id
                       ? AppColors.audiuSelected
                       : Colors.transparent,
                   borderRadius: BorderRadius.all(Radius.circular(17))),
@@ -56,14 +67,17 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                       child: Container(
                         width: Get.width * 0.5,
                         child: StyledText(
-                          widget.audio.id,
+                          widget.audio.name ?? '',
                           fontSize: 17,
                           color: AppColors.primary,
                         ),
                       ),
                     ),
+                    if (_audioController.currentPage.value == MenuItems.yoga)
+                      Text(printDuration(
+                          _audioController.audioSource[widget.id].duration,
+                          h: false)),
                     if (_audioController.playingIndex.value == widget.id &&
-                        !playCached &&
                         _audioController.isAudioLoading.value)
                       _buildLoadingAudioIndicator(),
                     buildFavoriteButton()
@@ -95,8 +109,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
       onPressed: () => _handlePlayPauseButton(),
       bgColor: AppColors.primary,
       icon: Icon(
-        (_audioController.playingIndex.value == widget.id &&
-                _audioController.isPlaying.value)
+        _audioController.playingIndex.value == widget.id
             ? Icons.pause
             : Icons.play_arrow,
         color: AppColors.WHITE,
@@ -116,46 +129,44 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
   }
 
   void _handlePlayPauseButton() async {
-    if (!_audioController.isPlaying.value) {
-      final _oldPlayingIndex = _audioController.playingIndex.value;
-      _audioController.playingIndex.value = widget.id;
-
-      if (_audioController.playingIndex.value == -1 ||
-          _oldPlayingIndex != widget.id) {
-        _playNewTrack(widget.audio);
-      } else
-        await _audioController.player.play();
-      _setIsPlayingState(!_audioController.isPlaying.value);
+    print('playIndex ${_audioController.playingIndex.value} == ${widget.id}');
+    if (_audioController.playingIndex.value == widget.id) {
+      await _audioController.bfPlayer.value.pause();
+      _audioController.playingIndex.value = -1;
     } else {
-      if (_audioController.playingIndex.value == widget.id) {
-        await _audioController.player.pause();
-        _setIsPlayingState(!_audioController.isPlaying.value);
-      } else {
-        _playNewTrack(widget.audio);
-        _audioController.playingIndex.value = widget.id;
-        _setIsPlayingState(true);
-      }
+      _playNewTrack(widget.audio);
     }
   }
 
-  void _setIsPlayingState(bool newIsPlaying) {
-    setState(() {
-      _audioController.isPlaying.value = newIsPlaying;
-    });
-  }
-
   void _playNewTrack(MeditationAudio track) async {
-    final _cachedAudioFile = await _audioController.getCachedAudioFile(track);
+    _audioController.playingIndex.value = widget.id;
+    _audioController.isAudioLoading.value = true;
+    final _cachedAudioFile = await getCachedAudioFile(track);
     if (_cachedAudioFile == null) {
       playCached = false;
-      await _audioController.player.setUrl(track.url);
+      await _audioController.bfPlayer.value.setUrl(track.url);
       print('Play from url ${track.url}, isFile cached = $playCached');
     } else {
       playCached = true;
       final _filePath = _cachedAudioFile.path;
-      await _audioController.player.setFilePath(_filePath);
+      await _audioController.bfPlayer.value.setFilePath(_filePath);
       print('Play from path $_filePath, isFile cached = $playCached');
     }
-    _audioController.player.play();
+    _audioController.bfPlayer.value.play();
+
+    _audioController.isAudioLoading.value = false;
+  }
+
+  Future<File> getCachedAudioFile(
+    MeditationAudio track,
+  ) async {
+    MeditationAudio audioFile = _audioController.audioSource
+        .firstWhere((element) => element == track, orElse: () => null);
+    if (audioFile?.filePath != null) {
+      return File(audioFile.filePath);
+    } else {
+      var fl = await _audioController.cacheAudioFile(track);
+      return fl != null ? File(fl.filePath) : null;
+    }
   }
 }

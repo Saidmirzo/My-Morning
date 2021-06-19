@@ -56,70 +56,76 @@ class MainMenuPageState extends State<MainMenuPage> {
     launchForinterview =
         MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
     return Scaffold(
-      body: AppGradientContainer(
-        gradient: AppColors.Bg_Gradient_Menu,
-        child: Stack(children: [
-          SafeArea(
-            bottom: false,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                const SizedBox(height: 10),
-                Text(
-                  'MY MORNING',
-                  style: TextStyle(
-                      fontSize: Get.width * .06,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: ClipPath(
-                    clipper: OvalTopBorderClipper(),
-                    child: SingleChildScrollView(
-                      child: Container(
-                        color: Colors.white,
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            Image.asset('$imagePath/logo.png',
-                                width: Get.width * .2),
-                            const SizedBox(height: 30),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Expanded(
-                                    child: buildStartComplexButton(), flex: 1),
-                                const SizedBox(width: 5),
-                                Container(
-                                  width: Get.width * .49,
-                                  height: Get.width * .5,
-                                  child: Column(
-                                    children: [
-                                      buildMeditationsButton(),
-                                      Spacer(),
-                                      buildAffirmationsButton(),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            buildSettingsButton(),
-                            const SizedBox(height: 30),
-                            buildExercises()
-                          ],
-                        ),
-                      ),
+      body: Stack(children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              buildHeader(),
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Image.asset('$imagePath/logo.png', width: Get.width * .2),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(child: buildStartComplexButton(), flex: 1),
+                        const SizedBox(width: 5),
+                        Container(
+                          width: Get.width * .49,
+                          height: Get.width * .5,
+                          child: Column(
+                            children: [
+                              buildMeditationsButton(),
+                              Spacer(),
+                              buildAffirmationsButton(),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                  ),
+                    const SizedBox(height: 20),
+                    buildSettingsButton(),
+                    const SizedBox(height: 30),
+                    buildExercises()
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Positioned(bottom: 0, child: BottomMenu()),
-        ]),
+        ),
+        Positioned(bottom: 0, child: BottomMenu()),
+      ]),
+    );
+  }
+
+  Widget buildHeader() {
+    return Container(
+      color: Color(0xffFFB5C3),
+      child: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Text(
+              'MY MORNING',
+              style: TextStyle(
+                  fontSize: Get.width * .06,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white),
+            ),
+            const SizedBox(height: 30),
+            ClipPath(
+              clipper: OvalTopBorderClipper(),
+              child: Container(
+                height: 40,
+                color: Color(0xffffffff),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -279,7 +285,9 @@ class MainMenuPageState extends State<MainMenuPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Image.asset(image, width: Get.width * .1),
-                    SvgPicture.asset('$imagePath/crown.svg'),
+                    Obx(() => !billingService.isVip.value
+                        ? SvgPicture.asset('$imagePath/crown.svg')
+                        : SizedBox())
                   ],
                 ),
               ),
@@ -304,15 +312,6 @@ class MainMenuPageState extends State<MainMenuPage> {
               ),
             ],
           ),
-          Obx(
-            () => !billingService.isVip.value
-                ? Positioned(
-                    bottom: 0,
-                    right: 5,
-                    child: Icon(Icons.lock, color: Colors.black87),
-                  )
-                : SizedBox(),
-          )
         ],
       ),
       radius: 28,

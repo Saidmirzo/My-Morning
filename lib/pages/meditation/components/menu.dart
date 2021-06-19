@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 
 import 'menu_item.dart';
 
-class MenuItems {
-  static const int music = 1;
-  static const int sounds = 2;
-  static const int yoga = 3;
-  static const int favorite = 4;
-}
-
 class AudioMenu extends StatelessWidget {
+  final bool withBgSound;
+  MediationAudioController cAudio = Get.find();
+
+  AudioMenu({Key key, this.withBgSound}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,11 +44,12 @@ class AudioMenu extends StatelessWidget {
           svgPath: 'assets/images/svg/forest.svg',
           itemIndex: MenuItems.sounds,
         ),
-        MenuItem(
-          title: 'music_menu_meditations'.tr,
-          svgPath: 'assets/images/svg/yoga.svg',
-          itemIndex: MenuItems.yoga,
-        ),
+        if (!withBgSound)
+          MenuItem(
+            title: 'music_menu_meditations'.tr,
+            svgPath: 'assets/images/svg/yoga.svg',
+            itemIndex: MenuItems.yoga,
+          ),
         MenuItem(
           title: 'music_menu_favorite'.tr,
           icon: Icons.star,

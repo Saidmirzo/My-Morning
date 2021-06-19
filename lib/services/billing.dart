@@ -25,11 +25,16 @@ class BillingService {
     purchaserInfo = await Purchases.getPurchaserInfo();
     await getOfering();
     isVip.value = isPro();
+    liadVisuzlisations();
   }
 
   Future<void> purchase(Package _package) async {
     purchaserInfo = await Purchases.purchasePackage(_package);
     isVip.value = isPro();
+    liadVisuzlisations();
+  }
+
+  void liadVisuzlisations() {
     if (isVip.value) {
       var c = Get.put(VisualizationController(
           hiveBox: myDbBox,

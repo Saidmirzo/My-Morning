@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/pages/meditation/controllers/menu_controller.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 
 import '../../../resources/colors.dart';
 
@@ -18,9 +18,9 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AudioMenuController cMenu = Get.find();
+    MediationAudioController cAudio = Get.find();
     return Obx(() {
-      Color _color = itemIndex == cMenu.currentPage.value
+      Color _color = itemIndex == cAudio.currentPage.value
           ? AppColors.primary
           : AppColors.primary.withOpacity(0.4);
       return CupertinoButton(
@@ -32,7 +32,7 @@ class MenuItem extends StatelessWidget {
                 icon: svgPath != null
                     ? SvgPicture.asset(svgPath, color: _color)
                     : Icon(icon, color: _color),
-                onPressed: () => cMenu.changePage(itemIndex),
+                onPressed: () => cAudio.changePage(itemIndex),
                 color: _color,
               ),
               if (title.isNotEmpty)

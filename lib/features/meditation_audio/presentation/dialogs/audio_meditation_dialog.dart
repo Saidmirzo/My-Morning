@@ -5,9 +5,12 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
-import 'package:morningmagic/pages/meditation/components/menu.dart';
 
 class AudioMeditationContainer extends StatefulWidget {
+  final bool withBgSound;
+
+  const AudioMeditationContainer({Key key, this.withBgSound = false})
+      : super(key: key);
   @override
   _AudioMeditationContainerState createState() =>
       _AudioMeditationContainerState();
@@ -32,12 +35,12 @@ class _AudioMeditationContainerState extends State<AudioMeditationContainer>
           : ListView.builder(
               shrinkWrap: true,
               padding: EdgeInsets.symmetric(vertical: 16),
-              itemCount: _audioController.audios.length,
+              itemCount: _audioController.audioSource.length,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return AudioMeditationDialogItem(
                   id: index,
-                  audio: _audioController.audios[index],
+                  audio: _audioController.audioSource[index],
                 );
               },
             );
@@ -45,16 +48,19 @@ class _AudioMeditationContainerState extends State<AudioMeditationContainer>
   }
 
   void _stopPlayer() {
-    _audioController.player.stop();
-    _audioController.isPlaying.value = false;
+    _audioController.bfPlayer.value.stop();
     _audioController.playingIndex.value = -1;
-    _audioController.selectedItemIndex.value = 0;
+    if (!widget.withBgSound) _audioController.changeItem(0);
+    _audioController.bufIdSelected(0);
   }
 
   @override
   void initState() {
     _audioController = Get.find();
-    _audioController.audioSource = MeditationAudioData.soundSource;
+    _audioController.changeAudioSource(meditationAudioData.soundSource);
+    if (widget.withBgSound)
+      _audioController.changeAudioSource(meditationAudioData.soundSource,
+          isBgSource: true);
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {

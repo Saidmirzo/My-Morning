@@ -12,6 +12,7 @@ import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:screen/screen.dart';
 
+import '../meditation_audio_page.dart';
 import 'components/components.dart';
 
 class MeditationTimerPage extends StatefulWidget {
@@ -46,6 +47,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
     _audioController = Get.find();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      print('MeditationTimerPage addPostFrameCallback');
       _audioController.initializeMeditationAudio(autoplay: widget.fromAudio);
       await timerService.init(1, _audioController.player);
       timerService.fromHomeMenu = widget.fromHomeMenu;
@@ -64,6 +66,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
     print('build timer page');
     return WillPopScope(
       onWillPop: () async {
+        print('MeditationTimerPage willPopScope');
         _audioController.player.stop();
         return true;
       },
@@ -85,6 +88,45 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                   ),
                 ),
               ),
+              Obx(() => _audioController.withBgSound.value
+                  ? Positioned(
+                      top: Get.height * .36,
+                      left: 20,
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              Icon(Icons.volume_up, color: Colors.black45),
+                              RotatedBox(
+                                quarterTurns: -1,
+                                child: SizedBox(
+                                  width: Get.height * .2,
+                                  child: Obx(() => Slider(
+                                        value: _audioController
+                                            .bgAudioPlayer.value.volume,
+                                        min: 0,
+                                        max: 1,
+                                        onChanged:
+                                            _audioController.changeBgValume,
+                                      )),
+                                ),
+                              ),
+                              Icon(Icons.volume_off, color: Colors.black45),
+                            ],
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                _audioController.bgAudioPlayer?.value?.pause();
+                                _audioController.pause();
+                                Get.to(MeditationAudioPage(
+                                    fromTimerPage: true, withBgSound: true));
+                              },
+                              child: Icon(Icons.library_music,
+                                  color: Colors.black54)),
+                        ],
+                      ),
+                    )
+                  : SizedBox()),
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
@@ -99,6 +141,8 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                       ))),
                   Spacer(),
                   Obx(() {
+                    print(
+                        'rebuild player buttons. isPlaying: ${_audioController.isPlaying.value}');
                     if (_audioController != null &&
                         _audioController.isAudioLoading.value &&
                         !_audioController.isPlaylistAudioCached)
@@ -109,10 +153,24 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                   Container(
                       width: Get.width * 0.8,
                       alignment: Alignment.center,
-                      child: Obx(() => Text(
-                            _audioController.currAudioName.value,
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.clip,
+                      child: Obx(() => Column(
+                            children: [
+                              LinearProgressIndicator(
+                                  value:
+                                      _audioController.percentDuration.value),
+                              // Row(
+                              // const SizedBox(height: 10),
+                              // Время пока не нужно
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     Text(printDuration(
+                              //         _audioController.durationPosition.value)),
+                              //     Text(' / '),
+                              //     Text(printDuration(
+                              //         _audioController.player.duration)),
+                              //   ],
+                              // ),
+                            ],
                           ))),
                   Spacer(),
                   buildMenuButtons(timerService),

@@ -47,8 +47,7 @@ class _AudioMeditationFavoriteContainerState
   }
 
   void _stopPlayer() {
-    _audioController.player.stop();
-    _audioController.isPlaying.value = false;
+    _audioController.bfPlayer.value.stop();
     _audioController.playingIndex.value = -1;
     _audioController.playFromFavorite = true;
   }

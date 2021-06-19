@@ -26,17 +26,18 @@ class _YogaMeditationContainerState extends State<YogaMeditationContainer>
 
   Widget _buildSelectAudioList() {
     return Obx(() {
-      return _audioController.isAudioListLoading?.value ?? false
+      return _audioController.isAudioListLoading.value
           ? Center(child: CupertinoActivityIndicator())
           : ListView.builder(
               shrinkWrap: true,
               padding: EdgeInsets.symmetric(vertical: 16),
-              itemCount: _audioController.audios.length,
+              itemCount: _audioController.audioSource.length,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return AudioMeditationDialogItem(
                   id: index,
-                  audio: _audioController.audios[index],
+                  audio: _audioController.audioSource[index],
+                  isYoga: true,
                 );
               },
             );
@@ -44,18 +45,16 @@ class _YogaMeditationContainerState extends State<YogaMeditationContainer>
   }
 
   void _stopPlayer() {
-    _audioController.player.stop();
-    _audioController.isPlaying.value = false;
+    _audioController.bfPlayer.value.stop();
     _audioController.playingIndex.value = -1;
-    _audioController.selectedItemIndex.value = 0;
   }
 
   @override
   void initState() {
     _audioController = Get.find();
-    _audioController.audioSource = Get.locale.languageCode == 'ru'
-        ? MeditationAudioData.meditationRuSource
-        : MeditationAudioData.meditationEnSource;
+    _audioController.changeAudioSource(Get.locale.languageCode == 'ru'
+        ? meditationAudioData.meditationRuSource
+        : meditationAudioData.meditationEnSource);
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {

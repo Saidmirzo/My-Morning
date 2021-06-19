@@ -48,6 +48,7 @@ Widget buildMenuButtons(TimerService timerService) {
               ),
               onPressed: () {
                 cAudio.player.pause();
+                cAudio.bgAudioPlayer?.value?.pause();
                 timerService.timer.cancel();
                 timerService.isActive.value = false;
                 Get.to(MeditationAudioPage(fromTimerPage: true));

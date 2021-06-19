@@ -91,6 +91,7 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
                   color: Colors.lightBlue[300],
                   textDecoration: TextDecoration.none,
                 ),
+                "img": Style(width: 20, height: 20)
               },
               shrinkWrap: true,
               onLinkTap: (url) async {

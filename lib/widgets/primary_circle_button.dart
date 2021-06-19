@@ -6,6 +6,7 @@ class PrimaryCircleButton extends StatelessWidget {
   final Widget icon;
   final double size;
   final EdgeInsets padding;
+  final EdgeInsets btnPadding;
   final Color bgColor;
 
   const PrimaryCircleButton(
@@ -14,6 +15,7 @@ class PrimaryCircleButton extends StatelessWidget {
       this.icon,
       this.size = 40,
       this.padding = const EdgeInsets.all(3),
+      this.btnPadding = const EdgeInsets.all(10),
       this.bgColor = Colors.white})
       : super(key: key);
 
@@ -21,7 +23,7 @@ class PrimaryCircleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoButton(
       onPressed: onPressed,
-      padding: padding,
+      padding: btnPadding,
       child: SizedBox(
         width: size,
         height: size,

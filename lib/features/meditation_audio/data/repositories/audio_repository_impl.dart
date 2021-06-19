@@ -12,16 +12,16 @@ import '../../domain/entities/meditation_audio.dart';
 class AudioRepositoryImpl implements AudioRepository {
   @override
   Future<List<MeditationAudio>> getCachedAudioFiles(
-      Map<String, String> map) async {
+      List<MeditationAudio> map) async {
     List<MeditationAudio> audioFiles = [];
 
-    for (String trackKey in map.keys) {
+    for (var item in map) {
       FileInfo _cachedFile =
-          await MeditationAudioCacheManager.instance.getFileFromCache(trackKey);
+          await MeditationAudioCacheManager.instance.getFileFromCache(item.url);
       if (_cachedFile != null)
         audioFiles.add(MeditationAudio(
-          id: trackKey,
-          url: map[trackKey],
+          name: item.name,
+          url: item.url,
           filePath: _cachedFile.file.path,
         ));
     }
@@ -31,11 +31,11 @@ class AudioRepositoryImpl implements AudioRepository {
 
   @override
   Future<MeditationAudio> getAudioFile(MeditationAudio track) async {
-    File file = await MeditationAudioCacheManager.instance
-        .getSingleFile(track.url, key: track.id);
+    File file =
+        await MeditationAudioCacheManager.instance.getSingleFile(track.url);
 
     return MeditationAudio(
-      id: track.id,
+      name: track.name,
       url: track.url,
       filePath: file.path,
     );

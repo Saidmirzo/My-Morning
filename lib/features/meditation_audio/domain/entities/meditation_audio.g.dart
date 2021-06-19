@@ -17,22 +17,25 @@ class MeditationAudioAdapter extends TypeAdapter<MeditationAudio> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MeditationAudio(
-      id: fields[0] as String,
-      url: fields[1] as String,
-      filePath: fields[2] as String,
+      name: fields[3] as String,
+      url: fields[0] as String,
+      filePath: fields[1] as String,
+      duration: fields[2] as Duration,
     );
   }
 
   @override
   void write(BinaryWriter writer, MeditationAudio obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
       ..write(obj.url)
+      ..writeByte(1)
+      ..write(obj.filePath)
       ..writeByte(2)
-      ..write(obj.filePath);
+      ..write(obj.duration)
+      ..writeByte(3)
+      ..write(obj.name);
   }
 
   @override

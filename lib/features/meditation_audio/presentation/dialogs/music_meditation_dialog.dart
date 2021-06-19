@@ -7,6 +7,11 @@ import 'package:morningmagic/features/meditation_audio/presentation/controller/m
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
 
 class MusicMeditationContainer extends StatefulWidget {
+  final bool withBgSound;
+
+  const MusicMeditationContainer({Key key, this.withBgSound = false})
+      : super(key: key);
+
   @override
   _MusicMeditationContainerState createState() =>
       _MusicMeditationContainerState();
@@ -26,17 +31,18 @@ class _MusicMeditationContainerState extends State<MusicMeditationContainer>
 
   Widget _buildSelectAudioList() {
     return Obx(() {
-      return _audioController.isAudioListLoading?.value ?? false
+      print('page: ${_audioController.currentPage.value}');
+      return _audioController.isAudioListLoading.value
           ? Center(child: CupertinoActivityIndicator())
           : ListView.builder(
               shrinkWrap: true,
               padding: EdgeInsets.symmetric(vertical: 16),
-              itemCount: _audioController.audios.length,
+              itemCount: _audioController.audioSource.length,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return AudioMeditationDialogItem(
                   id: index,
-                  audio: _audioController.audios[index],
+                  audio: _audioController.audioSource[index],
                 );
               },
             );
@@ -44,28 +50,26 @@ class _MusicMeditationContainerState extends State<MusicMeditationContainer>
   }
 
   void _stopPlayer() {
-    _audioController.player.stop();
-    _audioController.isPlaying.value = false;
+    _audioController.bfPlayer.value.stop();
     _audioController.playingIndex.value = -1;
-    _audioController.selectedItemIndex.value = 0;
+    if (!widget.withBgSound) _audioController.changeItem(0);
+    _audioController.bufIdSelected(0);
   }
 
   @override
   void initState() {
     _audioController = Get.find();
-    _audioController.audioSource = MeditationAudioData.musicSource;
+    print('Init music container');
+    _audioController.changeAudioSource(meditationAudioData.musicSource);
+    print('new audioSource length: ${meditationAudioData.musicSource.length}');
+    if (widget.withBgSound)
+      _audioController.changeAudioSource(meditationAudioData.musicSource,
+          isBgSource: true);
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _stopPlayer();
       _audioController.playFromFavorite = false;
       _audioController.reinitAudioSource(fromDialog: true);
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
   }
 }

@@ -13,15 +13,19 @@ import '../../features/meditation_audio/presentation/controller/meditation_audio
 import '../../features/meditation_audio/presentation/dialogs/audio_meditation_dialog.dart';
 import '../../resources/colors.dart';
 import '../../widgets/primary_circle_button.dart';
-import 'controllers/menu_controller.dart';
+
 import 'timer/meditation_timer_page.dart';
 
 class MeditationAudioPage extends StatefulWidget {
   final bool fromTimerPage;
   final bool fromHomeMenu;
+  final bool withBgSound;
 
   const MeditationAudioPage(
-      {Key key, this.fromTimerPage = false, this.fromHomeMenu = false})
+      {Key key,
+      this.fromTimerPage = false,
+      this.fromHomeMenu = false,
+      this.withBgSound = false})
       : super(key: key);
 
   @override
@@ -29,14 +33,14 @@ class MeditationAudioPage extends StatefulWidget {
 }
 
 class _MeditationAudioPageState extends State<MeditationAudioPage> {
-  AudioMenuController cMenu;
   MediationAudioController cAudio;
 
   @override
   void initState() {
-    cMenu = Get.put(AudioMenuController());
     cAudio =
         Get.put(MediationAudioController(repository: AudioRepositoryImpl()));
+    if (widget.withBgSound) cAudio.currentPage.value = MenuItems.music;
+    print('withBgSound: ${cAudio.withBgSound}');
     super.initState();
   }
 
@@ -65,11 +69,11 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                     top: 0,
                     child: Obx(() {
                       String path = 'assets/images/meditation';
-                      String bg = cMenu.currentPage.value == MenuItems.music
+                      String bg = cAudio.currentPage.value == MenuItems.music
                           ? '$path/audio_bg1.png'
-                          : cMenu.currentPage.value == MenuItems.sounds
+                          : cAudio.currentPage.value == MenuItems.sounds
                               ? '$path/audio_bg2.png'
-                              : cMenu.currentPage.value == MenuItems.yoga
+                              : cAudio.currentPage.value == MenuItems.yoga
                                   ? '$path/audio_bg3.png'
                                   : '$path/audio_bg4.png';
                       return Image.asset(bg,
@@ -83,6 +87,8 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                         CupertinoButton(
                             child: Icon(Icons.arrow_back, color: Colors.white),
                             onPressed: () async {
+                              cAudio.bfPlayer.value.stop();
+                              cAudio.playingIndex.value = -1;
                               cAudio.initializeMeditationAudio(
                                   autoplay: false, fromDialog: true);
                               Get.back();
@@ -96,9 +102,19 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                         icon:
                             Icon(Icons.arrow_forward, color: AppColors.primary),
                         onPressed: () {
+                          cAudio.bfPlayer.value.stop();
+                          cAudio.playingIndex.value = -1;
+                          if (cAudio.currentPage.value == MenuItems.yoga) {
+                            cAudio.withBgSound(true);
+                          } else {
+                            if (!widget.withBgSound) cAudio.bgPlayList?.clear();
+                            cAudio.withBgSound(widget.withBgSound);
+                          }
                           if (widget.fromTimerPage) {
                             cAudio.initializeMeditationAudio(
-                                autoplay: false, fromDialog: true);
+                                autoplay: false,
+                                fromDialog: true,
+                                reinitMainSound: !widget.withBgSound);
                             Get.back();
                           } else {
                             Get.to(MeditationTimerPage(
@@ -120,15 +136,19 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                   // height: Get.height,
                   padding: const EdgeInsetsDirectional.only(bottom: 50),
                   child: Obx(() {
-                    return cMenu == null
+                    print(
+                        'cAudio.currentPage.value: ${cAudio.currentPage?.value}');
+                    return cAudio == null
                         ? CircularProgressIndicator()
-                        : cMenu.currentPage.value == MenuItems.favorite
+                        : cAudio.currentPage.value == MenuItems.favorite
                             ? AudioMeditationFavoriteContainer()
-                            : cMenu.currentPage.value == MenuItems.music
-                                ? MusicMeditationContainer()
-                                : cMenu.currentPage.value == MenuItems.yoga
+                            : cAudio.currentPage.value == MenuItems.music
+                                ? MusicMeditationContainer(
+                                    withBgSound: widget.withBgSound)
+                                : cAudio.currentPage.value == MenuItems.yoga
                                     ? YogaMeditationContainer()
-                                    : AudioMeditationContainer();
+                                    : AudioMeditationContainer(
+                                        withBgSound: widget.withBgSound);
                   }),
                 ),
               );
@@ -136,16 +156,10 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
           ),
           Positioned(
             bottom: 0,
-            child: AudioMenu(),
+            child: AudioMenu(withBgSound: widget.withBgSound),
           )
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    Get.delete<AudioMenuController>();
-    super.dispose();
   }
 }

@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'book.dart';
 
 class BookAdapter extends TypeAdapter<Book> {
-
   @override
   final typeId = 2;
 
