@@ -52,6 +52,7 @@ class MyResource {
   // Оценка
   static const String LAUNCH_FOR_RATE = 'launchForRate';
   static const String IS_RATED = 'isRated';
+  static const String RATE_ALREADY_SHOWED = 'rateAlreadyShowed';
   static const String LAUNCH_FOR_INTERVIEW = 'launchForInterview';
   static const String IS_DONE_INTERVIEW = 'isDoneInterview';
 

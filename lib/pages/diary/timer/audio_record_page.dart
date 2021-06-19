@@ -62,8 +62,12 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
       return true;
     }
 
-    if (statusMicrophone.isUndetermined || statusMicrophone.isDenied) {
+    print('statusMicrophone: $statusMicrophone');
+
+    if (statusMicrophone.isPermanentlyDenied || statusMicrophone.isDenied) {
+      print('request microphone permission');
       statusMicrophone = await Permission.microphone.request();
+      print('statusMicrophone: $statusMicrophone');
     }
 
     return statusMicrophone.isGranted;
@@ -81,6 +85,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   Future<void> _startRecording() async {
     await _recorder.start();
     Recording current = await _recorder.current();
+    print('_startRecording    current : $current');
     _recording = current;
     isRecording.toggle();
   }
@@ -111,8 +116,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
 
   Future<void> playPause() async {
     if (_recording == null) {
-//      ToastUtils.createOverlayEntry(context, AppLocalizations.of(context)
-//          .translate("add_permission"));
+      print('AudioRecordPage _recordering == null');
       return;
     }
     switch (_recording.status) {
@@ -223,9 +227,9 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
 
   @override
   void initState() {
-    checkPermissions().then((value) {
-      print("process complete");
-    });
+    // checkPermissions().then((value) {
+    //   print("process complete");
+    // });
     initTimer();
     super.initState();
   }
@@ -248,11 +252,11 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
       isActive.toggle();
       _timer = Timer.periodic(
           1.seconds,
-          (Timer timer) => setState(() async {
+          (Timer timer) => setState(() {
                 if (_time.value < 1) {
                   final _audioPlayer = AudioPlayer();
-                  await _audioPlayer.setAsset("assets/audios/success.mp3");
-                  await _audioPlayer.play();
+                  _audioPlayer.setAsset("assets/audios/success.mp3");
+                  _audioPlayer.play();
                   _timer.cancel();
                   Future.microtask(() => stop());
                   OrderUtil().getRouteById(3).then((value) {
@@ -272,6 +276,8 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
     bool res = await getPermissions();
     if (res) {
       await _prepare();
+    } else {
+      print('permissions not allowed');
     }
   }
 
@@ -440,6 +446,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
           ],
         ),
         onPressed: () async {
+          await checkPermissions();
           await playPause();
         });
   }

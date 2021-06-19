@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/html_parser.dart';
 import 'package:flutter_html/style.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
@@ -94,7 +95,7 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
                 "img": Style(width: 20, height: 20)
               },
               shrinkWrap: true,
-              onLinkTap: (url) async {
+              onLinkTap: (url, cntx, map, element) {
                 if (url.contains('mailto')) openEmail(url.split(':').last, '');
                 if (url.contains('screen')) {
                   print('open screen: ${url.split(':').last}');

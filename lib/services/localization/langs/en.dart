@@ -3,7 +3,7 @@ Map<String, String> translations_en = {
   "settings_desc": "Set up your complex",
   "start_complex": "Start complex",
   "set_timer": "Set timer",
-  "dont_add_time": "Don't add time",
+  "dont_add_time": "Don't change time",
   "select": "Select",
   "own_time": "Own time",
   "1_hour": "1 hour",

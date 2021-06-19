@@ -1,9 +1,9 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -250,12 +250,13 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
 
   void onPlayAudio() async {
     isPlayed.value = true;
-    await widget.audioPlayer.play(widget.text, isLocal: true);
+    await widget.audioPlayer.setFilePath(widget.text);
+    await widget.audioPlayer?.play();
   }
 
   void onStopAudio() async {
     isPlayed.value = false;
-    await widget.audioPlayer.stop();
+    await widget.audioPlayer?.stop();
   }
 
   @override
@@ -275,27 +276,15 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.1,
               child: Center(
-                child: StreamBuilder<AudioPlayerState>(
-                    stream: widget.audioPlayer.onPlayerStateChanged,
-                    builder: (context, snapshot) {
-                      if (snapshot.data == AudioPlayerState.COMPLETED) {
-                        onStopAudio();
-                      }
-                      return GestureDetector(
-                        onTap: () {
-                          onPlayAudio();
-                          if (snapshot.data == AudioPlayerState.STOPPED) {
-                          } else if (snapshot.data ==
-                              AudioPlayerState.PLAYING) {
-                            onStopAudio();
-                          }
-                        },
-                        child: Obx(() => Icon(
-                            isPlayed.value ? Icons.pause : Icons.play_arrow,
-                            size: 70,
-                            color: AppColors.VIOLET)),
-                      );
-                    }),
+                child: GestureDetector(
+                  onTap: () {
+                    isPlayed.value ? onStopAudio() : onPlayAudio();
+                  },
+                  child: Obx(() => Icon(
+                      isPlayed.value ? Icons.pause : Icons.play_arrow,
+                      size: 70,
+                      color: AppColors.VIOLET)),
+                ),
               ),
             ),
             Spacer(),

@@ -524,7 +524,7 @@ Map<String, String> translations_ru = {
   "purchase_bonuses_image": "assets/images/purchase/bonuses_ru.png",
   "tarif_plans": "Тарифный план",
   "set_timer": "Устанавить таймер",
-  "dont_add_time": "Не добавлять время",
+  "dont_add_time": "Не изменять время",
   "select": "Выбор",
   "own_time": "Свое время",
   "1_hour": "1 час",

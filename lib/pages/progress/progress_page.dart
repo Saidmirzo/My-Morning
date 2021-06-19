@@ -746,19 +746,33 @@ class _ProgressPageState extends State<ProgressPage> {
   );
 
   void rateApp(BuildContext widgetContext) async {
+    // Кол-во запусков для первого показа
+    const int firstCntLaunch = 2;
+    // Кол-во запусков для следующих показов
+    const int nextCntLaunch = 5;
     int launchForRate =
         await MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0);
+    print('rateApp   launchForRate    $launchForRate');
     // Кол-во запусков равно либо больше чем нужно для показа оценки
-    bool needLaunch = launchForRate == 0 || launchForRate >= 5;
+    bool needLaunch =
+        launchForRate >= firstCntLaunch || launchForRate >= nextCntLaunch;
     // Ранее оценили или нет?
     bool isRated =
         await MyDB().getBox().get(MyResource.IS_RATED, defaultValue: false);
-    print(
-        'needLaunch ${!needLaunch} && !isRated ${!isRated} && !appStates.isRating.value ${!appStates.isRating.value}');
+    bool rateFirstShowed = await MyDB()
+        .getBox()
+        .get(MyResource.RATE_ALREADY_SHOWED, defaultValue: false);
+    // Если раньше уже показали, ждем минимум 5 запусков после последнего показа
+    if (launchForRate < nextCntLaunch && rateFirstShowed) {
+      print(
+          'rateApp   уже показывали, ждем еще минимум ${nextCntLaunch - launchForRate} запусков');
+      return;
+    }
     if (!needLaunch || isRated || !appStates.isRating.value) return;
     // Обнуляем счетчик, чтобы через N запусков показать снова, если нужно
-    if (launchForRate > 0) MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE, 0);
-    print('Запускаем функцию rateApp');
+    MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE, 0);
+    // Запоминаем, что раньше уже показывали
+    MyDB().getBox().put(MyResource.RATE_ALREADY_SHOWED, true);
     rateMyApp.init();
     if (Platform.isIOS) {
       print('rateApp - Platform.isIOS');

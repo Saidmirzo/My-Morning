@@ -141,8 +141,6 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                       ))),
                   Spacer(),
                   Obx(() {
-                    print(
-                        'rebuild player buttons. isPlaying: ${_audioController.isPlaying.value}');
                     if (_audioController != null &&
                         _audioController.isAudioLoading.value &&
                         !_audioController.isPlaylistAudioCached)

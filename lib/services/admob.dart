@@ -1,59 +1,79 @@
 import 'dart:io' show Platform;
 
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../storage.dart';
 
+const int maxFailedLoadAttempts = 5;
+
 class AdmobService {
   static final String appId = kDebugMode
-      ? FirebaseAdMob.testAppId
+      ? 'ca-app-pub-3940256099942544/3419835294'
       : Platform.isAndroid
           ? 'ca-app-pub-8444251353824953~3273634678'
-          : Platform.isIOS
-              ? 'ca-app-pub-8444251353824953~3943846765'
-              : FirebaseAdMob.testAppId;
+          : 'ca-app-pub-8444251353824953~3943846765';
   static final String interstitialId = kDebugMode
-      ? InterstitialAd.testAdUnitId
+      ? 'ca-app-pub-3940256099942544/8691691433'
       : Platform.isAndroid
           ? 'ca-app-pub-8444251353824953/5675746746'
-          : Platform.isIOS
-              ? 'ca-app-pub-8444251353824953/8111156632'
-              : InterstitialAd.testAdUnitId;
+          : 'ca-app-pub-8444251353824953/8111156632';
 
-  InterstitialAd myInterstitial;
+  InterstitialAd _interstitialAd;
+  int _numInterstitialLoadAttempts = 0;
 
   AdmobService() {
-    initInterstitial();
+    createInterstitialAd();
   }
 
-  void initInterstitial() {
-    myInterstitial?.dispose();
-
-    myInterstitial = InterstitialAd(
-      adUnitId: interstitialId,
-      listener: (MobileAdEvent event) {
-        switch (event) {
-          case MobileAdEvent.failedToLoad:
-          case MobileAdEvent.closed:
-            initInterstitial();
-            break;
-          default:
-            break;
-        }
-      },
+  void createInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: InterstitialAd.testAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          print('$ad loaded');
+          _interstitialAd = ad;
+          _numInterstitialLoadAttempts = 0;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          print('InterstitialAd failed to load: $error.');
+          _numInterstitialLoadAttempts += 1;
+          _interstitialAd = null;
+          if (_numInterstitialLoadAttempts <= maxFailedLoadAttempts) {
+            createInterstitialAd();
+          }
+        },
+      ),
     );
-    myInterstitial.load();
   }
 
   void showInterstitial() async {
-    billingService.isPro()
-        ? print('Нельзя показать межстраничную рекламу, это VIP пользователь')
-        : print('Пытаюсь запустить рекламу');
-    if (await myInterstitial.isLoaded())
-      myInterstitial.show();
-    else
-      print('Межстраничная реклама еще не загружена');
+    if (billingService.isVip.value) {
+      print('Notice: мы не будем показывать рекламу ВИП юзерам');
+      return;
+    }
+
+    if (_interstitialAd == null) {
+      print('Warning: attempt to show interstitial before loaded.');
+      return;
+    }
+    _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (InterstitialAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        createInterstitialAd();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        createInterstitialAd();
+      },
+    );
+    _interstitialAd?.show();
+    _interstitialAd = null;
   }
 }
 

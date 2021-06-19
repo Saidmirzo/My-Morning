@@ -31,17 +31,17 @@ class BillingService {
   Future<void> purchase(Package _package) async {
     purchaserInfo = await Purchases.purchasePackage(_package);
     isVip.value = isPro();
-    liadVisuzlisations();
   }
 
   void liadVisuzlisations() {
-    if (isVip.value) {
-      var c = Get.put(VisualizationController(
-          hiveBox: myDbBox,
-          targetRepository: VisualizationTargetRepositoryImpl(),
-          imageRepository: VisualizationImageRepositoryImpl()));
-      c.loadAllTargets();
-    }
+    // Пусть загружается всегда, чтобы наверняка уже было загружено до того как юзер оплатит подписку
+    // if (isVip.value) {
+    var c = Get.put(VisualizationController(
+        hiveBox: myDbBox,
+        targetRepository: VisualizationTargetRepositoryImpl(),
+        imageRepository: VisualizationImageRepositoryImpl()));
+    c.loadAllTargets();
+    // }
   }
 
   Future<void> getOfering() async {
@@ -54,9 +54,6 @@ class BillingService {
   }
 
   bool isPro() {
-    // Old, оставлю на время теста, может придется вернуь
-    // bool isActive = (purchaserInfo?.entitlements?.active?.length ?? 0) > 0;
-    // New
     bool isActive = (purchaserInfo?.activeSubscriptions?.length ?? 0) > 0;
     print('activeSubscriptions: ${purchaserInfo.activeSubscriptions}');
     return /* kDebugMode ? true : */ isActive;

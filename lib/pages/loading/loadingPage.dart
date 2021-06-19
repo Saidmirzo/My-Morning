@@ -1,7 +1,8 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:intl/intl.dart';
+import 'package:morningmagic/app_states.dart';
+import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/pages/loading/evening.dart';
 import 'package:morningmagic/pages/loading/morning.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
@@ -9,15 +10,9 @@ import 'package:morningmagic/pages/settings/settingsPage.dart';
 import 'package:morningmagic/pages/welcome/welcome_page.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
-import 'package:morningmagic/app_states.dart';
-import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
-import 'package:morningmagic/routing/route_values.dart';
 
 import '../../db/hive.dart';
-import '../../db/model/user/user.dart';
 import '../../db/resource.dart';
-import '../../resources/colors.dart';
-import '../../resources/colors.dart';
 import '../../storage.dart';
 import 'afternoon.dart';
 import 'night.dart';
@@ -85,25 +80,16 @@ class LoadingPageState extends State<LoadingPage>
   }
 
   Widget chooseNavigationRoute() {
+    calculateOpanApp();
     if (myDbBox != null && myDbBox.get(MyResource.USER_KEY) != null) {
-      return chooseSettingsOrStartMenu();
+      return getMenuPage();
     } else {
       AnalyticService.analytics.logAppOpen();
       return WelcomePage();
     }
   }
 
-  Widget chooseSettingsOrStartMenu() {
-    int launchForRate = MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE) ?? 0;
-    launchForRate++;
-    MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE, launchForRate);
-
-    MyDB().getBox().put(
-        MyResource.COUNT_APP_LAUNCH,
-        MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH) != null
-            ? (MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH) + 1)
-            : 1);
-
+  Widget getMenuPage() {
     String eventName;
     switch (MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH)) {
       case 2:
@@ -120,19 +106,24 @@ class LoadingPageState extends State<LoadingPage>
         break;
     }
 
-    if (eventName != null)
+    if (eventName != null) {
       AnalyticService.analytics.logEvent(
         name: eventName,
         parameters: <String, dynamic>{'bool': true},
       );
-
-    if (myDbBox != null &&
-        myDbBox.get(MyResource.BOOK_KEY) != null &&
-        myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY) != null) {
-      return MainMenuPage();
-    } else {
-      return SettingsPage();
     }
+
+    return MainMenuPage();
+  }
+
+  void calculateOpanApp() {
+    MyDB().getBox().put(MyResource.COUNT_APP_LAUNCH,
+        MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH, defaultValue: 0) + 1);
+    MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE,
+        MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0) + 1);
+
+    print(
+        'launch app for rate    :    ${MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0)}');
   }
 
   _redirect() async {

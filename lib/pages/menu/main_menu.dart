@@ -1,3 +1,4 @@
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,6 +16,7 @@ import 'package:morningmagic/pages/reading/reading_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/services/admob.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/storage.dart';
@@ -42,9 +44,14 @@ class MainMenuPageState extends State<MainMenuPage> {
   @override
   void initState() {
     super.initState();
+    admobService.createInterstitialAd();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       dayHolderSize = await _getDaysLength();
+      if (GetPlatform.isIOS) {
+        // Show tracking authorization dialog and ask for permission
+        AppTrackingTransparency.requestTrackingAuthorization();
+      }
     });
 
     _clearExercisesHolder();

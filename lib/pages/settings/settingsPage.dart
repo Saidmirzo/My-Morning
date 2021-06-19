@@ -62,17 +62,11 @@ class SettingsPageState extends State<SettingsPage> {
   void initState() {
     Get.put(AffirmationController());
     settingsController = Get.put(SettingsController());
-    admobService.initInterstitial();
     _init();
     _initTarifDialog();
     initPurchaseListener();
     activityList = buildActivityList(true);
     AnalyticService.screenView('settings_page');
-
-    if (GetPlatform.isIOS) {
-      // Show tracking authorization dialog and ask for permission
-      AppTrackingTransparency.requestTrackingAuthorization();
-    }
     getAndSetCountLaunches();
     super.initState();
   }
