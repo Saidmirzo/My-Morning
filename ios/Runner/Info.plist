@@ -56,6 +56,10 @@
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Music!</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Not used</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Not used</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>The data is used exclusively for the user and is not passed on to third parties</string>
 	<key>NSCameraUsageDescription</key>

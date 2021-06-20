@@ -56,7 +56,7 @@ class BillingService {
   bool isPro() {
     bool isActive = (purchaserInfo?.activeSubscriptions?.length ?? 0) > 0;
     print('activeSubscriptions: ${purchaserInfo.activeSubscriptions}');
-    return /* kDebugMode ? true : */ isActive;
+    return kDebugMode ? true : isActive;
   }
 
   Package get monthlyTarif => _offering?.monthly;

@@ -227,9 +227,9 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
 
   @override
   void initState() {
-    // checkPermissions().then((value) {
-    //   print("process complete");
-    // });
+    checkPermissions().then((value) {
+      print("process complete");
+    });
     initTimer();
     super.initState();
   }
@@ -446,6 +446,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
           ],
         ),
         onPressed: () async {
+          print('path   :    ${await _localPath}');
           await checkPermissions();
           await playPause();
         });

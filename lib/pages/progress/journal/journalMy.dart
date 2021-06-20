@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
-import 'package:just_audio/just_audio.dart';
+// import 'package:just_audio/just_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -250,8 +251,7 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
 
   void onPlayAudio() async {
     isPlayed.value = true;
-    await widget.audioPlayer.setFilePath(widget.text);
-    await widget.audioPlayer?.play();
+    await widget.audioPlayer?.play(widget.text, isLocal: true);
   }
 
   void onStopAudio() async {
