@@ -212,6 +212,7 @@ class MediationAudioController extends GetxController {
       });
     } else {
       if (withBgSound.value) {
+        print('generateMeditationPlayList : withBgSound.value');
         return [getOneAudioItem(audioSource[selectedItemIndex.value])];
       } else {
         audioSource.forEach((element) {
@@ -282,7 +283,7 @@ class MediationAudioController extends GetxController {
       print('initializeMeditationAudio: reinit main audio');
       await reinitAudioSource(fromDialog: fromDialog);
       if (reinitMainSound) updateCurrName();
-      if ((bgPlayList?.length ?? 0) == 0)
+      if ((bgPlayList?.length ?? 0) == 0 || currentPage.value == MenuItems.yoga)
         playList = await generateMeditationPlayList();
       await player.setAudioSource(
         ConcatenatingAudioSource(
@@ -333,7 +334,9 @@ class MediationAudioController extends GetxController {
     else
       _nextIndex = player.currentIndex + 1;
     player.seek(Duration(seconds: 0), index: _nextIndex);
-    currAudioName.value = audioSource[_nextIndex].name;
+    if (!withBgSound.value) {
+      currAudioName.value = audioSource[_nextIndex].name;
+    }
     if (!player.playing) player.play();
   }
 
@@ -347,7 +350,9 @@ class MediationAudioController extends GetxController {
     else
       _nextIndex = player.currentIndex - 1;
     player.seek(Duration(seconds: 0), index: _nextIndex);
-    currAudioName.value = audioSource[_nextIndex].name;
+    if (!withBgSound.value) {
+      currAudioName.value = audioSource[_nextIndex].name;
+    }
     if (!player.playing) player.play();
   }
 

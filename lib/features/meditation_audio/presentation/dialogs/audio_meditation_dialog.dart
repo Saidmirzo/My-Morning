@@ -59,7 +59,7 @@ class _AudioMeditationContainerState extends State<AudioMeditationContainer>
   @override
   void initState() {
     _audioController = Get.find();
-    _source.addAll(meditationAudioData.musicSource);
+    _source.addAll(meditationAudioData.soundSource);
     _audioController.changeAudioSource(_source, isBgSource: widget.withBgSound);
     super.initState();
     WidgetsBinding.instance.addObserver(this);

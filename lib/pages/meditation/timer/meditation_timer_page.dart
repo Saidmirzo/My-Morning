@@ -153,10 +153,13 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                       width: Get.width * 0.8,
                       alignment: Alignment.center,
                       child: Obx(() {
-                        var duration = _audioController
-                            .audioSource[
-                                _audioController?.player?.currentIndex ?? 0]
-                            .duration;
+                        var duration = (_audioController?.withBgSound?.value ??
+                                false)
+                            ? _audioController
+                                .audioSource[
+                                    _audioController?.selectedItemIndex?.value]
+                                .duration
+                            : null;
                         return Row(
                           children: [
                             if (duration != null)

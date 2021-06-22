@@ -8,11 +8,6 @@ import '../storage.dart';
 const int maxFailedLoadAttempts = 5;
 
 class AdmobService {
-  static final String appId = kDebugMode
-      ? 'ca-app-pub-3940256099942544/3419835294'
-      : Platform.isAndroid
-          ? 'ca-app-pub-8444251353824953~3273634678'
-          : 'ca-app-pub-8444251353824953~3943846765';
   static final String interstitialId = kDebugMode
       ? 'ca-app-pub-3940256099942544/8691691433'
       : Platform.isAndroid
@@ -28,7 +23,7 @@ class AdmobService {
 
   void createInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: InterstitialAd.testAdUnitId,
+      adUnitId: interstitialId,
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
