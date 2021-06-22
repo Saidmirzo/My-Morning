@@ -100,6 +100,8 @@ class SettingsPageState extends State<SettingsPage> {
     ScrollController _scrollController =
         PrimaryScrollController.of(context) ?? ScrollController();
 
+    double titleFontSize = Get.width * 0.055;
+
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
@@ -130,7 +132,7 @@ class SettingsPageState extends State<SettingsPage> {
                                 style: TextStyle(
                                     color: AppColors.VIOLET,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 24),
+                                    fontSize: titleFontSize),
                               ),
                             )),
                       ),
@@ -143,7 +145,7 @@ class SettingsPageState extends State<SettingsPage> {
                             style: TextStyle(
                                 color: AppColors.VIOLET,
                                 fontStyle: FontStyle.normal,
-                                fontSize: 14),
+                                fontSize: Get.width * .033),
                           ),
                         ),
                       ),
@@ -166,7 +168,7 @@ class SettingsPageState extends State<SettingsPage> {
                                 style: TextStyle(
                                     color: AppColors.VIOLET,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 26),
+                                    fontSize: titleFontSize),
                               ),
                             )),
                       ),
@@ -204,7 +206,7 @@ class SettingsPageState extends State<SettingsPage> {
                                         child: Text('choose_ready'.tr,
                                             style: TextStyle(
                                               color: AppColors.VIOLET,
-                                              fontSize: Get.height * 0.028,
+                                              fontSize: titleFontSize,
                                               fontWeight: FontWeight.normal,
                                             )),
                                       ),
@@ -242,7 +244,7 @@ class SettingsPageState extends State<SettingsPage> {
                               style: TextStyle(
                                   color: AppColors.VIOLET,
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 26),
+                                  fontSize: titleFontSize),
                             ),
                           ),
                         ),
@@ -269,7 +271,7 @@ class SettingsPageState extends State<SettingsPage> {
                                   keyboardType: TextInputType.text,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      fontSize: 23,
+                                      fontSize: titleFontSize,
                                       fontStyle: FontStyle.normal,
                                       color: AppColors.VIOLET,
                                       decoration: TextDecoration.none),
@@ -352,7 +354,7 @@ class SettingsPageState extends State<SettingsPage> {
               style: TextStyle(
                   color: AppColors.VIOLET,
                   fontStyle: FontStyle.normal,
-                  fontSize: 14),
+                  fontSize: Get.width * .033),
             )),
             Obx(
               () => Text(
@@ -362,7 +364,7 @@ class SettingsPageState extends State<SettingsPage> {
                 style: TextStyle(
                     color: AppColors.VIOLET,
                     fontStyle: FontStyle.normal,
-                    fontSize: 21),
+                    fontSize: Get.width * .05),
               ),
             )
           ],
@@ -625,7 +627,7 @@ class AffirmationTextField extends StatelessWidget {
       keyboardType: TextInputType.text,
       textAlign: TextAlign.left,
       style: TextStyle(
-          fontSize: 20,
+          fontSize: Get.width * .045,
           fontStyle: FontStyle.normal,
           color: AppColors.VIOLET,
           decoration: TextDecoration.none),
@@ -634,7 +636,7 @@ class AffirmationTextField extends StatelessWidget {
         hintText: 'affirmation_hint'.tr,
         hintStyle: TextStyle(
           color: AppColors.LIGHT_GRAY,
-          fontSize: 16,
+          fontSize: Get.width * .04,
         ),
         border: InputBorder.none,
       ),

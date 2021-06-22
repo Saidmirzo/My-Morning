@@ -9,6 +9,7 @@ import 'package:morningmagic/features/meditation_audio/presentation/controller/m
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/timer_service.dart';
+import 'package:morningmagic/utils/other.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:screen/screen.dart';
 
@@ -90,7 +91,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
               ),
               Obx(() => _audioController.withBgSound.value
                   ? Positioned(
-                      top: Get.height * .36,
+                      top: Get.height * .20,
                       left: 20,
                       child: Row(
                         children: [
@@ -100,7 +101,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                               RotatedBox(
                                 quarterTurns: -1,
                                 child: SizedBox(
-                                  width: Get.height * .2,
+                                  width: Get.height * .33,
                                   child: Obx(() => Slider(
                                         value: _audioController
                                             .bgAudioPlayer.value.volume,
@@ -151,25 +152,31 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                   Container(
                       width: Get.width * 0.8,
                       alignment: Alignment.center,
-                      child: Obx(() => Column(
-                            children: [
-                              LinearProgressIndicator(
+                      child: Obx(() {
+                        var duration = _audioController
+                            .audioSource[
+                                _audioController?.player?.currentIndex ?? 0]
+                            .duration;
+                        return Row(
+                          children: [
+                            if (duration != null)
+                              Text(printDuration(
+                                  _audioController.durationPosition.value,
+                                  h: false)),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: LinearProgressIndicator(
                                   value:
                                       _audioController.percentDuration.value),
-                              // Row(
-                              // const SizedBox(height: 10),
-                              // Время пока не нужно
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: [
-                              //     Text(printDuration(
-                              //         _audioController.durationPosition.value)),
-                              //     Text(' / '),
-                              //     Text(printDuration(
-                              //         _audioController.player.duration)),
-                              //   ],
-                              // ),
-                            ],
-                          ))),
+                            ),
+                            const SizedBox(width: 10),
+                            if (duration != null)
+                              Text(
+                                printDuration(duration, h: false),
+                              ),
+                          ],
+                        );
+                      })),
                   Spacer(),
                   buildMenuButtons(timerService),
                 ],

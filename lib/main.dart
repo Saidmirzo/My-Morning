@@ -9,6 +9,8 @@ import 'package:morningmagic/services/localization/localization_service.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/notifications.dart';
 
+import 'utils/my_behavior.dart';
+
 Future<void> main() async {
   // Для выполнение действия через N время на андроид
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +27,6 @@ Future<void> main() async {
       initialRoute: AppRouting.initialRoute,
       onGenerateRoute: (settings) => AppRouting.generateRoute(settings),
       translations: LocalizationService(),
-      // debugShowCheckedModeBanner: false,
       locale: _initialLocale,
       theme: ThemeData(fontFamily: 'Montserrat'),
       supportedLocales: [

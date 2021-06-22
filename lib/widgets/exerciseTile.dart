@@ -66,7 +66,7 @@ class ExerciseTile extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: AppColors.VIOLET,
-                    fontSize: 20,
+                    fontSize: Get.width * .05,
                     fontStyle: FontStyle.normal),
               )),
               Container(
@@ -82,7 +82,7 @@ class ExerciseTile extends StatelessWidget {
                         'min'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 11,
+                            fontSize: Get.width * .025,
                             fontStyle: FontStyle.normal,
                             color: AppColors.VIOLET,
                             decoration: TextDecoration.none),
@@ -129,7 +129,7 @@ class ExerciseTile extends StatelessWidget {
                 borderSide: BorderSide(color: AppColors.CREAM),
                 borderRadius: BorderRadius.all(Radius.circular(8)))),
         style: TextStyle(
-            fontSize: 18,
+            fontSize: Get.width * .04,
             fontStyle: FontStyle.normal,
             color: AppColors.VIOLET,
             decoration: TextDecoration.none),

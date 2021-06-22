@@ -1,12 +1,12 @@
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/interviewDialog.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
-import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
 import 'package:morningmagic/pages/diary/diary_page.dart';
@@ -65,6 +65,7 @@ class MainMenuPageState extends State<MainMenuPage> {
     return Scaffold(
       body: Stack(children: [
         SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           child: Column(
             children: [
               buildHeader(),
@@ -277,7 +278,7 @@ class MainMenuPageState extends State<MainMenuPage> {
       {Color color, Function onPressed}) {
     return container(
       width: Get.width * .44,
-      height: Get.width * .45,
+      height: Get.width * .5,
       padding: const EdgeInsets.all(15),
       margin: const EdgeInsets.all(5),
       onPressed: onPressed,
@@ -313,7 +314,7 @@ class MainMenuPageState extends State<MainMenuPage> {
                   subtitle,
                   style: TextStyle(
                       color: AppColors.primary,
-                      fontSize: Get.width * .04,
+                      fontSize: Get.width * .035,
                       fontWeight: FontWeight.w400),
                 ),
               ),
