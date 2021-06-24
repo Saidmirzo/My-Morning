@@ -50,7 +50,6 @@ class MediationAudioController extends GetxController {
   // Если играет на странице таймера
   RxBool isPlaying = false.obs;
   var isAudioLoading = false.obs;
-  var isAudioListLoading = false.obs;
 
   bool playFromFavorite = false;
 
@@ -181,7 +180,6 @@ class MediationAudioController extends GetxController {
   }
 
   Future<MeditationAudio> cacheAudioFile(MeditationAudio track) async {
-    print('cacheAudioFile: $track');
     try {
       MeditationAudio audioFile = await repository.getAudioFile(track);
       audioSource.add(audioFile);
@@ -203,7 +201,9 @@ class MediationAudioController extends GetxController {
     return null;
   }
 
+  Rx<Duration> meditationTrackDuration = 0.seconds.obs;
   Future<List<AudioSource>> generateMeditationPlayList() async {
+    meditationTrackDuration?.value = null;
     List<AudioSource> _result = [];
     if (playFromFavorite) {
       print('generateMeditationPlayList: playFromFavorite');
@@ -213,6 +213,8 @@ class MediationAudioController extends GetxController {
     } else {
       if (withBgSound.value) {
         print('generateMeditationPlayList : withBgSound.value');
+        meditationTrackDuration.value =
+            audioSource[selectedItemIndex.value].duration;
         return [getOneAudioItem(audioSource[selectedItemIndex.value])];
       } else {
         audioSource.forEach((element) {

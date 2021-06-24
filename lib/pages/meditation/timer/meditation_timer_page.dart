@@ -117,6 +117,8 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                           ),
                           GestureDetector(
                               onTap: () {
+                                _audioController.currentPage.value =
+                                    MenuItems.music;
                                 _audioController.bgAudioPlayer?.value?.pause();
                                 _audioController.pause();
                                 Get.to(MeditationAudioPage(
@@ -153,13 +155,10 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                       width: Get.width * 0.8,
                       alignment: Alignment.center,
                       child: Obx(() {
-                        var duration = (_audioController?.withBgSound?.value ??
-                                false)
-                            ? _audioController
-                                .audioSource[
-                                    _audioController?.selectedItemIndex?.value]
-                                .duration
-                            : null;
+                        var duration = _audioController
+                            ?.meditationTrackDuration?.value;
+                        print(
+                            'rebuild duration : withBgSound=${_audioController?.withBgSound?.value}');
                         return Row(
                           children: [
                             if (duration != null)

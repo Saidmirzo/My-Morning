@@ -39,7 +39,6 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
   void initState() {
     cAudio =
         Get.put(MediationAudioController(repository: AudioRepositoryImpl()));
-    if (widget.withBgSound) cAudio.currentPage.value = MenuItems.music;
     print('withBgSound: ${cAudio.withBgSound}');
     super.initState();
   }

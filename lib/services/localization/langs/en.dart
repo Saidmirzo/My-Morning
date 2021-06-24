@@ -550,8 +550,8 @@ Map<String, String> translations_en = {
       "<p>After 10 days, it will be possible to develop a habit <br>After a month of using, you will be able to feel that it has become much easier to wake up, and stress has become noticeably less.</p>",
   "faq_about_title_5": "How to set up fitness?",
   "faq_about_desc_5":
-      "<p>1. Click on <img alt='settings' src='https://storage.yandexcloud.net/myaudio/Nastavnik/kartinki/02-min.png'> in settings <br>2. Select the program you want to edit <br>3. Click edit <br>There is a problem? <a href='screen:support'>support</a></p>",
+      "<p>1. Click on <img alt='settings' src='https://storage.yandexcloud.net/myaudio/Nastavnik/kartinki/02-min.png' width='25' /> in settings <br>2. Select the program you want to edit <br>3. Click edit <br>There is a problem? <a href='screen:support'>support</a></p>",
   "faq_about_title_6": "How to set up visualizations?",
   "faq_about_desc_6":
-      "<p>1. To add a target, click on the <img alt='settings' src='https://storage.yandexcloud.net/myaudio/Nastavnik/kartinki/01-min.png'> in the target selection <br>2. Then select the image from those saved in your phone <br>3. Wait while the pictures are loaded <br>4. You can use ready-made goals and images, or add your own images to goals using the same instructions. <br>There is a problem? <a href='screen:support'>support</a></p>",
+      "<p>1. To add a target, click on the <img alt='settings' src='https://storage.yandexcloud.net/myaudio/Nastavnik/kartinki/01-min.png' width='25' /> in the target selection <br>2. Then select the image from those saved in your phone <br>3. Wait while the pictures are loaded <br>4. You can use ready-made goals and images, or add your own images to goals using the same instructions. <br>There is a problem? <a href='screen:support'>support</a></p>",
 };

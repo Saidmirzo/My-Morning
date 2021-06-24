@@ -31,22 +31,18 @@ class _AudioMeditationContainerState extends State<AudioMeditationContainer>
   }
 
   Widget _buildSelectAudioList() {
-    return Obx(() {
-      return _audioController.isAudioListLoading.value
-          ? Center(child: CupertinoActivityIndicator())
-          : ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(vertical: 16),
-              itemCount: _source.length,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return AudioMeditationDialogItem(
-                  id: index,
-                  audio: _source[index],
-                );
-              },
-            );
-    });
+    return ListView.builder(
+      shrinkWrap: true,
+      padding: EdgeInsets.symmetric(vertical: 16),
+      itemCount: _source.length,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return AudioMeditationDialogItem(
+          id: index,
+          audio: _source[index],
+        );
+      },
+    );
   }
 
   void _stopPlayer() {
@@ -66,7 +62,6 @@ class _AudioMeditationContainerState extends State<AudioMeditationContainer>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _stopPlayer();
       _audioController.playFromFavorite = false;
-      _audioController.reinitAudioSource(fromDialog: true);
     });
   }
 
