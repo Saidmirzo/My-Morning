@@ -16,7 +16,7 @@ class AffirmationCategoryDialog extends StatefulWidget {
 }
 
 class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
-  final AffirmationController _controller = Get.find();
+  final AffirmationController _controller = Get.put(AffirmationController());
 
   @override
   Widget build(BuildContext context) {
