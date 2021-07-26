@@ -169,21 +169,15 @@ class _ProgressPageState extends State<ProgressPage> {
               new CircularStackEntry(
                 [
                   new CircularSegmentEntry(
-                    MyDB().getBox().get(
-                              MyResource.PERCENT_OF_AWARENESS,
-                            ) ??
-                        0,
+                    MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS,
+                        defaultValue: 0.0),
                     Color(0xff00b2ff),
                     rankKey: 'completed',
                   ),
                   new CircularSegmentEntry(
-                    MyDB().getBox().get(
-                                  MyResource.PERCENT_OF_AWARENESS,
-                                ) !=
-                            null
-                        ? 100 -
-                            MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS)
-                        : 100,
+                    100 -
+                        MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS,
+                            defaultValue: 0.0),
                     Color(0xffb3e8ff),
                     rankKey: 'remaining',
                   ),
@@ -403,38 +397,28 @@ class _ProgressPageState extends State<ProgressPage> {
                       ),
                       Text(
                         _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) == 1
-                            ? MyDB().getBox().get(
-                                        MyResource.TOTAL_COUNT_OF_SESSIONS) !=
-                                    null
-                                ? MyDB()
-                                    .getBox()
-                                    .get(MyResource.TOTAL_COUNT_OF_SESSIONS)
-                                    .toString()
-                                : '0'
-                            : (_Itogi_Mounth_Year_kol_vo(
+                            ? MyDB()
+                                .getBox()
+                                .get(MyResource.TOTAL_COUNT_OF_SESSIONS,
+                                    defaultValue: 0)
+                                .toString()
+                            : _Itogi_Mounth_Year_kol_vo(
                                         _Itog, _Mounth, _Year) ==
                                     2
-                                ? MyDB().getBox().get(MyResource
-                                            .TOTAL_COUNT_OF_SESSIONS) !=
-                                        null
-                                    ? MyDB()
-                                        .getBox()
-                                        .get(MyResource.TOTAL_COUNT_OF_SESSIONS)
-                                        .toString()
-                                    : '0'
+                                ? MyDB()
+                                    .getBox()
+                                    .get(MyResource.TOTAL_COUNT_OF_SESSIONS,
+                                        defaultValue: 0)
+                                    .toString()
                                 : (_Itogi_Mounth_Year_kol_vo(
                                             _Itog, _Mounth, _Year) ==
                                         3
-                                    ? MyDB().getBox().get(MyResource
-                                                .YEAR_COUNT_OF_SESSIONS) !=
-                                            null
-                                        ? MyDB()
-                                            .getBox()
-                                            .get(MyResource
-                                                .YEAR_COUNT_OF_SESSIONS)
-                                            .toString()
-                                        : '0'
-                                    : '3')),
+                                    ? MyDB()
+                                        .getBox()
+                                        .get(MyResource.YEAR_COUNT_OF_SESSIONS,
+                                            defaultValue: 0)
+                                        .toString()
+                                    : '3'),
                         style: TextStyle(
                           color: Color(0xff832f51),
                           fontSize:
@@ -462,40 +446,25 @@ class _ProgressPageState extends State<ProgressPage> {
                         ),
                       ),
                       Text(
-                        _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) == 1
-                            ? MyDB().getBox().get(MyResource
-                                        .TOTAL_MINUTES_OF_AWARENESS) !=
-                                    null
-                                ? MyDB()
-                                    .getBox()
-                                    .get(MyResource.TOTAL_MINUTES_OF_AWARENESS)
-                                    .toString()
-                                : '0'
-                            : (_Itogi_Mounth_Year_kol_vo(
-                                        _Itog, _Mounth, _Year) ==
-                                    2
-                                ? MyDB().getBox().get(MyResource
-                                            .TOTAL_MINUTES_OF_AWARENESS) !=
-                                        null
-                                    ? MyDB()
-                                        .getBox()
-                                        .get(MyResource
-                                            .TOTAL_MINUTES_OF_AWARENESS)
-                                        .toString()
-                                    : '0'
-                                : (_Itogi_Mounth_Year_kol_vo(
+                        (_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) == 1
+                                ? MyDB().getBox().get(
+                                    MyResource.TOTAL_MINUTES_OF_AWARENESS,
+                                    defaultValue: 0)
+                                : _Itogi_Mounth_Year_kol_vo(
                                             _Itog, _Mounth, _Year) ==
-                                        3
-                                    ? MyDB().getBox().get(MyResource
-                                                .YEAR_MINUTES_OF_AWARENESS) !=
-                                            null
-                                        ? MyDB()
-                                            .getBox()
-                                            .get(MyResource
-                                                .YEAR_MINUTES_OF_AWARENESS)
-                                            .toString()
-                                        : '0'
-                                    : '3')),
+                                        2
+                                    ? MyDB().getBox().get(
+                                        MyResource.TOTAL_MINUTES_OF_AWARENESS,
+                                        defaultValue: 0)
+                                    : _Itogi_Mounth_Year_kol_vo(
+                                                _Itog, _Mounth, _Year) ==
+                                            3
+                                        ? MyDB().getBox().get(
+                                            MyResource
+                                                .YEAR_MINUTES_OF_AWARENESS,
+                                            defaultValue: 0)
+                                        : 3)
+                            .toString(),
                         style: TextStyle(
                           color: Color(0xff832f51),
                           fontSize:
@@ -523,41 +492,27 @@ class _ProgressPageState extends State<ProgressPage> {
                         ),
                       ),
                       Text(
-                        _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) == 1
-                            ? MyDB().getBox().get(MyResource
-                                        .TOTAL_COUNT_OF_COMPLETED_SESSIONS) !=
-                                    null
-                                ? MyDB()
-                                    .getBox()
-                                    .get(MyResource
-                                        .TOTAL_COUNT_OF_COMPLETED_SESSIONS)
-                                    .toString()
-                                : '0'
-                            : (_Itogi_Mounth_Year_kol_vo(
-                                        _Itog, _Mounth, _Year) ==
-                                    2
-                                ? MyDB().getBox().get(MyResource
-                                            .TOTAL_COUNT_OF_COMPLETED_SESSIONS) !=
-                                        null
-                                    ? MyDB()
-                                        .getBox()
-                                        .get(MyResource
-                                            .TOTAL_COUNT_OF_COMPLETED_SESSIONS)
-                                        .toString()
-                                    : '0'
-                                : (_Itogi_Mounth_Year_kol_vo(
+                        (_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) == 1
+                                ? MyDB().getBox().get(
+                                    MyResource
+                                        .TOTAL_COUNT_OF_COMPLETED_SESSIONS,
+                                    defaultValue: 0)
+                                : _Itogi_Mounth_Year_kol_vo(
                                             _Itog, _Mounth, _Year) ==
-                                        3
-                                    ? MyDB().getBox().get(MyResource
-                                                .YEAR_COUNT_OF_COMPLETED_SESSIONS) !=
-                                            null
-                                        ? MyDB()
-                                            .getBox()
-                                            .get(MyResource
-                                                .YEAR_COUNT_OF_COMPLETED_SESSIONS)
-                                            .toString()
-                                        : '0'
-                                    : '3')),
+                                        2
+                                    ? MyDB().getBox().get(
+                                        MyResource
+                                            .TOTAL_COUNT_OF_COMPLETED_SESSIONS,
+                                        defaultValue: 0)
+                                    : _Itogi_Mounth_Year_kol_vo(
+                                                _Itog, _Mounth, _Year) ==
+                                            3
+                                        ? MyDB().getBox().get(
+                                            MyResource
+                                                .YEAR_COUNT_OF_COMPLETED_SESSIONS,
+                                            defaultValue: 0)
+                                        : 3)
+                            .toString(),
                         style: TextStyle(
                           color: Color(0xff832f51),
                           fontSize:

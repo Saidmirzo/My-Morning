@@ -7,6 +7,7 @@ import 'package:get/instance_manager.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/pages/progress/components/appbar.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 import '../../../app_states.dart';
@@ -36,10 +37,6 @@ class _journalMyState extends State<journalMy> {
       body: Stack(
         children: [
           Container(
-            width:
-                MediaQuery.of(context).size.width, // match parent(all screen)
-            height:
-                MediaQuery.of(context).size.height, // match parent(all screen)
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -53,107 +50,89 @@ class _journalMyState extends State<journalMy> {
               ),
             ),
             //SingleChildScrollView
-            child: Padding(
-              padding: const EdgeInsets.only(top: 75, bottom: 75),
-              child: GridView(
-                //padding: const EdgeInsets.all(25),
-                children: list.isNotEmpty
-                    ? List.generate(
-                        list.length,
-                        (index) => !list[index][1].contains('/')
-                            ? CategoryItem(
-                                list.isNotEmpty ? list[index][0] : '0',
-                                list.isNotEmpty ? list[index][1] : '0',
-                                list.isNotEmpty ? list[index][2] : '01.01.2020',
-                              )
-                            : CategoryRecordItem(
-                                list.isNotEmpty ? list[index][0] : '0',
-                                list.isNotEmpty ? list[index][1] : '0',
-                                list.isNotEmpty ? list[index][2] : '01.01.2020',
-                                audioPlayer,
-                              ),
-                      )
-                    : [],
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-                  childAspectRatio: 5 / 4.1,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 0,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 30,
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.keyboard_arrow_left_rounded,
-                    size: 40,
-                    color: AppColors.VIOLET,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    child: Text(
-                      'my_diary'.tr,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.VIOLET,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+            child: Column(
+              children: [
+                appBarProgress('my_diary'.tr),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15, bottom: 15),
+                    child: GridView(
+                      //padding: const EdgeInsets.all(25),
+                      children: list.isNotEmpty
+                          ? List.generate(
+                              list.length,
+                              (index) => !list[index][1].contains('/')
+                                  ? CategoryItem(
+                                      list.isNotEmpty ? list[index][0] : '0',
+                                      list.isNotEmpty ? list[index][1] : '0',
+                                      list.isNotEmpty
+                                          ? list[index][2]
+                                          : '01.01.2020',
+                                    )
+                                  : CategoryRecordItem(
+                                      list.isNotEmpty ? list[index][0] : '0',
+                                      list.isNotEmpty ? list[index][1] : '0',
+                                      list.isNotEmpty
+                                          ? list[index][2]
+                                          : '01.01.2020',
+                                      audioPlayer,
+                                    ),
+                            )
+                          : [],
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent:
+                            MediaQuery.of(context).size.width * 0.5,
+                        childAspectRatio: 5 / 4.1,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 0,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => JournalMyDitailsAdd()));
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add_circle_outline,
-                      size: 40,
-                      //color: AppColors.VIOLET,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      //width: MediaQuery.of(context).size.width * 0.75,
-                      child: Text(
-                        'add_note'.tr,
-                        //textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.VIOLET,
-                          fontSize: 30,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
-              ),
+                addBtn(context),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  InkWell addBtn(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => JournalMyDitailsAdd()));
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.1,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add_circle_outline,
+              size: 40,
+              //color: AppColors.VIOLET,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 10,
+              ),
+              //width: MediaQuery.of(context).size.width * 0.75,
+              child: Text(
+                'add_note'.tr,
+                //textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.VIOLET,
+                  fontSize: 30,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

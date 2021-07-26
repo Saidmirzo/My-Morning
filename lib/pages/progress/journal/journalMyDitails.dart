@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/pages/progress/components/appbar.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 import 'journalMy.dart';
@@ -50,10 +51,6 @@ class _journalMyDitailsState extends State<journalMyDitails> {
       body: Stack(
         children: [
           Container(
-            width:
-                MediaQuery.of(context).size.width, // match parent(all screen)
-            height:
-                MediaQuery.of(context).size.height, // match parent(all screen)
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -66,168 +63,148 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                 ],
               ),
             ),
-            child: Hero(
-              tag: widget.id,
-              child: Material(
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  margin: const EdgeInsets.only(
-                      bottom: 75, left: 5, right: 5, top: 75),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          //crossAxisAlignment: CrossAxisAlignment.center,
+            child: Column(
+              children: [
+                appBarProgress('my_diary'.tr),
+                Expanded(
+                  child: Hero(
+                    tag: widget.id,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        margin: const EdgeInsets.only(
+                            bottom: 15, left: 5, right: 5, top: 15),
+                        child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 5),
-                              child: Icon(Icons.access_time),
-                            ),
                             Container(
-                              width: 10,
-                            ),
-                            Text(
-                              widget.date,
-                              style: TextStyle(),
-                            ),
-                            Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isEnabled = true;
-                                });
-                                Future.delayed(Duration(milliseconds: 300), () {
-                                  setFocus();
-                                });
-                              },
-                              child: Icon(
-                                Icons.edit_outlined,
-                                //size: 40,
-                                //color: AppColors.VIOLET,
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 5),
+                                    child: Icon(Icons.access_time),
+                                  ),
+                                  Container(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    widget.date,
+                                    style: TextStyle(),
+                                  ),
+                                  Spacer(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isEnabled = true;
+                                      });
+                                      Future.delayed(
+                                          Duration(milliseconds: 300), () {
+                                        setFocus();
+                                      });
+                                    },
+                                    child: Icon(
+                                      Icons.edit_outlined,
+                                      //size: 40,
+                                      //color: AppColors.VIOLET,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 10,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      print('!!!delete_outline!!!');
+                                      _showAlert(context);
+                                    },
+                                    child: Icon(
+                                      Icons.delete_outline,
+                                      //size: 40,
+                                      //color: AppColors.VIOLET,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Container(
-                              width: 10,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                print('!!!delete_outline!!!');
-                                _showAlert(context);
-                              },
-                              child: Icon(
-                                Icons.delete_outline,
-                                //size: 40,
-                                //color: AppColors.VIOLET,
-                              ),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                  child: TextField(
+                                focusNode: focusNode,
+                                controller: controller,
+                                maxLines: 100,
+                                enabled: isEnabled ? true : false,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                ),
+                                // enabled: true,
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.04, //16,
+                                  color: Colors.black54,
+                                ),
+                                //style: Theme.of(context).textTheme.title,
+                              )),
                             ),
                           ],
                         ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          border: Border.all(width: 1, color: AppColors.BLUE),
+                        ),
                       ),
-                      //Spacer(),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        child: SingleChildScrollView(
-                            child: TextField(
-                          focusNode: focusNode,
-                          controller: controller,
-                          maxLines: 100,
-                          enabled: isEnabled ? true : false,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                          ),
-                          // enabled: true,
-                          style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.04, //16,
-                            color: Colors.black54,
-                          ),
-                          //style: Theme.of(context).textTheme.title,
-                        )),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
-                    border: Border.all(width: 1, color: AppColors.BLUE),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 30,
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.keyboard_arrow_left_rounded,
-                    size: 40,
-                    color: AppColors.VIOLET,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    child: Text('my_diary'.tr,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.VIOLET,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  list.removeWhere((value) => value[0] == widget.id);
-                  list.insert(int.parse(widget.id),
-                      [widget.id, controller.text, widget.date]);
-                });
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => journalMy()));
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add_circle_outline,
-                      size: 40,
-                      //color: AppColors.VIOLET,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      //width: MediaQuery.of(context).size.width * 0.75,
-                      child: Text('save_diary'.tr,
-                          //textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.VIOLET,
-                            fontSize: 30,
-                            fontWeight: FontWeight.normal,
-                          )),
-                    ),
-                  ],
-                ),
-              ),
+                saveBtn(context),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  InkWell saveBtn(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          list.removeWhere((value) => value[0] == widget.id);
+          list.insert(
+              int.parse(widget.id), [widget.id, controller.text, widget.date]);
+        });
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => journalMy()));
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.1,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add_circle_outline,
+              size: 40,
+              //color: AppColors.VIOLET,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 10,
+              ),
+              //width: MediaQuery.of(context).size.width * 0.75,
+              child: Text('save_diary'.tr,
+                  //textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.VIOLET,
+                    fontSize: 30,
+                    fontWeight: FontWeight.normal,
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }

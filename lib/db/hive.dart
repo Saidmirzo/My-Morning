@@ -96,8 +96,6 @@ class MyDB {
   }
 
   Future<void> clearWithoutUserName() async {
-    // var tutorial = await myDbBox.get(MyResource.TUTORIAL_VIEWED);
-    // var user = await myDbBox.get(MyResource.USER_KEY);
     await myDbBox.put(MyResource.AFFIRMATION_PROGRESS, []);
     await myDbBox.put(MyResource.FITNESS_PROGRESS, []);
     await myDbBox.put(MyResource.MY_READING_PROGRESS, []);
@@ -106,5 +104,29 @@ class MyDB {
     await myDbBox.put(MyResource.NOTE_KEY, Note(""));
     await myDbBox.put(MyResource.NOTE_COUNT, 0);
     await myDbBox.put(MyResource.MEDITATION_AUDIO_FAVORITE, []);
+
+    // Измеритель осознанности
+    await myDbBox.put(MyResource.PERCENT_OF_AWARENESS, 0.0);
+
+    // Грифик за неделю
+    await myDbBox.put(MyResource.MONDAY, 0);
+    await myDbBox.put(MyResource.TUESDAY, 0);
+    await myDbBox.put(MyResource.WEDNESDAY, 0);
+    await myDbBox.put(MyResource.THUSDAY, 0);
+    await myDbBox.put(MyResource.FRIDAY, 0);
+    await myDbBox.put(MyResource.SATURDAY, 0);
+    await myDbBox.put(MyResource.SUNDAY, 0);
+
+    // Второй виджет (всего, месяц, год)
+    //TODO: будет переделываться статистика, т.к. там неправильные расчеты
+    // Соответственно нужно будет исправить и здесь чтобы правильно удаляло
+    await myDbBox.put(MyResource.TOTAL_COUNT_OF_SESSIONS, 0);
+    await myDbBox.put(MyResource.YEAR_COUNT_OF_SESSIONS, 0);
+
+    await myDbBox.put(MyResource.TOTAL_MINUTES_OF_AWARENESS, 0);
+    await myDbBox.put(MyResource.YEAR_MINUTES_OF_AWARENESS, 0);
+
+    await myDbBox.put(MyResource.TOTAL_COUNT_OF_COMPLETED_SESSIONS, 0);
+    await myDbBox.put(MyResource.YEAR_COUNT_OF_COMPLETED_SESSIONS, 0);
   }
 }

@@ -6,6 +6,7 @@ import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/pages/progress/components/appbar.dart';
 
 import 'package:morningmagic/resources/colors.dart';
 import '../../../app_states.dart';
@@ -53,153 +54,119 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                 ],
               ),
             ),
-            child: Container(
-              padding: const EdgeInsets.all(15),
-              margin:
-                  const EdgeInsets.only(bottom: 75, left: 5, right: 5, top: 75),
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      //crossAxisAlignment: CrossAxisAlignment.center,
+            child: Column(
+              children: [
+                appBarProgress('my_diary'.tr),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    margin: const EdgeInsets.only(
+                        bottom: 15, left: 5, right: 5, top: 15),
+                    child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: Icon(Icons.access_time),
-                        ),
                         Container(
-                          width: 10,
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            //crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: Icon(Icons.access_time),
+                              ),
+                              Container(
+                                width: 10,
+                              ),
+                              Text(
+                                '${date.day}.${date.month}.${date.year}',
+                                style: TextStyle(),
+                              ),
+                            ],
+                          ),
                         ),
-                        Text(
-                          '${date.day}.${date.month}.${date.year}',
-                          style: TextStyle(),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: TextField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 25,
+                              //controller: nameController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Text',
+                              ),
+                              onChanged: (value) {
+                                text.value = value;
+                              },
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Spacer(),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.7,
-                    child: SingleChildScrollView(
-                      child: TextField(
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 25,
-                        //controller: nameController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Text',
-                        ),
-                        onChanged: (value) {
-                          text.value = value;
-                        },
-                      ),
-                    ),
-                    // Text(
-                    //   widget.text,
-                    //   style: TextStyle(
-                    //     fontSize:
-                    //         MediaQuery.of(context).size.width * 0.04, //16,
-                    //     color: Colors.black54,
-                    //   ),
-                    //   //style: Theme.of(context).textTheme.title,
-                    // ),
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-                border: Border.all(width: 1, color: AppColors.BLUE),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 30,
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.keyboard_arrow_left_rounded,
-                    size: 40,
-                    color: AppColors.VIOLET,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    child: Text(
-                      'my_diary'.tr,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.VIOLET,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                      border: Border.all(width: 1, color: AppColors.BLUE),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: InkWell(
-              onTap: () {
-                print('!!!save note!!!');
-                setState(() {
-                  list.add([
-                    list.isNotEmpty
-                        ? (int.parse(list.last[0]) + 1).toString()
-                        : '0',
-                    text.value,
-                    '${date.day}.${date.month}.${date.year}',
-                  ]);
-                });
-                print(list);
-                setState(() {
-                  MyDB().getBox().put(MyResource.NOTEPADS, list);
-                });
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => journalMy()));
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add_circle_outline,
-                      size: 40,
-                      //color: AppColors.VIOLET,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 10,
-                      ),
-                      //width: MediaQuery.of(context).size.width * 0.75,
-                      child: Text(
-                        'save_diary'.tr,
-                        //textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.VIOLET,
-                          fontSize: 30,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
-              ),
+                addBtn(context),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  InkWell addBtn(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        print('!!!save note!!!');
+        setState(() {
+          list.add([
+            list.isNotEmpty ? (int.parse(list.last[0]) + 1).toString() : '0',
+            text.value,
+            '${date.day}.${date.month}.${date.year}',
+          ]);
+        });
+        print(list);
+        setState(() {
+          MyDB().getBox().put(MyResource.NOTEPADS, list);
+        });
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => journalMy()));
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.1,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add_circle_outline,
+              size: 40,
+              //color: AppColors.VIOLET,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 10,
+              ),
+              //width: MediaQuery.of(context).size.width * 0.75,
+              child: Text(
+                'save_diary'.tr,
+                //textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.VIOLET,
+                  fontSize: 30,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

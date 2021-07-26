@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/pages/progress/components/appbar.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 class MyFitnessProgress extends StatefulWidget {
@@ -22,83 +23,51 @@ class _MyFitnessProgressState extends State<MyFitnessProgress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width:
-                MediaQuery.of(context).size.width, // match parent(all screen)
-            height:
-                MediaQuery.of(context).size.height, // match parent(all screen)
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                tileMode: TileMode.repeated,
-                colors: [
-                  AppColors.TOP_GRADIENT,
-                  AppColors.MIDDLE_GRADIENT,
-                  AppColors.BOTTOM_GRADIENT,
-                ],
-              ),
-            ),
-            //SingleChildScrollView
-            child: Padding(
-              padding: const EdgeInsets.only(top: 75, bottom: 0),
-              child: GridView(
-                padding: EdgeInsets.only(bottom: 15),
-                children: list.isNotEmpty
-                    ? List.generate(
-                        list.length,
-                        (index) => FitnessMiniProgress(
-                          list.isNotEmpty ? list[index][0] : '0',
-                          list.isNotEmpty ? list[index][1] : '',
-                          list.isNotEmpty ? list[index][2] : '01.01.2020',
-                        ),
-                      )
-                    : [],
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-                  childAspectRatio: 5 / 4.1,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 0,
+      body: Container(
+        width: MediaQuery.of(context).size.width, // match parent(all screen)
+        height: MediaQuery.of(context).size.height, // match parent(all screen)
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            tileMode: TileMode.repeated,
+            colors: [
+              AppColors.TOP_GRADIENT,
+              AppColors.MIDDLE_GRADIENT,
+              AppColors.BOTTOM_GRADIENT,
+            ],
+          ),
+        ),
+        //SingleChildScrollView
+        child: Column(
+          children: [
+            appBarProgress('my_exercises'.tr),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15, bottom: 0),
+                child: GridView(
+                  padding: EdgeInsets.only(bottom: 15),
+                  children: list.isNotEmpty
+                      ? List.generate(
+                          list.length,
+                          (index) => FitnessMiniProgress(
+                            list.isNotEmpty ? list[index][0] : '0',
+                            list.isNotEmpty ? list[index][1] : '',
+                            list.isNotEmpty ? list[index][2] : '01.01.2020',
+                          ),
+                        )
+                      : [],
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
+                    childAspectRatio: 5 / 4.1,
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 0,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            top: 30,
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.keyboard_arrow_left_rounded,
-                        size: 40,
-                        color: AppColors.VIOLET,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.81,
-                        child: Text(
-                          'my_exercises'.tr,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.VIOLET,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -201,115 +170,84 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width:
-                MediaQuery.of(context).size.width, // match parent(all screen)
-            height:
-                MediaQuery.of(context).size.height, // match parent(all screen)
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                tileMode: TileMode.repeated,
-                colors: [
-                  AppColors.TOP_GRADIENT,
-                  AppColors.MIDDLE_GRADIENT,
-                  AppColors.BOTTOM_GRADIENT,
-                ],
-              ),
-            ),
-            child: Hero(
-              tag: widget.id,
-              child: Material(
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  margin: const EdgeInsets.only(
-                      bottom: 15, left: 5, right: 5, top: 75),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          //crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 5),
-                              child: Icon(Icons.access_time),
-                            ),
-                            Container(
-                              width: 10,
-                            ),
-                            Text(
-                              widget.date,
-                              style: TextStyle(),
-                            ),
-                            Spacer(),
-                          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            tileMode: TileMode.repeated,
+            colors: [
+              AppColors.TOP_GRADIENT,
+              AppColors.MIDDLE_GRADIENT,
+              AppColors.BOTTOM_GRADIENT,
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            appBarProgress('my_exercises'.tr),
+            Expanded(
+              child: Hero(
+                tag: widget.id,
+                child: Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    margin: const EdgeInsets.only(
+                        bottom: 15, left: 5, right: 5, top: 15),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            //crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: Icon(Icons.access_time),
+                              ),
+                              Container(
+                                width: 10,
+                              ),
+                              Text(
+                                widget.date,
+                                style: TextStyle(),
+                              ),
+                              Spacer(),
+                            ],
+                          ),
                         ),
-                      ),
-                      //Spacer(),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        child: SingleChildScrollView(
-                            child: TextField(
-                          controller: controller,
-                          maxLines: 100,
-                          enabled: false,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                          ),
-                          // enabled: true,
-                          style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.04, //16,
-                            color: Colors.black54,
-                          ),
-                          //style: Theme.of(context).textTheme.title,
-                        )),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
-                    border: Border.all(width: 1, color: AppColors.BLUE),
+                        Expanded(
+                          child: SingleChildScrollView(
+                              child: TextField(
+                            controller: controller,
+                            maxLines: 100,
+                            enabled: false,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                            // enabled: true,
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.04, //16,
+                              color: Colors.black54,
+                            ),
+                            //style: Theme.of(context).textTheme.title,
+                          )),
+                        ),
+                      ],
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                      border: Border.all(width: 1, color: AppColors.BLUE),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            top: 30,
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.keyboard_arrow_left_rounded,
-                    size: 40,
-                    color: AppColors.VIOLET,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    child: Text(
-                      'my_exercises'.tr,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.VIOLET,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
