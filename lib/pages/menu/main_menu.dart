@@ -234,8 +234,8 @@ class MainMenuPageState extends State<MainMenuPage> {
                 ),
                 exerciseBLock(
                   'assets/images/purchase/note.png',
-                  'notes_small'.tr,
-                  'notes_desc'.tr,
+                  'menu_diary_small'.tr,
+                  'menu_diary_desc'.tr,
                   color: Color(0xffFFD2DB),
                   onPressed: () => openIfVip(DiaryPage(fromHomeMenu: true)),
                 ),

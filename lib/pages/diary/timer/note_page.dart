@@ -136,58 +136,63 @@ class TimerNotePageState extends State<TimerNotePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => _onWillPop(),
-      child: Scaffold(
-        body: Container(
-          width: Get.width,
-          height: Get.height,
-          decoration: BoxDecoration(
-            gradient: AppColors.Bg_Gradient_Timer_Diary_Note,
-          ),
-          child: SafeArea(
-            bottom: false,
-            child: Stack(
-              children: [
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    width: Get.width,
-                    child: Image.asset(
-                      'assets/images/diary/note/clouds.png',
-                      fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: Get.focusScope.unfocus,
+      child: WillPopScope(
+        onWillPop: () => _onWillPop(),
+        child: Scaffold(
+          body: Container(
+            width: Get.width,
+            height: Get.height,
+            decoration: BoxDecoration(
+              gradient: AppColors.Bg_Gradient_Timer_Diary_Note,
+            ),
+            child: SafeArea(
+              bottom: false,
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      width: Get.width,
+                      child: Image.asset(
+                        'assets/images/diary/note/clouds.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    width: Get.width,
-                    child: Image.asset(
-                      'assets/images/diary/note/main.png',
-                      fit: BoxFit.cover,
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      width: Get.width,
+                      child: Image.asset(
+                        'assets/images/diary/note/main.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 38),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      SizedBox(height: Get.height * 0.05),
-                      buildTitle(),
-                      const SizedBox(height: 20),
-                      buildTimerProgress(),
-                      const SizedBox(height: 10),
-                      timerText(),
-                      const SizedBox(height: 25),
-                      buildInput(context),
-                      const SizedBox(height: 15),
-                      nextBtn(),
-                    ],
+                  SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 38),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          SizedBox(height: Get.height * 0.05),
+                          buildTitle(),
+                          const SizedBox(height: 20),
+                          buildTimerProgress(),
+                          const SizedBox(height: 10),
+                          timerText(),
+                          const SizedBox(height: 25),
+                          Expanded(child: buildInput(context)),
+                          const SizedBox(height: 15),
+                          nextBtn(),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -251,7 +256,8 @@ class TimerNotePageState extends State<TimerNotePage> {
           minLines: 10,
           maxLines: 10,
           cursorColor: AppColors.VIOLET,
-          keyboardType: TextInputType.text,
+          // keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.newline,
           textAlign: TextAlign.left,
           style: TextStyle(
               fontSize: Get.height * 0.02,

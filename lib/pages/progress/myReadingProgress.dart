@@ -171,8 +171,6 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: MediaQuery.of(context).size.width, // match parent(all screen)
-        height: MediaQuery.of(context).size.height, // match parent(all screen)
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -192,10 +190,11 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
               child: Hero(
                 tag: widget.id,
                 child: Material(
+                  color: Colors.transparent,
                   child: Container(
                     padding: const EdgeInsets.all(15),
                     margin: const EdgeInsets.only(
-                        bottom: 15, left: 5, right: 5, top: 75),
+                        bottom: 15, left: 5, right: 5, top: 15),
                     child: Column(
                       children: [
                         Container(
