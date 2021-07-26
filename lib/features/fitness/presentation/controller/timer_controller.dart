@@ -109,13 +109,15 @@ class TimerFitnesController {
         1.seconds,
         (Timer timer) async {
           if (time.value < 1) {
+            timer.cancel();
+            print(' - --  -- Timer cancel and play success music!!!!');
             final _audioPlayer = AudioPlayer();
-
             await _audioPlayer.setAsset("assets/audios/success.mp3");
             await _audioPlayer.play();
-            timer.cancel();
             saveFitnessProgress();
             isExDone.value = true;
+            _audioPlayer.dispose();
+            gifController?.stop();
           } else {
             time--;
           }

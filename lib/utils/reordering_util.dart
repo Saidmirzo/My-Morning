@@ -145,7 +145,7 @@ class OrderUtil {
     print('next time: $next');
 
     if (pos == 6 || next == 0) {
-      return ProgressPage();
+      return ProgressPage(onDone: true);
     } else {
       return getRouteByPositionInList(pos);
     }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/timer_controller.dart';
@@ -22,7 +23,7 @@ class FitnessSuccessPage extends StatefulWidget {
 }
 
 class FitnessSuccessPageState extends State<FitnessSuccessPage> {
-  AudioPlayer _audioPlayer;
+  AudioPlayer _audioPlayer = AudioPlayer();
   DateTime dateTime = DateTime.now();
   FitnessController controller = Get.find();
   int count;
@@ -31,10 +32,11 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   void initState() {
     super.initState();
     Get.delete<TimerFitnesController>();
-    _initializeAudioPlayer();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _vibrate();
+      await _audioPlayer.setAsset("assets/audios/success.mp3");
+      await _audioPlayer.play();
       int _minutes =
           await MyDB().getBox().get(MyResource.FITNESS_TIME_KEY).time;
       _updateLocalData(_minutes);
@@ -139,57 +141,19 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   }
 
   void _updateLocalData(int minutes) {
-    MyDB().getBox().put(
-        MyResource.TOTAL_COUNT_OF_SESSIONS,
-        MyDB().getBox().get(MyResource.TOTAL_COUNT_OF_SESSIONS) != null
-            ? MyDB().getBox().get(MyResource.TOTAL_COUNT_OF_SESSIONS) + 1
-            : 1);
-    MyDB().getBox().put(
-        '${MyResource.MONTH_COUNT_OF_SESSIONS}_${dateTime.month}',
-        MyDB().getBox().get(MyResource.MONTH_COUNT_OF_SESSIONS) != null
-            ? MyDB().getBox().get(MyResource.MONTH_COUNT_OF_SESSIONS) + 1
-            : 1);
-    MyDB().getBox().put(
-        MyResource.YEAR_COUNT_OF_SESSIONS,
-        MyDB().getBox().get(MyResource.YEAR_COUNT_OF_SESSIONS) != null
-            ? MyDB().getBox().get(MyResource.YEAR_COUNT_OF_SESSIONS) + 1
-            : 1);
-
-    MyDB().getBox().put(
-        MyResource.TOTAL_MINUTES_OF_AWARENESS,
-        MyDB().getBox().get(MyResource.TOTAL_MINUTES_OF_AWARENESS) != null
-            ? MyDB().getBox().get(MyResource.TOTAL_MINUTES_OF_AWARENESS) +
-                minutes
-            : minutes);
-    MyDB().getBox().put(
-        '${MyResource.MONTH_MINUTES_OF_AWARENESS}_${dateTime.month}',
-        MyDB().getBox().get(MyResource.MONTH_MINUTES_OF_AWARENESS) != null
-            ? MyDB().getBox().get(MyResource.MONTH_MINUTES_OF_AWARENESS) +
-                minutes
-            : minutes);
-    MyDB().getBox().put(
-        MyResource.YEAR_MINUTES_OF_AWARENESS,
-        MyDB().getBox().get(MyResource.YEAR_MINUTES_OF_AWARENESS) != null
-            ? MyDB().getBox().get(MyResource.YEAR_MINUTES_OF_AWARENESS) +
-                minutes
-            : minutes);
-
-    MyDB().getBox().put(
-        MyResource.PERCENT_OF_AWARENESS,
-        MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS) != null
-            ? MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS) + 0.5
-            : 0.5);
+    ProgressModel pgModel = MyDB().getProgress();
+    pgModel.count_of_session[DateTime.now()] = 1;
+    pgModel.minutes_of_awarenes[DateTime.now()] = minutes;
+    // Почему-то в старой версии это не сохранялось, скрыл на время и я
+    // pgModel.count_of_complete_session[DateTime.now()] = 1;
+    pgModel.percent_of_awareness = pgModel.percent_of_awareness + 0.5;
+    pgModel.save();
 
     MyDB().getBox().put(
         _getWeekDay(),
         MyDB().getBox().get(_getWeekDay()) != null
             ? (MyDB().getBox().get(_getWeekDay()) + minutes)
             : minutes);
-  }
-
-  void _initializeAudioPlayer() {
-    _audioPlayer = AudioPlayer();
-    _audioPlayer.setAsset("assets/audios/success.mp3");
   }
 
   Future<void> _vibrate() async {

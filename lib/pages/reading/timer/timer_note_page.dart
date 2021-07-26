@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/reading/timer/components/customInputNextColumn.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -23,7 +24,7 @@ class TimerInputSuccessScreen extends StatefulWidget {
 }
 
 class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
-  AudioPlayer _audioPlayer;
+  AudioPlayer _audioPlayer = AudioPlayer();
   int count;
   DateTime dateTime = DateTime.now();
 
@@ -52,45 +53,14 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });
-    MyDB().getBox().put(
-        MyResource.TOTAL_COUNT_OF_SESSIONS,
-        MyDB().getBox().get(MyResource.TOTAL_COUNT_OF_SESSIONS) != null
-            ? MyDB().getBox().get(MyResource.TOTAL_COUNT_OF_SESSIONS) + 1
-            : 1);
-    MyDB().getBox().put(
-        '${MyResource.MONTH_COUNT_OF_SESSIONS}_${dateTime.month}',
-        MyDB().getBox().get(MyResource.MONTH_COUNT_OF_SESSIONS) != null
-            ? MyDB().getBox().get(MyResource.MONTH_COUNT_OF_SESSIONS) + 1
-            : 1);
-    MyDB().getBox().put(
-        '${MyResource.YEAR_COUNT_OF_SESSIONS}_${dateTime.year}',
-        MyDB().getBox().get(MyResource.YEAR_COUNT_OF_SESSIONS) != null
-            ? MyDB().getBox().get(MyResource.YEAR_COUNT_OF_SESSIONS) + 1
-            : 1);
 
-    MyDB().getBox().put(
-        MyResource.TOTAL_MINUTES_OF_AWARENESS,
-        MyDB().getBox().get(MyResource.TOTAL_MINUTES_OF_AWARENESS) != null
-            ? MyDB().getBox().get(MyResource.TOTAL_MINUTES_OF_AWARENESS) +
-                widget.minutes
-            : widget.minutes);
-    MyDB().getBox().put(
-        '${MyResource.MONTH_MINUTES_OF_AWARENESS}_${dateTime.month}',
-        MyDB().getBox().get(MyResource.MONTH_MINUTES_OF_AWARENESS) != null
-            ? MyDB().getBox().get(MyResource.MONTH_MINUTES_OF_AWARENESS) +
-                widget.minutes
-            : widget.minutes);
-    MyDB().getBox().put(
-        '${MyResource.YEAR_MINUTES_OF_AWARENESS}_${dateTime.year}',
-        MyDB().getBox().get(MyResource.YEAR_MINUTES_OF_AWARENESS) != null
-            ? MyDB().getBox().get(MyResource.YEAR_MINUTES_OF_AWARENESS) +
-                widget.minutes
-            : widget.minutes);
-    MyDB().getBox().put(
-        MyResource.PERCENT_OF_AWARENESS,
-        MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS) != null
-            ? MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS) + 0.5
-            : 0.5);
+    ProgressModel pgModel = MyDB().getProgress();
+    pgModel.count_of_session[DateTime.now()] = 1;
+    pgModel.minutes_of_awarenes[DateTime.now()] = widget.minutes;
+    // Почему-то в старой версии это не сохранялось, скрыл на время и я
+    // pgModel.count_of_complete_session[DateTime.now()] = 1;
+    pgModel.percent_of_awareness = pgModel.percent_of_awareness + 0.5;
+    pgModel.save();
 
     MyDB().getBox().put(
         getWeekDay(),
@@ -103,6 +73,8 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
     if (await Vibration.hasVibrator()) {
       Vibration.vibrate();
     }
+    await _audioPlayer.setAsset("assets/audios/success.mp3");
+    _audioPlayer.play();
   }
 
   @override

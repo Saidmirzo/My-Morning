@@ -24,6 +24,7 @@ import 'model/exercise/exercise_holder.dart';
 import 'model/exercise/exercise_title.dart';
 import 'model/exercise_time/exercise_time_adapter.dart';
 import 'model/notepad.dart';
+import 'model/progress.dart';
 import 'model/progress/affirmation_progress/affirmation_progress.dart';
 import 'model/progress/day/day.dart';
 import 'model/progress/day/day_holder.dart';
@@ -75,6 +76,7 @@ class MyDB {
     Hive.registerAdapter(FitnessExerciseAdapter());
     Hive.registerAdapter(VisualizationTargetAdapter());
     Hive.registerAdapter(MeditationAudioAdapter());
+    Hive.registerAdapter(ProgressModelAdapter());
 
     await this.openMyBox();
   }
@@ -105,9 +107,6 @@ class MyDB {
     await myDbBox.put(MyResource.NOTE_COUNT, 0);
     await myDbBox.put(MyResource.MEDITATION_AUDIO_FAVORITE, []);
 
-    // Измеритель осознанности
-    await myDbBox.put(MyResource.PERCENT_OF_AWARENESS, 0.0);
-
     // Грифик за неделю
     await myDbBox.put(MyResource.MONDAY, 0);
     await myDbBox.put(MyResource.TUESDAY, 0);
@@ -117,16 +116,22 @@ class MyDB {
     await myDbBox.put(MyResource.SATURDAY, 0);
     await myDbBox.put(MyResource.SUNDAY, 0);
 
-    // Второй виджет (всего, месяц, год)
-    //TODO: будет переделываться статистика, т.к. там неправильные расчеты
-    // Соответственно нужно будет исправить и здесь чтобы правильно удаляло
-    await myDbBox.put(MyResource.TOTAL_COUNT_OF_SESSIONS, 0);
-    await myDbBox.put(MyResource.YEAR_COUNT_OF_SESSIONS, 0);
+    saveProgress(ProgressModel(
+        count_of_session: {},
+        minutes_of_awarenes: {},
+        count_of_complete_session: {}));
+  }
 
-    await myDbBox.put(MyResource.TOTAL_MINUTES_OF_AWARENESS, 0);
-    await myDbBox.put(MyResource.YEAR_MINUTES_OF_AWARENESS, 0);
+  ProgressModel getProgress() {
+    ProgressModel pgModel = MyDB().getBox().get(MyResource.PROGRESS,
+        defaultValue: ProgressModel(
+            count_of_session: {},
+            count_of_complete_session: {},
+            minutes_of_awarenes: {}));
+    return pgModel;
+  }
 
-    await myDbBox.put(MyResource.TOTAL_COUNT_OF_COMPLETED_SESSIONS, 0);
-    await myDbBox.put(MyResource.YEAR_COUNT_OF_COMPLETED_SESSIONS, 0);
+  void saveProgress(ProgressModel val) {
+    MyDB().getBox().put(MyResource.PROGRESS, val);
   }
 }

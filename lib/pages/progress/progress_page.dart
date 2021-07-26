@@ -9,7 +9,9 @@ import 'package:flutter_circular_chart_two/flutter_circular_chart_two.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
+import 'package:intl/intl.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/progress.dart';
 import 'package:morningmagic/db/model/user/user.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
@@ -42,6 +44,10 @@ import 'myReadingProgress.dart';
 import 'myVisualizationProgress.dart';
 
 class ProgressPage extends StatefulWidget {
+  final bool onDone;
+
+  const ProgressPage({Key key, this.onDone = false}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ProgressPageState();
@@ -62,10 +68,16 @@ class _ProgressPageState extends State<ProgressPage> {
 
   TextEditingController nameController;
 
+  ProgressModel pgModel;
+
   @override
   void initState() {
     super.initState();
-
+    pgModel = MyDB().getProgress();
+    if (widget.onDone) {
+      pgModel.count_of_complete_session[DateTime.now()] = 1;
+      pgModel.save();
+    }
     AnalyticService.screenView('dashboard');
     userName = _getUserName();
     nameController = TextEditingController(text: userName);
@@ -169,15 +181,12 @@ class _ProgressPageState extends State<ProgressPage> {
               new CircularStackEntry(
                 [
                   new CircularSegmentEntry(
-                    MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS,
-                        defaultValue: 0.0),
+                    pgModel.percent_of_awareness ?? 0.0,
                     Color(0xff00b2ff),
                     rankKey: 'completed',
                   ),
                   new CircularSegmentEntry(
-                    100 -
-                        MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS,
-                            defaultValue: 0.0),
+                    (100 - (pgModel.percent_of_awareness ?? 0.0)),
                     Color(0xffb3e8ff),
                     rankKey: 'remaining',
                   ),
@@ -187,8 +196,7 @@ class _ProgressPageState extends State<ProgressPage> {
             ],
             chartType: CircularChartType.Radial,
             percentageValues: true,
-            holeLabel:
-                '${MyDB().getBox().get(MyResource.PERCENT_OF_AWARENESS) ?? 0} %',
+            holeLabel: '${pgModel.percent_of_awareness ?? 0.0} %',
             edgeStyle: SegmentEdgeStyle.round,
             labelStyle: new TextStyle(
               color: Colors.blueGrey[600],
@@ -284,9 +292,6 @@ class _ProgressPageState extends State<ProgressPage> {
                                 MediaQuery.of(context).size.width * 0.04, //23,
                           ),
                         ),
-                        //bool _Itog = true;
-                        // bool _Mounth = false;
-                        // bool _Year = false;
                         _Itog
                             ? Icon(
                                 Icons.arrow_drop_down,
@@ -378,151 +383,131 @@ class _ProgressPageState extends State<ProgressPage> {
             ),
             child: Stack(
               children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/images/amount_practice.svg',
-                        width: 23,
-                      ),
-                      Text(
-                        'count_of_sessions'.tr,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: MediaQuery.of(context).size.width * 0.03, //
-                        ),
-                      ),
-                      Text(
-                        _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) == 1
-                            ? MyDB()
-                                .getBox()
-                                .get(MyResource.TOTAL_COUNT_OF_SESSIONS,
-                                    defaultValue: 0)
-                                .toString()
-                            : _Itogi_Mounth_Year_kol_vo(
-                                        _Itog, _Mounth, _Year) ==
-                                    2
-                                ? MyDB()
-                                    .getBox()
-                                    .get(MyResource.TOTAL_COUNT_OF_SESSIONS,
-                                        defaultValue: 0)
-                                    .toString()
-                                : (_Itogi_Mounth_Year_kol_vo(
-                                            _Itog, _Mounth, _Year) ==
-                                        3
-                                    ? MyDB()
-                                        .getBox()
-                                        .get(MyResource.YEAR_COUNT_OF_SESSIONS,
-                                            defaultValue: 0)
-                                        .toString()
-                                    : '3'),
-                        style: TextStyle(
-                          color: Color(0xff832f51),
-                          fontSize:
-                              MediaQuery.of(context).size.width * 0.085, //32,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.timer,
-                        color: Colors.black54,
-                      ),
-                      Text(
-                        'minutes_of_awareness_with_myself'.tr,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: MediaQuery.of(context).size.width * 0.03, //
-                        ),
-                      ),
-                      Text(
-                        (_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) == 1
-                                ? MyDB().getBox().get(
-                                    MyResource.TOTAL_MINUTES_OF_AWARENESS,
-                                    defaultValue: 0)
-                                : _Itogi_Mounth_Year_kol_vo(
-                                            _Itog, _Mounth, _Year) ==
-                                        2
-                                    ? MyDB().getBox().get(
-                                        MyResource.TOTAL_MINUTES_OF_AWARENESS,
-                                        defaultValue: 0)
-                                    : _Itogi_Mounth_Year_kol_vo(
-                                                _Itog, _Mounth, _Year) ==
-                                            3
-                                        ? MyDB().getBox().get(
-                                            MyResource
-                                                .YEAR_MINUTES_OF_AWARENESS,
-                                            defaultValue: 0)
-                                        : 3)
-                            .toString(),
-                        style: TextStyle(
-                          color: Color(0xff832f51),
-                          fontSize:
-                              MediaQuery.of(context).size.width * 0.085, //32,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.show_chart,
-                        color: Colors.black54,
-                      ),
-                      Text(
-                        'count_of_completed_sessions'.tr,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: MediaQuery.of(context).size.width * 0.03, //
-                        ),
-                      ),
-                      Text(
-                        (_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year) == 1
-                                ? MyDB().getBox().get(
-                                    MyResource
-                                        .TOTAL_COUNT_OF_COMPLETED_SESSIONS,
-                                    defaultValue: 0)
-                                : _Itogi_Mounth_Year_kol_vo(
-                                            _Itog, _Mounth, _Year) ==
-                                        2
-                                    ? MyDB().getBox().get(
-                                        MyResource
-                                            .TOTAL_COUNT_OF_COMPLETED_SESSIONS,
-                                        defaultValue: 0)
-                                    : _Itogi_Mounth_Year_kol_vo(
-                                                _Itog, _Mounth, _Year) ==
-                                            3
-                                        ? MyDB().getBox().get(
-                                            MyResource
-                                                .YEAR_COUNT_OF_COMPLETED_SESSIONS,
-                                            defaultValue: 0)
-                                        : 3)
-                            .toString(),
-                        style: TextStyle(
-                          color: Color(0xff832f51),
-                          fontSize:
-                              MediaQuery.of(context).size.width * 0.085, //32,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                practicsCount(),
+                minutesCount(),
+                completeSessionCount(),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  int getCount(Map<DateTime, int> _map) {
+    var itogiType = _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year);
+    int count = 0;
+    switch (itogiType) {
+      case 1:
+        _map.forEach((key, value) {
+          count += value;
+        });
+        break;
+      case 2:
+        _map.forEach((key, value) {
+          var dt = DateTime.now();
+          if ("${dt.year}/${dt.month}" == '${key.year}/${key.month}') {
+            count += value;
+          }
+        });
+        break;
+      case 3:
+        _map.forEach((key, value) {
+          if (DateTime.now().year == key.year) {
+            count += value;
+          }
+        });
+        break;
+    }
+    return count;
+  }
+
+  Widget practicsCount() {
+    var count = getCount(pgModel.count_of_session);
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SvgPicture.asset(
+            'assets/images/amount_practice.svg',
+            width: 23,
+          ),
+          Text(
+            'count_of_sessions'.tr,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: MediaQuery.of(context).size.width * 0.03, //
+            ),
+          ),
+          Text(
+            count.toString(),
+            style: TextStyle(
+              color: Color(0xff832f51),
+              fontSize: MediaQuery.of(context).size.width * 0.085, //32,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Align minutesCount() {
+    var count = getCount(pgModel.minutes_of_awarenes);
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(
+            Icons.timer,
+            color: Colors.black54,
+          ),
+          Text(
+            'minutes_of_awareness_with_myself'.tr,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: MediaQuery.of(context).size.width * 0.03, //
+            ),
+          ),
+          Text(
+            count.toString(),
+            style: TextStyle(
+              color: Color(0xff832f51),
+              fontSize: MediaQuery.of(context).size.width * 0.085, //32,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Align completeSessionCount() {
+    var count = getCount(pgModel.count_of_complete_session);
+    return Align(
+      alignment: Alignment.topRight,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(
+            Icons.show_chart,
+            color: Colors.black54,
+          ),
+          Text(
+            'count_of_completed_sessions'.tr,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: MediaQuery.of(context).size.width * 0.03, //
+            ),
+          ),
+          Text(
+            count.toString(),
+            style: TextStyle(
+              color: Color(0xff832f51),
+              fontSize: MediaQuery.of(context).size.width * 0.085, //32,
             ),
           ),
         ],
@@ -707,7 +692,6 @@ class _ProgressPageState extends State<ProgressPage> {
     const int nextCntLaunch = 5;
     int launchForRate =
         await MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0);
-    print('rateApp   launchForRate    $launchForRate');
     // Кол-во запусков равно либо больше чем нужно для показа оценки
     bool needLaunch =
         launchForRate >= firstCntLaunch || launchForRate >= nextCntLaunch;
@@ -719,8 +703,8 @@ class _ProgressPageState extends State<ProgressPage> {
         .get(MyResource.RATE_ALREADY_SHOWED, defaultValue: false);
     // Если раньше уже показали, ждем минимум 5 запусков после последнего показа
     if (launchForRate < nextCntLaunch && rateFirstShowed) {
-      print(
-          'rateApp   уже показывали, ждем еще минимум ${nextCntLaunch - launchForRate} запусков');
+      // print(
+      //     'rateApp   уже показывали, ждем еще минимум ${nextCntLaunch - launchForRate} запусков');
       return;
     }
     if (!needLaunch || isRated || !appStates.isRating.value) return;

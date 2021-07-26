@@ -35,19 +35,7 @@ class MyResource {
   static const String ORDER_PROGRAM_HOLDER = 'order_program_holder';
   static const String USER_PROGRAM_HOLDER = 'user_program_holder';
 
-  static const String PERCENT_OF_AWARENESS = 'percent_of_awareness';
-  static const String TOTAL_COUNT_OF_SESSIONS = 'total_count_of_sessions';
-  static const String TOTAL_MINUTES_OF_AWARENESS = 'total_minutes_of_awareness';
-  static const String TOTAL_COUNT_OF_COMPLETED_SESSIONS =
-      'total_count_of_completed_sessions';
-  static const String MONTH_COUNT_OF_SESSIONS = 'month_count_of_sessions';
-  static const String MONTH_MINUTES_OF_AWARENESS = 'month_minutes_of_awareness';
-  static const String MONTH_COUNT_OF_COMPLETED_SESSIONS =
-      'month_count_of_completed_sessions';
-  static const String YEAR_COUNT_OF_SESSIONS = 'year_count_of_sessions';
-  static const String YEAR_MINUTES_OF_AWARENESS = 'year_minutes_of_awareness';
-  static const String YEAR_COUNT_OF_COMPLETED_SESSIONS =
-      'year_count_of_completed_sessions';
+  static const String PROGRESS = 'progress';
 
   // Оценка
   static const String LAUNCH_FOR_RATE = 'launchForRate';

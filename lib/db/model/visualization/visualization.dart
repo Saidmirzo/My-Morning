@@ -2,7 +2,6 @@ import 'package:hive/hive.dart';
 
 @HiveType(typeId: 6)
 class Visualization extends HiveObject {
-
   Visualization(this.visualization);
 
   @HiveField(0)
@@ -12,6 +11,4 @@ class Visualization extends HiveObject {
   String toString() {
     return 'Visualization{visualization: $visualization}';
   }
-
-
 }

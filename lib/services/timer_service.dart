@@ -218,8 +218,8 @@ class TimerService {
       timer = Timer.periodic(oneSec, (Timer timer) async {
         if (time < 1) {
           print('timer_service: timer work done');
-          await audioPlayer.setAsset("assets/audios/success.mp3");
-          await audioPlayer.play();
+          // await audioPlayer.setAsset("assets/audios/success.mp3");
+          // await audioPlayer.play();
           await _player?.stop();
           timer.cancel();
           if (pageId != TimerPageId.Reading) saveProgress();
@@ -309,7 +309,8 @@ class TimerService {
   }
 
   getNextPage(dynamic value) {
-    print('getnextPage fromHomeMenu: ${fromHomeMenu}');
+    print('getnextPage fromHomeMenu: $fromHomeMenu');
+    print('getNextPage value $value');
     Get.off(pageId == TimerPageId.Reading
         ? TimerInputSuccessScreen(
             fromHomeMenu: fromHomeMenu,

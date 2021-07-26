@@ -38,6 +38,7 @@ class AffirmationTimerPageState extends State<AffirmationTimerPage>
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await timerService.init(0, null);
