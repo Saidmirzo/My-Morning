@@ -28,25 +28,6 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   int count;
   DateTime dateTime = DateTime.now();
 
-  String getWeekDay() {
-    switch (DateTime.now().weekday) {
-      case 1:
-        return MyResource.MONDAY;
-      case 2:
-        return MyResource.TUESDAY;
-      case 3:
-        return MyResource.WEDNESDAY;
-      case 4:
-        return MyResource.THUSDAY;
-      case 5:
-        return MyResource.FRIDAY;
-      case 6:
-        return MyResource.SATURDAY;
-      case 7:
-        return MyResource.SUNDAY;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -57,16 +38,8 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
     ProgressModel pgModel = MyDB().getProgress();
     pgModel.count_of_session[DateTime.now()] = 1;
     pgModel.minutes_of_awarenes[DateTime.now()] = widget.minutes;
-    // Почему-то в старой версии это не сохранялось, скрыл на время и я
-    // pgModel.count_of_complete_session[DateTime.now()] = 1;
-    pgModel.percent_of_awareness = pgModel.percent_of_awareness + 0.5;
+    pgModel.percent_of_awareness[DateTime.now()] = 0.5;
     pgModel.save();
-
-    MyDB().getBox().put(
-        getWeekDay(),
-        MyDB().getBox().get(getWeekDay()) != null
-            ? (MyDB().getBox().get(getWeekDay()) + widget.minutes)
-            : widget.minutes);
   }
 
   Future<void> _asyncMethod() async {

@@ -49,13 +49,4 @@ class MyResource {
 
   // Кол-во запусков приложения
   static const String COUNT_APP_LAUNCH = 'countAppLaunch';
-
-  // Дни недели
-  static const String MONDAY = 'monday';
-  static const String TUESDAY = 'tuesday';
-  static const String WEDNESDAY = 'wednesday';
-  static const String THUSDAY = 'thursday';
-  static const String FRIDAY = 'friday';
-  static const String SATURDAY = 'saturday';
-  static const String SUNDAY = 'sunday';
 }

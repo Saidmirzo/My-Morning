@@ -20,7 +20,7 @@ class ProgressModelAdapter extends TypeAdapter<ProgressModel> {
       count_of_session: (fields[0] as Map)?.cast<DateTime, int>(),
       minutes_of_awarenes: (fields[1] as Map)?.cast<DateTime, int>(),
       count_of_complete_session: (fields[2] as Map)?.cast<DateTime, int>(),
-      percent_of_awareness: fields[3] as double,
+      percent_of_awareness: (fields[3] as Map)?.cast<DateTime, double>(),
     );
   }
 

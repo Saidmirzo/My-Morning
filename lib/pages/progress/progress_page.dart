@@ -162,6 +162,13 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Widget buildPercent() {
+    double monthPercent = 0.0;
+    pgModel.percent_of_awareness.forEach((key, value) {
+      var dt = DateTime.now();
+      if ("${dt.year}/${dt.month}" == '${key.year}/${key.month}') {
+        monthPercent += value;
+      }
+    });
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -181,12 +188,12 @@ class _ProgressPageState extends State<ProgressPage> {
               new CircularStackEntry(
                 [
                   new CircularSegmentEntry(
-                    pgModel.percent_of_awareness ?? 0.0,
+                    monthPercent,
                     Color(0xff00b2ff),
                     rankKey: 'completed',
                   ),
                   new CircularSegmentEntry(
-                    (100 - (pgModel.percent_of_awareness ?? 0.0)),
+                    (100 - monthPercent),
                     Color(0xffb3e8ff),
                     rankKey: 'remaining',
                   ),
@@ -196,7 +203,7 @@ class _ProgressPageState extends State<ProgressPage> {
             ],
             chartType: CircularChartType.Radial,
             percentageValues: true,
-            holeLabel: '${pgModel.percent_of_awareness ?? 0.0} %',
+            holeLabel: '$monthPercent %',
             edgeStyle: SegmentEdgeStyle.round,
             labelStyle: new TextStyle(
               color: Colors.blueGrey[600],
@@ -923,21 +930,40 @@ class VerticalBarLabelChart extends StatelessWidget {
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+    ProgressModel pgModel = MyDB().getProgress();
+
+    var date = DateTime.now();
+    var monday = date.add(-(date.weekday - 1).days);
+    monday = DateTime(monday.year, monday.month, monday.day);
+    print('monday : $monday');
+
+    int mondayMin = 0;
+    int tuesdayMin = 0;
+    int wednesdayMin = 0;
+    int thursdayMin = 0;
+    int fridayMin = 0;
+    int saturdayMin = 0;
+    int sundayMin = 0;
+
+    pgModel.minutes_of_awarenes.forEach((key, value) {
+      var dt = DateTime(key.year, key.month, key.day);
+      if (dt == monday) mondayMin = mondayMin + value;
+      if (dt == monday.add(1.days)) tuesdayMin = tuesdayMin + value;
+      if (dt == monday.add(2.days)) wednesdayMin = wednesdayMin + value;
+      if (dt == monday.add(3.days)) thursdayMin = thursdayMin + value;
+      if (dt == monday.add(4.days)) fridayMin = fridayMin + value;
+      if (dt == monday.add(5.days)) saturdayMin = saturdayMin + value;
+      if (dt == monday.add(6.days)) sundayMin = sundayMin + value;
+    });
+
     final data = [
-      new OrdinalSales(
-          'monday_short'.tr, MyDB().getBox().get(MyResource.MONDAY)),
-      new OrdinalSales(
-          'tuesday_short'.tr, MyDB().getBox().get(MyResource.TUESDAY)),
-      new OrdinalSales(
-          'wednesday_short'.tr, MyDB().getBox().get(MyResource.WEDNESDAY)),
-      new OrdinalSales(
-          'thursday_short'.tr, MyDB().getBox().get(MyResource.THUSDAY)),
-      new OrdinalSales(
-          'friday_short'.tr, MyDB().getBox().get(MyResource.FRIDAY)),
-      new OrdinalSales(
-          'saturday_short'.tr, MyDB().getBox().get(MyResource.SATURDAY)),
-      new OrdinalSales(
-          'sunday_short'.tr, MyDB().getBox().get(MyResource.SUNDAY)),
+      new OrdinalSales('monday_short'.tr, mondayMin),
+      new OrdinalSales('monday_short'.tr, tuesdayMin),
+      new OrdinalSales('tuesday_short'.tr, wednesdayMin),
+      new OrdinalSales('wednesday_short'.tr, thursdayMin),
+      new OrdinalSales('thursday_short'.tr, fridayMin),
+      new OrdinalSales('friday_short'.tr, saturdayMin),
+      new OrdinalSales('sunday_short'.tr, sundayMin),
     ];
 
     return [

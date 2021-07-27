@@ -57,11 +57,8 @@ class _ExercisePageState extends State<ExercisePage>
           decoration:
               BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Fitnes),
           child: Obx(() {
-            _gifController = GifController(vsync: this, duration: 2.seconds);
-            cTimer.gifController = _gifController;
-
-            print('rebuild fitnes timer page');
-            cTimer.exerciseName = exercise.value.name;
+            print('Rebuild exercise page');
+            cTimer?.exerciseName = exercise.value.name;
             _audioRes = exercise.value.audioRes;
             if (_audioRes != null) {
               initAudioAndPlay(_audioRes);
@@ -202,7 +199,7 @@ class _ExercisePageState extends State<ExercisePage>
 
   Widget subtitle() {
     return Text(
-      cTimer.isExDone.value ? 'exercise_complete'.tr : '',
+      (cTimer?.isExDone?.value ?? false) ? 'exercise_complete'.tr : '',
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: Get.height * 0.023,
@@ -255,22 +252,25 @@ class _ExercisePageState extends State<ExercisePage>
 
   void _onNext() async {
     print('_onNext');
-    cTimer.isExDone.value = false;
+    dispGif();
     _disposeServices();
     _fitnessController.incrementStep();
     final _exercise = _fitnessController.currentExercise;
     if (_exercise != null) {
+      cTimer?.isExDone?.value = false;
       exercise.value = _exercise;
     } else {
       _fitnessController.step = 0;
-      AppRouting.replace(FitnessSuccessPage());
+      AppRouting.replace(FitnessSuccessPage(
+          countProgram: _fitnessController.selectedProgram.exercises.length));
       appAnalitics.logEvent('first_fitnes_next');
     }
   }
 
   void _onPrev() async {
     print('_onPrev');
-    cTimer.isExDone.value = false;
+    dispGif();
+    cTimer?.isExDone?.value = false;
     _disposeServices();
     _fitnessController.dicrementStep();
     final _exercise = _fitnessController.prevExercise;
@@ -282,8 +282,15 @@ class _ExercisePageState extends State<ExercisePage>
     }
   }
 
+  void dispGif() {
+    _gifController?.stop();
+    _gifController?.dispose();
+    _gifController = GifController(vsync: this, duration: 2.seconds);
+    cTimer?.gifController = _gifController;
+  }
+
   void _disposeServices() async {
-    cTimer.cancelTimer();
+    cTimer?.cancelTimer();
     await _audioPlayer?.stop();
     await _audioPlayer?.dispose();
     isAudioActive.value = false;

@@ -113,21 +113,20 @@ class TimerFitnesController {
             print(' - --  -- Timer cancel and play success music!!!!');
             final _audioPlayer = AudioPlayer();
             await _audioPlayer.setAsset("assets/audios/success.mp3");
-            await _audioPlayer.play();
+            _audioPlayer.play().then((value) {
+              _audioPlayer.dispose();
+            });
             saveFitnessProgress();
             isExDone.value = true;
-            _audioPlayer.dispose();
-            gifController?.stop();
           } else {
             time--;
           }
         },
       );
       log('startTimer');
-      gifController.repeat(min: 0, max: 2, period: 4.seconds);
+      gifController?.repeat(min: 0, max: 2, period: 4.seconds);
     } else if (timer != null && timer.isActive) {
-      gifController.stop();
-      // gifController.stop();
+      gifController?.stop();
       isRuning.value = false;
       timer.cancel();
     }

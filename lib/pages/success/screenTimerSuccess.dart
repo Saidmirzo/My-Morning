@@ -28,44 +28,15 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   DateTime dateTime = DateTime.now();
   int count;
 
-  String getWeekDay() {
-    switch (DateTime.now().weekday) {
-      case 1:
-        return MyResource.MONDAY;
-      case 2:
-        return MyResource.TUESDAY;
-      case 3:
-        return MyResource.WEDNESDAY;
-      case 4:
-        return MyResource.THUSDAY;
-      case 5:
-        return MyResource.FRIDAY;
-      case 6:
-        return MyResource.SATURDAY;
-      case 7:
-        return MyResource.SUNDAY;
-      default:
-        return 'unknown day';
-    }
-  }
-
   @override
   void initState() {
     super.initState();
 
     ProgressModel pgModel = MyDB().getProgress();
-
     pgModel.count_of_session[DateTime.now()] = 1;
     pgModel.minutes_of_awarenes[DateTime.now()] = widget.minutes;
-    if (widget.isFinal) {
-      pgModel.count_of_complete_session[DateTime.now()] = 1;
-    }
-    pgModel.percent_of_awareness = pgModel.percent_of_awareness + 0.5;
-
+    pgModel.percent_of_awareness[DateTime.now()] = 0.5;
     pgModel.save();
-
-    MyDB().getBox().put(getWeekDay(),
-        MyDB().getBox().get(getWeekDay(), defaultValue: 0) + widget.minutes);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();

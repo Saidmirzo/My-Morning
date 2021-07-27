@@ -16,6 +16,10 @@ import '../../../../resources/colors.dart';
 import '../../../../widgets/primary_circle_button.dart';
 
 class FitnessSuccessPage extends StatefulWidget {
+  final int countProgram;
+
+  const FitnessSuccessPage({Key key, this.countProgram}) : super(key: key);
+
   @override
   State createState() {
     return FitnessSuccessPageState();
@@ -39,7 +43,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
       await _audioPlayer.play();
       int _minutes =
           await MyDB().getBox().get(MyResource.FITNESS_TIME_KEY).time;
-      _updateLocalData(_minutes);
+      _updateLocalData(_minutes, widget.countProgram);
     });
   }
 
@@ -140,46 +144,17 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
     Get.off(_routeValue, opaque: true);
   }
 
-  void _updateLocalData(int minutes) {
+  void _updateLocalData(int minutes, int countProgram) {
     ProgressModel pgModel = MyDB().getProgress();
     pgModel.count_of_session[DateTime.now()] = 1;
     pgModel.minutes_of_awarenes[DateTime.now()] = minutes;
-    // Почему-то в старой версии это не сохранялось, скрыл на время и я
-    // pgModel.count_of_complete_session[DateTime.now()] = 1;
-    pgModel.percent_of_awareness = pgModel.percent_of_awareness + 0.5;
+    pgModel.percent_of_awareness[DateTime.now()] = countProgram * 0.25;
     pgModel.save();
-
-    MyDB().getBox().put(
-        _getWeekDay(),
-        MyDB().getBox().get(_getWeekDay()) != null
-            ? (MyDB().getBox().get(_getWeekDay()) + minutes)
-            : minutes);
   }
 
   Future<void> _vibrate() async {
     if (await Vibration.hasVibrator()) {
       Vibration.vibrate();
-    }
-  }
-
-  String _getWeekDay() {
-    switch (DateTime.now().weekday) {
-      case 1:
-        return MyResource.MONDAY;
-      case 2:
-        return MyResource.TUESDAY;
-      case 3:
-        return MyResource.WEDNESDAY;
-      case 4:
-        return MyResource.THUSDAY;
-      case 5:
-        return MyResource.FRIDAY;
-      case 6:
-        return MyResource.SATURDAY;
-      case 7:
-        return MyResource.SUNDAY;
-      default:
-        return 'unknown day';
     }
   }
 }

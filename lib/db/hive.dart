@@ -107,27 +107,14 @@ class MyDB {
     await myDbBox.put(MyResource.NOTE_COUNT, 0);
     await myDbBox.put(MyResource.MEDITATION_AUDIO_FAVORITE, []);
 
-    // Грифик за неделю
-    await myDbBox.put(MyResource.MONDAY, 0);
-    await myDbBox.put(MyResource.TUESDAY, 0);
-    await myDbBox.put(MyResource.WEDNESDAY, 0);
-    await myDbBox.put(MyResource.THUSDAY, 0);
-    await myDbBox.put(MyResource.FRIDAY, 0);
-    await myDbBox.put(MyResource.SATURDAY, 0);
-    await myDbBox.put(MyResource.SUNDAY, 0);
-
-    saveProgress(ProgressModel(
-        count_of_session: {},
-        minutes_of_awarenes: {},
-        count_of_complete_session: {}));
+    saveProgress(ProgressModel().zero);
   }
 
   ProgressModel getProgress() {
-    ProgressModel pgModel = MyDB().getBox().get(MyResource.PROGRESS,
-        defaultValue: ProgressModel(
-            count_of_session: {},
-            count_of_complete_session: {},
-            minutes_of_awarenes: {}));
+    ProgressModel pgModel = MyDB().getBox().get(
+          MyResource.PROGRESS,
+          defaultValue: ProgressModel().zero,
+        );
     return pgModel;
   }
 
