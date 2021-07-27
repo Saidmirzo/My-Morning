@@ -1,5 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
@@ -59,6 +60,11 @@ class _VisualizationFullScreenPageState
           }
         },
         child: Obx(() {
+          if (_visualizationController.hideElements.value) {
+            SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+          } else {
+            SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+          }
           print(
               '_visualizationController.hideElements : ${_visualizationController.hideElements.value}');
           return Stack(
