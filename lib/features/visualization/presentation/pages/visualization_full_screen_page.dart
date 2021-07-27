@@ -14,10 +14,11 @@ class _VisualizationFullScreenPageState
     extends State<VisualizationFullScreenPage> {
   final _visualizationController = Get.find<VisualizationController>();
 
-
   PageController _pageController;
 
   final List<Widget> _pages = <Widget>[];
+
+  static const int durationHideElements = 200;
 
   @override
   void initState() {
@@ -30,6 +31,7 @@ class _VisualizationFullScreenPageState
         _visualizationController.setCurrentImageIndex(next);
       }
     });
+    _visualizationController.startTimerElements();
   }
 
   @override
@@ -39,20 +41,46 @@ class _VisualizationFullScreenPageState
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    if (_visualizationController.timerElements?.isActive ?? false)
+      _visualizationController.timerElements?.cancel();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        onTap: ()  {
-          Navigator.pop(context); },
-        child: Stack(
-          children: [
-            PageView(
-              controller: _pageController,
-              children: _pages,
-            ),
-            if (_pages.length > 1) _buildPageIndicator(),
-          ],
-        ),
+        onTap: () {
+          if (_visualizationController.hideElements.value) {
+            _visualizationController.startTimerElements();
+          } else {
+            Navigator.pop(context);
+          }
+        },
+        child: Obx(() {
+          print(
+              '_visualizationController.hideElements : ${_visualizationController.hideElements.value}');
+          return Stack(
+            children: [
+              PageView(
+                controller: _pageController,
+                children: _pages,
+              ),
+              if (_pages.length > 1)
+                AnimatedPositioned(
+                  duration: Duration(milliseconds: durationHideElements),
+                  bottom:
+                      _visualizationController.hideElements.value ? -30 : 30,
+                  child: Container(
+                    alignment: Alignment.topCenter,
+                    width: MediaQuery.of(context).size.width,
+                    child: _buildPageIndicator(),
+                  ),
+                ),
+            ],
+          );
+        }),
       ),
     );
   }
@@ -66,24 +94,19 @@ class _VisualizationFullScreenPageState
   }
 
   Widget _buildPageIndicator() {
-    return Positioned(
-      bottom: 0.0,
-      right: 0.0,
-      left: 0.0,
-      child: Container(
-        color: Colors.grey[800].withOpacity(0.1),
-        child: Obx(() => DotsIndicator(
-              dotsCount: _pages.length,
-              position: _visualizationController.currentImageIndex.toDouble(),
-              decorator: DotsDecorator(
-                size: const Size.square(10.0),
-                activeSize: const Size.square(16.0),
-                activeColor: Colors.white,
-                color: Colors.white.withOpacity(0.6),
-                spacing: const EdgeInsets.all(12.0),
-              ),
-            )),
-      ),
+    return Container(
+      color: Colors.grey[800].withOpacity(0.1),
+      child: Obx(() => DotsIndicator(
+            dotsCount: _pages.length,
+            position: _visualizationController.currentImageIndex.toDouble(),
+            decorator: DotsDecorator(
+              size: const Size.square(10.0),
+              activeSize: const Size.square(16.0),
+              activeColor: Colors.white,
+              color: Colors.white.withOpacity(0.6),
+              spacing: const EdgeInsets.all(12.0),
+            ),
+          )),
     );
   }
 
@@ -97,15 +120,23 @@ class _VisualizationFullScreenPageState
           fit: BoxFit.cover,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 48.0),
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Obx(() => Text(
-                _visualizationController.formattedTimeLeft,
-                style: TextStyle(
-                    color: Colors.white.withOpacity(0.85), fontSize: 48),
-              )),
+      child: Obx(
+        () => Stack(
+          children: [
+            AnimatedPositioned(
+              duration: Duration(milliseconds: durationHideElements),
+              top: _visualizationController.hideElements.value ? -50 : 50,
+              child: Container(
+                alignment: Alignment.topCenter,
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  _visualizationController.formattedTimeLeft,
+                  style: TextStyle(
+                      color: Colors.white.withOpacity(0.85), fontSize: 48),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

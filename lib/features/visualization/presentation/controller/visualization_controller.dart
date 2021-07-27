@@ -89,6 +89,26 @@ class VisualizationController extends GetxController {
     _saveVisualizationProgress();
   }
 
+  // Таймер скрывает все элементы в режиме FullScreen через 3 секунды
+  Timer timerElements;
+  int _durationElem = 3;
+  RxBool hideElements = false.obs;
+  startTimerElements() {
+    timerElements?.cancel();
+    _durationElem = 3;
+    hideElements.value = false;
+    timerElements =
+        Timer.periodic(Duration(milliseconds: TIMER_TICK_DURATION), (timer) {
+      print('hide elements tick, left : $_durationElem');
+      if (_durationElem > 0) {
+        _durationElem = _durationElem - 1;
+      } else {
+        timerElements.cancel();
+        hideElements.value = true;
+      }
+    });
+  }
+
   saveVisualization(String text) {
     _hiveBox.put(MyResource.VISUALIZATION_KEY, Visualization(text));
   }
