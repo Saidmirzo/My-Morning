@@ -81,6 +81,7 @@ class VisualizationController extends GetxController {
     super.onInit();
     _getTimeLeftFromPrefs();
     await _initializeTargets();
+    loadAllTargets();
   }
 
   @override
@@ -173,7 +174,7 @@ class VisualizationController extends GetxController {
 
   void loadAllTargets() async {
     print('loadAllImages: start');
-    print('targets lengthL: ${targets.length}');
+    print('targets length: ${targets.length}');
     targets.forEach((element) {
       print('loadAllImages: load ${element.toString()}');
       loadImages(element);

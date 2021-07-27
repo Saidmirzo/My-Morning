@@ -36,11 +36,10 @@ class BillingService {
   void liadVisuzlisations() {
     // Пусть загружается всегда, чтобы наверняка уже было загружено до того как юзер оплатит подписку
     // if (isVip.value) {
-    var c = Get.put(VisualizationController(
+    Get.put(VisualizationController(
         hiveBox: myDbBox,
         targetRepository: VisualizationTargetRepositoryImpl(),
         imageRepository: VisualizationImageRepositoryImpl()));
-    c.loadAllTargets();
     // }
   }
 

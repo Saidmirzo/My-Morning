@@ -20,6 +20,7 @@ import 'model/app_and_custom_exercises/app_exercise_holder.dart';
 import 'model/app_and_custom_exercises/custom_exercise_holder.dart';
 import 'model/app_and_custom_exercises/exercise_name.dart';
 import 'model/book/book_adapter.dart';
+import 'model/duration_adapter.dart';
 import 'model/exercise/exercise_holder.dart';
 import 'model/exercise/exercise_title.dart';
 import 'model/exercise_time/exercise_time_adapter.dart';
@@ -77,6 +78,7 @@ class MyDB {
     Hive.registerAdapter(VisualizationTargetAdapter());
     Hive.registerAdapter(MeditationAudioAdapter());
     Hive.registerAdapter(ProgressModelAdapter());
+    Hive.registerAdapter(DurationAdapter());
 
     await this.openMyBox();
   }

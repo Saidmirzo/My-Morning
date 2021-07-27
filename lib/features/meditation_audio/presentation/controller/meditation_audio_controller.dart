@@ -76,6 +76,8 @@ class MediationAudioController extends GetxController {
     super.onInit();
     print('audioController: onInit');
 
+    loadFavoriteAudios();
+
     changeAudioSource(meditationAudioData.musicSource);
     changeAudioSource(meditationAudioData.musicSource, isBgSource: true);
 
@@ -148,6 +150,7 @@ class MediationAudioController extends GetxController {
   }
 
   Future<void> reinitAudioSource({bool fromDialog = false}) async {
+    print('reinitAudioSource');
     if (playFromFavorite) {
       print('playFromFavorite');
       audioSource.clear();
@@ -164,7 +167,12 @@ class MediationAudioController extends GetxController {
       }
     }
     print('audioSource lenght: ${audioSource.length}');
+    await loadFavoriteAudios();
+  }
+
+  Future loadFavoriteAudios() async {
     (await repository.getFavoriteAudioFiles()).forEach((element) {
+      print('Favorite audio : $element');
       if (!favoriteAudios.value.contains(element))
         favoriteAudios.value.add(element);
     });
