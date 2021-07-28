@@ -26,40 +26,25 @@ class InputTextColumn extends StatefulWidget {
 }
 
 class InputTextColumnState extends State<InputTextColumn> {
-  TextEditingController controller;
+  TextEditingController controller = TextEditingController();
   ReadingProgress readingProgress;
   DateTime date = DateTime.now();
 
   @override
   void initState() {
-    getTime().then((value) {
-      Book book = value.get(MyResource.BOOK_KEY, defaultValue: Book(""));
-      controller = TextEditingController();
-      controller.addListener(() {
-        if (controller != null && controller.text.isNotEmpty) {
-          clearTextFunction(controller);
-          int pages = int.tryParse(controller.text);
-          readingProgress = ReadingProgress(book.bookName, pages);
-        }
-      });
-    });
     super.initState();
   }
 
-  void clearTextFunction(TextEditingController controller) {
-    if (controller.text.contains(".") ||
-        controller.text.contains("-") ||
-        controller.text.contains(",") ||
-        controller.text.contains(" ") ||
-        (int.tryParse(controller.text) != null &&
-            int.tryParse(controller.text) < 0)) {
-      print("CLEAR !!!!!!!!!!");
-      controller.clear();
-      controller.text = "0";
-    }
-  }
-
-  void saveProg(String box, String type) {
+  void saveProg() {
+    String type = 'reading_small'.tr;
+    var box = MyResource.MY_READING_PROGRESS;
+    Day day = ProgressUtil()
+        .createDay(null, null, null, readingProgress, null, null, null);
+    ProgressUtil().updateDayList(day);
+    Book book =
+        MyDB().getBox().get(MyResource.BOOK_KEY, defaultValue: Book(""));
+    int pages = int.tryParse(controller.text) ?? 0;
+    readingProgress = ReadingProgress(book.bookName, pages);
     List<dynamic> tempList;
     List<dynamic> list = MyDB().getBox().get(box) ?? [];
     tempList = list;
@@ -95,10 +80,6 @@ class InputTextColumnState extends State<InputTextColumn> {
       ]);
     }
     MyDB().getBox().put(box, list);
-  }
-
-  Future<Box> getTime() async {
-    return await MyDB().getBox();
   }
 
   @override
@@ -150,24 +131,15 @@ class InputTextColumnState extends State<InputTextColumn> {
           PrimaryCircleButton(
             icon: Icon(Icons.arrow_forward, color: AppColors.primary),
             onPressed: () {
+              saveProg();
+              widget.onPressed();
               OrderUtil().getRouteById(4).then((value) {
                 Get.off(widget.fromHomeMenu ? ProgressPage() : value);
               });
-              saveReadingProgress();
-              widget.onPressed();
             },
           ),
         ],
       ),
     );
-  }
-
-  void saveReadingProgress() {
-    if (readingProgress != null) {
-      Day day = ProgressUtil()
-          .createDay(null, null, null, readingProgress, null, null, null);
-      ProgressUtil().updateDayList(day);
-      saveProg(MyResource.MY_READING_PROGRESS, 'reading_small'.tr);
-    }
   }
 }

@@ -21,8 +21,6 @@ class VisualizationMainPage extends StatefulWidget {
 }
 
 class _VisualizationMainPageState extends State<VisualizationMainPage> {
-  TextEditingController _textEditingController;
-
   VisualizationController _controller;
 
   @override
@@ -33,8 +31,6 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
         targetRepository: VisualizationTargetRepositoryImpl(),
         imageRepository: VisualizationImageRepositoryImpl()));
     _controller.fromHomeMenu = widget.fromHomeMenu;
-    _textEditingController = TextEditingController();
-    _textEditingController.addListener(() => _saveVisualization());
   }
 
   @override
@@ -151,11 +147,12 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
           child: TextField(
-            controller: _textEditingController,
+            controller: _controller.vizualizationText,
             minLines: 4,
             maxLines: 4,
             cursorColor: AppColors.VIOLET,
-            keyboardType: TextInputType.text,
+            // keyboardType: TextInputType.text,
+            textInputAction: TextInputAction.newline,
             textAlign: TextAlign.left,
             style: TextStyle(
                 fontSize: 24,
@@ -179,17 +176,9 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
     return PrimaryCircleButton(
         size: 50,
         onPressed: () {
-          _saveVisualization();
           _openVisualizationTargetScreen();
         },
         icon: Icon(Icons.arrow_forward, color: Colors.black));
-  }
-
-  void _saveVisualization() {
-    final _visualizationText = _textEditingController.text;
-    if (_visualizationText != null && _visualizationText.isNotEmpty) {
-      _controller.saveVisualization(_visualizationText);
-    }
   }
 
   void _openVisualizationTargetScreen() => Get.to(

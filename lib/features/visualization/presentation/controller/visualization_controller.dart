@@ -28,6 +28,7 @@ class VisualizationController extends GetxController {
 
   final VisualizationTargetRepository targetRepository;
   final VisualizationImageRepository imageRepository;
+  TextEditingController vizualizationText = TextEditingController();
 
   Box _hiveBox;
 
@@ -108,22 +109,6 @@ class VisualizationController extends GetxController {
         hideElements.value = true;
       }
     });
-  }
-
-  saveVisualization(String text) {
-    _hiveBox.put(MyResource.VISUALIZATION_KEY, Visualization(text));
-  }
-
-  String getVisualizationText() {
-    String _visualizationText = '';
-
-    Visualization _visualization = _hiveBox.get(MyResource.VISUALIZATION_KEY);
-
-    if (_visualization != null) {
-      _visualizationText = _visualization.visualization;
-    }
-
-    return _visualizationText;
   }
 
   Future<List<VisualizationTarget>> getTargets() {
@@ -281,7 +266,7 @@ class VisualizationController extends GetxController {
     if (passedTimeSeconds > 0) {
       _saveProgressList();
       VisualizationProgress visualizationProgress =
-          VisualizationProgress(passedTimeSeconds, getVisualizationText());
+          VisualizationProgress(passedTimeSeconds, vizualizationText.text);
       Day day = ProgressUtil()
           .createDay(null, null, null, null, null, null, visualizationProgress);
       ProgressUtil().updateDayList(day);
@@ -290,8 +275,9 @@ class VisualizationController extends GetxController {
 
   // TODO refactor this WTF
   void _saveProgressList() {
+    print('_saveProgressList vizualizations');
     String type = 'visualization_small'.tr;
-    String _visualizationText = getVisualizationText();
+    String _visualizationText = vizualizationText.text;
     List<dynamic> tempList;
     List<dynamic> list =
         _hiveBox.get(MyResource.MY_VISUALISATION_PROGRESS) ?? [];
@@ -299,8 +285,9 @@ class VisualizationController extends GetxController {
     final _now = DateTime.now();
 
     if (list.isNotEmpty) {
+      print('_saveProgressList vizualizations list.isNotEmpty');
       if (list.last[2] == '${_now.day}.${_now.month}.${_now.year}') {
-        print(passedTimeSeconds);
+        print('_saveProgressList vizualizations 1');
         list.add([
           tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
           tempList[tempList.indexOf(tempList.last)][1] +
@@ -313,6 +300,7 @@ class VisualizationController extends GetxController {
         ]);
         list.removeAt(list.indexOf(list.last) - 1);
       } else {
+        print('_saveProgressList vizualizations 2');
         list.add([
           list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
           passedTimeSeconds < 5
@@ -324,6 +312,7 @@ class VisualizationController extends GetxController {
         ]);
       }
     } else {
+      print('_saveProgressList vizualizations 3');
       list.add([
         list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
         passedTimeSeconds < 5

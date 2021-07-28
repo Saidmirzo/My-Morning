@@ -90,7 +90,7 @@ Map<String, String> translations_en = {
   "sunday_short": "sn",
   "count_of_sessions": "Amount\nof completed\npractice",
   "minutes_of_awareness_with_myself": "Minutes\nof awareness\nwith myself",
-  "count_of_completed_sessions": "Amount\nof completed\nsessions",
+  "count_of_completed_sessions": "Amount \nCompleted \ncomplexes",
   "my_diary": "My diary",
   "my_exercises": "My exercises",
   "my_affirmations": "My affirmations",

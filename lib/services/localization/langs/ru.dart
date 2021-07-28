@@ -36,7 +36,7 @@ Map<String, String> translations_ru = {
   "count_of_sessions": "Число\nзавершенных\nпрактик",
   "tutorial_asset": "assets/audios/tutorial_rus.mp3",
   "minutes_of_awareness_with_myself": "Минуты\nединения с\nсобой",
-  "count_of_completed_sessions": "Число\nзавершенных\nсеансов",
+  "count_of_completed_sessions": "Число\nзавершенных\nкомплексов",
   "my_diary": "Мой дневник",
   "exercises_note": "Упражнения",
   "visualizations_note": "Визуализация",
@@ -207,7 +207,7 @@ Map<String, String> translations_ru = {
   "good_morning": "Доброе утро,\n",
   "good_afternoon": "Добрый день,\n",
   "good_evening": "Добрый вечер,\n",
-  "good_night": "Добрый ночи,\n",
+  "good_night": "Доброй ночи,\n",
   "meditation": "МЕДИТАЦИЯ",
   "meditation_title":
       "Примите наиболее удобную\n позу, успокойте ум, \nследите за дыханием.",

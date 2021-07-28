@@ -50,7 +50,9 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
                     child: ListView(
                       padding: const EdgeInsets.all(16.0),
                       shrinkWrap: true,
-                      children: [_buildVisualizationText()],
+                      children: [
+                        _buildVisualizationText(),
+                      ],
                     ),
                   ),
                   _buildButtonsRow(context),
@@ -102,7 +104,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
 
   Widget _buildVisualizationText() {
     return StyledText(
-      _controller.getVisualizationText(),
+      _controller.vizualizationText.text,
       fontSize: 24,
       color: Colors.white,
       textAlign: TextAlign.center,
