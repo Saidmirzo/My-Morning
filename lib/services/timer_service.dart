@@ -49,12 +49,13 @@ class TimerService {
 
   // TODO remove one of players
   AudioPlayer audioPlayer = AudioPlayer();
-  AudioPlayer _player;
 
-  init(int _pageId, AudioPlayer _player) async {
+  Function onDone;
+
+  init(int _pageId, {Function onDone}) async {
     print('timerService: init');
     this.pageId = _pageId;
-    this._player = _player;
+    this.onDone = onDone;
 
     getTimeAndText().then((int value) {
       _time.value = value * 60;
@@ -218,12 +219,10 @@ class TimerService {
       timer = Timer.periodic(oneSec, (Timer timer) async {
         if (time < 1) {
           print('timer_service: timer work done');
-          // await audioPlayer.setAsset("assets/audios/success.mp3");
-          // await audioPlayer.play();
-          await _player?.stop();
           timer.cancel();
           if (pageId != TimerPageId.Reading) saveProgress();
           OrderUtil().getRouteById(pageId).then((value) => getNextPage(value));
+          if (onDone != null) onDone();
         } else {
           _time.value--;
         }
@@ -284,7 +283,6 @@ class TimerService {
     AudioPlayer audioPlayer = AudioPlayer();
     await audioPlayer.setAsset("assets/audios/success.mp3");
     await audioPlayer.play();
-    await _player?.stop();
   }
 
   static void waitAndNotifyInBg(IsolateData data) async {

@@ -88,6 +88,9 @@ class VisualizationController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    print('Stop timer');
+    _setTimerStateStopped();
+    _timer?.cancel();
     _saveVisualizationProgress();
   }
 
@@ -222,8 +225,6 @@ class VisualizationController extends GetxController {
   }
 
   finishVisualization() {
-    _saveVisualizationProgress();
-    _timer?.cancel();
     Get.offAll(VisualizationSuccessPage(fromHomeMenu: fromHomeMenu),
         predicate: ModalRoute.withName(homePageRoute));
   }

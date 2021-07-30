@@ -54,6 +54,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
                       child: PrimaryCircleButton(
                         icon: Icon(Icons.arrow_back, color: AppColors.primary),
                         onPressed: () {
+                          _controller.finishVisualization();
                           if (widget.fromHomeMenu)
                             return Get.off(MainMenuPage(), opaque: true);
                           OrderUtil()

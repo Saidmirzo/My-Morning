@@ -41,7 +41,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await timerService.init(TimerPageId.Reading, null);
+      await timerService.init(TimerPageId.Reading);
       timerService.fromHomeMenu = widget.fromHomeMenu;
     });
     AnalyticService.screenView('reading_timer_page');

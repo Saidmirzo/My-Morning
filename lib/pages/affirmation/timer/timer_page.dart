@@ -41,7 +41,7 @@ class AffirmationTimerPageState extends State<AffirmationTimerPage>
 
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await timerService.init(0, null);
+      await timerService.init(0);
       timerService.fromHomeMenu = widget.fromHomeMenu;
     });
     AnalyticService.screenView('affirmation_timer_page');

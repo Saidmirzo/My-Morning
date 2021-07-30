@@ -50,7 +50,12 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       print('MeditationTimerPage addPostFrameCallback');
       _audioController.initializeMeditationAudio(autoplay: widget.fromAudio);
-      await timerService.init(1, _audioController.player);
+      await timerService.init(1, onDone: () async {
+        await _audioController.player?.stop();
+        await _audioController.player?.dispose();
+        await _audioController.bgAudioPlayer?.value?.stop();
+        await _audioController.bgAudioPlayer?.value?.dispose();
+      });
       timerService.fromHomeMenu = widget.fromHomeMenu;
     });
 
@@ -155,10 +160,8 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                       width: Get.width * 0.8,
                       alignment: Alignment.center,
                       child: Obx(() {
-                        var duration = _audioController
-                            ?.meditationTrackDuration?.value;
-                        print(
-                            'rebuild duration : withBgSound=${_audioController?.withBgSound?.value}');
+                        var duration =
+                            _audioController?.meditationTrackDuration?.value;
                         return Row(
                           children: [
                             if (duration != null)

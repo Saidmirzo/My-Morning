@@ -38,6 +38,7 @@ class _VisualizationFullScreenPageState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _pages.clear();
     _pages.addAll(_buildPages());
   }
 
@@ -76,8 +77,10 @@ class _VisualizationFullScreenPageState
               if (_pages.length > 1)
                 AnimatedPositioned(
                   duration: Duration(milliseconds: durationHideElements),
-                  bottom:
-                      _visualizationController.hideElements.value ? -30 : 30,
+                  bottom: _visualizationController.hideElements.value &&
+                          _pages.length > 1
+                      ? -30
+                      : 30,
                   child: Container(
                     alignment: Alignment.topCenter,
                     width: MediaQuery.of(context).size.width,
@@ -102,17 +105,17 @@ class _VisualizationFullScreenPageState
   Widget _buildPageIndicator() {
     return Container(
       color: Colors.grey[800].withOpacity(0.1),
-      child: Obx(() => DotsIndicator(
-            dotsCount: _pages.length,
-            position: _visualizationController.currentImageIndex.toDouble(),
-            decorator: DotsDecorator(
-              size: const Size.square(10.0),
-              activeSize: const Size.square(16.0),
-              activeColor: Colors.white,
-              color: Colors.white.withOpacity(0.6),
-              spacing: const EdgeInsets.all(12.0),
-            ),
-          )),
+      child: DotsIndicator(
+        dotsCount: _pages.length,
+        position: _visualizationController.currentImageIndex.toDouble(),
+        decorator: DotsDecorator(
+          size: const Size.square(10.0),
+          activeSize: const Size.square(16.0),
+          activeColor: Colors.white,
+          color: Colors.white.withOpacity(0.6),
+          spacing: const EdgeInsets.all(12.0),
+        ),
+      ),
     );
   }
 
