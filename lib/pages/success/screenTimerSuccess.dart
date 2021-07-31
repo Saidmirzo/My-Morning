@@ -32,6 +32,8 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   void initState() {
     super.initState();
 
+    print('init Screen timer success');
+
     ProgressModel pgModel = MyDB().getProgress();
     pgModel.count_of_session[DateTime.now()] = 1;
     pgModel.minutes_of_awarenes[DateTime.now()] = widget.minutes;

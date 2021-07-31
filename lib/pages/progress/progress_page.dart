@@ -958,11 +958,11 @@ class VerticalBarLabelChart extends StatelessWidget {
 
     final data = [
       new OrdinalSales('monday_short'.tr, mondayMin),
-      new OrdinalSales('monday_short'.tr, tuesdayMin),
-      new OrdinalSales('tuesday_short'.tr, wednesdayMin),
-      new OrdinalSales('wednesday_short'.tr, thursdayMin),
-      new OrdinalSales('thursday_short'.tr, fridayMin),
-      new OrdinalSales('friday_short'.tr, saturdayMin),
+      new OrdinalSales('tuesday_short'.tr, tuesdayMin),
+      new OrdinalSales('wednesday_short'.tr, wednesdayMin),
+      new OrdinalSales('thursday_short'.tr, thursdayMin),
+      new OrdinalSales('friday_short'.tr, fridayMin),
+      new OrdinalSales('saturday_short'.tr, saturdayMin),
       new OrdinalSales('sunday_short'.tr, sundayMin),
     ];
 

@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
+import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
+import 'package:morningmagic/db/model/progress.dart';
 import 'package:morningmagic/db/model/progress/day/day.dart';
 import 'package:morningmagic/db/model/progress/visualization_progress/visualization_progress.dart';
 import 'package:morningmagic/db/model/visualization/visualization.dart';
@@ -80,18 +83,24 @@ class VisualizationController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    _getTimeLeftFromPrefs();
-    await _initializeTargets();
-    loadAllTargets();
+    reinit();
   }
 
   @override
   void onClose() {
     super.onClose();
     print('Stop timer');
-    _setTimerStateStopped();
-    _timer?.cancel();
-    _saveVisualizationProgress();
+    try {
+      _timer?.cancel();
+    } catch (e) {
+      print('Error close Vizualization controller : $e');
+    }
+  }
+
+  void reinit() async {
+    _getTimeLeftFromPrefs();
+    await _initializeTargets();
+    loadAllTargets();
   }
 
   // Таймер скрывает все элементы в режиме FullScreen через 3 секунды
@@ -208,23 +217,24 @@ class VisualizationController extends GetxController {
           Timer.periodic(Duration(milliseconds: TIMER_TICK_DURATION), (timer) {
         if (_timeLeft > 0) {
           _timeLeft.value = _timeLeft.value - TIMER_TICK_DURATION;
-          _setTimerStateActive();
+          _updateTimerIsActive(true);
         } else {
           _timer.cancel();
-          _setTimerStateStopped();
-          _timeLeft.value = _initialTimeLeft;
-
           finishVisualization();
+          _updateTimerIsActive(false);
+          _timeLeft.value = _initialTimeLeft;
         }
       });
-      _setTimerStateActive();
+      _updateTimerIsActive(true);
     } else {
       _timer.cancel();
-      _setTimerStateStopped();
+      _updateTimerIsActive(false);
     }
   }
 
   finishVisualization() {
+    print('finish vizualization');
+    _saveProgressList();
     Get.offAll(VisualizationSuccessPage(fromHomeMenu: fromHomeMenu),
         predicate: ModalRoute.withName(homePageRoute));
   }
@@ -246,85 +256,48 @@ class VisualizationController extends GetxController {
   _getTimeLeftFromPrefs() {
     ExerciseTime _exerciseTime = _hiveBox.get(MyResource.VISUALIZATION_TIME_KEY,
         defaultValue: ExerciseTime(0));
+    print('Init time : ${_exerciseTime.time}');
     _initialTimeLeft =
         _exerciseTime.time * 60 * 1000; //time from prefs in minutes
+    print('Init time : $_initialTimeLeft');
     _timeLeft.value = _initialTimeLeft;
   }
 
   _updateTimerIsActive(bool newValue) {
-    if (newValue != isTimerActive.value) isTimerActive.value = newValue;
+    if (newValue != isTimerActive?.value) isTimerActive?.value = newValue;
   }
-
-  _setTimerStateActive() => _updateTimerIsActive(true);
-
-  _setTimerStateStopped() => _updateTimerIsActive(false);
 
   void _setDownloading(bool isDownloading) =>
       isImagesDownloading.value = isDownloading;
 
-  // TODO refactor this WTF
-  _saveVisualizationProgress() {
-    if (passedTimeSeconds > 0) {
-      _saveProgressList();
-      VisualizationProgress visualizationProgress =
-          VisualizationProgress(passedTimeSeconds, vizualizationText.text);
-      Day day = ProgressUtil()
-          .createDay(null, null, null, null, null, null, visualizationProgress);
-      ProgressUtil().updateDayList(day);
-    }
+  // Save progress
+  void _saveProgressList() {
+    saveStats();
+    print('cVizualization _saveProgressList');
+    VisualizationProgress visualizationProgress = VisualizationProgress(
+        passedTimeSeconds,
+        vizualizationText.text.isEmpty ? '-' : vizualizationText.text);
+    // Get old data or init empty map
+    var _map = MyDB().getVizualizationProgress();
+    // Now date with format
+    final _now = DateFormat('d.M.y').format(DateTime.now());
+    if (_map[_now] == null) _map[_now] = [];
+    // Add progress into current day
+    _map[_now].add(visualizationProgress);
+    // Save progress
+    _hiveBox.put(MyResource.MY_VISUALISATION_PROGRESS, _map);
   }
 
-  // TODO refactor this WTF
-  void _saveProgressList() {
-    print('_saveProgressList vizualizations');
-    String type = 'visualization_small'.tr;
-    String _visualizationText = vizualizationText.text;
-    List<dynamic> tempList;
-    List<dynamic> list =
-        _hiveBox.get(MyResource.MY_VISUALISATION_PROGRESS) ?? [];
-    tempList = list;
-    final _now = DateTime.now();
-
-    if (list.isNotEmpty) {
-      print('_saveProgressList vizualizations list.isNotEmpty');
-      if (list.last[2] == '${_now.day}.${_now.month}.${_now.year}') {
-        print('_saveProgressList vizualizations 1');
-        list.add([
-          tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
-          tempList[tempList.indexOf(tempList.last)][1] +
-              (passedTimeSeconds < 5
-                  ? '\n$type - ' + 'skip_note'.tr
-                  : '\n$type - $passedTimeSeconds ' +
-                      'seconds'.tr +
-                      '($_visualizationText)'),
-          '${_now.day}.${_now.month}.${_now.year}'
-        ]);
-        list.removeAt(list.indexOf(list.last) - 1);
-      } else {
-        print('_saveProgressList vizualizations 2');
-        list.add([
-          list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
-          passedTimeSeconds < 5
-              ? '\n$type - ' + 'skip_note'.tr
-              : '\n$type - $passedTimeSeconds ' +
-                  'seconds'.tr +
-                  '($_visualizationText)',
-          '${_now.day}.${_now.month}.${_now.year}'
-        ]);
-      }
-    } else {
-      print('_saveProgressList vizualizations 3');
-      list.add([
-        list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
-        passedTimeSeconds < 5
-            ? '\n$type - ' + 'skip_note'.tr
-            : '\n$type - $passedTimeSeconds ' +
-                'seconds'.tr +
-                '($_visualizationText)',
-        '${_now.day}.${_now.month}.${_now.year}'
-      ]);
-    }
-    _hiveBox.put(MyResource.MY_VISUALISATION_PROGRESS, list);
+  void saveStats() {
+    if (passedTimeSeconds < 15) return;
+    var sec = (passedTimeSeconds / 60).round();
+    // Округляем до 1 минуты
+    sec = sec == 0 ? 1 : sec;
+    ProgressModel pgModel = MyDB().getProgress();
+    pgModel.count_of_session[DateTime.now()] = 1;
+    pgModel.minutes_of_awarenes[DateTime.now()] = sec;
+    pgModel.percent_of_awareness[DateTime.now()] = 0.5;
+    pgModel.save();
   }
 
   ImageProvider getImpressionDecorationImage(int imageIndex) {

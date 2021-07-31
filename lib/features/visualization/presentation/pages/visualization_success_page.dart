@@ -28,8 +28,8 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
   @override
   void initState() {
     super.initState();
-    Get.delete<VisualizationController>();
     _initializeAudioPlayer();
+    Get.delete<VisualizationController>();
   }
 
   @override

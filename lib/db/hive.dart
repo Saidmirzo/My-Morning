@@ -80,7 +80,12 @@ class MyDB {
     Hive.registerAdapter(ProgressModelAdapter());
     Hive.registerAdapter(DurationAdapter());
 
-    await this.openMyBox();
+    try {
+      await this.openMyBox();
+    } catch (e) {
+      await Hive.deleteBoxFromDisk(MyResource.BOX_NAME);
+      await this.openMyBox();
+    }
   }
 
   openMyBox() async {
@@ -99,11 +104,18 @@ class MyDB {
     return myDbBox;
   }
 
+  Map<String, List<dynamic>> getVizualizationProgress() {
+    return Map<String, List<dynamic>>.from(getBox().get(
+        MyResource.MY_VISUALISATION_PROGRESS,
+        defaultValue: Map<String, List<dynamic>>()));
+  }
+
   Future<void> clearWithoutUserName() async {
     await myDbBox.put(MyResource.AFFIRMATION_PROGRESS, []);
     await myDbBox.put(MyResource.FITNESS_PROGRESS, []);
     await myDbBox.put(MyResource.MY_READING_PROGRESS, []);
-    await myDbBox.put(MyResource.MY_VISUALISATION_PROGRESS, []);
+    await myDbBox.put(MyResource.MY_VISUALISATION_PROGRESS,
+        Map<String, List<VisualizationProgress>>());
     await myDbBox.put(MyResource.NOTEPADS, []);
     await myDbBox.put(MyResource.NOTE_KEY, Note(""));
     await myDbBox.put(MyResource.NOTE_COUNT, 0);

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/progress/visualization_progress/visualization_progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
 
@@ -14,12 +15,12 @@ class MyVisualizationProgress extends StatefulWidget {
 }
 
 class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
-  List<dynamic> list;
+  Map<String, List<dynamic>> _map;
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get(MyResource.MY_VISUALISATION_PROGRESS) ?? [];
-    print(MyDB().getBox().get(MyResource.MY_VISUALISATION_PROGRESS));
+    // Get old data or init empty map
+    _map = MyDB().getVizualizationProgress();
   }
 
   @override
@@ -49,13 +50,13 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
                 padding: const EdgeInsets.only(top: 15, bottom: 0),
                 child: GridView(
                   padding: EdgeInsets.only(bottom: 15),
-                  children: list.isNotEmpty
+                  children: _map.isNotEmpty
                       ? List.generate(
-                          list.length,
+                          _map.length,
                           (index) => VisualizationMiniProgress(
-                            list.isNotEmpty ? list[index][0] : '0',
-                            list.isNotEmpty ? list[index][1] : '',
-                            list.isNotEmpty ? list[index][2] : '01.01.2020',
+                            _map.keys.toList()[index],
+                            _map[_map.keys.toList()[index]],
+                            _map.keys.toList()[index],
                           ),
                         )
                       : [],
@@ -77,20 +78,21 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
 
 class VisualizationMiniProgress extends StatelessWidget {
   final String id;
-  final String text;
   final String date;
+  final List<dynamic> list;
 
-  VisualizationMiniProgress(this.id, this.text, this.date);
+  VisualizationMiniProgress(this.id, this.list, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
         ctx,
         MaterialPageRoute(
-            builder: (context) => VisualizationFullProgress(id, text, date)));
+            builder: (context) => VisualizationFullProgress(id, list, date)));
   }
 
   @override
   Widget build(BuildContext context) {
+    print(list);
     return Hero(
       tag: id,
       child: Material(
@@ -111,7 +113,7 @@ class VisualizationMiniProgress extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Text(
-                    text,
+                    list.last.text,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04, //16,
                       color: Colors.black54,
@@ -150,10 +152,10 @@ class VisualizationMiniProgress extends StatelessWidget {
 
 class VisualizationFullProgress extends StatefulWidget {
   String id;
-  String text;
+  List<dynamic> list;
   String date;
 
-  VisualizationFullProgress(this.id, this.text, this.date);
+  VisualizationFullProgress(this.id, this.list, this.date);
 
   @override
   _VisualizationFullProgressState createState() =>
@@ -161,15 +163,6 @@ class VisualizationFullProgress extends StatefulWidget {
 }
 
 class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
-  List<dynamic> list;
-  List<dynamic> tempList;
-  TextEditingController controller;
-  @override
-  void initState() {
-    super.initState();
-    controller = TextEditingController(text: widget.text);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,42 +196,65 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
                         child: Column(
                           children: [
                             Container(
-                              padding: EdgeInsets.only(bottom: 10),
                               child: Row(
-                                //crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(right: 5),
                                     child: Icon(Icons.access_time),
                                   ),
-                                  Container(
-                                    width: 10,
-                                  ),
+                                  SizedBox(width: 10),
                                   Text(
                                     widget.date,
                                     style: TextStyle(),
                                   ),
-                                  Spacer(),
                                 ],
                               ),
                             ),
                             Expanded(
-                              child: SingleChildScrollView(
-                                  child: TextField(
-                                controller: controller,
-                                maxLines: 100,
-                                enabled: false,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                ),
-                                // enabled: true,
-                                style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width *
-                                      0.04, //16,
-                                  color: Colors.black54,
-                                ),
-                                //style: Theme.of(context).textTheme.title,
-                              )),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: widget.list.length,
+                                itemBuilder: (ctx, i) {
+                                  return Container(
+                                    margin: const EdgeInsets.only(bottom: 15),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            '${widget.list[i].seconds}' +
+                                                ' ' +
+                                                'sec'.tr,
+                                            style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.04,
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 7,
+                                          child: Text(
+                                            '${widget.list[i].text}',
+                                            style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.04,
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),

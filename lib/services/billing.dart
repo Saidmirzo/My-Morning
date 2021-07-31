@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/visualization/data/repositories/visualization_image_repository_impl.dart';
@@ -36,11 +37,11 @@ class BillingService {
   void liadVisuzlisations() {
     // Пусть загружается всегда, чтобы наверняка уже было загружено до того как юзер оплатит подписку
     // if (isVip.value) {
-    Get.put(VisualizationController(
-        hiveBox: myDbBox,
-        targetRepository: VisualizationTargetRepositoryImpl(),
-        imageRepository: VisualizationImageRepositoryImpl()));
-    // }
+    VisualizationController(
+            hiveBox: myDbBox,
+            targetRepository: VisualizationTargetRepositoryImpl(),
+            imageRepository: VisualizationImageRepositoryImpl())
+        .reinit();
   }
 
   Future<void> getOfering() async {
