@@ -55,7 +55,6 @@ class BillingService {
 
   bool isPro() {
     bool isActive = (purchaserInfo?.activeSubscriptions?.length ?? 0) > 0;
-    print('activeSubscriptions: ${purchaserInfo.activeSubscriptions}');
     return kDebugMode ? true : isActive;
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/timer_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/timer_circle_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -18,15 +19,35 @@ class TimerFitnes extends StatefulWidget {
   }
 }
 
-class TimeAppBarState extends State<TimerFitnes> {
+class TimeAppBarState extends State<TimerFitnes> with WidgetsBindingObserver {
   TimerFitnesController cTimer = Get.find();
+
+  TimerLeftController cTimerLeft;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      cTimerLeft.onAppLeft(cTimer.timer, cTimer.time.value);
+    } else if (state == AppLifecycleState.resumed) {
+      cTimerLeft.onAppResume(cTimer.timer, cTimer.time);
+    }
+  }
 
   @override
   void initState() {
+    cTimerLeft = TimerLeftController();
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       cTimer.init();
     });
+  }
+
+  @override
+  void dispose() {
+    Get.delete<TimerLeftController>();
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override

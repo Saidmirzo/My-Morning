@@ -69,6 +69,7 @@ class SettingsActivityListState extends State<SettingsActivityList> {
     list = List.generate(
       6,
       (index) => ExerciseTile(
+        onChange: () => calculateNewTime(),
         key: ValueKey(index + 1),
         index: index,
         orderItem: orderItemsList[index],

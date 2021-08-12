@@ -101,7 +101,7 @@ class TimerNotePageState extends State<TimerNotePage> {
                 if (_time.value < 1) {
                   next();
                 } else {
-                  _time.value--;
+                  _time?.value--;
                 }
               }));
     } else if (_timer != null && _timer.isActive) {

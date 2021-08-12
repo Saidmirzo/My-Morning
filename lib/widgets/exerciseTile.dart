@@ -16,6 +16,7 @@ class ExerciseTile extends StatelessWidget {
   final String title;
   final EdgeInsets edgeInsets;
   final TextEditingController textEditingController;
+  final Function onChange;
 
   const ExerciseTile(
       {Key key,
@@ -23,7 +24,8 @@ class ExerciseTile extends StatelessWidget {
       @required this.orderItem,
       @required this.title,
       @required this.edgeInsets,
-      @required this.textEditingController})
+      @required this.textEditingController,
+      this.onChange})
       : super(key: key);
 
   @override
@@ -108,6 +110,7 @@ class ExerciseTile extends StatelessWidget {
       var isVip = billingService.isVip.value;
       print('isVip from exerciseTile: $isVip');
       return TextField(
+        onChanged: (val) => onChange(),
         controller: textEditingController,
         minLines: 1,
         maxLines: 1,

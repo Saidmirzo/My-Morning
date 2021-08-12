@@ -33,8 +33,7 @@ import 'notifications.dart';
 // TODO rewrite
 class TimerService {
   Timer timer;
-  RxInt _time = 0.obs;
-  int get time => _time.value;
+  RxInt time = 0.obs;
   int startTime;
   int startValue;
   int pageId;
@@ -43,9 +42,6 @@ class TimerService {
   String bookTitle;
   AppStates appStates = Get.put(AppStates());
   bool fromHomeMenu = false;
-
-  DateTime appLeftTime;
-  int leftSecondsBeforePauseApp = -1;
 
   // TODO remove one of players
   AudioPlayer audioPlayer = AudioPlayer();
@@ -58,7 +54,7 @@ class TimerService {
     this.onDone = onDone;
 
     getTimeAndText().then((int value) {
-      _time.value = value * 60;
+      time.value = value * 60;
       startValue = value * 60;
       startTime = value;
       startTimer();
@@ -76,7 +72,7 @@ class TimerService {
   void setTime(int min) {
     startTime = min;
     startValue = min * 60;
-    _time.value = min * 60;
+    time.value = min * 60;
   }
 
   Future<void> skipTask() async {
@@ -127,7 +123,7 @@ class TimerService {
   DateTime date = DateTime.now();
 
   int getPassedSeconds() {
-    return startValue - time;
+    return startValue - time.value;
   }
 
   void saveProg(String box, String type, String text) {
@@ -205,7 +201,7 @@ class TimerService {
           null, null, visualizationProgress);
       ProgressUtil().updateDayList(day);
       print('SaveTimerPage id$pageId : $day');
-      _time.value = startValue;
+      time.value = startValue;
     } else {
       print('Dont save');
     }
@@ -224,85 +220,12 @@ class TimerService {
           OrderUtil().getRouteById(pageId).then((value) => getNextPage(value));
           if (onDone != null) onDone();
         } else {
-          _time.value--;
+          time.value--;
         }
       });
     } else if (timer != null && timer.isActive) {
       timer.cancel();
       isActive.toggle();
-    }
-  }
-
-  void onAppLeft() async {
-    print('До завершения осталось ${time} c.');
-    leftSecondsBeforePauseApp = time;
-    // Уведомим о заверщении упражнения через N оставшихся секунд
-    if (time > 0 && timer.isActive) {
-      appLeftTime = DateTime.now();
-      pushNotifications.sendNotificationWithSleep(
-          'push_success'.tr, 'action_completed'.tr, time,
-          id: PushNotifications.pushIdTreaning);
-      if (GetPlatform.isAndroid) {
-        // На андроид пуш не показывает на заблокированном экране
-        // По этому запустим наш звук завершения, чтобы привлечь внимание
-        _startIsolate(time);
-      }
-    } else {
-      print('Пропускаем запуск изолятора т.к. таймер уже неактивен');
-    }
-  }
-
-  void onAppResume() async {
-    int val =
-        DateTime.now().difference(appLeftTime ?? DateTime.now()).inSeconds;
-    print('Разница: $val сек');
-    if (timer.isActive && leftSecondsBeforePauseApp > 0)
-      _time.value = leftSecondsBeforePauseApp - val;
-    pushNotifications.deleteNotification(PushNotifications.pushIdTreaning);
-    _stopIsolate();
-  }
-
-  Isolate _isolate;
-  ReceivePort _receivePort;
-
-  void _startIsolate(int tm) async {
-    print('Запускаем изолятор');
-    _receivePort = ReceivePort();
-    _isolate = await Isolate.spawn(
-        waitAndNotifyInBg, IsolateData(_receivePort.sendPort, tm));
-    _receivePort.listen(_isolateHandleMessage, onDone: () {
-      print('onDone');
-      // Проверка чтобы не срабатывало уведомление
-      // если мы вернулись до окончания таймера и отменили изолятор вручную
-      if (_isolate == null) notifyInBackground();
-    });
-  }
-
-  void notifyInBackground() async {
-    print('notifyInBackground');
-    AudioPlayer audioPlayer = AudioPlayer();
-    await audioPlayer.setAsset("assets/audios/success.mp3");
-    await audioPlayer.play();
-  }
-
-  static void waitAndNotifyInBg(IsolateData data) async {
-    print('leftSecondsBeforePauseApp : ${data.time}');
-    Timer.periodic(new Duration(seconds: 5), (Timer t) {
-      String msg = 'notification ${DateTime.now()}';
-      data.sendPort.send(msg);
-    });
-  }
-
-  void _isolateHandleMessage(dynamic data) {
-    print('RECEIVED: ' + data);
-  }
-
-  void _stopIsolate() {
-    if (_isolate != null) {
-      print('_stopIsolate');
-      _receivePort.close();
-      _isolate.kill(priority: Isolate.immediate);
-      _isolate = null;
     }
   }
 
@@ -347,10 +270,4 @@ class TimerService {
         return MyResource.VISUALIZATION_TIME_KEY;
     }
   }
-}
-
-class IsolateData {
-  SendPort sendPort;
-  int time;
-  IsolateData(this.sendPort, this.time);
 }

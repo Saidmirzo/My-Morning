@@ -7,6 +7,7 @@ import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:screen/screen.dart';
@@ -25,18 +26,20 @@ class AffirmationTimerPage extends StatefulWidget {
 class AffirmationTimerPageState extends State<AffirmationTimerPage>
     with WidgetsBindingObserver {
   TimerService timerService = TimerService();
+  TimerLeftController cTimerLeft;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      timerService.onAppLeft();
+      cTimerLeft.onAppLeft(timerService.timer, timerService.time.value);
     } else if (state == AppLifecycleState.resumed) {
-      timerService.onAppResume();
+      cTimerLeft.onAppResume(timerService.timer, timerService.time);
     }
   }
 
   @override
   void initState() {
+    cTimerLeft = TimerLeftController();
     super.initState();
 
     WidgetsBinding.instance.addObserver(this);
@@ -83,7 +86,10 @@ class AffirmationTimerPageState extends State<AffirmationTimerPage>
                   Spacer(),
                   buildTimerProgress(timerService),
                   const SizedBox(height: 20),
-                  Obx(() => Text(StringUtil.createTimeString(timerService.time),
+                  Obx(() => Text(
+                      StringUtil.createTimeString(
+                        timerService.time.value,
+                      ),
                       style: TextStyle(
                         fontSize: Get.height * 0.033,
                         fontWeight: FontWeight.w600,
@@ -108,6 +114,7 @@ class AffirmationTimerPageState extends State<AffirmationTimerPage>
 
   @override
   void dispose() {
+    Get.delete<TimerLeftController>();
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
     timerService.dispose();

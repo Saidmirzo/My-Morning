@@ -27,8 +27,6 @@ import 'package:morningmagic/utils/string_util.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class VisualizationController extends GetxController {
-  static const int TIMER_TICK_DURATION = 1000;
-
   final VisualizationTargetRepository targetRepository;
   final VisualizationImageRepository imageRepository;
   TextEditingController vizualizationText = TextEditingController();
@@ -52,13 +50,13 @@ class VisualizationController extends GetxController {
 
   var _currentImageIndex = 0.obs;
 
-  var _timeLeft = 0.obs;
+  var timeLeft = 0.obs;
 
   var isTimerActive = false.obs;
 
   var isImagesDownloading = false.obs;
 
-  Timer _timer;
+  Timer timer;
 
   int _initialTimeLeft;
 
@@ -67,16 +65,15 @@ class VisualizationController extends GetxController {
   List<VisualizationImage> get selectedImages =>
       selectedImageIndexes.map((index) => images[index]).toList();
 
-  String get formattedTimeLeft =>
-      StringUtil.getFormattedTimeLeft(_timeLeft.value);
+  String get formattedTimeLeft => StringUtil.createTimeString(timeLeft.value);
 
-  double get timeLeftValue => 1 - _timeLeft / _initialTimeLeft;
+  double get timeLeftValue => 1 - timeLeft / _initialTimeLeft;
 
   int get currentImageIndex => (_currentImageIndex >= selectedImages.length)
       ? 0
       : _currentImageIndex.value;
 
-  int get passedTimeSeconds => (_initialTimeLeft - _timeLeft.value) ~/ 1000;
+  int get passedTimeSeconds => (_initialTimeLeft - timeLeft.value);
 
   int get selectedImagesCount => selectedImageIndexes.length;
 
@@ -91,7 +88,7 @@ class VisualizationController extends GetxController {
     super.onClose();
     print('Stop timer');
     try {
-      _timer?.cancel();
+      timer?.cancel();
     } catch (e) {
       print('Error close Vizualization controller : $e');
     }
@@ -111,8 +108,7 @@ class VisualizationController extends GetxController {
     timerElements?.cancel();
     _durationElem = 3;
     hideElements.value = false;
-    timerElements =
-        Timer.periodic(Duration(milliseconds: TIMER_TICK_DURATION), (timer) {
+    timerElements = Timer.periodic(1.seconds, (timer) {
       print('hide elements tick, left : $_durationElem');
       if (_durationElem > 0) {
         _durationElem = _durationElem - 1;
@@ -212,22 +208,21 @@ class VisualizationController extends GetxController {
   bool isImageSelected(int index) => selectedImageIndexes.contains(index);
 
   toggleStartPauseTimer() {
-    if (_timer == null || !_timer.isActive) {
-      _timer =
-          Timer.periodic(Duration(milliseconds: TIMER_TICK_DURATION), (timer) {
-        if (_timeLeft > 0) {
-          _timeLeft.value = _timeLeft.value - TIMER_TICK_DURATION;
+    if (timer == null || !timer.isActive) {
+      timer = Timer.periodic(1.seconds, (timer) {
+        if (timeLeft > 0) {
+          timeLeft.value--;
           _updateTimerIsActive(true);
         } else {
-          _timer.cancel();
+          timer.cancel();
           finishVisualization();
           _updateTimerIsActive(false);
-          _timeLeft.value = _initialTimeLeft;
+          timeLeft.value = _initialTimeLeft;
         }
       });
       _updateTimerIsActive(true);
     } else {
-      _timer.cancel();
+      timer.cancel();
       _updateTimerIsActive(false);
     }
   }
@@ -257,10 +252,9 @@ class VisualizationController extends GetxController {
     ExerciseTime _exerciseTime = _hiveBox.get(MyResource.VISUALIZATION_TIME_KEY,
         defaultValue: ExerciseTime(0));
     print('Init time : ${_exerciseTime.time}');
-    _initialTimeLeft =
-        _exerciseTime.time * 60 * 1000; //time from prefs in minutes
+    _initialTimeLeft = _exerciseTime.time * 60; // time from prefs in minutes
     print('Init time : $_initialTimeLeft');
-    _timeLeft.value = _initialTimeLeft;
+    timeLeft.value = _initialTimeLeft;
   }
 
   _updateTimerIsActive(bool newValue) {

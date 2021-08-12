@@ -11,6 +11,7 @@ import 'package:morningmagic/features/visualization/presentation/widgets/back_bu
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/routes/scale_route.dart';
 import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 
 class VisualizationTimerPage extends StatefulWidget {
@@ -18,15 +19,38 @@ class VisualizationTimerPage extends StatefulWidget {
   _VisualizationTimerPageState createState() => _VisualizationTimerPageState();
 }
 
-class _VisualizationTimerPageState extends State<VisualizationTimerPage> {
+class _VisualizationTimerPageState extends State<VisualizationTimerPage>
+    with WidgetsBindingObserver {
   VisualizationController _controller = Get.find<VisualizationController>();
+
+  TimerLeftController cTimerLeft;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      cTimerLeft.onAppLeft(_controller.timer, _controller.timeLeft.value);
+    } else if (state == AppLifecycleState.resumed) {
+      cTimerLeft.onAppResume(_controller.timer, _controller.timeLeft);
+    }
+  }
+
+  @override
+  void dispose() {
+    Get.delete<TimerLeftController>();
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
 
   @override
   void initState() {
+    print('VizTimerPage init');
+    cTimerLeft = Get.put(TimerLeftController());
     super.initState();
     _controller.setCurrentImageIndex(0);
+    WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      print('VizTimer addPostFrameCallback');
       _controller.toggleStartPauseTimer();
     });
   }
