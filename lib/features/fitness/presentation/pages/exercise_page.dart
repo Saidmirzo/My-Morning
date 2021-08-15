@@ -30,7 +30,7 @@ class ExercisePage extends StatefulWidget {
 class _ExercisePageState extends State<ExercisePage>
     with TickerProviderStateMixin {
   GifController _gifController;
-  FitnessController _fitnessController = Get.find<FitnessController>();
+  FitnessController _fitnessController = Get.find();
   AudioPlayer _audioPlayer;
   Rx<FitnessExercise> exercise;
   TimerFitnesController cTimer;
@@ -39,7 +39,20 @@ class _ExercisePageState extends State<ExercisePage>
   void initState() {
     exercise = widget.exercise.obs;
     _gifController = GifController(vsync: this, duration: 2.seconds);
-    cTimer = Get.put(TimerFitnesController(_gifController));
+    cTimer = Get.put(TimerFitnesController(_gifController,
+        (_fitnessController?.selectedProgram?.exercises?.length ?? 0),
+        onDone: () async {
+      if (_fitnessController.step !=
+          _fitnessController.selectedProgram.exercises.length - 1) {
+        print('onDone2');
+        Get.to(FitnessSuccessPage(onNext: () async {
+          Get.back();
+          _onNext();
+        }));
+      } else {
+        _onNext();
+      }
+    }));
     cTimer.progName = widget.progName;
     super.initState();
   }
@@ -258,10 +271,14 @@ class _ExercisePageState extends State<ExercisePage>
     _disposeServices();
     _fitnessController.incrementStep();
     final _exercise = _fitnessController.currentExercise;
+    print('_onNext 2');
     if (_exercise != null) {
+      print('_onNext 3');
+      if (cTimer?.isExDone?.value ?? false) cTimer.startTimer();
       cTimer?.isExDone?.value = false;
       exercise.value = _exercise;
     } else {
+      print('_onNext 4');
       _fitnessController.step = 0;
       AppRouting.replace(FitnessSuccessPage(
           countProgram: _fitnessController.selectedProgram.exercises.length));

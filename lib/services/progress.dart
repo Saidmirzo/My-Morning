@@ -90,7 +90,6 @@ class ProgressController extends GetxController {
     var arr = [affirmation, meditation, fittness, reading, visualizations];
     var _start = DateTime(_date.year, _date.month);
     var _end = DateTime(_date.year, _date.month + 1);
-    print('percentOfAwareness $_start - $_end');
     return statPerPeriod(_start, _end, arr)[2];
   }
 
@@ -106,7 +105,6 @@ class ProgressController extends GetxController {
     var stat = [];
     var _now = DateTime.now();
     var arr = [affirmation, meditation, fittness, reading, visualizations];
-    print('type id $itogiType');
     switch (itogiType) {
       case 1:
         // Стартовую дату берем 99 лет назад

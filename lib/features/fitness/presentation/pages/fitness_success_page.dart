@@ -14,8 +14,10 @@ import '../../../../widgets/primary_circle_button.dart';
 
 class FitnessSuccessPage extends StatefulWidget {
   final int countProgram;
+  final Function onNext;
 
-  const FitnessSuccessPage({Key key, this.countProgram}) : super(key: key);
+  const FitnessSuccessPage({Key key, this.countProgram, this.onNext})
+      : super(key: key);
 
   @override
   State createState() {
@@ -32,7 +34,10 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   @override
   void initState() {
     super.initState();
-    Get.delete<TimerFitnesController>();
+
+    // Он будет null если мы закончили всю тренировку
+    // Между упражнениями здесь будет функция next
+    // if (widget.onNext == null) Get.delete<TimerFitnesController>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _vibrate();
@@ -54,7 +59,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        final _fitnessController = Get.find<FitnessController>();
+        final _fitnessController = Get.find();
         _fitnessController.step = 0;
         return true;
       },
@@ -88,7 +93,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
     return PrimaryCircleButton(
       size: 45,
       icon: Icon(Icons.arrow_forward, color: AppColors.primary),
-      onPressed: _continueClicked,
+      onPressed: widget.onNext ?? _continueClicked,
     );
   }
 
@@ -134,7 +139,6 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
     } else {
       _routeValue = await OrderUtil().getRouteById(2);
     }
-    Get.delete<FitnessController>();
     Get.off(_routeValue, opaque: true);
   }
 

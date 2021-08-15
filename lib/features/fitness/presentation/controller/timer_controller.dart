@@ -8,6 +8,7 @@ import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/fitness_porgress/fitness_progress.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/features/fitness/presentation/pages/fitness_success_page.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/progress.dart';
 
@@ -19,21 +20,24 @@ class TimerFitnesController {
   // Когда упражнение завершено
   RxBool isExDone = false.obs;
   String progName = '';
+  int exerciseCount = 0;
+  final Function() onDone;
 
   GifController gifController;
 
   DateTime date = DateTime.now();
   String timeStr;
 
-  TimerFitnesController(this.gifController) {
+  TimerFitnesController(this.gifController, this.exerciseCount, {this.onDone}) {
     init();
   }
 
   void init() async {
     ExerciseTime _time = await MyDB().getBox().get(MyResource.FITNESS_TIME_KEY,
         defaultValue: ExerciseTime(TimerPageId.Fitness));
-    time.value = _time.time * 60;
-    startValue = _time.time * 60;
+    var tm = ((_time.time * 60) / exerciseCount).round();
+    time.value = tm;
+    startValue = tm;
     startTimer();
   }
 
@@ -65,13 +69,9 @@ class TimerFitnesController {
         (Timer timer) async {
           if (time.value < 1) {
             timer.cancel();
-            final _audioPlayer = AudioPlayer();
-            await _audioPlayer.setAsset("assets/audios/success.mp3");
-            _audioPlayer.play().then((value) {
-              _audioPlayer.dispose();
-            });
             saveFitnessProgress(false);
             isExDone.value = true;
+            if (onDone != null) onDone();
           } else {
             time--;
             passedSec++;
@@ -89,7 +89,7 @@ class TimerFitnesController {
 
   void cancelTimer() {
     timer?.cancel();
-    saveFitnessProgress(true);
+    if (!isExDone.value) saveFitnessProgress(true);
     passedSec = 0;
   }
 }

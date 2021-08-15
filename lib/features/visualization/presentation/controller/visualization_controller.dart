@@ -112,10 +112,6 @@ class VisualizationController extends GetxController {
     });
   }
 
-  Future<List<VisualizationTarget>> getTargets() {
-    return targetRepository.getVisualizationTargets();
-  }
-
   saveTarget(String text) {
     final _id = targets.last.id + 1;
     targets.add(VisualizationTarget(
