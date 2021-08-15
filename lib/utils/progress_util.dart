@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/app_exercise_holder.dart';
@@ -7,105 +5,11 @@ import 'package:morningmagic/db/model/app_and_custom_exercises/custom_exercise_h
 import 'package:morningmagic/db/model/app_and_custom_exercises/exercise_name.dart';
 import 'package:morningmagic/db/model/exercise/exercise_holder.dart';
 import 'package:morningmagic/db/model/exercise/exercise_title.dart';
-import 'package:morningmagic/db/model/progress/day/day.dart';
-import 'package:morningmagic/db/model/progress/day/day_holder.dart';
 import 'package:morningmagic/db/model/user_program/user_program.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/pages/exerciseCustomDetails.dart';
-import 'package:morningmagic/pages/exerciseDetails.dart';
-import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
-import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:random_string/random_string.dart';
 
 class ExerciseUtils {
-  void chooseExerciseAndRoute(
-      BuildContext context, String exerciseName, int pageId) {
-    if (equalsIgnoreCase(exerciseName, "Потягивания") ||
-        equalsIgnoreCase(exerciseName, "Stretching")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 0, pageId: pageId, isCustomProgram: true)));
-    } else if (equalsIgnoreCase(exerciseName, "Шаги на месте") ||
-        equalsIgnoreCase(exerciseName, "March in Place")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 1, pageId: pageId, isCustomProgram: true)));
-    } else if (equalsIgnoreCase(exerciseName, "Перекаты с носков на пятки") ||
-        equalsIgnoreCase(exerciseName, "Heel and Toe Raises")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 2, pageId: pageId, isCustomProgram: true)));
-    } else if (equalsIgnoreCase(exerciseName, "Вращения") ||
-        equalsIgnoreCase(exerciseName, "Rotations")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 3, pageId: pageId, isCustomProgram: true)));
-    } else if (equalsIgnoreCase(
-            exerciseName, "Попеременные наклоны и приседания") ||
-        equalsIgnoreCase(exerciseName, "Alternating bend and squats")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 4, pageId: pageId, isCustomProgram: true)));
-    } else if (equalsIgnoreCase(exerciseName, "Наклоны в стороны") ||
-        equalsIgnoreCase(exerciseName, "Standing Side Bend")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 5, pageId: pageId, isCustomProgram: true)));
-    } else if (equalsIgnoreCase(
-            exerciseName, "Попеременное подтягивание ног") ||
-        equalsIgnoreCase(exerciseName, "Bicycle Crunch")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 6, pageId: pageId, isCustomProgram: true)));
-    } else if (equalsIgnoreCase(exerciseName, "«Кошечка»") ||
-        equalsIgnoreCase(exerciseName, "Cat and Dog")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 7, pageId: pageId, isCustomProgram: true)));
-    } else if (equalsIgnoreCase(exerciseName, "Отжимания") ||
-        equalsIgnoreCase(exerciseName, "Press Up")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 8, pageId: pageId, isCustomProgram: true)));
-    } else if (equalsIgnoreCase(exerciseName, "Потягивания ") ||
-        equalsIgnoreCase(exerciseName, "Hand stretching")) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ExerciseDetails(
-                  stepId: 9, pageId: pageId, isCustomProgram: true)));
-    } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  ExerciseCustomDetails(title: exerciseName, pageId: pageId)));
-      print("Custom user exercise !!!");
-    }
-  }
-
-  Future<void> deleteAllProgress() async {
-    await MyDB().getBox().put(MyResource.DAYS_HOLDER, DayHolder(List<Day>()));
-  }
-
   Future<void> deleteSelectedExerciseFromDB(String key) async {
     ExerciseHolder holder =
         await MyDB().getBox().get(MyResource.EXERCISES_HOLDER);
@@ -147,7 +51,7 @@ class ExerciseUtils {
   void saveCustomExercise(ExerciseName exerciseName) async {
     CustomExerciseHolder customExerciseHolder = await MyDB().getBox().get(
         MyResource.CUSTOM_EXERCISES_HOLDER,
-        defaultValue: CustomExerciseHolder(List<ExerciseName>()));
+        defaultValue: CustomExerciseHolder(<ExerciseName>[]));
     customExerciseHolder.list.add(exerciseName);
     await MyDB()
         .getBox()
@@ -174,14 +78,10 @@ class ExerciseUtils {
         .put(MyResource.CUSTOM_EXERCISES_HOLDER, customExerciseHolder);
   }
 
-  void goNextRoute(BuildContext context, int pageId) async {
-    nextRoute(context, pageId);
-  }
-
   void saveExercisesNames(Box box) {
     AppExerciseHolder appExerciseHolder = box.get(
         MyResource.APP_EXERCISES_HOLDER,
-        defaultValue: AppExerciseHolder(List<ExerciseName>()));
+        defaultValue: AppExerciseHolder(<ExerciseName>[]));
 
     if (appExerciseHolder.list.length == 0) {
       appExerciseHolder.list
@@ -226,30 +126,4 @@ class ExerciseUtils {
       holder.freshExercises.insert(0, last);
     }
   }
-
-  void nextRoute(BuildContext context, int pageId) async {
-    ExerciseHolder holder =
-        await MyDB().getBox().get(MyResource.EXERCISES_HOLDER);
-    if (holder != null && holder.freshExercises.length > 0) {
-      ExerciseTitle first = holder.freshExercises.first;
-      holder.freshExercises.removeAt(0);
-      holder.skipExercises.add(first);
-
-      await MyDB().getBox().put(MyResource.EXERCISES_HOLDER, holder);
-
-      chooseExerciseAndRoute(context, first.title, pageId);
-    } else if (holder != null &&
-        holder.freshExercises.length == 0 &&
-        holder.skipExercises.length > 0) {
-      OrderUtil().getRouteById(2).then((value) {
-        Get.off(TimerSuccessScreen(() {
-          Get.off(value);
-        }, MyDB().getBox().get(MyResource.FITNESS_TIME_KEY).time, false));
-      });
-    }
-  }
-
-  bool equalsIgnoreCase(String a, String b) =>
-      (a == null && b == null) ||
-      (a != null && b != null && a.toLowerCase() == b.toLowerCase());
 }

@@ -19,8 +19,9 @@ import 'package:sliding_sheet/sliding_sheet.dart';
 
 class ExercisePage extends StatefulWidget {
   final FitnessExercise exercise;
+  final String progName;
 
-  const ExercisePage({Key key, @required this.exercise}) : super(key: key);
+  const ExercisePage(this.progName, this.exercise);
 
   @override
   _ExercisePageState createState() => _ExercisePageState();
@@ -39,6 +40,7 @@ class _ExercisePageState extends State<ExercisePage>
     exercise = widget.exercise.obs;
     _gifController = GifController(vsync: this, duration: 2.seconds);
     cTimer = Get.put(TimerFitnesController(_gifController));
+    cTimer.progName = widget.progName;
     super.initState();
   }
 

@@ -5,20 +5,14 @@ part 'affirmation_progress.g.dart';
 
 @HiveType(typeId: 10)
 class AffirmationProgress extends Exercise {
-
-  AffirmationProgress(this.seconds, this.text);
-
-  String title = "Аффермации";
+  AffirmationProgress(this.sec, this.text, {this.isSkip = false});
 
   @HiveField(0)
-  int seconds;
+  int sec;
 
   @HiveField(1)
   String text;
 
-  @override
-  String toString() {
-    return 'AffirmationProgress{title: $title, seconds: $seconds, text: $text}';
-  }
-
+  @HiveField(2)
+  bool isSkip;
 }

@@ -19,17 +19,23 @@ class FitnessProgressAdapter extends TypeAdapter<FitnessProgress> {
     return FitnessProgress(
       fields[0] as int,
       fields[1] as String,
+      fields[2] as String,
+      isSkip: fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, FitnessProgress obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.seconds)
+      ..write(obj.sec)
       ..writeByte(1)
-      ..write(obj.exercise);
+      ..write(obj.progName)
+      ..writeByte(2)
+      ..write(obj.text)
+      ..writeByte(3)
+      ..write(obj.isSkip);
   }
 
   @override

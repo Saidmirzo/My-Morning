@@ -9,9 +9,7 @@ import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
-import 'package:morningmagic/db/model/progress/day/day.dart';
-import 'package:morningmagic/db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
-import 'package:morningmagic/db/progress.dart';
+import 'package:morningmagic/db/model/progress/diary_progress/diary_record_progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
@@ -21,6 +19,7 @@ import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
@@ -162,14 +161,14 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
       case RecordingStatus.Recording:
         {
           await _stopRecording();
-          saveVocabularyRecordProgress(_recording.path);
+          saveDiaryRecordProgress(_recording.path, true);
           print("STOP RECORDING !!!!!!!!!!!!!!!!");
           break;
         }
       case RecordingStatus.Paused:
         {
           await _stopRecording();
-          saveVocabularyRecordProgress(_recording.path);
+          saveDiaryRecordProgress(_recording.path, true);
           print("STOP RECORDING !!!!!!!!!!!!!!!!");
           break;
         }
@@ -178,31 +177,14 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
     }
   }
 
-  void saveProg(String box, String path) {
-    print('savep progress');
-    DateTime date = DateTime.now();
-    List<dynamic> list = MyDB().getBox().get(box) ?? [];
-    setState(() {
-      list.add([
-        list.isNotEmpty ? (int.parse(list.last[0]) + 1).toString() : '0',
-        path,
-        '${date.day}.${date.month}.${date.year}',
-      ]);
-    });
-    MyDB().getBox().put(box, list);
-  }
-
-  void saveVocabularyRecordProgress(String path) {
+  int passedSec = 0;
+  void saveDiaryRecordProgress(String path, bool isSkip) {
     if (path != null) {
-      print('saveVocabularyRecordProgress');
+      print('saveDiaryRecordProgress');
       path = path.substring(1);
-      VocabularyRecordProgress recordProgress =
-          new VocabularyRecordProgress(path);
-      saveProg(MyResource.NOTEPADS, path);
-      Day day = ProgressUtil()
-          .createDay(null, null, null, null, null, recordProgress, null);
-      ProgressUtil().updateDayList(day);
-      print(recordProgress);
+      var model = new DiaryRecordProgress(path, passedSec, isSkip);
+      ProgressController pg = Get.find();
+      pg.saveDiaryJournal(model);
     }
   }
 
@@ -227,6 +209,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
 
   @override
   void initState() {
+    passedSec = 0;
     checkPermissions().then((value) {
       print("process complete");
     });
@@ -264,6 +247,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                   });
                 } else {
                   _time.value--;
+                  passedSec++;
                 }
               }));
     } else if (_timer != null && _timer.isActive) {

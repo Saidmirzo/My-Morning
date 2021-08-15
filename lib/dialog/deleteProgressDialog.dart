@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/utils/progress_util.dart';
-import 'package:morningmagic/widgets/animatedButton.dart';
-
 import 'package:get/get.dart';
+import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/widgets/animatedButton.dart';
 
 class DeleteProgressDialog extends Dialog {
   DeleteProgressDialog(this.voidCallback);
@@ -41,9 +39,7 @@ class DeleteProgressDialog extends Dialog {
                 padding: EdgeInsets.only(top: 20),
                 child: Center(
                   child: AnimatedButton(() {
-                    ExerciseUtils().deleteAllProgress().then((value) {
-                      voidCallback();
-                    });
+                    voidCallback();
                     Navigator.pop(context, true);
                   }, 'yes'.tr, 22, null, null),
                 ),

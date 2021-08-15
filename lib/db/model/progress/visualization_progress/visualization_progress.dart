@@ -5,20 +5,14 @@ part 'visualization_progress.g.dart';
 
 @HiveType(typeId: 17)
 class VisualizationProgress extends Exercise {
-
-  VisualizationProgress(this.seconds, this.text);
-
-  String title = "Визуализация";
+  VisualizationProgress(this.sec, this.text, {this.isSkip = false});
 
   @HiveField(0)
-  int seconds;
+  int sec;
 
   @HiveField(1)
   String text;
 
-  @override
-  String toString() {
-    return 'VisualizationProgress{title: $title, seconds: $seconds, text: $text}';
-  }
-
+  @HiveField(2)
+  bool isSkip;
 }

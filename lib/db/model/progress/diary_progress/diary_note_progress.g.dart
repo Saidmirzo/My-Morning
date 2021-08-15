@@ -1,32 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'day_holder.dart';
+part of 'diary_note_progress.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class DayHolderAdapter extends TypeAdapter<DayHolder> {
+class DiaryNoteProgressAdapter extends TypeAdapter<DiaryNoteProgress> {
   @override
-  final int typeId = 12;
+  final int typeId = 35;
 
   @override
-  DayHolder read(BinaryReader reader) {
+  DiaryNoteProgress read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return DayHolder(
-      (fields[0] as List)?.cast<Day>(),
+    return DiaryNoteProgress(
+      fields[0] as String,
+      fields[1] as int,
+      fields[2] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, DayHolder obj) {
+  void write(BinaryWriter writer, DiaryNoteProgress obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.listOfDays);
+      ..write(obj.note)
+      ..writeByte(1)
+      ..write(obj.sec)
+      ..writeByte(2)
+      ..write(obj.isSkip);
   }
 
   @override
@@ -35,7 +41,7 @@ class DayHolderAdapter extends TypeAdapter<DayHolder> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DayHolderAdapter &&
+      other is DiaryNoteProgressAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

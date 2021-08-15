@@ -5,18 +5,11 @@ part 'meditation_progress.g.dart';
 
 @HiveType(typeId: 11)
 class MeditationProgress extends Exercise {
-
-  MeditationProgress(this.seconds);
-
-  String title = "Медитация";
+  MeditationProgress(this.sec, {this.isSkip = false});
 
   @HiveField(0)
-  int seconds;
+  int sec;
 
-  @override
-  String toString() {
-    return 'MeditationProgress{title: $title, seconds: $seconds}';
-  }
-
-
+  @HiveField(1)
+  bool isSkip;
 }

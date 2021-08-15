@@ -6,9 +6,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/note/note.dart';
-import 'package:morningmagic/db/model/progress/day/day.dart';
-import 'package:morningmagic/db/model/progress/vocabulary_progress/vocabulary_note_progress.dart';
-import 'package:morningmagic/db/progress.dart';
+import 'package:morningmagic/db/model/progress/diary_progress/diary_note_progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
@@ -16,6 +14,7 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
@@ -35,18 +34,14 @@ class TimerNotePage extends StatefulWidget {
 
 class TimerNotePageState extends State<TimerNotePage> {
   TextEditingController textEditingController;
-  int count;
   DateTime date = DateTime.now();
   int _startTime = 0;
 
   @override
   void initState() {
+    passedSec = 0;
     initEditText();
     super.initState();
-    count = MyDB().getBox().get(MyResource.NOTE_COUNT) ?? 0;
-    Future.delayed(Duration(days: 1), () {
-      MyDB().getBox().put(MyResource.NOTE_COUNT, 0);
-    });
     initTimer();
     AnalyticService.screenView('text_note_page');
   }
@@ -63,28 +58,14 @@ class TimerNotePageState extends State<TimerNotePage> {
     });
   }
 
-  void saveProg(String box, String path) {
-    DateTime date = DateTime.now();
-    List<dynamic> list = MyDB().getBox().get(box) ?? [];
-    setState(() {
-      list.add([
-        list.isNotEmpty ? (int.parse(list.last[0]) + 1).toString() : '0',
-        path,
-        '${date.day}.${date.month}.${date.year}',
-      ]);
-    });
-    MyDB().getBox().put(box, list);
-  }
-
-  void saveNoteProgress() {
+  int passedSec = 0;
+  void saveNoteProgress(bool isSkip) {
     if (textEditingController.text != null &&
         textEditingController.text.isNotEmpty) {
-      VocabularyNoteProgress noteProgress =
-          VocabularyNoteProgress(textEditingController.text);
-      saveProg(MyResource.NOTEPADS, noteProgress.note);
-      Day day = ProgressUtil()
-          .createDay(null, null, null, null, noteProgress, null, null);
-      ProgressUtil().updateDayList(day);
+      var model =
+          DiaryNoteProgress(textEditingController.text, passedSec, isSkip);
+      ProgressController pg = Get.find();
+      pg.saveDiaryJournal(model);
     }
   }
 
@@ -99,9 +80,10 @@ class TimerNotePageState extends State<TimerNotePage> {
           1.seconds,
           (Timer timer) => setState(() {
                 if (_time.value < 1) {
-                  next();
+                  next(false);
                 } else {
                   _time?.value--;
+                  passedSec++;
                 }
               }));
     } else if (_timer != null && _timer.isActive) {
@@ -110,11 +92,11 @@ class TimerNotePageState extends State<TimerNotePage> {
     }
   }
 
-  void next() async {
+  void next(bool isSkip) async {
     if (_timer?.isActive ?? false) _timer.cancel();
     final _audioPlayer = AudioPlayer();
     await _audioPlayer.setAsset("assets/audios/success.mp3");
-    saveNoteProgress();
+    saveNoteProgress(isSkip);
     OrderUtil().getRouteById(TimerPageId.Diary).then((value) {
       Get.off(TimerSuccessScreen(() {
         Get.off(widget.fromHomeMenu ? ProgressPage() : value);
@@ -238,7 +220,7 @@ class TimerNotePageState extends State<TimerNotePage> {
   Widget nextBtn() {
     return PrimaryCircleButton(
       icon: Icon(Icons.arrow_forward, color: AppColors.primary),
-      onPressed: () => next(),
+      onPressed: () => next(true),
     );
   }
 
@@ -282,7 +264,7 @@ class TimerNotePageState extends State<TimerNotePage> {
   }
 
   Future<bool> _onWillPop() async {
-    saveNoteProgress();
+    saveNoteProgress(true);
     return true;
   }
 }

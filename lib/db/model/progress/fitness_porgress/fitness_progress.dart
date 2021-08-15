@@ -5,21 +5,17 @@ part 'fitness_progress.g.dart';
 
 @HiveType(typeId: 14)
 class FitnessProgress extends Exercise {
-
-  FitnessProgress(this.seconds, this.exercise);
-
-  String title = "Фитнес";
+  FitnessProgress(this.sec, this.progName, this.text, {this.isSkip = false});
 
   @HiveField(0)
-  int seconds;
+  int sec;
 
   @HiveField(1)
-  String exercise;
+  String progName;
 
-  @override
-  String toString() {
-    return 'FitnessProgress{title: $title, seconds: $seconds, exercise: $exercise}';
-  }
+  @HiveField(2)
+  String text;
 
-
+  @HiveField(3)
+  bool isSkip;
 }

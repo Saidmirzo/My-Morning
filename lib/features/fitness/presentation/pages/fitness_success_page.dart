@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/model/progress.dart';
-import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/timer_controller.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
@@ -41,9 +38,6 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
       _vibrate();
       await _audioPlayer.setAsset("assets/audios/success.mp3");
       await _audioPlayer.play();
-      int _minutes =
-          await MyDB().getBox().get(MyResource.FITNESS_TIME_KEY).time;
-      _updateLocalData(_minutes, widget.countProgram);
     });
   }
 
@@ -142,14 +136,6 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
     }
     Get.delete<FitnessController>();
     Get.off(_routeValue, opaque: true);
-  }
-
-  void _updateLocalData(int minutes, int countProgram) {
-    ProgressModel pgModel = MyDB().getProgress();
-    pgModel.count_of_session[DateTime.now()] = 1;
-    pgModel.minutes_of_awarenes[DateTime.now()] = minutes;
-    pgModel.percent_of_awareness[DateTime.now()] = countProgram * 0.25;
-    pgModel.save();
   }
 
   Future<void> _vibrate() async {

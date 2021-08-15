@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/model/book/book.dart';
-import 'package:morningmagic/db/model/progress/day/day.dart';
 import 'package:morningmagic/db/model/progress/reading_progress/reading_progress.dart';
-import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/resources/my_const.dart';
+import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
-import 'package:get/get.dart';
 
 import '../../../../resources/colors.dart';
 import '../../../../widgets/primary_circle_button.dart';
@@ -17,7 +15,11 @@ import '../../../../widgets/primary_circle_button.dart';
 class InputTextColumn extends StatefulWidget {
   final VoidCallback onPressed;
   final bool fromHomeMenu;
-  InputTextColumn(this.onPressed, {this.fromHomeMenu = false});
+  final int passedSec;
+  final bool isSkip;
+
+  InputTextColumn(this.onPressed, this.passedSec, this.isSkip,
+      {this.fromHomeMenu = false});
 
   @override
   State createState() {
@@ -27,7 +29,6 @@ class InputTextColumn extends StatefulWidget {
 
 class InputTextColumnState extends State<InputTextColumn> {
   TextEditingController controller = TextEditingController();
-  ReadingProgress readingProgress;
   DateTime date = DateTime.now();
 
   @override
@@ -35,51 +36,15 @@ class InputTextColumnState extends State<InputTextColumn> {
     super.initState();
   }
 
-  void saveProg() {
-    String type = 'reading_small'.tr;
-    var box = MyResource.MY_READING_PROGRESS;
-    Day day = ProgressUtil()
-        .createDay(null, null, null, readingProgress, null, null, null);
-    ProgressUtil().updateDayList(day);
-    Book book =
-        MyDB().getBox().get(MyResource.BOOK_KEY, defaultValue: Book(""));
-    int pages = int.tryParse(controller.text) ?? 0;
-    readingProgress = ReadingProgress(book.bookName, pages);
-    List<dynamic> tempList;
-    List<dynamic> list = MyDB().getBox().get(box) ?? [];
-    tempList = list;
-    print(list);
-    print(tempList);
-    if (list.isNotEmpty) {
-      if (list.last[2] == '${date.day}.${date.month}.${date.year}') {
-        list.add([
-          tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
-          tempList[tempList.indexOf(tempList.last)][1] +
-              '\n$type - ${readingProgress.book} (${readingProgress.pages} ' +
-              'pages_note'.tr +
-              ')',
-          '${date.day}.${date.month}.${date.year}'
-        ]);
-        list.removeAt(list.indexOf(list.last) - 1);
-      } else {
-        list.add([
-          list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
-          '\n$type - ${readingProgress.book} (${readingProgress.pages} ' +
-              'pages_note'.tr +
-              ')',
-          '${date.day}.${date.month}.${date.year}'
-        ]);
-      }
-    } else {
-      list.add([
-        list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
-        '\n$type - ${readingProgress.book} (${readingProgress.pages} ' +
-            'pages_note'.tr +
-            ')',
-        '${date.day}.${date.month}.${date.year}'
-      ]);
+  void saveProg(bool isSkip) {
+    if (widget.passedSec > minPassedSec) {
+      String book = MyDB().getBox().get(MyResource.BOOK_KEY, defaultValue: '');
+      int pages = int.tryParse(controller.text) ?? 0;
+      ReadingProgress model =
+          ReadingProgress(book, pages, widget.passedSec, isSkip: isSkip);
+      ProgressController cPg = Get.find();
+      cPg.saveJournal(MyResource.READING_JOURNAL, model);
     }
-    MyDB().getBox().put(box, list);
   }
 
   @override
@@ -131,7 +96,7 @@ class InputTextColumnState extends State<InputTextColumn> {
           PrimaryCircleButton(
             icon: Icon(Icons.arrow_forward, color: AppColors.primary),
             onPressed: () {
-              saveProg();
+              saveProg(widget.isSkip);
               widget.onPressed();
               OrderUtil().getRouteById(4).then((value) {
                 Get.off(widget.fromHomeMenu ? ProgressPage() : value);

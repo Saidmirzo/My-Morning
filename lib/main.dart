@@ -5,11 +5,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/services/localization/localization_service.dart';
 import 'package:morningmagic/routing/app_routing.dart';
+import 'package:morningmagic/services/localization/localization_service.dart';
 import 'package:morningmagic/services/notifications.dart';
 
-import 'utils/my_behavior.dart';
+import 'services/progress.dart';
 
 Future<void> main() async {
   // Для выполнение действия через N время на андроид
@@ -18,6 +18,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await _initializeHiveStore();
   pushNotifications = PushNotifications();
+  Get.put(ProgressController());
 
   final _initialLocale = await LocalizationService.getInitialLocale();
 

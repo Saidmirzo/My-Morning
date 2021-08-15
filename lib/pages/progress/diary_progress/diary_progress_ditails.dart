@@ -5,30 +5,31 @@ import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/progress/components/appbar.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/services/progress.dart';
 
-import 'journalMy.dart';
+import 'diary_progress.dart';
 
 class journalMyDitails extends StatefulWidget {
   String id;
   String text;
   String date;
+  Map<String, dynamic> map;
 
-  journalMyDitails(this.id, this.text, this.date);
+  journalMyDitails(this.id, this.text, this.date, this.map);
 
   @override
   _journalMyDitailsState createState() => _journalMyDitailsState();
 }
 
 class _journalMyDitailsState extends State<journalMyDitails> {
-  List<dynamic> list;
-  List<dynamic> tempList;
   TextEditingController controller;
   FocusNode focusNode;
   bool isEnabled = false;
+  ProgressController progressController = Get.find();
+
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get(MyResource.NOTEPADS);
     controller = TextEditingController(text: widget.text);
     focusNode = FocusNode();
     focusNode.addListener(
@@ -85,13 +86,8 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                                     padding: const EdgeInsets.only(right: 5),
                                     child: Icon(Icons.access_time),
                                   ),
-                                  Container(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    widget.date,
-                                    style: TextStyle(),
-                                  ),
+                                  Container(width: 10),
+                                  Text(widget.date),
                                   Spacer(),
                                   GestureDetector(
                                     onTap: () {
@@ -103,15 +99,9 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                                         setFocus();
                                       });
                                     },
-                                    child: Icon(
-                                      Icons.edit_outlined,
-                                      //size: 40,
-                                      //color: AppColors.VIOLET,
-                                    ),
+                                    child: Icon(Icons.edit_outlined),
                                   ),
-                                  Container(
-                                    width: 10,
-                                  ),
+                                  Container(width: 10),
                                   InkWell(
                                     onTap: () {
                                       print('!!!delete_outline!!!');
@@ -169,14 +159,13 @@ class _journalMyDitailsState extends State<journalMyDitails> {
     return InkWell(
       onTap: () {
         setState(() {
-          list.removeWhere((value) => value[0] == widget.id);
-          list.insert(
-              int.parse(widget.id), [widget.id, controller.text, widget.date]);
+          widget.map[widget.date].note = controller.text;
+          myDbBox.put(MyResource.DIARY_JOURNAL, widget.map);
         });
         Navigator.of(context).pop();
         Navigator.of(context).pop();
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => journalMy()));
+            .push(MaterialPageRoute(builder: (context) => MyDiaryProgress()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -222,17 +211,6 @@ class _journalMyDitailsState extends State<journalMyDitails> {
           actionsPadding: EdgeInsets.all(0),
           buttonPadding: EdgeInsets.all(0),
           backgroundColor: AppColors.BOTTOM_GRADIENT,
-          // title: Container(
-          //   color: AppColors.VIOLET,
-          //   child: Text(
-          //     'Сообщение !',
-          //     style: TextStyle(
-          //       color: AppColors.VIOLET,
-          //       backgroundColor: AppColors.SHADER_BOTTOM,
-          //       fontSize: 30,
-          //     ),
-          //   ),
-          // ),
           content: Container(
             height: MediaQuery.of(context).size.height * 0.2,
             width: MediaQuery.of(context).size.width,
@@ -261,17 +239,14 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                       ),
                       onPressed: () {
                         setState(() {
-                          list.removeWhere((value) => value[0] == widget.id);
+                          widget.map.remove(widget.date);
+                          myDbBox.put(MyResource.DIARY_JOURNAL, widget.map);
                         });
-                        setState(() {
-                          MyDB().getBox().put(MyResource.NOTEPADS, list);
-                        });
-
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => journalMy()));
+                            builder: (context) => MyDiaryProgress()));
                       },
                     ),
                     FlatButton(

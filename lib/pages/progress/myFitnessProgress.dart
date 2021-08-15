@@ -12,12 +12,12 @@ class MyFitnessProgress extends StatefulWidget {
 }
 
 class _MyFitnessProgressState extends State<MyFitnessProgress> {
-  List<dynamic> list;
+  Map<String, List<dynamic>> _map;
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get(MyResource.FITNESS_PROGRESS) ?? [];
-    print(list);
+    // Get old data or init empty map
+    _map = MyDB().getJournalProgress(MyResource.FITNESS_JOURNAL);
   }
 
   @override
@@ -38,7 +38,6 @@ class _MyFitnessProgressState extends State<MyFitnessProgress> {
             ],
           ),
         ),
-        //SingleChildScrollView
         child: Column(
           children: [
             appBarProgress('my_exercises'.tr),
@@ -47,13 +46,13 @@ class _MyFitnessProgressState extends State<MyFitnessProgress> {
                 padding: const EdgeInsets.only(top: 15, bottom: 0),
                 child: GridView(
                   padding: EdgeInsets.only(bottom: 15),
-                  children: list.isNotEmpty
+                  children: _map.isNotEmpty
                       ? List.generate(
-                          list.length,
+                          _map.length,
                           (index) => FitnessMiniProgress(
-                            list.isNotEmpty ? list[index][0] : '0',
-                            list.isNotEmpty ? list[index][1] : '',
-                            list.isNotEmpty ? list[index][2] : '01.01.2020',
+                            _map.keys.toList()[index],
+                            _map[_map.keys.toList()[index]],
+                            _map.keys.toList()[index],
                           ),
                         )
                       : [],
@@ -75,16 +74,16 @@ class _MyFitnessProgressState extends State<MyFitnessProgress> {
 
 class FitnessMiniProgress extends StatelessWidget {
   final String id;
-  final String text;
+  final List<dynamic> list;
   final String date;
 
-  FitnessMiniProgress(this.id, this.text, this.date);
+  FitnessMiniProgress(this.id, this.list, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
         ctx,
         MaterialPageRoute(
-            builder: (context) => FitnessFullProgress(id, text, date)));
+            builder: (context) => FitnessFullProgress(id, list, date)));
   }
 
   @override
@@ -109,7 +108,7 @@ class FitnessMiniProgress extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Text(
-                    text,
+                    list.last.text,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04, //16,
                       color: Colors.black54,
@@ -148,25 +147,16 @@ class FitnessMiniProgress extends StatelessWidget {
 
 class FitnessFullProgress extends StatefulWidget {
   String id;
-  String text;
+  List<dynamic> list;
   String date;
 
-  FitnessFullProgress(this.id, this.text, this.date);
+  FitnessFullProgress(this.id, this.list, this.date);
 
   @override
   _FitnessFullProgressState createState() => _FitnessFullProgressState();
 }
 
 class _FitnessFullProgressState extends State<FitnessFullProgress> {
-  List<dynamic> list;
-  List<dynamic> tempList;
-  TextEditingController controller;
-  @override
-  void initState() {
-    super.initState();
-    controller = TextEditingController(text: widget.text);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,24 +207,7 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                              child: TextField(
-                            controller: controller,
-                            maxLines: 100,
-                            enabled: false,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                            // enabled: true,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.04, //16,
-                              color: Colors.black54,
-                            ),
-                            //style: Theme.of(context).textTheme.title,
-                          )),
-                        ),
+                        list(),
                       ],
                     ),
                     decoration: BoxDecoration(
@@ -248,6 +221,67 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Expanded list() {
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.list.length,
+        itemBuilder: (ctx, i) {
+          var prog = widget.list[i].progName;
+          String skip =
+              widget.list[i].isSkip ? '( ' + 'skip_note'.tr + ' )' : '';
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (prog != null &&
+                  (i == 0 || prog != widget.list[i - 1].progName)) ...[
+                const SizedBox(height: 20),
+                Text(
+                  widget.list[i].progName,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.045,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 7),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        '${widget.list[i].sec}' + ' ' + 'sec'.tr,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 7,
+                      child: Text(
+                        '${widget.list[i].text} $skip',
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

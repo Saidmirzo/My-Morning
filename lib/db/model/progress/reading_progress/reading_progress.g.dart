@@ -19,17 +19,23 @@ class ReadingProgressAdapter extends TypeAdapter<ReadingProgress> {
     return ReadingProgress(
       fields[0] as String,
       fields[1] as int,
+      fields[2] as int,
+      isSkip: fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, ReadingProgress obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.book)
       ..writeByte(1)
-      ..write(obj.pages);
+      ..write(obj.pages)
+      ..writeByte(2)
+      ..write(obj.sec)
+      ..writeByte(3)
+      ..write(obj.isSkip);
   }
 
   @override

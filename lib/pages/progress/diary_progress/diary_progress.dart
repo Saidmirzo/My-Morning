@@ -1,32 +1,35 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/instance_manager.dart';
-// import 'package:just_audio/just_audio.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:intl/intl.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/progress/diary_progress/diary_record_progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/progress/components/appbar.dart';
 import 'package:morningmagic/resources/colors.dart';
 
-import '../../../app_states.dart';
-import 'journalMyDetailsAdd.dart';
-import 'journalMyDitails.dart';
+import 'diary_progress_details_add.dart';
+import 'diary_progress_ditails.dart';
 
-class journalMy extends StatefulWidget {
+class MyDiaryProgress extends StatefulWidget {
   @override
-  _journalMyState createState() => _journalMyState();
+  _MyDiaryProgressState createState() => _MyDiaryProgressState();
 }
 
-class _journalMyState extends State<journalMy> {
-  List<dynamic> list;
-
+class _MyDiaryProgressState extends State<MyDiaryProgress> {
+  Map<String, dynamic> _map;
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get(MyResource.NOTEPADS) ?? [];
-    print(list);
+    try {
+      _map = MyDB().getDiaryProgress();
+    } catch (e) {
+      print('error get reading progress');
+      myDbBox.put(MyResource.DIARY_JOURNAL, {});
+      _map = MyDB().getDiaryProgress();
+    }
   }
 
   AudioPlayer audioPlayer = AudioPlayer();
@@ -57,26 +60,25 @@ class _journalMyState extends State<journalMy> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 15, bottom: 15),
                     child: GridView(
-                      //padding: const EdgeInsets.all(25),
-                      children: list.isNotEmpty
+                      children: _map.isNotEmpty
                           ? List.generate(
-                              list.length,
-                              (index) => !list[index][1].contains('/')
-                                  ? CategoryItem(
-                                      list.isNotEmpty ? list[index][0] : '0',
-                                      list.isNotEmpty ? list[index][1] : '0',
-                                      list.isNotEmpty
-                                          ? list[index][2]
-                                          : '01.01.2020',
-                                    )
-                                  : CategoryRecordItem(
-                                      list.isNotEmpty ? list[index][0] : '0',
-                                      list.isNotEmpty ? list[index][1] : '0',
-                                      list.isNotEmpty
-                                          ? list[index][2]
-                                          : '01.01.2020',
-                                      audioPlayer,
-                                    ),
+                              _map.length,
+                              (index) {
+                                var key = _map.keys.toList()[index];
+                                return _map[key] is DiaryRecordProgress
+                                    ? CategoryRecordItem(
+                                        key,
+                                        _map[key].path,
+                                        key,
+                                        audioPlayer,
+                                      )
+                                    : CategoryItem(
+                                        key,
+                                        _map[key].note,
+                                        key,
+                                        _map,
+                                      );
+                              },
                             )
                           : [],
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -142,14 +144,15 @@ class CategoryItem extends StatelessWidget {
   final String id;
   final String text;
   final String date;
+  final Map<String, dynamic> map;
 
-  CategoryItem(this.id, this.text, this.date);
+  CategoryItem(this.id, this.text, this.date, this.map);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
         ctx,
         MaterialPageRoute(
-            builder: (context) => journalMyDitails(id, text, date)));
+            builder: (context) => journalMyDitails(id, text, date, map)));
   }
 
   @override
@@ -192,7 +195,9 @@ class CategoryItem extends StatelessWidget {
                         child: Icon(Icons.access_time),
                       ),
                       Text(
-                        date,
+                        DateFormat.yMMMEd()
+                            .format(DateTime.parse(date))
+                            .toString(),
                         style: TextStyle(),
                       )
                     ],
@@ -275,7 +280,9 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
                     child: Icon(Icons.access_time),
                   ),
                   Text(
-                    widget.date,
+                    DateFormat.yMMMEd()
+                        .format(DateTime.parse(widget.date))
+                        .toString(),
                     style: TextStyle(),
                   )
                 ],
@@ -287,49 +294,6 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
           borderRadius: BorderRadius.circular(15),
           color: Colors.white,
           border: Border.all(width: 1, color: AppColors.BLUE),
-        ),
-      ),
-    );
-  }
-}
-
-class CategoriesScreen extends StatefulWidget {
-  @override
-  _CategoriesScreenState createState() => _CategoriesScreenState();
-}
-
-class _CategoriesScreenState extends State<CategoriesScreen> {
-  AppStates appStates = Get.put(AppStates());
-
-  List<dynamic> list;
-
-  @override
-  void initState() {
-    super.initState();
-    list = MyDB().getBox().get(MyResource.NOTEPADS);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 75, bottom: 75),
-      child: GridView(
-        //padding: const EdgeInsets.all(25),
-        children: list != null
-            ? List.generate(
-                list != null ? list.length : 1,
-                (index) => CategoryItem(
-                  list[index].id,
-                  list[index].text,
-                  list[index].date,
-                ),
-              )
-            : [],
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-          childAspectRatio: 5 / 4.1,
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 0,
         ),
       ),
     );

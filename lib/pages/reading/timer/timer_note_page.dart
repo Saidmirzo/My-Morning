@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/model/progress.dart';
-import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/reading/timer/components/customInputNextColumn.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -12,10 +9,12 @@ import 'package:vibration/vibration.dart';
 import '../../../resources/colors.dart';
 
 class TimerInputSuccessScreen extends StatefulWidget {
-  final int minutes;
+  final int passedSec;
+  final bool isSkip;
   final bool fromHomeMenu;
 
-  TimerInputSuccessScreen({this.minutes, this.fromHomeMenu = false});
+  TimerInputSuccessScreen(this.passedSec, this.isSkip,
+      {this.fromHomeMenu = false});
 
   @override
   State createState() {
@@ -25,8 +24,6 @@ class TimerInputSuccessScreen extends StatefulWidget {
 
 class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   AudioPlayer _audioPlayer = AudioPlayer();
-  int count;
-  DateTime dateTime = DateTime.now();
 
   @override
   void initState() {
@@ -34,12 +31,9 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });
-
-    ProgressModel pgModel = MyDB().getProgress();
-    pgModel.count_of_session[DateTime.now()] = 1;
-    pgModel.minutes_of_awarenes[DateTime.now()] = widget.minutes;
-    pgModel.percent_of_awareness[DateTime.now()] = 0.5;
-    pgModel.save();
+    // ProgressModel pgModel = MyDB().getProgress();
+    // pgModel.count_of_session[DateTime.now()] = 1;
+    // pgModel.save();
   }
 
   Future<void> _asyncMethod() async {
@@ -87,6 +81,8 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
                       () {
                         dispAudio();
                       },
+                      widget.passedSec,
+                      widget.isSkip,
                       fromHomeMenu: widget.fromHomeMenu,
                     ),
                   ),

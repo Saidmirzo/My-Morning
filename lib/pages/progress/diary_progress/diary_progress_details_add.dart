@@ -1,16 +1,15 @@
-import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
-import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/db/model/progress/diary_progress/diary_note_progress.dart';
 import 'package:morningmagic/pages/progress/components/appbar.dart';
-
 import 'package:morningmagic/resources/colors.dart';
-import '../../../app_states.dart';
-import 'journalMy.dart';
+import 'package:morningmagic/services/progress.dart';
+
+import 'diary_progress.dart';
 
 class JournalMyDitailsAdd extends StatefulWidget {
   @override
@@ -19,15 +18,12 @@ class JournalMyDitailsAdd extends StatefulWidget {
 
 class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
   DateTime date = DateTime.now();
-  AppStates appStates = Get.put(AppStates());
   RxString text = ''.obs;
   TextEditingController controller;
 
-  List<dynamic> list;
   @override
   void initState() {
     controller = TextEditingController();
-    list = MyDB().getBox().get(MyResource.NOTEPADS) ?? [];
     super.initState();
   }
 
@@ -121,22 +117,14 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
   InkWell addBtn(BuildContext context) {
     return InkWell(
       onTap: () {
-        print('!!!save note!!!');
-        setState(() {
-          list.add([
-            list.isNotEmpty ? (int.parse(list.last[0]) + 1).toString() : '0',
-            text.value,
-            '${date.day}.${date.month}.${date.year}',
-          ]);
-        });
-        print(list);
-        setState(() {
-          MyDB().getBox().put(MyResource.NOTEPADS, list);
-        });
+        var model = DiaryNoteProgress(text.value, 0, true);
+        ProgressController pg = Get.find();
+        pg.saveDiaryJournal(model);
+        setState(() {});
         Navigator.of(context).pop();
         Navigator.of(context).pop();
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => journalMy()));
+            .push(MaterialPageRoute(builder: (context) => MyDiaryProgress()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -185,17 +173,6 @@ _showAlert(BuildContext context) {
         actionsPadding: EdgeInsets.all(0),
         buttonPadding: EdgeInsets.all(0),
         backgroundColor: AppColors.BOTTOM_GRADIENT,
-        // title: Container(
-        //   color: AppColors.VIOLET,
-        //   child: Text(
-        //     'Сообщение !',
-        //     style: TextStyle(
-        //       color: AppColors.VIOLET,
-        //       backgroundColor: AppColors.SHADER_BOTTOM,
-        //       fontSize: 30,
-        //     ),
-        //   ),
-        // ),
         content: Container(
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width,

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/model/progress/visualization_progress/visualization_progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
 
@@ -20,7 +19,7 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
   void initState() {
     super.initState();
     // Get old data or init empty map
-    _map = MyDB().getVizualizationProgress();
+    _map = MyDB().getJournalProgress(MyResource.VISUALISATION_JOURNAL);
   }
 
   @override
@@ -203,59 +202,11 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
                                     child: Icon(Icons.access_time),
                                   ),
                                   SizedBox(width: 10),
-                                  Text(
-                                    widget.date,
-                                    style: TextStyle(),
-                                  ),
+                                  Text(widget.date),
                                 ],
                               ),
                             ),
-                            Expanded(
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: widget.list.length,
-                                itemBuilder: (ctx, i) {
-                                  return Container(
-                                    margin: const EdgeInsets.only(bottom: 15),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          flex: 2,
-                                          child: Text(
-                                            '${widget.list[i].seconds}' +
-                                                ' ' +
-                                                'sec'.tr,
-                                            style: TextStyle(
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04,
-                                              color: Colors.black54,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 7,
-                                          child: Text(
-                                            '${widget.list[i].text}',
-                                            style: TextStyle(
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04,
-                                              color: Colors.black54,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
+                            list(),
                           ],
                         ),
                         decoration: BoxDecoration(
@@ -271,6 +222,48 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Expanded list() {
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.list.length,
+        itemBuilder: (ctx, i) {
+          String skip =
+              widget.list[i].isSkip ? '( ' + 'skip_note'.tr + ' )' : '';
+          return Container(
+            margin: const EdgeInsets.only(bottom: 15),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    '${widget.list[i].sec}' + ' ' + 'sec'.tr,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 7,
+                  child: Text(
+                    '${widget.list[i].text} $skip',
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

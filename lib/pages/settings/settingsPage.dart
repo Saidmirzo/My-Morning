@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +11,6 @@ import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_co
 import 'package:morningmagic/pages/reminders/reminders_page.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/routing/app_routing.dart';
-import 'package:morningmagic/services/admob.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/widgets/primary_button.dart';
@@ -20,7 +18,6 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../../app_states.dart';
 import '../../db/model/affirmation_text/affirmation_text.dart';
-import '../../db/model/book/book.dart';
 import '../../db/model/exercise_time/exercise_time.dart';
 import '../../db/model/user/user.dart';
 import '../../db/resource.dart';
@@ -30,7 +27,6 @@ import '../../storage.dart';
 import '../../widgets/setting_activity_list.dart';
 import '../../widgets/subscribe_1_month_button.dart';
 import '../affirmation/affirmation_dialog/affirmation_dialog.dart';
-import '../paywall_page.dart';
 import 'settings_controller.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -534,7 +530,7 @@ class SettingsPageState extends State<SettingsPage> {
 
     bookController.addListener(() {
       if (bookController.text != null && bookController.text.isNotEmpty) {
-        MyDB().getBox().put(MyResource.BOOK_KEY, Book(bookController.text));
+        MyDB().getBox().put(MyResource.BOOK_KEY, bookController.text);
       }
       setState(() {});
     });
@@ -556,12 +552,7 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   String getInitialValueForBookField() {
-    String result = "";
-    Book time = MyDB().getBox().get(MyResource.BOOK_KEY);
-    if (time != null) {
-      result = time.bookName;
-    }
-    return result;
+    return MyDB().getBox().get(MyResource.BOOK_KEY);
   }
 
   String getInitialValueForNameField() {

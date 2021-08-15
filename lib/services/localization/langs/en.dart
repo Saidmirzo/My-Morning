@@ -79,6 +79,7 @@ Map<String, String> translations_en = {
   "for_week": "For week\n",
   "skip_note": "skip",
   "pages_note": "pages",
+  "pages_short": "pages",
   "minutes_per_week": "minutes",
   "monday_short": "mn",
   "tuesday_short": "ts",

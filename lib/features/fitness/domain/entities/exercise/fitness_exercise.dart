@@ -1,7 +1,6 @@
-import 'package:get/get.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:meta/meta.dart';
 
 part 'fitness_exercise.g.dart';
 

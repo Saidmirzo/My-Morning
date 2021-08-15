@@ -12,12 +12,18 @@ class MyAffirmationProgress extends StatefulWidget {
 }
 
 class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
-  List<dynamic> list;
+  Map<String, List<dynamic>> _map;
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get(MyResource.AFFIRMATION_PROGRESS) ?? [];
-    print(list);
+    // Get old data or init empty map
+    try {
+      _map = MyDB().getJournalProgress(MyResource.AFFIRMATION_JOURNAL);
+    } catch (e) {
+      print('error get reading progress');
+      myDbBox.put(MyResource.AFFIRMATION_JOURNAL, {});
+      _map = MyDB().getJournalProgress(MyResource.AFFIRMATION_JOURNAL);
+    }
   }
 
   @override
@@ -47,13 +53,13 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
                 padding: const EdgeInsets.only(top: 10, bottom: 0),
                 child: GridView(
                   padding: EdgeInsets.only(bottom: 15),
-                  children: list.isNotEmpty
+                  children: _map.isNotEmpty
                       ? List.generate(
-                          list.length,
+                          _map.length,
                           (index) => AffirmationMiniProgress(
-                            list.isNotEmpty ? list[index][0] : '0',
-                            list.isNotEmpty ? list[index][1] : '',
-                            list.isNotEmpty ? list[index][2] : '01.01.2020',
+                            _map.keys.toList()[index],
+                            _map[_map.keys.toList()[index]],
+                            _map.keys.toList()[index],
                           ),
                         )
                       : [],
@@ -75,16 +81,16 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
 
 class AffirmationMiniProgress extends StatelessWidget {
   final String id;
-  final String text;
+  final List<dynamic> list;
   final String date;
 
-  AffirmationMiniProgress(this.id, this.text, this.date);
+  AffirmationMiniProgress(this.id, this.list, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
         ctx,
         MaterialPageRoute(
-            builder: (context) => AffirmationFullProgress(id, text, date)));
+            builder: (context) => AffirmationFullProgress(id, list, date)));
   }
 
   @override
@@ -109,7 +115,7 @@ class AffirmationMiniProgress extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Text(
-                    text,
+                    list.last.text,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04, //16,
                       color: Colors.black54,
@@ -148,10 +154,10 @@ class AffirmationMiniProgress extends StatelessWidget {
 
 class AffirmationFullProgress extends StatefulWidget {
   String id;
-  String text;
   String date;
+  List<dynamic> list;
 
-  AffirmationFullProgress(this.id, this.text, this.date);
+  AffirmationFullProgress(this.id, this.list, this.date);
 
   @override
   _AffirmationFullProgressState createState() =>
@@ -159,15 +165,6 @@ class AffirmationFullProgress extends StatefulWidget {
 }
 
 class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
-  List<dynamic> list;
-  List<dynamic> tempList;
-  TextEditingController controller;
-  @override
-  void initState() {
-    super.initState();
-    controller = TextEditingController(text: widget.text);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,41 +198,18 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
                         Container(
                           padding: EdgeInsets.only(bottom: 10),
                           child: Row(
-                            //crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(right: 5),
                                 child: Icon(Icons.access_time),
                               ),
-                              Container(
-                                width: 10,
-                              ),
-                              Text(
-                                widget.date,
-                                style: TextStyle(),
-                              ),
+                              Container(width: 10),
+                              Text(widget.date),
                               Spacer(),
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                              child: TextField(
-                            controller: controller,
-                            maxLines: 100,
-                            enabled: false,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                            // enabled: true,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.04, //16,
-                              color: Colors.black54,
-                            ),
-                            //style: Theme.of(context).textTheme.title,
-                          )),
-                        ),
+                        list(),
                       ],
                     ),
                     decoration: BoxDecoration(
@@ -249,6 +223,48 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Expanded list() {
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.list.length,
+        itemBuilder: (ctx, i) {
+          String skip =
+              widget.list[i].isSkip ? '( ' + 'skip_note'.tr + ' )' : '';
+          return Container(
+            margin: const EdgeInsets.only(bottom: 15),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    '${widget.list[i].sec}' + ' ' + 'sec'.tr,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 7,
+                  child: Text(
+                    '${widget.list[i].text} $skip',
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -25,7 +24,6 @@ import 'package:morningmagic/utils/reordering_util.dart';
 
 import '../../db/hive.dart';
 import '../../db/model/exercise/exercise_holder.dart';
-import '../../db/model/progress/day/day_holder.dart';
 import '../../db/resource.dart';
 import 'components/menu.dart';
 
@@ -37,7 +35,6 @@ class MainMenuPage extends StatefulWidget {
 }
 
 class MainMenuPageState extends State<MainMenuPage> {
-  int dayHolderSize;
   int launchForinterview = 0;
   final String imagePath = 'assets/images/home_menu';
 
@@ -47,7 +44,6 @@ class MainMenuPageState extends State<MainMenuPage> {
     admobService.createInterstitialAd();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      dayHolderSize = await _getDaysLength();
       if (GetPlatform.isIOS) {
         // Show tracking authorization dialog and ask for permission
         AppTrackingTransparency.requestTrackingAuthorization();
@@ -459,12 +455,6 @@ class MainMenuPageState extends State<MainMenuPage> {
         ),
       ),
     );
-  }
-
-  Future<int> _getDaysLength() async {
-    DayHolder dayHolder = await MyDB().getBox().get(MyResource.DAYS_HOLDER);
-    if (dayHolder == null) return 0;
-    return dayHolder.listOfDays.length;
   }
 
   _clearExercisesHolder() async {

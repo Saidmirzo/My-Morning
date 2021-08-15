@@ -19,17 +19,20 @@ class AffirmationProgressAdapter extends TypeAdapter<AffirmationProgress> {
     return AffirmationProgress(
       fields[0] as int,
       fields[1] as String,
+      isSkip: fields[2] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, AffirmationProgress obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.seconds)
+      ..write(obj.sec)
       ..writeByte(1)
-      ..write(obj.text);
+      ..write(obj.text)
+      ..writeByte(2)
+      ..write(obj.isSkip);
   }
 
   @override

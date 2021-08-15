@@ -241,6 +241,7 @@ Map<String, String> translations_ru = {
   "vip_restored": "Подписки восстановлены",
   "pages": "Сколько страниц ?",
   "pages_note": "страниц",
+  "pages_short": "стр",
   "continue": "Продолжить",
   "change_tarif": "Сменить тариф",
   "reminders": "Напоминания",

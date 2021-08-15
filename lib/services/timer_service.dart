@@ -1,34 +1,27 @@
 import 'dart:async';
-import 'dart:isolate';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/affirmation_text/affirmation_text.dart';
-import 'package:morningmagic/db/model/book/book.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/affirmation_progress/affirmation_progress.dart';
-import 'package:morningmagic/db/model/progress/day/day.dart';
 import 'package:morningmagic/db/model/progress/meditation_progress/meditation_progress.dart';
-import 'package:morningmagic/db/model/progress/visualization_progress/visualization_progress.dart';
 import 'package:morningmagic/db/model/visualization/visualization.dart';
-import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/reading/timer/timer_note_page.dart';
 import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
+import 'package:morningmagic/resources/my_const.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
-
-import 'notifications.dart';
 
 // TODO rewrite
 class TimerService {
@@ -79,11 +72,11 @@ class TimerService {
     if (timer != null && timer.isActive) {
       timer.cancel();
     }
-    if (pageId != TimerPageId.Reading) saveProgress();
+    if (pageId != TimerPageId.Reading) saveProgress(true);
     await OrderUtil().getRouteById(pageId).then((value) {
       print('skipTask pageId: $pageId');
       if (pageId == TimerPageId.Reading)
-        getNextPage(value);
+        getNextPage(value, true);
       else
         Get.off(
           fromHomeMenu
@@ -102,105 +95,50 @@ class TimerService {
     timer?.cancel();
     AppRouting?.navigateToHomeWithClearHistory();
     // При выходе в меню чтение не сохраняем
-    if (pageId != TimerPageId.Reading) saveProgress();
+    if (pageId != TimerPageId.Reading) saveProgress(true);
   }
 
   Future<int> getTimeAndText() async {
-    Box box = await MyDB().getBox();
     ExerciseTime time =
-        box.get(this.getBoxTimeKey(pageId), defaultValue: ExerciseTime(0));
-    AffirmationText text = box.get(MyResource.AFFIRMATION_TEXT_KEY,
+        myDbBox.get(this.getBoxTimeKey(pageId), defaultValue: ExerciseTime(0));
+    AffirmationText text = myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY,
         defaultValue: AffirmationText(""));
     affirmationText.value = text.affirmationText;
-    Visualization visualization =
-        box.get(MyResource.VISUALIZATION_KEY, defaultValue: Visualization(""));
+    Visualization visualization = myDbBox.get(MyResource.VISUALIZATION_KEY,
+        defaultValue: Visualization(""));
     visualizationText = visualization.visualization;
-    Book book = box.get(MyResource.BOOK_KEY, defaultValue: Book(""));
-    bookTitle = book.bookName;
+    bookTitle = myDbBox.get(MyResource.BOOK_KEY, defaultValue: '');
+    print('Book title : $bookTitle');
     return time.time;
   }
 
   DateTime date = DateTime.now();
 
-  int getPassedSeconds() {
-    return startValue - time.value;
-  }
+  // Кол-во секунд прошедших со старта таймера
+  int passedSec = 0;
 
-  void saveProg(String box, String type, String text) {
-    List<dynamic> tempList;
-    List<dynamic> list = MyDB().getBox().get(box) ?? [];
-    tempList = list;
-    print(list);
-    print(tempList);
-    if (list.isNotEmpty) {
-      if (list.last[2] == '${date.day}.${date.month}.${date.year}') {
-        list.add([
-          tempList.isNotEmpty ? '${(int.parse(tempList.last[0]) + 1)}' : '0',
-          tempList[tempList.indexOf(tempList.last)][1] +
-              (getPassedSeconds() < 5
-                  ? '\n$type - ' + 'skip_note'.tr
-                  : '\n$type - ${getPassedSeconds()} ' +
-                      'seconds'.tr +
-                      '($text)'),
-          '${date.day}.${date.month}.${date.year}'
-        ]);
-        list.removeAt(list.indexOf(list.last) - 1);
-      } else {
-        list.add([
-          list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
-          getPassedSeconds() < 5
-              ? '\n$type - ' + 'skip_note'.tr
-              : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr + '($text)',
-          '${date.day}.${date.month}.${date.year}'
-        ]);
-      }
-    } else {
-      list.add([
-        list.isNotEmpty ? '${(int.parse(list.last[0]) + 1)}' : '0',
-        getPassedSeconds() < 5
-            ? '\n$type - ' + 'skip_note'.tr
-            : '\n$type - ${getPassedSeconds()} ' + 'seconds'.tr + '($text)',
-        '${date.day}.${date.month}.${date.year}'
-      ]);
-    }
-    MyDB().getBox().put(box, list);
-  }
-
-  void saveProgress() {
-    print('Passed seconds: ${getPassedSeconds()}');
-    if (getPassedSeconds() > 0) {
-      AffirmationProgress affirmation;
-      MeditationProgress meditation;
-      VisualizationProgress visualizationProgress;
-      // FitnessProgress fitnessProgress;
+  void saveProgress(bool isSkip) {
+    print('saveProgress Passed seconds: $passedSec');
+    print('saveProgress isSkip: $isSkip');
+    if (passedSec > minPassedSec) {
+      ProgressController pg = Get.find();
       switch (pageId) {
         case TimerPageId.Affirmation:
-          saveProg(MyResource.AFFIRMATION_PROGRESS, 'affirmation_small'.tr,
-              affirmationText.value);
-          affirmation =
-              AffirmationProgress(getPassedSeconds(), affirmationText.value);
+          var model = AffirmationProgress(passedSec,
+              affirmationText.value.isEmpty ? '-' : affirmationText.value,
+              isSkip: isSkip);
+          pg.saveJournal(MyResource.AFFIRMATION_JOURNAL, model);
           break;
         case TimerPageId.Meditation:
-          meditation = MeditationProgress(getPassedSeconds());
-          break;
-        case TimerPageId.Fitness:
-          saveProg(MyResource.FITNESS_PROGRESS, 'Упражнения', '');
-          break;
-        case TimerPageId.Reading:
-          saveProg(MyResource.MY_READING_PROGRESS, 'Чтение', '');
-          break;
-        case TimerPageId.Visualization:
-          saveProg(MyResource.MY_VISUALISATION_PROGRESS, 'Визуализация', '');
-          visualizationProgress =
-              VisualizationProgress(getPassedSeconds(), visualizationText);
+          // Журнал медитаций нигде не показываем, но записываем
+          // чтобы потом учитывать в статистике
+          var model = MeditationProgress(passedSec, isSkip: isSkip);
+          pg.saveJournal(MyResource.MEDITATION_JOURNAL, model);
           break;
         default:
       }
 
-      Day day = ProgressUtil().createDay(affirmation, meditation, null, null,
-          null, null, visualizationProgress);
-      ProgressUtil().updateDayList(day);
-      print('SaveTimerPage id$pageId : $day');
+      // Обнуляем время
       time.value = startValue;
     } else {
       print('Dont save');
@@ -216,11 +154,14 @@ class TimerService {
         if (time < 1) {
           print('timer_service: timer work done');
           timer.cancel();
-          if (pageId != TimerPageId.Reading) saveProgress();
-          OrderUtil().getRouteById(pageId).then((value) => getNextPage(value));
+          if (pageId != TimerPageId.Reading) saveProgress(false);
+          OrderUtil()
+              .getRouteById(pageId)
+              .then((value) => getNextPage(value, false));
           if (onDone != null) onDone();
         } else {
           time.value--;
+          passedSec++;
         }
       });
     } else if (timer != null && timer.isActive) {
@@ -229,14 +170,11 @@ class TimerService {
     }
   }
 
-  getNextPage(dynamic value) {
+  getNextPage(dynamic value, bool isSkip) {
     print('getnextPage fromHomeMenu: $fromHomeMenu');
     print('getNextPage value $value');
     Get.off(pageId == TimerPageId.Reading
-        ? TimerInputSuccessScreen(
-            fromHomeMenu: fromHomeMenu,
-            minutes:
-                MyDB().getBox().get(getBoxTimeKey(TimerPageId.Reading)).time)
+        ? TimerInputSuccessScreen(passedSec, isSkip, fromHomeMenu: fromHomeMenu)
         : TimerSuccessScreen(
             () => Get.off(
                   fromHomeMenu

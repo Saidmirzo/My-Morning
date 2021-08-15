@@ -2,9 +2,10 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/custom_exercise_holder.dart';
 import 'package:morningmagic/db/model/note/note.dart';
+import 'package:morningmagic/db/model/progress/diary_progress/diary_note_progress.dart';
+import 'package:morningmagic/db/model/progress/diary_progress/diary_record_progress.dart';
 import 'package:morningmagic/db/model/progress/reading_progress/reading_progress.dart';
 import 'package:morningmagic/db/model/progress/visualization_progress/visualization_progress.dart';
-import 'package:morningmagic/db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
 import 'package:morningmagic/db/model/visualization/visualization_adapter.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
@@ -19,19 +20,14 @@ import 'model/affirmation_text/affirmation_text_adapter.dart';
 import 'model/app_and_custom_exercises/app_exercise_holder.dart';
 import 'model/app_and_custom_exercises/custom_exercise_holder.dart';
 import 'model/app_and_custom_exercises/exercise_name.dart';
-import 'model/book/book_adapter.dart';
 import 'model/duration_adapter.dart';
 import 'model/exercise/exercise_holder.dart';
 import 'model/exercise/exercise_title.dart';
 import 'model/exercise_time/exercise_time_adapter.dart';
 import 'model/notepad.dart';
-import 'model/progress.dart';
 import 'model/progress/affirmation_progress/affirmation_progress.dart';
-import 'model/progress/day/day.dart';
-import 'model/progress/day/day_holder.dart';
 import 'model/progress/fitness_porgress/fitness_progress.dart';
 import 'model/progress/meditation_progress/meditation_progress.dart';
-import 'model/progress/vocabulary_progress/vocabulary_note_progress.dart';
 import 'model/reordering_program/order_holder.dart';
 import 'model/reordering_program/order_item.dart';
 import 'model/user/user_adapter.dart';
@@ -52,18 +48,13 @@ class MyDB {
     Hive.registerAdapter(NotepadAdapter());
     Hive.registerAdapter(UserAdapter());
     Hive.registerAdapter(AffirmationTextAdapter());
-    Hive.registerAdapter(BookAdapter());
     Hive.registerAdapter(ExerciseTimeAdapter());
     Hive.registerAdapter(VisualizationAdapter());
-    Hive.registerAdapter(DayAdapter());
     Hive.registerAdapter(AffirmationProgressAdapter());
     Hive.registerAdapter(MeditationProgressAdapter());
     Hive.registerAdapter(VisualizationProgressAdapter());
     Hive.registerAdapter(FitnessProgressAdapter());
     Hive.registerAdapter(ReadingProgressAdapter());
-    Hive.registerAdapter(DayHolderAdapter());
-    Hive.registerAdapter(VocabularyNoteProgressAdapter());
-    Hive.registerAdapter(VocabularyRecordProgressAdapter());
     Hive.registerAdapter(NoteAdapter());
     Hive.registerAdapter(ExerciseHolderAdapter());
     Hive.registerAdapter(ExerciseTitleAdapter());
@@ -77,8 +68,9 @@ class MyDB {
     Hive.registerAdapter(FitnessExerciseAdapter());
     Hive.registerAdapter(VisualizationTargetAdapter());
     Hive.registerAdapter(MeditationAudioAdapter());
-    Hive.registerAdapter(ProgressModelAdapter());
     Hive.registerAdapter(DurationAdapter());
+    Hive.registerAdapter(DiaryNoteProgressAdapter());
+    Hive.registerAdapter(DiaryRecordProgressAdapter());
 
     try {
       await this.openMyBox();
@@ -104,35 +96,43 @@ class MyDB {
     return myDbBox;
   }
 
-  Map<String, List<dynamic>> getVizualizationProgress() {
-    return Map<String, List<dynamic>>.from(getBox().get(
-        MyResource.MY_VISUALISATION_PROGRESS,
-        defaultValue: Map<String, List<dynamic>>()));
+  // Получаем любой журнал
+  Map<String, List<dynamic>> getJournalProgress(String journal) {
+    try {
+      return Map<String, List<dynamic>>.from(
+          myDbBox.get(journal, defaultValue: Map<String, List<dynamic>>()));
+    } catch (e) {
+      print('Ошибка получения журнала $e');
+      // Ошиюка будет у старых пользователей из-за другой структуры сохраненных данных
+      // По этому удаляем их и начинаем вести статистику заново
+      myDbBox.put(journal, Map<String, List<dynamic>>());
+      return Map<String, List<dynamic>>.from(
+          myDbBox.get(journal, defaultValue: Map<String, List<dynamic>>()));
+    }
+  }
+
+  // Получаем журнал дневника
+  Map<String, dynamic> getDiaryProgress() {
+    return Map<String, dynamic>.from(getBox()
+        .get(MyResource.DIARY_JOURNAL, defaultValue: Map<String, dynamic>()));
   }
 
   Future<void> clearWithoutUserName() async {
-    await myDbBox.put(MyResource.AFFIRMATION_PROGRESS, []);
-    await myDbBox.put(MyResource.FITNESS_PROGRESS, []);
-    await myDbBox.put(MyResource.MY_READING_PROGRESS, []);
-    await myDbBox.put(MyResource.MY_VISUALISATION_PROGRESS,
-        Map<String, List<VisualizationProgress>>());
-    await myDbBox.put(MyResource.NOTEPADS, []);
-    await myDbBox.put(MyResource.NOTE_KEY, Note(""));
-    await myDbBox.put(MyResource.NOTE_COUNT, 0);
+    // Очищаем весь журнал по всем практикам
+    [
+      MyResource.AFFIRMATION_JOURNAL,
+      MyResource.MEDITATION_JOURNAL,
+      MyResource.FITNESS_JOURNAL,
+      MyResource.READING_JOURNAL,
+      MyResource.VISUALISATION_JOURNAL,
+      MyResource.FULL_COMPLEX_FINISH,
+    ].forEach((element) {
+      myDbBox.put(element, Map<String, List<dynamic>>());
+    });
+
+    // У дневника сохранение по другому, по этому очищаем так
+    myDbBox.put(MyResource.DIARY_JOURNAL, Map<String, dynamic>());
+
     await myDbBox.put(MyResource.MEDITATION_AUDIO_FAVORITE, []);
-
-    saveProgress(ProgressModel().zero);
-  }
-
-  ProgressModel getProgress() {
-    ProgressModel pgModel = MyDB().getBox().get(
-          MyResource.PROGRESS,
-          defaultValue: ProgressModel().zero,
-        );
-    return pgModel;
-  }
-
-  void saveProgress(ProgressModel val) {
-    MyDB().getBox().put(MyResource.PROGRESS, val);
   }
 }

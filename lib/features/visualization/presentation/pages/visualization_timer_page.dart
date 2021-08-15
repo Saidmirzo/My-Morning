@@ -119,7 +119,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage>
           return _buildActionButton(_toggleStartPauseCallback, _imageRes);
         }),
         _buildActionButton(() {
-          _controller.finishVisualization();
+          _controller.finishVisualization(true);
           appAnalitics.logEvent('first_visualisation_next');
         }, 'assets/images/arrow_forward.svg'),
       ],

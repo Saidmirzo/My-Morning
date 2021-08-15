@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/model/progress.dart';
-import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
@@ -31,15 +28,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   @override
   void initState() {
     super.initState();
-
     print('init Screen timer success');
-
-    ProgressModel pgModel = MyDB().getProgress();
-    pgModel.count_of_session[DateTime.now()] = 1;
-    pgModel.minutes_of_awarenes[DateTime.now()] = widget.minutes;
-    pgModel.percent_of_awareness[DateTime.now()] = 0.5;
-    pgModel.save();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });

@@ -2,42 +2,30 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_chart_two/flutter_circular_chart_two.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:intl/intl.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/db/model/progress.dart';
 import 'package:morningmagic/db/model/user/user.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/progress/components/remove_button.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/utils/other.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../../app_states.dart';
-import '../../db/model/progress/affirmation_progress/affirmation_progress.dart';
-import '../../db/model/progress/day/day.dart';
-import '../../db/model/progress/fitness_porgress/fitness_progress.dart';
-import '../../db/model/progress/meditation_progress/meditation_progress.dart';
-import '../../db/model/progress/reading_progress/reading_progress.dart';
-import '../../db/model/progress/visualization_progress/visualization_progress.dart';
-import '../../db/model/progress/vocabulary_progress/vocabulary_note_progress.dart';
-import '../../db/model/progress/vocabulary_progress/vocabulary_record_progress.dart';
 import '../../storage.dart';
 import '../../widgets/language_switcher.dart';
-import '../../widgets/progressItem.dart';
-import '../../widgets/progressItemRecord.dart';
 import '../paywall_page.dart';
 import 'components/menu_button.dart';
-import 'journal/journalMy.dart';
+import 'diary_progress/diary_progress.dart';
 import 'myAffirmationProgress.dart';
 import 'myFitnessProgress.dart';
 import 'myReadingProgress.dart';
@@ -61,32 +49,33 @@ class _ProgressPageState extends State<ProgressPage> {
   final GlobalKey<AnimatedCircularChartState> _chartKey =
       new GlobalKey<AnimatedCircularChartState>();
 
+  ProgressController cPg = Get.find();
+
   bool _Itog = true;
   bool _Mounth = false;
   bool _Year = false;
+
   String userName;
 
   TextEditingController nameController;
 
-  ProgressModel pgModel;
-
   @override
   void initState() {
     super.initState();
-    pgModel = MyDB().getProgress();
+    print('onDine complex ${widget.onDone}');
     if (widget.onDone) {
-      pgModel.count_of_complete_session[DateTime.now()] = 1;
-      pgModel.save();
+      // Если комплекс был полностью завершен
+      cPg.saveJournal(MyResource.FULL_COMPLEX_FINISH, 1);
     }
+    cPg.loadJournals();
+    setState(() {});
     AnalyticService.screenView('dashboard');
     userName = _getUserName();
     nameController = TextEditingController(text: userName);
-    print('Open _AskedQuestionsState');
   }
 
   @override
   Widget build(BuildContext context) {
-    log('Build askedQuestionScreen');
     rateApp(context);
     return Scaffold(
       body: AppGradientContainer(
@@ -162,13 +151,7 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Widget buildPercent() {
-    double monthPercent = 0.0;
-    pgModel.percent_of_awareness.forEach((key, value) {
-      var dt = DateTime.now();
-      if ("${dt.year}/${dt.month}" == '${key.year}/${key.month}') {
-        monthPercent += value;
-      }
-    });
+    double monthPercent = cPg.percentOfAwareness(DateTime.now());
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -392,7 +375,7 @@ class _ProgressPageState extends State<ProgressPage> {
               children: [
                 practicsCount(),
                 minutesCount(),
-                completeSessionCount(),
+                completeComplexCount(),
               ],
             ),
           ),
@@ -401,36 +384,9 @@ class _ProgressPageState extends State<ProgressPage> {
     );
   }
 
-  int getCount(Map<DateTime, int> _map) {
-    var itogiType = _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year);
-    int count = 0;
-    switch (itogiType) {
-      case 1:
-        _map.forEach((key, value) {
-          count += value;
-        });
-        break;
-      case 2:
-        _map.forEach((key, value) {
-          var dt = DateTime.now();
-          if ("${dt.year}/${dt.month}" == '${key.year}/${key.month}') {
-            count += value;
-          }
-        });
-        break;
-      case 3:
-        _map.forEach((key, value) {
-          if (DateTime.now().year == key.year) {
-            count += value;
-          }
-        });
-        break;
-    }
-    return count;
-  }
-
   Widget practicsCount() {
-    var count = getCount(pgModel.count_of_session);
+    var count = cPg
+        .calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[0];
     return Align(
       alignment: Alignment.topLeft,
       child: Column(
@@ -461,7 +417,8 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Align minutesCount() {
-    var count = getCount(pgModel.minutes_of_awarenes);
+    var count = cPg
+        .calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[1];
     return Align(
       alignment: Alignment.topCenter,
       child: Column(
@@ -491,8 +448,9 @@ class _ProgressPageState extends State<ProgressPage> {
     );
   }
 
-  Align completeSessionCount() {
-    var count = getCount(pgModel.count_of_complete_session);
+  Align completeComplexCount() {
+    var count =
+        cPg.getCountComplex(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year));
     return Align(
       alignment: Alignment.topRight,
       child: Column(
@@ -534,7 +492,7 @@ class _ProgressPageState extends State<ProgressPage> {
       child: Column(
         children: [
           menuBtn('assets/images/diary.svg', 'my_diary'.tr,
-              () => Get.to(journalMy())),
+              () => Get.to(MyDiaryProgress())),
           menuBtn('assets/images/sport.svg', 'my_exercises'.tr, () {
             billingService.isPro()
                 ? Navigator.of(context).push(MaterialPageRoute(
@@ -605,81 +563,6 @@ class _ProgressPageState extends State<ProgressPage> {
           ),
       ],
     );
-  }
-
-  Widget getProgressBodyWidget(List<Day> days) {
-    print(days.length.toString() + " length");
-    return Column(
-      children: createRowsByDays(days),
-    );
-  }
-
-  List<Widget> createRowsByDays(List<Day> days) {
-    List<Widget> list = new List();
-    for (int i = 0; i < days.length; i++) {
-      list.add(createRow(days[i]));
-    }
-    return list;
-  }
-
-  Widget createRow(Day day) {
-    AffirmationProgress affirmationProgress = day.affirmationProgress;
-    MeditationProgress meditationProgress = day.meditationProgress;
-    FitnessProgress fitnessProgress = day.fitnessProgress;
-    ReadingProgress readingProgress = day.readingProgress;
-    VocabularyNoteProgress vocabularyNoteProgress = day.vocabularyNoteProgress;
-    VocabularyRecordProgress vocabularyRecordProgress =
-        day.vocabularyRecordProgress;
-    VisualizationProgress visualizationProgress = day.visualizationProgress;
-    String value;
-
-    if (affirmationProgress != null) {
-      value = createMinutesStringFromSeconds(affirmationProgress.seconds);
-      value = value + ", " + affirmationProgress.text;
-      return ProgressPair('affirmation_small'.tr, value);
-    } else if (meditationProgress != null) {
-      value = createMinutesStringFromSeconds(meditationProgress.seconds);
-      return ProgressPair('meditation_small'.tr, value);
-    } else if (visualizationProgress != null) {
-      value = createMinutesStringFromSeconds(visualizationProgress.seconds);
-      value = value + ", " + visualizationProgress.text;
-      return ProgressPair('visualization_small'.tr, value);
-    } else if (fitnessProgress != null) {
-      value = createMinutesStringFromSeconds(fitnessProgress.seconds);
-      value = value + ", " + fitnessProgress.exercise;
-      return ProgressPair('fitness_small'.tr, value);
-    } else if (readingProgress != null) {
-      value = readingProgress.book;
-      value = value + ", " + readingProgress.pages.toString();
-      return ProgressPair('reading_small'.tr, value);
-    } else if (vocabularyNoteProgress != null) {
-      value = vocabularyNoteProgress.note;
-      return ProgressPair('diary_small'.tr, value);
-    } else if (vocabularyRecordProgress != null) {
-      return ProgressPairRecord(
-          'diary_small'.tr, vocabularyRecordProgress.path);
-    }
-  }
-
-  String createMinutesStringFromSeconds(int sec) {
-    String result = "";
-
-    int minutes = sec ~/ 60;
-    int seconds = sec % 60;
-
-    if (minutes > 0) {
-      result = minutes.toString() +
-          " " +
-          'min'.tr +
-          " " +
-          seconds.toString() +
-          " " +
-          'sec'.tr;
-    } else {
-      result = sec.toString() + " " + 'sec'.tr;
-    }
-
-    return result;
   }
 
   RateMyApp rateMyApp = RateMyApp(
@@ -897,73 +780,43 @@ class VerticalBarLabelChart extends StatelessWidget {
 
   VerticalBarLabelChart(this.seriesList, {this.animate});
 
-  /// Creates a [BarChart] with sample data and no transition.
   factory VerticalBarLabelChart.withSampleData() {
     return new VerticalBarLabelChart(
       _createSampleData(),
-      // Disable animations for image tests.
       animate: true,
     );
   }
 
-  // [BarLabelDecorator] will automatically position the label
-  // inside the bar if the label will fit. If the label will not fit,
-  // it will draw outside of the bar.
-  // Labels can always display inside or outside using [LabelPosition].
-  //
-  // Text style for inside / outside can be controlled independently by setting
-  // [insideLabelStyleSpec] and [outsideLabelStyleSpec].
   @override
   Widget build(BuildContext context) {
     return new charts.BarChart(
       seriesList,
       animate: animate,
-      // Set a bar label decorator.
-      // Example configuring different styles for inside/outside:
-      //       barRendererDecorator: new charts.BarLabelDecorator(
-      //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
-      //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
       barRendererDecorator: new charts.BarLabelDecorator<String>(),
       domainAxis: new charts.OrdinalAxisSpec(),
     );
   }
 
-  /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
-    ProgressModel pgModel = MyDB().getProgress();
-
+    ProgressController cPg = Get.find();
     var date = DateTime.now();
     var monday = date.add(-(date.weekday - 1).days);
     monday = DateTime(monday.year, monday.month, monday.day);
-    print('monday : $monday');
-
-    int mondayMin = 0;
-    int tuesdayMin = 0;
-    int wednesdayMin = 0;
-    int thursdayMin = 0;
-    int fridayMin = 0;
-    int saturdayMin = 0;
-    int sundayMin = 0;
-
-    pgModel.minutes_of_awarenes.forEach((key, value) {
-      var dt = DateTime(key.year, key.month, key.day);
-      if (dt == monday) mondayMin = mondayMin + value;
-      if (dt == monday.add(1.days)) tuesdayMin = tuesdayMin + value;
-      if (dt == monday.add(2.days)) wednesdayMin = wednesdayMin + value;
-      if (dt == monday.add(3.days)) thursdayMin = thursdayMin + value;
-      if (dt == monday.add(4.days)) fridayMin = fridayMin + value;
-      if (dt == monday.add(5.days)) saturdayMin = saturdayMin + value;
-      if (dt == monday.add(6.days)) sundayMin = sundayMin + value;
-    });
 
     final data = [
-      new OrdinalSales('monday_short'.tr, mondayMin),
-      new OrdinalSales('tuesday_short'.tr, tuesdayMin),
-      new OrdinalSales('wednesday_short'.tr, wednesdayMin),
-      new OrdinalSales('thursday_short'.tr, thursdayMin),
-      new OrdinalSales('friday_short'.tr, fridayMin),
-      new OrdinalSales('saturday_short'.tr, saturdayMin),
-      new OrdinalSales('sunday_short'.tr, sundayMin),
+      new OrdinalSales('monday_short'.tr, cPg.minutesPerDay(monday)),
+      new OrdinalSales(
+          'tuesday_short'.tr, cPg.minutesPerDay(monday.add(1.days))),
+      new OrdinalSales(
+          'wednesday_short'.tr, cPg.minutesPerDay(monday.add(2.days))),
+      new OrdinalSales(
+          'thursday_short'.tr, cPg.minutesPerDay(monday.add(3.days))),
+      new OrdinalSales(
+          'friday_short'.tr, cPg.minutesPerDay(monday.add(4.days))),
+      new OrdinalSales(
+          'saturday_short'.tr, cPg.minutesPerDay(monday.add(5.days))),
+      new OrdinalSales(
+          'sunday_short'.tr, cPg.minutesPerDay(monday.add(6.days))),
     ];
 
     return [

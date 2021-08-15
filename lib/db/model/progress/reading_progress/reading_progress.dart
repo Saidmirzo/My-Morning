@@ -5,10 +5,7 @@ part 'reading_progress.g.dart';
 
 @HiveType(typeId: 15)
 class ReadingProgress extends Exercise {
-
-  ReadingProgress(this.book, this.pages);
-
-  String title = "Чтение";
+  ReadingProgress(this.book, this.pages, this.sec, {this.isSkip = false});
 
   @HiveField(0)
   String book;
@@ -16,10 +13,9 @@ class ReadingProgress extends Exercise {
   @HiveField(1)
   int pages;
 
-  @override
-  String toString() {
-    return 'ReadingProgress{title: $title, book: $book, pages: $pages}';
-  }
+  @HiveField(2)
+  int sec;
 
-
+  @HiveField(3)
+  bool isSkip;
 }

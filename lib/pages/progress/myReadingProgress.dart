@@ -13,12 +13,18 @@ class MyReadingProgress extends StatefulWidget {
 }
 
 class _MyReadingProgressState extends State<MyReadingProgress> {
-  List<dynamic> list;
+  Map<String, List<dynamic>> _map;
   @override
   void initState() {
     super.initState();
-    list = MyDB().getBox().get(MyResource.MY_READING_PROGRESS) ?? [];
-    print(list);
+    // Get old data or init empty map
+    try {
+      _map = MyDB().getJournalProgress(MyResource.READING_JOURNAL);
+    } catch (e) {
+      print('error get reading progress');
+      myDbBox.put(MyResource.READING_JOURNAL, {});
+      _map = MyDB().getJournalProgress(MyResource.READING_JOURNAL);
+    }
   }
 
   @override
@@ -47,13 +53,13 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
                 padding: const EdgeInsets.only(top: 15, bottom: 0),
                 child: GridView(
                   padding: EdgeInsets.only(bottom: 15),
-                  children: list.isNotEmpty
+                  children: _map.isNotEmpty
                       ? List.generate(
-                          list.length,
+                          _map.length,
                           (index) => ReadingMiniProgress(
-                            list.isNotEmpty ? list[index][0] : '0',
-                            list.isNotEmpty ? list[index][1] : '',
-                            list.isNotEmpty ? list[index][2] : '01.01.2020',
+                            _map.keys.toList()[index],
+                            _map[_map.keys.toList()[index]],
+                            _map.keys.toList()[index],
                           ),
                         )
                       : [],
@@ -75,16 +81,16 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
 
 class ReadingMiniProgress extends StatelessWidget {
   final String id;
-  final String text;
   final String date;
+  final List<dynamic> list;
 
-  ReadingMiniProgress(this.id, this.text, this.date);
+  ReadingMiniProgress(this.id, this.list, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
         ctx,
         MaterialPageRoute(
-            builder: (context) => ReadingFullProgress(id, text, date)));
+            builder: (context) => ReadingFullProgress(id, list, date)));
   }
 
   @override
@@ -109,7 +115,7 @@ class ReadingMiniProgress extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Text(
-                    text,
+                    list.last.book,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04, //16,
                       color: Colors.black54,
@@ -125,10 +131,7 @@ class ReadingMiniProgress extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 5),
                         child: Icon(Icons.access_time),
                       ),
-                      Text(
-                        date,
-                        style: TextStyle(),
-                      )
+                      Text(date)
                     ],
                   ),
                 ),
@@ -148,25 +151,16 @@ class ReadingMiniProgress extends StatelessWidget {
 
 class ReadingFullProgress extends StatefulWidget {
   String id;
-  String text;
   String date;
+  List<dynamic> list;
 
-  ReadingFullProgress(this.id, this.text, this.date);
+  ReadingFullProgress(this.id, this.list, this.date);
 
   @override
   _ReadingFullProgressState createState() => _ReadingFullProgressState();
 }
 
 class _ReadingFullProgressState extends State<ReadingFullProgress> {
-  List<dynamic> list;
-  List<dynamic> tempList;
-  TextEditingController controller;
-  @override
-  void initState() {
-    super.initState();
-    controller = TextEditingController(text: widget.text);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,35 +199,13 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
                                 padding: const EdgeInsets.only(right: 5),
                                 child: Icon(Icons.access_time),
                               ),
-                              Container(
-                                width: 10,
-                              ),
-                              Text(
-                                widget.date,
-                                style: TextStyle(),
-                              ),
+                              SizedBox(width: 10),
+                              Text(widget.date),
                               Spacer(),
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                              child: TextField(
-                            controller: controller,
-                            maxLines: 100,
-                            enabled: false,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                            // enabled: true,
-                            style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.04,
-                              color: Colors.black54,
-                            ),
-                            //style: Theme.of(context).textTheme.title,
-                          )),
-                        ),
+                        list(),
                       ],
                     ),
                     decoration: BoxDecoration(
@@ -247,6 +219,59 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Expanded list() {
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.list.length,
+        itemBuilder: (ctx, i) {
+          String skip =
+              widget.list[i].isSkip ? '( ' + 'skip_note'.tr + ' )' : '';
+          return Container(
+            margin: const EdgeInsets.only(bottom: 15),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    '${widget.list[i].sec}' + ' ' + 'sec'.tr,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    '${widget.list[i].pages}' + ' ' + 'pages_short'.tr,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 7,
+                  child: Text(
+                    '${widget.list[i].book} $skip',
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

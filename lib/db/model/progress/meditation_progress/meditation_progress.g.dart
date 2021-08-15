@@ -18,15 +18,18 @@ class MeditationProgressAdapter extends TypeAdapter<MeditationProgress> {
     };
     return MeditationProgress(
       fields[0] as int,
+      isSkip: fields[1] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, MeditationProgress obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.seconds);
+      ..write(obj.sec)
+      ..writeByte(1)
+      ..write(obj.isSkip);
   }
 
   @override

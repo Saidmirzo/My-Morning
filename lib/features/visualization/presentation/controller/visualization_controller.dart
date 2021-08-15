@@ -7,14 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
-import 'package:morningmagic/db/model/progress.dart';
-import 'package:morningmagic/db/model/progress/day/day.dart';
 import 'package:morningmagic/db/model/progress/visualization_progress/visualization_progress.dart';
-import 'package:morningmagic/db/model/visualization/visualization.dart';
-import 'package:morningmagic/db/progress.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/visualization/domain/entities/image_tag.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
@@ -22,7 +17,9 @@ import 'package:morningmagic/features/visualization/domain/entities/visualizatio
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_image_repository.dart';
 import 'package:morningmagic/features/visualization/domain/repositories/visualization_target_repository.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_success_page.dart';
+import 'package:morningmagic/resources/my_const.dart';
 import 'package:morningmagic/routing/route_values.dart';
+import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
@@ -31,14 +28,10 @@ class VisualizationController extends GetxController {
   final VisualizationImageRepository imageRepository;
   TextEditingController vizualizationText = TextEditingController();
 
-  Box _hiveBox;
-
   VisualizationController(
       {@required Box hiveBox,
       @required this.targetRepository,
-      @required this.imageRepository}) {
-    _hiveBox = hiveBox;
-  }
+      @required this.imageRepository});
 
   bool fromHomeMenu = false;
 
@@ -73,7 +66,7 @@ class VisualizationController extends GetxController {
       ? 0
       : _currentImageIndex.value;
 
-  int get passedTimeSeconds => (_initialTimeLeft - timeLeft.value);
+  int get passedSec => (_initialTimeLeft - timeLeft.value);
 
   int get selectedImagesCount => selectedImageIndexes.length;
 
@@ -215,7 +208,7 @@ class VisualizationController extends GetxController {
           _updateTimerIsActive(true);
         } else {
           timer.cancel();
-          finishVisualization();
+          finishVisualization(false);
           _updateTimerIsActive(false);
           timeLeft.value = _initialTimeLeft;
         }
@@ -227,9 +220,15 @@ class VisualizationController extends GetxController {
     }
   }
 
-  finishVisualization() {
+  finishVisualization(bool isSkip) {
     print('finish vizualization');
-    _saveProgressList();
+    if (passedSec > minPassedSec) {
+      VisualizationProgress model = VisualizationProgress(passedSec,
+          vizualizationText.text.isEmpty ? '-' : vizualizationText.text,
+          isSkip: isSkip);
+      ProgressController cPg = Get.find();
+      cPg.saveJournal(MyResource.VISUALISATION_JOURNAL, model);
+    }
     Get.offAll(VisualizationSuccessPage(fromHomeMenu: fromHomeMenu),
         predicate: ModalRoute.withName(homePageRoute));
   }
@@ -249,7 +248,7 @@ class VisualizationController extends GetxController {
   }
 
   _getTimeLeftFromPrefs() {
-    ExerciseTime _exerciseTime = _hiveBox.get(MyResource.VISUALIZATION_TIME_KEY,
+    ExerciseTime _exerciseTime = myDbBox.get(MyResource.VISUALIZATION_TIME_KEY,
         defaultValue: ExerciseTime(0));
     print('Init time : ${_exerciseTime.time}');
     _initialTimeLeft = _exerciseTime.time * 60; // time from prefs in minutes
@@ -263,36 +262,6 @@ class VisualizationController extends GetxController {
 
   void _setDownloading(bool isDownloading) =>
       isImagesDownloading.value = isDownloading;
-
-  // Save progress
-  void _saveProgressList() {
-    saveStats();
-    print('cVizualization _saveProgressList');
-    VisualizationProgress visualizationProgress = VisualizationProgress(
-        passedTimeSeconds,
-        vizualizationText.text.isEmpty ? '-' : vizualizationText.text);
-    // Get old data or init empty map
-    var _map = MyDB().getVizualizationProgress();
-    // Now date with format
-    final _now = DateFormat('d.M.y').format(DateTime.now());
-    if (_map[_now] == null) _map[_now] = [];
-    // Add progress into current day
-    _map[_now].add(visualizationProgress);
-    // Save progress
-    _hiveBox.put(MyResource.MY_VISUALISATION_PROGRESS, _map);
-  }
-
-  void saveStats() {
-    if (passedTimeSeconds < 15) return;
-    var sec = (passedTimeSeconds / 60).round();
-    // Округляем до 1 минуты
-    sec = sec == 0 ? 1 : sec;
-    ProgressModel pgModel = MyDB().getProgress();
-    pgModel.count_of_session[DateTime.now()] = 1;
-    pgModel.minutes_of_awarenes[DateTime.now()] = sec;
-    pgModel.percent_of_awareness[DateTime.now()] = 0.5;
-    pgModel.save();
-  }
 
   ImageProvider getImpressionDecorationImage(int imageIndex) {
     final _image = selectedImages[imageIndex];
