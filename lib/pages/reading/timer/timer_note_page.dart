@@ -31,9 +31,6 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });
-    // ProgressModel pgModel = MyDB().getProgress();
-    // pgModel.count_of_session[DateTime.now()] = 1;
-    // pgModel.save();
   }
 
   Future<void> _asyncMethod() async {

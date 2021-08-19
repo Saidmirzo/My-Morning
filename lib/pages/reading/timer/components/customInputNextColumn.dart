@@ -37,6 +37,7 @@ class InputTextColumnState extends State<InputTextColumn> {
   }
 
   void saveProg(bool isSkip) {
+    print('widget.passedSec : ${widget.passedSec}');
     if (widget.passedSec > minPassedSec) {
       String book = MyDB().getBox().get(MyResource.BOOK_KEY, defaultValue: '');
       int pages = int.tryParse(controller.text) ?? 0;

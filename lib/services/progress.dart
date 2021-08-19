@@ -157,7 +157,7 @@ class ProgressController extends GetxController {
         sec += value.sec;
       }
     });
-    return [count, (sec / 60).round(), percent];
+    return [count, sec / 60, percent];
   }
 
   /*

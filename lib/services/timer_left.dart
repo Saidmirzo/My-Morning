@@ -12,6 +12,8 @@ class TimerLeftController extends GetxController {
   DateTime appLeftTime;
   int leftSecondsBeforePauseApp = -1;
 
+  var _isolateTime = -1;
+
   void onAppLeft(Timer timer, int time) async {
     print('До завершения таймера осталось $time c.');
     leftSecondsBeforePauseApp = time;
@@ -42,7 +44,8 @@ class TimerLeftController extends GetxController {
   }
 
   void _startIsolate(int tm) async {
-    print('Запускаем изолятор');
+    _isolateTime = tm;
+    print('Запускаем изолятор на $tm sec');
     _receivePort = ReceivePort();
     _isolate = await Isolate.spawn(
         waitAndNotifyInBg, IsolateData(_receivePort.sendPort, tm));
@@ -61,16 +64,18 @@ class TimerLeftController extends GetxController {
     await audioPlayer.play();
   }
 
+  static const periodic = 5;
   static void waitAndNotifyInBg(IsolateData data) async {
     print('leftSecondsBeforePauseApp : ${data.time}');
-    Timer.periodic(new Duration(seconds: 5), (Timer t) {
-      String msg = 'notification ${DateTime.now()}';
-      data.sendPort.send(msg);
+    Timer.periodic(periodic.seconds, (Timer t) {
+      data.sendPort.send('recive ${DateTime.now()}');
     });
   }
 
-  void _isolateHandleMessage(dynamic data) {
-    print('RECEIVED: ' + data);
+  void _isolateHandleMessage(dynamic val) {
+    print('RECEIVED: $val');
+    _isolateTime -= periodic;
+    if (_isolateTime <= 0) _stopIsolate();
   }
 
   void _stopIsolate() {

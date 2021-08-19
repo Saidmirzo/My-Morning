@@ -433,14 +433,14 @@ class _ProgressPageState extends State<ProgressPage> {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.black54,
-              fontSize: MediaQuery.of(context).size.width * 0.03, //
+              fontSize: MediaQuery.of(context).size.width * 0.03,
             ),
           ),
           Text(
-            count.toString(),
+            double.parse(count.toStringAsFixed(1)).toString(),
             style: TextStyle(
               color: Color(0xff832f51),
-              fontSize: MediaQuery.of(context).size.width * 0.085, //32,
+              fontSize: MediaQuery.of(context).size.width * 0.085,
             ),
           ),
         ],
