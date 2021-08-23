@@ -28,9 +28,11 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      cTimerLeft.onAppLeft(_controller.timer, _controller.timeLeft.value);
+      cTimerLeft.onAppLeft(_controller.timer, _controller.timeLeft.value,
+          onPlayPause: () => _controller.toggleStartPauseTimer());
     } else if (state == AppLifecycleState.resumed) {
-      cTimerLeft.onAppResume(_controller.timer, _controller.timeLeft);
+      cTimerLeft.onAppResume(
+          _controller.timer, _controller.timeLeft, _controller.passedSec);
     }
   }
 

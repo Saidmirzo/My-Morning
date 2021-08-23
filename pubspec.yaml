@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 1.1.1+39
+version: 1.1.2+40
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -42,7 +42,7 @@ dependencies:
   rate_my_app: ^1.1.0+1
   smooth_star_rating: ^1.1.1
   screen: ^0.0.5
-  just_audio: ^0.7.5
+  just_audio: ^0.9.6
   audioplayers: ^0.19.0
   multi_image_picker: ^4.8.0
   path_provider: ^2.0.2

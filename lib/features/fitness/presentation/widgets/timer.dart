@@ -27,9 +27,10 @@ class TimeAppBarState extends State<TimerFitnes> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      cTimerLeft.onAppLeft(cTimer.timer, cTimer.time.value);
+      cTimerLeft.onAppLeft(cTimer.timer, cTimer.time.value,
+          onPlayPause: () => cTimer.startTimer());
     } else if (state == AppLifecycleState.resumed) {
-      cTimerLeft.onAppResume(cTimer.timer, cTimer.time);
+      cTimerLeft.onAppResume(cTimer.timer, cTimer.time, cTimer.passedSec);
     }
   }
 

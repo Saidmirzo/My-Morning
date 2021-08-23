@@ -119,11 +119,16 @@ class PushNotifications {
         msg,
         tz.TZDateTime.now(tz.local).add(Duration(seconds: secondsSleep)),
         NotificationDetails(
-            android: AndroidNotificationDetails('your channel id',
-                'your channel name', 'your channel description')),
+          android: AndroidNotificationDetails(
+            'your channel id',
+            'your channel name',
+            'your channel description',
+          ),
+        ),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
+    print('Добавили пуш, сработает через $secondsSleep sec');
   }
 
   Future<void> sendWeekleRepeat(String title, String msg, DateTime dateTime,
@@ -136,8 +141,12 @@ class PushNotifications {
         msg,
         tz.TZDateTime.from(dateTime, tz.local),
         NotificationDetails(
-            android: AndroidNotificationDetails('your channel id',
-                'your channel name', 'your channel description')),
+          android: AndroidNotificationDetails(
+            'your channel id',
+            'your channel name',
+            'your channel description',
+          ),
+        ),
         androidAllowWhileIdle: true,
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
         uiLocalNotificationDateInterpretation:

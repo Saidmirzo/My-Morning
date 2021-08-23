@@ -261,7 +261,7 @@ Map<String, String> translations_ru = {
   "tarif_month_desc":
       "@price в месяц после триала\n\nОтмена бесплатна в течении триала",
   "tarif_annual_title": "@price / год",
-  "tarif_annual_desc": "-50% скидка на подписку\n\n@price экономите за 12 мес",
+  "tarif_annual_desc": "-75% скидка на подписку\n\n@price экономите за 12 мес",
   "buy_month": "Оплатить подписку",
   "buy_days": "Попробуйте @days дня бесплатно",
   "buy_free": "ПОПРОБОВАТЬ ПОЛНЫЙ\nКОМПЛЕКС",

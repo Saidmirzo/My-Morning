@@ -66,7 +66,7 @@ class VisualizationController extends GetxController {
       ? 0
       : _currentImageIndex.value;
 
-  int get passedSec => (_initialTimeLeft - timeLeft.value);
+  RxInt passedSec = 0.obs;
 
   int get selectedImagesCount => selectedImageIndexes.length;
 
@@ -201,6 +201,7 @@ class VisualizationController extends GetxController {
       timer = Timer.periodic(1.seconds, (timer) {
         if (timeLeft > 0) {
           timeLeft.value--;
+          passedSec++;
           _updateTimerIsActive(true);
         } else {
           timer.cancel();
@@ -219,7 +220,7 @@ class VisualizationController extends GetxController {
   finishVisualization(bool isSkip) {
     print('finish vizualization');
     if (passedSec > minPassedSec) {
-      VisualizationProgress model = VisualizationProgress(passedSec,
+      VisualizationProgress model = VisualizationProgress(passedSec.value,
           vizualizationText.text.isEmpty ? '-' : vizualizationText.text,
           isSkip: isSkip);
       ProgressController cPg = Get.find();

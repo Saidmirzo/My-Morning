@@ -115,7 +115,7 @@ class TimerService {
   DateTime date = DateTime.now();
 
   // Кол-во секунд прошедших со старта таймера
-  int passedSec = 0;
+  RxInt passedSec = 0.obs;
 
   void saveProgress(bool isSkip) {
     print('saveProgress Passed seconds: $passedSec');
@@ -124,7 +124,7 @@ class TimerService {
       ProgressController pg = Get.find();
       switch (pageId) {
         case TimerPageId.Affirmation:
-          var model = AffirmationProgress(passedSec,
+          var model = AffirmationProgress(passedSec.value,
               affirmationText.value.isEmpty ? '-' : affirmationText.value,
               isSkip: isSkip);
           pg.saveJournal(MyResource.AFFIRMATION_JOURNAL, model);
@@ -132,7 +132,7 @@ class TimerService {
         case TimerPageId.Meditation:
           // Журнал медитаций нигде не показываем, но записываем
           // чтобы потом учитывать в статистике
-          var model = MeditationProgress(passedSec, isSkip: isSkip);
+          var model = MeditationProgress(passedSec.value, isSkip: isSkip);
           pg.saveJournal(MyResource.MEDITATION_JOURNAL, model);
           break;
         default:
@@ -149,9 +149,10 @@ class TimerService {
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
     if (timer == null || !timer.isActive) {
+      print('start Timer');
       isActive.toggle();
       timer = Timer.periodic(oneSec, (Timer timer) async {
-        if (time < 1) {
+        if (time.value < 1) {
           print('timer_service: timer work done');
           timer.cancel();
           if (pageId != TimerPageId.Reading) saveProgress(false);
@@ -165,16 +166,20 @@ class TimerService {
         }
       });
     } else if (timer != null && timer.isActive) {
+      print('stop Timer');
       timer.cancel();
       isActive.toggle();
     }
   }
 
+  // Время таймера записывается неверно если залочить экран ( passedSeconds )
+
   getNextPage(dynamic value, bool isSkip) {
     print('getnextPage fromHomeMenu: $fromHomeMenu');
     print('getNextPage value $value');
     Get.off(pageId == TimerPageId.Reading
-        ? TimerInputSuccessScreen(passedSec, isSkip, fromHomeMenu: fromHomeMenu)
+        ? TimerInputSuccessScreen(passedSec.value, isSkip,
+            fromHomeMenu: fromHomeMenu)
         : TimerSuccessScreen(
             () => Get.off(
                   fromHomeMenu

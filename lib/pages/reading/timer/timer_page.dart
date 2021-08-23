@@ -31,9 +31,11 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      cTimerLeft.onAppLeft(timerService.timer, timerService.time.value);
+      cTimerLeft.onAppLeft(timerService.timer, timerService.time.value,
+          onPlayPause: () => timerService.startTimer());
     } else if (state == AppLifecycleState.resumed) {
-      cTimerLeft.onAppResume(timerService.timer, timerService.time);
+      cTimerLeft.onAppResume(
+          timerService.timer, timerService.time, timerService.passedSec);
     }
   }
 

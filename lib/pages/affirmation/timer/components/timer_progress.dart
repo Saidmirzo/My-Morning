@@ -14,7 +14,7 @@ Widget buildTimerProgress(TimerService timerService) {
         radius: Get.height * 0.18,
         lineWidth: 15.0,
         animation: false,
-        percent: timerService.createValue,
+        percent: timerService.createValue > 1.0 ? 1 : timerService.createValue,
         center: TimerCircleButton(
             child: Icon(
               timerService.isActive.isTrue ? Icons.pause : Icons.play_arrow,

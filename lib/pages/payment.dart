@@ -136,8 +136,10 @@ class _PaymentPageState extends State<PaymentPage> {
       tarif(
           'tarif_annual_title'
               .trParams({'price': '${annualProd?.priceString}'}),
-          'tarif_annual_desc'
-              .trParams({'price': '${annualProd?.priceString}'})),
+          'tarif_annual_desc'.trParams({
+            'price':
+                '${(((monthProd?.price ?? 0) * 12) - annualProd?.price).toStringAsFixed(2)} ${annualProd?.currencyCode}'
+          })),
     ];
     return Column(
       children: [

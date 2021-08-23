@@ -34,11 +34,6 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   @override
   void initState() {
     super.initState();
-
-    // Он будет null если мы закончили всю тренировку
-    // Между упражнениями здесь будет функция next
-    // if (widget.onNext == null) Get.delete<TimerFitnesController>();
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _vibrate();
       await _audioPlayer.setAsset("assets/audios/success.mp3");

@@ -3,12 +3,10 @@ import 'dart:developer';
 
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/fitness_porgress/fitness_progress.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/features/fitness/presentation/pages/fitness_success_page.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/progress.dart';
 
@@ -46,12 +44,12 @@ class TimerFitnesController {
       : 0.0.obs;
 
   // Прошло секунд за все упражнения
-  int passedSec = 0;
+  RxInt passedSec = 0.obs;
 
   void saveFitnessProgress(bool isSkip) {
     if (passedSec > 0) {
-      var model =
-          FitnessProgress(passedSec, progName, exerciseName, isSkip: isSkip);
+      var model = FitnessProgress(passedSec.value, progName, exerciseName,
+          isSkip: isSkip);
       ProgressController pg = Get.find();
       pg.saveJournal(MyResource.FITNESS_JOURNAL, model);
     }
@@ -90,6 +88,6 @@ class TimerFitnesController {
   void cancelTimer() {
     timer?.cancel();
     if (!isExDone.value) saveFitnessProgress(true);
-    passedSec = 0;
+    passedSec.value = 0;
   }
 }

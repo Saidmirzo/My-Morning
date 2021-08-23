@@ -14,11 +14,16 @@ class TimerLeftController extends GetxController {
 
   var _isolateTime = -1;
 
-  void onAppLeft(Timer timer, int time) async {
+  Timer _timer;
+  Function _onPlayPause;
+
+  void onAppLeft(Timer timer, int time, {Function onPlayPause}) async {
+    _timer = timer;
+    _onPlayPause = onPlayPause;
     print('До завершения таймера осталось $time c.');
     leftSecondsBeforePauseApp = time;
     // Уведомим о заверщении упражнения через N оставшихся секунд
-    if (time > 0 && timer.isActive) {
+    if (time > 0 && _timer.isActive) {
       appLeftTime = DateTime.now();
       pushNotifications.sendNotificationWithSleep(
           'push_success'.tr, 'action_completed'.tr, time,
@@ -33,14 +38,19 @@ class TimerLeftController extends GetxController {
     }
   }
 
-  void onAppResume(Timer timer, RxInt _time) async {
+  void onAppResume(Timer timer, RxInt _time, RxInt passedSec) async {
     int val =
         DateTime.now().difference(appLeftTime ?? DateTime.now()).inSeconds;
     print('Разница: $val сек');
-    if (timer.isActive && leftSecondsBeforePauseApp > 0)
-      _time.value = leftSecondsBeforePauseApp - val;
+    if (leftSecondsBeforePauseApp > 0) {
+      _time.value =
+          val > leftSecondsBeforePauseApp ? 0 : leftSecondsBeforePauseApp - val;
+      passedSec.value +=
+          val > leftSecondsBeforePauseApp ? leftSecondsBeforePauseApp : val;
+    }
     pushNotifications.deleteNotification(PushNotifications.pushIdTreaning);
     _stopIsolate();
+    if (_onPlayPause != null) _onPlayPause();
   }
 
   void _startIsolate(int tm) async {
@@ -53,8 +63,13 @@ class TimerLeftController extends GetxController {
       print('onDone');
       // Проверка чтобы не срабатывало уведомление
       // если мы вернулись до окончания таймера и отменили изолятор вручную
-      if (_isolate == null) notifyInBackground();
+      if (_isolate == null) {
+        notifyInBackground();
+        // Запускаем таймер
+      }
     });
+    // Останавливаем таймер
+    if (_onPlayPause != null && _timer.isActive) _onPlayPause();
   }
 
   void notifyInBackground() async {
@@ -75,7 +90,9 @@ class TimerLeftController extends GetxController {
   void _isolateHandleMessage(dynamic val) {
     print('RECEIVED: $val');
     _isolateTime -= periodic;
-    if (_isolateTime <= 0) _stopIsolate();
+    if (_isolateTime <= 0) {
+      _stopIsolate();
+    }
   }
 
   void _stopIsolate() {

@@ -84,35 +84,56 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-pixabay-271681-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-taryn-elliott-4099354-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-vlada-karpovich-7903180-min.jpg',
-        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-wendy-wei-1916821%20(1)-min.jpg'
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-wendy-wei-1916821%20(1)-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/3pexels-anna-nekrashevich-6802052-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/3pexels-karolina-grabowska-4968665-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/3pexels-nataliya-vaitkevich-6532596-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/3pexels-pixabay-262491-min.jpg',
       ],
       EnumToString.convertToString(VisualizationImageTag.family): [
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-binyamin-mellish-1396122-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-brett-sayles-1708601-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-olle-988622-min.jpg',
-        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-oleg-magni-1837603-min.jpg'
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-oleg-magni-1837603-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/1pexels-anastasia-shuraeva-4079293-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/1pexels-arina-krasnikova-5416641.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/1pexels-cottonbro-6595042.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/1pexels-elina-sazonova-1914984-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/1pexels-emma-bauso-3585812-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/1pexels-lisa-1909015-min.jpg',
       ],
       EnumToString.convertToString(VisualizationImageTag.nature): [
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-flickr-146083.jpg',
-        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-ian-beckley-2792157-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-louis-3690511.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-trace-hudson-2724664%20(1)-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/max-ravier-3331094-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/michael-block-3225517-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/nothing-ahead-3571551-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/zetong-li-1784578-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/konstantin-abramov-8906200.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-yaroslav-shuraev-1834399-min.jpg'
       ],
       EnumToString.convertToString(VisualizationImageTag.rest): [
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-pixabay-266436-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-rachel-claire-4825701-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-vincent-gerbouin-1179156.jpg',
-        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-vincent-rivaud-2363807-min.jpg'
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-vincent-rivaud-2363807-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-burst-374148-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-daria-shevtsova-698158-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-daria-shevtsova-916337.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-jess-loiterton-4321802-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-laura-stanley-2252314-min.jpg',
       ],
       EnumToString.convertToString(VisualizationImageTag.sport): [
-        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-ian-beckley-2792157-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-leon-ardho-1552252-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-pixabay-358042-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-pixabay-390051.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-riccardo-bresciani-303040-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-tyler-hendy-54123-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-tyler-tornberg-1635086.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-nataliya-vaitkevich-6120392-min.jpg'
+            'https://storage.yandexcloud.net/myaudio/Visualisation/2pexels-heart-rules-711187-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/2pexels-mali-maeder-68468-min.jpg',
       ],
     };
 

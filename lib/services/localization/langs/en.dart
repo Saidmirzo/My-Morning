@@ -311,7 +311,7 @@ Map<String, String> translations_en = {
       "@price per month after the trial \n\nCancellation is free during the trial",
   "tarif_annual_title": "@price / year",
   "tarif_annual_desc":
-      "-50% discount on subscription \n\n@price save for 12 months",
+      "-75% discount on subscription \n\n@price save for 12 months",
   "buy_month": "Pay for subscription",
   "buy_free": "TRY THE FULL COMPLEX",
   "days_free": "@days days free",
