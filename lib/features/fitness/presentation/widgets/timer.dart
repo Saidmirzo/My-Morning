@@ -28,7 +28,7 @@ class TimeAppBarState extends State<TimerFitnes> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
       cTimerLeft.onAppLeft(cTimer.timer, cTimer.time.value,
-          onPlayPause: () => cTimer.startTimer());
+          onPlayPause: () => cTimer.startStopTimer());
     } else if (state == AppLifecycleState.resumed) {
       cTimerLeft.onAppResume(cTimer.timer, cTimer.time, cTimer.passedSec);
     }
@@ -97,6 +97,6 @@ class TimeAppBarState extends State<TimerFitnes> with WidgetsBindingObserver {
           size: 25,
           color: AppColors.VIOLET,
         ),
-        onPressed: () => cTimer.startTimer()));
+        onPressed: () => cTimer.startStopTimer()));
   }
 }

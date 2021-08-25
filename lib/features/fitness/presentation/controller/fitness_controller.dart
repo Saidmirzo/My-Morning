@@ -23,6 +23,7 @@ class FitnessController extends GetxController {
   FitnessProgram get selectedProgram => _selectedProgram.value;
 
   set selectedProgram(FitnessProgram value) {
+    print('selectedProgram ${value.exercises.length}');
     _selectedProgram.value = value;
   }
 

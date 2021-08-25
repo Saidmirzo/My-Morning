@@ -44,7 +44,7 @@ class _ExercisePageState extends State<ExercisePage>
         onDone: () async {
       if (_fitnessController.step !=
           _fitnessController.selectedProgram.exercises.length - 1) {
-        print('onDone2');
+        print('onDone from init');
         Get.to(FitnessSuccessPage(onNext: () async {
           Get.back();
           _onNext();
@@ -73,6 +73,8 @@ class _ExercisePageState extends State<ExercisePage>
               BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Fitnes),
           child: Obx(() {
             print('Rebuild exercise page');
+            cTimer.exerciseCount =
+                _fitnessController?.selectedProgram?.exercises?.length ?? 0;
             cTimer?.exerciseName = exercise.value.name;
             _audioRes = exercise.value.audioRes;
             if (_audioRes != null) {
@@ -267,6 +269,7 @@ class _ExercisePageState extends State<ExercisePage>
 
   void _onNext() async {
     print('_onNext');
+    // if (cTimer.isRuning.value) cTimer.startStopTimer();
     dispGif();
     _disposeServices();
     _fitnessController.incrementStep();
@@ -274,7 +277,7 @@ class _ExercisePageState extends State<ExercisePage>
     print('_onNext 2');
     if (_exercise != null) {
       print('_onNext 3');
-      if (cTimer?.isExDone?.value ?? false) cTimer.startTimer();
+      if (cTimer?.isExDone?.value ?? false) cTimer.startStopTimer();
       cTimer?.isExDone?.value = false;
       exercise.value = _exercise;
     } else {
@@ -283,6 +286,7 @@ class _ExercisePageState extends State<ExercisePage>
       AppRouting.replace(FitnessSuccessPage(
           countProgram: _fitnessController.selectedProgram.exercises.length));
       appAnalitics.logEvent('first_fitnes_next');
+      Get.delete<TimerFitnesController>();
     }
   }
 

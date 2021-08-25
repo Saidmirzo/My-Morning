@@ -31,12 +31,13 @@ class TimerFitnesController {
   }
 
   void init() async {
+    print('exerciseCount : $exerciseCount');
     ExerciseTime _time = await MyDB().getBox().get(MyResource.FITNESS_TIME_KEY,
         defaultValue: ExerciseTime(TimerPageId.Fitness));
     var tm = ((_time.time * 60) / exerciseCount).round();
     time.value = tm;
     startValue = tm;
-    startTimer();
+    startStopTimer();
   }
 
   RxDouble get createValue => startValue != null
@@ -58,7 +59,7 @@ class TimerFitnesController {
   }
 
   RxBool isRuning = false.obs;
-  void startTimer() {
+  void startStopTimer() {
     if (timer == null || !timer.isActive) {
       isExDone.value = false;
       isRuning.value = true;

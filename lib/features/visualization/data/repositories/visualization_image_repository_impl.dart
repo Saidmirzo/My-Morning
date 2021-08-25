@@ -131,8 +131,8 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-riccardo-bresciani-303040-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-tyler-hendy-54123-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-tyler-tornberg-1635086.jpg',
-        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-nataliya-vaitkevich-6120392-min.jpg'
-            'https://storage.yandexcloud.net/myaudio/Visualisation/2pexels-heart-rules-711187-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/pexels-nataliya-vaitkevich-6120392-min.jpg',
+        'https://storage.yandexcloud.net/myaudio/Visualisation/2pexels-heart-rules-711187-min.jpg',
         'https://storage.yandexcloud.net/myaudio/Visualisation/2pexels-mali-maeder-68468-min.jpg',
       ],
     };
