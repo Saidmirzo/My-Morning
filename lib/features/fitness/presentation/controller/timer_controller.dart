@@ -12,6 +12,7 @@ import 'package:morningmagic/services/progress.dart';
 
 class TimerFitnesController {
   Timer timer;
+  String practicId;
   int startValue;
   RxInt time = 0.obs;
   String exerciseName = 'NaN';
@@ -26,7 +27,8 @@ class TimerFitnesController {
   DateTime date = DateTime.now();
   String timeStr;
 
-  TimerFitnesController(this.gifController, this.exerciseCount, {this.onDone}) {
+  TimerFitnesController(this.gifController, this.exerciseCount, this.practicId,
+      {this.onDone}) {
     init();
   }
 
@@ -49,7 +51,8 @@ class TimerFitnesController {
 
   void saveFitnessProgress(bool isSkip) {
     if (passedSec > 0) {
-      var model = FitnessProgress(passedSec.value, progName, exerciseName,
+      var model = FitnessProgress(
+          passedSec.value, progName, exerciseName, practicId,
           isSkip: isSkip);
       ProgressController pg = Get.find();
       pg.saveJournal(MyResource.FITNESS_JOURNAL, model);

@@ -39,20 +39,12 @@ class _ExercisePageState extends State<ExercisePage>
   void initState() {
     exercise = widget.exercise.obs;
     _gifController = GifController(vsync: this, duration: 2.seconds);
-    cTimer = Get.put(TimerFitnesController(_gifController,
-        (_fitnessController?.selectedProgram?.exercises?.length ?? 0),
-        onDone: () async {
-      if (_fitnessController.step !=
-          _fitnessController.selectedProgram.exercises.length - 1) {
-        print('onDone from init');
-        Get.to(FitnessSuccessPage(onNext: () async {
-          Get.back();
-          _onNext();
-        }));
-      } else {
-        _onNext();
-      }
-    }));
+    cTimer = Get.put(TimerFitnesController(
+      _gifController,
+      (_fitnessController?.selectedProgram?.exercises?.length ?? 0),
+      DateTime.now().toString(),
+      onDone: onDoneTimer,
+    ));
     cTimer.progName = widget.progName;
     super.initState();
   }
@@ -60,7 +52,22 @@ class _ExercisePageState extends State<ExercisePage>
   void initAudioAndPlay(String url) async {
     _audioPlayer = AudioPlayer();
     await _audioPlayer.setUrl(url);
-    // if (isAudioActive.isTrue) _audioPlayer.play();
+  }
+
+  void onDoneTimer() async {
+    if (_fitnessController.step !=
+        _fitnessController.selectedProgram.exercises.length - 1) {
+      Get.to(
+        FitnessSuccessPage(
+          onNext: () async {
+            Get.back();
+            _onNext();
+          },
+        ),
+      );
+    } else {
+      _onNext();
+    }
   }
 
   @override

@@ -5,7 +5,8 @@ part 'fitness_progress.g.dart';
 
 @HiveType(typeId: 14)
 class FitnessProgress extends Exercise {
-  FitnessProgress(this.sec, this.progName, this.text, {this.isSkip = false});
+  FitnessProgress(this.sec, this.progName, this.text, this.practicId,
+      {this.isSkip = false});
 
   @HiveField(0)
   int sec;
@@ -18,4 +19,8 @@ class FitnessProgress extends Exercise {
 
   @HiveField(3)
   bool isSkip;
+
+  /// Уникальный id практики чтобы в статистике могли сгруппировать
+  @HiveField(4)
+  String practicId;
 }

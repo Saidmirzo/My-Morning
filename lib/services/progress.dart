@@ -1,8 +1,8 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/progress/fitness_porgress/fitness_progress.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
 
 class ProgressController extends GetxController {
   static final DateFormat dtFormat = DateFormat('d.M.y');
@@ -139,8 +139,25 @@ class ProgressController extends GetxController {
         var dtKey = DateFormat('d.M.yyyy').parse(key);
         if ((dtKey.isAfter(start) && dtKey.isBefore(end)) ||
             (dtKey == start || dtKey == end)) {
+          String oldPracticId;
           value.forEach((element) {
-            if (!element.isSkip ?? false) count++;
+            if (element is FitnessProgress) {
+              try {
+                // Для фитнеса группируем по названию программы
+                print('fittnesProgram !isSkip ${!element.isSkip}');
+                if (element.practicId == null) return;
+                if (oldPracticId == null ||
+                    !element.practicId.contains(oldPracticId)) {
+                  oldPracticId = element.practicId;
+                  if (!element.isSkip) {
+                    count++;
+                  }
+                }
+              } catch (e) {}
+            } else {
+              // Для остальных считаем все завершенные
+              if (!element.isSkip ?? false) count++;
+            }
             sec += element.sec;
             if (!element.isSkip ?? false) {
               percent += 0.5;
