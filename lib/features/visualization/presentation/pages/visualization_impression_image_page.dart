@@ -75,50 +75,47 @@ class VisualizationImpressionImagePage extends StatelessWidget {
 
   Expanded _buildImageGrid() {
     return Expanded(
-      child: Obx(
-        () => GridView.builder(
-          itemCount: _controller.images.length,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-          itemBuilder: (context, index) => GestureDetector(
-            onTap: () => _controller.toggleImageSelected(index),
-            child: Obx(() => Container(
-                  margin: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                      border: (_controller.selectedImageIndexes.contains(index))
-                          ? Border.all(color: AppColors.VIOLET, width: 2.5)
-                          : null,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      )),
-                  child: Stack(
-                    // clipBehavior: Clip.none,
-                    fit: StackFit.expand,
-                    children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          child: _buildImage(index)),
-                      if (!_controller.images[index].isDefault &&
-                          _controller.selectedImageIndexes.contains(index))
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: InkWell(
-                            onTap: () => _showDialogRemoveImageSelection(index),
-                            // onTap: () => _controller.toggleImageSelected(index),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: SvgPicture.asset(
-                                'assets/images/remove_target.svg',
-                                height: 24,
-                                width: 24,
-                              ),
+      child: GridView.builder(
+        itemCount: _controller.images.length,
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () => _controller.toggleImageSelected(index),
+          child: Obx(() => Container(
+                margin: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                    border: (_controller.selectedImageIndexes.contains(index))
+                        ? Border.all(color: AppColors.VIOLET, width: 2.5)
+                        : null,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    )),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        child: _buildImage(index)),
+                    if (!_controller.images[index].isDefault &&
+                        _controller.selectedImageIndexes.contains(index))
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: InkWell(
+                          onTap: () => _showDialogRemoveImageSelection(index),
+                          // onTap: () => _controller.toggleImageSelected(index),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: SvgPicture.asset(
+                              'assets/images/remove_target.svg',
+                              height: 24,
+                              width: 24,
                             ),
                           ),
-                        )
-                    ],
-                  ),
-                )),
-          ),
+                        ),
+                      )
+                  ],
+                ),
+              )),
         ),
       ),
     );
@@ -139,12 +136,14 @@ class VisualizationImpressionImagePage extends StatelessWidget {
 
     switch (_image.runtimeType) {
       case VisualizationAssetImage:
+        print('_buildImage VisualizationAssetImage');
         return Image.asset(
           _image.path,
           fit: BoxFit.cover,
         );
         break;
       case VisualizationGalleryImage:
+        print('_buildImage VisualizationGalleryImage');
         return AssetThumb(
           width: 150,
           height: 150,
@@ -152,12 +151,20 @@ class VisualizationImpressionImagePage extends StatelessWidget {
         );
         break;
       case VisualizationFileSystemImage:
+        print('_buildImage VisualizationFileSystemImage');
         return Image.file(
           (_image as VisualizationFileSystemImage).file,
           fit: BoxFit.cover,
+          width: 150,
+          height: 150,
+          cacheWidth: 150,
+          cacheHeight: 150,
+          filterQuality: FilterQuality.low,
+          scale: 1.0,
         );
         break;
       case VisualizationNetworkImage:
+        print('_buildImage VisualizationNetworkImage');
         return Image.network(
           (_image as VisualizationNetworkImage).path,
           fit: BoxFit.cover,
