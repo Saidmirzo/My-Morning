@@ -123,7 +123,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
       height: 30,
       width: 30,
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(AppColors.WHITE),
+        valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
       ),
     );
   }
