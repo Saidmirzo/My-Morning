@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/dialog/langDialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/faq/faq_support.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -40,7 +41,13 @@ class FAQStateScreen extends State<FaqMenuPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    backBtn(),
+                    Row(
+                      children: [
+                        backBtn(),
+                        Spacer(),
+                        langBtn(),
+                      ],
+                    ),
                     const SizedBox(height: 20),
                     Text(
                       'faq_menu_title'.tr,
@@ -88,6 +95,31 @@ class FAQStateScreen extends State<FaqMenuPage> {
       ),
     );
   }
+
+  Widget langBtn() => CupertinoButton(
+        onPressed: () => showLangDialog(context),
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            width: Get.width * .35,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(18)),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(
+                child: Text(
+                  'language'.tr,
+                  style: TextStyle(
+                    fontSize: Get.width * .040,
+                    fontWeight: FontWeight.normal,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
 
   Widget backBtn() {
     return Align(
