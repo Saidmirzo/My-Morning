@@ -17,7 +17,7 @@ AlertDialog _landDialog() {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+          padding: const EdgeInsets.only(bottom: 15),
           child: Text(
             'language'.tr,
             style: _textStyle(weight: FontWeight.bold, fontSize: .055),

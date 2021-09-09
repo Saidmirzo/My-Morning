@@ -7,6 +7,7 @@ import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_
 import 'package:morningmagic/pages/faq/faq_support.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/widgets/lang_btn.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 import 'controllers/faq_controller.dart';
@@ -45,7 +46,7 @@ class FAQStateScreen extends State<FaqMenuPage> {
                       children: [
                         backBtn(),
                         Spacer(),
-                        langBtn(),
+                        langBtn(context),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -95,31 +96,6 @@ class FAQStateScreen extends State<FaqMenuPage> {
       ),
     );
   }
-
-  Widget langBtn() => CupertinoButton(
-        onPressed: () => showLangDialog(context),
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            width: Get.width * .35,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(18)),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Center(
-                child: Text(
-                  'language'.tr,
-                  style: TextStyle(
-                    fontSize: Get.width * .040,
-                    fontWeight: FontWeight.normal,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
 
   Widget backBtn() {
     return Align(
