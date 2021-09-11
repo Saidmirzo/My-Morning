@@ -567,4 +567,12 @@ Map<String, String> translations_ru = {
   "faq_about_title_6": "Как настроить визуализации?",
   "faq_about_desc_6":
       "<p>Чтобы добавить цель нажмите на <img alt='settings' src='https://storage.yandexcloud.net/myaudio/Nastavnik/kartinki/01-min.png' width='25' /> в выборе целей <br>Затем выберите образ из тех, что сохранены в вашем телефоне <br>Подождите немного, пока картинки загрузятся <br>Вы можете воспользоваться готовыми целями и образами, или добавить свои картинки в цели по такой же инструкции <br>Есть проблемы? <a href='screen:support'>«служба поддержки»</a></p>",
+  "welcome_to_sleep": "Добро пожаловать в сон",
+  "meditation_subtitle":
+      "Послушайте одну из наших медитаций, для снятия стресса",
+  "music_for_sleep_subtitle": "Засыпайте с любимой музыкой",
+  "music_for_sleep_title": "Музыка для сна",
+  "reading_at_night_title": "Чтение на ночь",
+  "reading_at_night_subtitle":
+      "Если предпочитаете читать не утром, а не перед сном"
 };

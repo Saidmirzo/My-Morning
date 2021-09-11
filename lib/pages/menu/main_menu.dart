@@ -30,6 +30,7 @@ import 'components/menu.dart';
 class MainMenuPage extends StatefulWidget {
   @override
   State createState() {
+    menuState = MenuState.MORNING;
     return MainMenuPageState();
   }
 }

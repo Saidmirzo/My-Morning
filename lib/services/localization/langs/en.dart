@@ -555,4 +555,11 @@ Map<String, String> translations_en = {
   "faq_about_title_6": "How to set up visualizations?",
   "faq_about_desc_6":
       "<p>1. To add a target, click on the <img alt='settings' src='https://storage.yandexcloud.net/myaudio/Nastavnik/kartinki/01-min.png' width='25' /> in the target selection <br>2. Then select the image from those saved in your phone <br>3. Wait while the pictures are loaded <br>4. You can use ready-made goals and images, or add your own images to goals using the same instructions. <br>There is a problem? <a href='screen:support'>support</a></p>",
+  "welcome_to_sleep": "Welcome to Sleep",
+  "meditation_subtitle": "Listen to one of our meditations to relieve stress",
+  "music_for_sleep_subtitle": "Fall asleep with your favorite music",
+  "music_for_sleep_title": "Music for sleeping",
+  "reading_at_night_title": "Reading at night",
+  "reading_at_night_subtitle":
+      "If you prefer to read not in the morning, but not before going to bed"
 };

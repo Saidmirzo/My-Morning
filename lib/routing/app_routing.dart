@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/loading/loadingPage.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
+import 'package:morningmagic/pages/nigth/nigth.dart';
 import 'package:morningmagic/pages/welcome/slides/name_input_slide.dart';
 import 'package:morningmagic/pages/settings/settingsPage.dart';
 import 'package:morningmagic/pages/welcome/welcome_page.dart';
 import 'package:morningmagic/routing/route_values.dart';
+
+import '../storage.dart';
 
 class AppRouting {
   static const String initialRoute = splashRoute;
@@ -16,17 +19,20 @@ class AppRouting {
         return MaterialPageRoute(
           builder: (_) => LoadingPage(),
         );
-        break;
+
       case homePageRoute:
         return MaterialPageRoute(
             builder: (_) => MainMenuPage(), settings: settings);
-        break;
+
       case settingsPageRoute:
         return MaterialPageRoute(builder: (_) => SettingsPage());
-        break;
+
       case welcomePageRoute:
         return MaterialPageRoute(builder: (_) => WelcomePage());
-        break;
+
+      case mainMenuNigthPage:
+        return MaterialPageRoute(builder: (_) => MainMenuNightPage());
+
       default:
         return MaterialPageRoute(builder: (_) => MainMenuPage());
     }
@@ -35,7 +41,10 @@ class AppRouting {
   static void navigateToHomeWithClearHistory() {
     Navigator.pushAndRemoveUntil(
       Get.context,
-      MaterialPageRoute(builder: (context) => MainMenuPage()),
+      MaterialPageRoute(
+          builder: (context) => menuState == MenuState.MORNING
+              ? MainMenuPage()
+              : MainMenuNightPage()),
       (Route<dynamic> route) => false,
     );
   }
