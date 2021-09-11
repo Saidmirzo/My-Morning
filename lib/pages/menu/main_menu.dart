@@ -217,18 +217,19 @@ class MainMenuPageState extends State<MainMenuPage> {
   Widget buildExercises() {
     return Column(
       children: [
-        Row(
-          children: [
-            const SizedBox(width: 5),
-            SvgPicture.asset('$imagePath/crown.svg'),
-            const SizedBox(width: 10),
-            Text(
-              'subscription'.tr,
-              style: TextStyle(
-                  fontSize: Get.width * .045, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
+        if (billingService.isPro())
+          Row(
+            children: [
+              const SizedBox(width: 5),
+              SvgPicture.asset('$imagePath/crown.svg'),
+              const SizedBox(width: 10),
+              Text(
+                'subscription'.tr,
+                style: TextStyle(
+                    fontSize: Get.width * .045, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
         const SizedBox(height: 10),
         Column(
           children: [
