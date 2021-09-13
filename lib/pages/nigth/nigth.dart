@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/dialog/interviewDialog.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
@@ -14,6 +17,7 @@ import 'package:morningmagic/pages/menu/components/menu.dart';
 import 'package:morningmagic/pages/payment.dart';
 import 'package:morningmagic/pages/reading/reading_page.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/admob.dart';
@@ -68,8 +72,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
               Container(
                 height: Get.height,
                 decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    border: Border.all(width: 0, color: AppColors.primary)),
+                    color: AppColors.nightModeBG,
+                    border: Border.all(width: 0, color: AppColors.nightModeBG)),
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -83,14 +87,17 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                     ),
                     const SizedBox(height: 30),
                     _buildSettingsButton(
+                        image: SvgAssets.nightMeditationBtn,
                         title: 'music_menu_meditations'.tr,
                         subTitle: 'meditation_subtitle'.tr),
                     const SizedBox(height: 20),
                     _buildSettingsButton(
+                        image: SvgAssets.nightBtnBook,
                         title: 'music_for_sleep_title'.tr,
                         subTitle: 'music_for_sleep_subtitle'.tr),
                     const SizedBox(height: 20),
                     _buildSettingsButton(
+                        image: SvgAssets.nightBtnBook,
                         title: 'reading_at_night_title'.tr,
                         subTitle: 'reading_at_night_subtitle'.tr),
                     const SizedBox(height: 20),
@@ -103,7 +110,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
         Positioned(
             bottom: 0,
             child: BottomMenu(
-              bgColor: AppColors.VIOLET,
+              bgColor: AppColors.nightModeBG,
             )),
       ]),
     );
@@ -117,7 +124,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
         child: Stack(
           children: [
             Image.asset(
-              '$imagePath/header.png',
+              '$imagePath/night_mode.png',
             ),
             //SvgPicture.asset('$imagePath/header.svg'),
             Positioned(
@@ -133,7 +140,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                     clipper: OvalTopBorderClipper(),
                     child: Container(
                       height: 40,
-                      color: AppColors.primary,
+                      color: AppColors.nightModeBG,
                     ),
                   ),
                   Text(
@@ -152,46 +159,66 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
     );
   }
 
-  Widget _buildSettingsButton({String title, String subTitle}) {
+  Widget _buildSettingsButton({String title, String subTitle, String image}) {
     return container(
       height: Get.width * .33,
       child: Stack(
         fit: StackFit.expand,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              '$imagePath/settings.png',
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: Get.width * .05,
-                      fontWeight: FontWeight.w600),
+              borderRadius: BorderRadius.circular(12),
+              child: Transform.rotate(
+                angle: Random().nextInt(50) * Random().nextDouble() * 3.14,
+                child: SvgPicture.asset(
+                  SvgAssets.nightBtnBg,
+                  fit: BoxFit.cover,
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  subTitle,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: Get.width * .03,
-                      fontWeight: FontWeight.w400),
+              )),
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Get.width * .05,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        subTitle,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Get.width * .03,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: SvgPicture.asset(
+                        image,
+                      )),
+                ),
+              ),
+            ],
           ),
         ],
       ),
-      color: Color(0xff592F72),
+      color: AppColors.nightBtnBg,
       onPressed: () => Navigator.pushNamed(context, settingsPageRoute),
     );
   }

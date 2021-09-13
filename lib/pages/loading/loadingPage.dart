@@ -6,6 +6,7 @@ import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/pages/loading/evening.dart';
 import 'package:morningmagic/pages/loading/morning.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
+import 'package:morningmagic/pages/nigth/nigth.dart';
 import 'package:morningmagic/pages/settings/settingsPage.dart';
 import 'package:morningmagic/pages/welcome/welcome_page.dart';
 import 'package:morningmagic/routing/app_routing.dart';
@@ -51,6 +52,7 @@ class LoadingPageState extends State<LoadingPage>
     } else if (h >= 18 && h < 21) {
       timeType = TimeType.evening;
     } else if (h < 4 || h >= 21) {
+      menuState = MenuState.NIGT;
       timeType = TimeType.night;
     }
   }
@@ -113,7 +115,7 @@ class LoadingPageState extends State<LoadingPage>
       );
     }
 
-    return MainMenuPage();
+    return menuState == MenuState.NIGT ? MainMenuNightPage() : MainMenuPage();
   }
 
   void calculateOpanApp() {
@@ -127,7 +129,6 @@ class LoadingPageState extends State<LoadingPage>
   }
 
   _redirect() async {
-    await Future.delayed(1.seconds);
     AppRouting.replace(chooseNavigationRoute());
   }
 

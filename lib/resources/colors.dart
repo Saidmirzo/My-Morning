@@ -23,7 +23,8 @@ class AppColors {
   static const inputHintText = Color(0xff592F72);
   static const audiuSelected = Color(0xffFAF1FF);
   static const purchaseDesc = Color(0xffB994DA);
-
+  static const nightModeBG = Color(0xFF040826);
+  static const nightBtnBg = Color(0xFF11123F);
   static const FIX_TOP = Color(0xFFa0b2fa);
   static const FIX_BOTTOM = Color(0xFFf8d9da);
 
@@ -80,8 +81,8 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xff7F88ED),
-      const Color(0xff96B0ED),
+      const Color(0xff040826),
+      const Color(0xff140225),
     ],
   );
 

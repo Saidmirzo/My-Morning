@@ -8,6 +8,7 @@ import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/storage.dart';
 
 import '../../faq/faq_menu.dart';
 
@@ -27,9 +28,11 @@ class BottomMenu extends StatelessWidget {
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(.05),
-                spreadRadius: 3,
-                blurRadius: 5,
+                color: menuState == MenuState.MORNING
+                    ? Colors.black.withOpacity(.05)
+                    : Colors.white.withOpacity(.09),
+                spreadRadius: 5,
+                blurRadius: 10,
               ),
             ],
             borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
@@ -39,12 +42,12 @@ class BottomMenu extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              _menuButton(SvgAssets.microphone,
+              _menuButton(SvgAssets.mountains,
                   onPress: _openMorning,
                   color: this.bgColor == AppColors.WHITE
                       ? AppColors.primary
                       : AppColors.WHITE),
-              _menuButton(SvgAssets.clock,
+              _menuButton(SvgAssets.night,
                   onPress: _openNight,
                   color: this.bgColor == AppColors.WHITE
                       ? AppColors.primary
