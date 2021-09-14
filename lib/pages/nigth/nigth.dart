@@ -87,16 +87,19 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                     ),
                     const SizedBox(height: 30),
                     _buildSettingsButton(
+                        pageNameRouting: musicInstrumentsPageRoute,
                         image: SvgAssets.nightMeditationBtn,
                         title: 'music_menu_meditations'.tr,
                         subTitle: 'meditation_subtitle'.tr),
                     const SizedBox(height: 20),
                     _buildSettingsButton(
+                        pageNameRouting: musicInstrumentsPageRoute,
                         image: SvgAssets.nightBtnBook,
                         title: 'music_for_sleep_title'.tr,
                         subTitle: 'music_for_sleep_subtitle'.tr),
                     const SizedBox(height: 20),
                     _buildSettingsButton(
+                        pageNameRouting: musicInstrumentsPageRoute,
                         image: SvgAssets.nightBtnBook,
                         title: 'reading_at_night_title'.tr,
                         subTitle: 'reading_at_night_subtitle'.tr),
@@ -159,7 +162,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
     );
   }
 
-  Widget _buildSettingsButton({String title, String subTitle, String image}) {
+  Widget _buildSettingsButton(
+      {String title, String subTitle, String image, String pageNameRouting}) {
     return container(
       height: Get.width * .33,
       child: Stack(
@@ -174,6 +178,15 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                   fit: BoxFit.cover,
                 ),
               )),
+          Positioned(
+            right: 0,
+            top: Random().nextInt(80) * 1.0,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  '$imagePath/cloud.png',
+                )),
+          ),
           Row(
             children: [
               Expanded(
@@ -219,7 +232,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
         ],
       ),
       color: AppColors.nightBtnBg,
-      onPressed: () => Navigator.pushNamed(context, settingsPageRoute),
+      onPressed: () => Navigator.pushNamed(context, pageNameRouting),
     );
   }
 

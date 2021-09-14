@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/loading/loadingPage.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
+import 'package:morningmagic/pages/music_instrument/music_instrument_page.dart';
 import 'package:morningmagic/pages/nigth/nigth.dart';
 import 'package:morningmagic/pages/welcome/slides/name_input_slide.dart';
 import 'package:morningmagic/pages/settings/settingsPage.dart';
@@ -32,6 +33,9 @@ class AppRouting {
 
       case mainMenuNigthPage:
         return MaterialPageRoute(builder: (_) => MainMenuNightPage());
+
+      case musicInstrumentsPageRoute:
+        return MaterialPageRoute(builder: (_) => MusicInstrumentPage());
 
       default:
         return MaterialPageRoute(builder: (_) => MainMenuPage());
