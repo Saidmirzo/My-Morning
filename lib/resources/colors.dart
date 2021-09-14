@@ -28,6 +28,17 @@ class AppColors {
   static const FIX_TOP = Color(0xFFa0b2fa);
   static const FIX_BOTTOM = Color(0xFFf8d9da);
 
+  //страница звуков dark mode
+  static const instrumentalBg = Color(0xFF1F1643);
+  static const gradient_instrument_active = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xff592F72),
+      const Color(0xffFFD3DB),
+    ],
+  );
+
   // Gradients
   // страница загрузки
   static const gradient_settings_page = RadialGradient(

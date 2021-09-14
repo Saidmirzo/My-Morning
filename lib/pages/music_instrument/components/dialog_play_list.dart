@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/music_instrument/controllers/music_instrument_controllers.dart';
 import 'package:morningmagic/pages/music_instrument/music_instrument_page.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/resources/svg_assets.dart';
 
 Widget dilaogPlayList() {
   MusicInstrumentControllers _controllers = Get.find();
@@ -26,7 +28,11 @@ Widget dilaogPlayList() {
         SizedBox(height: 15),
         Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           _button(child: _buttonSave(), onPress: () {}),
-          Icon(Icons.star, color: Colors.white)
+          SvgPicture.asset(
+            SvgAssets.books,
+            height: 22,
+            width: 22,
+          ),
         ])
       ],
     ),
@@ -35,10 +41,11 @@ Widget dilaogPlayList() {
 
 Widget _buttonSave() {
   return Container(
-    height: 40,
+    height: 36,
     width: Get.width / 1.5,
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10), color: AppColors.PINK),
+        borderRadius: BorderRadius.circular(10),
+        color: const Color(0xFFB994DA)),
   );
 }
 
@@ -53,13 +60,21 @@ Widget _itemList(Instrument instrument) {
     child: Row(
       children: [
         Container(
-          height: 50,
-          width: 50,
-          color: Colors.white,
+          width: 45,
+          child: SvgPicture.asset(
+            instrument.sound,
+            color: const Color(0xFFD0D2E5),
+            height: 35,
+            width: 35,
+          ),
         ),
         Expanded(child: Slider(value: 0.5, onChanged: (ch) {})),
         _button(
-            child: Icon(Icons.remove_circle, color: Colors.white),
+            child: SvgPicture.asset(
+              SvgAssets.removePlayList,
+              height: 15,
+              width: 15,
+            ),
             onPress: () => _removeItem(instrument))
       ],
     ),

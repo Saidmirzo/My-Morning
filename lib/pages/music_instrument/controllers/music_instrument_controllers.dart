@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:morningmagic/pages/music_instrument/music_instrument_page.dart';
+import 'package:morningmagic/resources/svg_assets.dart';
 
 class MusicInstrumentControllers extends GetxController {
   List<Instrument> instrumentse = [];
@@ -15,28 +16,35 @@ class MusicInstrumentControllers extends GetxController {
   void _initSoundList() {
     instruments.value.value['music_instrument_title'.tr] = [];
     for (var i = 1; i <= 8; i++) {
-      instruments.value.value['music_instrument_title'.tr]
-          .add(Instrument(name: 'instrument_$i'.tr));
+      instruments.value.value['music_instrument_title'.tr].add(Instrument(
+          name: 'instrument_$i'.tr,
+          sound: '${SvgAssets.instrumentalPath}/instrument_$i.svg'));
     }
     instruments.value.value['music_instrument_places'.tr] = [];
     for (var i = 1; i <= 7; i++) {
-      instruments.value.value['music_instrument_places'.tr]
-          .add(Instrument(name: 'place_$i'.tr));
+      instruments.value.value['music_instrument_places'.tr].add(Instrument(
+          name: 'place_$i'.tr,
+          sound: '${SvgAssets.instrumentalPath}/place_$i.svg'));
     }
     instruments.value.value['music_instrument_other'.tr] = [];
     for (var i = 1; i <= 6; i++) {
-      instruments.value.value['music_instrument_other'.tr]
-          .add(Instrument(name: 'other_$i'.tr));
+      instruments.value.value['music_instrument_other'.tr].add(Instrument(
+          name: 'other_$i'.tr,
+          sound: '${SvgAssets.instrumentalPath}/other_$i.svg'));
     }
     instruments.value.value['music_instrument_sound_of_nature'.tr] = [];
     for (var i = 1; i <= 19; i++) {
-      instruments.value.value['music_instrument_sound_of_nature'.tr]
-          .add(Instrument(name: 'nature_$i'.tr));
+      instruments.value.value['music_instrument_sound_of_nature'.tr].add(
+          Instrument(
+              name: 'nature_$i'.tr,
+              sound: '${SvgAssets.instrumentalPath}/nature_$i.svg'));
     }
     instruments.value.value['music_instrument_living_creatures'.tr] = [];
-    for (var i = 1; i <= 13; i++) {
-      instruments.value.value['music_instrument_living_creatures'.tr]
-          .add(Instrument(name: 'creatures_$i'.tr));
+    for (var i = 1; i <= 12; i++) {
+      instruments.value.value['music_instrument_living_creatures'.tr].add(
+          Instrument(
+              name: 'creatures_$i'.tr,
+              sound: '${SvgAssets.instrumentalPath}/creatures_$i.svg'));
     }
   }
 

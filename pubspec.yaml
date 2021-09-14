@@ -102,6 +102,7 @@ flutter:
     - assets/images/visualisation/
     - assets/images/reading/
     - assets/images/diary/
+    - assets/images/instrumental/
     - assets/images/diary/note/
     - assets/images/meditation/
     - assets/images/affirmation/

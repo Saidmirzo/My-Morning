@@ -1,3 +1,5 @@
+import 'package:morningmagic/pages/music_instrument/music_instrument_page.dart';
+
 class SvgAssets {
   static const path = 'assets/images/svg';
   static const home = '$path/home.svg';
@@ -17,4 +19,13 @@ class SvgAssets {
   static const nightBtnBook = 'assets/images/home_menu/night_btn_book.svg';
   static const nightMeditationBtn =
       'assets/images/home_menu/night_mediatation_btn.svg';
+
+  //страница звуков
+  static const instrumentalPath = 'assets/images/instrumental';
+  static const removePlayList = '$instrumentalPath/remove_play_list.svg';
+  static const books = '$instrumentalPath/books.svg';
+  static const time = '$instrumentalPath/time.svg';
+  static const pause = '$instrumentalPath/pause.svg';
+  static const play = '$instrumentalPath/play.svg';
+  static const next = '$instrumentalPath/next.svg';
 }

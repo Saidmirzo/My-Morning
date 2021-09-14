@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/music_instrument/components/dialog_play_list.dart';
 import 'package:morningmagic/pages/music_instrument/controllers/music_instrument_controllers.dart';
 import 'package:morningmagic/pages/music_instrument/property.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/styles.dart';
+import 'package:morningmagic/resources/svg_assets.dart';
 
 class Instrument {
   String name;
@@ -41,7 +43,7 @@ Widget body(BuildContext context) {
   return Container(
     width: Get.width,
     height: Get.height,
-    color: AppColors.primary,
+    color: AppColors.instrumentalBg,
     child: SafeArea(
       child: Stack(
         children: [
@@ -108,12 +110,11 @@ Widget body(BuildContext context) {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _playButton(Icon(Icons.repeat)),
-                  _playButton(Icon(Icons.play_arrow)),
-                  _playButton(Icon(Icons.volume_mute),
+                  _playButton(SvgAssets.time),
+                  _playButton(SvgAssets.play),
+                  _playButton(SvgAssets.next,
                       onPress: () => onShowPlayList(dilaogPlayList())),
-                  Transform.rotate(
-                      angle: 3.14 * 180 / 180, child: Icon(Icons.arrow_back)),
+                  _playButton(SvgAssets.next),
                 ],
               ),
             ),
@@ -159,7 +160,9 @@ List<Widget> _instrumentList() {
                       children: [
                         _titleInstrument(e.name),
                         _instumentContanier(size,
-                            instrument: e, controllers: _controllers),
+                            instrument: e,
+                            controllers: _controllers,
+                            isPlay: _controllers.isPlay(e)),
                         SizedBox(height: 5),
                         if (_controllers.isPlay(e)) _trackBar()
                       ],
@@ -188,15 +191,28 @@ Widget _titleInstrument(String title) {
 }
 
 Widget _instumentContanier(Size size,
-    {Instrument instrument, MusicInstrumentControllers controllers}) {
-  return CupertinoButton(
-    padding: const EdgeInsets.all(0),
-    onPressed: () => onInstrumentClick(instrument, controllers),
+    {Instrument instrument,
+    MusicInstrumentControllers controllers,
+    bool isPlay = false}) {
+  return InkWell(
+    //padding: const EdgeInsets.all(0),
+    onTap: () => onInstrumentClick(instrument, controllers),
     child: Container(
       height: size.width * 1.1,
       width: size.width,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+          color: isPlay == false ? AppColors.primary : null,
+          borderRadius: BorderRadius.circular(10),
+          gradient: isPlay ? AppColors.gradient_instrument_active : null),
+      child: Padding(
+        padding: const EdgeInsets.all(30),
+        child: instrument.sound != null
+            ? SvgPicture.asset(
+                instrument.sound,
+                color: isPlay ? Colors.white : null,
+              )
+            : SizedBox(),
+      ),
     ),
   );
 }
@@ -205,7 +221,13 @@ Widget _trackBar() {
   return Slider(value: 0.5, onChanged: (change) {});
 }
 
-Widget _playButton(Icon icon, {Function() onPress}) {
+Widget _playButton(String icon, {Function() onPress}) {
   return CupertinoButton(
-      padding: const EdgeInsets.all(0), onPressed: onPress, child: icon);
+      padding: const EdgeInsets.all(0),
+      onPressed: onPress,
+      child: SvgPicture.asset(
+        icon,
+        height: 18,
+        width: 18,
+      ));
 }
