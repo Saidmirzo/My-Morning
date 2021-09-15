@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/music_instrument/components/dialog_play_list.dart';
+import 'package:morningmagic/pages/music_instrument/components/slider.dart';
 import 'package:morningmagic/pages/music_instrument/controllers/music_instrument_controllers.dart';
 import 'package:morningmagic/pages/music_instrument/property.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -40,6 +41,7 @@ class _MusicInstrumentPageState extends State<MusicInstrumentPage> {
 }
 
 Widget body(BuildContext context) {
+  MusicInstrumentControllers _controller = Get.find();
   return Container(
     width: Get.width,
     height: Get.height,
@@ -112,8 +114,30 @@ Widget body(BuildContext context) {
                 children: [
                   _playButton(SvgAssets.time),
                   _playButton(SvgAssets.play),
-                  _playButton(SvgAssets.next,
-                      onPress: () => onShowPlayList(dilaogPlayList())),
+                  Stack(
+                    children: [
+                      _playButton(
+                        SvgAssets.playList,
+                        onPress: () => onShowPlayList(
+                          dilaogPlayList(),
+                        ),
+                      ),
+                      Obx(
+                        () => Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 5, 5, 0),
+                              child: Text(
+                                '${_controller.playList.value.value.length == 0 ? '' : _controller.playList.value.value.length}',
+                                style: TextStyle(fontSize: 10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   _playButton(SvgAssets.next),
                 ],
               ),
@@ -218,7 +242,10 @@ Widget _instumentContanier(Size size,
 }
 
 Widget _trackBar() {
-  return Slider(value: 0.5, onChanged: (change) {});
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 5),
+    child: TrackBar(),
+  );
 }
 
 Widget _playButton(String icon, {Function() onPress}) {

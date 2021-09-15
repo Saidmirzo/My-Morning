@@ -28,4 +28,5 @@ class SvgAssets {
   static const pause = '$instrumentalPath/pause.svg';
   static const play = '$instrumentalPath/play.svg';
   static const next = '$instrumentalPath/next.svg';
+  static const playList = '$instrumentalPath/play_list.svg';
 }

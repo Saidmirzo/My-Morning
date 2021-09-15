@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/music_instrument/components/slider.dart';
 import 'package:morningmagic/pages/music_instrument/controllers/music_instrument_controllers.dart';
 import 'package:morningmagic/pages/music_instrument/music_instrument_page.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -46,6 +47,13 @@ Widget _buttonSave() {
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: const Color(0xFFB994DA)),
+    child: Center(
+      child: Text(
+        'save_selected'.tr,
+        style: TextStyle(
+            fontSize: 18, fontStyle: FontStyle.normal, color: AppColors.VIOLET),
+      ),
+    ),
   );
 }
 
@@ -68,7 +76,11 @@ Widget _itemList(Instrument instrument) {
             width: 35,
           ),
         ),
-        Expanded(child: Slider(value: 0.5, onChanged: (ch) {})),
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: TrackBar(),
+        )),
         _button(
             child: SvgPicture.asset(
               SvgAssets.removePlayList,

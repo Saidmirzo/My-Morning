@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:morningmagic/pages/music_instrument/components/snackbar.dart';
 import 'package:morningmagic/pages/music_instrument/music_instrument_page.dart';
+import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 
 class MusicInstrumentControllers extends GetxController {
@@ -10,10 +13,10 @@ class MusicInstrumentControllers extends GetxController {
   var playList = Rx<List<Instrument>>([]).obs;
 
   MusicInstrumentControllers() {
-    _initSoundList();
+    _initInstrumentList();
   }
 
-  void _initSoundList() {
+  void _initInstrumentList() {
     instruments.value.value['music_instrument_title'.tr] = [];
     for (var i = 1; i <= 8; i++) {
       instruments.value.value['music_instrument_title'.tr].add(Instrument(
@@ -50,9 +53,19 @@ class MusicInstrumentControllers extends GetxController {
 
   void addPlay(Instrument instrument) {
     if (!isPlay(instrument)) {
-      playList.value.value.add(instrument);
-      playList.value.refresh();
+      if (playList.value.value.length < 10) {
+        playList.value.value.add(instrument);
+        playList.value.refresh();
+      } else
+        showErrorDialog('10 из 10');
     }
+  }
+
+  void showErrorDialog(String text) {
+    Get.snackbar('', text,
+        backgroundColor: AppColors.VIOLET.withOpacity(0.5),
+        titleText: snackText(''),
+        messageText: snackText(text));
   }
 
   void removePlayList(Instrument instrument) {

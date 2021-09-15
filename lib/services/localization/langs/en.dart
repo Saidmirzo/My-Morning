@@ -567,7 +567,7 @@ Map<String, String> translations_en = {
   "instrument_2": "Glucophone",
   "instrument_3": "Harmonica",
   "instrument_4": "Wooden spoons",
-  "Instrument_5": "Lullaby",
+  "instrument_5": "Lullaby",
   "instrument_6": "Piano",
   "instrument_7": "Violin",
   "instrument_8": "The flute",
@@ -619,4 +619,5 @@ Map<String, String> translations_en = {
   "creatures_10": "Crickets",
   "creatures_11": "Owl",
   "creatures_12": "Seagull",
+  "save_selected": "Save Selected",
 };

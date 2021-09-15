@@ -632,4 +632,5 @@ Map<String, String> translations_ru = {
   "creatures_10": "Сверчки",
   "creatures_11": "Сова",
   "creatures_12": "Чайка",
+  "save_selected": "Сохранить выбранное",
 };
