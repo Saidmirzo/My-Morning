@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
 
 class TrackBar extends StatefulWidget {
   @override
+  final String tag;
+  double volume;
+  final dialogMode;
+
+  TrackBar({@required this.tag, this.volume = 0.5, this.dialogMode = false});
+
   TrackBarState createState() => TrackBarState();
 }
 
 class TrackBarState extends State<TrackBar> {
-  double _value = 0;
-
+  InstrumentAudioController _audioController = Get.find();
   @override
   Widget build(BuildContext context) {
     return SliderTheme(
@@ -21,13 +28,21 @@ class TrackBarState extends State<TrackBar> {
         overlayColor: Colors.red.withAlpha(32),
         overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
       ),
-      child: Slider(
-        value: _value,
-        onChanged: (value) {
-          setState(() {
-            _value = value;
-          });
-        },
+      child: GestureDetector(
+        //  onHorizontalDragEnd: (detail) => _audioController
+        //    .updateVolumeInTotalList(widget.volume, tag: widget.tag),
+        child: Slider(
+          max: 1,
+          min: 0,
+          value: widget.volume,
+          onChanged: (value) {
+            setState(() {
+              widget.volume = value;
+              _audioController.setVolume(value,
+                  tag: widget.tag, inDialog: widget.dialogMode);
+            });
+          },
+        ),
       ),
     );
   }

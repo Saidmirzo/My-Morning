@@ -94,7 +94,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                     const SizedBox(height: 20),
                     _buildSettingsButton(
                         pageNameRouting: musicInstrumentsPageRoute,
-                        image: SvgAssets.nightBtnBook,
+                        image: SvgAssets.pianoBtnBook,
+                        fit: BoxFit.fill,
                         title: 'music_for_sleep_title'.tr,
                         subTitle: 'music_for_sleep_subtitle'.tr),
                     const SizedBox(height: 20),
@@ -163,11 +164,14 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
   }
 
   Widget _buildSettingsButton(
-      {String title, String subTitle, String image, String pageNameRouting}) {
+      {String title,
+      String subTitle,
+      String image,
+      String pageNameRouting,
+      BoxFit fit = BoxFit.none}) {
     return container(
       height: Get.width * .33,
       child: Stack(
-        fit: StackFit.expand,
         children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -218,14 +222,13 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
               ),
               Expanded(
                 flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: SvgPicture.asset(
-                        image,
-                      )),
-                ),
+                child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.only(bottomRight: Radius.circular(12)),
+                    child: SvgPicture.asset(
+                      image,
+                      fit: fit,
+                    )),
               ),
             ],
           ),

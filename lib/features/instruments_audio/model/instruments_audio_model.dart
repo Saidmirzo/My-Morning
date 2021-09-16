@@ -1,7 +1,7 @@
 class InstrumentAudio {
-  final String name;
+  final String tag;
   final String url;
   final String filePath;
 
-  InstrumentAudio({this.name, this.url, this.filePath});
+  InstrumentAudio({this.tag, this.url, this.filePath});
 }

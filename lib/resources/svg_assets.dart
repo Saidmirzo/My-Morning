@@ -17,6 +17,7 @@ class SvgAssets {
   static const nightBtnBg = 'assets/images/home_menu/night_bg_btn.svg';
   static const nightBtnSong = 'assets/images/home_menu/night_btn_song.svg';
   static const nightBtnBook = 'assets/images/home_menu/night_btn_book.svg';
+  static const pianoBtnBook = 'assets/images/home_menu/piano_nigth.svg';
   static const nightMeditationBtn =
       'assets/images/home_menu/night_mediatation_btn.svg';
 

@@ -4,24 +4,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
 import 'package:morningmagic/pages/music_instrument/components/dialog_play_list.dart';
 import 'package:morningmagic/pages/music_instrument/components/slider.dart';
 import 'package:morningmagic/pages/music_instrument/controllers/music_instrument_controllers.dart';
+import 'package:morningmagic/pages/music_instrument/model/instrument_model.dart';
 import 'package:morningmagic/pages/music_instrument/property.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 
-class Instrument {
-  String name;
-  String sound;
-
-  Instrument({this.name, this.sound});
-}
-
 class MusicInstrumentPage extends StatefulWidget {
   MusicInstrumentPage() {
     Get.put(MusicInstrumentControllers());
+    Get.put(InstrumentAudioController());
   }
 
   @override
@@ -41,7 +37,7 @@ class _MusicInstrumentPageState extends State<MusicInstrumentPage> {
 }
 
 Widget body(BuildContext context) {
-  MusicInstrumentControllers _controller = Get.find();
+  InstrumentAudioController _audioController = Get.find();
   return Container(
     width: Get.width,
     height: Get.height,
@@ -113,7 +109,11 @@ Widget body(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _playButton(SvgAssets.time),
-                  _playButton(SvgAssets.play),
+                  Obx(() => _playButton(
+                      _audioController.isPause == false
+                          ? SvgAssets.pause
+                          : SvgAssets.play,
+                      onPress: () => playPause())),
                   Stack(
                     children: [
                       _playButton(
@@ -129,7 +129,7 @@ Widget body(BuildContext context) {
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(0, 5, 5, 0),
                               child: Text(
-                                '${_controller.playList.value.value.length == 0 ? '' : _controller.playList.value.value.length}',
+                                '${_audioController.audioSourse.length == 0 ? '' : _audioController.audioSourse.length}',
                                 style: TextStyle(fontSize: 10),
                               ),
                             ),
@@ -164,6 +164,7 @@ Widget _title(String title) => Padding(
 
 List<Widget> _instrumentList() {
   MusicInstrumentControllers _controllers = Get.find();
+  InstrumentAudioController _audioControlelr = Get.find();
   Size size = Size(Get.width / 3.5, Get.width / 3.5);
 
   List<Widget> toList() {
@@ -186,9 +187,11 @@ List<Widget> _instrumentList() {
                         _instumentContanier(size,
                             instrument: e,
                             controllers: _controllers,
-                            isPlay: _controllers.isPlay(e)),
+                            isPlay:
+                                _audioControlelr.isPlay(tag: e.instrument.tag)),
                         SizedBox(height: 5),
-                        if (_controllers.isPlay(e)) _trackBar()
+                        if (_audioControlelr.isPlay(tag: e.instrument.tag))
+                          _trackBar(instrument: e)
                       ],
                     ),
                   ))
@@ -230,9 +233,9 @@ Widget _instumentContanier(Size size,
           gradient: isPlay ? AppColors.gradient_instrument_active : null),
       child: Padding(
         padding: const EdgeInsets.all(30),
-        child: instrument.sound != null
+        child: instrument.instrumentImage != null
             ? SvgPicture.asset(
-                instrument.sound,
+                instrument.instrumentImage,
                 color: isPlay ? Colors.white : null,
               )
             : SizedBox(),
@@ -241,10 +244,13 @@ Widget _instumentContanier(Size size,
   );
 }
 
-Widget _trackBar() {
+Widget _trackBar({@required Instrument instrument}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 5),
-    child: TrackBar(),
+    child: TrackBar(
+      tag: instrument.instrument.tag,
+      volume: instrument.instrumentVolume,
+    ),
   );
 }
 
