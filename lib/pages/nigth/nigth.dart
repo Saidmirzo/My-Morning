@@ -120,6 +120,22 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
     );
   }
 
+  Widget textTitleButton(String text) {
+    return Text(text,
+        style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 18,
+            fontWeight: FontWeight.w600));
+  }
+
+  Widget textSubTitleButton(String text) {
+    return Text(text,
+        style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 13,
+            fontWeight: FontWeight.w400));
+  }
+
   Widget buildHeader() {
     return Container(
       decoration: BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
@@ -205,7 +221,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                         title,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: Get.width * .05,
+                            fontSize: 18,
+                            fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(height: 6),
@@ -213,7 +230,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                         subTitle,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: Get.width * .03,
+                            fontSize: 13,
+                            fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w400),
                       ),
                     ],

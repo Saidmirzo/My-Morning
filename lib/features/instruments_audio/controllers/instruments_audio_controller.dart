@@ -1,12 +1,14 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:morningmagic/features/instruments_audio/data/instrument_audio_impl.dart';
 import 'package:morningmagic/pages/music_instrument/controllers/music_instrument_controllers.dart';
 
 import 'package:morningmagic/pages/music_instrument/model/instrument_model.dart';
 
 class InstrumentAudioController extends GetxController {
-  // Плеер для выбора трека, чтобы не затирать основной
+  InstrumentAudioRepositoryImpl repo = InstrumentAudioRepositoryImpl();
+
   Map<String, AudioPlayer> audioPlayers = {};
   var audioSourceList = Rx<Map<String, Instrument>>({}).obs;
 
@@ -18,16 +20,22 @@ class InstrumentAudioController extends GetxController {
 
   void audioSourceUpdate() => audioSourceList.value.refresh();
 
-  void playAudio(Instrument instrument) {
-    if (audioSourse[instrument.instrument.tag] == null) {
-      print('add new instrument tag = ${instrument.instrument.tag}');
-      audioSourse[instrument.instrument.tag] = instrument;
+  void playAudio(Instrument instrument) async {
+    try {
+      if (audioSourse[instrument.instrument.tag] == null) {
+        print('add new instrument tag = ${instrument.instrument.tag}');
+        audioSourse[instrument.instrument.tag] = instrument;
+        Instrument cachInstrument = await cacheAudioFile(instrument);
+        audioPlayers[instrument.instrument.tag] = new AudioPlayer()
+          ..setFilePath(cachInstrument.instrument.filePath)
+          ..setVolume(0.5)
+          ..setLoopMode(LoopMode.one)
+          ..play();
 
-      audioPlayers[instrument.instrument.tag] = new AudioPlayer()
-        ..play(instrument.instrument.url)
-        ..setVolume(0.5);
-
-      audioSourceUpdate();
+        audioSourceUpdate();
+      }
+    } catch (e) {
+      print('failed to load the reproduction tool: $e');
     }
   }
 
@@ -59,7 +67,7 @@ class InstrumentAudioController extends GetxController {
       setPause(true);
     } else {
       for (var i = 0; i < audioPlayers.length; i++)
-        audioPlayers.values.elementAt(i).resume();
+        audioPlayers.values.elementAt(i).play();
 
       setPause(false);
     }
@@ -84,5 +92,16 @@ class InstrumentAudioController extends GetxController {
 
   bool isPlay({@required String tag}) {
     return audioSourse[tag] != null ? true : false;
+  }
+
+  Future<Instrument> cacheAudioFile(Instrument instrument) async {
+    try {
+      Instrument audioFile = await repo.getAudioFile(instrument);
+      audioSourse[instrument.instrument.tag] = audioFile;
+      return audioFile;
+    } catch (e) {
+      print('cacheAudioFile: $e');
+    }
+    return null;
   }
 }

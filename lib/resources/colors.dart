@@ -27,7 +27,9 @@ class AppColors {
   static const nightBtnBg = Color(0xFF11123F);
   static const FIX_TOP = Color(0xFFa0b2fa);
   static const FIX_BOTTOM = Color(0xFFf8d9da);
-
+  static const THUMB = Color(0xFF673A7A);
+  static const TRACKBAR_ACTIVE = Color(0xFF673A7A);
+  static const TRACKBAR_UNACTIVE = Color(0xFFB994DA);
   //страница звуков dark mode
   static const instrumentalBg = Color(0xFF1F1643);
   static const gradient_instrument_active = LinearGradient(

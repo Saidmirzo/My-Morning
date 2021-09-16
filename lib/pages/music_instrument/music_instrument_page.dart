@@ -98,21 +98,23 @@ Widget body(BuildContext context) {
           ),
           Positioned(
             bottom: 40,
-            right: Get.width / 4.5,
-            left: Get.width / 4.5,
+            right: 52,
+            left: 52,
             child: Container(
-              height: 45,
+              height: 39,
               decoration: BoxDecoration(
-                  color: AppColors.CREAM,
+                  color: AppColors.TRACKBAR_UNACTIVE,
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _playButton(SvgAssets.time),
                   Obx(() => _playButton(
-                      _audioController.isPause == false
-                          ? SvgAssets.pause
-                          : SvgAssets.play,
+                      _audioController.audioSourse.length == 0
+                          ? SvgAssets.play
+                          : _audioController.isPause == false
+                              ? SvgAssets.pause
+                              : SvgAssets.play,
                       onPress: () => playPause())),
                   Stack(
                     children: [
@@ -211,7 +213,7 @@ Widget _titleInstrument(String title) {
     height: 40,
     child: Text(
       title,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.white, fontSize: 14),
       textAlign: TextAlign.center,
     ),
   );

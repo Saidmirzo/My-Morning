@@ -57,7 +57,11 @@ Widget _buttonSave() {
       child: Text(
         'save_selected'.tr,
         style: TextStyle(
-            fontSize: 18, fontStyle: FontStyle.normal, color: AppColors.VIOLET),
+            fontSize: 18,
+            fontStyle: FontStyle.normal,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w600,
+            color: AppColors.VIOLET),
       ),
     ),
   );

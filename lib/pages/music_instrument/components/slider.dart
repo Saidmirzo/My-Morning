@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
+import 'package:morningmagic/resources/colors.dart';
 
 class TrackBar extends StatefulWidget {
   @override
@@ -20,12 +21,12 @@ class TrackBarState extends State<TrackBar> {
     return SliderTheme(
       data: SliderThemeData(
         trackShape: CustomTrackShape(),
-        activeTrackColor: Colors.red[700],
-        inactiveTrackColor: Colors.red[100],
+        activeTrackColor: AppColors.TRACKBAR_ACTIVE,
+        inactiveTrackColor: AppColors.TRACKBAR_UNACTIVE,
         trackHeight: 2.0,
-        thumbColor: Colors.redAccent,
+        thumbColor: AppColors.THUMB,
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5.0),
-        overlayColor: Colors.red.withAlpha(32),
+        overlayColor: AppColors.THUMB.withAlpha(32),
         overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
       ),
       child: GestureDetector(
