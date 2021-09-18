@@ -28,6 +28,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
     with WidgetsBindingObserver {
   TimerService timerService = TimerService();
   TimerLeftController cTimerLeft;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {

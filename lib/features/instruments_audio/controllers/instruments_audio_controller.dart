@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/instruments_audio/data/instrument_audio_impl.dart';
+import 'package:morningmagic/pages/music_instrument/components/snackbar.dart';
 import 'package:morningmagic/pages/music_instrument/controllers/music_instrument_controllers.dart';
 
 import 'package:morningmagic/pages/music_instrument/model/instrument_model.dart';
+import 'package:morningmagic/resources/colors.dart';
 
 class InstrumentAudioController extends GetxController {
   InstrumentAudioRepositoryImpl repo = InstrumentAudioRepositoryImpl();
@@ -22,6 +24,11 @@ class InstrumentAudioController extends GetxController {
 
   void playAudio(Instrument instrument) async {
     try {
+      if (audioSourse.length == 10) {
+        showErrorDialog('10 из 10');
+        return;
+      }
+
       if (audioSourse[instrument.instrument.tag] == null) {
         print('add new instrument tag = ${instrument.instrument.tag}');
         audioSourse[instrument.instrument.tag] = instrument;
@@ -33,7 +40,10 @@ class InstrumentAudioController extends GetxController {
           ..play();
 
         audioSourceUpdate();
-      }
+        //update state pause btn
+        pause.refresh();
+      } else
+        stop(instrument);
     } catch (e) {
       print('failed to load the reproduction tool: $e');
     }
@@ -103,5 +113,12 @@ class InstrumentAudioController extends GetxController {
       print('cacheAudioFile: $e');
     }
     return null;
+  }
+
+  void showErrorDialog(String text) {
+    Get.snackbar('', text,
+        backgroundColor: AppColors.VIOLET.withOpacity(0.5),
+        titleText: snackText(''),
+        messageText: snackText(text));
   }
 }

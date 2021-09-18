@@ -2,14 +2,17 @@ import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/reading/timer/timer_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/timer_service.dart';
 
 class AddTimePeriod extends StatelessWidget {
   final TimerService timerService;
+  final bool nightMode;
   GlobalKey _scaffoldKey = GlobalKey();
 
-  AddTimePeriod({Key key, @required this.timerService}) : super(key: key);
+  AddTimePeriod({Key key, @required this.timerService, this.nightMode = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +30,14 @@ class AddTimePeriod extends StatelessWidget {
             Positioned(
               bottom: 0,
               child: Container(
+                color: AppColors.VIOLET,
                 width: Get.width,
-                child: Image.asset(
-                  'assets/images/timer/clouds_timer.png',
-                  fit: BoxFit.cover,
-                ),
+                child: nightMode == false
+                    ? Image.asset(
+                        'assets/images/timer/clouds_timer.png',
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
             ),
             SafeArea(

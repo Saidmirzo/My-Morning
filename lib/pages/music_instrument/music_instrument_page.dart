@@ -13,6 +13,7 @@ import 'package:morningmagic/pages/music_instrument/property.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
+import 'package:morningmagic/services/timer_service.dart';
 
 class MusicInstrumentPage extends StatefulWidget {
   MusicInstrumentPage() {
@@ -38,6 +39,8 @@ class _MusicInstrumentPageState extends State<MusicInstrumentPage> {
 
 Widget body(BuildContext context) {
   InstrumentAudioController _audioController = Get.find();
+  final TimerService timerService = TimerService();
+
   return Container(
     width: Get.width,
     height: Get.height,
@@ -108,7 +111,8 @@ Widget body(BuildContext context) {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _playButton(SvgAssets.time),
+                  _playButton(SvgAssets.time,
+                      onPress: () => setTimePeriod(timerService)),
                   Obx(() => _playButton(
                       _audioController.audioSourse.length == 0
                           ? SvgAssets.play
@@ -140,7 +144,8 @@ Widget body(BuildContext context) {
                       ),
                     ],
                   ),
-                  _playButton(SvgAssets.next),
+                  _playButton(SvgAssets.next,
+                      onPress: () => gotToTimerPage(timerService)),
                 ],
               ),
             ),

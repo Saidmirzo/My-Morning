@@ -8,7 +8,9 @@ void showLangDialog(BuildContext context) {
       context: context,
       builder: (context) {
         return _landDialog();
-      }).then((value) => LocalizationService.switchLocale(value));
+      }).then((value) {
+    if (value != null) LocalizationService.switchLocale(value);
+  });
 }
 
 AlertDialog _landDialog() {

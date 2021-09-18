@@ -72,13 +72,6 @@ class MusicInstrumentControllers extends GetxController {
     }
   } */
 
-  void showErrorDialog(String text) {
-    Get.snackbar('', text,
-        backgroundColor: AppColors.VIOLET.withOpacity(0.5),
-        titleText: snackText(''),
-        messageText: snackText(text));
-  }
-
   /*void removePlayList(Instrument instrument) {
     playList.value.value.remove(instrument);
     playList.value.refresh();

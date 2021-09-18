@@ -219,7 +219,7 @@ class MainMenuPageState extends State<MainMenuPage> {
   Widget buildExercises() {
     return Column(
       children: [
-        if (billingService.isPro())
+        if (!billingService.isPro())
           Row(
             children: [
               const SizedBox(width: 5),
