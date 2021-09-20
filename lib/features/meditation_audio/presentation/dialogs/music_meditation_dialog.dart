@@ -41,6 +41,7 @@ class _MusicMeditationContainerState extends State<MusicMeditationContainer>
         return AudioMeditationDialogItem(
           id: index,
           audio: _source[index],
+          lock: index > 0 ? true : false,
         );
       },
     );

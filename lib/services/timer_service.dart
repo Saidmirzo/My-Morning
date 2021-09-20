@@ -11,6 +11,7 @@ import 'package:morningmagic/db/model/progress/affirmation_progress/affirmation_
 import 'package:morningmagic/db/model/progress/meditation_progress/meditation_progress.dart';
 import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
@@ -45,13 +46,19 @@ class TimerService {
     print('timerService: init');
     this.pageId = _pageId;
     this.onDone = onDone;
+    if (startTime == null || startTime == 0) {
+      getTimeAndText().then((int value) {
+        time.value = value * 60;
+        startValue = value * 60;
+        startTime = value;
+        startTimer();
+      });
+    } else {
+      time.value = startTime * 60;
+      startValue = startTime * 60;
 
-    getTimeAndText().then((int value) {
-      time.value = value * 60;
-      startValue = value * 60;
-      startTime = value;
       startTimer();
-    });
+    }
   }
 
   dispose() {
@@ -72,6 +79,18 @@ class TimerService {
     if (timer != null && timer.isActive) {
       timer.cancel();
     }
+    if (pageId == TimerPageId.MusicNight) {
+      deleteInstrumentAudioController();
+      saveProgress(true);
+      Get.off(
+        TimerSuccessScreen(
+            () => Get.offAll(
+                billingService.isVip.value ? ProgressPage() : PaywallPage()),
+            (passedSec.value / 60).round(),
+            true),
+      );
+      return;
+    }
     if (pageId != TimerPageId.Reading) saveProgress(true);
     await OrderUtil().getRouteById(pageId).then((value) {
       print('skipTask pageId: $pageId');
@@ -91,11 +110,20 @@ class TimerService {
     }
   }
 
+  void deleteInstrumentAudioController() {
+    InstrumentAudioController _controller = Get.find();
+    _controller.dispose();
+    Get.delete<InstrumentAudioController>();
+  }
+
   Function goToHome() {
     timer?.cancel();
     AppRouting?.navigateToHomeWithClearHistory();
     // При выходе в меню чтение не сохраняем
     if (pageId != TimerPageId.Reading) saveProgress(true);
+    if (pageId == TimerPageId.MusicNight) {
+      deleteInstrumentAudioController();
+    }
   }
 
   Future<int> getTimeAndText() async {

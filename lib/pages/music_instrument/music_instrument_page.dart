@@ -165,7 +165,7 @@ Widget _title(String title) => Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 10, 15),
       child: Text(
         title,
-        style: AppStyles.treaningSubtitle,
+        style: AppStyles.instrumentCategotyText,
       ),
     );
 
@@ -218,7 +218,7 @@ Widget _titleInstrument(String title) {
     height: 40,
     child: Text(
       title,
-      style: TextStyle(color: Colors.white, fontSize: 14),
+      style: TextStyle(color: AppColors.instrument_text_color, fontSize: 14),
       textAlign: TextAlign.center,
     ),
   );

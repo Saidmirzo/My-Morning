@@ -11,6 +11,7 @@ import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/domain/repositories/audio_repository.dart';
+import 'package:morningmagic/storage.dart';
 
 import '../../domain/entities/meditation_audio.dart';
 
@@ -19,6 +20,7 @@ class MenuItems {
   static const int sounds = 2;
   static const int yoga = 3;
   static const int favorite = 4;
+  static const int meditationNight = 5;
 }
 
 class MediationAudioController extends GetxController {
@@ -67,7 +69,9 @@ class MediationAudioController extends GetxController {
       audioSource[player.currentIndex].filePath != null;
 
   // Страница с которой выбрали музыку
-  RxInt currentPage = MenuItems.music.obs;
+  RxInt currentPage = menuState == MenuState.MORNING
+      ? MenuItems.music.obs
+      : MenuItems.meditationNight.obs;
 
   RxString currAudioName = ''.obs;
 

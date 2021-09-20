@@ -16,4 +16,10 @@ class AppStyles {
     color: AppColors.WHITE,
     fontWeight: FontWeight.w500,
   );
+
+  static final TextStyle instrumentCategotyText = TextStyle(
+    fontSize: Get.height * 0.020,
+    color: AppColors.instrument_text_color,
+    fontWeight: FontWeight.w500,
+  );
 }

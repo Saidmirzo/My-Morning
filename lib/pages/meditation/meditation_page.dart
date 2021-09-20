@@ -1,10 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/add_time_page/add_time_period.dart';
+import 'package:morningmagic/pages/meditation/meditation_audio_page_night.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/services/timer_service.dart';
+import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
@@ -34,13 +39,16 @@ class _MeditationPageState extends State<MeditationPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_1),
+        decoration: BoxDecoration(
+            gradient: menuState == MenuState.MORNING
+                ? AppColors.Bg_Gradient_1
+                : AppColors.gradient_loading_night_bg),
         width: Get.width,
         height: Get.height,
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            bg(),
+            menuState == MenuState.MORNING ? bg() : bgNightMeditation(),
             SafeArea(
               bottom: false,
               child: Column(
@@ -66,24 +74,43 @@ class _MeditationPageState extends State<MeditationPage> {
                   Text('meditation_title'.tr,
                       style: AppStyles.treaningSubtitle,
                       textAlign: TextAlign.center),
-                  SizedBox(height: Get.height * 0.06),
-                  PrimaryCircleButton(
-                      size: 54,
-                      icon: SvgPicture.asset('assets/images/svg/add_music.svg'),
-                      onPressed: () {
-                        Get.to(MeditationAudioPage(
-                            fromHomeMenu: widget.fromHomeMenu));
-                        appAnalitics.logEvent('first_music');
-                      }),
+                  SizedBox(height: Get.height * 0.02),
+                  if (menuState == MenuState.MORNING)
+                    PrimaryCircleButton(
+                        size: 38,
+                        icon:
+                            SvgPicture.asset('assets/images/svg/add_music.svg'),
+                        onPressed: () {
+                          Get.to(MeditationAudioPage(
+                              fromHomeMenu: widget.fromHomeMenu));
+                          appAnalitics.logEvent('first_music');
+                        }),
                   SizedBox(height: Get.height * 0.04),
                   PrimaryCircleButton(
-                      size: 54,
+                      size: 38,
                       icon: Icon(Icons.arrow_forward, color: AppColors.primary),
                       onPressed: () {
                         Get.to(MeditationTimerPage(
                             fromHomeMenu: widget.fromHomeMenu));
                         appAnalitics.logEvent('first_meditation_start');
                       }),
+                  SizedBox(height: Get.height * 0.04),
+                  if (menuState == MenuState.NIGT)
+                    CupertinoButton(
+                      padding: const EdgeInsets.all(0),
+                      onPressed: () async {
+                        TimerService timerSevice = TimerService();
+                        await Get.to(AddTimePeriod(
+                          timerService: timerSevice,
+                        ));
+                        Get.to(MeditationTimerPage(
+                          fromHomeMenu: widget.fromHomeMenu,
+                          timerService: timerSevice,
+                        ));
+                      },
+                      child: SvgPicture.asset(
+                          'assets/images/reading_night/timer_button.svg'),
+                    ),
                 ],
               ),
             ),

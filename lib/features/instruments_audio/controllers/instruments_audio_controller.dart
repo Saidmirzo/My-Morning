@@ -22,6 +22,12 @@ class InstrumentAudioController extends GetxController {
 
   void audioSourceUpdate() => audioSourceList.value.refresh();
 
+  @override
+  void dispose() {
+    stopAll();
+    super.dispose();
+  }
+
   void playAudio(Instrument instrument) async {
     try {
       if (audioSourse.length == 10) {

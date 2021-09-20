@@ -30,7 +30,12 @@ class AppColors {
   static const THUMB = Color(0xFF673A7A);
   static const TRACKBAR_ACTIVE = Color(0xFF673A7A);
   static const TRACKBAR_UNACTIVE = Color(0xFFB994DA);
+  static const timerNightBgButton = Color(0xFFC50B2);
+  static const nightButtonMenuIocons = Color(0xFFE4CDF8);
+  static const timerNightMenuIcon = Color(0xFFB994DA);
+
   //страница звуков dark mode
+  static const instrument_text_color = Color(0xFFCAB0DC);
   static const instrumentalBg = Color(0xFF1F1643);
   static const gradient_instrument_active = LinearGradient(
     begin: Alignment.topCenter,
@@ -42,6 +47,15 @@ class AppColors {
   );
 
   // Gradients
+  //Настройки времени ночной фон
+  static const timerBgNigt = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xff040826),
+      const Color(0xff462663),
+    ],
+  );
   // страница загрузки
   static const gradient_settings_page = RadialGradient(
     colors: [AppColors.LIGHT_CREAM, AppColors.CREAM],
@@ -142,6 +156,15 @@ class AppColors {
       const Color(0xffFFF9EF),
     ],
   );
+  //ночное чтение
+  static const reading_night_mode = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xff53336C),
+      const Color(0xff2A1B4C),
+    ],
+  );
   // главное меню
   static const Bg_Gradient_Menu = LinearGradient(
     begin: Alignment.topCenter,
@@ -172,6 +195,15 @@ class AppColors {
     colors: [
       const Color(0xffFFE6C1),
       const Color(0xffFFD3DB),
+    ],
+  );
+
+  static const Progress_Gradient_Timer_Meditation_Night = LinearGradient(
+    begin: Alignment.bottomCenter,
+    end: Alignment.topCenter,
+    colors: [
+      const Color(0xff592F72),
+      const Color(0xff040826),
     ],
   );
 

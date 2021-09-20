@@ -87,21 +87,25 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                     ),
                     const SizedBox(height: 30),
                     _buildSettingsButton(
-                        pageNameRouting: musicInstrumentsPageRoute,
-                        image: SvgAssets.nightMeditationBtn,
+                        onPressed: () => Get.off(
+                            MeditationPage(fromHomeMenu: true),
+                            opaque: true),
+                        image: 'assets/images/home_menu/night_meditation.png',
                         title: 'music_menu_meditations'.tr,
                         subTitle: 'meditation_subtitle'.tr),
                     const SizedBox(height: 20),
                     _buildSettingsButton(
-                        pageNameRouting: musicInstrumentsPageRoute,
-                        image: SvgAssets.pianoBtnBook,
-                        fit: BoxFit.fill,
+                        onPressed: () => Navigator.pushNamed(
+                            context, musicInstrumentsPageRoute),
+                        forSleep: true,
                         title: 'music_for_sleep_title'.tr,
                         subTitle: 'music_for_sleep_subtitle'.tr),
                     const SizedBox(height: 20),
                     _buildSettingsButton(
-                        pageNameRouting: musicInstrumentsPageRoute,
-                        image: SvgAssets.nightBtnBook,
+                        onPressed: () => Get.to(ReadingPage(
+                              fromHomeMenu: true,
+                            )),
+                        image: 'assets/images/home_menu/book.png',
                         title: 'reading_at_night_title'.tr,
                         subTitle: 'reading_at_night_subtitle'.tr),
                     const SizedBox(height: 20),
@@ -183,8 +187,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
       {String title,
       String subTitle,
       String image,
-      String pageNameRouting,
-      BoxFit fit = BoxFit.none}) {
+      bool forSleep = false,
+      Function() onPressed}) {
     return container(
       height: Get.width * .33,
       child: Stack(
@@ -220,7 +224,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                       Text(
                         title,
                         style: TextStyle(
-                            color: Colors.white,
+                            color: const Color(0xFFBEBFE7),
                             fontSize: 18,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w600),
@@ -229,7 +233,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                       Text(
                         subTitle,
                         style: TextStyle(
-                            color: Colors.white,
+                            color: const Color(0xFFBEBFE7),
                             fontSize: 13,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w400),
@@ -243,17 +247,28 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                 child: ClipRRect(
                     borderRadius:
                         BorderRadius.only(bottomRight: Radius.circular(12)),
-                    child: SvgPicture.asset(
+                    child: forSleep == false
+                        ? Image.asset(image,
+                            width: Get.width, fit: BoxFit.contain)
+                        : Stack(
+                            children: [
+                              Image.asset('assets/images/home_menu/notes.png',
+                                  width: Get.width, fit: BoxFit.fitHeight),
+                              Image.asset('assets/images/home_menu/piano.png',
+                                  width: Get.width, fit: BoxFit.fitHeight)
+                            ],
+                          ) /* SvgPicture.asset(
                       image,
                       fit: fit,
-                    )),
+                    ) */
+                    ),
               ),
             ],
           ),
         ],
       ),
       color: AppColors.nightBtnBg,
-      onPressed: () => Navigator.pushNamed(context, pageNameRouting),
+      onPressed: onPressed,
     );
   }
 

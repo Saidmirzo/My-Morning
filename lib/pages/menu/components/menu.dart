@@ -46,22 +46,22 @@ class BottomMenu extends StatelessWidget {
                   onPress: _openMorning,
                   color: this.bgColor == AppColors.WHITE
                       ? AppColors.primary
-                      : AppColors.WHITE),
+                      : AppColors.nightButtonMenuIocons),
               _menuButton(SvgAssets.night,
                   onPress: _openNight,
                   color: this.bgColor == AppColors.WHITE
                       ? AppColors.primary
-                      : AppColors.WHITE),
+                      : AppColors.nightButtonMenuIocons),
               _menuButton(SvgAssets.progress,
                   onPress: _openProgress,
                   color: this.bgColor == AppColors.WHITE
                       ? AppColors.primary
-                      : AppColors.WHITE),
+                      : AppColors.nightButtonMenuIocons),
               _menuButton(SvgAssets.question,
                   onPress: _openFaq,
                   color: this.bgColor == AppColors.WHITE
                       ? AppColors.primary
-                      : AppColors.WHITE),
+                      : AppColors.nightButtonMenuIocons),
             ],
           ),
         ),

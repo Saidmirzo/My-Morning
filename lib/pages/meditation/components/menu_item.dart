@@ -21,8 +21,8 @@ class MenuItem extends StatelessWidget {
     MediationAudioController cAudio = Get.find();
     return Obx(() {
       Color _color = itemIndex == cAudio.currentPage.value
-          ? AppColors.primary
-          : AppColors.primary.withOpacity(0.4);
+          ? Color(0xFFB994DA)
+          : Color(0xFF495087);
       return CupertinoButton(
           padding: const EdgeInsets.all(5),
           child: Column(

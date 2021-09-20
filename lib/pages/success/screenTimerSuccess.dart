@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/storage.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
 
@@ -57,27 +58,36 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-          width: Get.width,
-          height: Get.height,
-          decoration:
-              BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              bg(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildProgress(),
-                  SizedBox(height: 20),
-                  const SizedBox(height: 50),
-                  buildButton(),
-                ],
-              )
-            ],
+    return WillPopScope(
+      onWillPop: () {
+        widget.onPressed();
+      },
+      child: Scaffold(
+        body: Center(
+          child: Container(
+            width: Get.width,
+            height: Get.height,
+            decoration: BoxDecoration(
+                gradient: menuState == MenuState.MORNING
+                    ? AppColors.Bg_Gradient_Timer_Reading
+                    : AppColors.gradient_loading_night_bg),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                bg(),
+                if (menuState == MenuState.NIGT) mn1(),
+                if (menuState == MenuState.NIGT) mn2(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    buildProgress(),
+                    SizedBox(height: 20),
+                    const SizedBox(height: 50),
+                    buildButton(),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -108,6 +118,22 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
           fit: BoxFit.cover,
         ),
       ),
+    );
+  }
+
+  Positioned mn1() {
+    return Positioned(
+      bottom: 0,
+      child: Image.asset('assets/images/meditation/mountain1_night.png',
+          width: Get.width, fit: BoxFit.cover),
+    );
+  }
+
+  Positioned mn2() {
+    return Positioned(
+      bottom: 0,
+      child: Image.asset('assets/images/meditation/mountain2_night.png',
+          width: Get.width, fit: BoxFit.cover),
     );
   }
 

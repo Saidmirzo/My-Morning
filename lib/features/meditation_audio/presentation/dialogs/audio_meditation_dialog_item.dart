@@ -8,6 +8,7 @@ import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.d
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/other.dart';
 
 import '../../../../resources/colors.dart';
@@ -17,12 +18,14 @@ class AudioMeditationDialogItem extends StatefulWidget {
   final int id;
   final MeditationAudio audio;
   final bool isYoga;
+  final bool lock;
 
   const AudioMeditationDialogItem({
     Key key,
     @required this.id,
     @required this.audio,
     this.isYoga = false,
+    this.lock = false,
   });
 
   @override
@@ -53,7 +56,9 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
               margin: EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(
                   color: _audioController.bufIdSelected.value == widget.id
-                      ? AppColors.audiuSelected
+                      ? menuState == MenuState.MORNING
+                          ? AppColors.audiuSelected
+                          : Color(0xFF11123F)
                       : Colors.transparent,
                   borderRadius: BorderRadius.all(Radius.circular(17))),
               child: Container(
@@ -69,7 +74,9 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                         child: StyledText(
                           widget.audio.name ?? '',
                           fontSize: 17,
-                          color: AppColors.primary,
+                          color: menuState == MenuState.MORNING
+                              ? AppColors.primary
+                              : Color(0xFFBEBFE7),
                         ),
                       ),
                     ),
@@ -80,7 +87,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                     if (_audioController.playingIndex.value == widget.id &&
                         _audioController.isAudioLoading.value)
                       _buildLoadingAudioIndicator(),
-                    buildFavoriteButton()
+                    buildFavoriteButton(lock: widget.lock)
                   ],
                 ),
               ),
@@ -91,28 +98,40 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     );
   }
 
-  Widget buildFavoriteButton() {
+  Widget buildFavoriteButton({bool lock}) {
     return CupertinoButton(
         child: Obx(() => Icon(
               _audioController.favoriteAudios.value.contains(widget.audio)
-                  ? Icons.star_outlined
-                  : Icons.star_border,
-              color: AppColors.primary,
+                  ? lock
+                      ? Icons.lock
+                      : Icons.star_outlined
+                  : lock
+                      ? Icons.lock
+                      : Icons.star_border,
+              color: menuState == MenuState.MORNING
+                  ? AppColors.primary
+                  : Color(0xFFB994DA),
             )),
-        onPressed: () {
-          _audioController.setAudioFavorite(widget.audio);
-        });
+        onPressed: lock == false
+            ? () {
+                _audioController.setAudioFavorite(widget.audio);
+              }
+            : null);
   }
 
   Widget _buildAudioControlButton() {
     return PrimaryCircleButton(
       onPressed: () => _handlePlayPauseButton(),
-      bgColor: AppColors.primary,
+      bgColor: menuState == MenuState.MORNING
+          ? AppColors.primary
+          : Color(0xFFB994DA),
       icon: Icon(
         _audioController.playingIndex.value == widget.id
             ? Icons.pause
             : Icons.play_arrow,
-        color: AppColors.WHITE,
+        color: menuState == MenuState.MORNING
+            ? AppColors.WHITE
+            : Color(0xFF040826),
         size: 30,
       ),
     );

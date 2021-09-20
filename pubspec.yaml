@@ -110,6 +110,7 @@ flutter:
     - assets/images/purchase/
     - assets/images/svg/
     - assets/images/timer/
+    - assets/images/reading_night/
     - assets/audios/
 
   fonts:

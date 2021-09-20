@@ -10,6 +10,7 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/services/timer_service.dart';
+import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/other.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:screen/screen.dart';
@@ -20,9 +21,12 @@ import 'components/components.dart';
 class MeditationTimerPage extends StatefulWidget {
   final bool fromAudio;
   final bool fromHomeMenu;
-
+  final TimerService timerService;
   const MeditationTimerPage(
-      {Key key, this.fromAudio = false, this.fromHomeMenu = false})
+      {Key key,
+      this.fromAudio = false,
+      this.fromHomeMenu = false,
+      this.timerService})
       : super(key: key);
   @override
   State createState() => MeditationTimerPageState();
@@ -31,7 +35,7 @@ class MeditationTimerPage extends StatefulWidget {
 class MeditationTimerPageState extends State<MeditationTimerPage>
     with WidgetsBindingObserver {
   MediationAudioController _audioController;
-  TimerService timerService = TimerService();
+  TimerService timerService;
   TimerLeftController cTimerLeft;
 
   @override
@@ -47,6 +51,8 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
 
   @override
   void initState() {
+    timerService =
+        widget.timerService == null ? TimerService() : widget.timerService;
     cTimerLeft = TimerLeftController();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -85,7 +91,9 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
         body: Container(
           height: Get.height,
           decoration: BoxDecoration(
-            gradient: AppColors.Bg_Gradient_Timer_Meditation,
+            gradient: menuState == MenuState.MORNING
+                ? AppColors.Bg_Gradient_Timer_Meditation
+                : AppColors.gradient_loading_night_bg,
           ),
           child: Stack(
             children: [
@@ -153,7 +161,9 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                       style: TextStyle(
                         fontSize: Get.height * 0.033,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.primary,
+                        color: menuState == MenuState.MORNING
+                            ? AppColors.primary
+                            : Colors.white,
                       ))),
                   Spacer(),
                   Obx(() {
@@ -173,9 +183,11 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                         return Row(
                           children: [
                             if (duration != null)
-                              Text(printDuration(
-                                  _audioController.durationPosition.value,
-                                  h: false)),
+                              Text(
+                                printDuration(
+                                    _audioController.durationPosition.value,
+                                    h: false),
+                              ),
                             const SizedBox(width: 10),
                             Expanded(
                               child: LinearProgressIndicator(
@@ -185,7 +197,10 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                             const SizedBox(width: 10),
                             if (duration != null)
                               Text(
-                                printDuration(duration, h: false),
+                                printDuration(
+                                  duration,
+                                  h: false,
+                                ),
                               ),
                           ],
                         );
