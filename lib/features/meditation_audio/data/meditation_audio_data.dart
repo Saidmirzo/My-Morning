@@ -165,6 +165,62 @@ class MeditationAudioData {
             'https://storage.yandexcloud.net/myaudio/Nastavnik/En/6.%20Meditation%20for%20breathing%20control.mp3',
         duration: Duration(minutes: 5, seconds: 17)),
   ];
+
+  List<MeditationAudio> meditationNightRuSource = [
+    MeditationAudio(
+        name: 'Медитация для быстрого засыпания',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/%D0%9C%D0%B5%D0%B4%D0%B8%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B4%D0%BB%D1%8F%20%D0%B1%D1%8B%D1%81%D1%82%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B7%D0%B0%D1%81%D1%8B%D0%BF%D0%B0%D0%BD%D0%B8%D1%8F.mp3',
+        duration: Duration(minutes: 4, seconds: 21)),
+    MeditationAudio(
+        name: 'Не можешь уснуть? Сверхглубокий сон',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/%D0%9D%D0%B5%20%D0%BC%D0%BE%D0%B6%D0%B5%D1%88%D1%8C%20%D1%83%D1%81%D0%BD%D1%83%D1%82%D1%8C%2C%20%D1%81%D0%B2%D0%B5%D1%80%D1%85%D0%B3%D0%BB%D1%83%D0%B1%D0%BE%D0%BA%D0%B8%D0%B9%20%D1%81%D0%BE%D0%BD.mp3',
+        duration: Duration(minutes: 3, seconds: 22)),
+    MeditationAudio(
+        name: 'Короткая медитация перед сном',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/%D0%9A%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B0%D1%8F%20%D0%BC%D0%B5%D0%B4%D0%B8%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%20%D1%81%D0%BD%D0%BE%D0%BC.mp3',
+        duration: Duration(minutes: 4, seconds: 0)),
+    MeditationAudio(
+        name: 'Медитация для успокоения разума',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/%D0%9C%D0%B5%D0%B4%D0%B8%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%81%D0%BF%D0%BE%D0%BA%D0%BE%D0%B5%D0%BD%D0%B8%D1%8F%20%D1%80%D0%B0%D0%B7%D1%83%D0%BC%D0%B0.mp3',
+        duration: Duration(minutes: 3, seconds: 56)),
+    MeditationAudio(
+        name: 'Медитация чтобы отпустить и простить',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/%D0%9C%D0%B5%D0%B4%D0%B8%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D1%87%D1%82%D0%BE%D0%B1%D1%8B%20%D0%BE%D1%82%D0%BF%D1%83%D1%81%D1%82%D0%B8%D1%82%D1%8C%20%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%B8%D1%82%D1%8C.mp3',
+        duration: Duration(minutes: 4, seconds: 32)),
+  ];
+
+  List<MeditationAudio> meditationNightEnSource = [
+    MeditationAudio(
+        name: 'Meditation for fast falling asleep',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/1.%20Meditation%20for%20fast%20fallinh%20asleeo%204-7-8.mp3',
+        duration: Duration(minutes: 4, seconds: 47)),
+    MeditationAudio(
+        name: 'Super Deep Sleep',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/2.%20Super%20Deep%20Sleep.mp3',
+        duration: Duration(minutes: 3, seconds: 47)),
+    MeditationAudio(
+        name: 'Short meditation before bed',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/3.%20Short%20meditation%20before%20bed.mp3',
+        duration: Duration(minutes: 4, seconds: 03)),
+    MeditationAudio(
+        name: 'Meditation to calm the mind',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/4.%20Meditation%20to%20calm%20the%20mind.mp3',
+        duration: Duration(minutes: 4, seconds: 59)),
+    MeditationAudio(
+        name: 'Meditation to calm the mind',
+        url:
+            'https://storage.yandexcloud.net/myaudio/Night/Meditation/5.%20Meditation%20to%20let%20go%20and%20forgive.mp3',
+        duration: Duration(minutes: 5, seconds: 38)),
+  ];
 }
 
 MeditationAudioData meditationAudioData = MeditationAudioData();

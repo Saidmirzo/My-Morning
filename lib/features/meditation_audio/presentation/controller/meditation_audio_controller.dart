@@ -171,11 +171,14 @@ class MediationAudioController extends GetxController {
       }
     }
     print('audioSource lenght: ${audioSource.length}');
+
     await loadFavoriteAudios();
   }
 
   Future loadFavoriteAudios() async {
-    (await repository.getFavoriteAudioFiles()).forEach((element) {
+    (await repository.getFavoriteAudioFiles(
+            menuState == MenuState.MORNING ? false : true))
+        .forEach((element) {
       print('Favorite audio : $element');
       if (!favoriteAudios.value.contains(element))
         favoriteAudios.value.add(element);
@@ -189,6 +192,15 @@ class MediationAudioController extends GetxController {
     await MyDB()
         .getBox()
         .put(MyResource.MEDITATION_AUDIO_FAVORITE, favoriteAudios.value);
+  }
+
+  void setAudioNightFavorite(MeditationAudio audio) async {
+    favoriteAudios.value.contains(audio)
+        ? favoriteAudios.value.remove(audio)
+        : favoriteAudios.value.add(audio);
+    await MyDB()
+        .getBox()
+        .put(MyResource.MEDITATION_AUDIO_NIGHT_FAVORITE, favoriteAudios.value);
   }
 
   Future<MeditationAudio> cacheAudioFile(MeditationAudio track) async {

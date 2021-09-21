@@ -6,6 +6,7 @@ import 'package:morningmagic/pages/add_time_page/add_time_period.dart';
 import 'package:morningmagic/pages/meditation/meditation_audio_page_night.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/styles.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/timer_service.dart';
@@ -59,7 +60,7 @@ class _MeditationPageState extends State<MeditationPage> {
                       icon: Icon(Icons.arrow_back, color: AppColors.primary),
                       onPressed: () {
                         if (widget.fromHomeMenu)
-                          return Get.off(MainMenuPage(), opaque: true);
+                          return AppRouting.navigateToHomeWithClearHistory();
                         OrderUtil()
                             .getPreviousRouteById(TimerPageId.Meditation)
                             .then((value) {

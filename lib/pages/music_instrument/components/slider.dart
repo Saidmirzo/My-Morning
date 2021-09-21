@@ -22,7 +22,7 @@ class TrackBarState extends State<TrackBar> {
       data: SliderThemeData(
         trackShape: CustomTrackShape(),
         activeTrackColor: AppColors.TRACKBAR_ACTIVE,
-        inactiveTrackColor: AppColors.TRACKBAR_UNACTIVE,
+        inactiveTrackColor: AppColors.purchaseDesc,
         trackHeight: 2.0,
         thumbColor: AppColors.THUMB,
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5.0),

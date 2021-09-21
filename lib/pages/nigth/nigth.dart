@@ -34,7 +34,6 @@ import '../../db/resource.dart';
 class MainMenuNightPage extends StatefulWidget {
   @override
   State createState() {
-    menuState = MenuState.NIGT;
     return MainMenuNightPageState();
   }
 }

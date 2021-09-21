@@ -106,7 +106,7 @@ Widget body(BuildContext context) {
             child: Container(
               height: 39,
               decoration: BoxDecoration(
-                  color: AppColors.TRACKBAR_UNACTIVE,
+                  color: AppColors.purchaseDesc,
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

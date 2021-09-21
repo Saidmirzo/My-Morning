@@ -28,7 +28,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 width: btnSize,
                 height: btnSize,
                 color: menuState == MenuState.NIGT
-                    ? AppColors.timerNightMenuIcon
+                    ? AppColors.purchaseDesc
                     : AppColors.primary,
               ),
               onPressed: () => Get.to(AddTimePeriod(
@@ -40,7 +40,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 width: btnSize,
                 height: btnSize,
                 color: menuState == MenuState.NIGT
-                    ? AppColors.timerNightMenuIcon
+                    ? AppColors.purchaseDesc
                     : AppColors.primary,
               ),
               onPressed: () {
@@ -52,7 +52,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 width: btnSize,
                 height: btnSize,
                 color: menuState == MenuState.NIGT
-                    ? AppColors.timerNightMenuIcon
+                    ? AppColors.purchaseDesc
                     : AppColors.primary,
               ),
               onPressed: () {

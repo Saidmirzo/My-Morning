@@ -9,6 +9,7 @@ import 'package:morningmagic/db/model/affirmation_text/affirmation_text.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/affirmation_progress/affirmation_progress.dart';
 import 'package:morningmagic/db/model/progress/meditation_progress/meditation_progress.dart';
+import 'package:morningmagic/db/model/progress/music_for_cleeping/music_for_skeeping_progress.dart';
 import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
@@ -79,7 +80,7 @@ class TimerService {
     if (timer != null && timer.isActive) {
       timer.cancel();
     }
-    if (pageId == TimerPageId.MusicNight) {
+    /* if (pageId == TimerPageId.MusicNight) {
       deleteInstrumentAudioController();
       saveProgress(true);
       Get.off(
@@ -90,8 +91,9 @@ class TimerService {
             true),
       );
       return;
-    }
+    }*/
     if (pageId != TimerPageId.Reading) saveProgress(true);
+
     await OrderUtil().getRouteById(pageId).then((value) {
       print('skipTask pageId: $pageId');
       if (pageId == TimerPageId.Reading)
@@ -163,6 +165,10 @@ class TimerService {
           var model = MeditationProgress(passedSec.value, isSkip: isSkip);
           pg.saveJournal(MyResource.MEDITATION_JOURNAL, model);
           break;
+        case TimerPageId.MusicNight:
+          var model = MusicForSleepingProgress(passedSec.value, isSkip: isSkip);
+          pg.saveJournal(MyResource.MEDITATION_JOURNAL, model);
+          break;
         default:
       }
 
@@ -184,9 +190,14 @@ class TimerService {
           print('timer_service: timer work done');
           timer.cancel();
           if (pageId != TimerPageId.Reading) saveProgress(false);
+
+          //if (pageId != TimerPageId.MeditationNight)
           OrderUtil()
               .getRouteById(pageId)
               .then((value) => getNextPage(value, false));
+          //  else
+          //getNextPage(value, false);
+
           if (onDone != null) onDone();
         } else {
           time.value--;

@@ -18,7 +18,7 @@ Widget buildMenuButtons(TimerService timerService) {
   double btnSize = 30;
   Color colorIcon = menuState == MenuState.MORNING
       ? AppColors.primary
-      : AppColors.timerNightMenuIcon;
+      : AppColors.purchaseDesc;
   return Container(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),

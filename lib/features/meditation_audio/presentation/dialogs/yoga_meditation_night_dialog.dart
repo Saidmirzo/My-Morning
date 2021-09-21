@@ -7,19 +7,14 @@ import 'package:morningmagic/features/meditation_audio/domain/entities/meditatio
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
 
-class MusicMeditationContainer extends StatefulWidget {
-  final bool withBgSound;
-
-  const MusicMeditationContainer({Key key, this.withBgSound = false})
-      : super(key: key);
-
+class YogaMeditationNightContainer extends StatefulWidget {
   @override
-  _MusicMeditationContainerState createState() =>
-      _MusicMeditationContainerState();
+  _YogaMeditationNightContainerState createState() =>
+      _YogaMeditationNightContainerState();
 }
 
-class _MusicMeditationContainerState extends State<MusicMeditationContainer>
-    with WidgetsBindingObserver {
+class _YogaMeditationNightContainerState
+    extends State<YogaMeditationNightContainer> with WidgetsBindingObserver {
   MediationAudioController _audioController;
   List<MeditationAudio> _source = [];
 
@@ -41,6 +36,7 @@ class _MusicMeditationContainerState extends State<MusicMeditationContainer>
         return AudioMeditationDialogItem(
           id: index,
           audio: _source[index],
+          isYoga: true,
         );
       },
     );
@@ -49,20 +45,26 @@ class _MusicMeditationContainerState extends State<MusicMeditationContainer>
   void _stopPlayer() {
     _audioController.bfPlayer.value.stop();
     _audioController.playingIndex.value = -1;
-    if (!widget.withBgSound) _audioController.changeItem(0);
-    _audioController.bufIdSelected(0);
   }
 
   @override
   void initState() {
-    _source.addAll(meditationAudioData.musicSource);
     _audioController = Get.find();
-    print('Init music container');
-    _audioController.changeAudioSource(_source, isBgSource: widget.withBgSound);
+    _source.addAll(Get.locale.languageCode == 'ru'
+        ? meditationAudioData.meditationNightRuSource
+        : meditationAudioData.meditationNightEnSource);
+    _audioController.changeAudioSource(_source);
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _stopPlayer();
       _audioController.playFromFavorite = false;
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
 }

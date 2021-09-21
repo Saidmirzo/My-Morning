@@ -131,6 +131,10 @@ class OrderUtil {
   }
 
   Future<dynamic> getRouteById(int id) async {
+    if (id == TimerPageId.MeditationNight) {
+      return ProgressPage(onDone: true);
+    }
+
     OrderHolder orderHolder = await getOrderHolder();
     int pos = await getPositionById(id);
     print('currentPage = $pos');

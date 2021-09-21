@@ -4,6 +4,7 @@ import 'package:morningmagic/db/model/app_and_custom_exercises/custom_exercise_h
 import 'package:morningmagic/db/model/note/note.dart';
 import 'package:morningmagic/db/model/progress/diary_progress/diary_note_progress.dart';
 import 'package:morningmagic/db/model/progress/diary_progress/diary_record_progress.dart';
+import 'package:morningmagic/db/model/progress/music_for_cleeping/music_for_skeeping_progress.dart';
 import 'package:morningmagic/db/model/progress/reading_progress/reading_progress.dart';
 import 'package:morningmagic/db/model/progress/visualization_progress/visualization_progress.dart';
 import 'package:morningmagic/db/model/visualization/visualization_adapter.dart';
@@ -71,6 +72,7 @@ class MyDB {
     Hive.registerAdapter(DurationAdapter());
     Hive.registerAdapter(DiaryNoteProgressAdapter());
     Hive.registerAdapter(DiaryRecordProgressAdapter());
+    Hive.registerAdapter(MusicForSleepingProgressAdapter());
 
     try {
       await this.openMyBox();
@@ -126,6 +128,8 @@ class MyDB {
       MyResource.READING_JOURNAL,
       MyResource.VISUALISATION_JOURNAL,
       MyResource.FULL_COMPLEX_FINISH,
+      MyResource.MEDITATION_NIGHT_JOURNAL,
+      MyResource.MUSIC_SLEEPING_NIGHT_JOURNAL,
     ].forEach((element) {
       myDbBox.put(element, Map<String, List<dynamic>>());
     });

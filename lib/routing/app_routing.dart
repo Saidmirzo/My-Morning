@@ -42,7 +42,8 @@ class AppRouting {
     }
   }
 
-  static void navigateToHomeWithClearHistory() {
+  static void navigateToHomeWithClearHistory({MenuState menuStateValue}) {
+    if (menuStateValue != null) menuState = menuStateValue;
     Navigator.pushAndRemoveUntil(
       Get.context,
       MaterialPageRoute(

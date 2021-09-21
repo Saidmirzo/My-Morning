@@ -29,10 +29,10 @@ class AppColors {
   static const FIX_BOTTOM = Color(0xFFf8d9da);
   static const THUMB = Color(0xFF673A7A);
   static const TRACKBAR_ACTIVE = Color(0xFF673A7A);
-  static const TRACKBAR_UNACTIVE = Color(0xFFB994DA);
+  //static const TRACKBAR_UNACTIVE = Color(0xFFB994DA);
   static const timerNightBgButton = Color(0xFFC50B2);
   static const nightButtonMenuIocons = Color(0xFFE4CDF8);
-  static const timerNightMenuIcon = Color(0xFFB994DA);
+  //static const timerNightMenuIcon = Color(0xFFB994DA);
 
   //страница звуков dark mode
   static const instrument_text_color = Color(0xFFCAB0DC);

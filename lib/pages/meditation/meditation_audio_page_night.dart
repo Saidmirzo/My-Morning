@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_favorite.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/music_meditation_dialog.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/yoga_meditation_dialog.dart';
+import 'package:morningmagic/features/meditation_audio/presentation/dialogs/yoga_meditation_night_dialog.dart';
 
 import 'package:morningmagic/pages/meditation/components/menu_night.dart';
 import 'package:morningmagic/services/analitics/all.dart';
@@ -136,15 +137,16 @@ class _MeditationAudioNightPageState extends State<MeditationAudioNightPage> {
                         ? CircularProgressIndicator()
                         : cAudio.currentPage.value == MenuItems.favorite
                             ? AudioMeditationFavoriteContainer()
-                            : (cAudio.currentPage.value == MenuItems.music ||
-                                    cAudio.currentPage.value ==
-                                        MenuItems.meditationNight)
+                            : cAudio.currentPage.value == MenuItems.music
                                 ? MusicMeditationContainer(
                                     withBgSound: widget.withBgSound)
-                                : cAudio.currentPage.value == MenuItems.yoga
-                                    ? YogaMeditationContainer()
-                                    : AudioMeditationContainer(
-                                        withBgSound: widget.withBgSound);
+                                : cAudio.currentPage.value ==
+                                        MenuItems.meditationNight
+                                    ? YogaMeditationNightContainer()
+                                    : cAudio.currentPage.value == MenuItems.yoga
+                                        ? YogaMeditationContainer()
+                                        : AudioMeditationContainer(
+                                            withBgSound: widget.withBgSound);
                   }),
                 ),
               );

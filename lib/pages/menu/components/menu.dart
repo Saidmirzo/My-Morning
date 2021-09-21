@@ -7,6 +7,7 @@ import 'package:morningmagic/pages/nigth/nigth.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/storage.dart';
 
@@ -83,12 +84,13 @@ class BottomMenu extends StatelessWidget {
 
   _openMorning() {
     appAnalitics.logEvent('first_morning');
-    Get.to(MainMenuPage());
+    AppRouting.navigateToHomeWithClearHistory(
+        menuStateValue: MenuState.MORNING);
   }
 
   _openNight() {
     appAnalitics.logEvent('first_night');
-    Get.to(MainMenuNightPage());
+    AppRouting.navigateToHomeWithClearHistory(menuStateValue: MenuState.NIGT);
   }
 
   _openFaq() {

@@ -18,14 +18,12 @@ class AudioMeditationDialogItem extends StatefulWidget {
   final int id;
   final MeditationAudio audio;
   final bool isYoga;
-  final bool lock;
 
   const AudioMeditationDialogItem({
     Key key,
     @required this.id,
     @required this.audio,
     this.isYoga = false,
-    this.lock = false,
   });
 
   @override
@@ -37,7 +35,18 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
   MediationAudioController _audioController =
       Get.find<MediationAudioController>();
 
+  bool lock;
   bool playCached = false;
+
+  @override
+  void initState() {
+    if (billingService.isPro())
+      lock = false;
+    else
+      lock = widget.id == 0 ? false : true;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +55,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
         InkWell(
           onTap: () {
             if (widget.isYoga)
-              _audioController.selectedItemIndex.value = widget.id;
+              _audioController.selectedItemIndex.value = lock ? 0 : widget.id;
             else
               _audioController.changeItem(widget.id);
             _audioController.bufIdSelected.value = widget.id;
@@ -66,7 +75,9 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _buildAudioControlButton(),
+                    menuState == MenuState.MORNING
+                        ? _buildAudioControlButton(lock)
+                        : _buildAudioControlNightButton(lock),
                     SizedBox(width: 10),
                     Expanded(
                       child: Container(
@@ -87,7 +98,9 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                     if (_audioController.playingIndex.value == widget.id &&
                         _audioController.isAudioLoading.value)
                       _buildLoadingAudioIndicator(),
-                    buildFavoriteButton(lock: widget.lock)
+                    menuState == MenuState.MORNING
+                        ? buildFavoriteButton()
+                        : buildFavoriteButtonNight(lock)
                   ],
                 ),
               ),
@@ -98,7 +111,19 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     );
   }
 
-  Widget buildFavoriteButton({bool lock}) {
+  Widget buildFavoriteButton() {
+    return CupertinoButton(
+        child: Obx(() => Icon(
+            _audioController.favoriteAudios.value.contains(widget.audio)
+                ? Icons.star_outlined
+                : Icons.star_border,
+            color: AppColors.primary)),
+        onPressed: () {
+          _audioController.setAudioFavorite(widget.audio);
+        });
+  }
+
+  Widget buildFavoriteButtonNight(bool lock) {
     return CupertinoButton(
         child: Obx(() => Icon(
               _audioController.favoriteAudios.value.contains(widget.audio)
@@ -108,30 +133,38 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                   : lock
                       ? Icons.lock
                       : Icons.star_border,
-              color: menuState == MenuState.MORNING
-                  ? AppColors.primary
-                  : Color(0xFFB994DA),
+              color: AppColors.purchaseDesc,
             )),
-        onPressed: lock == false
-            ? () {
-                _audioController.setAudioFavorite(widget.audio);
-              }
-            : null);
+        onPressed: lock
+            ? null
+            : () {
+                _audioController.setAudioNightFavorite(widget.audio);
+              });
   }
 
-  Widget _buildAudioControlButton() {
+  Widget _buildAudioControlButton(bool lock) {
     return PrimaryCircleButton(
-      onPressed: () => _handlePlayPauseButton(),
-      bgColor: menuState == MenuState.MORNING
-          ? AppColors.primary
-          : Color(0xFFB994DA),
+      onPressed: lock == false ? () => _handlePlayPauseButton() : null,
+      bgColor: AppColors.primary,
       icon: Icon(
         _audioController.playingIndex.value == widget.id
             ? Icons.pause
             : Icons.play_arrow,
-        color: menuState == MenuState.MORNING
-            ? AppColors.WHITE
-            : Color(0xFF040826),
+        color: AppColors.WHITE,
+        size: 30,
+      ),
+    );
+  }
+
+  Widget _buildAudioControlNightButton(bool lock) {
+    return PrimaryCircleButton(
+      onPressed: lock == false ? () => _handlePlayPauseButton() : null,
+      bgColor: AppColors.purchaseDesc,
+      icon: Icon(
+        _audioController.playingIndex.value == widget.id
+            ? Icons.pause
+            : Icons.play_arrow,
+        color: Color(0xFF040826),
         size: 30,
       ),
     );
