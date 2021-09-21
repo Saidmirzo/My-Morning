@@ -24,36 +24,27 @@ Widget buildMenuButtons(TimerService timerService) {
         children: <Widget>[
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.clock,
+                _getIconMenu(SvgAssets.clock),
                 width: btnSize,
                 height: btnSize,
-                color: menuState == MenuState.NIGT
-                    ? AppColors.purchaseDesc
-                    : AppColors.primary,
               ),
               onPressed: () => Get.to(AddTimePeriod(
                     timerService: timerService,
                   ))),
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.home,
+                _getIconMenu(SvgAssets.home),
                 width: btnSize,
                 height: btnSize,
-                color: menuState == MenuState.NIGT
-                    ? AppColors.purchaseDesc
-                    : AppColors.primary,
               ),
               onPressed: () {
                 timerService.goToHome();
               }),
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.forward,
+                _getIconMenu(SvgAssets.forward),
                 width: btnSize,
                 height: btnSize,
-                color: menuState == MenuState.NIGT
-                    ? AppColors.purchaseDesc
-                    : AppColors.primary,
               ),
               onPressed: () {
                 timerService.skipTask();
@@ -63,4 +54,19 @@ Widget buildMenuButtons(TimerService timerService) {
       ),
     ),
   );
+}
+
+String _getIconMenu(String path) {
+  if (menuState == MenuState.MORNING) return path;
+
+  if (menuState == MenuState.NIGT) {
+    switch (path) {
+      case SvgAssets.home:
+        return SvgAssets.home_night;
+      case SvgAssets.forward:
+        return SvgAssets.skip_night;
+      default:
+        return SvgAssets.timer_night;
+    }
+  }
 }

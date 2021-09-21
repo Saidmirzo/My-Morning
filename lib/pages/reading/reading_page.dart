@@ -87,8 +87,8 @@ class _ReadingPageState extends State<ReadingPage> {
                           timerService: timerSevice,
                         ));
                         Get.to(ReadingTimerPage(
-                          timerService: timerSevice,
-                        ));
+                            timerService: timerSevice,
+                            fromHomeMenu: widget.fromHomeMenu));
                       },
                       child: SvgPicture.asset(
                           'assets/images/reading_night/timer_button.svg'),

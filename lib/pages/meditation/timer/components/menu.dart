@@ -32,19 +32,19 @@ Widget buildMenuButtons(TimerService timerService) {
         children: <Widget>[
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.clock,
+                _getIconMenu(SvgAssets.clock),
                 width: btnSize,
                 height: btnSize,
-                color: colorIcon,
+                //  color: colorIcon,
               ),
               onPressed: () =>
                   Get.to(AddTimePeriod(timerService: timerService))),
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.home,
+                _getIconMenu(SvgAssets.home),
                 width: btnSize,
                 height: btnSize,
-                color: colorIcon,
+                // color: colorIcon,
               ),
               onPressed: () {
                 cAudio.player.pause();
@@ -52,10 +52,10 @@ Widget buildMenuButtons(TimerService timerService) {
               }),
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.tiktok_music,
+                _getIconMenu(SvgAssets.tiktok_music),
                 width: btnSize,
                 height: btnSize,
-                color: colorIcon,
+                // color: colorIcon,
               ),
               onPressed: () {
                 cAudio.player.pause();
@@ -68,10 +68,10 @@ Widget buildMenuButtons(TimerService timerService) {
               }),
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.forward,
+                _getIconMenu(SvgAssets.forward),
                 width: btnSize,
                 height: btnSize,
-                color: colorIcon,
+                // color: colorIcon,
               ),
               onPressed: () {
                 cAudio.player.pause();
@@ -82,4 +82,30 @@ Widget buildMenuButtons(TimerService timerService) {
       ),
     ),
   );
+}
+
+String _getIconMenu(value) {
+  if (menuState == MenuState.MORNING)
+    switch (value) {
+      case SvgAssets.home:
+        return SvgAssets.home;
+      case SvgAssets.tiktok_music:
+        return SvgAssets.tiktok_music;
+      case SvgAssets.forward:
+        return SvgAssets.forward;
+      default:
+        return SvgAssets.clock;
+    }
+
+  if (menuState == MenuState.NIGT)
+    switch (value) {
+      case SvgAssets.home:
+        return SvgAssets.home_night;
+      case SvgAssets.tiktok_music:
+        return SvgAssets.music_list_night;
+      case SvgAssets.forward:
+        return SvgAssets.skip_night;
+      default:
+        return SvgAssets.timer_night;
+    }
 }

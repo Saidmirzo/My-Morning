@@ -24,36 +24,27 @@ Widget buildMenuButtons(TimerService timerService) {
         children: <Widget>[
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.clock,
+                SvgAssets.timer_night,
                 width: btnSize,
                 height: btnSize,
-                color: menuState == MenuState.NIGT
-                    ? AppColors.purchaseDesc
-                    : AppColors.primary,
               ),
               onPressed: () => Get.to(AddTimePeriod(
                     timerService: timerService,
                   ))),
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.home,
+                SvgAssets.home_night,
                 width: btnSize,
                 height: btnSize,
-                color: menuState == MenuState.NIGT
-                    ? AppColors.purchaseDesc
-                    : AppColors.primary,
               ),
               onPressed: () {
                 timerService.goToHome();
               }),
           CupertinoButton(
               child: SvgPicture.asset(
-                SvgAssets.forward,
+                SvgAssets.skip_night,
                 width: btnSize,
                 height: btnSize,
-                color: menuState == MenuState.NIGT
-                    ? AppColors.purchaseDesc
-                    : AppColors.primary,
               ),
               onPressed: () {
                 timerService.skipTask();

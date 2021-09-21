@@ -61,28 +61,4 @@ class MusicInstrumentControllers extends GetxController {
                   '${SvgAssets.instrumentalPath}/creatures_$i.svg'));
     }
   }
-
-  /* void addPlay(Instrument instrument) {
-    if (!isPlay(instrument)) {
-      if (playList.value.value.length < 10) {
-        playList.value.value.add(instrument);
-        playList.value.refresh();
-      } else
-        showErrorDialog('10 из 10');
-    }
-  } */
-
-  /*void removePlayList(Instrument instrument) {
-    playList.value.value.remove(instrument);
-    playList.value.refresh();
-  }
-
-  bool isPlay(Instrument instrumrnt) {
-    return playList.value.value
-                .where((element) => element.name == instrumrnt.name)
-                .length >
-            0
-        ? true
-        : false;
-  }*/
 }

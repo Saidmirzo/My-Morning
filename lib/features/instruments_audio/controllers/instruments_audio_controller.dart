@@ -47,6 +47,7 @@ class InstrumentAudioController extends GetxController {
 
         audioSourceUpdate();
         //update state pause btn
+        pause.value = false;
         pause.refresh();
       } else
         stop(instrument);

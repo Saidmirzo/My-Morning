@@ -82,8 +82,13 @@ class MediationAudioController extends GetxController {
 
     loadFavoriteAudios();
 
-    changeAudioSource(meditationAudioData.musicSource);
-    changeAudioSource(meditationAudioData.musicSource, isBgSource: true);
+    if (menuState == MenuState.MORNING) {
+      changeAudioSource(meditationAudioData.musicSource);
+      changeAudioSource(meditationAudioData.musicSource, isBgSource: true);
+    } else
+      changeAudioSource(Get.locale.languageCode == 'ru'
+          ? meditationAudioData.meditationNightRuSource
+          : meditationAudioData.meditationNightEnSource);
 
     // 50% громкость для фоновой музыки
     bgAudioPlayer.value.setVolume(.5);
@@ -352,6 +357,7 @@ class MediationAudioController extends GetxController {
 
   void next() {
     print('audio next');
+    if (menuState == MenuState.NIGT && !billingService.isPro()) return;
     final _playListLength = playList.length;
     if (_playListLength == 0) return;
     int _nextIndex = 0;
@@ -368,6 +374,7 @@ class MediationAudioController extends GetxController {
 
   void prev() {
     print('audio prev');
+    if (menuState == MenuState.NIGT && !billingService.isPro()) return;
     final _playListLength = playList.length;
     if (_playListLength == 0) return;
     int _nextIndex = 0;

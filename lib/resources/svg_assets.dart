@@ -30,4 +30,11 @@ class SvgAssets {
   static const play = '$instrumentalPath/play.svg';
   static const next = '$instrumentalPath/next.svg';
   static const playList = '$instrumentalPath/play_list.svg';
+
+  //Ночное меню
+  static const meditationNightpath = 'assets/images/meditation';
+  static const timer_night = '$meditationNightpath/timer_night.svg';
+  static const home_night = '$meditationNightpath/home_night.svg';
+  static const music_list_night = '$meditationNightpath/music_list_night.svg';
+  static const skip_night = '$meditationNightpath/skip_night.svg';
 }
