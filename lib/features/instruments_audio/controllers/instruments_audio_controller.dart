@@ -42,13 +42,11 @@ class InstrumentAudioController extends GetxController {
         audioPlayers[instrument.instrument.tag] = new AudioPlayer()
           ..setFilePath(cachInstrument.instrument.filePath)
           ..setVolume(0.5)
-          ..setLoopMode(LoopMode.one)
-          ..play();
+          ..setLoopMode(LoopMode.one);
 
         audioSourceUpdate();
-        //update state pause btn
-        pause.value = false;
-        pause.refresh();
+
+        _playAll();
       } else
         stop(instrument);
     } catch (e) {
@@ -74,6 +72,13 @@ class InstrumentAudioController extends GetxController {
   void setPause(bool value) {
     pause.value = value;
     pause.refresh();
+  }
+
+  void _playAll() {
+    for (var i = 0; i < audioPlayers.length; i++)
+      audioPlayers.values.elementAt(i).play();
+
+    setPause(false);
   }
 
   void playPause() {

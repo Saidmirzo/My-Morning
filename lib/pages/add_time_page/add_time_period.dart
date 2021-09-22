@@ -23,7 +23,9 @@ class AddTimePeriod extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: Get.width,
         decoration: BoxDecoration(
-          gradient: AppColors.timerBgNigt,
+          gradient: menuState == MenuState.MORNING
+              ? AppColors.Bg_Gradient_Timer_Reading
+              : AppColors.timerBgNigt,
         ),
         child: Stack(
           alignment: Alignment.center,
