@@ -558,10 +558,9 @@ Map<String, String> translations_en = {
   "welcome_to_sleep": "Welcome to Sleep",
   "meditation_subtitle": "Listen to one of our meditations to relieve stress",
   "music_for_sleep_subtitle": "Fall asleep with your favorite music",
-  "music_for_sleep_title": "Music for sleeping",
+  "music_for_sleep_title": "Sleep sounds",
   "reading_at_night_title": "Reading at night",
-  "reading_at_night_subtitle":
-      "If you prefer to read not in the morning, but not before going to bed",
+  "reading_at_night_subtitle": "If you prefer to read before bed",
   "music_instrument_title": "Musical instruments",
   "instrument_1": "Harp",
   "instrument_2": "Glucophone",
@@ -620,4 +619,5 @@ Map<String, String> translations_en = {
   "creatures_11": "Owl",
   "creatures_12": "Seagull",
   "save_selected": "Save Selected",
+  "my_night": "My night",
 };

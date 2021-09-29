@@ -37,16 +37,23 @@ class TimerService {
   String bookTitle;
   AppStates appStates = Get.put(AppStates());
   bool fromHomeMenu = false;
-
+  bool resume = false;
   // TODO remove one of players
   AudioPlayer audioPlayer = AudioPlayer();
 
   Function onDone;
 
   init(int _pageId, {Function onDone}) async {
+    if (resume) {
+      startTimer();
+      resume = false;
+      return;
+    }
     print('timerService: init');
     this.pageId = _pageId;
     this.onDone = onDone;
+    if (_pageId == TimerPageId.MeditationNight) return;
+
     if (startTime == null || startTime == 0) {
       getTimeAndText().then((int value) {
         time.value = value * 60;
@@ -67,13 +74,31 @@ class TimerService {
     if (timer != null) timer.cancel();
   }
 
+  void nightMeditationStart(Duration duration) {
+    if (duration != null) {
+      time.value = duration.inSeconds;
+      startValue = duration.inSeconds;
+      startTime = duration.inSeconds;
+      if (timer == null || !timer.isActive) startTimer();
+    }
+  }
+
   double get createValue =>
       startTime != null ? 1 - time / (startTime * 60) : time.toDouble();
+
+  double get creatValueNight =>
+      startTime != null ? 1 - time / startTime : time.toDouble();
 
   void setTime(int min) {
     startTime = min;
     startValue = min * 60;
     time.value = min * 60;
+  }
+
+  void setNightTime(int second) {
+    startTime = second;
+    startValue = second;
+    time.value = second;
   }
 
   Future<void> skipTask() async {
@@ -91,8 +116,7 @@ class TimerService {
     if (pageId == TimerPageId.Meditation) {
       Get.delete<MediationAudioController>();
     }
-    if (pageId == TimerPageId.MeditationNight)
-      deleteInstrumentAudioController();
+    if (pageId == TimerPageId.MusicNight) deleteInstrumentAudioController();
   }
 
   void deleteInstrumentAudioController() {
@@ -148,6 +172,10 @@ class TimerService {
           var model = MeditationProgress(passedSec.value, isSkip: isSkip);
           pg.saveJournal(MyResource.MEDITATION_JOURNAL, model);
           break;
+        case TimerPageId.MeditationNight:
+          var model = MeditationProgress(passedSec.value, isSkip: isSkip);
+          pg.saveJournal(MyResource.MEDITATION_JOURNAL, model);
+          break;
         case TimerPageId.MusicNight:
           deleteInstrumentAudioController();
           var model = MusicForSleepingProgress(passedSec.value, isSkip: isSkip);
@@ -175,12 +203,9 @@ class TimerService {
           timer.cancel();
           if (pageId != TimerPageId.Reading) saveProgress(false);
 
-          //if (pageId != TimerPageId.MeditationNight)
           OrderUtil()
               .getRouteById(pageId)
               .then((value) => getNextPage(value, false));
-          //  else
-          //getNextPage(value, false);
 
           if (onDone != null) onDone();
         } else {
@@ -188,7 +213,7 @@ class TimerService {
           passedSec++;
         }
       });
-    } else if (timer != null && timer.isActive) {
+    } else if (timer != null && timer.isActive && !resume) {
       print('stop Timer');
       timer.cancel();
       isActive.toggle();

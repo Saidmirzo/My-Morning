@@ -217,7 +217,7 @@ class VisualizationController extends GetxController {
     }
   }
 
-  finishVisualization(bool isSkip) {
+  finishVisualization(bool isSkip, {bool backProgramm = false}) {
     print('finish vizualization');
     if (passedSec > minPassedSec) {
       VisualizationProgress model = VisualizationProgress(passedSec.value,
@@ -226,8 +226,12 @@ class VisualizationController extends GetxController {
       ProgressController cPg = Get.find();
       cPg.saveJournal(MyResource.VISUALISATION_JOURNAL, model);
     }
-    Get.offAll(VisualizationSuccessPage(fromHomeMenu: fromHomeMenu),
-        predicate: ModalRoute.withName(homePageRoute));
+    if (!backProgramm)
+      Get.offAll(
+          VisualizationSuccessPage(
+            fromHomeMenu: fromHomeMenu,
+          ),
+          predicate: ModalRoute.withName(homePageRoute));
   }
 
   void removePickedImage(int index) async {

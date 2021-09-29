@@ -216,7 +216,7 @@ class MeditationAudioData {
             'https://storage.yandexcloud.net/myaudio/Night/Meditation/4.%20Meditation%20to%20calm%20the%20mind.mp3',
         duration: Duration(minutes: 4, seconds: 59)),
     MeditationAudio(
-        name: 'Meditation to calm the mind',
+        name: 'Meditation to let go and forgive',
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Meditation/5.%20Meditation%20to%20let%20go%20and%20forgive.mp3',
         duration: Duration(minutes: 5, seconds: 38)),

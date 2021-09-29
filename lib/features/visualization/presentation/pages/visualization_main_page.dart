@@ -9,6 +9,7 @@ import 'package:morningmagic/features/visualization/presentation/controller/visu
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_target_page.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
@@ -54,9 +55,10 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
                       child: PrimaryCircleButton(
                         icon: Icon(Icons.arrow_back, color: AppColors.primary),
                         onPressed: () {
-                          _controller.finishVisualization(true);
+                          _controller.finishVisualization(true,
+                              backProgramm: true);
                           if (widget.fromHomeMenu)
-                            return Get.off(MainMenuPage(), opaque: true);
+                            return AppRouting.navigateToHomeWithClearHistory();
                           OrderUtil()
                               .getPreviousRouteById(TimerPageId.Visualization)
                               .then((value) {

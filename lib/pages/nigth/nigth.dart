@@ -167,7 +167,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                     ),
                   ),
                   Text(
-                    'MY MORNING',
+                    'MY NIGHT',
                     style: TextStyle(
                         fontSize: Get.width * .03,
                         fontWeight: FontWeight.normal,
@@ -196,10 +196,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
               borderRadius: BorderRadius.circular(12),
               child: Transform.rotate(
                 angle: Random().nextInt(50) * Random().nextDouble() * 3.14,
-                child: SvgPicture.asset(
-                  SvgAssets.nightBtnBg,
-                  fit: BoxFit.cover,
-                ),
+                child: Image.asset('assets/images/home_menu/night_bg_btn.png',
+                    width: Get.width, fit: BoxFit.fill),
               )),
           Positioned(
             right: 0,

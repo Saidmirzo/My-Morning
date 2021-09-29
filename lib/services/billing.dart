@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/adjust_config.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/visualization/data/repositories/visualization_image_repository_impl.dart';
@@ -31,6 +32,7 @@ class BillingService {
   Future<void> purchase(Package _package) async {
     purchaserInfo = await Purchases.purchasePackage(_package);
     isVip.value = isPro();
+    AdJust.trackevent(AdJust.trialEvent);
   }
 
   void liadVisuzlisations() {

@@ -571,10 +571,9 @@ Map<String, String> translations_ru = {
   "meditation_subtitle":
       "Послушайте одну из наших медитаций, для снятия стресса",
   "music_for_sleep_subtitle": "Засыпайте с любимой музыкой",
-  "music_for_sleep_title": "Музыка для сна",
+  "music_for_sleep_title": "Звуки для сна",
   "reading_at_night_title": "Чтение на ночь",
-  "reading_at_night_subtitle":
-      "Если предпочитаете читать не утром, а не перед сном",
+  "reading_at_night_subtitle": "Если предпочитаете читать перед сном",
   "music_instrument_title": "Музыкальные инструменты",
   "instrument_1": "Арфа",
   "instrument_2": "Глюкофон",

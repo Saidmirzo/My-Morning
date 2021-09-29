@@ -7,6 +7,7 @@ import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/services/timer_service.dart';
@@ -51,17 +52,28 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
 
   @override
   void initState() {
+    // if (menuState == MenuState.MORNING) {
     timerService =
         widget.timerService == null ? TimerService() : widget.timerService;
     cTimerLeft = TimerLeftController();
+    //}
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _audioController = Get.find();
+    _audioController.timerService = timerService;
+
+    if (menuState == MenuState.NIGT)
+      timerService.nightMeditationStart(
+          _audioController.audioSource[selIndexNightYoga].duration);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       print('MeditationTimerPage addPostFrameCallback');
       _audioController.initializeMeditationAudio(autoplay: widget.fromAudio);
-      await timerService.init(1, onDone: () async {
+      int pageId = menuState == MenuState.MORNING
+          ? TimerPageId.Meditation
+          : TimerPageId.MeditationNight;
+
+      await timerService.init(pageId, onDone: () async {
         await _audioController.player?.stop();
         await _audioController.player?.dispose();
         await _audioController.bgAudioPlayer?.value?.stop();
@@ -154,17 +166,15 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                   Spacer(),
                   buildTimerProgress(timerService),
                   const SizedBox(height: 20),
-                  Obx(() => Text(
-                      StringUtil.createTimeString(
-                        timerService.time.value,
-                      ),
-                      style: TextStyle(
-                        fontSize: Get.height * 0.033,
-                        fontWeight: FontWeight.w600,
-                        color: menuState == MenuState.MORNING
-                            ? AppColors.primary
-                            : Colors.white,
-                      ))),
+                  Obx(() =>
+                      Text(StringUtil.createTimeString(timerService.time.value),
+                          style: TextStyle(
+                            fontSize: Get.height * 0.033,
+                            fontWeight: FontWeight.w600,
+                            color: menuState == MenuState.MORNING
+                                ? AppColors.primary
+                                : Colors.white,
+                          ))),
                   Spacer(),
                   Obx(() {
                     if (_audioController != null &&

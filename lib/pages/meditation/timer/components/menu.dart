@@ -7,6 +7,7 @@ import 'package:morningmagic/pages/add_time_page/add_time_period.dart';
 import 'package:morningmagic/pages/meditation/meditation_audio_page_night.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
+import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/storage.dart';
@@ -37,8 +38,14 @@ Widget buildMenuButtons(TimerService timerService) {
                 height: btnSize,
                 //  color: colorIcon,
               ),
-              onPressed: () =>
-                  Get.to(AddTimePeriod(timerService: timerService))),
+              onPressed: () {
+                Get.to(AddTimePeriod(
+                  timerService: timerService,
+                  pageId: menuState == MenuState.NIGT
+                      ? TimerPageId.MeditationNight
+                      : -1,
+                ));
+              }),
           CupertinoButton(
               child: SvgPicture.asset(
                 _getIconMenu(SvgAssets.home),
@@ -47,6 +54,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 // color: colorIcon,
               ),
               onPressed: () {
+                selIndexNightYoga = 0;
                 cAudio.player.pause();
                 timerService.goToHome();
               }),
@@ -58,6 +66,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 // color: colorIcon,
               ),
               onPressed: () {
+                selIndexNightYoga = 0;
                 cAudio.player.pause();
                 cAudio.bgAudioPlayer?.value?.pause();
                 timerService.timer.cancel();
@@ -74,6 +83,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 // color: colorIcon,
               ),
               onPressed: () {
+                selIndexNightYoga = 0;
                 cAudio.player.pause();
                 timerService.skipTask();
                 appAnalitics.logEvent('first_meditation_next');

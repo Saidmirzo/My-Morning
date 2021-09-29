@@ -8,8 +8,13 @@ class TrackBar extends StatefulWidget {
   final String tag;
   double volume;
   final dialogMode;
+  final bool fromTimer;
 
-  TrackBar({@required this.tag, this.volume = 0.5, this.dialogMode = false});
+  TrackBar(
+      {@required this.tag,
+      this.volume = 0.5,
+      this.dialogMode = false,
+      this.fromTimer = false});
 
   TrackBarState createState() => TrackBarState();
 }
@@ -40,7 +45,9 @@ class TrackBarState extends State<TrackBar> {
             setState(() {
               widget.volume = value;
               _audioController.setVolume(value,
-                  tag: widget.tag, inDialog: widget.dialogMode);
+                  tag: widget.tag,
+                  inDialog:
+                      widget.fromTimer == true ? false : widget.dialogMode);
             });
           },
         ),

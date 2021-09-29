@@ -100,7 +100,7 @@ class _MeditationAudioNightPageState extends State<MeditationAudioNightPage> {
                           cAudio.bfPlayer.value.stop();
                           cAudio.playingIndex.value = -1;
                           if (cAudio.currentPage.value == MenuItems.yoga) {
-                            cAudio.withBgSound(true);
+                            cAudio.withBgSound(false);
                           } else {
                             if (!widget.withBgSound) cAudio.bgPlayList?.clear();
                             cAudio.withBgSound(widget.withBgSound);

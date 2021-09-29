@@ -7,6 +7,7 @@ import 'package:morningmagic/pages/music_instrument/controllers/music_instrument
 
 import 'package:morningmagic/pages/music_instrument/model/instrument_model.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/services/timer_service.dart';
 
 class InstrumentAudioController extends GetxController {
   InstrumentAudioRepositoryImpl repo = InstrumentAudioRepositoryImpl();
@@ -18,7 +19,12 @@ class InstrumentAudioController extends GetxController {
 
   RxBool pause = false.obs;
 
+  //сохраняем таймер при возвращении на панель инструментов
+  TimerService timerService;
+
   bool get isPause => pause.value;
+
+  var isLoading = Rx<Instrument>(null).obs;
 
   void audioSourceUpdate() => audioSourceList.value.refresh();
 
@@ -31,13 +37,14 @@ class InstrumentAudioController extends GetxController {
   void playAudio(Instrument instrument) async {
     try {
       if (audioSourse.length == 10) {
-        showErrorDialog('10 из 10');
+        //showErrorDialog('10 из 10');
         return;
       }
 
       if (audioSourse[instrument.instrument.tag] == null) {
         print('add new instrument tag = ${instrument.instrument.tag}');
         audioSourse[instrument.instrument.tag] = instrument;
+        isLoading.value.value = instrument;
         Instrument cachInstrument = await cacheAudioFile(instrument);
         audioPlayers[instrument.instrument.tag] = new AudioPlayer()
           ..setFilePath(cachInstrument.instrument.filePath)
@@ -45,6 +52,7 @@ class InstrumentAudioController extends GetxController {
           ..setLoopMode(LoopMode.one);
 
         audioSourceUpdate();
+        isLoading.value.value = null;
 
         _playAll();
       } else

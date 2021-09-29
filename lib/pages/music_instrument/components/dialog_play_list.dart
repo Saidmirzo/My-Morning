@@ -9,7 +9,7 @@ import 'package:morningmagic/pages/music_instrument/model/instrument_model.dart'
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 
-Widget dilaogPlayList() {
+Widget dilaogPlayList({bool fromTimer = false}) {
   //MusicInstrumentControllers _controllers = Get.find();
   InstrumentAudioController _audioController = Get.find();
   return Container(
@@ -29,40 +29,12 @@ Widget dilaogPlayList() {
                             i < _audioController.audioSourse.length;
                             i++)
                           _itemList(
-                              _audioController.audioSourse.values.elementAt(i))
+                              _audioController.audioSourse.values.elementAt(i),
+                              fromTimer)
                       ],
                     )))),
         SizedBox(height: 15),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          _button(child: _buttonSave(), onPress: () {}),
-          SvgPicture.asset(
-            SvgAssets.books,
-            height: 22,
-            width: 22,
-          ),
-        ])
       ],
-    ),
-  );
-}
-
-Widget _buttonSave() {
-  return Container(
-    height: 36,
-    width: Get.width / 1.5,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color(0xFFB994DA)),
-    child: Center(
-      child: Text(
-        'save_selected'.tr,
-        style: TextStyle(
-            fontSize: 18,
-            fontStyle: FontStyle.normal,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-            color: AppColors.VIOLET),
-      ),
     ),
   );
 }
@@ -72,7 +44,7 @@ Widget _button({Widget child, Function() onPress}) {
       padding: const EdgeInsets.all(0), child: child, onPressed: onPress);
 }
 
-Widget _itemList(Instrument instrument) {
+Widget _itemList(Instrument instrument, bool fromTimer) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Row(
@@ -93,6 +65,7 @@ Widget _itemList(Instrument instrument) {
             tag: instrument.instrument.tag,
             volume: instrument.instrumentVolume,
             dialogMode: true,
+            fromTimer: fromTimer,
           ),
         )),
         _button(

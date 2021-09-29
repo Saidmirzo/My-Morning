@@ -91,27 +91,17 @@ class _MeditationPageState extends State<MeditationPage> {
                       size: 38,
                       icon: Icon(Icons.arrow_forward, color: AppColors.primary),
                       onPressed: () {
-                        Get.to(MeditationTimerPage(
-                            fromHomeMenu: widget.fromHomeMenu));
+                        if (menuState == MenuState.MORNING)
+                          Get.to(MeditationTimerPage(
+                              fromHomeMenu: widget.fromHomeMenu));
+                        else
+                          Get.to(MeditationAudioNightPage(
+                            fromTimerPage: false,
+                            fromHomeMenu: true,
+                          ));
                         appAnalitics.logEvent('first_meditation_start');
                       }),
                   SizedBox(height: Get.height * 0.04),
-                  if (menuState == MenuState.NIGT)
-                    CupertinoButton(
-                      padding: const EdgeInsets.all(0),
-                      onPressed: () async {
-                        TimerService timerSevice = TimerService();
-                        await Get.to(AddTimePeriod(
-                          timerService: timerSevice,
-                        ));
-                        Get.to(MeditationTimerPage(
-                          fromHomeMenu: widget.fromHomeMenu,
-                          timerService: timerSevice,
-                        ));
-                      },
-                      child: SvgPicture.asset(
-                          'assets/images/reading_night/timer_button.svg'),
-                    ),
                 ],
               ),
             ),

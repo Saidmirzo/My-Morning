@@ -43,7 +43,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
     if (billingService.isPro())
       lock = false;
     else
-      lock = widget.id == 0 ? false : true;
+      lock = widget.id <= 1 ? false : true;
 
     super.initState();
   }
@@ -54,6 +54,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
       children: [
         InkWell(
           onTap: () {
+            selIndexNightYoga = widget.id;
             if (widget.isYoga)
               _audioController.selectedItemIndex.value = lock ? 0 : widget.id;
             else
@@ -91,10 +92,18 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                         ),
                       ),
                     ),
-                    if (_audioController.currentPage.value == MenuItems.yoga)
-                      Text(printDuration(
-                          _audioController.audioSource[widget.id].duration,
-                          h: false)),
+                    if (_audioController.currentPage.value == MenuItems.yoga ||
+                        _audioController.currentPage.value ==
+                            MenuItems.meditationNight)
+                      Text(
+                        printDuration(
+                            _audioController.audioSource[widget.id].duration,
+                            h: false),
+                        style: TextStyle(
+                            color: menuState == MenuState.MORNING
+                                ? AppColors.primary
+                                : Color(0xFFBEBFE7)),
+                      ),
                     if (_audioController.playingIndex.value == widget.id &&
                         _audioController.isAudioLoading.value)
                       _buildLoadingAudioIndicator(),

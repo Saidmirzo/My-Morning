@@ -54,6 +54,7 @@ dependencies:
   percent_indicator: ^3.0.1
   facebook_app_events: ^0.11.2
   app_tracking_transparency: ^2.0.0
+  adjust_sdk: ^4.29.1
   #intl: "^0.17.0"
   flutter_gifimage: ^1.0.1
   day_night_time_picker: ^1.0.2

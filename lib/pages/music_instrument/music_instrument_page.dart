@@ -10,10 +10,14 @@ import 'package:morningmagic/pages/music_instrument/components/slider.dart';
 import 'package:morningmagic/pages/music_instrument/controllers/music_instrument_controllers.dart';
 import 'package:morningmagic/pages/music_instrument/model/instrument_model.dart';
 import 'package:morningmagic/pages/music_instrument/property.dart';
+import 'package:morningmagic/pages/music_instrument/timer/components/player_instrument.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/styles.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/timer_service.dart';
+import 'package:morningmagic/storage.dart';
+import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 class MusicInstrumentPage extends StatefulWidget {
   MusicInstrumentPage() {
@@ -46,110 +50,88 @@ Widget body(BuildContext context) {
     height: Get.height,
     color: AppColors.instrumentalBg,
     child: SafeArea(
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SingleChildScrollView(
-            child: Obx(() => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _instrumentList(),
-                )),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
+            child: PrimaryCircleButton(
+              bgColor: Colors.transparent,
+              icon: Icon(Icons.arrow_back, color: AppColors.WHITE),
+              onPressed: () {
+                _audioController.dispose();
+                Get.delete<InstrumentAudioController>();
+                AppRouting.navigateToHomeWithClearHistory();
+              },
+            ),
           ),
-          // for (var i = 80.0; i <= 0; i++)
-          /*Positioned(
-            bottom: 0,
-            child: ClipRRect(
-              child: new BackdropFilter(
-                filter: new ImageFilter.blur(sigmaX: 1.4, sigmaY: 1.4),
-                child: new Container(
-                  width: Get.width,
-                  height: 80,
-                  decoration: new BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.center,
-                          colors: [
-                        Colors.purple.shade500,
-                        Colors.purple.shade500.withOpacity(0.5),
-                        Colors.purple.shade500.withOpacity(0.0),
-                        //Colors.transparent
-                      ])),
+          Expanded(
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Obx(() => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _instrumentList(),
+                      )),
                 ),
-              ),
-            ),
-          ),*/
-          Positioned(
-            bottom: 0,
-            child: ClipRRect(
-              child: Container(
-                width: Get.width,
-                height: 100,
-                decoration: new BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [
-                      Color(0xFF290A3C),
+                // for (var i = 80.0; i <= 0; i++)
+                /*Positioned(
+                  bottom: 0,
+                  child: ClipRRect(
+                    child: new BackdropFilter(
+                      filter: new ImageFilter.blur(sigmaX: 1.4, sigmaY: 1.4),
+                      child: new Container(
+                        width: Get.width,
+                        height: 80,
+                        decoration: new BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.center,
+                                colors: [
+                              Colors.purple.shade500,
+                              Colors.purple.shade500.withOpacity(0.5),
+                              Colors.purple.shade500.withOpacity(0.0),
+                              //Colors.transparent
+                            ])),
+                      ),
+                    ),
+                  ),
+                ),*/
+                Positioned(
+                  bottom: 0,
+                  child: ClipRRect(
+                    child: Container(
+                      width: Get.width,
+                      height: 100,
+                      decoration: new BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: [
+                            Color(0xFF290A3C),
 
-                      Color(0xFF290A3C).withOpacity(0.8),
-                      Color(0xFF290A3C).withOpacity(0.5),
-                      Color(0xFF290A3C).withOpacity(0.2),
-                      Color(0xFF290A3C).withOpacity(0),
-                      //Colors.transparent
-                    ])),
-              ),
+                            Color(0xFF290A3C).withOpacity(0.8),
+                            Color(0xFF290A3C).withOpacity(0.5),
+                            Color(0xFF290A3C).withOpacity(0.2),
+                            Color(0xFF290A3C).withOpacity(0),
+                            //Colors.transparent
+                          ])),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 40,
+                  right: 52,
+                  left: 52,
+                  child: instrumentPlayer(
+                      audioController: _audioController,
+                      timerService: _audioController.timerService == null
+                          ? timerService
+                          : _audioController.timerService),
+                ),
+              ],
             ),
           ),
-          Positioned(
-            bottom: 40,
-            right: 52,
-            left: 52,
-            child: Container(
-              height: 39,
-              decoration: BoxDecoration(
-                  color: AppColors.purchaseDesc,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _playButton(SvgAssets.time,
-                      onPress: () => setTimePeriod(timerService)),
-                  Obx(() => _playButton(
-                      _audioController.audioSourse.length == 0
-                          ? SvgAssets.play
-                          : _audioController.isPause == false
-                              ? SvgAssets.pause
-                              : SvgAssets.play,
-                      onPress: () => playPause())),
-                  Stack(
-                    children: [
-                      _playButton(
-                        SvgAssets.playList,
-                        onPress: () => onShowPlayList(
-                          dilaogPlayList(),
-                        ),
-                      ),
-                      Obx(
-                        () => Positioned.fill(
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 5, 5, 0),
-                              child: Text(
-                                '${_audioController.audioSourse.length == 0 ? '' : _audioController.audioSourse.length}',
-                                style: TextStyle(fontSize: 10),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  _playButton(SvgAssets.next,
-                      onPress: () => gotToTimerPage(timerService)),
-                ],
-              ),
-            ),
-          )
         ],
       ),
     ),
@@ -228,9 +210,16 @@ Widget _instumentContanier(Size size,
     {Instrument instrument,
     MusicInstrumentControllers controllers,
     bool isPlay = false}) {
+  InstrumentAudioController audioController = Get.find();
+  bool isPay =
+      (instrument.instrument.pay == true && billingService.isPro() == false)
+          ? false
+          : true;
   return InkWell(
     //padding: const EdgeInsets.all(0),
-    onTap: () => onInstrumentClick(instrument, controllers),
+    onTap: isPay == false
+        ? null
+        : () => onInstrumentClick(instrument, controllers),
     child: Container(
       height: size.width * 1.1,
       width: size.width,
@@ -238,14 +227,39 @@ Widget _instumentContanier(Size size,
           color: isPlay == false ? AppColors.primary : null,
           borderRadius: BorderRadius.circular(10),
           gradient: isPlay ? AppColors.gradient_instrument_active : null),
-      child: Padding(
-        padding: const EdgeInsets.all(30),
-        child: instrument.instrumentImage != null
-            ? SvgPicture.asset(
-                instrument.instrumentImage,
-                color: isPlay ? Colors.white : null,
-              )
-            : SizedBox(),
+      child: Stack(
+        children: [
+          if (audioController.isLoading.value.value == instrument)
+            Positioned(
+                top: 5,
+                right: 5,
+                child: SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      color: AppColors.LOADING_INDICATOR,
+                      strokeWidth: 2,
+                    ))),
+          if (!isPay)
+            Positioned(
+                top: 5,
+                right: 5,
+                child: SvgPicture.asset(
+                  'assets/images/home_menu/crown.svg',
+                  color: AppColors.WHITE.withOpacity(0.5),
+                )),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(30),
+              child: instrument.instrumentImage != null
+                  ? SvgPicture.asset(
+                      instrument.instrumentImage,
+                      color: isPlay ? Colors.white : null,
+                    )
+                  : SizedBox(),
+            ),
+          ),
+        ],
       ),
     ),
   );
@@ -259,15 +273,4 @@ Widget _trackBar({@required Instrument instrument}) {
       volume: instrument.instrumentVolume,
     ),
   );
-}
-
-Widget _playButton(String icon, {Function() onPress}) {
-  return CupertinoButton(
-      padding: const EdgeInsets.all(0),
-      onPressed: onPress,
-      child: SvgPicture.asset(
-        icon,
-        height: 18,
-        width: 18,
-      ));
 }

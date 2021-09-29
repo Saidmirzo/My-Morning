@@ -1,13 +1,15 @@
+import 'package:adjust_sdk/adjust.dart';
+import 'package:adjust_sdk/adjust_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
+import 'package:morningmagic/adjust_config.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/pages/loading/evening.dart';
 import 'package:morningmagic/pages/loading/morning.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/nigth/nigth.dart';
-import 'package:morningmagic/pages/settings/settingsPage.dart';
 import 'package:morningmagic/pages/welcome/welcome_page.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
@@ -37,7 +39,9 @@ class LoadingPageState extends State<LoadingPage>
   @override
   void initState() {
     super.initState();
+    AdJust.initConfigAdJust();
     print('LoadingPage initState');
+    AdJust.trackevent(AdJust.trialEvent);
     checkTime();
     _initTimerValue();
     billingService.init();

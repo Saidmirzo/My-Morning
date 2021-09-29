@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
+import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
+import 'package:morningmagic/pages/music_instrument/timer/components/player_instrument.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
@@ -12,6 +14,7 @@ import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/string_util.dart';
+import 'package:morningmagic/widgets/primary_circle_button.dart';
 import 'package:screen/screen.dart';
 
 import 'components/components.dart';
@@ -33,6 +36,7 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
     with WidgetsBindingObserver {
   TimerService timerService;
   TimerLeftController cTimerLeft;
+  InstrumentAudioController _audioController = Get.find();
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -49,6 +53,7 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
   void initState() {
     timerService =
         widget.timerService == null ? TimerService() : widget.timerService;
+    _audioController.timerService = timerService;
     cTimerLeft = TimerLeftController();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -67,6 +72,7 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
   @override
   Widget build(BuildContext context) {
     print('build timer page');
+
     return WillPopScope(
       onWillPop: () async {
         return true;
@@ -79,43 +85,65 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
                 ? AppColors.Bg_Gradient_Timer_Reading
                 : AppColors.gradient_loading_night_bg,
           ),
-          child: Stack(
-            children: [
-              Positioned(
-                bottom: 0,
-                child: Container(
-                    width: Get.width,
-                    child: Image.asset(
-                      menuState == MenuState.MORNING
-                          ? 'assets/images/timer/clouds_timer.png'
-                          : 'assets/images/reading_night/clouds.png',
-                      fit: BoxFit.cover,
-                    )),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Spacer(),
-                  buildTimerProgress(timerService),
-                  const SizedBox(height: 20),
-                  Obx(() => Text(
-                      StringUtil.createTimeString(
-                        timerService.time.value,
-                      ),
-                      style: TextStyle(
-                        fontSize: Get.height * 0.033,
-                        fontWeight: FontWeight.w600,
-                        color: menuState == MenuState.MORNING
-                            ? AppColors.primary
-                            : AppColors.WHITE,
-                      ))),
-                  Spacer(),
-                  Spacer(),
-                  Spacer(),
-                  buildMenuButtons(timerService),
-                ],
-              ),
-            ],
+          child: SafeArea(
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  top: 0,
+                  child: Container(
+                      width: Get.width,
+                      child: Image.asset(
+                        'assets/images/reading_night/clouds.png',
+                        fit: BoxFit.fill,
+                      )),
+                ),
+                Positioned(
+                  top: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
+                    child: PrimaryCircleButton(
+                      icon: Icon(Icons.arrow_back, color: AppColors.primary),
+                      onPressed: () {
+                        InstrumentAudioController controller = Get.find();
+                        controller.timerService.resume = true;
+                        Get.back();
+                      },
+                    ),
+                  ),
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Spacer(),
+                    buildTimerProgress(timerService),
+                    const SizedBox(height: 20),
+                    Obx(() => Text(
+                        StringUtil.createTimeString(
+                          timerService.time.value,
+                        ),
+                        style: TextStyle(
+                          fontSize: Get.height * 0.033,
+                          fontWeight: FontWeight.w600,
+                          color: menuState == MenuState.MORNING
+                              ? AppColors.primary
+                              : AppColors.WHITE,
+                        ))),
+                    Spacer(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Get.width / 4,
+                          vertical: Get.height * 0.05),
+                      child: instrumentPlayer(
+                          audioController: _audioController,
+                          timerService: timerService,
+                          fromTimer: true),
+                    ),
+                    buildMenuButtons(timerService),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -124,9 +152,19 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
 
   @override
   void dispose() {
-    Get.delete<TimerLeftController>();
-    super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-    timerService.dispose();
+    InstrumentAudioController controller;
+    try {
+      controller = Get.find();
+    } catch (e) {
+      print(
+          'Instrument audio controller not found, dispose instrument timer page');
+    }
+
+    if (controller == null) {
+      Get.delete<TimerLeftController>();
+      super.dispose();
+      WidgetsBinding.instance.removeObserver(this);
+      timerService.dispose();
+    }
   }
 }

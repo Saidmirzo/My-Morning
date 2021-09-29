@@ -16,10 +16,12 @@ class InstrumentAudioData {
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%93%D1%83%D0%B1%D0%BD%D0%B0%D1%8F%20%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D1%88%D0%BA%D0%B0.mp3'),
     InstrumentAudio(
         tag: 'Wooden spoons',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%94%D0%B5%D1%80%D0%B5%D0%B2%D1%8F%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BB%D0%BE%D0%B6%D0%BA%D0%B8.mp3'),
     InstrumentAudio(
         tag: 'Lullaby',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9A%D0%BE%D0%BB%D1%8B%D0%B1%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F.mp3'),
     InstrumentAudio(
@@ -43,10 +45,12 @@ class InstrumentAudioData {
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%B2%20%D0%BA%D0%B0%D1%84%D0%B5.mp3'),
     InstrumentAudio(
         tag: 'Village',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%94%D0%B5%D1%80%D0%B5%D0%B2%D0%BD%D1%8F.mp3'),
     InstrumentAudio(
         tag: 'Train',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9F%D0%BE%D0%B5%D0%B7%D0%B4.mp3'),
     InstrumentAudio(
@@ -64,7 +68,7 @@ class InstrumentAudioData {
     InstrumentAudio(
         tag: 'Crowd',
         url:
-            'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%A2%D0%BE%D0%BB%D0%BF%D0%B0.mp'),
+            'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%A2%D0%BE%D0%BB%D0%BF%D0%B0.mp3'),
   ];
 
   List<InstrumentAudio> otherInstruments = [
@@ -145,6 +149,7 @@ class InstrumentAudioData {
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9E%D0%B3%D0%BE%D0%BD%D1%8C.mp3'),
     InstrumentAudio(
         tag: 'Lake',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9E%D0%B7%D0%B5%D1%80%D0%BE.mp3'),
     InstrumentAudio(
@@ -165,10 +170,12 @@ class InstrumentAudioData {
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%A1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D0%B2%D0%B5%D1%82%D0%B5%D1%80.mp3'),
     InstrumentAudio(
         tag: 'Snow crunch',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%A5%D1%80%D1%83%D1%81%D1%82%20%D1%81%D0%BD%D0%B5%D0%B3%D0%B0.mp3'),
     InstrumentAudio(
         tag: 'Rustle of Grass',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%A8%D0%B5%D0%BB%D0%B5%D1%81%D1%82%20%D1%82%D1%80%D0%B0%D0%B2%D1%8B.mp3'),
   ];
@@ -176,18 +183,22 @@ class InstrumentAudioData {
   List<InstrumentAudio> creaturesInstruments = [
     InstrumentAudio(
         tag: 'Whale',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9A%D0%B8%D1%82.mp3'),
     InstrumentAudio(
         tag: '"Cat lapping milk',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9A%D0%BE%D1%88%D0%BA%D0%B0%20%D0%BB%D0%B0%D0%BA%D0%B0%D0%B5%D1%82%20%D0%BC%D0%BE%D0%BB%D0%BE%D0%BA%D0%BE.mp3'),
     InstrumentAudio(
         tag: 'Horse gallop',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9B%D0%BE%D1%88%D0%B0%D0%B4%D1%8C%20%D0%B3%D0%B0%D0%BB%D0%BE%D0%BF.mp3'),
     InstrumentAudio(
         tag: 'The horse is coming',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9B%D0%BE%D1%88%D0%B0%D0%B4%D1%8C%20%D0%B8%D0%B4%D0%B5%D1%82.mp3'),
     InstrumentAudio(
@@ -196,14 +207,17 @@ class InstrumentAudioData {
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9B%D1%8F%D0%B3%D1%83%D1%88%D0%BA%D0%B0.mp3'),
     InstrumentAudio(
         tag: 'Frogs',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9B%D1%8F%D0%B3%D1%83%D1%88%D0%BA%D0%B8.mp3'),
     InstrumentAudio(
         tag: 'Cat Purr',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9C%D1%83%D1%80%D1%87%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BA%D0%BE%D1%88%D0%BA%D0%B8.mp3'),
     InstrumentAudio(
         tag: 'Birds',
+        pay: true,
         url:
             'https://storage.yandexcloud.net/myaudio/Night/Sound/%D0%9F%D1%82%D0%B8%D1%86%D1%8B.mp3'),
     InstrumentAudio(

@@ -14,6 +14,7 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   PageController pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
