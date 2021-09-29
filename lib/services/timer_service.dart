@@ -9,8 +9,10 @@ import 'package:morningmagic/db/model/affirmation_text/affirmation_text.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/progress/affirmation_progress/affirmation_progress.dart';
 import 'package:morningmagic/db/model/progress/meditation_progress/meditation_progress.dart';
+import 'package:morningmagic/db/model/progress/music_for_cleeping/music_for_skeeping_progress.dart';
 import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
@@ -35,23 +37,36 @@ class TimerService {
   String bookTitle;
   AppStates appStates = Get.put(AppStates());
   bool fromHomeMenu = false;
-
+  bool resume = false;
   // TODO remove one of players
   AudioPlayer audioPlayer = AudioPlayer();
 
   Function onDone;
 
   init(int _pageId, {Function onDone}) async {
+    if (resume) {
+      startTimer();
+      resume = false;
+      return;
+    }
     print('timerService: init');
     this.pageId = _pageId;
     this.onDone = onDone;
+    if (_pageId == TimerPageId.MeditationNight) return;
 
-    getTimeAndText().then((int value) {
-      time.value = value * 60;
-      startValue = value * 60;
-      startTime = value;
+    if (startTime == null || startTime == 0) {
+      getTimeAndText().then((int value) {
+        time.value = value * 60;
+        startValue = value * 60;
+        startTime = value;
+        startTimer();
+      });
+    } else {
+      time.value = startTime * 60;
+      startValue = startTime * 60;
+
       startTimer();
-    });
+    }
   }
 
   dispose() {
@@ -59,8 +74,20 @@ class TimerService {
     if (timer != null) timer.cancel();
   }
 
+  void nightMeditationStart(Duration duration) {
+    if (duration != null) {
+      time.value = duration.inSeconds;
+      startValue = duration.inSeconds;
+      startTime = duration.inSeconds;
+      if (timer == null || !timer.isActive) startTimer();
+    }
+  }
+
   double get createValue =>
       startTime != null ? 1 - time / (startTime * 60) : time.toDouble();
+
+  double get creatValueNight =>
+      startTime != null ? 1 - time / startTime : time.toDouble();
 
   void setTime(int min) {
     startTime = min;
@@ -68,27 +95,34 @@ class TimerService {
     time.value = min * 60;
   }
 
+  void setNightTime(int second) {
+    startTime = second;
+    startValue = second;
+    time.value = second;
+  }
+
   Future<void> skipTask() async {
     if (timer != null && timer.isActive) {
       timer.cancel();
     }
+
     if (pageId != TimerPageId.Reading) saveProgress(true);
+
     await OrderUtil().getRouteById(pageId).then((value) {
       print('skipTask pageId: $pageId');
-      if (pageId == TimerPageId.Reading)
-        getNextPage(value, true);
-      else
-        Get.off(
-          fromHomeMenu
-              ? billingService.isVip.value
-                  ? ProgressPage()
-                  : PaywallPage()
-              : value,
-        );
+
+      getNextPage(value, true);
     });
     if (pageId == TimerPageId.Meditation) {
       Get.delete<MediationAudioController>();
     }
+    if (pageId == TimerPageId.MusicNight) deleteInstrumentAudioController();
+  }
+
+  void deleteInstrumentAudioController() {
+    InstrumentAudioController _controller = Get.find();
+    _controller.dispose();
+    Get.delete<InstrumentAudioController>();
   }
 
   Function goToHome() {
@@ -96,6 +130,9 @@ class TimerService {
     AppRouting?.navigateToHomeWithClearHistory();
     // При выходе в меню чтение не сохраняем
     if (pageId != TimerPageId.Reading) saveProgress(true);
+    if (pageId == TimerPageId.MusicNight) {
+      deleteInstrumentAudioController();
+    }
   }
 
   Future<int> getTimeAndText() async {
@@ -135,6 +172,15 @@ class TimerService {
           var model = MeditationProgress(passedSec.value, isSkip: isSkip);
           pg.saveJournal(MyResource.MEDITATION_JOURNAL, model);
           break;
+        case TimerPageId.MeditationNight:
+          var model = MeditationProgress(passedSec.value, isSkip: isSkip);
+          pg.saveJournal(MyResource.MEDITATION_JOURNAL, model);
+          break;
+        case TimerPageId.MusicNight:
+          deleteInstrumentAudioController();
+          var model = MusicForSleepingProgress(passedSec.value, isSkip: isSkip);
+          pg.saveJournal(MyResource.MEDITATION_JOURNAL, model);
+          break;
         default:
       }
 
@@ -156,16 +202,18 @@ class TimerService {
           print('timer_service: timer work done');
           timer.cancel();
           if (pageId != TimerPageId.Reading) saveProgress(false);
+
           OrderUtil()
               .getRouteById(pageId)
               .then((value) => getNextPage(value, false));
+
           if (onDone != null) onDone();
         } else {
           time.value--;
           passedSec++;
         }
       });
-    } else if (timer != null && timer.isActive) {
+    } else if (timer != null && timer.isActive && !resume) {
       print('stop Timer');
       timer.cancel();
       isActive.toggle();

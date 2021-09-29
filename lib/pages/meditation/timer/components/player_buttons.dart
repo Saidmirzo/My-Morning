@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/widgets/timer_circle_button.dart';
 
 Widget buildPlayerControls() {
@@ -46,11 +47,13 @@ Widget buildPlayerControls() {
           Container(
               width: Get.width * 0.8,
               alignment: Alignment.center,
-              child: Obx(() => Text(
-                    cAudio.currAudioName.value,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.clip,
-                  ))),
+              child: Obx(() => Text(cAudio.currAudioName.value,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(
+                      color: menuState == MenuState.MORNING
+                          ? Colors.black
+                          : Colors.white)))),
         ],
       ),
     ),

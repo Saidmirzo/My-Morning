@@ -8,6 +8,7 @@ import 'package:flutter_circular_chart_two/flutter_circular_chart_two.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
+import 'package:morningmagic/adjust_config.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/user/user.dart';
 import 'package:morningmagic/db/resource.dart';
@@ -62,6 +63,7 @@ class _ProgressPageState extends State<ProgressPage> {
   @override
   void initState() {
     super.initState();
+    AdJust.trackevent(AdJust.installEvent);
     print('onDine complex ${widget.onDone}');
     if (widget.onDone) {
       // Если комплекс был полностью завершен
@@ -121,8 +123,8 @@ class _ProgressPageState extends State<ProgressPage> {
                 SizedBox(height: 15),
                 removeButton(),
                 SizedBox(height: 20),
-                buildLanguageSwitcher(),
-                SizedBox(height: 20),
+                /*  buildLanguageSwitcher(),
+                SizedBox(height: 20), */
               ],
             ),
           ),

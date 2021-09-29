@@ -110,22 +110,37 @@ class MainMenuPageState extends State<MainMenuPage> {
       color: Color(0xffFFB5C3),
       child: SafeArea(
         bottom: false,
-        child: Column(
+        child: Stack(
           children: [
-            const SizedBox(height: 20),
-            Text(
-              'MY MORNING',
-              style: TextStyle(
-                  fontSize: Get.width * .06,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white),
+            Image.asset(
+              '$imagePath/header.png',
             ),
-            const SizedBox(height: 30),
-            ClipPath(
-              clipper: OvalTopBorderClipper(),
-              child: Container(
-                height: 40,
-                color: Color(0xffffffff),
+
+            //SvgPicture.asset('$imagePath/header.svg'),
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'MY MORNING',
+                    style: TextStyle(
+                        fontSize: Get.width * .06,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
+                  const SizedBox(height: 20),
+                  ClipPath(
+                    clipper: OvalTopBorderClipper(),
+                    child: Container(
+                      height: 40,
+                      color: Color(0xffffffff),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -203,18 +218,19 @@ class MainMenuPageState extends State<MainMenuPage> {
   Widget buildExercises() {
     return Column(
       children: [
-        Row(
-          children: [
-            const SizedBox(width: 5),
-            SvgPicture.asset('$imagePath/crown.svg'),
-            const SizedBox(width: 10),
-            Text(
-              'subscription'.tr,
-              style: TextStyle(
-                  fontSize: Get.width * .045, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
+        if (!billingService.isPro())
+          Row(
+            children: [
+              const SizedBox(width: 5),
+              SvgPicture.asset('$imagePath/crown.svg'),
+              const SizedBox(width: 10),
+              Text(
+                'subscription'.tr,
+                style: TextStyle(
+                    fontSize: Get.width * .045, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
         const SizedBox(height: 10),
         Column(
           children: [

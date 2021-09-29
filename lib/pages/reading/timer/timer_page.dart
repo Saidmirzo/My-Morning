@@ -10,6 +10,7 @@ import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/services/timer_service.dart';
+import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:screen/screen.dart';
 
@@ -17,17 +18,22 @@ import 'components/components.dart';
 
 class ReadingTimerPage extends StatefulWidget {
   final bool fromHomeMenu;
+  final TimerService timerService;
 
-  const ReadingTimerPage({Key key, this.fromHomeMenu = false})
-      : super(key: key);
+  const ReadingTimerPage({
+    Key key,
+    this.fromHomeMenu = false,
+    this.timerService,
+  }) : super(key: key);
   @override
   State createState() => ReadingTimerPageState();
 }
 
 class ReadingTimerPageState extends State<ReadingTimerPage>
     with WidgetsBindingObserver {
-  TimerService timerService = TimerService();
+  TimerService timerService;
   TimerLeftController cTimerLeft;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
@@ -41,6 +47,8 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
 
   @override
   void initState() {
+    timerService =
+        widget.timerService == null ? TimerService() : widget.timerService;
     cTimerLeft = TimerLeftController();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -67,19 +75,22 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
         body: Container(
           height: Get.height,
           decoration: BoxDecoration(
-            gradient: AppColors.Bg_Gradient_Timer_Reading,
+            gradient: menuState == MenuState.MORNING
+                ? AppColors.Bg_Gradient_Timer_Reading
+                : AppColors.gradient_loading_night_bg,
           ),
           child: Stack(
             children: [
               Positioned(
                 bottom: 0,
                 child: Container(
-                  width: Get.width,
-                  child: Image.asset(
-                    'assets/images/timer/clouds_timer.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                    width: Get.width,
+                    child: Image.asset(
+                      menuState == MenuState.MORNING
+                          ? 'assets/images/timer/clouds_timer.png'
+                          : 'assets/images/reading_night/clouds.png',
+                      fit: BoxFit.cover,
+                    )),
               ),
               Column(
                 mainAxisSize: MainAxisSize.max,
@@ -94,7 +105,9 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
                       style: TextStyle(
                         fontSize: Get.height * 0.033,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.primary,
+                        color: menuState == MenuState.MORNING
+                            ? AppColors.primary
+                            : AppColors.WHITE,
                       ))),
                   Spacer(),
                   Spacer(),

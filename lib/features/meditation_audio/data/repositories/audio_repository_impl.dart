@@ -42,9 +42,10 @@ class AudioRepositoryImpl implements AudioRepository {
   }
 
   @override
-  Future<List<dynamic>> getFavoriteAudioFiles() async {
-    List<dynamic> audioFiles =
-        await MyDB().getBox().get(MyResource.MEDITATION_AUDIO_FAVORITE);
+  Future<List<dynamic>> getFavoriteAudioFiles(bool night) async {
+    List<dynamic> audioFiles = await MyDB().getBox().get(night
+        ? MyResource.MEDITATION_AUDIO_NIGHT_FAVORITE
+        : MyResource.MEDITATION_AUDIO_FAVORITE);
     return Future.value(audioFiles ?? []);
   }
 }

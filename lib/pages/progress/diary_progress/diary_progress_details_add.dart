@@ -30,7 +30,6 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -84,7 +83,8 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                           child: SingleChildScrollView(
                             child: TextField(
                               keyboardType: TextInputType.multiline,
-                              maxLines: 25,
+                              maxLines: null,
+                              minLines: 10,
                               //controller: nameController,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),

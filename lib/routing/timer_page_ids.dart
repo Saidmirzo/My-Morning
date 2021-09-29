@@ -5,4 +5,6 @@ class TimerPageId {
   static const int Diary = 3;
   static const int Reading = 4;
   static const int Visualization = 5;
+  static const int MusicNight = 6;
+  static const int MeditationNight = 7;
 }

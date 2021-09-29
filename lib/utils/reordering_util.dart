@@ -10,6 +10,7 @@ import 'package:morningmagic/pages/meditation/meditation_page.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/reading/reading_page.dart';
+import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/storage.dart';
 
@@ -131,6 +132,10 @@ class OrderUtil {
   }
 
   Future<dynamic> getRouteById(int id) async {
+    if (id == TimerPageId.MeditationNight || id == TimerPageId.MusicNight) {
+      return ProgressPage();
+    }
+
     OrderHolder orderHolder = await getOrderHolder();
     int pos = await getPositionById(id);
     print('currentPage = $pos');

@@ -11,6 +11,8 @@ import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/domain/repositories/audio_repository.dart';
+import 'package:morningmagic/services/timer_service.dart';
+import 'package:morningmagic/storage.dart';
 
 import '../../domain/entities/meditation_audio.dart';
 
@@ -19,6 +21,7 @@ class MenuItems {
   static const int sounds = 2;
   static const int yoga = 3;
   static const int favorite = 4;
+  static const int meditationNight = 5;
 }
 
 class MediationAudioController extends GetxController {
@@ -50,7 +53,7 @@ class MediationAudioController extends GetxController {
   // Если играет на странице таймера
   RxBool isPlaying = false.obs;
   var isAudioLoading = false.obs;
-
+  Duration get currentDurationTrack => player.duration;
   bool playFromFavorite = false;
 
   List<AudioSource> playList;
@@ -61,13 +64,17 @@ class MediationAudioController extends GetxController {
 
   Rx<Duration> durationPosition = Duration().obs;
   RxDouble percentDuration = 0.0.obs;
+  //для ночной медитации, чтобы заинициализировать таймер
+  TimerService timerService;
 
   bool get isPlaylistAudioCached =>
       player.currentIndex < audioSource.length &&
       audioSource[player.currentIndex].filePath != null;
 
   // Страница с которой выбрали музыку
-  RxInt currentPage = MenuItems.music.obs;
+  RxInt currentPage = menuState == MenuState.MORNING
+      ? MenuItems.music.obs
+      : MenuItems.meditationNight.obs;
 
   RxString currAudioName = ''.obs;
 
@@ -78,8 +85,13 @@ class MediationAudioController extends GetxController {
 
     loadFavoriteAudios();
 
-    changeAudioSource(meditationAudioData.musicSource);
-    changeAudioSource(meditationAudioData.musicSource, isBgSource: true);
+    if (menuState == MenuState.MORNING) {
+      changeAudioSource(meditationAudioData.musicSource);
+      changeAudioSource(meditationAudioData.musicSource, isBgSource: true);
+    } else
+      changeAudioSource(Get.locale.languageCode == 'ru'
+          ? meditationAudioData.meditationNightRuSource
+          : meditationAudioData.meditationNightEnSource);
 
     // 50% громкость для фоновой музыки
     bgAudioPlayer.value.setVolume(.5);
@@ -88,22 +100,24 @@ class MediationAudioController extends GetxController {
       durationPosition.value = event;
       if (event == null) return;
       percentDuration.value =
-          ((event?.inSeconds ?? 0 / player?.duration?.inSeconds ?? 0) / 100)
-              .toDouble();
+          (event.inSeconds / player.duration.inSeconds).toDouble();
     }, onError: (Object e, StackTrace stackTrace) {
       print('A stream error occurred: $e');
     });
+
     player.playingStream.listen((event) {
       print('playingStream $event');
       if (isPlaying.value != event) isPlaying.value = event;
     });
+
     player.playerStateStream.listen((state) {
       if (!state.playing &&
           (state.processingState.index == ProcessingState.loading.index ||
               state.processingState.index == ProcessingState.buffering.index)) {
         isAudioLoading.value = true;
-      } else
+      } else {
         isAudioLoading.value = false;
+      }
     });
   }
 
@@ -167,11 +181,14 @@ class MediationAudioController extends GetxController {
       }
     }
     print('audioSource lenght: ${audioSource.length}');
+
     await loadFavoriteAudios();
   }
 
   Future loadFavoriteAudios() async {
-    (await repository.getFavoriteAudioFiles()).forEach((element) {
+    (await repository.getFavoriteAudioFiles(
+            menuState == MenuState.MORNING ? false : true))
+        .forEach((element) {
       print('Favorite audio : $element');
       if (!favoriteAudios.value.contains(element))
         favoriteAudios.value.add(element);
@@ -185,6 +202,15 @@ class MediationAudioController extends GetxController {
     await MyDB()
         .getBox()
         .put(MyResource.MEDITATION_AUDIO_FAVORITE, favoriteAudios.value);
+  }
+
+  void setAudioNightFavorite(MeditationAudio audio) async {
+    favoriteAudios.value.contains(audio)
+        ? favoriteAudios.value.remove(audio)
+        : favoriteAudios.value.add(audio);
+    await MyDB()
+        .getBox()
+        .put(MyResource.MEDITATION_AUDIO_NIGHT_FAVORITE, favoriteAudios.value);
   }
 
   Future<MeditationAudio> cacheAudioFile(MeditationAudio track) async {
@@ -336,6 +362,9 @@ class MediationAudioController extends GetxController {
 
   void next() {
     print('audio next');
+    if (menuState == MenuState.NIGT && !billingService.isPro()) {
+      if (player.currentIndex >= 1) return;
+    }
     final _playListLength = playList.length;
     if (_playListLength == 0) return;
     int _nextIndex = 0;
@@ -343,15 +372,24 @@ class MediationAudioController extends GetxController {
       _nextIndex = 0;
     else
       _nextIndex = player.currentIndex + 1;
+
+    if (timerService != null)
+      timerService.nightMeditationStart(audioSource[_nextIndex].duration);
+
     player.seek(Duration(seconds: 0), index: _nextIndex);
     if (!withBgSound.value) {
       currAudioName.value = audioSource[_nextIndex].name;
     }
+
     if (!player.playing) player.play();
   }
 
   void prev() {
     print('audio prev');
+    if (menuState == MenuState.NIGT && !billingService.isPro()) {
+      if (player.currentIndex == 0) return;
+    }
+
     final _playListLength = playList.length;
     if (_playListLength == 0) return;
     int _nextIndex = 0;
@@ -359,15 +397,21 @@ class MediationAudioController extends GetxController {
       _nextIndex = _playListLength - 1;
     else
       _nextIndex = player.currentIndex - 1;
+
+    if (timerService != null)
+      timerService.nightMeditationStart(audioSource[_nextIndex].duration);
+
     player.seek(Duration(seconds: 0), index: _nextIndex);
     if (!withBgSound.value) {
       currAudioName.value = audioSource[_nextIndex].name;
     }
+
     if (!player.playing) player.play();
   }
 
   void play() {
     print('playOrPause: player.play');
+
     player.play();
     isPlaying(true);
   }

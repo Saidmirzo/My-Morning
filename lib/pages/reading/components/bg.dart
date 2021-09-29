@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/resources/svg_assets.dart';
 
 Widget bg() {
   return Stack(
@@ -21,6 +23,31 @@ Widget bg() {
       Positioned(
           bottom: 0,
           child: Image.asset('assets/images/reading/main.png',
+              width: Get.width, fit: BoxFit.cover)),
+    ],
+  );
+}
+
+Widget bgNight() {
+  return Stack(
+    children: [
+      Positioned(
+          bottom: 0,
+          child: Image.asset('assets/images/reading_night/clouds.png',
+              width: Get.width, fit: BoxFit.cover)),
+      Positioned(
+        bottom: 0,
+        child: Image.asset('assets/images/reading/mountain1.png',
+            width: Get.width, fit: BoxFit.cover),
+      ),
+      Positioned(
+        bottom: 0,
+        child: Image.asset('assets/images/reading/mountain2.png',
+            width: Get.width, fit: BoxFit.cover),
+      ),
+      Positioned(
+          bottom: 0,
+          child: Image.asset('assets/images/reading_night/main.png',
               width: Get.width, fit: BoxFit.cover)),
     ],
   );

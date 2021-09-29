@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "22.0.0"
+  adjust_sdk:
+    dependency: "direct main"
+    description:
+      name: adjust_sdk
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.29.1"
   analyzer:
     dependency: transitive
     description:
@@ -56,7 +63,7 @@ packages:
       name: audioplayers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.19.0"
+    version: "0.20.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -631,7 +638,7 @@ packages:
     source: hosted
     version: "1.1.0"
   intl:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       name: intl
       url: "https://pub.dartlang.org"

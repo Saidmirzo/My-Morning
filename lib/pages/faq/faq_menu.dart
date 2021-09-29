@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/dialog/langDialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/faq/faq_support.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/widgets/lang_btn.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 import 'controllers/faq_controller.dart';
@@ -40,7 +42,13 @@ class FAQStateScreen extends State<FaqMenuPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    backBtn(),
+                    Row(
+                      children: [
+                        backBtn(),
+                        Spacer(),
+                        langBtn(context),
+                      ],
+                    ),
                     const SizedBox(height: 20),
                     Text(
                       'faq_menu_title'.tr,

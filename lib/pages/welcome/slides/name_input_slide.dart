@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/widgets/lang_btn.dart';
 
 import '../../../db/model/user/user.dart';
 import '../../../db/resource.dart';
@@ -23,15 +24,22 @@ class NameInputSlide extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        //mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          langBtn(context),
+          Spacer(
+            flex: 1,
+          ),
           buildTitle(),
           SizedBox(height: 21),
           buildInput(),
           SizedBox(height: 41),
-          LanguageSwitcher(),
+          //LanguageSwitcher(),
           SizedBox(height: Get.height * .15),
           buildButton(),
+          Spacer(
+            flex: 1,
+          ),
         ],
       ),
     );
