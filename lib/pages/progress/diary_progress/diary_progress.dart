@@ -183,7 +183,6 @@ class CategoryItem extends StatelessWidget {
                       fontSize: MediaQuery.of(context).size.width * 0.04, //16,
                       color: Colors.black54,
                     ),
-                    //style: Theme.of(context).textTheme.title,
                   ),
                 ),
                 Spacer(),

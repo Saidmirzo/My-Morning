@@ -132,7 +132,6 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                                       0.04, //16,
                                   color: Colors.black54,
                                 ),
-                                //style: Theme.of(context).textTheme.title,
                               )),
                             ),
                           ],
