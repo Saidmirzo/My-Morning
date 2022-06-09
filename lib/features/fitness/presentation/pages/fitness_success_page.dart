@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
@@ -16,8 +17,7 @@ class FitnessSuccessPage extends StatefulWidget {
   final int countProgram;
   final Function onNext;
 
-  const FitnessSuccessPage({Key key, this.countProgram, this.onNext})
-      : super(key: key);
+  const FitnessSuccessPage({Key key, this.countProgram, this.onNext}) : super(key: key);
 
   @override
   State createState() {
@@ -62,8 +62,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
         body: Container(
           width: Get.width,
           height: Get.height,
-          decoration:
-              BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
+          decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -111,14 +110,10 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
       lineWidth: 27.0,
       reverse: true,
       animation: false,
-      percent: 0.4,
+      percent: 0.6,
       center: Text(
         'success'.tr,
-        style: TextStyle(
-            fontSize: Get.height * 0.04,
-            fontStyle: FontStyle.normal,
-            color: Colors.white,
-            fontWeight: FontWeight.w600),
+        style: TextStyle(fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
       linearGradient: AppColors.Progress_Gradient_Timer_Reading,

@@ -18,24 +18,23 @@ class OrderItemAdapter extends TypeAdapter<OrderItem> {
     };
     return OrderItem(
       fields[0] as int,
+      fields[1] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, OrderItem obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.position);
+      ..write(obj.position)
+      ..writeByte(1)
+      ..write(obj.id);
   }
 
   @override
   int get hashCode => typeId.hashCode;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is OrderItemAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+  bool operator ==(Object other) => identical(this, other) || other is OrderItemAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeTextSlide extends StatelessWidget {
   final PageController _pageController;
@@ -20,10 +23,7 @@ class WelcomeTextSlide extends StatelessWidget {
           Spacer(),
           Text(
             'welcome_page_title'.tr,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: Get.width * .055,
-                fontWeight: FontWeight.w600),
+            style: TextStyle(color: Colors.white, fontSize: Get.width * .055, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 20),
           Text(
@@ -31,7 +31,14 @@ class WelcomeTextSlide extends StatelessWidget {
             style: TextStyle(color: Colors.white60, fontSize: Get.width * .042),
           ),
           Spacer(),
-          Center(child: buildButton()),
+          Center(
+              child: PrimaryCircleButton(
+            size: 40,
+            icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+            onPressed: () async {
+              Navigator.pop(context);
+            },
+          )),
           Spacer(),
           Center(
               child: SvgPicture.asset(
@@ -40,17 +47,6 @@ class WelcomeTextSlide extends StatelessWidget {
           )),
         ],
       ),
-    );
-  }
-
-  PrimaryCircleButton buildButton() {
-    return PrimaryCircleButton(
-      size: 40,
-      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
-      onPressed: () {
-        _pageController.nextPage(
-            duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-      },
     );
   }
 }

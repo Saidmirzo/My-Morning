@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/components/back_component.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 import 'components/bg.dart';
@@ -43,7 +44,12 @@ class _InterviewPageState extends State<InterviewPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                dotPanel(_pages.length),
+                Row(
+                  children: [
+                    BackComponent(),
+                    dotPanel(_pages.length),
+                  ],
+                ),
                 Expanded(
                   child: PageView(
                     controller: _controller.pageController,

@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 1.1.3+42
+version: 1.1.5+44
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -13,10 +13,7 @@ dependencies:
     sdk: flutter
   # Временно через гит, т.к. с версией pub.dev ошибка:
   # The getter 'body1' isn't defined for the class 'TextTheme'.
-  charts_flutter: 
-    git:
-        url: git://github.com/google/charts.git
-        path: charts_flutter
+  charts_flutter: ^0.12.0
   cupertino_icons: ^1.0.3
   expandable: ^5.0.1
   google_mobile_ads: ^0.13.5
@@ -29,12 +26,12 @@ dependencies:
   flutter_circular_chart_two: ^0.1.2
   flutter_html: ^2.1.0
   flutter_svg: ^0.22.0
-  flutter_visualizers: ^0.0.2
+  #flutter_visualizers: ^0.0.2
   get: ^3.26.0
   hive: ^2.0.4
   hive_flutter: ^1.0.0
   permission_handler: ^7.2.0
-  purchases_flutter: ^3.2.2
+  # purchases_flutter: ^3.2.2
   random_string: ^2.1.0
   reorderables: ^0.3.2
   shared_preferences: ^2.0.6
@@ -65,10 +62,12 @@ dependencies:
   day_night_time_picker: ^1.0.2
   duration_picker: ^1.0.1
   numberpicker: ^2.1.1
-
-
+  hexcolor: ^2.0.0
+  appmetrica_plugin: ^0.1.0
+  adapty_flutter: ^1.0.10
   flutter_localizations:
     sdk: flutter
+  
 
 #  remove on fix charts flutter
 dependency_overrides:
@@ -91,6 +90,8 @@ flutter_icons:
 flutter:
   assets:
     - assets/images/
+    - assets/images/onboarding/
+    - assets/images/paywall/
     - assets/images/auth/
     - assets/images/faq/
     - assets/images/home_menu/

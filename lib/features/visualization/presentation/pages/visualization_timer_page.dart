@@ -19,8 +19,7 @@ class VisualizationTimerPage extends StatefulWidget {
   _VisualizationTimerPageState createState() => _VisualizationTimerPageState();
 }
 
-class _VisualizationTimerPageState extends State<VisualizationTimerPage>
-    with WidgetsBindingObserver {
+class _VisualizationTimerPageState extends State<VisualizationTimerPage> with WidgetsBindingObserver {
   VisualizationController _controller = Get.find<VisualizationController>();
 
   TimerLeftController cTimerLeft;
@@ -28,11 +27,9 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      cTimerLeft.onAppLeft(_controller.timer, _controller.timeLeft.value,
-          onPlayPause: () => _controller.toggleStartPauseTimer());
+      cTimerLeft.onAppLeft(_controller.timer, _controller.timeLeft.value, onPlayPause: () => _controller.toggleStartPauseTimer());
     } else if (state == AppLifecycleState.resumed) {
-      cTimerLeft.onAppResume(
-          _controller.timer, _controller.timeLeft, _controller.passedSec);
+      cTimerLeft.onAppResume(_controller.timer, _controller.timeLeft, _controller.passedSec);
     }
   }
 
@@ -95,10 +92,8 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage>
   BoxDecoration _buildPageDecoration() {
     return BoxDecoration(
       image: DecorationImage(
-        image: _controller
-            .getImpressionDecorationImage(_controller.currentImageIndex),
-        colorFilter: new ColorFilter.mode(
-            Colors.grey.withOpacity(0.5), BlendMode.exclusion),
+        image: _controller.getImpressionDecorationImage(_controller.currentImageIndex),
+        colorFilter: new ColorFilter.mode(Colors.grey.withOpacity(0.5), BlendMode.exclusion),
         fit: BoxFit.cover,
       ),
     );
@@ -109,15 +104,10 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage>
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildActionButton(
-            () => Navigator.of(context).push(_createFullScreenRoute()),
-            'assets/images/full_screen.svg'),
+        _buildActionButton(() => Navigator.of(context).push(_createFullScreenRoute()), 'assets/images/full_screen.svg'),
         Obx(() {
-          VoidCallback _toggleStartPauseCallback =
-              () => _controller.toggleStartPauseTimer();
-          final _imageRes = _controller.isTimerActive.value
-              ? 'assets/images/pause.svg'
-              : 'assets/images/play.svg';
+          VoidCallback _toggleStartPauseCallback = () => _controller.toggleStartPauseTimer();
+          final _imageRes = _controller.isTimerActive.value ? 'assets/images/pause.svg' : 'assets/images/play.svg';
           return _buildActionButton(_toggleStartPauseCallback, _imageRes);
         }),
         _buildActionButton(() {

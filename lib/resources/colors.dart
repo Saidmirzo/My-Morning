@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   static const LIGHT_VIOLET = Color(0xFF7948c2);
   static const VIOLET = Color(0xFF502e82);
+  static const VIOLET_ONB = Color(0xFF6B0496);
   static const CREAM = Color(0xFFe9b7b3);
   static const LIGHT_CREAM = Color(0xFFf6e4e2);
   static const PINK = Color(0xFFc24e95);

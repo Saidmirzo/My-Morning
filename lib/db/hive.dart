@@ -101,22 +101,19 @@ class MyDB {
   // Получаем любой журнал
   Map<String, List<dynamic>> getJournalProgress(String journal) {
     try {
-      return Map<String, List<dynamic>>.from(
-          myDbBox.get(journal, defaultValue: Map<String, List<dynamic>>()));
+      return Map<String, List<dynamic>>.from(myDbBox.get(journal, defaultValue: Map<String, List<dynamic>>()));
     } catch (e) {
       print('Ошибка получения журнала $e');
       // Ошиюка будет у старых пользователей из-за другой структуры сохраненных данных
       // По этому удаляем их и начинаем вести статистику заново
       myDbBox.put(journal, Map<String, List<dynamic>>());
-      return Map<String, List<dynamic>>.from(
-          myDbBox.get(journal, defaultValue: Map<String, List<dynamic>>()));
+      return Map<String, List<dynamic>>.from(myDbBox.get(journal, defaultValue: Map<String, List<dynamic>>()));
     }
   }
 
   // Получаем журнал дневника
   Map<String, dynamic> getDiaryProgress() {
-    return Map<String, dynamic>.from(getBox()
-        .get(MyResource.DIARY_JOURNAL, defaultValue: Map<String, dynamic>()));
+    return Map<String, dynamic>.from(getBox().get(MyResource.DIARY_JOURNAL, defaultValue: Map<String, dynamic>()));
   }
 
   Future<void> clearWithoutUserName() async {

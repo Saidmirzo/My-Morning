@@ -27,8 +27,7 @@ class ExercisePage extends StatefulWidget {
   _ExercisePageState createState() => _ExercisePageState();
 }
 
-class _ExercisePageState extends State<ExercisePage>
-    with TickerProviderStateMixin {
+class _ExercisePageState extends State<ExercisePage> with TickerProviderStateMixin {
   GifController _gifController;
   FitnessController _fitnessController = Get.find();
   AudioPlayer _audioPlayer;
@@ -55,8 +54,7 @@ class _ExercisePageState extends State<ExercisePage>
   }
 
   void onDoneTimer() async {
-    if (_fitnessController.step !=
-        _fitnessController.selectedProgram.exercises.length - 1) {
+    if (_fitnessController.step != _fitnessController.selectedProgram.exercises.length - 1) {
       Get.to(
         FitnessSuccessPage(
           onNext: () async {
@@ -76,12 +74,10 @@ class _ExercisePageState extends State<ExercisePage>
       onWillPop: _onWillPop,
       child: Scaffold(
         body: Container(
-          decoration:
-              BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Fitnes),
+          decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Fitnes),
           child: Obx(() {
             print('Rebuild exercise page');
-            cTimer.exerciseCount =
-                _fitnessController?.selectedProgram?.exercises?.length ?? 0;
+            cTimer.exerciseCount = _fitnessController?.selectedProgram?.exercises?.length ?? 0;
             cTimer?.exerciseName = exercise.value.name;
             _audioRes = exercise.value.audioRes;
             if (_audioRes != null) {
@@ -103,20 +99,13 @@ class _ExercisePageState extends State<ExercisePage>
                 alignment: Alignment.topCenter,
                 children: <Widget>[
                   Positioned(bottom: 0, child: bg()),
-                  if (exercise.value.imageRes != null)
-                    Positioned(top: Get.height * 0.1, child: img()),
+                  if (exercise.value.imageRes != null) Positioned(top: Get.height * 0.1, child: img()),
                   Container(
                     width: Get.width,
                     child: SafeArea(
                         bottom: false,
                         child: Column(
-                          children: <Widget>[
-                            title(),
-                            subtitle(),
-                            Spacer(),
-                            timerWithNavigation(),
-                            SizedBox(height: Get.height * 0.15)
-                          ],
+                          children: <Widget>[title(), subtitle(), Spacer(), timerWithNavigation(), SizedBox(height: Get.height * 0.15)],
                         )),
                   ),
                 ],
@@ -160,18 +149,14 @@ class _ExercisePageState extends State<ExercisePage>
   Widget exDesc() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-          color: Colors.white),
+      decoration: BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(20)), color: Colors.white),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             height: 4,
             width: 50,
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(50)),
+            decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(50)),
           ),
           const SizedBox(height: 15),
           Row(
@@ -179,12 +164,7 @@ class _ExercisePageState extends State<ExercisePage>
             children: [
               if (exercise.value.audioRes != null)
                 Obx(() => CupertinoButton(
-                    child: Icon(
-                        isAudioActive.isTrue
-                            ? Icons.volume_up
-                            : Icons.volume_off,
-                        size: 30,
-                        color: AppColors.primary),
+                    child: Icon(isAudioActive.isTrue ? Icons.volume_up : Icons.volume_off, size: 30, color: AppColors.primary),
                     onPressed: () {
                       playPauseAudio();
                     })),
@@ -290,8 +270,7 @@ class _ExercisePageState extends State<ExercisePage>
     } else {
       print('_onNext 4');
       _fitnessController.step = 0;
-      AppRouting.replace(FitnessSuccessPage(
-          countProgram: _fitnessController.selectedProgram.exercises.length));
+      AppRouting.replace(FitnessSuccessPage(countProgram: _fitnessController.selectedProgram.exercises.length));
       appAnalitics.logEvent('first_fitnes_next');
       Get.delete<TimerFitnesController>();
     }

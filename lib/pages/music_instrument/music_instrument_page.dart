@@ -104,18 +104,15 @@ Widget body(BuildContext context) {
                       width: Get.width,
                       height: 100,
                       decoration: new BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [
-                            Color(0xFF290A3C),
+                          gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [
+                        Color(0xFF290A3C),
 
-                            Color(0xFF290A3C).withOpacity(0.8),
-                            Color(0xFF290A3C).withOpacity(0.5),
-                            Color(0xFF290A3C).withOpacity(0.2),
-                            Color(0xFF290A3C).withOpacity(0),
-                            //Colors.transparent
-                          ])),
+                        Color(0xFF290A3C).withOpacity(0.8),
+                        Color(0xFF290A3C).withOpacity(0.5),
+                        Color(0xFF290A3C).withOpacity(0.2),
+                        Color(0xFF290A3C).withOpacity(0),
+                        //Colors.transparent
+                      ])),
                     ),
                   ),
                 ),
@@ -123,11 +120,7 @@ Widget body(BuildContext context) {
                   bottom: 40,
                   right: 52,
                   left: 52,
-                  child: instrumentPlayer(
-                      audioController: _audioController,
-                      timerService: _audioController.timerService == null
-                          ? timerService
-                          : _audioController.timerService),
+                  child: instrumentPlayer(audioController: _audioController, timerService: _audioController.timerService == null ? timerService : _audioController.timerService),
                 ),
               ],
             ),
@@ -168,19 +161,13 @@ List<Widget> _instrumentList() {
           children: subList
               .map((e) => Container(
                     width: size.width,
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 25, horizontal: 5),
+                    margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 5),
                     child: Column(
                       children: [
                         _titleInstrument(e.name),
-                        _instumentContanier(size,
-                            instrument: e,
-                            controllers: _controllers,
-                            isPlay:
-                                _audioControlelr.isPlay(tag: e.instrument.tag)),
+                        _instumentContanier(size, instrument: e, controllers: _controllers, isPlay: _audioControlelr.isPlay(tag: e.instrument.tag)),
                         SizedBox(height: 5),
-                        if (_audioControlelr.isPlay(tag: e.instrument.tag))
-                          _trackBar(instrument: e)
+                        if (_audioControlelr.isPlay(tag: e.instrument.tag)) _trackBar(instrument: e)
                       ],
                     ),
                   ))
@@ -206,27 +193,16 @@ Widget _titleInstrument(String title) {
   );
 }
 
-Widget _instumentContanier(Size size,
-    {Instrument instrument,
-    MusicInstrumentControllers controllers,
-    bool isPlay = false}) {
+Widget _instumentContanier(Size size, {Instrument instrument, MusicInstrumentControllers controllers, bool isPlay = false}) {
   InstrumentAudioController audioController = Get.find();
-  bool isPay =
-      (instrument.instrument.pay == true && billingService.isPro() == false)
-          ? false
-          : true;
+  bool isPay = (instrument.instrument.pay == true && billingService.isPro() == false) ? false : true;
   return InkWell(
     //padding: const EdgeInsets.all(0),
-    onTap: isPay == false
-        ? null
-        : () => onInstrumentClick(instrument, controllers),
+    onTap: isPay == false ? null : () => onInstrumentClick(instrument, controllers),
     child: Container(
       height: size.width * 1.1,
       width: size.width,
-      decoration: BoxDecoration(
-          color: isPlay == false ? AppColors.primary : null,
-          borderRadius: BorderRadius.circular(10),
-          gradient: isPlay ? AppColors.gradient_instrument_active : null),
+      decoration: BoxDecoration(color: isPlay == false ? AppColors.primary : null, borderRadius: BorderRadius.circular(10), gradient: isPlay ? AppColors.gradient_instrument_active : null),
       child: Stack(
         children: [
           if (audioController.isLoading.value.value == instrument)

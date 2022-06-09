@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,14 +65,10 @@ class MediationAudioController extends GetxController {
   //для ночной медитации, чтобы заинициализировать таймер
   TimerService timerService;
 
-  bool get isPlaylistAudioCached =>
-      player.currentIndex < audioSource.length &&
-      audioSource[player.currentIndex].filePath != null;
+  bool get isPlaylistAudioCached => player.currentIndex < audioSource.length && audioSource[player.currentIndex].filePath != null;
 
   // Страница с которой выбрали музыку
-  RxInt currentPage = menuState == MenuState.MORNING
-      ? MenuItems.music.obs
-      : MenuItems.meditationNight.obs;
+  RxInt currentPage = menuState == MenuState.MORNING ? MenuItems.music.obs : MenuItems.meditationNight.obs;
 
   RxString currAudioName = ''.obs;
 
@@ -89,18 +83,15 @@ class MediationAudioController extends GetxController {
       changeAudioSource(meditationAudioData.musicSource);
       changeAudioSource(meditationAudioData.musicSource, isBgSource: true);
     } else
-      changeAudioSource(Get.locale.languageCode == 'ru'
-          ? meditationAudioData.meditationNightRuSource
-          : meditationAudioData.meditationNightEnSource);
+      changeAudioSource(Get.locale.languageCode == 'ru' ? meditationAudioData.meditationNightRuSource : meditationAudioData.meditationNightEnSource);
 
     // 50% громкость для фоновой музыки
-    bgAudioPlayer.value.setVolume(.5);
+    bgAudioPlayer.value.setVolume(1);
 
     player.positionStream.listen((event) {
       durationPosition.value = event;
       if (event == null) return;
-      percentDuration.value =
-          (event.inSeconds / player.duration.inSeconds).toDouble();
+      percentDuration.value = (event.inSeconds / player.duration.inSeconds).toDouble();
     }, onError: (Object e, StackTrace stackTrace) {
       print('A stream error occurred: $e');
     });
@@ -111,9 +102,7 @@ class MediationAudioController extends GetxController {
     });
 
     player.playerStateStream.listen((state) {
-      if (!state.playing &&
-          (state.processingState.index == ProcessingState.loading.index ||
-              state.processingState.index == ProcessingState.buffering.index)) {
+      if (!state.playing && (state.processingState.index == ProcessingState.loading.index || state.processingState.index == ProcessingState.buffering.index)) {
         isAudioLoading.value = true;
       } else {
         isAudioLoading.value = false;
@@ -131,8 +120,7 @@ class MediationAudioController extends GetxController {
     bgAudioPlayer.value.dispose();
   }
 
-  void changeAudioSource(List<MeditationAudio> source,
-      {bool isBgSource = false}) {
+  void changeAudioSource(List<MeditationAudio> source, {bool isBgSource = false}) {
     List<MeditationAudio> list = [];
     list.addAll(source);
     if (isBgSource) {
@@ -175,8 +163,7 @@ class MediationAudioController extends GetxController {
         print('reinitAudioSource: from chashed audio files');
         audioSource.addAll(await repository.getCachedAudioFiles(audioSource));
         if (withBgSound.value) {
-          bgAudioSource
-              .addAll(await repository.getCachedAudioFiles(bgAudioSource));
+          bgAudioSource.addAll(await repository.getCachedAudioFiles(bgAudioSource));
         }
       }
     }
@@ -186,31 +173,20 @@ class MediationAudioController extends GetxController {
   }
 
   Future loadFavoriteAudios() async {
-    (await repository.getFavoriteAudioFiles(
-            menuState == MenuState.MORNING ? false : true))
-        .forEach((element) {
+    (await repository.getFavoriteAudioFiles(menuState == MenuState.MORNING ? false : true)).forEach((element) {
       print('Favorite audio : $element');
-      if (!favoriteAudios.value.contains(element))
-        favoriteAudios.value.add(element);
+      if (!favoriteAudios.value.contains(element)) favoriteAudios.value.add(element);
     });
   }
 
   void setAudioFavorite(MeditationAudio audio) async {
-    favoriteAudios.value.contains(audio)
-        ? favoriteAudios.value.remove(audio)
-        : favoriteAudios.value.add(audio);
-    await MyDB()
-        .getBox()
-        .put(MyResource.MEDITATION_AUDIO_FAVORITE, favoriteAudios.value);
+    favoriteAudios.value.contains(audio) ? favoriteAudios.value.remove(audio) : favoriteAudios.value.add(audio);
+    await MyDB().getBox().put(MyResource.MEDITATION_AUDIO_FAVORITE, favoriteAudios.value);
   }
 
   void setAudioNightFavorite(MeditationAudio audio) async {
-    favoriteAudios.value.contains(audio)
-        ? favoriteAudios.value.remove(audio)
-        : favoriteAudios.value.add(audio);
-    await MyDB()
-        .getBox()
-        .put(MyResource.MEDITATION_AUDIO_NIGHT_FAVORITE, favoriteAudios.value);
+    favoriteAudios.value.contains(audio) ? favoriteAudios.value.remove(audio) : favoriteAudios.value.add(audio);
+    await MyDB().getBox().put(MyResource.MEDITATION_AUDIO_NIGHT_FAVORITE, favoriteAudios.value);
   }
 
   Future<MeditationAudio> cacheAudioFile(MeditationAudio track) async {
@@ -247,8 +223,7 @@ class MediationAudioController extends GetxController {
     } else {
       if (withBgSound.value) {
         print('generateMeditationPlayList : withBgSound.value');
-        meditationTrackDuration.value =
-            audioSource[selectedItemIndex.value].duration;
+        meditationTrackDuration.value = audioSource[selectedItemIndex.value].duration;
         return [getOneAudioItem(audioSource[selectedItemIndex.value])];
       } else {
         audioSource.forEach((element) {
@@ -302,29 +277,22 @@ class MediationAudioController extends GetxController {
           _result.add(AudioSource.uri(Uri.file(_cachedAudio.filePath)));
         } else {
           _result.add(ProgressiveAudioSource(Uri.parse(element.url)));
-          cacheAudioFile(MeditationAudio(
-              name: element.name, url: element.url, filePath: null));
+          cacheAudioFile(MeditationAudio(name: element.name, url: element.url, filePath: null));
         }
       });
     }
     return _result;
   }
 
-  void initializeMeditationAudio(
-      {bool autoplay = true,
-      bool fromDialog = false,
-      bool reinitMainSound = true}) async {
+  void initializeMeditationAudio({bool autoplay = true, bool fromDialog = false, bool reinitMainSound = true}) async {
     print('initializeMeditationAudio');
     if (reinitMainSound) {
       print('initializeMeditationAudio: reinit main audio');
       await reinitAudioSource(fromDialog: fromDialog);
       if (reinitMainSound) updateCurrName();
-      if ((bgPlayList?.length ?? 0) == 0 || currentPage.value == MenuItems.yoga)
-        playList = await generateMeditationPlayList();
+      if ((bgPlayList?.length ?? 0) == 0 || currentPage.value == MenuItems.yoga) playList = await generateMeditationPlayList();
       await player.setAudioSource(
-        ConcatenatingAudioSource(
-            children:
-                List.generate(playList.length, (index) => playList[index])),
+        ConcatenatingAudioSource(children: List.generate(playList.length, (index) => playList[index])),
         initialIndex: withBgSound.value ? 0 : selectedItemIndex.value,
       );
       await player.setLoopMode(withBgSound.value ? LoopMode.off : LoopMode.one);
@@ -335,9 +303,7 @@ class MediationAudioController extends GetxController {
       // Фоновая музыка
       bgPlayList = await generateBgPlayList();
       await bgAudioPlayer.value.setAudioSource(
-        ConcatenatingAudioSource(
-            children:
-                List.generate(bgPlayList.length, (index) => bgPlayList[index])),
+        ConcatenatingAudioSource(children: List.generate(bgPlayList.length, (index) => bgPlayList[index])),
         initialIndex: bgSelectedItemIndex.value >= 0
             ? bgSelectedItemIndex.value
             : selectedItemIndex.value < 3
@@ -373,8 +339,7 @@ class MediationAudioController extends GetxController {
     else
       _nextIndex = player.currentIndex + 1;
 
-    if (timerService != null)
-      timerService.nightMeditationStart(audioSource[_nextIndex].duration);
+    if (timerService != null) timerService.nightMeditationStart(audioSource[_nextIndex].duration);
 
     player.seek(Duration(seconds: 0), index: _nextIndex);
     if (!withBgSound.value) {
@@ -398,8 +363,7 @@ class MediationAudioController extends GetxController {
     else
       _nextIndex = player.currentIndex - 1;
 
-    if (timerService != null)
-      timerService.nightMeditationStart(audioSource[_nextIndex].duration);
+    if (timerService != null) timerService.nightMeditationStart(audioSource[_nextIndex].duration);
 
     player.seek(Duration(seconds: 0), index: _nextIndex);
     if (!withBgSound.value) {

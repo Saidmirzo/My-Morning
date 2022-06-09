@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,15 +18,9 @@ import '../../meditation_audio_page.dart';
 Widget buildMenuButtons(TimerService timerService) {
   MediationAudioController cAudio = Get.find();
   double btnSize = 30;
-  Color colorIcon = menuState == MenuState.MORNING
-      ? AppColors.primary
-      : AppColors.purchaseDesc;
+  Color colorIcon = menuState == MenuState.MORNING ? AppColors.primary : AppColors.purchaseDesc;
   return Container(
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        color: menuState == MenuState.MORNING
-            ? Colors.white
-            : AppColors.nightModeBG),
+    decoration: BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(30)), color: menuState == MenuState.MORNING ? Colors.white : AppColors.nightModeBG),
     child: SafeArea(
       top: false,
       child: Row(
@@ -41,9 +36,7 @@ Widget buildMenuButtons(TimerService timerService) {
               onPressed: () {
                 Get.to(AddTimePeriod(
                   timerService: timerService,
-                  pageId: menuState == MenuState.NIGT
-                      ? TimerPageId.MeditationNight
-                      : -1,
+                  pageId: menuState == MenuState.NIGT ? TimerPageId.MeditationNight : -1,
                 ));
               }),
           CupertinoButton(
@@ -71,9 +64,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 cAudio.bgAudioPlayer?.value?.pause();
                 timerService.timer.cancel();
                 timerService.isActive.value = false;
-                Get.to(menuState == MenuState.MORNING
-                    ? MeditationAudioPage(fromTimerPage: true)
-                    : MeditationAudioNightPage(fromTimerPage: true));
+                Get.to(menuState == MenuState.MORNING ? MeditationAudioPage(fromTimerPage: true) : MeditationAudioNightPage(fromTimerPage: true));
               }),
           CupertinoButton(
               child: SvgPicture.asset(
@@ -87,6 +78,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 cAudio.player.pause();
                 timerService.skipTask();
                 appAnalitics.logEvent('first_meditation_next');
+                AppMetrica.reportEvent('complex_meditation_end');
               }),
         ],
       ),

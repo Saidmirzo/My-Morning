@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
-import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/storage.dart';
-import 'package:morningmagic/widgets/timer_circle_button.dart';
 
-Widget buildPlayerControls() {
+Widget buildPlayerControls(TimerService timerService) {
   MediationAudioController cAudio = Get.find();
   return Container(
     child: Padding(
@@ -24,15 +23,9 @@ Widget buildPlayerControls() {
                   color: Colors.white,
                 ),
               ),
-              Obx(
-                () => TimerCircleButton(
-                  onPressed: cAudio.playOrPause,
-                  child: Icon(
-                    cAudio.isPlaying.value ? Icons.pause : Icons.play_arrow,
-                    size: 40,
-                    color: AppColors.VIOLET,
-                  ),
-                ),
+              Flexible(
+                child: Obx(() =>
+                    Text(cAudio.currAudioName.value, textAlign: TextAlign.center, overflow: TextOverflow.clip, style: TextStyle(color: menuState == MenuState.MORNING ? Colors.black : Colors.white))),
               ),
               CupertinoButton(
                 onPressed: cAudio.next,
@@ -44,16 +37,6 @@ Widget buildPlayerControls() {
               ),
             ],
           ),
-          Container(
-              width: Get.width * 0.8,
-              alignment: Alignment.center,
-              child: Obx(() => Text(cAudio.currAudioName.value,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.clip,
-                  style: TextStyle(
-                      color: menuState == MenuState.MORNING
-                          ? Colors.black
-                          : Colors.white)))),
         ],
       ),
     ),

@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,42 +6,45 @@ import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/widgets/lang_btn.dart';
-
 import '../../../db/model/user/user.dart';
 import '../../../db/resource.dart';
 import '../../../resources/colors.dart';
-import '../../../widgets/language_switcher.dart';
 import '../../../widgets/primary_circle_button.dart';
 
 class NameInputSlide extends StatelessWidget {
   final PageController _pageController;
   TextEditingController myController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final FocusNode _focusNode = FocusNode();
 
   NameInputSlide(this._pageController);
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        //mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          langBtn(context),
-          Spacer(
-            flex: 1,
-          ),
-          buildTitle(),
-          SizedBox(height: 21),
-          buildInput(),
-          SizedBox(height: 41),
-          //LanguageSwitcher(),
-          SizedBox(height: Get.height * .15),
-          buildButton(),
-          Spacer(
-            flex: 1,
-          ),
-        ],
+    return InkWell(
+      onTap: () => _focusNode.unfocus(),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            langBtn(context),
+            Spacer(
+              flex: 1,
+            ),
+            buildTitle(),
+            SizedBox(height: 21),
+            buildInput(),
+            SizedBox(height: 41),
+            //LanguageSwitcher(),
+            SizedBox(height: Get.height * .15),
+            buildButton(),
+            buildSkipButton(),
+            Spacer(
+              flex: 1,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -65,8 +69,7 @@ class NameInputSlide extends StatelessWidget {
       onPressed: () {
         if (_formKey.currentState.validate()) {
           saveNameToBox();
-          _pageController.nextPage(
-              duration: 300.milliseconds, curve: Curves.easeIn);
+          _pageController.nextPage(duration: 300.milliseconds, curve: Curves.easeIn);
         }
       },
     );
@@ -81,11 +84,10 @@ class NameInputSlide extends StatelessWidget {
         ),
         child: Container(
           padding: EdgeInsets.only(left: 15, right: 15, bottom: 5),
-          decoration: BoxDecoration(
-              color: Color(0xffDCACC8),
-              borderRadius: BorderRadius.circular(30)),
+          decoration: BoxDecoration(color: Color(0xffDCACC8), borderRadius: BorderRadius.circular(30)),
           child: TextFormField(
             controller: myController,
+            focusNode: _focusNode,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'please_input_name'.tr;
@@ -103,18 +105,30 @@ class NameInputSlide extends StatelessWidget {
               color: AppColors.VIOLET,
               decoration: TextDecoration.none,
             ),
-            decoration: new InputDecoration(
-                border: InputBorder.none,
-                hintText: 'your_name'.tr,
-                hintStyle: TextStyle(color: Colors.white)),
+            decoration: new InputDecoration(border: InputBorder.none, hintText: 'your_name'.tr, hintStyle: TextStyle(color: Colors.white)),
           ),
         ));
   }
 
   void saveNameToBox() async {
     if (myController.text != null && myController.text.isNotEmpty) {
+      AppMetrica.reportEvent('onbording_name_set');
       await MyDB().getBox().put(MyResource.USER_KEY, User(myController.text));
       appAnalitics.logEvent('first_name');
     }
+  }
+
+  CupertinoButton buildSkipButton() {
+    return CupertinoButton(
+      child: Text(
+        'skip'.tr,
+        style: TextStyle(color: Colors.white54),
+      ),
+      onPressed: () {
+        // AppRouting.replace(MainMenuPage());
+        AppMetrica.reportEvent('onbording_name_skip');
+        _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+      },
+    );
   }
 }

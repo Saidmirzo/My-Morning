@@ -13,9 +13,9 @@ class TimerInputSuccessScreen extends StatefulWidget {
   final int passedSec;
   final bool isSkip;
   final bool fromHomeMenu;
+  final double procent;
 
-  TimerInputSuccessScreen(this.passedSec, this.isSkip,
-      {this.fromHomeMenu = false});
+  TimerInputSuccessScreen(this.passedSec, this.isSkip, this.procent, {this.fromHomeMenu = false});
 
   @override
   State createState() {
@@ -63,16 +63,11 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
         body: Container(
           width: Get.width,
           height: Get.height,
-          decoration: BoxDecoration(
-              gradient: menuState == MenuState.NIGT
-                  ? AppColors.gradient_loading_night_bg
-                  : AppColors.Bg_Gradient_Timer_Reading),
+          decoration: BoxDecoration(gradient: menuState == MenuState.NIGT ? AppColors.gradient_loading_night_bg : AppColors.Bg_Gradient_Timer_Reading),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              bg(menuState == MenuState.NIGT
-                  ? 'assets/images/reading_night/clouds.png'
-                  : 'assets/images/timer/clouds_timer.png'),
+              bg(menuState == MenuState.NIGT ? 'assets/images/reading_night/clouds.png' : 'assets/images/timer/clouds_timer.png'),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -103,14 +98,10 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
       lineWidth: 18.0,
       reverse: true,
       animation: false,
-      percent: 0.4,
+      percent: widget.procent,
       center: Text(
         'success'.tr,
-        style: TextStyle(
-            fontSize: Get.height * 0.04,
-            fontStyle: FontStyle.normal,
-            color: Colors.white,
-            fontWeight: FontWeight.w600),
+        style: TextStyle(fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
       linearGradient: AppColors.Progress_Gradient_Timer_Reading,
@@ -134,24 +125,16 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   Widget bgNight() {
     return Stack(
       children: [
-        Positioned(
-            bottom: 0,
-            child: Image.asset('assets/images/reading_night/clouds.png',
-                width: Get.width, fit: BoxFit.cover)),
+        Positioned(bottom: 0, child: Image.asset('assets/images/reading_night/clouds.png', width: Get.width, fit: BoxFit.cover)),
         Positioned(
           bottom: 0,
-          child: Image.asset('assets/images/reading/mountain1.png',
-              width: Get.width, fit: BoxFit.cover),
+          child: Image.asset('assets/images/reading/mountain1.png', width: Get.width, fit: BoxFit.cover),
         ),
         Positioned(
           bottom: 0,
-          child: Image.asset('assets/images/reading/mountain2.png',
-              width: Get.width, fit: BoxFit.cover),
+          child: Image.asset('assets/images/reading/mountain2.png', width: Get.width, fit: BoxFit.cover),
         ),
-        Positioned(
-            bottom: 0,
-            child: Image.asset('assets/images/reading_night/main.png',
-                width: Get.width, fit: BoxFit.cover)),
+        Positioned(bottom: 0, child: Image.asset('assets/images/reading_night/main.png', width: Get.width, fit: BoxFit.cover)),
       ],
     );
   }

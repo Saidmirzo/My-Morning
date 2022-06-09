@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,11 @@ import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/progress/components/remove_button.dart';
 import 'package:morningmagic/resources/colors.dart';
+import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/utils/other.dart';
+import 'package:morningmagic/widgets/primary_circle_button.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -47,8 +50,7 @@ class _ProgressPageState extends State<ProgressPage> {
   AppStates appStates = Get.put(AppStates());
   int appRating = 5;
 
-  final GlobalKey<AnimatedCircularChartState> _chartKey =
-      new GlobalKey<AnimatedCircularChartState>();
+  final GlobalKey<AnimatedCircularChartState> _chartKey = new GlobalKey<AnimatedCircularChartState>();
 
   ProgressController cPg = Get.find();
 
@@ -68,6 +70,7 @@ class _ProgressPageState extends State<ProgressPage> {
     if (widget.onDone) {
       // Если комплекс был полностью завершен
       cPg.saveJournal(MyResource.FULL_COMPLEX_FINISH, 1);
+      AppMetrica.reportEvent('complex_finish');
     }
     cPg.loadJournals();
     setState(() {});
@@ -84,48 +87,59 @@ class _ProgressPageState extends State<ProgressPage> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(top: 16, bottom: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: InkWell(
-                    onTap: () async {
-                      nameController.text = userName;
-                      final _newName = await _editUserNameDialog();
-                      if (_newName != null) {
-                        setState(() {
-                          userName = _newName;
-                        });
-                        MyDB()
-                            .getBox()
-                            .put(MyResource.USER_KEY, User(userName));
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 25.0, right: 25.0, top: 16, bottom: 16),
-                      child: Text(
-                        userName,
-                        style: TextStyle(fontSize: 23, color: AppColors.VIOLET),
+            padding: EdgeInsets.only(top: 5, bottom: 5),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: PrimaryCircleButton(
+                      icon: Icon(Icons.arrow_back, color: AppColors.primary),
+                      onPressed: () {
+                        return AppRouting.navigateToHomeWithClearHistory();
+                      },
+                    ),
+                  ),
+                  Visibility(
+                    visible: userName.isNotEmpty,
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: InkWell(
+                        onTap: () async {
+                          nameController.text = userName;
+                          final _newName = await _editUserNameDialog();
+                          if (_newName != null) {
+                            setState(() {
+                              userName = _newName;
+                            });
+                            MyDB().getBox().put(MyResource.USER_KEY, User(userName));
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 16, bottom: 16),
+                          child: Text(
+                            userName,
+                            style: TextStyle(fontSize: 23, color: AppColors.VIOLET),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                buildStatWidget(),
-                SizedBox(height: 15),
-                buildTwoWidget(),
-                SizedBox(height: 15),
-                _menuList(context),
-                SizedBox(height: 15),
-                menuButton(),
-                SizedBox(height: 15),
-                removeButton(),
-                SizedBox(height: 20),
-                /*  buildLanguageSwitcher(),
-                SizedBox(height: 20), */
-              ],
+                  buildStatWidget(),
+                  SizedBox(height: 15),
+                  buildTwoWidget(),
+                  SizedBox(height: 15),
+                  _menuList(context),
+                  SizedBox(height: 15),
+                  // menuButton(),
+                  // SizedBox(height: 15),
+                  removeButton(),
+                  SizedBox(height: 20),
+                  /*  buildLanguageSwitcher(),
+                  SizedBox(height: 20), */
+                ],
+              ),
             ),
           ),
         ),
@@ -161,10 +175,7 @@ class _ProgressPageState extends State<ProgressPage> {
           Text(
             'awareness_meter'.tr,
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: Get.height * 0.023,
-                color: Colors.black45,
-                fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: Get.height * 0.023, color: Colors.black45, fontWeight: FontWeight.w500),
           ),
           AnimatedCircularChart(
             key: _chartKey,
@@ -242,9 +253,7 @@ class _ProgressPageState extends State<ProgressPage> {
 
   Container buildTwoWidget() {
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -280,8 +289,7 @@ class _ProgressPageState extends State<ProgressPage> {
                           'total'.tr,
                           style: TextStyle(
                             color: _Itog ? Colors.white : Colors.black54,
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.04, //23,
+                            fontSize: MediaQuery.of(context).size.width * 0.04, //23,
                           ),
                         ),
                         _Itog
@@ -313,8 +321,7 @@ class _ProgressPageState extends State<ProgressPage> {
                           'month'.tr,
                           style: TextStyle(
                             color: _Mounth ? Colors.white : Colors.black54,
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.04, //23,
+                            fontSize: MediaQuery.of(context).size.width * 0.04, //23,
                           ),
                         ),
                         _Mounth
@@ -346,8 +353,7 @@ class _ProgressPageState extends State<ProgressPage> {
                           'year'.tr,
                           style: TextStyle(
                             color: _Year ? Colors.white : Colors.black54,
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.04, //23,
+                            fontSize: MediaQuery.of(context).size.width * 0.04, //23,
                           ),
                         ),
                         _Year
@@ -387,8 +393,7 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Widget practicsCount() {
-    var count = cPg
-        .calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[0];
+    var count = cPg.calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[0];
     return Align(
       alignment: Alignment.topLeft,
       child: Column(
@@ -419,8 +424,7 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Align minutesCount() {
-    var count = cPg
-        .calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[1];
+    var count = cPg.calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[1];
     return Align(
       alignment: Alignment.topCenter,
       child: Column(
@@ -451,8 +455,7 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Align completeComplexCount() {
-    var count =
-        cPg.getCountComplex(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year));
+    var count = cPg.getCountComplex(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year));
     return Align(
       alignment: Alignment.topRight,
       child: Column(
@@ -482,53 +485,38 @@ class _ProgressPageState extends State<ProgressPage> {
     );
   }
 
-  Widget buildLanguageSwitcher() => Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      child: LanguageSwitcher());
+  Widget buildLanguageSwitcher() => Container(width: MediaQuery.of(context).size.width * 0.9, child: LanguageSwitcher());
 
   Container _menuList(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Column(
         children: [
-          menuBtn('assets/images/diary.svg', 'my_diary'.tr,
-              () => Get.to(MyDiaryProgress())),
+          menuBtn('assets/images/diary.svg', 'my_diary'.tr, () => Get.to(MyDiaryProgress())),
           menuBtn('assets/images/sport.svg', 'my_exercises'.tr, () {
             billingService.isPro()
-                ? Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MyFitnessProgress()))
-                : Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PaywallPage()));
+                ? Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyFitnessProgress()))
+                : Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaywallPage()));
           }),
           menuBtn('assets/images/affirmation.svg', 'my_affirmations'.tr, () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => billingService.isPro()
-                    ? MyAffirmationProgress()
-                    : PaywallPage()));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => billingService.isPro() ? MyAffirmationProgress() : PaywallPage()));
           }),
           menuBtn('assets/images/books.svg', 'my_books'.tr, () {
             billingService.isPro()
-                ? Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MyReadingProgress()))
-                : Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PaywallPage()));
+                ? Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyReadingProgress()))
+                : Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaywallPage()));
           }),
           menuBtn('assets/images/visualization.svg', 'my_visualization'.tr, () {
             billingService.isPro()
-                ? Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MyVisualizationProgress()))
-                : Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PaywallPage()));
+                ? Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyVisualizationProgress()))
+                : Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaywallPage()));
           }, showSeparator: false),
         ],
       ),
     );
   }
 
-  Widget menuBtn(String iconPath, String title, Function onTap,
-      {bool showSeparator = true}) {
+  Widget menuBtn(String iconPath, String title, Function onTap, {bool showSeparator = true}) {
     return Column(
       children: [
         InkWell(
@@ -582,17 +570,12 @@ class _ProgressPageState extends State<ProgressPage> {
     const int firstCntLaunch = 2;
     // Кол-во запусков для следующих показов
     const int nextCntLaunch = 5;
-    int launchForRate =
-        await MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0);
+    int launchForRate = await MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0);
     // Кол-во запусков равно либо больше чем нужно для показа оценки
-    bool needLaunch =
-        launchForRate >= firstCntLaunch || launchForRate >= nextCntLaunch;
+    bool needLaunch = launchForRate >= firstCntLaunch || launchForRate >= nextCntLaunch;
     // Ранее оценили или нет?
-    bool isRated =
-        await MyDB().getBox().get(MyResource.IS_RATED, defaultValue: false);
-    bool rateFirstShowed = await MyDB()
-        .getBox()
-        .get(MyResource.RATE_ALREADY_SHOWED, defaultValue: false);
+    bool isRated = await MyDB().getBox().get(MyResource.IS_RATED, defaultValue: false);
+    bool rateFirstShowed = await MyDB().getBox().get(MyResource.RATE_ALREADY_SHOWED, defaultValue: false);
     // Если раньше уже показали, ждем минимум 5 запусков после последнего показа
     if (launchForRate < nextCntLaunch && rateFirstShowed) {
       // print(
@@ -652,8 +635,7 @@ class _ProgressPageState extends State<ProgressPage> {
                   onPressed: () {
                     if (appRating < 5) {
                       MyDB().getBox().put(MyResource.IS_RATED, true);
-                      openEmail(
-                          'wonderfulmorningnow@gmail.com', 'rate_subject'.tr);
+                      openEmail('morning@good-apps.org', 'rate_subject'.tr);
                     } else {
                       MyDB().getBox().put(MyResource.IS_RATED, true);
                       rateMyApp.launchStore();
@@ -718,8 +700,7 @@ class _ProgressPageState extends State<ProgressPage> {
                   onPressed: () {
                     if (appRating < 5) {
                       MyDB().getBox().put(MyResource.IS_RATED, true);
-                      openEmail(
-                          'wonderfulmorningnow@gmail.com', 'rate_subject'.tr);
+                      openEmail('morning@good-apps.org', 'rate_subject'.tr);
                     } else {
                       MyDB().getBox().put(MyResource.IS_RATED, true);
                       rateMyApp.launchStore();
@@ -807,18 +788,12 @@ class VerticalBarLabelChart extends StatelessWidget {
 
     final data = [
       new OrdinalSales('monday_short'.tr, cPg.minutesPerDay(monday)),
-      new OrdinalSales(
-          'tuesday_short'.tr, cPg.minutesPerDay(monday.add(1.days))),
-      new OrdinalSales(
-          'wednesday_short'.tr, cPg.minutesPerDay(monday.add(2.days))),
-      new OrdinalSales(
-          'thursday_short'.tr, cPg.minutesPerDay(monday.add(3.days))),
-      new OrdinalSales(
-          'friday_short'.tr, cPg.minutesPerDay(monday.add(4.days))),
-      new OrdinalSales(
-          'saturday_short'.tr, cPg.minutesPerDay(monday.add(5.days))),
-      new OrdinalSales(
-          'sunday_short'.tr, cPg.minutesPerDay(monday.add(6.days))),
+      new OrdinalSales('tuesday_short'.tr, cPg.minutesPerDay(monday.add(1.days))),
+      new OrdinalSales('wednesday_short'.tr, cPg.minutesPerDay(monday.add(2.days))),
+      new OrdinalSales('thursday_short'.tr, cPg.minutesPerDay(monday.add(3.days))),
+      new OrdinalSales('friday_short'.tr, cPg.minutesPerDay(monday.add(4.days))),
+      new OrdinalSales('saturday_short'.tr, cPg.minutesPerDay(monday.add(5.days))),
+      new OrdinalSales('sunday_short'.tr, cPg.minutesPerDay(monday.add(6.days))),
     ];
 
     return [
@@ -828,8 +803,7 @@ class VerticalBarLabelChart extends StatelessWidget {
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: data,
           // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (OrdinalSales sales, _) =>
-              '${sales.sales.toString()}')
+          labelAccessorFn: (OrdinalSales sales, _) => '${sales.sales.toString()}')
     ];
   }
 }

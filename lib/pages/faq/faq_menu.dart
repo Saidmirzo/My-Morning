@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:morningmagic/dialog/langDialog.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/faq/faq_support.dart';
+import 'package:morningmagic/pages/interview/interview1/interview_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/widgets/lang_btn.dart';
@@ -52,41 +56,87 @@ class FAQStateScreen extends State<FaqMenuPage> {
                     const SizedBox(height: 20),
                     Text(
                       'faq_menu_title'.tr,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: Get.width * .07,
-                          fontWeight: FontWeight.w600),
+                      style: TextStyle(color: Colors.white, fontSize: Get.width * .07, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 30),
                     Wrap(
                       spacing: Get.width * .05,
                       runSpacing: Get.width * .05,
                       children: [
-                        buildBtn(
-                          'assets/images/faq/support.svg',
-                          faqController.cat_support,
-                          Get.width * .4,
-                          padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                          onPressed: () => Get.to(FaqSupportPage()),
-                        ),
+                        // buildBtn(
+                        //   'assets/images/faq/support.svg',
+                        //   faqController.cat_support,
+                        //   Get.width * .4,
+                        //   padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        //   onPressed: () => Get.to(FaqSupportPage()),
+                        // ),
                         buildBtn(
                           'assets/images/faq/question.svg',
                           faqController.cat_why,
                           Get.width * .25,
                           padding: const EdgeInsets.fromLTRB(20, 15, 10, 0),
-                          onPressed: () =>
-                              faqController.openCategory(faqController.cat_why),
+                          onPressed: () => faqController.openCategory(faqController.cat_why),
                         ),
                         buildBtn(
                           'assets/images/faq/about_tarifs.svg',
                           faqController.cat_tarifs,
                           Get.width * .25,
                           padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                          onPressed: () => faqController
-                              .openCategory(faqController.cat_tarifs),
+                          onPressed: () => faqController.openCategory(faqController.cat_tarifs),
                         ),
                       ],
-                    )
+                    ),
+                    const Spacer(),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            spreadRadius: 6,
+                            blurRadius: 60,
+                            offset: Offset(0, 0),
+                          )
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: AppColors.VIOLET_ONB,
+                          minimumSize: Size(double.infinity, Platform.isIOS ? 70 : 60),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onPressed: () {
+                          AppMetrica.reportEvent('poll_screen');
+                          Get.to(InterviewPage());
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 25),
+                            Flexible(
+                              fit: FlexFit.tight,
+                              child: Text(
+                                "support_text_title".tr,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward, size: 25),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "support_text_body".tr,
+                        style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -131,8 +181,7 @@ class FAQStateScreen extends State<FaqMenuPage> {
       padding: const EdgeInsets.all(0),
       child: Container(
         width: Get.width * .4,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(18)),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

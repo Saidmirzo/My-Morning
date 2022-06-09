@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
@@ -14,12 +15,10 @@ import '../../../../widgets/primary_circle_button.dart';
 class VisualizationSuccessPage extends StatefulWidget {
   final bool fromHomeMenu;
 
-  const VisualizationSuccessPage({Key key, this.fromHomeMenu = false})
-      : super(key: key);
+  const VisualizationSuccessPage({Key key, this.fromHomeMenu = false}) : super(key: key);
 
   @override
-  _VisualizationSuccessPageState createState() =>
-      _VisualizationSuccessPageState();
+  _VisualizationSuccessPageState createState() => _VisualizationSuccessPageState();
 }
 
 class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
@@ -67,8 +66,7 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
         body: Container(
           width: Get.width,
           height: Get.height,
-          decoration:
-              BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
+          decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -116,14 +114,10 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
       lineWidth: 27.0,
       reverse: true,
       animation: false,
-      percent: 0.4,
+      percent: 0.8,
       center: Text(
         'success'.tr,
-        style: TextStyle(
-            fontSize: Get.height * 0.04,
-            fontStyle: FontStyle.normal,
-            color: Colors.white,
-            fontWeight: FontWeight.w600),
+        style: TextStyle(fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
       linearGradient: AppColors.Progress_Gradient_Timer_Reading,

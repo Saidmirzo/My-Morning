@@ -9,12 +9,10 @@ import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audi
 
 class YogaMeditationContainer extends StatefulWidget {
   @override
-  _YogaMeditationContainerState createState() =>
-      _YogaMeditationContainerState();
+  _YogaMeditationContainerState createState() => _YogaMeditationContainerState();
 }
 
-class _YogaMeditationContainerState extends State<YogaMeditationContainer>
-    with WidgetsBindingObserver {
+class _YogaMeditationContainerState extends State<YogaMeditationContainer> with WidgetsBindingObserver {
   MediationAudioController _audioController;
   List<MeditationAudio> _source = [];
 
@@ -50,9 +48,7 @@ class _YogaMeditationContainerState extends State<YogaMeditationContainer>
   @override
   void initState() {
     _audioController = Get.find();
-    _source.addAll(Get.locale.languageCode == 'ru'
-        ? meditationAudioData.meditationRuSource
-        : meditationAudioData.meditationEnSource);
+    _source.addAll(Get.locale.languageCode == 'ru' ? meditationAudioData.meditationRuSource : meditationAudioData.meditationEnSource);
     _audioController.changeAudioSource(_source);
     super.initState();
     WidgetsBinding.instance.addObserver(this);

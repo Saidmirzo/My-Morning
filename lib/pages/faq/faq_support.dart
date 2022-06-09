@@ -62,8 +62,7 @@ class _FaqSupportPageState extends State<FaqSupportPage> {
       },
       child: Column(
         children: [
-          SvgPicture.asset('assets/images/svg/instagram.svg',
-              width: Get.width / 4),
+          SvgPicture.asset('assets/images/svg/instagram.svg', width: Get.width / 4),
           Text(
             '@mymorningapp',
             style: TextStyle(color: Colors.white, fontSize: Get.width * .04),
@@ -76,13 +75,13 @@ class _FaqSupportPageState extends State<FaqSupportPage> {
   Widget buildEmail() {
     return GestureDetector(
       onTap: () {
-        openEmail('wonderfulmorningnow@gmail.com', '');
+        openEmail('morning@good-apps.org', '');
       },
       child: Column(
         children: [
           Icon(Icons.mail, size: Get.width / 4, color: Colors.blue),
           Text(
-            'wonderfulmorningnow@gmail.com',
+            'morning@good-apps.org',
             style: TextStyle(color: Colors.white, fontSize: Get.width * .04),
           )
         ],

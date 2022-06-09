@@ -73,9 +73,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   }
 
   Future<String> get _localPath async {
-    final directory = Platform.isIOS
-        ? await getApplicationDocumentsDirectory()
-        : await getTemporaryDirectory();
+    final directory = Platform.isIOS ? await getApplicationDocumentsDirectory() : await getTemporaryDirectory();
     return directory.path + "/" + randomAlpha(10);
   }
 
@@ -218,9 +216,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   }
 
   void initTimer() {
-    ExerciseTime time = MyDB()
-        .getBox()
-        .get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
+    ExerciseTime time = MyDB().getBox().get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
     _time.value = time.time * 60;
     _startTime = time.time;
 
@@ -272,8 +268,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   }
 
   Future _init() async {
-    _recorder = FlutterAudioRecorder(await _localPath,
-        audioFormat: AudioFormat.AAC, sampleRate: 22050);
+    _recorder = FlutterAudioRecorder(await _localPath, audioFormat: AudioFormat.AAC, sampleRate: 22050);
     await _recorder.initialized;
     Recording rec = await _recorder.current();
     print(rec.path);
@@ -295,8 +290,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
         body: Container(
           height: Get.height,
           width: Get.width, // match parent(all screen)
-          decoration:
-              BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Diary),
+          decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Diary),
           child: Container(
             child: Stack(
               children: [
@@ -368,17 +362,11 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   // }
 
   Widget buildTextMic() {
-    return Obx(() => Text(
-        isRecording.isTrue ? 'go_stop_record'.tr : 'go_start_record'.tr,
-        style: TextStyle(fontSize: Get.height * 0.015, color: Colors.white)));
+    return Obx(() => Text(isRecording.isTrue ? 'go_stop_record'.tr : 'go_start_record'.tr, style: TextStyle(fontSize: Get.height * 0.015, color: Colors.white)));
   }
 
   Widget buildTextProgress() {
-    return Obx(() => Text(StringUtil.createTimeString(_time.value),
-        style: TextStyle(
-            fontSize: Get.height * 0.033,
-            fontWeight: FontWeight.w600,
-            color: Colors.white)));
+    return Obx(() => Text(StringUtil.createTimeString(_time.value), style: TextStyle(fontSize: Get.height * 0.033, fontWeight: FontWeight.w600, color: Colors.white)));
   }
 
   Widget buildTimerProgress() {
@@ -417,10 +405,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
             Positioned(
               right: 13,
               child: Container(
-                  child: Obx(() => Icon(
-                      isRecording.isTrue ? Icons.stop : Icons.play_arrow,
-                      color: AppColors.primary,
-                      size: 10)),
+                  child: Obx(() => Icon(isRecording.isTrue ? Icons.stop : Icons.play_arrow, color: AppColors.primary, size: 10)),
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
@@ -439,9 +424,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   Widget buildMenuButtons() {
     double btnSize = 30;
     return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-          color: Colors.white),
+      decoration: BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(30)), color: Colors.white),
       child: SafeArea(
         top: false,
         child: Row(
@@ -469,11 +452,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                   await stop();
                   OrderUtil().getRouteById(TimerPageId.Diary).then(
                     (value) {
-                      Get.off(TimerSuccessScreen(
-                          () => Get.to(
-                              widget.fromHomeMenu ? ProgressPage() : value),
-                          MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time,
-                          false));
+                      Get.off(TimerSuccessScreen(() => Get.to(widget.fromHomeMenu ? ProgressPage() : value), MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time, false, 1));
                     },
                   );
                   appAnalitics.logEvent('first_dnevnik_next');
@@ -484,8 +463,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
     );
   }
 
-  RxDouble get createValue =>
-      _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.obs;
+  RxDouble get createValue => _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.obs;
 
   Future<bool> _onWillPop() async {
     if (_timer != null) {

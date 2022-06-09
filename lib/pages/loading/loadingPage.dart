@@ -1,5 +1,3 @@
-import 'package:adjust_sdk/adjust.dart';
-import 'package:adjust_sdk/adjust_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
@@ -10,10 +8,9 @@ import 'package:morningmagic/pages/loading/evening.dart';
 import 'package:morningmagic/pages/loading/morning.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/nigth/nigth.dart';
-import 'package:morningmagic/pages/welcome/welcome_page.dart';
+import 'package:morningmagic/pages/onboarding/onboarding_1_page.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
-
 import '../../db/hive.dart';
 import '../../db/resource.dart';
 import '../../storage.dart';
@@ -29,8 +26,7 @@ class LoadingPage extends StatefulWidget {
 
 enum TimeType { morning, afternoon, evening, night }
 
-class LoadingPageState extends State<LoadingPage>
-    with SingleTickerProviderStateMixin {
+class LoadingPageState extends State<LoadingPage> with SingleTickerProviderStateMixin {
   bool switcherSun = false;
   bool firstBuild = false;
   AppStates appStates = Get.put(AppStates());
@@ -77,9 +73,7 @@ class LoadingPageState extends State<LoadingPage>
             : timeType == TimeType.afternoon
                 ? AfternoonPage(onDone: _redirect)
                 : timeType == TimeType.evening
-                    ? EveningPage(
-                        onDone: () =>
-                            AppRouting.replace(chooseNavigationRoute()))
+                    ? EveningPage(onDone: () => AppRouting.replace(chooseNavigationRoute()))
                     : NightPage(onDone: _redirect),
       ],
     ));
@@ -91,7 +85,8 @@ class LoadingPageState extends State<LoadingPage>
       return getMenuPage();
     } else {
       AnalyticService.analytics.logAppOpen();
-      return WelcomePage();
+      return OnBoarding1Page();
+      // return WelcomePage();
     }
   }
 
@@ -123,13 +118,10 @@ class LoadingPageState extends State<LoadingPage>
   }
 
   void calculateOpanApp() {
-    MyDB().getBox().put(MyResource.COUNT_APP_LAUNCH,
-        MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH, defaultValue: 0) + 1);
-    MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE,
-        MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0) + 1);
+    MyDB().getBox().put(MyResource.COUNT_APP_LAUNCH, MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH, defaultValue: 0) + 1);
+    MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE, MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0) + 1);
 
-    print(
-        'launch app for rate    :    ${MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0)}');
+    print('launch app for rate    :    ${MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0)}');
   }
 
   _redirect() async {
@@ -138,22 +130,22 @@ class LoadingPageState extends State<LoadingPage>
 
   void _initTimerValue() {
     if (MyDB().getBox().get(MyResource.AFFIRMATION_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(3));
+      MyDB().getBox().put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(1));
     }
     if (MyDB().getBox().get(MyResource.MEDITATION_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(3));
+      MyDB().getBox().put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(5));
     }
     if (MyDB().getBox().get(MyResource.FITNESS_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.FITNESS_TIME_KEY, ExerciseTime(3));
+      MyDB().getBox().put(MyResource.FITNESS_TIME_KEY, ExerciseTime(5));
     }
     if (MyDB().getBox().get(MyResource.DIARY_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.DIARY_TIME_KEY, ExerciseTime(3));
+      MyDB().getBox().put(MyResource.DIARY_TIME_KEY, ExerciseTime(1));
     }
     if (MyDB().getBox().get(MyResource.READING_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(3));
+      MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(10));
     }
     if (MyDB().getBox().get(MyResource.VISUALIZATION_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(3));
+      MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(1));
     }
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:adapty_flutter/adapty_flutter.dart';
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -7,15 +9,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/reordering_program/order_item.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_controller.dart';
+import 'package:morningmagic/pages/paywall/payment.dart';
+// import 'package:morningmagic/pages/paywall/payment_sale.dart';
 import 'package:morningmagic/pages/reminders/reminders_page.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/widgets/primary_button.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
-
+import 'package:morningmagic/widgets/primary_circle_button.dart';
 import '../../app_states.dart';
 import '../../db/model/affirmation_text/affirmation_text.dart';
 import '../../db/model/exercise_time/exercise_time.dart';
@@ -56,11 +61,11 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
+    AppMetrica.reportEvent('settings_screen');
     Get.put(AffirmationController());
     settingsController = Get.put(SettingsController());
     _init();
     _initTarifDialog();
-    initPurchaseListener();
     activityList = buildActivityList(true);
     AnalyticService.screenView('settings_page');
     getAndSetCountLaunches();
@@ -68,12 +73,8 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   void getAndSetCountLaunches() {
-    countLaunchesSettingsPage =
-        MyDB().getBox().get(MyResource.LAUNCH_SETTINGS_PAGE, defaultValue: 0) +
-            1;
-    MyDB()
-        .getBox()
-        .put(MyResource.LAUNCH_SETTINGS_PAGE, countLaunchesSettingsPage);
+    countLaunchesSettingsPage = MyDB().getBox().get(MyResource.LAUNCH_SETTINGS_PAGE, defaultValue: 0) + 1;
+    MyDB().getBox().put(MyResource.LAUNCH_SETTINGS_PAGE, countLaunchesSettingsPage);
     print('countLaunchesSettingsPage: $countLaunchesSettingsPage');
   }
 
@@ -93,8 +94,7 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    ScrollController _scrollController =
-        PrimaryScrollController.of(context) ?? ScrollController();
+    ScrollController _scrollController = PrimaryScrollController.of(context) ?? ScrollController();
 
     double titleFontSize = Get.width * 0.055;
 
@@ -109,8 +109,7 @@ class SettingsPageState extends State<SettingsPage> {
           child: Container(
               padding: EdgeInsets.only(top: 35),
               width: Get.width,
-              decoration:
-                  BoxDecoration(gradient: AppColors.gradient_settings_page),
+              decoration: BoxDecoration(gradient: AppColors.gradient_settings_page),
               child: Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Form(
@@ -118,19 +117,26 @@ class SettingsPageState extends State<SettingsPage> {
                     controller: _scrollController,
                     slivers: <Widget>[
                       SliverToBoxAdapter(
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: PrimaryCircleButton(
+                            icon: Icon(Icons.arrow_back, color: AppColors.primary),
+                            onPressed: () => Get.back(),
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
                         child: Container(
-                            padding: EdgeInsets.only(top: 10, left: 10),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'choose_sequence'.tr,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: AppColors.VIOLET,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: titleFontSize),
-                              ),
-                            )),
+                          padding: EdgeInsets.only(top: 10, left: 10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'choose_sequence'.tr,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(color: AppColors.VIOLET, fontWeight: FontWeight.w600, fontSize: titleFontSize),
+                            ),
+                          ),
+                        ),
                       ),
                       SliverToBoxAdapter(
                         child: Container(
@@ -138,48 +144,64 @@ class SettingsPageState extends State<SettingsPage> {
                           child: Text(
                             'choose_title'.tr,
                             textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: AppColors.VIOLET,
-                                fontStyle: FontStyle.normal,
-                                fontSize: Get.width * .033),
+                            style: TextStyle(color: AppColors.VIOLET, fontStyle: FontStyle.normal, fontSize: Get.width * .033),
                           ),
                         ),
                       ),
                       SliverPadding(padding: EdgeInsets.only(top: 15)),
                       Obx(() {
-                        print(
-                            'rebuild list when isVip: ${billingService.isVip}');
+                        print('rebuild list when isVip: ${billingService.isVip}');
                         return activityList;
                       }),
-                      SliverPadding(padding: EdgeInsets.only(top: 5)),
+                      SliverToBoxAdapter(
+                        child: IconButton(
+                          icon: Icon(Icons.add_circle_outline),
+                          iconSize: 40,
+                          onPressed: () async {
+                            if (!billingService.isPro()) {
+                              Get.to(PaymentPage());
+                              return;
+                            }
+                            AppMetrica.reportEvent('settings_practice_add');
+                            for (var i = 0; i < 4; i++) {
+                              if (MyDB().getBox().get("${MyResource.CUSTOM_TIME_KEY}$i") == null) {
+                                await MyDB().getBox().put("${MyResource.CUSTOM_TIME_KEY}$i", ExerciseTime(1));
+                                List<OrderItem> _itemRows = (await OrderUtil().getOrderHolder()).list;
+                                _itemRows.add(OrderItem(_itemRows.length, "${MyResource.CUSTOM_TIME_KEY}$i"));
+                                OrderUtil().addOrderHolder(_itemRows);
+                                setState(() {
+                                  activityList = buildActivityList(true);
+                                });
+                                return;
+                              }
+                            }
+                          },
+                        ),
+                      ),
+                      SliverPadding(padding: EdgeInsets.only(top: 15)),
                       buildCountMinutes(),
                       SliverToBoxAdapter(
                         child: Container(
-                            padding: EdgeInsets.only(top: 15, left: 10),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'write_affirmation'.tr,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: AppColors.VIOLET,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: titleFontSize),
-                              ),
-                            )),
+                          padding: EdgeInsets.only(top: 15, left: 10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'write_affirmation'.tr,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(color: AppColors.VIOLET, fontWeight: FontWeight.w600, fontSize: titleFontSize),
+                            ),
+                          ),
+                        ),
                       ),
                       SliverToBoxAdapter(
                         child: Column(
                           children: [
                             InkWell(
                               onTap: () async {
-                                String _affirmationText =
-                                    await _showAffirmationCategoryDialog(
-                                        context);
+                                String _affirmationText = await _showAffirmationCategoryDialog(context);
                                 if (_affirmationText != null) {
                                   setState(() {
-                                    affirmationTextController.text =
-                                        _affirmationText;
+                                    affirmationTextController.text = _affirmationText;
                                   });
                                 }
                               },
@@ -212,8 +234,7 @@ class SettingsPageState extends State<SettingsPage> {
                               ),
                             ),
                             Container(
-                              padding:
-                                  EdgeInsets.only(top: 10, left: 10, right: 10),
+                              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
                               child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30.0),
@@ -221,9 +242,7 @@ class SettingsPageState extends State<SettingsPage> {
                                   ),
                                   child: Container(
                                     padding: EdgeInsets.all(20),
-                                    child: AffirmationTextField(
-                                        affirmationTextController:
-                                            affirmationTextController),
+                                    child: AffirmationTextField(affirmationTextController: affirmationTextController),
                                   )),
                             ),
                           ],
@@ -237,10 +256,7 @@ class SettingsPageState extends State<SettingsPage> {
                             child: Text(
                               'book_name'.tr,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: AppColors.VIOLET,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: titleFontSize),
+                              style: TextStyle(color: AppColors.VIOLET, fontWeight: FontWeight.w600, fontSize: titleFontSize),
                             ),
                           ),
                         ),
@@ -249,31 +265,56 @@ class SettingsPageState extends State<SettingsPage> {
                         child: Container(
                           padding: EdgeInsets.only(top: 5, left: 10, right: 10),
                           child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  color: billingService.isPro()
-                                      ? AppColors.TRANSPARENT_WHITE
-                                      : AppColors.TRANSPARENTS),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(30.0), color: billingService.isPro() ? AppColors.TRANSPARENT_WHITE : AppColors.TRANSPARENTS),
                               child: Container(
-                                padding: EdgeInsets.only(
-                                    top: 11, bottom: 11, right: 20, left: 20),
+                                padding: EdgeInsets.only(top: 11, bottom: 11, right: 20, left: 20),
                                 child: TextField(
-                                  enabled:
-                                      billingService.isPro() ? true : false,
+                                  enabled: billingService.isPro() ? true : false,
                                   controller: bookController,
                                   minLines: 1,
                                   maxLines: 1,
                                   cursorColor: AppColors.VIOLET,
                                   keyboardType: TextInputType.text,
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: titleFontSize,
-                                      fontStyle: FontStyle.normal,
-                                      color: AppColors.VIOLET,
-                                      decoration: TextDecoration.none),
+                                  style: TextStyle(fontSize: titleFontSize, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
                                   decoration: null,
                                 ),
                               )),
+                        ),
+                      ),
+                      SliverToBoxAdapter(child: SizedBox(height: 20)),
+                      SliverToBoxAdapter(
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10, top: 15),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'name'.tr,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(color: AppColors.VIOLET, fontWeight: FontWeight.w600, fontSize: titleFontSize),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Container(
+                          padding: EdgeInsets.only(top: 5, left: 10, right: 10),
+                          child: Container(
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(30.0), color: AppColors.TRANSPARENT_WHITE),
+                            child: Container(
+                              padding: EdgeInsets.only(top: 11, bottom: 11, right: 20, left: 20),
+                              child: TextField(
+                                controller: nameController,
+                                minLines: 1,
+                                maxLines: 1,
+                                cursorColor: AppColors.VIOLET,
+                                keyboardType: TextInputType.text,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: titleFontSize, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
+                                decoration: null,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       SliverToBoxAdapter(child: SizedBox(height: 20)),
@@ -344,23 +385,16 @@ class SettingsPageState extends State<SettingsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-                child: Text(
-              'duration'.tr,
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                  color: AppColors.VIOLET,
-                  fontStyle: FontStyle.normal,
-                  fontSize: Get.width * .033),
-            )),
+              child: Text(
+                'duration'.tr,
+                textAlign: TextAlign.start,
+                style: TextStyle(color: AppColors.VIOLET, fontStyle: FontStyle.normal, fontSize: Get.width * .033),
+              ),
+            ),
             Obx(
               () => Text(
-                'x_minutes'.trParams({
-                  'x': settingsController.countAvailableMinutes.value.toString()
-                }),
-                style: TextStyle(
-                    color: AppColors.VIOLET,
-                    fontStyle: FontStyle.normal,
-                    fontSize: Get.width * .05),
+                'x_minutes'.trParams({'x': settingsController.countAvailableMinutes.value.toString()}),
+                style: TextStyle(color: AppColors.VIOLET, fontStyle: FontStyle.normal, fontSize: Get.width * .05),
               ),
             )
           ],
@@ -369,54 +403,52 @@ class SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget buildActivityList(bool needReInit) => SettingsActivityList(
-      meditationTimeController,
-      affirmationTimeController,
-      fitnessTimeController,
-      vocabularyTimeController,
-      readingTimeController,
-      visualizationTimeController,
-      needReInit);
+  Widget _buildMinutesTextInput(String key, dynamic param) {
+    return TextField(
+      onChanged: (value) async {
+        await MyDB().getBox().put(key, {'time': value.isEmpty ? "0" : value, 'title': param['title']});
+      },
+      controller: TextEditingController(text: param['time'].toString()),
+      minLines: 1,
+      maxLines: 1,
+      cursorColor: AppColors.VIOLET,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.next,
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+          filled: true,
+          contentPadding: EdgeInsets.all(6),
+          isDense: true,
+          fillColor: AppColors.TRANSPARENT_WHITE,
+          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.VIOLET), borderRadius: BorderRadius.all(Radius.circular(8))),
+          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.CREAM), borderRadius: BorderRadius.all(Radius.circular(8)))),
+      style: TextStyle(fontSize: Get.width * .04, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
+    );
+  }
+
+  Widget buildActivityList(bool needReInit) =>
+      SettingsActivityList(meditationTimeController, affirmationTimeController, fitnessTimeController, vocabularyTimeController, readingTimeController, visualizationTimeController);
 
   void _init() {
     initTextEditingControllers();
     addListenersToEditText();
   }
 
-  initPurchaseListener() {
-    Purchases.addPurchaserInfoUpdateListener((_purchaserInfo) {
-      print('Purchaser Info Listener');
-      if (billingService.purchaserInfo != _purchaserInfo)
-        setState(() {
-          billingService.purchaserInfo = _purchaserInfo;
-          print('Purchase state updated');
-          activityList = buildActivityList(true);
-        });
-    });
-  }
-
   void _initTarifDialog() async {
-    await Future.delayed(Duration(seconds: 3));
-    if (!billingService.isPro() && countLaunchesSettingsPage % 3 == 0) {
-      Get.dialog(PaymentDialog());
-    }
+    // await Future.delayed(Duration(seconds: 3));
+    // if (!billingService.isPro() && countLaunchesSettingsPage % 3 == 0) {
+    //   Get.to(PaymentSalePage());
+    // }
   }
 
   void initTextEditingControllers() {
-    affirmationTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.AFFIRMATION_TIME_KEY));
-    meditationTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.MEDITATION_TIME_KEY));
-    fitnessTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.FITNESS_TIME_KEY));
-    vocabularyTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.DIARY_TIME_KEY));
-    readingTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.READING_TIME_KEY));
-    visualizationTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.VISUALIZATION_TIME_KEY));
-    affirmationTextController =
-        TextEditingController(text: getInitialValueForAffirmationTextField());
+    affirmationTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.AFFIRMATION_TIME_KEY));
+    meditationTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.MEDITATION_TIME_KEY));
+    fitnessTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.FITNESS_TIME_KEY));
+    vocabularyTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.DIARY_TIME_KEY));
+    readingTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.READING_TIME_KEY));
+    visualizationTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.VISUALIZATION_TIME_KEY));
+    affirmationTextController = TextEditingController(text: getInitialValueForAffirmationTextField());
     bookController = TextEditingController(text: getInitialValueForBookField());
     nameController = TextEditingController(text: getInitialValueForNameField());
   }
@@ -430,15 +462,11 @@ class SettingsPageState extends State<SettingsPage> {
 
   void addListenersToEditText() {
     affirmationTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          affirmationTimeController, MyResource.AFFIRMATION_TIME_KEY);
-      if (affirmationTimeController.text != null &&
-          affirmationTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(affirmationTimeController, MyResource.AFFIRMATION_TIME_KEY);
+      if (affirmationTimeController.text != null && affirmationTimeController.text.isNotEmpty) {
         int input = int.tryParse(affirmationTimeController.text);
         if (input != null) {
-          MyDB()
-              .getBox()
-              .put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(input));
+          MyDB().getBox().put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(input));
         }
       } else {
         MyDB().getBox().put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(0));
@@ -446,15 +474,11 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     meditationTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          meditationTimeController, MyResource.MEDITATION_TIME_KEY);
-      if (meditationTimeController.text != null &&
-          meditationTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(meditationTimeController, MyResource.MEDITATION_TIME_KEY);
+      if (meditationTimeController.text != null && meditationTimeController.text.isNotEmpty) {
         int input = int.tryParse(meditationTimeController.text);
         if (input != null) {
-          MyDB()
-              .getBox()
-              .put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(input));
+          MyDB().getBox().put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(input));
         }
       } else {
         MyDB().getBox().put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(0));
@@ -462,10 +486,8 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     fitnessTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          fitnessTimeController, MyResource.FITNESS_TIME_KEY);
-      if (fitnessTimeController.text != null &&
-          fitnessTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(fitnessTimeController, MyResource.FITNESS_TIME_KEY);
+      if (fitnessTimeController.text != null && fitnessTimeController.text.isNotEmpty) {
         int input = int.tryParse(fitnessTimeController.text);
         if (input != null) {
           MyDB().getBox().put(MyResource.FITNESS_TIME_KEY, ExerciseTime(input));
@@ -476,10 +498,8 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     vocabularyTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          vocabularyTimeController, MyResource.DIARY_TIME_KEY);
-      if (vocabularyTimeController.text != null &&
-          vocabularyTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(vocabularyTimeController, MyResource.DIARY_TIME_KEY);
+      if (vocabularyTimeController.text != null && vocabularyTimeController.text.isNotEmpty) {
         int input = int.tryParse(vocabularyTimeController.text);
         if (input != null) {
           MyDB().getBox().put(MyResource.DIARY_TIME_KEY, ExerciseTime(input));
@@ -490,10 +510,8 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     readingTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          readingTimeController, MyResource.READING_TIME_KEY);
-      if (readingTimeController.text != null &&
-          readingTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(readingTimeController, MyResource.READING_TIME_KEY);
+      if (readingTimeController.text != null && readingTimeController.text.isNotEmpty) {
         int input = int.tryParse(readingTimeController.text);
         if (input != null) {
           MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(input));
@@ -504,15 +522,11 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     visualizationTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          visualizationTimeController, MyResource.VISUALIZATION_TIME_KEY);
-      if (visualizationTimeController.text != null &&
-          visualizationTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(visualizationTimeController, MyResource.VISUALIZATION_TIME_KEY);
+      if (visualizationTimeController.text != null && visualizationTimeController.text.isNotEmpty) {
         int input = int.tryParse(visualizationTimeController.text);
         if (input != null) {
-          MyDB()
-              .getBox()
-              .put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(input));
+          MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(input));
         }
       } else {
         MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(0));
@@ -520,10 +534,8 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     affirmationTextController.addListener(() {
-      if (affirmationTextController.text != null &&
-          affirmationTextController.text.isNotEmpty) {
-        MyDB().getBox().put(MyResource.AFFIRMATION_TEXT_KEY,
-            AffirmationText(affirmationTextController.text));
+      if (affirmationTextController.text != null && affirmationTextController.text.isNotEmpty) {
+        MyDB().getBox().put(MyResource.AFFIRMATION_TEXT_KEY, AffirmationText(affirmationTextController.text));
       }
       setState(() {});
     });
@@ -534,6 +546,7 @@ class SettingsPageState extends State<SettingsPage> {
       }
       setState(() {});
     });
+
     nameController.addListener(() {
       if (nameController.text != null && nameController.text.isNotEmpty) {
         MyDB().getBox().put(MyResource.USER_KEY, User(nameController.text));
@@ -570,8 +583,7 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   Future<String> _showAffirmationCategoryDialog(BuildContext context) async {
-    return await showDialog(
-        context: context, builder: (context) => AffirmationCategoryDialog());
+    return await showDialog(context: context, builder: (context) => AffirmationCategoryDialog());
   }
 
   _mutateTextOnValidationFailed(TextEditingController controller, String key) {
@@ -584,17 +596,12 @@ class SettingsPageState extends State<SettingsPage> {
         _oldValue = '';
       controller.clear();
       controller.text = _oldValue;
-      controller.selection =
-          TextSelection.collapsed(offset: controller.text.length);
+      controller.selection = TextSelection.collapsed(offset: controller.text.length);
     }
   }
 
   bool _isInputTimeNotValid(String text) {
-    return text.contains(".") ||
-        text.contains("-") ||
-        text.contains(",") ||
-        text.contains(" ") ||
-        text.length > 2;
+    return text.contains(".") || text.contains("-") || text.contains(",") || text.contains(" ") || text.length > 2;
   }
 }
 
@@ -617,11 +624,7 @@ class AffirmationTextField extends StatelessWidget {
       cursorColor: AppColors.VIOLET,
       keyboardType: TextInputType.text,
       textAlign: TextAlign.left,
-      style: TextStyle(
-          fontSize: Get.width * .045,
-          fontStyle: FontStyle.normal,
-          color: AppColors.VIOLET,
-          decoration: TextDecoration.none),
+      style: TextStyle(fontSize: Get.width * .045, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
       decoration: InputDecoration(
         hintMaxLines: 8,
         hintText: 'affirmation_hint'.tr,

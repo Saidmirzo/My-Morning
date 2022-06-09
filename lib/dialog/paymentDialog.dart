@@ -5,16 +5,12 @@ import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/storage.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
-
 import '../resources/colors.dart';
-import '../widgets/subscribe_1_month_button.dart';
 
 class PaymentDialog extends Dialog {
   @override
   Widget build(BuildContext context) {
-    var isInterviewed =
-        MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
+    var isInterviewed = MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
     var tryalDays = isInterviewed ? 14 : 7;
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -34,10 +30,7 @@ class PaymentDialog extends Dialog {
                   child: Text(
                     'appreciate'.tr,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.VIOLET),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: AppColors.VIOLET),
                   ),
                 ),
               ),
@@ -68,11 +61,7 @@ class PaymentDialog extends Dialog {
                             child: Text(
                               "10\$",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.PINK,
-                                  decoration: TextDecoration.lineThrough),
+                              style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.PINK, decoration: TextDecoration.lineThrough),
                             ),
                           ),
                           Container(
@@ -80,10 +69,7 @@ class PaymentDialog extends Dialog {
                             child: Text(
                               "1\$",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.VIOLET),
+                              style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.VIOLET),
                             ),
                           )
                         ],
@@ -124,9 +110,7 @@ class PaymentDialog extends Dialog {
 
   Container _buildBuyButton({@required title, @required VoidCallback onTap}) {
     return Container(
-        decoration: BoxDecoration(
-            color: AppColors.PINK,
-            borderRadius: BorderRadius.all(Radius.circular(30))),
+        decoration: BoxDecoration(color: AppColors.PINK, borderRadius: BorderRadius.all(Radius.circular(30))),
         child: InkWell(
           onTap: onTap,
           child: Padding(
@@ -152,26 +136,26 @@ class PaymentDialog extends Dialog {
   }
 }
 
-class UpsellScreen extends StatelessWidget {
-  final Offerings offerings;
+// class UpsellScreen extends StatelessWidget {
+//   final Offerings offerings;
 
-  UpsellScreen({Key key, @required this.offerings}) : super(key: key);
+//   UpsellScreen({Key key, @required this.offerings}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    if (offerings != null) {
-      final offering = offerings.current;
-      if (offering != null) {
-        final monthly = offering.monthly;
-        if (monthly != null) {
-          return Container(
-            child: Center(
-              child: Subscribe1MonthButton(),
-            ),
-          );
-        }
-      }
-    }
-    return Container(width: 0, height: 0);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     if (offerings != null) {
+//       final offering = offerings.current;
+//       if (offering != null) {
+//         final monthly = offering.monthly;
+//         if (monthly != null) {
+//           return Container(
+//             child: Center(
+//               child: Subscribe1MonthButton(),
+//             ),
+//           );
+//         }
+//       }
+//     }
+//     return Container(width: 0, height: 0);
+//   }
+// }

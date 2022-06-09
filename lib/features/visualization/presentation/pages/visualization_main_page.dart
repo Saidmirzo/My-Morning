@@ -27,10 +27,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
   @override
   void initState() {
     super.initState();
-    _controller = Get.put(VisualizationController(
-        hiveBox: myDbBox,
-        targetRepository: VisualizationTargetRepositoryImpl(),
-        imageRepository: VisualizationImageRepositoryImpl()));
+    _controller = Get.put(VisualizationController(hiveBox: myDbBox, targetRepository: VisualizationTargetRepositoryImpl(), imageRepository: VisualizationImageRepositoryImpl()));
     _controller.fromHomeMenu = widget.fromHomeMenu;
   }
 
@@ -55,13 +52,9 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
                       child: PrimaryCircleButton(
                         icon: Icon(Icons.arrow_back, color: AppColors.primary),
                         onPressed: () {
-                          _controller.finishVisualization(true,
-                              backProgramm: true);
-                          if (widget.fromHomeMenu)
-                            return AppRouting.navigateToHomeWithClearHistory();
-                          OrderUtil()
-                              .getPreviousRouteById(TimerPageId.Visualization)
-                              .then((value) {
+                          _controller.finishVisualization(true, backProgramm: true);
+                          if (widget.fromHomeMenu) return AppRouting.navigateToHomeWithClearHistory();
+                          OrderUtil().getPreviousRouteById(TimerPageId.Visualization).then((value) {
                             Get.off(value);
                           });
                         },
@@ -95,24 +88,16 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
   Widget bg() {
     return Stack(
       children: [
-        Positioned(
-            bottom: 0,
-            child: Image.asset('assets/images/visualisation/clouds.png',
-                width: Get.width, fit: BoxFit.cover)),
+        Positioned(bottom: 0, child: Image.asset('assets/images/visualisation/clouds.png', width: Get.width, fit: BoxFit.cover)),
         Positioned(
           bottom: 0,
-          child: Image.asset('assets/images/visualisation/mountain1.png',
-              width: Get.width, fit: BoxFit.cover),
+          child: Image.asset('assets/images/visualisation/mountain1.png', width: Get.width, fit: BoxFit.cover),
         ),
         Positioned(
           bottom: 0,
-          child: Image.asset('assets/images/visualisation/mountain2.png',
-              width: Get.width, fit: BoxFit.cover),
+          child: Image.asset('assets/images/visualisation/mountain2.png', width: Get.width, fit: BoxFit.cover),
         ),
-        Positioned(
-            bottom: 0,
-            child: Image.asset('assets/images/visualisation/main.png',
-                width: Get.width, fit: BoxFit.cover)),
+        Positioned(bottom: 0, child: Image.asset('assets/images/visualisation/main.png', width: Get.width, fit: BoxFit.cover)),
       ],
     );
   }
@@ -135,8 +120,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
       child: Text(
         'visualization_title'.tr,
         textAlign: TextAlign.center,
-        style: TextStyle(
-            fontSize: Get.height * 0.019, color: AppColors.WHITE, height: 1.3),
+        style: TextStyle(fontSize: Get.height * 0.019, color: AppColors.WHITE, height: 1.3),
       ),
     );
   }
@@ -157,11 +141,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
             // keyboardType: TextInputType.text,
             textInputAction: TextInputAction.newline,
             textAlign: TextAlign.left,
-            style: TextStyle(
-                fontSize: 24,
-                fontStyle: FontStyle.normal,
-                color: AppColors.VIOLET,
-                decoration: TextDecoration.none),
+            style: TextStyle(fontSize: 24, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
             decoration: InputDecoration(
               hintMaxLines: 4,
               hintText: 'visualization_hint'.tr,

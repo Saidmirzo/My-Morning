@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
@@ -14,6 +15,7 @@ import 'package:morningmagic/db/model/visualization/visualization.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
+import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_controller.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/reading/timer/timer_note_page.dart';
@@ -24,6 +26,7 @@ import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
+import 'package:morningmagic/utils/storage.dart';
 
 // TODO rewrite
 class TimerService {
@@ -56,6 +59,7 @@ class TimerService {
 
     if (startTime == null || startTime == 0) {
       getTimeAndText().then((int value) {
+        if (value == 0) value = 1;
         time.value = value * 60;
         startValue = value * 60;
         startTime = value;
@@ -79,15 +83,13 @@ class TimerService {
       time.value = duration.inSeconds;
       startValue = duration.inSeconds;
       startTime = duration.inSeconds;
-      if (timer == null || !timer.isActive) startTimer();
     }
+    if (timer == null || !timer.isActive) startTimer();
   }
 
-  double get createValue =>
-      startTime != null ? 1 - time / (startTime * 60) : time.toDouble();
+  double get createValue => startTime != null ? 1 - time / (startTime * 60) : time.toDouble();
 
-  double get creatValueNight =>
-      startTime != null ? 1 - time / startTime : time.toDouble();
+  double get creatValueNight => startTime != null ? 1 - time / startTime : time.toDouble();
 
   void setTime(int min) {
     startTime = min;
@@ -136,13 +138,11 @@ class TimerService {
   }
 
   Future<int> getTimeAndText() async {
-    ExerciseTime time =
-        myDbBox.get(this.getBoxTimeKey(pageId), defaultValue: ExerciseTime(0));
-    AffirmationText text = myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY,
-        defaultValue: AffirmationText(""));
-    affirmationText.value = text.affirmationText;
-    Visualization visualization = myDbBox.get(MyResource.VISUALIZATION_KEY,
-        defaultValue: Visualization(""));
+    ExerciseTime time = myDbBox.get(this.getBoxTimeKey(pageId), defaultValue: ExerciseTime(0));
+    AffirmationText text = myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY, defaultValue: AffirmationText(""));
+
+    affirmationText.value = text.affirmationText.isEmpty ? affiramtions[Random().nextInt(affiramtions.length - 1)].affirmations[Random().nextInt(5)].text : text.affirmationText;
+    Visualization visualization = myDbBox.get(MyResource.VISUALIZATION_KEY, defaultValue: Visualization(""));
     visualizationText = visualization.visualization;
     bookTitle = myDbBox.get(MyResource.BOOK_KEY, defaultValue: '');
     print('Book title : $bookTitle');
@@ -161,9 +161,7 @@ class TimerService {
       ProgressController pg = Get.find();
       switch (pageId) {
         case TimerPageId.Affirmation:
-          var model = AffirmationProgress(passedSec.value,
-              affirmationText.value.isEmpty ? '-' : affirmationText.value,
-              isSkip: isSkip);
+          var model = AffirmationProgress(passedSec.value, affirmationText.value.isEmpty ? '-' : affirmationText.value, isSkip: isSkip);
           pg.saveJournal(MyResource.AFFIRMATION_JOURNAL, model);
           break;
         case TimerPageId.Meditation:
@@ -203,9 +201,7 @@ class TimerService {
           timer.cancel();
           if (pageId != TimerPageId.Reading) saveProgress(false);
 
-          OrderUtil()
-              .getRouteById(pageId)
-              .then((value) => getNextPage(value, false));
+          OrderUtil().getRouteById(pageId).then((value) => getNextPage(value, false));
 
           if (onDone != null) onDone();
         } else {
@@ -222,22 +218,42 @@ class TimerService {
 
   // Время таймера записывается неверно если залочить экран ( passedSeconds )
 
-  getNextPage(dynamic value, bool isSkip) {
+  getNextPage(dynamic value, bool isSkip, {bool isFinal = false}) {
     print('getnextPage fromHomeMenu: $fromHomeMenu');
     print('getNextPage value $value');
     Get.off(pageId == TimerPageId.Reading
-        ? TimerInputSuccessScreen(passedSec.value, isSkip,
-            fromHomeMenu: fromHomeMenu)
+        ? TimerInputSuccessScreen(passedSec.value, isSkip, calculateProcent(pageId), fromHomeMenu: fromHomeMenu)
         : TimerSuccessScreen(
-            () => Get.off(
-                  fromHomeMenu
-                      ? billingService.isVip.value
-                          ? ProgressPage()
-                          : PaywallPage()
-                      : value,
-                ),
+            () => Get.off(fromHomeMenu
+                ? billingService.isVip.value
+                    ? ProgressPage()
+                    : PaywallPage()
+                : value),
             MyDB().getBox().get(getBoxTimeKey(pageId)).time ?? 3,
-            false));
+            isFinal,
+            calculateProcent(pageId)));
+  }
+
+  double calculateProcent(int pageId) {
+    switch (pageId) {
+      case TimerPageId.Meditation:
+        return 0.2;
+        break;
+      case TimerPageId.Affirmation:
+        return 0.4;
+        break;
+      case TimerPageId.Fitness:
+        return 0.6;
+        break;
+      case TimerPageId.Visualization:
+        return 0.8;
+        break;
+      case TimerPageId.Reading:
+        return 0.9;
+        break;
+      default:
+        return 0.2;
+    }
   }
 
   getBoxTimeKey(int pageId) {

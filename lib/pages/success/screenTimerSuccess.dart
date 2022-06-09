@@ -12,8 +12,9 @@ class TimerSuccessScreen extends StatefulWidget {
   final VoidCallback onPressed;
   final int minutes;
   final bool isFinal;
+  final double procent;
 
-  TimerSuccessScreen(this.onPressed, this.minutes, this.isFinal);
+  TimerSuccessScreen(this.onPressed, this.minutes, this.isFinal, this.procent);
 
   @override
   State createState() {
@@ -29,6 +30,8 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   @override
   void initState() {
     super.initState();
+    print(widget.minutes);
+    print(widget.isFinal);
     print('init Screen timer success');
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
@@ -67,10 +70,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
           child: Container(
             width: Get.width,
             height: Get.height,
-            decoration: BoxDecoration(
-                gradient: menuState == MenuState.MORNING
-                    ? AppColors.Bg_Gradient_Timer_Reading
-                    : AppColors.gradient_loading_night_bg),
+            decoration: BoxDecoration(gradient: menuState == MenuState.MORNING ? AppColors.Bg_Gradient_Timer_Reading : AppColors.gradient_loading_night_bg),
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -124,16 +124,14 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   Positioned mn1() {
     return Positioned(
       bottom: 0,
-      child: Image.asset('assets/images/meditation/mountain1_night.png',
-          width: Get.width, fit: BoxFit.cover),
+      child: Image.asset('assets/images/meditation/mountain1_night.png', width: Get.width, fit: BoxFit.cover),
     );
   }
 
   Positioned mn2() {
     return Positioned(
       bottom: 0,
-      child: Image.asset('assets/images/meditation/mountain2_night.png',
-          width: Get.width, fit: BoxFit.cover),
+      child: Image.asset('assets/images/meditation/mountain2_night.png', width: Get.width, fit: BoxFit.cover),
     );
   }
 
@@ -143,14 +141,10 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
       lineWidth: 27.0,
       reverse: true,
       animation: false,
-      percent: 0.4,
+      percent: widget.isFinal ? 1 : widget.procent,
       center: Text(
         'success'.tr,
-        style: TextStyle(
-            fontSize: Get.height * 0.04,
-            fontStyle: FontStyle.normal,
-            color: Colors.white,
-            fontWeight: FontWeight.w600),
+        style: TextStyle(fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
       linearGradient: AppColors.Progress_Gradient_Timer_Reading,

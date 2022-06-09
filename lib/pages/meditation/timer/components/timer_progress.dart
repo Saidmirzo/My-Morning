@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
@@ -8,9 +7,7 @@ import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/widgets/timer_circle_button.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-Widget buildTimerProgress(
-  TimerService timerService,
-) {
+Widget buildTimerProgress(TimerService timerService, bool isSilence) {
   double _timerSize = Get.width * 0.5;
   MediationAudioController audioController = Get.find();
 
@@ -21,20 +18,23 @@ Widget buildTimerProgress(
         radius: Get.height * 0.24,
         lineWidth: 20.0,
         animation: false,
-        percent: menuState == MenuState.MORNING
-            ? timerService.createValue
-            : timerService.creatValueNight,
+        percent: menuState == MenuState.MORNING ? timerService.createValue : timerService.creatValueNight,
         center: TimerCircleButton(
-            child: Icon(
-              timerService.isActive.isTrue ? Icons.pause : Icons.play_arrow,
-              size: 40,
-              color: AppColors.VIOLET,
-            ),
-            onPressed: () => timerService.startTimer()),
+          child: Icon(
+            timerService.isActive.isTrue ? Icons.pause : Icons.play_arrow,
+            size: 40,
+            color: AppColors.VIOLET,
+          ),
+          onPressed: () {
+            print(isSilence);
+            if (!isSilence) {
+              audioController.playOrPause();
+            }
+            timerService.startTimer();
+          },
+        ),
         circularStrokeCap: CircularStrokeCap.round,
-        linearGradient: menuState == MenuState.MORNING
-            ? AppColors.Progress_Gradient_Timer_Meditation
-            : AppColors.Progress_Gradient_Timer_Meditation_Night,
+        linearGradient: menuState == MenuState.MORNING ? AppColors.Progress_Gradient_Timer_Meditation : AppColors.Progress_Gradient_Timer_Meditation_Night,
         backgroundColor: Colors.white,
       ),
     ),

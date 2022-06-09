@@ -87,10 +87,7 @@ class AffirmationMiniProgress extends StatelessWidget {
   AffirmationMiniProgress(this.id, this.list, this.date);
 
   void selectCategory(BuildContext ctx) {
-    Navigator.push(
-        ctx,
-        MaterialPageRoute(
-            builder: (context) => AffirmationFullProgress(id, list, date)));
+    Navigator.push(ctx, MaterialPageRoute(builder: (context) => AffirmationFullProgress(id, list, date)));
   }
 
   @override
@@ -103,8 +100,7 @@ class AffirmationMiniProgress extends StatelessWidget {
           onTap: () => selectCategory(context),
           borderRadius: BorderRadius.circular(15),
           child: Container(
-            padding:
-                const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+            padding: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
             margin: const EdgeInsets.only(
               bottom: 15,
               left: 5,
@@ -159,8 +155,7 @@ class AffirmationFullProgress extends StatefulWidget {
   AffirmationFullProgress(this.id, this.list, this.date);
 
   @override
-  _AffirmationFullProgressState createState() =>
-      _AffirmationFullProgressState();
+  _AffirmationFullProgressState createState() => _AffirmationFullProgressState();
 }
 
 class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
@@ -190,8 +185,7 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
                   color: Colors.transparent,
                   child: Container(
                     padding: const EdgeInsets.all(15),
-                    margin: const EdgeInsets.only(
-                        bottom: 15, left: 5, right: 5, top: 15),
+                    margin: const EdgeInsets.only(bottom: 15, left: 5, right: 5, top: 15),
                     child: Column(
                       children: [
                         Container(
@@ -232,8 +226,7 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
         shrinkWrap: true,
         itemCount: widget.list.length,
         itemBuilder: (ctx, i) {
-          String skip =
-              widget.list[i].isSkip ? '( ' + 'skip_note'.tr + ' )' : '';
+          String skip = widget.list[i].isSkip ? '( ' + 'skip_note'.tr + ' )' : '';
           return Container(
             margin: const EdgeInsets.only(bottom: 15),
             child: Row(

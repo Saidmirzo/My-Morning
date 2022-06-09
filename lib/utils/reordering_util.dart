@@ -1,9 +1,12 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
+import 'package:morningmagic/pages/custom_methodic/custom_methodic_page.dart';
+import 'package:morningmagic/pages/custom_methodic/custom_methodic_start_page.dart';
 import 'package:morningmagic/pages/diary/diary_page.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/meditation/meditation_page.dart';
@@ -22,37 +25,40 @@ import '../widgets/exerciseTile.dart';
 class OrderUtil {
   Future<OrderHolder> getOrderHolder() async {
     OrderHolder orderHolder;
-    orderHolder = await MyDB().getBox().get(MyResource.ORDER_PROGRAM_HOLDER,
-        defaultValue: createDefaultHolder());
+    orderHolder = await MyDB().getBox().get(MyResource.ORDER_PROGRAM_HOLDER, defaultValue: createDefaultHolder());
+    print(orderHolder);
     return orderHolder;
   }
 
   Future<void> saveOrderHolder(List<ExerciseTile> exerciseList) async {
     List<OrderItem> orderItemsList = [];
     for (int i = 0; i < exerciseList.length; i++) {
-      orderItemsList.add(OrderItem(exerciseList[i].orderItem.position));
+      orderItemsList.add(OrderItem(exerciseList[i].orderItem.position, exerciseList[i].orderItem.id));
       print('save: ${exerciseList[i].title}');
     }
     OrderHolder orderHolder = OrderHolder(orderItemsList);
     await MyDB().getBox().put(MyResource.ORDER_PROGRAM_HOLDER, orderHolder);
   }
 
-  OrderHolder createDefaultHolder() {
-    OrderItem orderAffirmation = new OrderItem(0);
-    OrderItem orderMeditation = new OrderItem(1);
-    OrderItem orderFitness = new OrderItem(2);
-    OrderItem orderDiary = new OrderItem(3);
-    OrderItem orderReading = new OrderItem(4);
-    OrderItem orderVisualization = new OrderItem(5);
+  Future<void> addOrderHolder(List<OrderItem> items) async {
+    OrderHolder orderHolder = OrderHolder(items);
+    await MyDB().getBox().put(MyResource.ORDER_PROGRAM_HOLDER, orderHolder);
+  }
 
-    List<OrderItem> list = [
-      orderMeditation,
-      orderAffirmation,
-      orderFitness,
-      orderVisualization,
-      orderReading,
-      orderDiary
-    ];
+  Future<void> removeOrderHolder(List<OrderItem> items) async {
+    OrderHolder orderHolder = OrderHolder(items);
+    await MyDB().getBox().put(MyResource.ORDER_PROGRAM_HOLDER, orderHolder);
+  }
+
+  OrderHolder createDefaultHolder() {
+    OrderItem orderAffirmation = new OrderItem(0, getStringIdByOrderId(0));
+    OrderItem orderMeditation = new OrderItem(1, getStringIdByOrderId(1));
+    OrderItem orderFitness = new OrderItem(2, getStringIdByOrderId(2));
+    OrderItem orderDiary = new OrderItem(3, getStringIdByOrderId(3));
+    OrderItem orderReading = new OrderItem(4, getStringIdByOrderId(4));
+    OrderItem orderVisualization = new OrderItem(5, getStringIdByOrderId(5));
+
+    List<OrderItem> list = [orderMeditation, orderAffirmation, orderFitness, orderVisualization, orderReading, orderDiary];
 
     return new OrderHolder(list);
   }
@@ -68,7 +74,7 @@ class OrderUtil {
       return "diary_small";
     } else if (id == TimerPageId.Reading) {
       return "reading_small";
-    } else {
+    } else if (id == TimerPageId.Visualization) {
       return "visualization_small";
     }
   }
@@ -99,24 +105,72 @@ class OrderUtil {
     }
   }
 
+  void endComplex(String id) {
+    if (id.contains("custom")) {
+      AppMetrica.reportEvent('complex_userpractice_end');
+    }
+    if (id == "affirmation_small") {
+      AppMetrica.reportEvent('complex_affirmations_end');
+    }
+    if (id == "meditation_small") {
+      AppMetrica.reportEvent('complex_meditation_end');
+    }
+    if (id == "fitness_small") {
+      AppMetrica.reportEvent('complex_fitness_end');
+    }
+    if (id == "diary_small") {
+      AppMetrica.reportEvent('complex_diary_end');
+    }
+    if (id == "reading_small") {
+      AppMetrica.reportEvent('complex_reading_end');
+    }
+    if (id == "visualization_small") {
+      AppMetrica.reportEvent('complex_visualization_end');
+    }
+  }
+
   Future<dynamic> getRouteByPositionInList(int position) async {
-    if (position == 6) return ProgressPage();
     OrderHolder orderHolder = await getOrderHolder();
+    if (position > orderHolder.list.length) return ProgressPage();
 
     OrderItem orderItem = orderHolder.list[position];
-    int id = orderItem.position;
+    String id = orderItem.id;
     print('Open id: $id');
 
-    if (!billingService.isPro() && ![0, 1].contains(id)) {
+    endComplex(orderHolder.list[position - 1].id);
+
+    if (!billingService.isPro() && ![0, 1].contains(orderItem.position)) {
       print('!isPro && ![0,1].contains(id)');
       return Get.to(PaywallPage());
     }
-    if (id == TimerPageId.Affirmation) return AffirmationPage();
-    if (id == TimerPageId.Meditation) return MeditationPage();
-    if (id == TimerPageId.Fitness) return FitnessMainPage(pageId: id);
-    if (id == TimerPageId.Diary) return DiaryPage();
-    if (id == TimerPageId.Reading) return ReadingPage();
-    if (id == TimerPageId.Visualization) return VisualizationMainPage();
+    if (id.contains("custom")) {
+      AppMetrica.reportEvent('complex_userpractice');
+      return CustomMethodicStartPage(id: id, pageId: orderItem.position);
+    }
+    if (id == "affirmation_small") {
+      AppMetrica.reportEvent('complex_affirmations');
+      return AffirmationPage();
+    }
+    if (id == "meditation_small") {
+      AppMetrica.reportEvent('complex_meditation');
+      return MeditationPage();
+    }
+    if (id == "fitness_small") {
+      AppMetrica.reportEvent('complex_fitness');
+      return FitnessMainPage(pageId: orderItem.position);
+    }
+    if (id == "diary_small") {
+      AppMetrica.reportEvent('complex_diary');
+      return DiaryPage();
+    }
+    if (id == "reading_small") {
+      AppMetrica.reportEvent('complex_reading');
+      return ReadingPage();
+    }
+    if (id == "visualization_small") {
+      AppMetrica.reportEvent('complex_visualization');
+      return VisualizationMainPage();
+    }
   }
 
   Future<dynamic> getPreviousRouteById(int id) async {
@@ -132,24 +186,23 @@ class OrderUtil {
   }
 
   Future<dynamic> getRouteById(int id) async {
-    if (id == TimerPageId.MeditationNight || id == TimerPageId.MusicNight) {
+    if (id == 10 || id == 11 || id == 12) {
       return ProgressPage();
     }
 
     OrderHolder orderHolder = await getOrderHolder();
     int pos = await getPositionById(id);
-    print('currentPage = $pos');
     pos++;
     pos = await getNextPos(pos);
-    var next = pos == 6
-        ? 0
-        : MyDB()
-            .getBox()
-            .get(getBoxTimeKey(orderHolder.list[pos].position))
-            .time;
-    print('next time: $next');
+    // var next;
+    // if (orderHolder.list[pos].id.contains("custom")) {
+    //   next = MyDB().getBox().get(orderHolder.list[pos].id).time;
+    // } else {
+    //   next = MyDB().getBox().get(getBoxTimeKey(orderHolder.list[pos].position)).time;
+    // }
+    // print('next time: $next');
 
-    if (pos == 6 || next == 0) {
+    if (pos == orderHolder.list.length) {
       return ProgressPage(onDone: true);
     } else {
       return getRouteByPositionInList(pos);
@@ -159,14 +212,21 @@ class OrderUtil {
   Future<int> getNextPos(int _pos) async {
     OrderHolder orderHolder = await getOrderHolder();
     var pos = _pos;
-    for (var i = pos; i < 6; i++) {
-      var time =
-          MyDB().getBox().get(getBoxTimeKey(orderHolder.list[i].position)).time;
+    if (pos == orderHolder.list.length) return pos;
+
+    for (var i = pos; i <= orderHolder.list.length; i++) {
+      print(getBoxTimeKey(orderHolder.list[i].position));
+      var time;
+      if (orderHolder.list[i].id.contains("custom")) {
+        time = MyDB().getBox().get(orderHolder.list[i].id).time;
+      } else {
+        time = MyDB().getBox().get(getBoxTimeKey(orderHolder.list[i].position)).time;
+      }
       if (time > 0) {
         pos = i;
         break;
       }
-      pos = 6;
+      pos = orderHolder.list.length;
     }
     return pos;
   }
@@ -175,8 +235,7 @@ class OrderUtil {
     OrderHolder orderHolder = await getOrderHolder();
     var pos = _pos;
     for (var i = pos; i >= 0; i--) {
-      var time =
-          MyDB().getBox().get(getBoxTimeKey(orderHolder.list[i].position)).time;
+      var time = MyDB().getBox().get(getBoxTimeKey(orderHolder.list[i].position)).time;
       print(getBoxTimeKey(orderHolder.list[i].position));
       print(time);
       if (time > 0) {

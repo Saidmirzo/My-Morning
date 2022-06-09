@@ -4,11 +4,9 @@ import 'package:morningmagic/pages/loading/loadingPage.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/music_instrument/music_instrument_page.dart';
 import 'package:morningmagic/pages/nigth/nigth.dart';
-import 'package:morningmagic/pages/welcome/slides/name_input_slide.dart';
 import 'package:morningmagic/pages/settings/settingsPage.dart';
 import 'package:morningmagic/pages/welcome/welcome_page.dart';
 import 'package:morningmagic/routing/route_values.dart';
-
 import '../storage.dart';
 
 class AppRouting {
@@ -22,8 +20,7 @@ class AppRouting {
         );
 
       case homePageRoute:
-        return MaterialPageRoute(
-            builder: (_) => MainMenuPage(), settings: settings);
+        return MaterialPageRoute(builder: (_) => MainMenuPage(), settings: settings);
 
       case settingsPageRoute:
         return MaterialPageRoute(builder: (_) => SettingsPage());
@@ -46,10 +43,7 @@ class AppRouting {
     if (menuStateValue != null) menuState = menuStateValue;
     Navigator.pushAndRemoveUntil(
       Get.context,
-      MaterialPageRoute(
-          builder: (context) => menuState == MenuState.MORNING
-              ? MainMenuPage()
-              : MainMenuNightPage()),
+      MaterialPageRoute(builder: (context) => menuState == MenuState.MORNING ? MainMenuPage() : MainMenuNightPage()),
       (Route<dynamic> route) => false,
     );
   }

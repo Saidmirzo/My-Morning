@@ -7,6 +7,7 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
+import 'package:morningmagic/pages/meditation/timer/meditation_timer_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/other.dart';
@@ -27,13 +28,11 @@ class AudioMeditationDialogItem extends StatefulWidget {
   });
 
   @override
-  _AudioMeditationDialogItemState createState() =>
-      _AudioMeditationDialogItemState();
+  _AudioMeditationDialogItemState createState() => _AudioMeditationDialogItemState();
 }
 
 class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
-  MediationAudioController _audioController =
-      Get.find<MediationAudioController>();
+  MediationAudioController _audioController = Get.find<MediationAudioController>();
 
   bool lock;
   bool playCached = false;
@@ -60,25 +59,28 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
             else
               _audioController.changeItem(widget.id);
             _audioController.bufIdSelected.value = widget.id;
+
+            Get.to(MeditationTimerPage(fromAudio: true, fromHomeMenu: true));
           },
           child: Obx(
             () => Container(
               margin: EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(
-                  color: _audioController.bufIdSelected.value == widget.id
-                      ? menuState == MenuState.MORNING
-                          ? AppColors.audiuSelected
-                          : Color(0xFF11123F)
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.all(Radius.circular(17))),
+                color: _audioController.bufIdSelected.value == widget.id
+                    ? menuState == MenuState.MORNING
+                        ? AppColors.audiuSelected
+                        : Color(0xFF11123F)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(17),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 2),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    menuState == MenuState.MORNING
-                        ? _buildAudioControlButton(lock)
-                        : _buildAudioControlNightButton(lock),
+                    menuState == MenuState.MORNING ? _buildAudioControlButton(lock) : _buildAudioControlNightButton(lock),
                     SizedBox(width: 10),
                     Expanded(
                       child: Container(
@@ -86,30 +88,18 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                         child: StyledText(
                           widget.audio.name ?? '',
                           fontSize: 17,
-                          color: menuState == MenuState.MORNING
-                              ? AppColors.primary
-                              : Color(0xFFBEBFE7),
+                          color: menuState == MenuState.MORNING ? AppColors.primary : Color(0xFFBEBFE7),
                         ),
                       ),
                     ),
-                    if (_audioController.currentPage.value == MenuItems.yoga ||
-                        _audioController.currentPage.value ==
-                            MenuItems.meditationNight)
+                    if (_audioController.currentPage.value == MenuItems.yoga || _audioController.currentPage.value == MenuItems.meditationNight)
                       Text(
-                        printDuration(
-                            _audioController.audioSource[widget.id].duration,
-                            h: false),
-                        style: TextStyle(
-                            color: menuState == MenuState.MORNING
-                                ? AppColors.primary
-                                : Color(0xFFBEBFE7)),
+                        printDuration(_audioController.audioSource[widget.id].duration, h: false),
+                        style: TextStyle(color: menuState == MenuState.MORNING ? AppColors.primary : Color(0xFFBEBFE7)),
                       ),
-                    if (_audioController.playingIndex.value == widget.id &&
-                        _audioController.isAudioLoading.value)
-                      _buildLoadingAudioIndicator(),
-                    menuState == MenuState.MORNING
-                        ? buildFavoriteButton()
-                        : buildFavoriteButtonNight(lock)
+                    if (_audioController.playingIndex.value == widget.id && _audioController.isAudioLoading.value) _buildLoadingAudioIndicator(),
+                    // menuState == MenuState.MORNING ? buildFavoriteButton() : buildFavoriteButtonNight(lock)
+                    buildFavoriteButton()
                   ],
                 ),
               ),
@@ -122,11 +112,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
 
   Widget buildFavoriteButton() {
     return CupertinoButton(
-        child: Obx(() => Icon(
-            _audioController.favoriteAudios.value.contains(widget.audio)
-                ? Icons.star_outlined
-                : Icons.star_border,
-            color: AppColors.primary)),
+        child: Obx(() => Icon(_audioController.favoriteAudios.value.contains(widget.audio) ? Icons.star_outlined : Icons.star_border, color: AppColors.primary)),
         onPressed: () {
           _audioController.setAudioFavorite(widget.audio);
         });
@@ -156,9 +142,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
       onPressed: lock == false ? () => _handlePlayPauseButton() : null,
       bgColor: AppColors.primary,
       icon: Icon(
-        _audioController.playingIndex.value == widget.id
-            ? Icons.pause
-            : Icons.play_arrow,
+        _audioController.playingIndex.value == widget.id ? Icons.pause : Icons.play_arrow,
         color: AppColors.WHITE,
         size: 30,
       ),
@@ -170,9 +154,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
       onPressed: lock == false ? () => _handlePlayPauseButton() : null,
       bgColor: AppColors.purchaseDesc,
       icon: Icon(
-        _audioController.playingIndex.value == widget.id
-            ? Icons.pause
-            : Icons.play_arrow,
+        _audioController.playingIndex.value == widget.id ? Icons.pause : Icons.play_arrow,
         color: Color(0xFF040826),
         size: 30,
       ),
@@ -221,8 +203,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
   Future<File> getCachedAudioFile(
     MeditationAudio track,
   ) async {
-    MeditationAudio audioFile = _audioController.audioSource
-        .firstWhere((element) => element == track, orElse: () => null);
+    MeditationAudio audioFile = _audioController.audioSource.firstWhere((element) => element == track, orElse: () => null);
     if (audioFile?.filePath != null) {
       return File(audioFile.filePath);
     } else {

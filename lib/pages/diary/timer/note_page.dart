@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -49,21 +50,16 @@ class TimerNotePageState extends State<TimerNotePage> {
   void initEditText() {
     textEditingController = new TextEditingController();
     textEditingController.addListener(() async {
-      if (textEditingController.text != null &&
-          textEditingController.text.isNotEmpty) {
-        await MyDB()
-            .getBox()
-            .put(MyResource.NOTE_KEY, Note(textEditingController.text));
+      if (textEditingController.text != null && textEditingController.text.isNotEmpty) {
+        await MyDB().getBox().put(MyResource.NOTE_KEY, Note(textEditingController.text));
       }
     });
   }
 
   int passedSec = 0;
   void saveNoteProgress(bool isSkip) {
-    if (textEditingController.text != null &&
-        textEditingController.text.isNotEmpty) {
-      var model =
-          DiaryNoteProgress(textEditingController.text, passedSec, isSkip);
+    if (textEditingController.text != null && textEditingController.text.isNotEmpty) {
+      var model = DiaryNoteProgress(textEditingController.text, passedSec, isSkip);
       ProgressController pg = Get.find();
       pg.saveDiaryJournal(model);
     }
@@ -100,21 +96,19 @@ class TimerNotePageState extends State<TimerNotePage> {
     OrderUtil().getRouteById(TimerPageId.Diary).then((value) {
       Get.off(TimerSuccessScreen(() {
         Get.off(widget.fromHomeMenu ? ProgressPage() : value);
-      }, MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time, false));
+      }, MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time, false, 1));
     });
     appAnalitics.logEvent('first_dnevnik_next');
   }
 
   void initTimer() {
-    ExerciseTime time = MyDB().getBox().get(MyResource.DIARY_TIME_KEY,
-        defaultValue: ExerciseTime(TimerPageId.Diary));
+    ExerciseTime time = MyDB().getBox().get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(TimerPageId.Diary));
     _time.value = time.time * 60;
     _startTime = time.time;
     startTimer();
   }
 
-  RxDouble get leftTime =>
-      _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.obs;
+  RxDouble get leftTime => _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -241,11 +235,7 @@ class TimerNotePageState extends State<TimerNotePage> {
           // keyboardType: TextInputType.text,
           textInputAction: TextInputAction.newline,
           textAlign: TextAlign.left,
-          style: TextStyle(
-              fontSize: Get.height * 0.02,
-              fontStyle: FontStyle.normal,
-              color: AppColors.VIOLET,
-              decoration: TextDecoration.none),
+          style: TextStyle(fontSize: Get.height * 0.02, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
           decoration: null,
         ),
       ),

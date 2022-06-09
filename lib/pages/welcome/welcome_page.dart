@@ -1,8 +1,10 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/welcome/slides/add_push_slide.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/pageview_dots.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'slides/name_input_slide.dart';
 import 'slides/welcome_text_slide.dart';
@@ -14,6 +16,16 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   PageController pageController = PageController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SharedPreferences.getInstance().then((value) {
+      AppMetrica.reportEvent('first_open');
+      value.setBool('isFirstOpen', true);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +51,9 @@ class _WelcomePageState extends State<WelcomePage> {
                       controller: pageController,
                       physics: NeverScrollableScrollPhysics(),
                       children: [
+                        AddPushSlide(pageController),
                         NameInputSlide(pageController),
                         WelcomeTextSlide(pageController),
-                        AddPushSlide(),
                       ],
                     ),
                   ),

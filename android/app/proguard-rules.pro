@@ -34,3 +34,7 @@
     boolean isLimitAdTrackingEnabled();
 }
 -keep public class com.android.installreferrer.** { *; }
+
+-keepclassmembers enum * {*;}
+
+-keep class com.adapty.** { *; }

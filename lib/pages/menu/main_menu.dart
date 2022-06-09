@@ -1,4 +1,5 @@
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +11,7 @@ import 'package:morningmagic/features/visualization/presentation/pages/visualiza
 import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
 import 'package:morningmagic/pages/diary/diary_page.dart';
 import 'package:morningmagic/pages/meditation/meditation_page.dart';
-import 'package:morningmagic/pages/payment.dart';
+import 'package:morningmagic/pages/paywall/payment.dart';
 import 'package:morningmagic/pages/reading/reading_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/route_values.dart';
@@ -41,14 +42,14 @@ class MainMenuPageState extends State<MainMenuPage> {
   @override
   void initState() {
     super.initState();
-    admobService.createInterstitialAd();
+    // admobService.createInterstitialAd();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (GetPlatform.isIOS) {
-        // Show tracking authorization dialog and ask for permission
-        AppTrackingTransparency.requestTrackingAuthorization();
-      }
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    //   if (GetPlatform.isIOS) {
+    //     // Show tracking authorization dialog and ask for permission
+    //     AppTrackingTransparency.requestTrackingAuthorization();
+    //   }
+    // });
 
     _clearExercisesHolder();
     AnalyticService.screenView('menu_page');
@@ -56,8 +57,7 @@ class MainMenuPageState extends State<MainMenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    launchForinterview =
-        MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
+    launchForinterview = MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
     return Scaffold(
       body: Stack(children: [
         SingleChildScrollView(
@@ -127,10 +127,7 @@ class MainMenuPageState extends State<MainMenuPage> {
                 children: [
                   Text(
                     'MY MORNING',
-                    style: TextStyle(
-                        fontSize: Get.width * .06,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
+                    style: TextStyle(fontSize: Get.width * .06, fontWeight: FontWeight.w700, color: Colors.white),
                   ),
                   const SizedBox(height: 20),
                   ClipPath(
@@ -151,68 +148,64 @@ class MainMenuPageState extends State<MainMenuPage> {
 
   Widget buildMeditationsButton() {
     return container(
-      height: Get.width * .23,
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: Stack(
-        children: [
-          Positioned(
-              right: 0,
-              child: Image.asset(
-                '$imagePath/meditation.png',
-                height: Get.width * .23,
-              )),
-          Positioned.fill(
-            left: 10,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'meditation_small'.tr,
-                style: TextStyle(
-                    fontSize: Get.width * .037,
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w700),
+        height: Get.width * .23,
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        child: Stack(
+          children: [
+            Positioned(
+                right: 0,
+                child: Image.asset(
+                  '$imagePath/meditation.png',
+                  height: Get.width * .23,
+                )),
+            Positioned.fill(
+              left: 10,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'meditation_small'.tr,
+                  style: TextStyle(fontSize: Get.width * .037, color: AppColors.primary, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      color: Color(0xffFFD2DB),
-      onPressed: () =>
-          Get.off(MeditationPage(fromHomeMenu: true), opaque: true),
-    );
+          ],
+        ),
+        color: Color(0xffFFD2DB),
+        onPressed: () {
+          AppMetrica.reportEvent('meditation_start');
+          Get.off(MeditationPage(fromHomeMenu: true), opaque: true);
+        });
   }
 
   Widget buildAffirmationsButton() {
     return container(
-      height: Get.width * .23,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            left: 10,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'affirmation_small'.tr,
-                style: TextStyle(
-                    fontSize: Get.width * .037,
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w700),
+        height: Get.width * .23,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              left: 10,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'affirmation_small'.tr,
+                  style: TextStyle(fontSize: Get.width * .037, color: AppColors.primary, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
-          ),
-          Positioned(
-              right: 0,
-              child: Image.asset(
-                '$imagePath/affirmation.png',
-                height: Get.width * .23,
-              )),
-        ],
-      ),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      color: Color(0xffFFE6C0),
-      onPressed: () =>
-          Get.off(AffirmationPage(fromHomeMenu: true), opaque: true),
-    );
+            Positioned(
+                right: 0,
+                child: Image.asset(
+                  '$imagePath/affirmation.png',
+                  height: Get.width * .23,
+                )),
+          ],
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        color: Color(0xffFFE6C0),
+        onPressed: () {
+          AppMetrica.reportEvent('affirmations_start');
+          Get.off(AffirmationPage(fromHomeMenu: true), opaque: true);
+        });
   }
 
   Widget buildExercises() {
@@ -226,8 +219,7 @@ class MainMenuPageState extends State<MainMenuPage> {
               const SizedBox(width: 10),
               Text(
                 'subscription'.tr,
-                style: TextStyle(
-                    fontSize: Get.width * .045, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: Get.width * .045, fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -237,40 +229,28 @@ class MainMenuPageState extends State<MainMenuPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                exerciseBLock(
-                  'assets/images/purchase/fitness.png',
-                  'fitness_small'.tr,
-                  'fitness_desc'.tr,
-                  onPressed: () => openIfVip(FitnessMainPage(
-                      pageId: TimerPageId.Fitness, fromHomeMenu: true)),
-                ),
-                exerciseBLock(
-                  'assets/images/purchase/note.png',
-                  'menu_diary_small'.tr,
-                  'menu_diary_desc'.tr,
-                  color: Color(0xffFFD2DB),
-                  onPressed: () => openIfVip(DiaryPage(fromHomeMenu: true)),
-                ),
+                exerciseBLock('assets/images/purchase/fitness.png', 'fitness_small'.tr, 'fitness_desc'.tr, onPressed: () {
+                  AppMetrica.reportEvent('fitness_start');
+                  openIfVip(FitnessMainPage(pageId: TimerPageId.Fitness, fromHomeMenu: true));
+                }),
+                exerciseBLock('assets/images/purchase/note.png', 'menu_diary_small'.tr, 'menu_diary_desc'.tr, color: Color(0xffFFD2DB), onPressed: () {
+                  AppMetrica.reportEvent('diary_start');
+                  openIfVip(DiaryPage(fromHomeMenu: true));
+                }),
               ],
             ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                exerciseBLock(
-                  'assets/images/purchase/eye.png',
-                  'visualization_small'.tr,
-                  'visualization_desc'.tr,
-                  color: Color(0xffE4C8FC),
-                  onPressed: () =>
-                      openIfVip(VisualizationMainPage(fromHomeMenu: true)),
-                ),
-                exerciseBLock(
-                  'assets/images/purchase/book.png',
-                  'reading_small'.tr,
-                  'reading_desc'.tr,
-                  onPressed: () => openIfVip(ReadingPage(fromHomeMenu: true)),
-                ),
+                exerciseBLock('assets/images/purchase/eye.png', 'visualization_small'.tr, 'visualization_desc'.tr, color: Color(0xffE4C8FC), onPressed: () {
+                  AppMetrica.reportEvent('visualization_start');
+                  openIfVip(VisualizationMainPage(fromHomeMenu: true));
+                }),
+                exerciseBLock('assets/images/purchase/book.png', 'reading_small'.tr, 'reading_desc'.tr, onPressed: () {
+                  AppMetrica.reportEvent('reading_start');
+                  openIfVip(ReadingPage(fromHomeMenu: true));
+                }),
               ],
             ),
             const SizedBox(height: 120),
@@ -280,14 +260,16 @@ class MainMenuPageState extends State<MainMenuPage> {
     );
   }
 
-  void openIfVip(Widget page) {
-    billingService.isPro()
-        ? Get.off(page, opaque: true)
-        : Get.to(PaymentPage());
+  void openIfVip(Widget page) async {
+    if (billingService.isPro()) {
+      Get.off(page, opaque: true);
+    } else {
+      await Get.to(PaymentPage());
+      setState(() {});
+    }
   }
 
-  Widget exerciseBLock(String image, String title, String subtitle,
-      {Color color, Function onPressed}) {
+  Widget exerciseBLock(String image, String title, String subtitle, {Color color, Function onPressed}) {
     return container(
       width: Get.width * .44,
       height: Get.width * .5,
@@ -303,12 +285,7 @@ class MainMenuPageState extends State<MainMenuPage> {
                 height: 45,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset(image, width: Get.width * .1),
-                    Obx(() => !billingService.isVip.value
-                        ? SvgPicture.asset('$imagePath/crown.svg')
-                        : SizedBox())
-                  ],
+                  children: [Image.asset(image, width: Get.width * .1), Obx(() => !billingService.isVip.value ? SvgPicture.asset('$imagePath/crown.svg') : SizedBox())],
                 ),
               ),
               const SizedBox(height: 10),
@@ -324,10 +301,7 @@ class MainMenuPageState extends State<MainMenuPage> {
               Flexible(
                 child: Text(
                   subtitle,
-                  style: TextStyle(
-                      color: AppColors.primary,
-                      fontSize: Get.width * .035,
-                      fontWeight: FontWeight.w400),
+                  style: TextStyle(color: AppColors.primary, fontSize: Get.width * .035, fontWeight: FontWeight.w400),
                 ),
               ),
             ],
@@ -379,8 +353,7 @@ class MainMenuPageState extends State<MainMenuPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('start'.tr,
-                              style: TextStyle(color: Colors.black)),
+                          Text('start'.tr, style: TextStyle(color: Colors.black)),
                           Icon(Icons.arrow_forward, color: Colors.black),
                         ],
                       ),
@@ -422,18 +395,12 @@ class MainMenuPageState extends State<MainMenuPage> {
               children: [
                 Text(
                   'settings'.tr,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: Get.width * .06,
-                      fontWeight: FontWeight.w600),
+                  style: TextStyle(color: Colors.white, fontSize: Get.width * .06, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   'settings_desc'.tr,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: Get.width * .04,
-                      fontWeight: FontWeight.w400),
+                  style: TextStyle(color: Colors.white, fontSize: Get.width * .04, fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -474,32 +441,23 @@ class MainMenuPageState extends State<MainMenuPage> {
   }
 
   _clearExercisesHolder() async {
-    await MyDB()
-        .getBox()
-        .put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
+    await MyDB().getBox().put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
   }
 
   _startExercise() async {
+    AppMetrica.reportEvent('complex_start');
     var _cntBeforInterview = launchForinterview + 1;
-    await MyDB()
-        .getBox()
-        .put(MyResource.LAUNCH_FOR_INTERVIEW, _cntBeforInterview);
-    openInterviewModel(_cntBeforInterview);
+    await MyDB().getBox().put(MyResource.LAUNCH_FOR_INTERVIEW, _cntBeforInterview);
+    // openInterviewModel(_cntBeforInterview);
     appAnalitics.logEvent('first_start');
-    await OrderUtil()
-        .getRouteByPositionInList(await OrderUtil().getNextPos(0))
-        .then((value) {
+    await OrderUtil().getRouteByPositionInList(await OrderUtil().getNextPos(0)).then((value) {
       Get.off(value);
     });
   }
 
   void openInterviewModel(int _cntBeforInterview) async {
-    bool isInterviewed = await MyDB()
-        .getBox()
-        .get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
-    if (_cntBeforInterview > 2 && !isInterviewed)
-      Future.delayed(Duration(seconds: 1),
-          () => Get.dialog(InterviewDialog(), barrierDismissible: false));
+    // bool isInterviewed = await MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
+    // if (_cntBeforInterview > 2 && !isInterviewed) Future.delayed(Duration(seconds: 1), () => Get.dialog(InterviewDialog(), barrierDismissible: false));
   }
 
   _openSettings() {

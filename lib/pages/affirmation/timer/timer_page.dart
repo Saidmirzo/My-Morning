@@ -17,25 +17,21 @@ import 'components/components.dart';
 class AffirmationTimerPage extends StatefulWidget {
   final bool fromHomeMenu;
 
-  const AffirmationTimerPage({Key key, this.fromHomeMenu = false})
-      : super(key: key);
+  const AffirmationTimerPage({Key key, this.fromHomeMenu = false}) : super(key: key);
   @override
   State createState() => AffirmationTimerPageState();
 }
 
-class AffirmationTimerPageState extends State<AffirmationTimerPage>
-    with WidgetsBindingObserver {
+class AffirmationTimerPageState extends State<AffirmationTimerPage> with WidgetsBindingObserver {
   TimerService timerService = TimerService();
   TimerLeftController cTimerLeft;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      cTimerLeft.onAppLeft(timerService.timer, timerService.time.value,
-          onPlayPause: () => timerService.startTimer());
+      cTimerLeft.onAppLeft(timerService.timer, timerService.time.value, onPlayPause: () => timerService.startTimer());
     } else if (state == AppLifecycleState.resumed) {
-      cTimerLeft.onAppResume(
-          timerService.timer, timerService.time, timerService.passedSec);
+      cTimerLeft.onAppResume(timerService.timer, timerService.time, timerService.passedSec);
     }
   }
 
@@ -48,6 +44,7 @@ class AffirmationTimerPageState extends State<AffirmationTimerPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await timerService.init(0);
       timerService.fromHomeMenu = widget.fromHomeMenu;
+      timerService.startTimer();
     });
     AnalyticService.screenView('affirmation_timer_page');
     try {
@@ -99,9 +96,7 @@ class AffirmationTimerPageState extends State<AffirmationTimerPage>
                       ))),
                   Spacer(),
                   Spacer(),
-                  Obx(() => timerService.affirmationText.value.isNotEmpty
-                      ? buildTitleWidget(timerService.affirmationText.value)
-                      : SizedBox()),
+                  Obx(() => timerService.affirmationText.value.isNotEmpty ? buildTitleWidget(timerService.affirmationText.value) : SizedBox()),
                   Spacer(),
                   Spacer(),
                   buildMenuButtons(timerService),

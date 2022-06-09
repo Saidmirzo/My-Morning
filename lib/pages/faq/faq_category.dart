@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/html_parser.dart';
@@ -5,8 +7,9 @@ import 'package:flutter_html/style.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/faq/faq_support.dart';
+import 'package:morningmagic/pages/interview/interview1/interview_page.dart';
 import 'package:morningmagic/pages/interview/interview2/interview_page.dart';
-import 'package:morningmagic/pages/payment.dart';
+import 'package:morningmagic/pages/paywall/payment.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/other.dart';
 import 'package:morningmagic/widgets/expansion_tile.dart';
@@ -39,10 +42,7 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
                 const SizedBox(height: 20),
                 Text(
                   widget.category,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: Get.width * .065,
-                      fontWeight: FontWeight.w700),
+                  style: TextStyle(color: Colors.white, fontSize: Get.width * .065, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 30),
                 questionList(),
@@ -103,8 +103,7 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
                     Get.to(FaqSupportPage());
                   else if (url.split(':').last == 'tarifs')
                     Get.to(PaymentPage());
-                  else if (url.split(':').last == 'unsubscribe')
-                    Get.to(Interview2Page());
+                  else if (url.split(':').last == 'unsubscribe') Get.to(Interview2Page());
                 }
               },
             ),
@@ -119,8 +118,7 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
           onTap: () => Get.to(FaqSupportPage()),
           child: Container(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(13), color: Colors.white),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(13), color: Colors.white),
             child: Text(
               'faq_tarifs_title_6'.tr,
               style: TextStyle(

@@ -9,10 +9,7 @@ class Subscribe1MonthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (billingService.isPro()) {
-      return GestureDetector(
-        child: Text('tarif_plans'.tr, textAlign: TextAlign.center),
-        onTap: () => billingService.startPaymentPage(),
-      );
+      return Text('tarif_plans_done'.tr, textAlign: TextAlign.center);
     }
     return Column(
       children: [

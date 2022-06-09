@@ -23,20 +23,14 @@ class InterviewDialog extends Dialog {
                 color: Colors.white,
               ),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 50),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 50),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      billingService.isPro()
-                          ? 'interview_dialog_text_vip'.tr
-                          : 'interview_dialog_text'.tr,
+                      billingService.isPro() ? 'interview_dialog_text_vip'.tr : 'interview_dialog_text'.tr,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: Colors.black),
                     ),
                     const SizedBox(height: 30),
                     CupertinoButton(
@@ -57,9 +51,7 @@ class InterviewDialog extends Dialog {
                           style: TextStyle(color: Colors.red),
                         ),
                         onPressed: () {
-                          MyDB()
-                              .getBox()
-                              .put(MyResource.IS_DONE_INTERVIEW, true);
+                          MyDB().getBox().put(MyResource.IS_DONE_INTERVIEW, true);
                           Get.back();
                         }),
                   ],
@@ -67,10 +59,9 @@ class InterviewDialog extends Dialog {
               ),
             ),
             Positioned(
-                right: 0,
-                child: CupertinoButton(
-                    child: Icon(Icons.close, color: Colors.black),
-                    onPressed: Get.back))
+              right: 0,
+              child: CupertinoButton(child: Icon(Icons.close, color: Colors.black), onPressed: Get.back),
+            )
           ],
         ),
       ),

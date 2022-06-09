@@ -2,7 +2,10 @@ import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/reordering_program/order_item.dart';
+import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/fitness/data/repositories/fitness_program_repository_impl.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_program_settings.dart';
@@ -17,6 +20,8 @@ class ExerciseTile extends StatelessWidget {
   final EdgeInsets edgeInsets;
   final TextEditingController textEditingController;
   final Function onChange;
+  final Function onChangeTitle;
+  final Function onRemove;
 
   const ExerciseTile(
       {Key key,
@@ -25,7 +30,9 @@ class ExerciseTile extends StatelessWidget {
       @required this.title,
       @required this.edgeInsets,
       @required this.textEditingController,
-      this.onChange})
+      this.onChange,
+      this.onChangeTitle,
+      this.onRemove})
       : super(key: key);
 
   @override
@@ -36,68 +43,91 @@ class ExerciseTile extends StatelessWidget {
         () => Container(
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            color: billingService.isVip.value || index < 2
-                ? AppColors.TRANSPARENT_WHITE
-                : AppColors.TRANSPARENTS,
+            color: billingService.isVip.value || index < 2 ? AppColors.TRANSPARENT_WHITE : AppColors.TRANSPARENTS,
             borderRadius: BorderRadius.all(Radius.circular(45)),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              const SizedBox(width: 20),
-              orderItem.position == TimerPageId.Fitness
-                  ? GestureDetector(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  const SizedBox(width: 20),
+                  Icon(Icons.menu, color: Colors.grey),
+                  if (orderItem.position == TimerPageId.Fitness) ...[
+                    const SizedBox(width: 10),
+                    GestureDetector(
                       child: Icon(
                         Icons.settings,
-                        color: !billingService.isVip.value
-                            ? Colors.black45
-                            : Colors.black,
+                        color: !billingService.isVip.value ? Colors.black45 : Colors.black,
                       ),
                       onTap: () {
                         if (!billingService.isVip.value) return;
-                        Get.put(FitnessController(
-                            repository: FitnessProgramRepositoryImpl()));
+                        Get.put(FitnessController(repository: FitnessProgramRepositoryImpl()));
                         Get.to(FitnessProgramSettingsPage());
                       },
                     )
-                  : const SizedBox(width: 20),
-              Expanded(
-                  child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: AppColors.VIOLET,
-                    fontSize: Get.width * .05,
-                    fontStyle: FontStyle.normal),
-              )),
-              Container(
-                padding: EdgeInsets.only(
-                    right: MediaQuery.of(context).size.width / 12),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(bottom: 3, top: 3),
-                      child: Text(
-                        'min'.tr,
+                  ],
+                  if (orderItem.id.contains("custom")) ...[
+                    Expanded(
+                      child: TextField(
+                        enabled: billingService.isPro(),
+                        controller: TextEditingController(text: MyDB().getBox().get(orderItem.id).title ?? ""),
+                        onChanged: (value) => onChangeTitle(value),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        cursorColor: AppColors.VIOLET,
+                        style: TextStyle(color: AppColors.VIOLET, fontSize: Get.width * .05, fontStyle: FontStyle.normal),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: Get.width * .025,
-                            fontStyle: FontStyle.normal,
-                            color: AppColors.VIOLET,
-                            decoration: TextDecoration.none),
                       ),
                     ),
-                    Container(
-                      width: 64,
-                      padding: EdgeInsets.only(bottom: 8),
-                      child: _buildMinutesTextInput(),
+                  ],
+                  if (!orderItem.id.contains("custom")) ...[
+                    Expanded(
+                      child: Text(
+                        title ?? "",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: AppColors.VIOLET, fontSize: Get.width * .05, fontStyle: FontStyle.normal),
+                      ),
                     ),
                   ],
+                  Container(
+                    padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 12),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(bottom: 3, top: 3),
+                          child: Text(
+                            'min'.tr,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: Get.width * .025, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
+                          ),
+                        ),
+                        Container(
+                          width: 64,
+                          padding: EdgeInsets.only(bottom: 8),
+                          child: _buildMinutesTextInput(),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Visibility(
+                visible: orderItem.id.contains("custom"),
+                child: Positioned(
+                  right: -3,
+                  child: IconButton(
+                    onPressed: () => onRemove(),
+                    icon: Icon(Icons.close),
+                    constraints: BoxConstraints(),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -110,7 +140,7 @@ class ExerciseTile extends StatelessWidget {
       var isVip = billingService.isVip.value;
       print('isVip from exerciseTile: $isVip');
       return TextField(
-        onChanged: (val) => onChange(),
+        onChanged: (value) => onChange(value),
         controller: textEditingController,
         minLines: 1,
         maxLines: 1,
@@ -123,19 +153,10 @@ class ExerciseTile extends StatelessWidget {
             filled: true,
             contentPadding: EdgeInsets.all(6),
             isDense: true,
-            fillColor:
-                isVip ? AppColors.TRANSPARENT_WHITE : AppColors.TRANSPARENTS,
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.VIOLET),
-                borderRadius: BorderRadius.all(Radius.circular(8))),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.CREAM),
-                borderRadius: BorderRadius.all(Radius.circular(8)))),
-        style: TextStyle(
-            fontSize: Get.width * .04,
-            fontStyle: FontStyle.normal,
-            color: AppColors.VIOLET,
-            decoration: TextDecoration.none),
+            fillColor: isVip ? AppColors.TRANSPARENT_WHITE : AppColors.TRANSPARENTS,
+            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.VIOLET), borderRadius: BorderRadius.all(Radius.circular(8))),
+            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.CREAM), borderRadius: BorderRadius.all(Radius.circular(8)))),
+        style: TextStyle(fontSize: Get.width * .04, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
       );
     });
   }

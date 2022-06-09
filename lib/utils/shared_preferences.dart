@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomSharedPreferences {
-
   Future<bool> getVoice() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool sex = prefs.getBool('sex');
@@ -28,4 +27,16 @@ class CustomSharedPreferences {
     await prefs.setBool('language', value);
   }
 
+  Future<bool> isOpenSale() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int count = prefs.getInt('openPaywall');
+    count = count == null ? 1 : count + 1;
+    count < 3 ? await prefs.setInt('openPaywall', count) : await prefs.remove('openPaywall');
+    return count == 3;
+  }
+
+  Future<bool> isFirstOpen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isFirstOpen') == null;
+  }
 }
