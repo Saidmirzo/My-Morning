@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
@@ -18,11 +17,11 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
     super.initState();
     // Get old data or init empty map
     try {
-      _map = MyDB().getJournalProgress(MyResource.AFFIRMATION_JOURNAL);
+      _map = MyDB().getJournalProgress(MyResource.FULL_COMPLEX_FINISH);
     } catch (e) {
       print('error get reading progress');
       myDbBox.put(MyResource.AFFIRMATION_JOURNAL, {});
-      _map = MyDB().getJournalProgress(MyResource.AFFIRMATION_JOURNAL);
+      _map = MyDB().getJournalProgress(MyResource.FULL_COMPLEX_FINISH);
     }
   }
 
@@ -32,7 +31,7 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
       body: Container(
         width: MediaQuery.of(context).size.width, // match parent(all screen)
         height: MediaQuery.of(context).size.height, // match parent(all screen)
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -52,7 +51,7 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 0),
                 child: GridView(
-                  padding: EdgeInsets.only(bottom: 15),
+                  padding: const EdgeInsets.only(bottom: 15),
                   children: _map.isNotEmpty
                       ? List.generate(
                           _map.length,
@@ -84,7 +83,7 @@ class AffirmationMiniProgress extends StatelessWidget {
   final List<dynamic> list;
   final String date;
 
-  AffirmationMiniProgress(this.id, this.list, this.date);
+  const AffirmationMiniProgress(this.id, this.list, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(ctx, MaterialPageRoute(builder: (context) => AffirmationFullProgress(id, list, date)));
@@ -111,24 +110,24 @@ class AffirmationMiniProgress extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Text(
-                    list.last.text,
+                    list.last.toString(),
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04, //16,
                       color: Colors.black54,
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 5),
                         child: Icon(Icons.access_time),
                       ),
                       Text(
                         date,
-                        style: TextStyle(),
+                        style: const TextStyle(),
                       )
                     ],
                   ),
@@ -163,7 +162,7 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -189,16 +188,16 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 5),
                                 child: Icon(Icons.access_time),
                               ),
                               Container(width: 10),
                               Text(widget.date),
-                              Spacer(),
+                              const Spacer(),
                             ],
                           ),
                         ),
@@ -235,7 +234,7 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    '${widget.list[i].sec}' + ' ' + 'sec'.tr,
+                    '${widget.list[i].sec}' ' ' + 'sec'.tr,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04,
                       color: Colors.black54,

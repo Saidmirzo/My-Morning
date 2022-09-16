@@ -5,7 +5,7 @@ class ProgressPairRecord extends StatefulWidget {
   final String exerciseTitle;
   final String path;
 
-  ProgressPairRecord(this.exerciseTitle, this.path);
+  const ProgressPairRecord(this.exerciseTitle, this.path);
 
   @override
   State<StatefulWidget> createState() {
@@ -26,7 +26,7 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -34,7 +34,7 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
           Container(
             child: Text(
               widget.exerciseTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: AppColors.VIOLET,
                 fontStyle: FontStyle.normal,
@@ -42,7 +42,7 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
             ),
           ),
           Container(
-            child: Text(' – '),
+            child: const Text(' – '),
           ),
           Container(
             child: FloatingActionButton(
@@ -67,13 +67,13 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
 
   Widget getIcon() {
     if (!switcher) {
-      return Icon(
+      return const Icon(
         Icons.play_arrow,
         size: 40,
         color: AppColors.VIOLET,
       );
     } else {
-      return Icon(
+      return const Icon(
         Icons.stop,
         size: 40,
         color: AppColors.VIOLET,

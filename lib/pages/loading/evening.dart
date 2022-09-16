@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'components/name.dart';
 
 class EveningPage extends StatefulWidget {
@@ -47,7 +46,7 @@ class _EveningPageState extends State<EveningPage>
     });
     return Container(
       decoration:
-          BoxDecoration(gradient: AppColors.gradient_loading_evening_bg),
+          const BoxDecoration(gradient: AppColors.gradient_loading_evening_bg),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -63,7 +62,7 @@ class _EveningPageState extends State<EveningPage>
 
   Widget buildBg() {
     return Positioned(
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset('assets/images/startscreen/evening/trees.png',
             fit: BoxFit.fitWidth),
@@ -75,7 +74,7 @@ class _EveningPageState extends State<EveningPage>
   Positioned buildClouds() {
     return Positioned(
       top: Get.height * 0.2,
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset(
           'assets/images/startscreen/evening/clouds.png',
@@ -87,7 +86,7 @@ class _EveningPageState extends State<EveningPage>
 
   Positioned buildClouds2() {
     return Positioned(
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset(
           'assets/images/startscreen/evening/clouds2.png',
@@ -104,9 +103,8 @@ class _EveningPageState extends State<EveningPage>
         child: Container(
           width: Get.width * 0.8,
           height: Get.width * 0.8,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(180),
-              gradient: AppColors.gradient_evening_sun),
+          decoration: const BoxDecoration(
+              shape: BoxShape.circle, gradient: AppColors.gradient_evening_sun),
         ),
       );
     });

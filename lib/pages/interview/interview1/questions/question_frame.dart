@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../components/title_question.dart';
-
 import '../../../../widgets/primary_circle_button.dart';
 import '../../interview1/interview_controller.dart';
 
@@ -35,17 +34,17 @@ class QuestionFrame extends StatelessWidget {
                   return ![0, _controller.countPages - 1]
                           .contains(_controller.currQuestion.value)
                       ? PrimaryCircleButton(
-                          icon: Icon(Icons.arrow_back),
+                          icon: const Icon(Icons.arrow_back),
                           onPressed: _controller.slideBack,
                           size: 50)
-                      : SizedBox();
+                      : const SizedBox();
                 }),
                 PrimaryCircleButton(
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
                       _controller.next(index);
                     },
-                    icon: Icon(Icons.arrow_forward),
+                    icon: const Icon(Icons.arrow_forward),
                     size: 50),
               ],
             ),

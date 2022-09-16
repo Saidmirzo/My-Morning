@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class MyResource {
   // Журналы
   static const String DIARY_JOURNAL = "diary_progress";
@@ -7,7 +9,8 @@ class MyResource {
   static const String VISUALISATION_JOURNAL = "my_visualization_progress";
   static const String MEDITATION_JOURNAL = "meditation_progress";
   static const String MEDITATION_NIGHT_JOURNAL = "meditation_night_progress";
-  static const String MUSIC_SLEEPING_NIGHT_JOURNAL = "meditation_night_progress";
+  static const String MUSIC_SLEEPING_NIGHT_JOURNAL =
+      "meditation_night_progress";
 
   // Завершенные комплексы
   static const String FULL_COMPLEX_FINISH = "FULL_COMPLEX_FINISH";
@@ -23,7 +26,8 @@ class MyResource {
   static const String NOTEPADS = "notepads";
   static const String MEDITATION_TIME_KEY = "meditation_time";
   static const String MEDITATION_AUDIO_FAVORITE = "meditation_audio_favorite";
-  static const String MEDITATION_AUDIO_NIGHT_FAVORITE = "meditation_audio_night_favorite";
+  static const String MEDITATION_AUDIO_NIGHT_FAVORITE =
+      "meditation_audio_night_favorite";
   static const String AFFIRMATION_TIME_KEY = "affirmation_time";
   static const String FITNESS_TIME_KEY = "fitness_time";
   static const String DIARY_TIME_KEY = "diary_time";

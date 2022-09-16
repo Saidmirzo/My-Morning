@@ -4,7 +4,6 @@ import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/instruments_audio/data/instrument_audio_impl.dart';
 import 'package:morningmagic/pages/music_instrument/components/snackbar.dart';
 import 'package:morningmagic/pages/music_instrument/controllers/music_instrument_controllers.dart';
-
 import 'package:morningmagic/pages/music_instrument/model/instrument_model.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/timer_service.dart';
@@ -34,36 +33,40 @@ class InstrumentAudioController extends GetxController {
     super.dispose();
   }
 
-  void playAudio(Instrument instrument) async {
+  Future<void> playAudio(Instrument instrument) async {
     try {
       if (audioSourse.length == 10) {
         //showErrorDialog('10 из 10');
         return;
       }
 
+      stopAll();
+
       if (audioSourse[instrument.instrument.tag] == null) {
         print('add new instrument tag = ${instrument.instrument.tag}');
         audioSourse[instrument.instrument.tag] = instrument;
         isLoading.value.value = instrument;
         Instrument cachInstrument = await cacheAudioFile(instrument);
-        audioPlayers[instrument.instrument.tag] = new AudioPlayer()
-          ..setFilePath(cachInstrument.instrument.filePath)
-          ..setVolume(0.5)
-          ..setLoopMode(LoopMode.one);
+        audioPlayers[instrument.instrument.tag] = AudioPlayer();
+        await audioPlayers[instrument.instrument.tag]
+            .setFilePath(cachInstrument.instrument.filePath);
+        await audioPlayers[instrument.instrument.tag].setVolume(0.5);
+        await audioPlayers[instrument.instrument.tag].setLoopMode(LoopMode.one);
 
         audioSourceUpdate();
         isLoading.value.value = null;
 
         _playAll();
-      } else
-        stop(instrument);
+      } else {
+        await stop(instrument);
+      }
     } catch (e) {
       print('failed to load the reproduction tool: $e');
     }
   }
 
-  void stop(Instrument instrument) {
-    audioPlayers[instrument.instrument.tag].stop();
+  Future<void> stop(Instrument instrument) async {
+    await audioPlayers[instrument.instrument.tag].stop();
     audioPlayers.removeWhere((key, value) => key == instrument.instrument.tag);
     audioSourse.removeWhere((key, value) => key == instrument.instrument.tag);
     audioSourceList.value.refresh();
@@ -75,6 +78,7 @@ class InstrumentAudioController extends GetxController {
       audioPlayers.values.elementAt(i).dispose();
     }
     audioPlayers.clear();
+    audioSourse.clear();
   }
 
   void setPause(bool value) {
@@ -83,21 +87,24 @@ class InstrumentAudioController extends GetxController {
   }
 
   void _playAll() {
-    for (var i = 0; i < audioPlayers.length; i++)
+    for (var i = 0; i < audioPlayers.length; i++) {
       audioPlayers.values.elementAt(i).play();
+    }
 
     setPause(false);
   }
 
   void playPause() {
     if (!pause.value) {
-      for (var i = 0; i < audioPlayers.length; i++)
+      for (var i = 0; i < audioPlayers.length; i++) {
         audioPlayers.values.elementAt(i).pause();
+      }
 
       setPause(true);
     } else {
-      for (var i = 0; i < audioPlayers.length; i++)
+      for (var i = 0; i < audioPlayers.length; i++) {
         audioPlayers.values.elementAt(i).play();
+      }
 
       setPause(false);
     }
@@ -113,9 +120,9 @@ class InstrumentAudioController extends GetxController {
   Future updateVolumeInTotalList(double volume, {@required String tag}) async {
     MusicInstrumentControllers _musicInstrumentControllers = Get.find();
     _musicInstrumentControllers.instruments.value.value.forEach((key, value) {
-      value.forEach((element) {
+      for (var element in value) {
         if (element.instrument.tag == tag) element.instrumentVolume = volume;
-      });
+      }
     });
     _musicInstrumentControllers.instruments.value.refresh();
   }

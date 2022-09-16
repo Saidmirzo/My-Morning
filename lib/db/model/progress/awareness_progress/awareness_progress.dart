@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:hive/hive.dart';
 
 part 'awareness_progress.g.dart';
@@ -23,9 +25,9 @@ class AwarenessProgress extends HiveObject {
   }
 
   void incrementAwareness() {
-    if (_awareness >= 100 || isLastUpdateToday)
+    if (_awareness >= 100 || isLastUpdateToday) {
       return;
-    else {
+    } else {
       _awareness += AWARENESS_PROGRESS_PERCENTS;
       _lastUpdateDate = DateTime.now();
     }

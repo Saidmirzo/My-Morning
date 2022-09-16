@@ -15,7 +15,7 @@ class RoundBorderedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      shape: CircleBorder(),
+      shape: const CircleBorder(),
       color: Colors.transparent,
       child: InkWell(
         customBorder: const CircleBorder(),

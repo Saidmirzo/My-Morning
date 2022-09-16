@@ -31,6 +31,12 @@ AlertDialog _landDialog() {
         _btnDialog(
             title: 'Русский',
             onPress: () => Get.back(result: LocalizationService.RU)),
+        _btnDialog(
+            title: 'Deutsch',
+            onPress: () => Get.back(result: LocalizationService.GE)),
+        _btnDialog(
+            title: 'Português',
+            onPress: () => Get.back(result: LocalizationService.PO)),
       ],
     ),
   );

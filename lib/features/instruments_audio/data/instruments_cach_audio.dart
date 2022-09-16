@@ -5,7 +5,7 @@ class InstrumentsAudioCacheManager {
   static CacheManager instance = CacheManager(
     Config(
       key,
-      stalePeriod: Duration(days: 10),
+      stalePeriod: const Duration(days: 10),
       maxNrOfCacheObjects: 20,
     ),
   );

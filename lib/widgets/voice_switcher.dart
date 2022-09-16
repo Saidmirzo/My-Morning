@@ -16,13 +16,13 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(left: 10, top: 10, bottom: 5),
+          padding: const EdgeInsets.only(left: 10, top: 10, bottom: 5),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'player_voice'.tr,
               textAlign: TextAlign.left,
-              style: TextStyle(
+              style: const TextStyle(
                   color: AppColors.VIOLET,
                   fontStyle: FontStyle.normal,
                   fontSize: 26),
@@ -31,7 +31,7 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
         ),
         Container(
           child: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -43,7 +43,7 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
                         return Text('female'.tr,
                             style: TextStyle(
                               color: chooseWomanColor(
-                                  value.data == null ? true : value.data),
+                                  value.data ?? true),
                               fontStyle: FontStyle.normal,
                               fontSize: 20,
                             ));
@@ -54,7 +54,7 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
                     future: CustomSharedPreferences().getVoice(),
                     builder: (BuildContext context, AsyncSnapshot<bool> value) {
                       return Switch(
-                        value: value.data == null ? true : value.data,
+                        value: value.data ?? true,
                         inactiveThumbColor: AppColors.PINK,
                         inactiveTrackColor: AppColors.PINK,
                         activeColor: AppColors.BLUE,
@@ -76,7 +76,7 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
                         return Text('male'.tr,
                             style: TextStyle(
                               color: chooseManColor(
-                                  value.data == null ? true : value.data),
+                                  value.data ?? true),
                               fontStyle: FontStyle.normal,
                               fontSize: 20,
                             ));

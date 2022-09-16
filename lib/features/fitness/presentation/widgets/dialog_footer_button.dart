@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'styled_text.dart';
 
 class DialogFooterButton extends StatelessWidget {
@@ -16,11 +15,11 @@ class DialogFooterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton.icon(
         onPressed: onPressed,
-        shape: new RoundedRectangleBorder(
-            side: BorderSide(
+        shape: RoundedRectangleBorder(
+            side: const BorderSide(
                 style: BorderStyle.solid, width: 2, color: AppColors.VIOLET),
-            borderRadius: new BorderRadius.circular(30.0)),
-        icon: Icon(
+            borderRadius: BorderRadius.circular(30.0)),
+        icon: const Icon(
           Icons.add,
           color: AppColors.VIOLET,
         ),

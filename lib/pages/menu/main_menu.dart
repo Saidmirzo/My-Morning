@@ -1,34 +1,39 @@
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
-import 'package:morningmagic/dialog/interviewDialog.dart';
+import 'package:morningmagic/dialog/connection_dialog.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
 import 'package:morningmagic/pages/diary/diary_page.dart';
+import 'package:morningmagic/pages/faq/faq_menu.dart';
 import 'package:morningmagic/pages/meditation/meditation_page.dart';
-import 'package:morningmagic/pages/paywall/payment.dart';
+import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import 'package:morningmagic/pages/reading/reading_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
-import 'package:morningmagic/services/admob.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
+import 'package:morningmagic/services/connection_service/connection_service.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/oval_top_clipper.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
-
 import '../../db/hive.dart';
 import '../../db/model/exercise/exercise_holder.dart';
 import '../../db/resource.dart';
+import '../../dialog/interviewDialog.dart';
 import 'components/menu.dart';
+import 'components/questions_dialog.dart';
+
+bool isComplex = false;
 
 class MainMenuPage extends StatefulWidget {
+  const MainMenuPage({Key key}) : super(key: key);
+
   @override
   State createState() {
     return MainMenuPageState();
@@ -50,6 +55,19 @@ class MainMenuPageState extends State<MainMenuPage> {
     //     AppTrackingTransparency.requestTrackingAuthorization();
     //   }
     // });
+    Future.delayed(
+      const Duration(seconds: 4),
+      () async {
+        if (!(await ConnectionRepo.isConnected())) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const ConnectionDialog();
+            },
+          );
+        }
+      },
+    );
 
     _clearExercisesHolder();
     AnalyticService.screenView('menu_page');
@@ -57,57 +75,71 @@ class MainMenuPageState extends State<MainMenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    launchForinterview = MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
+    launchForinterview =
+        MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
     return Scaffold(
-      body: Stack(children: [
-        SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Column(
-            children: [
-              buildHeader(),
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Image.asset('$imagePath/logo.png', width: Get.width * .2),
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(child: buildStartComplexButton(), flex: 1),
-                        const SizedBox(width: 5),
-                        Container(
-                          width: Get.width * .49,
-                          height: Get.width * .5,
-                          child: Column(
-                            children: [
-                              buildMeditationsButton(),
-                              Spacer(),
-                              buildAffirmationsButton(),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    buildSettingsButton(),
-                    const SizedBox(height: 30),
-                    buildExercises()
-                  ],
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Column(
+              children: [
+                buildHeader(),
+                Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Image.asset('$imagePath/logo.png', width: Get.width * .2),
+                      const SizedBox(
+                        height: 10.69,
+                      ),
+                      const Text(
+                        'MY MORNING',
+                        style: TextStyle(
+                            color: Color(0xffD1ADE7),
+                            fontFamily: 'Montserrat',
+                            fontStyle: FontStyle.normal,
+                            fontSize: 19.47,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 25.04),
+                      buildStartComplexButton(),
+                      const SizedBox(
+                        height: 12.6,
+                      ),
+                      SizedBox(
+                        width: Get.width - 10,
+                        child: Row(
+                          children: [
+                            buildMeditationsButton(),
+                            const Spacer(),
+                            buildAffirmationsButton(),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      buildExercises()
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Positioned(bottom: 0, child: BottomMenu()),
-      ]),
+          const Positioned(
+            bottom: 0,
+            child: BottomMenu(
+              currentPageNumber: 1,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget buildHeader() {
     return Container(
-      color: Color(0xffFFB5C3),
+      color: const Color(0xffFFB5C3),
       child: SafeArea(
         bottom: false,
         child: Stack(
@@ -115,8 +147,6 @@ class MainMenuPageState extends State<MainMenuPage> {
             Image.asset(
               '$imagePath/header.png',
             ),
-
-            //SvgPicture.asset('$imagePath/header.svg'),
             Positioned(
               top: 0,
               bottom: 0,
@@ -125,20 +155,21 @@ class MainMenuPageState extends State<MainMenuPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    'MY MORNING',
-                    style: TextStyle(fontSize: Get.width * .06, fontWeight: FontWeight.w700, color: Colors.white),
-                  ),
                   const SizedBox(height: 20),
                   ClipPath(
                     clipper: OvalTopBorderClipper(),
                     child: Container(
                       height: 40,
-                      color: Color(0xffffffff),
+                      color: const Color(0xffffffff),
                     ),
                   ),
                 ],
               ),
+            ),
+            Positioned(
+              top: 24,
+              right: 24,
+              child: newQuestionsButton(),
             ),
           ],
         ),
@@ -146,96 +177,138 @@ class MainMenuPageState extends State<MainMenuPage> {
     );
   }
 
-  Widget buildMeditationsButton() {
-    return container(
-        height: Get.width * .23,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        child: Stack(
-          children: [
-            Positioned(
-                right: 0,
-                child: Image.asset(
-                  '$imagePath/meditation.png',
-                  height: Get.width * .23,
-                )),
-            Positioned.fill(
-              left: 10,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'meditation_small'.tr,
-                  style: TextStyle(fontSize: Get.width * .037, color: AppColors.primary, fontWeight: FontWeight.w700),
-                ),
-              ),
-            ),
-          ],
+  Widget newQuestionsButton() {
+    return GestureDetector(
+      onTap: () {
+        appAnalitics.logEvent('first_faq');
+        Get.to(const FaqMenuPage());
+      },
+      child: Container(
+        width: 47.05,
+        height: 47.05,
+        padding: const EdgeInsets.all(12.76),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
         ),
-        color: Color(0xffFFD2DB),
-        onPressed: () {
-          AppMetrica.reportEvent('meditation_start');
-          Get.off(MeditationPage(fromHomeMenu: true), opaque: true);
-        });
+        child: Image.asset(
+          '$imagePath/settings_icon_2.png',
+        ),
+      ),
+    );
+  }
+
+  Widget buildMeditationsButton() {
+    return GestureDetector(
+      onTap: () {
+        AppMetrica.reportEvent('meditation_start');
+        Get.off(const MeditationPage(fromHomeMenu: true), opaque: true);
+        isComplex = false;
+      },
+      child: Container(
+        width: (Get.width - 30) / 2,
+        height: Get.width * .23,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(19),
+          image: const DecorationImage(
+            image: AssetImage("assets/images/Meditationimg.jpeg"),
+            fit: BoxFit.fill,
+          ),
+          color: const Color(0xffFFD2DB),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 31, 10, 30),
+          child: Text(
+            'meditation_small'.tr,
+            style: TextStyle(
+                fontSize: Get.width * .037,
+                color: AppColors.primary,
+                fontWeight: FontWeight.w700),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget buildAffirmationsButton() {
-    return container(
+    return GestureDetector(
+      onTap: () {
+        AppMetrica.reportEvent('affirmations_start');
+        Get.off(const AffirmationPage(fromHomeMenu: true), opaque: true);
+        isComplex = false;
+      },
+      child: Container(
+        width: (Get.width - 30) / 2,
         height: Get.width * .23,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              left: 10,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'affirmation_small'.tr,
-                  style: TextStyle(fontSize: Get.width * .037, color: AppColors.primary, fontWeight: FontWeight.w700),
-                ),
-              ),
-            ),
-            Positioned(
-                right: 0,
-                child: Image.asset(
-                  '$imagePath/affirmation.png',
-                  height: Get.width * .23,
-                )),
-          ],
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(19),
+          image: const DecorationImage(
+            image: AssetImage("assets/images/afirmationimg.jpeg"),
+            fit: BoxFit.fill,
+          ),
+          color: const Color(0xffFFD2DB),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        color: Color(0xffFFE6C0),
-        onPressed: () {
-          AppMetrica.reportEvent('affirmations_start');
-          Get.off(AffirmationPage(fromHomeMenu: true), opaque: true);
-        });
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, bottom: 10, right: 10),
+          child: Row(
+            children: [
+              const SizedBox(
+                height: 24,
+              ),
+              Text(
+                'affirmation_smal'.tr,
+                style: TextStyle(
+                    fontSize: Get.width * .037,
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget buildExercises() {
     return Column(
       children: [
-        if (!billingService.isPro())
-          Row(
-            children: [
-              const SizedBox(width: 5),
-              SvgPicture.asset('$imagePath/crown.svg'),
-              const SizedBox(width: 10),
-              Text(
-                'subscription'.tr,
-                style: TextStyle(fontSize: Get.width * .045, fontWeight: FontWeight.w600),
-              ),
-            ],
-          ),
+        // if (!billingService.isPro())
+        Row(
+          children: [
+            const SizedBox(width: 5),
+            GestureDetector(child: SvgPicture.asset('$imagePath/crown.svg')),
+            const SizedBox(width: 10),
+            Text(
+              !billingService.isPro()
+                  ? 'Try PREMIUM Package for free'.tr
+                  : 'PREMIUM activated'.tr,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xff592F72)),
+            ),
+          ],
+        ),
         const SizedBox(height: 10),
         Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                exerciseBLock('assets/images/purchase/fitness.png', 'fitness_small'.tr, 'fitness_desc'.tr, onPressed: () {
+                exerciseBLock('assets/images/purchase/fitness.png',
+                    'fitness_small'.tr, 'fitness_desc'.tr, onPressed: () {
+                  isComplex = false;
+
                   AppMetrica.reportEvent('fitness_start');
-                  openIfVip(FitnessMainPage(pageId: TimerPageId.Fitness, fromHomeMenu: true));
+                  openIfVip(const FitnessMainPage(
+                      pageId: TimerPageId.Fitness, fromHomeMenu: true));
                 }),
-                exerciseBLock('assets/images/purchase/note.png', 'menu_diary_small'.tr, 'menu_diary_desc'.tr, color: Color(0xffFFD2DB), onPressed: () {
+                exerciseBLock('assets/images/purchase/note.png',
+                    'menu_diary_small'.tr, 'menu_diary_desc'.tr,
+                    color: const Color(0xffFFD2DB), onPressed: () {
+                  isComplex = false;
                   AppMetrica.reportEvent('diary_start');
-                  openIfVip(DiaryPage(fromHomeMenu: true));
+                  openIfVip(const DiaryPage(fromHomeMenu: true));
                 }),
               ],
             ),
@@ -243,14 +316,40 @@ class MainMenuPageState extends State<MainMenuPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                exerciseBLock('assets/images/purchase/eye.png', 'visualization_small'.tr, 'visualization_desc'.tr, color: Color(0xffE4C8FC), onPressed: () {
-                  AppMetrica.reportEvent('visualization_start');
-                  openIfVip(VisualizationMainPage(fromHomeMenu: true));
-                }),
-                exerciseBLock('assets/images/purchase/book.png', 'reading_small'.tr, 'reading_desc'.tr, onPressed: () {
-                  AppMetrica.reportEvent('reading_start');
-                  openIfVip(ReadingPage(fromHomeMenu: true));
-                }),
+                exerciseBLock(
+                  'assets/images/purchase/eye.png',
+                  'visualization_small'.tr,
+                  'visualization_desc'.tr,
+                  color: const Color(0xffE4C8FC),
+                  onPressed: () async {
+                    isComplex = false;
+
+                    if (await ConnectionRepo.isConnected()) {
+                      AppMetrica.reportEvent('visualization_start');
+                      openIfVip(
+                        const VisualizationMainPage(fromHomeMenu: true),
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const ConnectionDialog();
+                        },
+                      );
+                    }
+                  },
+                ),
+                exerciseBLock(
+                  'assets/images/purchase/book.png',
+                  'reading_small'.tr,
+                  'reading_desc'.tr,
+                  onPressed: () {
+                    isComplex = false;
+
+                    AppMetrica.reportEvent('reading_start');
+                    openIfVip(const ReadingPage(fromHomeMenu: true));
+                  },
+                ),
               ],
             ),
             const SizedBox(height: 120),
@@ -264,12 +363,13 @@ class MainMenuPageState extends State<MainMenuPage> {
     if (billingService.isPro()) {
       Get.off(page, opaque: true);
     } else {
-      await Get.to(PaymentPage());
+      await Get.to(NewPaywall());
       setState(() {});
     }
   }
 
-  Widget exerciseBLock(String image, String title, String subtitle, {Color color, Function onPressed}) {
+  Widget exerciseBLock(String image, String title, String subtitle,
+      {Color color, Function onPressed}) {
     return container(
       width: Get.width * .44,
       height: Get.width * .5,
@@ -281,11 +381,16 @@ class MainMenuPageState extends State<MainMenuPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 height: 45,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Image.asset(image, width: Get.width * .1), Obx(() => !billingService.isVip.value ? SvgPicture.asset('$imagePath/crown.svg') : SizedBox())],
+                  children: [
+                    Image.asset(image, width: Get.width * .1),
+                    Obx(() => !billingService.isVip.value
+                        ? SvgPicture.asset('$imagePath/crown.svg')
+                        : const SizedBox())
+                  ],
                 ),
               ),
               const SizedBox(height: 10),
@@ -301,7 +406,10 @@ class MainMenuPageState extends State<MainMenuPage> {
               Flexible(
                 child: Text(
                   subtitle,
-                  style: TextStyle(color: AppColors.primary, fontSize: Get.width * .035, fontWeight: FontWeight.w400),
+                  style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: Get.width * .035,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
             ],
@@ -309,106 +417,120 @@ class MainMenuPageState extends State<MainMenuPage> {
         ],
       ),
       radius: 28,
-      color: color ?? Color(0xffFFE6C0),
+      color: color ?? const Color(0xffFFE6C0),
     );
   }
 
   Widget buildStartComplexButton() {
-    return container(
-      height: Get.width * .5,
-      child: Stack(
+    return Container(
+      width: double.maxFinite,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('$imagePath/start_full2.png'),
+            fit: BoxFit.fill,
+          ),
+          borderRadius: BorderRadius.circular(19)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Positioned(
-            right: 0,
-            child: Image.asset(
-              '$imagePath/start_full.png',
-              width: Get.width * .28,
+          Align(
+            alignment: Alignment.topRight,
+            child: questionButtonForComplexButton(),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Text(
+            'start_complex'.tr,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Montserrat',
             ),
           ),
-          Positioned(
-            bottom: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: Get.width * .4,
-                    child: Text(
-                      'start_complex'.tr,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: Get.width * .047,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 13),
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    width: Get.width * .35,
-                    child: Container(
-                      height: Get.width * .09,
-                      width: Get.width * .3,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('start'.tr, style: TextStyle(color: Colors.black)),
-                          Icon(Icons.arrow_forward, color: Colors.black),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  )
-                ],
+          const SizedBox(
+            height: 12,
+          ),
+          Row(
+            children: [
+              buildStartButton(),
+              const SizedBox(
+                width: 7,
               ),
-            ),
+              buildSettingsButton(),
+            ],
           ),
         ],
       ),
-      color: Color(0xff592F72),
-      onPressed: _startExercise,
+    );
+  }
+
+  Widget questionButtonForComplexButton() {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const QuestionsDialog();
+          },
+        );
+      },
+      child: Container(
+        width: 34,
+        height: 34,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+              image: AssetImage('$imagePath/questions_img.png'),
+              fit: BoxFit.fill),
+        ),
+      ),
+    );
+  }
+
+  Widget buildStartButton() {
+    return Expanded(
+      child: GestureDetector(
+        onTap: _startExercise,
+        child: Container(
+          height: 51.75,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Text(
+            'start'.tr,
+            style: const TextStyle(
+              color: Color(0xff592F72),
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+        ),
+      ),
     );
   }
 
   Widget buildSettingsButton() {
-    return container(
-      height: Get.width * .23,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              '$imagePath/settings.png',
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'settings'.tr,
-                  style: TextStyle(color: Colors.white, fontSize: Get.width * .06, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'settings_desc'.tr,
-                  style: TextStyle(color: Colors.white, fontSize: Get.width * .04, fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
-          ),
-        ],
+    return GestureDetector(
+      onTap: _openSettings,
+      child: Container(
+        width: 51.75,
+        height: 51.75,
+        padding: const EdgeInsets.all(15.11),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+        ),
+        child: Image.asset(
+          '$imagePath/settings_icon_1.png',
+        ),
       ),
-      color: Color(0xff592F72),
-      onPressed: _openSettings,
     );
   }
 
@@ -441,23 +563,34 @@ class MainMenuPageState extends State<MainMenuPage> {
   }
 
   _clearExercisesHolder() async {
-    await MyDB().getBox().put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
+    await MyDB()
+        .getBox()
+        .put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
   }
 
   _startExercise() async {
+    isComplex = true;
     AppMetrica.reportEvent('complex_start');
     var _cntBeforInterview = launchForinterview + 1;
-    await MyDB().getBox().put(MyResource.LAUNCH_FOR_INTERVIEW, _cntBeforInterview);
-    // openInterviewModel(_cntBeforInterview);
+    await MyDB()
+        .getBox()
+        .put(MyResource.LAUNCH_FOR_INTERVIEW, _cntBeforInterview);
     appAnalitics.logEvent('first_start');
-    await OrderUtil().getRouteByPositionInList(await OrderUtil().getNextPos(0)).then((value) {
+    Get.to(const MeditationPage());
+    await OrderUtil()
+        .getRouteByPositionInList(await OrderUtil().getNextPos(0))
+        .then((value) {
       Get.off(value);
     });
   }
 
   void openInterviewModel(int _cntBeforInterview) async {
-    // bool isInterviewed = await MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
-    // if (_cntBeforInterview > 2 && !isInterviewed) Future.delayed(Duration(seconds: 1), () => Get.dialog(InterviewDialog(), barrierDismissible: false));
+    bool isInterviewed = await MyDB()
+        .getBox()
+        .get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
+    if (_cntBeforInterview > 2 && !isInterviewed)
+      Future.delayed(const Duration(seconds: 1),
+          () => Get.dialog(const InterviewDialog(), barrierDismissible: false));
   }
 
   _openSettings() {

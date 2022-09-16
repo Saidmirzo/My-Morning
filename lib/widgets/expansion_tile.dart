@@ -5,7 +5,6 @@
 // @dart=2.9
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -204,8 +203,9 @@ class _MyExpansionTileState extends State<MyExpansionTile>
       }
       PageStorage.of(context)?.writeState(context, _isExpanded);
     });
-    if (widget.onExpansionChanged != null)
+    if (widget.onExpansionChanged != null) {
       widget.onExpansionChanged(_isExpanded);
+    }
   }
 
   Widget _buildChildren(BuildContext context, Widget child) {
@@ -237,7 +237,7 @@ class _MyExpansionTileState extends State<MyExpansionTile>
                 subtitle: widget.subtitle,
                 trailing: RotationTransition(
                   turns: _iconTurns,
-                  child: widget.trailing ?? Icon(Icons.expand_more),
+                  child: widget.trailing ?? const Icon(Icons.expand_more),
                 ),
               ),
             ),
@@ -267,10 +267,10 @@ class _MyExpansionTileState extends State<MyExpansionTile>
     _borderColorTween.end = Colors.transparent;
     _headerColorTween
       ..begin = theme.textTheme.subtitle1.color
-      ..end = theme.accentColor;
+      ..end = theme.colorScheme.secondary;
     _iconColorTween
       ..begin = theme.unselectedWidgetColor
-      ..end = theme.accentColor;
+      ..end = theme.colorScheme.secondary;
     _backgroundColorTween.end = widget.backgroundColor;
     super.didChangeDependencies();
   }

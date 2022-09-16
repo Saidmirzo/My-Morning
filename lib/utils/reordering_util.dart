@@ -1,11 +1,9 @@
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/fitness_main_page.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
-import 'package:morningmagic/pages/custom_methodic/custom_methodic_page.dart';
 import 'package:morningmagic/pages/custom_methodic/custom_methodic_start_page.dart';
 import 'package:morningmagic/pages/diary/diary_page.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
@@ -13,10 +11,8 @@ import 'package:morningmagic/pages/meditation/meditation_page.dart';
 import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/pages/reading/reading_page.dart';
-import 'package:morningmagic/pages/success/screenTimerSuccess.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/storage.dart';
-
 import '../db/model/reordering_program/order_holder.dart';
 import '../db/model/reordering_program/order_item.dart';
 import '../db/resource.dart';
@@ -25,7 +21,8 @@ import '../widgets/exerciseTile.dart';
 class OrderUtil {
   Future<OrderHolder> getOrderHolder() async {
     OrderHolder orderHolder;
-    orderHolder = await MyDB().getBox().get(MyResource.ORDER_PROGRAM_HOLDER, defaultValue: createDefaultHolder());
+    orderHolder = await MyDB().getBox().get(MyResource.ORDER_PROGRAM_HOLDER,
+        defaultValue: createDefaultHolder());
     print(orderHolder);
     return orderHolder;
   }
@@ -33,7 +30,8 @@ class OrderUtil {
   Future<void> saveOrderHolder(List<ExerciseTile> exerciseList) async {
     List<OrderItem> orderItemsList = [];
     for (int i = 0; i < exerciseList.length; i++) {
-      orderItemsList.add(OrderItem(exerciseList[i].orderItem.position, exerciseList[i].orderItem.id));
+      orderItemsList.add(OrderItem(
+          exerciseList[i].orderItem.position, exerciseList[i].orderItem.id));
       print('save: ${exerciseList[i].title}');
     }
     OrderHolder orderHolder = OrderHolder(orderItemsList);
@@ -51,16 +49,23 @@ class OrderUtil {
   }
 
   OrderHolder createDefaultHolder() {
-    OrderItem orderAffirmation = new OrderItem(0, getStringIdByOrderId(0));
-    OrderItem orderMeditation = new OrderItem(1, getStringIdByOrderId(1));
-    OrderItem orderFitness = new OrderItem(2, getStringIdByOrderId(2));
-    OrderItem orderDiary = new OrderItem(3, getStringIdByOrderId(3));
-    OrderItem orderReading = new OrderItem(4, getStringIdByOrderId(4));
-    OrderItem orderVisualization = new OrderItem(5, getStringIdByOrderId(5));
+    OrderItem orderAffirmation = OrderItem(0, getStringIdByOrderId(0));
+    OrderItem orderMeditation = OrderItem(1, getStringIdByOrderId(1));
+    OrderItem orderFitness = OrderItem(2, getStringIdByOrderId(2));
+    OrderItem orderDiary = OrderItem(3, getStringIdByOrderId(3));
+    OrderItem orderReading = OrderItem(4, getStringIdByOrderId(4));
+    OrderItem orderVisualization = OrderItem(5, getStringIdByOrderId(5));
 
-    List<OrderItem> list = [orderMeditation, orderAffirmation, orderFitness, orderVisualization, orderReading, orderDiary];
+    List<OrderItem> list = [
+      orderMeditation,
+      orderAffirmation,
+      orderFitness,
+      orderVisualization,
+      orderReading,
+      orderDiary
+    ];
 
-    return new OrderHolder(list);
+    return OrderHolder(list);
   }
 
   String getStringIdByOrderId(int id) {
@@ -131,13 +136,13 @@ class OrderUtil {
 
   Future<dynamic> getRouteByPositionInList(int position) async {
     OrderHolder orderHolder = await getOrderHolder();
-    if (position > orderHolder.list.length) return ProgressPage();
+    if (position > orderHolder.list.length) return const ProgressPage();
 
     OrderItem orderItem = orderHolder.list[position];
     String id = orderItem.id;
     print('Open id: $id');
 
-    endComplex(orderHolder.list[position - 1].id);
+    endComplex(orderHolder.list[position].id);
 
     if (!billingService.isPro() && ![0, 1].contains(orderItem.position)) {
       print('!isPro && ![0,1].contains(id)');
@@ -149,11 +154,11 @@ class OrderUtil {
     }
     if (id == "affirmation_small") {
       AppMetrica.reportEvent('complex_affirmations');
-      return AffirmationPage();
+      return const AffirmationPage();
     }
     if (id == "meditation_small") {
       AppMetrica.reportEvent('complex_meditation');
-      return MeditationPage();
+      return const MeditationPage();
     }
     if (id == "fitness_small") {
       AppMetrica.reportEvent('complex_fitness');
@@ -161,15 +166,15 @@ class OrderUtil {
     }
     if (id == "diary_small") {
       AppMetrica.reportEvent('complex_diary');
-      return DiaryPage();
+      return const DiaryPage();
     }
     if (id == "reading_small") {
       AppMetrica.reportEvent('complex_reading');
-      return ReadingPage();
+      return const ReadingPage();
     }
     if (id == "visualization_small") {
       AppMetrica.reportEvent('complex_visualization');
-      return VisualizationMainPage();
+      return const VisualizationMainPage();
     }
   }
 
@@ -179,7 +184,7 @@ class OrderUtil {
     pos--;
     pos = await getPreviousPos(pos);
     if (pos < 0) {
-      return MainMenuPage();
+      return const MainMenuPage();
     } else {
       return getRouteByPositionInList(pos);
     }
@@ -187,7 +192,7 @@ class OrderUtil {
 
   Future<dynamic> getRouteById(int id) async {
     if (id == 10 || id == 11 || id == 12) {
-      return ProgressPage();
+      return const ProgressPage();
     }
 
     OrderHolder orderHolder = await getOrderHolder();
@@ -203,7 +208,7 @@ class OrderUtil {
     // print('next time: $next');
 
     if (pos == orderHolder.list.length) {
-      return ProgressPage(onDone: true);
+      return const ProgressPage(onDone: true);
     } else {
       return getRouteByPositionInList(pos);
     }
@@ -220,7 +225,10 @@ class OrderUtil {
       if (orderHolder.list[i].id.contains("custom")) {
         time = MyDB().getBox().get(orderHolder.list[i].id).time;
       } else {
-        time = MyDB().getBox().get(getBoxTimeKey(orderHolder.list[i].position)).time;
+        time = MyDB()
+            .getBox()
+            .get(getBoxTimeKey(orderHolder.list[i].position))
+            .time;
       }
       if (time > 0) {
         pos = i;
@@ -235,7 +243,8 @@ class OrderUtil {
     OrderHolder orderHolder = await getOrderHolder();
     var pos = _pos;
     for (var i = pos; i >= 0; i--) {
-      var time = MyDB().getBox().get(getBoxTimeKey(orderHolder.list[i].position)).time;
+      var time =
+          MyDB().getBox().get(getBoxTimeKey(orderHolder.list[i].position)).time;
       print(getBoxTimeKey(orderHolder.list[i].position));
       print(time);
       if (time > 0) {

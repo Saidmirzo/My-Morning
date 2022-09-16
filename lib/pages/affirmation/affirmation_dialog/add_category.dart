@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'affirmation_controller.dart';
 
 class AddCategoryAffirmation extends StatelessWidget {
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
   final AffirmationController _controller = Get.find();
+
+  AddCategoryAffirmation({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class AddCategoryAffirmation extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height / 1.3,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -23,7 +24,7 @@ class AddCategoryAffirmation extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildMenu(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               buildTextFormField(),
             ],
           ),
@@ -37,20 +38,20 @@ class AddCategoryAffirmation extends StatelessWidget {
       textInputAction: TextInputAction.next,
       controller: _textController,
       decoration: InputDecoration(
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.VIOLET, width: 1),
         ),
         suffixIcon: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.clear,
             color: AppColors.VIOLET,
           ),
           onPressed: () => _textController.clear(),
         ),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         hintText: 'input_cat_name'.tr,
       ),
       autofocus: true,
@@ -67,26 +68,27 @@ class AddCategoryAffirmation extends StatelessWidget {
             child: Text(
               'back_button'.tr,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 23,
                   fontStyle: FontStyle.normal,
                   color: AppColors.VIOLET),
             ),
           ),
         ),
-        Spacer(),
+        const Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
           child: InkWell(
             onTap: () async {
-              if (_textController.text.length > 0)
+              if (_textController.text.isNotEmpty) {
                 _controller.addAffirmationCategory(_textController.text);
+              }
               Get.back();
             },
             child: Text(
               'choose'.tr,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 23,
                   fontStyle: FontStyle.normal,
                   color: AppColors.VIOLET),

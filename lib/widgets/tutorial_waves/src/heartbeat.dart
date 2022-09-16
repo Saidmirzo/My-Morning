@@ -44,7 +44,7 @@ class _HeartBeatState extends State<HeartBeat>
     _beatForward = Tween(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(
+        curve: const Interval(
           0.30,
           0.65,
           curve: Curves.easeIn,
@@ -56,7 +56,7 @@ class _HeartBeatState extends State<HeartBeat>
     _beatBackward = Tween(begin: 1.0, end: 0.8).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(
+        curve: const Interval(
           0.65,
           1.00,
           curve: Curves.easeIn,

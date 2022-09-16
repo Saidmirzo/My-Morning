@@ -2,7 +2,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
+import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/domain/entities/image_tag.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
@@ -31,6 +31,7 @@ class VisualizationTargetItem extends StatefulWidget {
 
 class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
   final _controller = Get.find<VisualizationController>();
+
   bool isLoading = false;
   VisualizationImage attachedImage;
 
@@ -45,9 +46,16 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
       });
 
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+        List<int> selectedIndexes =
+            myDbBox.get("${widget.target.id}") ?? <int>[];
         final _images =
             await _controller.loadAttachedTargetImages(widget.target.id);
-        if (_images.isNotEmpty) attachedImage = _images.first;
+        if (_images.isNotEmpty) {
+          attachedImage =
+              _controller.images.isNotEmpty && selectedIndexes.isNotEmpty
+                  ? _controller.images[selectedIndexes.last]
+                  : _images.first;
+        }
 
         setState(() {
           isLoading = false;
@@ -58,18 +66,19 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading)
+    if (isLoading) {
       return _buildLoading();
-    else
+    } else {
       return _buildContent();
+    }
   }
 
-  Widget _buildLoading() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 2),
-        child: Container(
+  Widget _buildLoading() => const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 2),
+        child: SizedBox(
             height: 94,
             child: Center(
-                child: Container(
+                child: SizedBox(
               width: 36,
               height: 36,
               child: CircularProgressIndicator(
@@ -87,17 +96,18 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
             decoration: _buildBoxDecoration(widget.target),
             child: Row(
               children: [
-                SizedBox(
-                  width: 16,
+                // const Spacer(),
+                Expanded(
+                  child: StyledText(
+                    (widget.target.isCustom)
+                        ? widget.target.title
+                        : (widget.target.title).tr,
+                    color: AppColors.WHITE,
+                    fontSize: 26,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                StyledText(
-                  (widget.target.isCustom)
-                      ? widget.target.title
-                      : (widget.target.title).tr,
-                  color: AppColors.WHITE,
-                  fontSize: 28,
-                ),
-                Spacer(),
+                // const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -112,8 +122,8 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
                       ),
                     if (widget.target.isCustom)
                       IconButton(
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(
+                          padding: const EdgeInsets.all(0),
+                          icon: const Icon(
                             Icons.edit,
                             color: Colors.white,
                           ),
@@ -138,14 +148,16 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
               image: _controller.getTargetCoverDecorationImage(attachedImage),
               fit: BoxFit.cover,
             ));
-      } else
+      } else {
         return BoxDecoration(borderRadius: _borderRadius, color: Colors.grey);
-    } else
+      }
+    } else {
       return BoxDecoration(
           borderRadius: _borderRadius,
           image: DecorationImage(
             image: AssetImage(_target.coverAssetPath),
             fit: BoxFit.cover,
           ));
+    }
   }
 }

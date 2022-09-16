@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../interview_controller.dart';
 
 Widget dotPanel(int _count) {
@@ -9,7 +8,7 @@ Widget dotPanel(int _count) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(_count, (index) {
           final isActive = index <= _controller.currQuestion.value;
-          final size = 15.0;
+          const size = 15.0;
           return Container(
             width: size,
             height: size,

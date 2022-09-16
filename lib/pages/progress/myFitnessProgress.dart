@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -17,7 +16,7 @@ class _MyFitnessProgressState extends State<MyFitnessProgress> {
   void initState() {
     super.initState();
     // Get old data or init empty map
-    _map = MyDB().getJournalProgress(MyResource.FITNESS_JOURNAL);
+    _map = MyDB().getJournalProgress(MyResource.FULL_COMPLEX_FINISH);
   }
 
   @override
@@ -26,7 +25,7 @@ class _MyFitnessProgressState extends State<MyFitnessProgress> {
       body: Container(
         width: MediaQuery.of(context).size.width, // match parent(all screen)
         height: MediaQuery.of(context).size.height, // match parent(all screen)
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -45,7 +44,7 @@ class _MyFitnessProgressState extends State<MyFitnessProgress> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 0),
                 child: GridView(
-                  padding: EdgeInsets.only(bottom: 15),
+                  padding: const EdgeInsets.only(bottom: 15),
                   children: _map.isNotEmpty
                       ? List.generate(
                           _map.length,
@@ -77,7 +76,7 @@ class FitnessMiniProgress extends StatelessWidget {
   final List<dynamic> list;
   final String date;
 
-  FitnessMiniProgress(this.id, this.list, this.date);
+  const FitnessMiniProgress(this.id, this.list, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
@@ -108,24 +107,24 @@ class FitnessMiniProgress extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Text(
-                    list.last.text,
+                    list.last.toString(),
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04, //16,
                       color: Colors.black54,
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 5),
                         child: Icon(Icons.access_time),
                       ),
                       Text(
                         date,
-                        style: TextStyle(),
+                        style: const TextStyle(),
                       )
                     ],
                   ),
@@ -160,7 +159,7 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -187,12 +186,12 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: Row(
                             //crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 5),
                                 child: Icon(Icons.access_time),
                               ),
                               Container(
@@ -200,9 +199,9 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
                               ),
                               Text(
                                 widget.date,
-                                style: TextStyle(),
+                                style: const TextStyle(),
                               ),
-                              Spacer(),
+                              const Spacer(),
                             ],
                           ),
                         ),
@@ -257,7 +256,7 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        '${widget.list[i].sec}' + ' ' + 'sec'.tr,
+                        '${widget.list[i].sec}' ' ' + 'sec'.tr,
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           color: Colors.black54,

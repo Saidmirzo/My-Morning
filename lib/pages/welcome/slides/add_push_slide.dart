@@ -10,7 +10,7 @@ import 'package:numberpicker/numberpicker.dart';
 class AddPushSlide extends StatelessWidget {
   final PageController _pageController;
   ReminderController reminderController;
-  AddPushSlide(this._pageController);
+  AddPushSlide(this._pageController, {Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     reminderController = Get.put(ReminderController());
@@ -20,23 +20,26 @@ class AddPushSlide extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Spacer(),
+          const Spacer(),
           Text(
             'welcome_push_title'.tr,
             textAlign: TextAlign.start,
-            style: TextStyle(color: Colors.white, fontSize: Get.width * .06, fontWeight: FontWeight.w600),
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: Get.width * .06,
+                fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 20),
           Text(
             'welcome_push_subtitle'.tr,
             style: TextStyle(color: Colors.white60, fontSize: Get.width * .042),
           ),
-          Spacer(),
+          const Spacer(),
           buildNumberPicker(),
-          Spacer(),
+          const Spacer(),
           Center(child: buildButton()),
           Center(child: buildSkipButton()),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );
@@ -57,9 +60,10 @@ class AddPushSlide extends StatelessWidget {
             itemHeight: 50,
             axis: Axis.vertical,
             onChanged: hours,
-            textStyle: TextStyle(color: Colors.white70),
-            selectedTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-            decoration: BoxDecoration(
+            textStyle: const TextStyle(color: Colors.white70),
+            selectedTextStyle: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.w500),
+            decoration: const BoxDecoration(
               border: Border(
                 top: BorderSide(color: Colors.white),
                 bottom: BorderSide(color: Colors.white),
@@ -76,9 +80,10 @@ class AddPushSlide extends StatelessWidget {
             itemHeight: 50,
             axis: Axis.vertical,
             onChanged: min,
-            textStyle: TextStyle(color: Colors.white70),
-            selectedTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-            decoration: BoxDecoration(
+            textStyle: const TextStyle(color: Colors.white70),
+            selectedTextStyle: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.w500),
+            decoration: const BoxDecoration(
               border: Border(
                 top: BorderSide(color: Colors.white),
                 bottom: BorderSide(color: Colors.white),
@@ -93,15 +98,17 @@ class AddPushSlide extends StatelessWidget {
   PrimaryCircleButton buildButton() {
     return PrimaryCircleButton(
       size: 40,
-      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+      icon: const Icon(Icons.arrow_forward, color: AppColors.primary),
       onPressed: () {
         reminderController.addReminder(
-          timeOfDay: TimeOfDay(hour: hours.value, minute: min.value),
+           timeOfDay: TimeOfDay(hour: hours.value, minute: min.value),
           activeAllDaysByDefault: true,
           onAction: () {
             // AppRouting.replace(MainMenuPage());
             AppMetrica.reportEvent('onbording_time_set');
-            _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+            _pageController.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn);
           },
         );
         // _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeIn);
@@ -113,12 +120,13 @@ class AddPushSlide extends StatelessWidget {
     return CupertinoButton(
       child: Text(
         'skip'.tr,
-        style: TextStyle(color: Colors.white54),
+        style: const TextStyle(color: Colors.white54),
       ),
       onPressed: () {
         // AppRouting.replace(MainMenuPage());
         AppMetrica.reportEvent('onbording_time_skip');
-        _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+        _pageController.nextPage(
+            duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
       },
     );
   }

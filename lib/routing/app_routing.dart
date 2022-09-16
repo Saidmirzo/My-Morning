@@ -7,6 +7,8 @@ import 'package:morningmagic/pages/nigth/nigth.dart';
 import 'package:morningmagic/pages/settings/settingsPage.dart';
 import 'package:morningmagic/pages/welcome/welcome_page.dart';
 import 'package:morningmagic/routing/route_values.dart';
+import 'package:morningmagic/services/injections.dart';
+
 import '../storage.dart';
 
 class AppRouting {
@@ -16,26 +18,27 @@ class AppRouting {
     switch (settings.name) {
       case splashRoute:
         return MaterialPageRoute(
-          builder: (_) => LoadingPage(),
+          builder: (_) => LoadingPage(abTestService: injection()),
         );
 
       case homePageRoute:
-        return MaterialPageRoute(builder: (_) => MainMenuPage(), settings: settings);
+        return MaterialPageRoute(
+            builder: (_) => const MainMenuPage(), settings: settings);
 
       case settingsPageRoute:
-        return MaterialPageRoute(builder: (_) => SettingsPage());
+        return MaterialPageRoute(builder: (_) => const SettingsPage());
 
       case welcomePageRoute:
-        return MaterialPageRoute(builder: (_) => WelcomePage());
+        return MaterialPageRoute(builder: (_) => const WelcomePage());
 
       case mainMenuNigthPage:
-        return MaterialPageRoute(builder: (_) => MainMenuNightPage());
+        return MaterialPageRoute(builder: (_) => const MainMenuNightPage());
 
       case musicInstrumentsPageRoute:
         return MaterialPageRoute(builder: (_) => MusicInstrumentPage());
 
       default:
-        return MaterialPageRoute(builder: (_) => MainMenuPage());
+        return MaterialPageRoute(builder: (_) => const MainMenuPage());
     }
   }
 
@@ -43,7 +46,10 @@ class AppRouting {
     if (menuStateValue != null) menuState = menuStateValue;
     Navigator.pushAndRemoveUntil(
       Get.context,
-      MaterialPageRoute(builder: (context) => menuState == MenuState.MORNING ? MainMenuPage() : MainMenuNightPage()),
+      MaterialPageRoute(
+          builder: (context) => menuState == MenuState.MORNING
+              ? const MainMenuPage()
+              : const MainMenuNightPage()),
       (Route<dynamic> route) => false,
     );
   }
@@ -55,4 +61,22 @@ class AppRouting {
       (Route<dynamic> route) => false,
     );
   }
+}
+
+Route createRoute(dynamic nabigationClass) {
+  dynamic navigationClass = nabigationClass;
+  return PageRouteBuilder(
+    transitionDuration: const Duration(microseconds: 1000),
+    pageBuilder: (context, animation, secondaryAnimation) => navigationClass,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      // const begin = Offset(1, 0);
+      const end = Offset(0, 0);
+      const curve = Curves.ease;
+      var tween = Tween(begin: end, end: end).chain(CurveTween(curve: curve));
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
 
 class YogaMeditationNightContainer extends StatefulWidget {
+  const YogaMeditationNightContainer({Key key}) : super(key: key);
+
   @override
   _YogaMeditationNightContainerState createState() =>
       _YogaMeditationNightContainerState();
@@ -16,7 +17,7 @@ class YogaMeditationNightContainer extends StatefulWidget {
 class _YogaMeditationNightContainerState
     extends State<YogaMeditationNightContainer> with WidgetsBindingObserver {
   MediationAudioController _audioController;
-  List<MeditationAudio> _source = [];
+  final List<MeditationAudio> _source = [];
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +30,9 @@ class _YogaMeditationNightContainerState
   Widget _buildSelectAudioList() {
     return ListView.builder(
       shrinkWrap: true,
-      padding: EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       itemCount: _source.length,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return AudioMeditationDialogItem(
           id: index,

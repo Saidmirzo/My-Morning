@@ -3,22 +3,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/pages/menu/main_menu.dart';
-import 'package:morningmagic/pages/nigth/nigth.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/storage.dart';
-
-import '../../faq/faq_menu.dart';
+import '../../reminders/reminders_page.dart';
 
 class BottomMenu extends StatelessWidget {
   final double btnSize = 30;
-  Color bgColor;
+  final Color bgColor;
+  final int currentPageNumber;
 
-  BottomMenu({this.bgColor = AppColors.WHITE});
+  const BottomMenu(
+      {Key key,
+      this.bgColor = AppColors.WHITE,
+      @required this.currentPageNumber})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +29,72 @@ class BottomMenu extends StatelessWidget {
       color: Colors.transparent,
       child: Container(
         width: Get.width,
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: menuState == MenuState.MORNING ? Colors.black.withOpacity(.05) : Colors.white.withOpacity(.09),
-            spreadRadius: 5,
-            blurRadius: 10,
-          ),
-        ], borderRadius: BorderRadius.vertical(top: Radius.circular(30)), color: this.bgColor),
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: menuState == MenuState.MORNING
+                    ? Colors.black.withOpacity(.05)
+                    : Colors.white.withOpacity(.09),
+                spreadRadius: 5,
+                blurRadius: 10,
+              ),
+            ],
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+            color: bgColor),
         child: SafeArea(
           top: false,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              _menuButton(SvgAssets.mountains, onPress: _openMorning, color: this.bgColor == AppColors.WHITE ? AppColors.primary : AppColors.nightButtonMenuIocons),
-              _menuButton(SvgAssets.night, onPress: _openNight, color: this.bgColor == AppColors.WHITE ? AppColors.primary : AppColors.nightButtonMenuIocons),
-              _menuButton(SvgAssets.progress, onPress: _openProgress, color: this.bgColor == AppColors.WHITE ? AppColors.primary : AppColors.nightButtonMenuIocons),
-              _menuButton(SvgAssets.question, onPress: _openFaq, color: this.bgColor == AppColors.WHITE ? AppColors.primary : AppColors.nightButtonMenuIocons),
+              _menuButton(
+                SvgAssets.mountains,
+                'Morning'.tr,
+                onPress: _openMorning,
+                color: bgColor == AppColors.WHITE
+                    ? currentPageNumber == 1
+                        ? AppColors.primary
+                        : AppColors.primary.withOpacity(.34)
+                    : currentPageNumber == 1
+                        ? AppColors.nightButtonMenuIocons
+                        : AppColors.nightButtonMenuIocons.withOpacity(.34),
+              ),
+              _menuButton(
+                SvgAssets.night,
+                'Evening'.tr,
+                onPress: _openNight,
+                color: bgColor == AppColors.WHITE
+                    ? currentPageNumber == 2
+                        ? AppColors.primary
+                        : AppColors.primary.withOpacity(.34)
+                    : currentPageNumber == 2
+                        ? AppColors.nightButtonMenuIocons
+                        : AppColors.nightButtonMenuIocons.withOpacity(.34),
+              ),
+              _menuButton(
+                SvgAssets.progress,
+                'Statistics'.tr,
+                onPress: _openProgress,
+                color: bgColor == AppColors.WHITE
+                    ? currentPageNumber == 3
+                        ? AppColors.primary
+                        : AppColors.primary.withOpacity(.34)
+                    : currentPageNumber == 3
+                        ? AppColors.nightButtonMenuIocons
+                        : AppColors.nightButtonMenuIocons.withOpacity(.34),
+              ),
+              _menuButton(
+                'assets/images/home_menu/notification_icon.svg',
+                'Notifications'.tr,
+                onPress: _openFaq,
+                color: bgColor == AppColors.WHITE
+                    ? currentPageNumber == 4
+                        ? AppColors.primary
+                        : AppColors.primary.withOpacity(.34)
+                    : currentPageNumber == 4
+                        ? AppColors.nightButtonMenuIocons
+                        : AppColors.nightButtonMenuIocons.withOpacity(.34),
+              ),
             ],
           ),
         ),
@@ -50,21 +102,45 @@ class BottomMenu extends StatelessWidget {
     );
   }
 
-  Widget _menuButton(String image, {Function() onPress, Color color}) {
+  Widget _menuButton(
+    String image,
+    String text, {
+    Function() onPress,
+    Color color,
+  }) {
     return CupertinoButton(
-        padding: const EdgeInsets.only(top: 5),
-        child: SvgPicture.asset(
-          image,
-          color: color,
-          width: btnSize,
-          height: btnSize,
-        ),
-        onPressed: onPress);
+      padding: const EdgeInsets.only(top: 0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(
+            image,
+            color: color,
+            width: btnSize * 0.7,
+            height: btnSize * 0.7,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              color: color,
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+        ],
+      ),
+      onPressed: onPress,
+    );
   }
 
   _openMorning() {
     appAnalitics.logEvent('first_morning');
-    AppRouting.navigateToHomeWithClearHistory(menuStateValue: MenuState.MORNING);
+    AppRouting.navigateToHomeWithClearHistory(
+        menuStateValue: MenuState.MORNING);
   }
 
   _openNight() {
@@ -73,13 +149,13 @@ class BottomMenu extends StatelessWidget {
   }
 
   _openFaq() {
-    appAnalitics.logEvent('first_faq');
-    Get.to(FaqMenuPage());
+    // appAnalitics.logEvent('first_faq');
+    Get.to(RemindersPage());
   }
 
   _openProgress() {
     AppMetrica.reportEvent('statistics_screen');
     appAnalitics.logEvent('first_menu_progress');
-    Get.to(ProgressPage());
+    Get.to(const ProgressPage());
   }
 }

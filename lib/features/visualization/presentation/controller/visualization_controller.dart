@@ -1,11 +1,8 @@
+// ignore_for_file: avoid_print
 import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/state_manager.dart';
 import 'package:hive/hive.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
@@ -41,7 +38,7 @@ class VisualizationController extends GetxController {
 
   final List<int> selectedImageIndexes = <int>[].obs;
 
-  var _currentImageIndex = 0.obs;
+  final _currentImageIndex = 0.obs;
 
   var timeLeft = 0.obs;
 
@@ -114,10 +111,13 @@ class VisualizationController extends GetxController {
 
   saveTarget(String text) {
     final _id = targets.last.id + 1;
-    targets.add(VisualizationTarget(
+    targets.add(
+      VisualizationTarget(
         id: _id,
         tag: EnumToString.convertToString(VisualizationImageTag.custom),
-        title: text));
+        title: text,
+      ),
+    );
     targetRepository.saveVisualizationTargets(targets);
   }
 
@@ -132,10 +132,11 @@ class VisualizationController extends GetxController {
     final _oldTargetIndex = targets.indexOf(_oldTarget);
     if (_oldTarget != null) {
       final _newTarget = VisualizationTarget(
-          id: _oldTarget.id,
-          tag: _oldTarget.tag,
-          title: title,
-          coverAssetPath: _oldTarget.coverAssetPath);
+        id: _oldTarget.id,
+        tag: _oldTarget.tag,
+        title: title,
+        coverAssetPath: _oldTarget.coverAssetPath,
+      );
       targets.replaceRange(_oldTargetIndex, _oldTargetIndex + 1, [_newTarget]);
       targetRepository.saveVisualizationTargets(targets);
     }
@@ -145,8 +146,11 @@ class VisualizationController extends GetxController {
     _setDownloading(true);
 
     _currentImageIndex.value = 0;
-    selectedImageIndexes.clear();
-    images.clear();
+    // selectedImageIndexes.clear();
+    if (images.isNotEmpty) {
+      images.clear();
+    }
+
     final _loadedImages =
         await imageRepository.getVisualizationImages(target.tag, target.id);
     images.addAll(_loadedImages);
@@ -157,10 +161,10 @@ class VisualizationController extends GetxController {
   void loadAllTargets() async {
     print('loadAllImages: start');
     print('targets length: ${targets.length}');
-    targets.forEach((element) {
+    for (var element in targets) {
       print('loadAllImages: load ${element.toString()}');
       loadImages(element);
-    });
+    }
   }
 
   Future<List<VisualizationImage>> loadAttachedTargetImages(
@@ -169,7 +173,7 @@ class VisualizationController extends GetxController {
         EnumToString.convertToString(VisualizationImageTag.custom), targetId);
   }
 
-  addImageAssetsFromGallery(List<Asset> assetImages) async {
+  Future<void> addImageAssetsFromGallery(List<Asset> assetImages) async {
     int oldLastImageIndex = images.length - 1;
 
     final _galleryImages =
@@ -183,15 +187,21 @@ class VisualizationController extends GetxController {
           (i) => oldLastImageIndex + 1 + i);
       selectedImageIndexes.addAll(_selectedIndexes);
     }
-
+    print(images);
     imageRepository.cachePickedFromGalleryAssets(assetImages, selectedTargetId);
   }
 
   toggleImageSelected(int index) {
-    if (selectedImageIndexes.contains(index))
+    if (selectedImageIndexes.contains(index)) {
       selectedImageIndexes.remove(index);
-    else
+      selectedImages.removeAt(index);
+    } else {
+      selectedImages.add(images[index]);
       selectedImageIndexes.add(index);
+    }
+    myDbBox.put(selectedTargetId.toString(), selectedImageIndexes);
+    print(
+        "----------------------------------------------------------------------- $selectedImages");
   }
 
   bool isImageSelected(int index) => selectedImageIndexes.contains(index);
@@ -220,18 +230,22 @@ class VisualizationController extends GetxController {
   finishVisualization(bool isSkip, {bool backProgramm = false}) {
     print('finish vizualization');
     if (passedSec > minPassedSec) {
-      VisualizationProgress model = VisualizationProgress(passedSec.value,
-          vizualizationText.text.isEmpty ? '-' : vizualizationText.text,
-          isSkip: isSkip);
+      VisualizationProgress model = VisualizationProgress(
+        passedSec.value,
+        vizualizationText.text.isEmpty ? '-' : vizualizationText.text,
+        isSkip: isSkip,
+      );
       ProgressController cPg = Get.find();
       cPg.saveJournal(MyResource.VISUALISATION_JOURNAL, model);
     }
-    if (!backProgramm)
+    if (!backProgramm) {
       Get.offAll(
           VisualizationSuccessPage(
             fromHomeMenu: fromHomeMenu,
+            percentValue: (passedSec.value / (60 / 100)) / 100,
           ),
           predicate: ModalRoute.withName(homePageRoute));
+    }
   }
 
   void removePickedImage(int index) async {
@@ -292,7 +306,7 @@ class VisualizationController extends GetxController {
       case VisualizationNetworkImage:
         return NetworkImage((image as VisualizationNetworkImage).path);
       default:
-        throw new UnsupportedError('unknown image type');
+        throw UnsupportedError('unknown image type');
     }
   }
 

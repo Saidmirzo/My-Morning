@@ -1,10 +1,7 @@
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_text_model.dart';
-
 import 'models/affirmation_cat_model.dart';
 
 class AffirmationController extends GetxController {
@@ -125,7 +122,7 @@ class AffirmationController extends GetxController {
       affirmations.value.add(item);
     }
 
-    if (affirmations.value.length == 0) {
+    if (affirmations.value.isEmpty) {
       print('Аффирмаций не найдено, добавляем дефолтные');
       await initDefAffirmations();
     }

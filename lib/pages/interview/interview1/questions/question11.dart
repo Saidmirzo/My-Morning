@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/interview/interview1/components/multiline_input.dart';
 import 'package:morningmagic/pages/interview/interview1/components/title_question.dart';
-
 import '../../interview1/interview_controller.dart';
 import 'question_frame.dart';
 

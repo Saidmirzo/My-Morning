@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'components/appbar.dart';
 
 class MyVisualizationProgress extends StatefulWidget {
@@ -19,7 +17,7 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
   void initState() {
     super.initState();
     // Get old data or init empty map
-    _map = MyDB().getJournalProgress(MyResource.VISUALISATION_JOURNAL);
+    _map = MyDB().getJournalProgress(MyResource.FULL_COMPLEX_FINISH);
   }
 
   @override
@@ -28,7 +26,7 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
       body: Container(
         width: MediaQuery.of(context).size.width, // match parent(all screen)
         height: MediaQuery.of(context).size.height, // match parent(all screen)
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -48,7 +46,7 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 0),
                 child: GridView(
-                  padding: EdgeInsets.only(bottom: 15),
+                  padding: const EdgeInsets.only(bottom: 15),
                   children: _map.isNotEmpty
                       ? List.generate(
                           _map.length,
@@ -80,7 +78,7 @@ class VisualizationMiniProgress extends StatelessWidget {
   final String date;
   final List<dynamic> list;
 
-  VisualizationMiniProgress(this.id, this.list, this.date);
+  const VisualizationMiniProgress(this.id, this.list, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
@@ -112,24 +110,24 @@ class VisualizationMiniProgress extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Text(
-                    list.last.text,
+                    list.last.toString(),
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04, //16,
                       color: Colors.black54,
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 5),
                         child: Icon(Icons.access_time),
                       ),
                       Text(
                         date,
-                        style: TextStyle(),
+                        style: const TextStyle(),
                       )
                     ],
                   ),
@@ -167,7 +165,7 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -196,11 +194,11 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
                             Container(
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 5),
+                                  const Padding(
+                                    padding: EdgeInsets.only(right: 5),
                                     child: Icon(Icons.access_time),
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   Text(widget.date),
                                 ],
                               ),
@@ -241,7 +239,7 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    '${widget.list[i].sec}' + ' ' + 'sec'.tr,
+                    '${widget.list[i].sec}' ' ' + 'sec'.tr,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04,
                       color: Colors.black54,

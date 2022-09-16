@@ -8,7 +8,7 @@ class Line extends StatefulWidget {
   final double wideStep;
   final AnimationController controller;
 
-  Line(this.wideStep, this.controller);
+  const Line(this.wideStep, this.controller);
 
   @override
   State<StatefulWidget> createState() => _LineState();
@@ -21,7 +21,7 @@ class Line extends StatefulWidget {
 class _LineState extends State<Line> with TickerProviderStateMixin {
   double _progress = 0.0;
   Animation<double> animation;
-  final _random = new Random();
+  final _random = Random();
   int randomValue = 0;
 
   @override
@@ -52,7 +52,7 @@ class _LineState extends State<Line> with TickerProviderStateMixin {
           width: 1,
           height: 35,
           child: CustomPaint(
-            size: Size(1, 35),
+            size: const Size(1, 35),
             painter: LinePainter(_progress, widget.wideStep, randomValue),
           )),
     );

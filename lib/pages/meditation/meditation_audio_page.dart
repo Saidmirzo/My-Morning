@@ -1,23 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_favorite.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/music_meditation_dialog.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/yoga_meditation_dialog.dart';
-import 'package:morningmagic/pages/meditation/components/menu.dart';
-import 'package:morningmagic/services/analitics/all.dart';
+import 'package:morningmagic/pages/meditation/timer/meditation_timer_page.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import '../../features/meditation_audio/data/repositories/audio_repository_impl.dart';
 import '../../features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
-import '../../features/meditation_audio/presentation/dialogs/audio_meditation_dialog.dart';
-import 'timer/meditation_timer_page.dart';
+import '../../services/analitics/all.dart';
+import '../../services/timer_service.dart';
 
 class MeditationAudioPage extends StatefulWidget {
   final bool fromTimerPage;
   final bool fromHomeMenu;
   final bool withBgSound;
+  final bool isMeditation;
+  final TimerService timerService;
 
-  const MeditationAudioPage({Key key, this.fromTimerPage = false, this.fromHomeMenu = false, this.withBgSound = false}) : super(key: key);
+  const MeditationAudioPage({
+    Key key,
+    this.fromTimerPage = false,
+    this.fromHomeMenu = false,
+    this.withBgSound = false,
+    this.isMeditation = false,
+    this.timerService,
+  }) : super(key: key);
 
   @override
   _MeditationAudioPageState createState() => _MeditationAudioPageState();
@@ -28,7 +35,8 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
 
   @override
   void initState() {
-    cAudio = Get.put(MediationAudioController(repository: AudioRepositoryImpl()));
+    cAudio =
+        Get.put(MediationAudioController(repository: AudioRepositoryImpl()));
     print('withBgSound: ${cAudio.withBgSound}');
     super.initState();
   }
@@ -42,7 +50,7 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
           SlidingSheet(
             elevation: 8,
             cornerRadius: 16,
-            snapSpec: SnapSpec(
+            snapSpec: const SnapSpec(
               // Enable snapping. This is true by default.
               snap: true,
               // Set custom snapping points.
@@ -56,19 +64,30 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
               children: <Widget>[
                 Positioned(
                   top: 0,
-                  child: Obx(
-                    () {
-                      String path = 'assets/images/meditation';
-                      String bg = cAudio.currentPage.value == MenuItems.music
-                          ? '$path/audio_bg1.png'
-                          : cAudio.currentPage.value == MenuItems.sounds
-                              ? '$path/audio_bg2.png'
-                              : cAudio.currentPage.value == MenuItems.yoga
-                                  ? '$path/audio_bg3.png'
-                                  : '$path/audio_bg4.png';
-                      return Image.asset(bg, width: Get.width, fit: BoxFit.cover);
-                    },
+                  child: Image.asset(
+                    widget.isMeditation
+                        ? 'assets/images/meditation/audio_bg3.png'
+                        : 'assets/images/meditation/audio_bg2.png',
+                    width: Get.width,
+                    fit: BoxFit.cover,
                   ),
+                  // child: Obx(
+                  //   () {
+                  //     String path = 'assets/images/meditation';
+                  //     String bg = widget.isMeditation ? '$path/audio_bg3.png' : '$path/audio_bg2.png';
+                  //         // ? '$path/audio_bg1.png'
+                  //         // : cAudio.currentPage.value == MenuItems.sounds
+                  //         //     ? '$path/audio_bg2.png'
+                  //         //     : cAudio.currentPage.value == MenuItems.yoga
+                  //         //         ? '$path/audio_bg3.png'
+                  //         //         : '$path/audio_bg4.png';
+                  //     return Image.asset(
+                  //       widget.isMeditation ? '$path/audio_bg3.png' : '$path/audio_bg2.png',
+                  //       width: Get.width,
+                  //       fit: BoxFit.cover,
+                  //     );
+                  //   },
+                  // ),
                 ),
                 Column(
                   children: <Widget>[
@@ -76,15 +95,14 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
                     Row(
                       children: [
                         CupertinoButton(
-                          child: Icon(Icons.arrow_back, color: Colors.white),
-                          onPressed: () async {
-                            cAudio.bfPlayer.value.stop();
-                            cAudio.playingIndex.value = -1;
-                            cAudio.initializeMeditationAudio(autoplay: false, fromDialog: true);
+                          child: const Icon(Icons.west,
+                              size: 30, color: Colors.white),
+                          onPressed: () {
                             Get.back();
+                            appAnalitics.logEvent('first_music_next');
                           },
                         ),
-                        Spacer(),
+                        const Spacer(),
                       ],
                     ),
                     SizedBox(height: Get.height * 0.02),
@@ -115,54 +133,65 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
             ),
             builder: (context, state) {
               return ConstrainedBox(
-                constraints: new BoxConstraints(
+                constraints: BoxConstraints(
                   minHeight: Get.height,
                 ),
                 child: Container(
                   // height: Get.height,
                   padding: const EdgeInsetsDirectional.only(bottom: 50),
-                  child: Obx(
-                    () {
-                      print('cAudio.currentPage.value: ${cAudio.currentPage?.value}');
-                      return cAudio == null
-                          ? CircularProgressIndicator()
-                          : cAudio.currentPage.value == MenuItems.favorite
-                              ? AudioMeditationFavoriteContainer()
-                              : cAudio.currentPage.value == MenuItems.music
-                                  ? MusicMeditationContainer(withBgSound: widget.withBgSound)
-                                  : cAudio.currentPage.value == MenuItems.yoga
-                                      ? YogaMeditationContainer()
-                                      : AudioMeditationContainer(withBgSound: widget.withBgSound);
-                    },
-                  ),
+                  child: cAudio == null
+                      ? const CircularProgressIndicator()
+                      : widget.isMeditation
+                          ? YogaMeditationContainer(
+                              timerService: widget.timerService)
+                          : MusicMeditationContainer(
+                              timerService: widget.timerService),
+                  // child: Obx(
+                  //   () {
+                  //     return cAudio == null ? const CircularProgressIndicator() : widget.isMeditation ? YogaMeditationContainer() : const MusicMeditationContainer();
+                  //     // return cAudio == null
+                  //     //     ? const CircularProgressIndicator()
+                  //     //     : cAudio.currentPage.value == MenuItems.favorite
+                  //     //         ? AudioMeditationFavoriteContainer()
+                  //     //         : cAudio.currentPage.value == MenuItems.music
+                  //     //             ? MusicMeditationContainer(
+                  //     //                 withBgSound: widget.withBgSound,
+                  //     //               )
+                  //     //             : cAudio.currentPage.value == MenuItems.yoga
+                  //     //                 ? YogaMeditationContainer()
+                  //     //                 : AudioMeditationContainer(
+                  //     //                     withBgSound: widget.withBgSound,
+                  //     //                   );
+                  //   },
+                  // ),
                 ),
               );
             },
           ),
-          Positioned(
-            bottom: 0,
-            child: AudioMenu(withBgSound: widget.withBgSound),
-          )
         ],
       ),
     );
   }
 
-  // void openMeditation() {
-  //   cAudio.bfPlayer.value.stop();
-  //   cAudio.playingIndex.value = -1;
-  //   if (cAudio.currentPage.value == MenuItems.yoga) {
-  //     cAudio.withBgSound(true);
-  //   } else {
-  //     if (!widget.withBgSound) cAudio.bgPlayList?.clear();
-  //     cAudio.withBgSound(widget.withBgSound);
-  //   }
-  //   if (widget.fromTimerPage) {
-  //     cAudio.initializeMeditationAudio(autoplay: false, fromDialog: true, reinitMainSound: !widget.withBgSound);
-  //     Get.back();
-  //   } else {
-  //     Get.to(MeditationTimerPage(fromAudio: true, fromHomeMenu: widget.fromHomeMenu));
-  //     appAnalitics.logEvent('first_music_next');
-  //   }
-  // }
+  void openMeditation() {
+    cAudio.bfPlayer.value.stop();
+    cAudio.playingIndex.value = -1;
+    if (cAudio.currentPage.value == MenuItems.yoga) {
+      cAudio.withBgSound(true);
+    } else {
+      if (!widget.withBgSound) cAudio.bgPlayList?.clear();
+      cAudio.withBgSound(widget.withBgSound);
+    }
+    if (widget.fromTimerPage) {
+      cAudio.initializeMeditationAudio(
+          autoplay: false,
+          fromDialog: true,
+          reinitMainSound: !widget.withBgSound);
+      Get.back();
+    } else {
+      Get.to(MeditationTimerPage(
+          fromAudio: true, fromHomeMenu: widget.fromHomeMenu));
+      appAnalitics.logEvent('first_music_next');
+    }
+  }
 }

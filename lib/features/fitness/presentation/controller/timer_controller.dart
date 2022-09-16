@@ -83,7 +83,11 @@ class TimerFitnesController {
       log('startTimer');
       gifController?.repeat(min: 0, max: 2, period: 4.seconds);
     } else if (timer != null && timer.isActive) {
-      gifController?.stop();
+      try {
+        gifController?.stop();
+      } catch (e) {
+        print(e);
+      }
       isRuning.value = false;
       timer.cancel();
     }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 
-import 'menu_item.dart';
+import 'menu_item.dart' as menu;
 
 class AudioMenu extends StatelessWidget {
   final bool withBgSound;
@@ -21,11 +21,11 @@ class AudioMenu extends StatelessWidget {
               color: Colors.pink.withOpacity(0.1),
               spreadRadius: 10,
               blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
           color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(30))),
       child: buildMenu(),
     );
   }
@@ -34,23 +34,23 @@ class AudioMenu extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        MenuItem(
+        menu.MenuItem(
           title: 'music_menu_music'.tr,
           svgPath: 'assets/images/svg/note.svg',
           itemIndex: MenuItems.music,
         ),
-        MenuItem(
+        menu.MenuItem(
           title: 'music_menu_sounds'.tr,
           svgPath: 'assets/images/svg/forest.svg',
           itemIndex: MenuItems.sounds,
         ),
         if (!withBgSound)
-          MenuItem(
+          menu.MenuItem(
             title: 'music_menu_meditations'.tr,
             svgPath: 'assets/images/svg/yoga.svg',
             itemIndex: MenuItems.yoga,
           ),
-        MenuItem(
+        menu.MenuItem(
           title: 'music_menu_favorite'.tr,
           icon: Icons.star,
           itemIndex: MenuItems.favorite,

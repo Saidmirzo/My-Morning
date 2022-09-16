@@ -7,15 +7,15 @@ class ExerciseEditDialogItem extends StatelessWidget {
   final FitnessExercise exercise;
   final VoidCallback onDeleteItem;
 
-  ExerciseEditDialogItem(
+  const ExerciseEditDialogItem(
       {Key key, @required this.exercise, @required this.onDeleteItem})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+      decoration: const BoxDecoration(
           color: AppColors.LIGHT_VIOLET,
           borderRadius: BorderRadius.all(Radius.circular(40))),
       child: Row(
@@ -33,7 +33,7 @@ class ExerciseEditDialogItem extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.delete,
               color: AppColors.WHITE,
             ),

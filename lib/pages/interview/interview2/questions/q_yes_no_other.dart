@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/interview/interview2/components/multiline_input.dart';
-
 import '../interview_controller.dart';
 import 'question_frame.dart';
 
@@ -17,12 +16,14 @@ Widget qYesNoOther(String title, int index) {
           (val.value == YesNoOther.other && fieldController.text.isEmpty)) {
         Get.snackbar(null, 'please_fill_all_fields'.tr);
       } else {
-        if (val.value == YesNoOther.other)
+        if (val.value == YesNoOther.other) {
           _controller.data[title] = fieldController.text;
-        if (val.value == YesNoOther.yes)
+        }
+        if (val.value == YesNoOther.yes) {
           _controller.data[title] = 'да';
-        else
+        } else {
           _controller.data[title] = 'нет';
+        }
         _controller.slideNext();
       }
     },

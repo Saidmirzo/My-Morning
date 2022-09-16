@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
 
 class AudioMeditationFavoriteContainer extends StatefulWidget {
+  const AudioMeditationFavoriteContainer({Key key}) : super(key: key);
+
   @override
   _AudioMeditationFavoriteContainerState createState() =>
       _AudioMeditationFavoriteContainerState();
@@ -28,14 +28,14 @@ class _AudioMeditationFavoriteContainerState
         '_buildSelectAudioList: ${_audioController.favoriteAudios.value.length}');
     return Obx(() {
       return _audioController.isAudioLoading.value
-          ? Center(child: CupertinoActivityIndicator())
-          : _audioController.favoriteAudios.value.length == 0
+          ? const Center(child: CupertinoActivityIndicator())
+          : _audioController.favoriteAudios.value.isEmpty
               ? Center(child: Text('empty_favorite_list'.tr))
               : ListView.builder(
                   shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   itemCount: _audioController.favoriteAudios.value.length,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return AudioMeditationDialogItem(
                       id: index,

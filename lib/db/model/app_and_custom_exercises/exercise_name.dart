@@ -1,10 +1,8 @@
 import 'package:hive/hive.dart';
-
 part 'exercise_name.g.dart';
 
 @HiveType(typeId: 100)
 class ExerciseName extends HiveObject {
-
   ExerciseName(this.id, this.title, this.size);
 
   @HiveField(0)

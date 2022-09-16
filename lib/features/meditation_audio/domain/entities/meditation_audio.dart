@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 part 'meditation_audio.g.dart';
 
-@HiveType(typeId: 22)
+@HiveType(typeId: 42)
 class MeditationAudio extends Equatable {
   @HiveField(0)
   final String url;
@@ -15,7 +15,7 @@ class MeditationAudio extends Equatable {
   @HiveField(3)
   final String name;
 
-  MeditationAudio({
+  const MeditationAudio({
     @required this.name,
     @required this.url,
     this.filePath,

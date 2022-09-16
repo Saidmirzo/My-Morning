@@ -6,11 +6,13 @@ import 'package:morningmagic/features/meditation_audio/data/meditation_audio_dat
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/controller/meditation_audio_controller.dart';
 import 'package:morningmagic/features/meditation_audio/presentation/dialogs/audio_meditation_dialog_item.dart';
+import '../../../../services/timer_service.dart';
 
 class MusicMeditationContainer extends StatefulWidget {
   final bool withBgSound;
-
-  const MusicMeditationContainer({Key key, this.withBgSound = false})
+  final TimerService timerService;
+  const MusicMeditationContainer(
+      {Key key, this.timerService, this.withBgSound = false})
       : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class MusicMeditationContainer extends StatefulWidget {
 class _MusicMeditationContainerState extends State<MusicMeditationContainer>
     with WidgetsBindingObserver {
   MediationAudioController _audioController;
-  List<MeditationAudio> _source = [];
+  final List<MeditationAudio> _source = [];
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +36,13 @@ class _MusicMeditationContainerState extends State<MusicMeditationContainer>
   Widget _buildSelectAudioList() {
     return ListView.builder(
       shrinkWrap: true,
-      padding: EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       itemCount: _source.length,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return AudioMeditationDialogItem(
+          isMeditation: false,
+          timerService: widget.timerService,
           id: index,
           audio: _source[index],
         );

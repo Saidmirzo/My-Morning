@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-
 import '../../../db/hive.dart';
 import '../../../db/model/user/user.dart';
 import '../../../db/resource.dart';
@@ -39,18 +35,18 @@ class Interview2Controller extends GetxController {
   // Ответы на вопросы
   Map<String, dynamic> data = {};
   // Коллекция в БД в котороую все сохраняем
-  CollectionReference _collection =
+  final CollectionReference _collection =
       FirebaseFirestore.instance.collection('interview_2');
 
   void slideNext() {
     if (pageController.page.round() == countPages - 2) save();
     pageController.animateToPage(pageController.page.round() + 1,
-        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+        duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
   }
 
   void slideBack() {
     pageController.animateToPage(pageController.page.round() - 1,
-        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+        duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
   }
 
   void save() async {

@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-
 part 'fitness_exercise.g.dart';
 
 @HiveType(typeId: 19)
@@ -17,21 +16,23 @@ class FitnessExercise extends Equatable {
   @HiveField(4)
   final String imageRes;
 
-  FitnessExercise(this._name, this._description,
+  const FitnessExercise(this._name, this._description,
       {this.isCreatedByUser = false, this.audioRes, this.imageRes});
 
   String get name {
-    if (!this.isCreatedByUser)
+    if (!isCreatedByUser) {
       return _name.tr;
-    else
+    } else {
       return _name;
+    }
   }
 
   String get description {
-    if (!this.isCreatedByUser)
+    if (!isCreatedByUser) {
       return _description.tr;
-    else
+    } else {
       return _description;
+    }
   }
 
   @override

@@ -83,7 +83,7 @@ class ExerciseUtils {
         MyResource.APP_EXERCISES_HOLDER,
         defaultValue: AppExerciseHolder(<ExerciseName>[]));
 
-    if (appExerciseHolder.list.length == 0) {
+    if (appExerciseHolder.list.isEmpty) {
       appExerciseHolder.list
           .add(ExerciseName(randomAlpha(10), "exercise_1_title", 14));
       appExerciseHolder.list
@@ -119,7 +119,7 @@ class ExerciseUtils {
   void moveRouteToFresh() async {
     ExerciseHolder holder =
         await MyDB().getBox().get(MyResource.EXERCISES_HOLDER);
-    if (holder != null && holder.skipExercises.length > 0) {
+    if (holder != null && holder.skipExercises.isNotEmpty) {
       int index = holder.skipExercises.length - 1;
       ExerciseTitle last = holder.skipExercises[index];
       holder.skipExercises.removeAt(index);

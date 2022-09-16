@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:isolate';
 
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -17,7 +18,8 @@ class TimerLeftController extends GetxController {
   Timer _timer;
   Function _onPlayPause;
 
-  void onAppLeft(Timer timer, int time, {Function onPlayPause}) async {
+  void onAppLeft(Timer timer, int time,
+      {Function onPlayPause, AudioPlayer player}) async {
     _timer = timer;
     _onPlayPause = onPlayPause;
     print('До завершения таймера осталось $time c.');
@@ -31,7 +33,7 @@ class TimerLeftController extends GetxController {
       if (GetPlatform.isAndroid) {
         // На андроид пуш не показывает на заблокированном экране
         // По этому запустим наш звук завершения, чтобы привлечь внимание
-        _startIsolate(time);
+        _startIsolate(time, player);
       }
     } else {
       print('Пропускаем запуск изолятора т.к. таймер уже неактивен');
@@ -53,18 +55,26 @@ class TimerLeftController extends GetxController {
     if (_onPlayPause != null) _onPlayPause();
   }
 
-  void _startIsolate(int tm) async {
+  void _startIsolate(int tm, AudioPlayer player) async {
     _isolateTime = tm;
     print('Запускаем изолятор на $tm sec');
     _receivePort = ReceivePort();
     _isolate = await Isolate.spawn(
         waitAndNotifyInBg, IsolateData(_receivePort.sendPort, tm));
-    _receivePort.listen(_isolateHandleMessage, onDone: () {
+    _receivePort.listen((dynamic val) {
+      print('RECEIVED: $val');
+      _isolateTime -= periodic;
+      if (_isolateTime <= 0) {
+        _stopIsolate();
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      }
+    }, onDone: () {
       print('onDone');
       // Проверка чтобы не срабатывало уведомление
       // если мы вернулись до окончания таймера и отменили изолятор вручную
       if (_isolate == null) {
         notifyInBackground();
+        player.stop();
         // Запускаем таймер
       }
     });
@@ -87,13 +97,14 @@ class TimerLeftController extends GetxController {
     });
   }
 
-  void _isolateHandleMessage(dynamic val) {
-    print('RECEIVED: $val');
-    _isolateTime -= periodic;
-    if (_isolateTime <= 0) {
-      _stopIsolate();
-    }
-  }
+  // void _isolateHandleMessage(dynamic val) {
+  //   print('RECEIVED: $val');
+  //   _isolateTime -= periodic;
+  //   if (_isolateTime <= 0) {
+  //     _stopIsolate();
+  //     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //   }
+  // }
 
   void _stopIsolate() {
     if (_isolate != null) {

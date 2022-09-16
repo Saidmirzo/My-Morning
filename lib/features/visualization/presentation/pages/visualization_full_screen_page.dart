@@ -6,6 +6,8 @@ import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 
 class VisualizationFullScreenPage extends StatefulWidget {
+  const VisualizationFullScreenPage({Key key}) : super(key: key);
+
   @override
   _VisualizationFullScreenPageState createState() =>
       _VisualizationFullScreenPageState();
@@ -45,8 +47,9 @@ class _VisualizationFullScreenPageState
   @override
   void dispose() {
     super.dispose();
-    if (_visualizationController.timerElements?.isActive ?? false)
+    if (_visualizationController.timerElements?.isActive ?? false) {
       _visualizationController.timerElements?.cancel();
+    }
   }
 
   @override
@@ -62,9 +65,11 @@ class _VisualizationFullScreenPageState
         },
         child: Obx(() {
           if (_visualizationController.hideElements.value) {
-            SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+            SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+                overlays: [SystemUiOverlay.bottom]);
           } else {
-            SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+            SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+                overlays: SystemUiOverlay.values);
           }
           print(
               '_visualizationController.hideElements : ${_visualizationController.hideElements.value}');
@@ -76,7 +81,7 @@ class _VisualizationFullScreenPageState
               ),
               if (_pages.length > 1)
                 AnimatedPositioned(
-                  duration: Duration(milliseconds: durationHideElements),
+                  duration: const Duration(milliseconds: durationHideElements),
                   bottom: _visualizationController.hideElements.value &&
                           _pages.length > 1
                       ? -30
@@ -133,7 +138,7 @@ class _VisualizationFullScreenPageState
         () => Stack(
           children: [
             AnimatedPositioned(
-              duration: Duration(milliseconds: durationHideElements),
+              duration: const Duration(milliseconds: durationHideElements),
               top: _visualizationController.hideElements.value ? -50 : 50,
               child: Container(
                 alignment: Alignment.topCenter,

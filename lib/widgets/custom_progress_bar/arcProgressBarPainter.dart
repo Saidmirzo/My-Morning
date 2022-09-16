@@ -9,28 +9,28 @@ class ArcProgressBarPainter extends CustomPainter {
 
   ArcProgressBarPainter({
     double strokeWidth,
-  }) : this.strokeWidth = strokeWidth ?? 8;
+  }) : strokeWidth = strokeWidth ?? 8;
 
   @override
   void paint(Canvas canvas, Size size) {
     final Offset center = size.center(Offset.zero);
     final Size constrainedSize =
-        size - Offset(this.strokeWidth, this.strokeWidth);
+        size - Offset(strokeWidth, strokeWidth);
     final shortestSide =
         Math.min(constrainedSize.width, constrainedSize.height);
     final radius = (shortestSide / 2);
 
     // Start at the top. 0 radians represents the right edge
-    final double startAngle = (2 * Math.pi * 0.275);
+    const double startAngle = (2 * Math.pi * 0.275);
 
     final backgroundPaint = Paint()
-      ..shader = LinearGradient(
+      ..shader = const LinearGradient(
               colors: [AppColors.SHADER_BOTTOM, AppColors.PINK],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter)
           .createShader(Rect.fromLTRB(constrainedSize.height,
               constrainedSize.height, constrainedSize.height, 0))
-      ..strokeWidth = this.strokeWidth
+      ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 
@@ -46,6 +46,6 @@ class ArcProgressBarPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     final oldPainter = (oldDelegate as ArcProgressBarPainter);
-    return oldPainter.strokeWidth != this.strokeWidth;
+    return oldPainter.strokeWidth != strokeWidth;
   }
 }

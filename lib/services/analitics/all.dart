@@ -8,8 +8,9 @@ class AppAnalitics {
       bool logFirebase = true,
       Map<String, dynamic> params}) {
     if (logFacebook) fbAppEvents.logEvent(name: name, parameters: params);
-    if (logFirebase)
+    if (logFirebase) {
       AnalyticService.analytics.logEvent(name: name, parameters: params);
+    }
   }
 }
 

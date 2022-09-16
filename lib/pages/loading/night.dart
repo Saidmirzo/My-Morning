@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'components/name.dart';
 
 class NightPage extends StatefulWidget {
@@ -48,7 +47,8 @@ class _NightPageState extends State<NightPage>
       controller.forward();
     });
     return Container(
-      decoration: BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
+      decoration:
+          const BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -63,7 +63,7 @@ class _NightPageState extends State<NightPage>
   Positioned buildClouds() {
     return Positioned(
       bottom: 0,
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset(
           'assets/images/startscreen/night/clouds.png',
@@ -81,8 +81,9 @@ class _NightPageState extends State<NightPage>
           width: Get.width * 0.25,
           height: Get.width * 0.25,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(180),
-              color: Colors.white.withOpacity(.61)),
+            shape: BoxShape.circle,
+            color: Colors.white.withOpacity(.61),
+          ),
         ),
       ),
     );

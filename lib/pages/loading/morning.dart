@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'components/name.dart';
 
 class MorningPage extends StatefulWidget {
@@ -49,7 +48,7 @@ class _MorningPageState extends State<MorningPage>
     });
     return Container(
       decoration:
-          BoxDecoration(gradient: AppColors.gradient_loading_morning_bg),
+          const BoxDecoration(gradient: AppColors.gradient_loading_morning_bg),
       child: Stack(
         alignment: Alignment.center,
         children: [

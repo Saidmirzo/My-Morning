@@ -20,8 +20,8 @@ Widget bg() {
       ),
       Positioned(
           bottom: 0,
-          child: Image.asset('assets/images/fitnes/main.png',
-              width: Get.width, fit: BoxFit.cover)),
+          child: Image.asset('assets/images/fitnes/main1.png',
+              scale: 5, width: Get.width, fit: BoxFit.cover)),
     ],
   );
 }

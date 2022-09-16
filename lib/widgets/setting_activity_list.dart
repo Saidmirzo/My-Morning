@@ -1,16 +1,15 @@
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/db/model/reordering_program/order_holder.dart';
 import 'package:morningmagic/db/model/reordering_program/order_item.dart';
-import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/settings/settings_controller.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:reorderables/reorderables.dart';
-
+import '../pages/paywall/new_paywall.dart';
 import 'exerciseTile.dart';
 
 class SettingsActivityList extends StatefulWidget {
@@ -21,8 +20,13 @@ class SettingsActivityList extends StatefulWidget {
   final TextEditingController readingTimeController;
   final TextEditingController visualizationTimeController;
 
-  SettingsActivityList(
-      this.affirmationTimeController, this.meditationTimeController, this.fitnessTimeController, this.vocabularyTimeController, this.readingTimeController, this.visualizationTimeController);
+  const SettingsActivityList(
+      this.affirmationTimeController,
+      this.meditationTimeController,
+      this.fitnessTimeController,
+      this.vocabularyTimeController,
+      this.readingTimeController,
+      this.visualizationTimeController);
 
   @override
   State createState() => SettingsActivityListState();
@@ -44,11 +48,22 @@ class SettingsActivityListState extends State<SettingsActivityList> {
     return FutureBuilder(
       future: OrderUtil().getOrderHolder(),
       builder: (context, AsyncSnapshot<OrderHolder> snapshot) {
-        if (!snapshot.hasData) return SliverToBoxAdapter();
+        if (!snapshot.hasData) return const SliverToBoxAdapter();
         _itemRows = createListOfWidgets(snapshot.data.list);
         return ReorderableSliverList(
           delegate: ReorderableSliverChildListDelegate(_itemRows),
           onReorder: _onReorder,
+          buildDraggableFeedback: (ctx, cons, child) {
+            return Material(
+              color: Colors.transparent,
+              child: Container(
+                constraints: cons,
+                height: 90,
+                color: Colors.transparent,
+                child: child,
+              ),
+            );
+          },
         );
       },
     );
@@ -68,14 +83,22 @@ class SettingsActivityListState extends State<SettingsActivityList> {
         return ExerciseTile(
           onChange: (value) async {
             if (orderItemsList[index].id.contains("custom")) {
-              await MyDB().getBox().put(orderItemsList[index].id, ExerciseTime(int.parse(value), title: MyDB().getBox().get(orderItemsList[index].id).title ?? ""));
+              await MyDB().getBox().put(
+                  orderItemsList[index].id,
+                  ExerciseTime(int.parse(value),
+                      title:
+                          MyDB().getBox().get(orderItemsList[index].id).title ??
+                              ""));
               return;
             }
             calculateNewTime();
           },
           onChangeTitle: (value) async {
             if (value.isEmpty) return;
-            await MyDB().getBox().put(orderItemsList[index].id, ExerciseTime(MyDB().getBox().get(orderItemsList[index].id).time, title: value));
+            await MyDB().getBox().put(
+                orderItemsList[index].id,
+                ExerciseTime(MyDB().getBox().get(orderItemsList[index].id).time,
+                    title: value));
           },
           onRemove: () async {
             await MyDB().getBox().delete(orderItemsList[index].id);
@@ -86,10 +109,17 @@ class SettingsActivityListState extends State<SettingsActivityList> {
           key: ValueKey(index + 1),
           index: index,
           orderItem: orderItemsList[index],
-          title: OrderUtil().getStringIdByOrderId(orderItemsList[index].position).tr,
-          edgeInsets: EdgeInsets.only(bottom: 15),
+          title: OrderUtil()
+              .getStringIdByOrderId(orderItemsList[index].position)
+              .tr,
+          edgeInsets: const EdgeInsets.only(bottom: 15),
           textEditingController: orderItemsList[index].id.contains("custom")
-              ? TextEditingController(text: MyDB().getBox().get(orderItemsList[index].id).time.toString())
+              ? TextEditingController(
+                  text: MyDB()
+                      .getBox()
+                      .get(orderItemsList[index].id)
+                      .time
+                      .toString())
               : getControllerById(orderItemsList[index].position),
         );
       },
@@ -111,23 +141,33 @@ class SettingsActivityListState extends State<SettingsActivityList> {
       case 4:
         return widget.readingTimeController;
       default:
-        return widget.readingTimeController;
+        return widget.visualizationTimeController;
     }
   }
 
   void _onReorder(int oldIndex, int newIndex) {
-    if (billingService.isVip.value || (oldIndex == 0 && newIndex == 1) || (oldIndex == 1 && newIndex == 0)) {
+    if (billingService.isVip.value ||
+        (oldIndex == 0 && newIndex == 1) ||
+        (oldIndex == 1 && newIndex == 0)) {
       AppMetrica.reportEvent('settings_practice_change');
       ExerciseTile row = _itemRows.removeAt(oldIndex);
       _itemRows.insert(newIndex, row);
       print('ЗАПИСЬ УПРАЖНЕНИЙ');
-      _itemRows.forEach((element) {
+      for (var element in _itemRows) {
         print(element.title);
-      });
+      }
       OrderUtil().saveOrderHolder(_itemRows).then((value) {
         print("REORDERING SAVED !!!");
         setState(() {});
       });
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NewPaywall(
+                  isseting: true,
+                )),
+      );
     }
     calculateNewTime();
   }
@@ -136,7 +176,8 @@ class SettingsActivityListState extends State<SettingsActivityList> {
     OrderUtil().getOrderHolder().then((value) {
       int time = 0;
       for (var i = 0; i < value.list.length; i++) {
-        var val = int.tryParse(getControllerById(value.list[i].position).text) ?? 0;
+        var val =
+            int.tryParse(getControllerById(value.list[i].position).text) ?? 0;
         if (billingService.isPro() || i < 2) time += val;
       }
       settingsController.countAvailableMinutes.value = time;

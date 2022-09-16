@@ -8,6 +8,8 @@ import 'package:morningmagic/storage.dart';
 import '../resources/colors.dart';
 
 class PaymentDialog extends Dialog {
+  const PaymentDialog({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var isInterviewed = MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
@@ -16,93 +18,87 @@ class PaymentDialog extends Dialog {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.only(top: 10, bottom: 18),
-                child: Center(
-                  child: Text(
-                    'appreciate'.tr,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: AppColors.VIOLET),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 10, bottom: 18),
+              child: Center(
+                child: Text(
+                  'appreciate'.tr,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: AppColors.VIOLET),
+                ),
+              ),
+            ),
+            Column(
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Center(
+                    child: Text(
+                      'price'.tr,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: AppColors.VIOLET,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Center(
-                        child: Text(
-                          'price'.tr,
+                Container(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        "10\$",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.PINK, decoration: TextDecoration.lineThrough),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: const Text(
+                          "1\$",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
-                            color: AppColors.VIOLET,
-                          ),
+                          style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.VIOLET),
                         ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            child: Text(
-                              "10\$",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.PINK, decoration: TextDecoration.lineThrough),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "1\$",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.VIOLET),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+                      )
+                    ],
+                  ),
                 ),
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  _buildBuyButton(
+                    title: 'buy_month'.tr,
+                    onTap: () {
+                      _startPaymentSubscription(context);
+                      appAnalitics.logEvent('first_popap_pay');
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  _buildBuyButton(
+                    title: 'buy_days'.trParams({'days': '$tryalDays'}),
+                    onTap: () {
+                      _startPaymentTrial(context);
+                      appAnalitics.logEvent('first_popap_trial');
+                    },
+                  )
+                ],
               ),
-              Container(
-                padding: EdgeInsets.only(bottom: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    _buildBuyButton(
-                      title: 'buy_month'.tr,
-                      onTap: () {
-                        _startPaymentSubscription(context);
-                        appAnalitics.logEvent('first_popap_pay');
-                      },
-                    ),
-                    SizedBox(height: 8),
-                    _buildBuyButton(
-                      title: 'buy_days'.trParams({'days': '$tryalDays'}),
-                      onTap: () {
-                        _startPaymentTrial(context);
-                        appAnalitics.logEvent('first_popap_trial');
-                      },
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -110,7 +106,7 @@ class PaymentDialog extends Dialog {
 
   Container _buildBuyButton({@required title, @required VoidCallback onTap}) {
     return Container(
-        decoration: BoxDecoration(color: AppColors.PINK, borderRadius: BorderRadius.all(Radius.circular(30))),
+        decoration: const BoxDecoration(color: AppColors.PINK, borderRadius: BorderRadius.all(Radius.circular(30))),
         child: InkWell(
           onTap: onTap,
           child: Padding(

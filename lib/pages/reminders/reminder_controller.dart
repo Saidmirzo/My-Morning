@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/pages/reminders/components/add_text.dart';
 import 'package:morningmagic/pages/reminders/models/reminder.dart';
 import 'package:morningmagic/services/notifications.dart';
 
@@ -46,14 +44,16 @@ class ReminderController extends GetxController {
       TimeOfDay timeOfDay}) async {
     activeDays.value.clear();
     if (activeAllDaysByDefault) {
-      for (var i = 1; i <= 7; i++) activeDays.value.add(i);
+      for (var i = 1; i <= 7; i++) {
+        activeDays.value.add(i);
+      }
     }
     // Выбор дней недели и времени
     await Get.dialog(AddTimeDialog(initTime: timeOfDay));
     // Если время не выбрал пропустим
     if (selectedTime == null) return;
 
-    String _text = await Get.dialog(AddTextReminder());
+    // String _text = await Get.dialog(AddTextReminder());
 
     // Последний ид который был использован
     int lastPushId = getLastPushId() + 1;
@@ -66,7 +66,7 @@ class ReminderController extends GetxController {
       ReminderModel(
         id: lastPushId,
         date: getStartDate(time: selectedTime),
-        text: _text ?? 'reminders'.tr,
+        text: 'reminders'.tr,
         activeDays: _ll,
       ),
     );
@@ -84,10 +84,11 @@ class ReminderController extends GetxController {
     int _weekday = DateTime.now().weekday;
     for (var element in _activeDays) {
       int _days = 0;
-      if (element < _weekday)
+      if (element < _weekday) {
         _days = _weekday + element + 1;
-      else
+      } else {
         _days = element - _weekday;
+      }
       _startDates.add(_date.add(_days.days));
     }
     return _startDates;
@@ -95,7 +96,7 @@ class ReminderController extends GetxController {
 
   DateTime getStartDate({DateTime startDate, TimeOfDay time}) {
     DateTime _selectedDate = startDate ?? DateTime.now();
-    var newDateTime = new DateTime(
+    var newDateTime = DateTime(
       _selectedDate.year,
       _selectedDate.month,
       _selectedDate.day,

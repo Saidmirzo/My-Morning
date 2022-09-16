@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:morningmagic/features/instruments_audio/data/instrument_audio_data.dart';
-import 'package:morningmagic/pages/music_instrument/components/snackbar.dart';
 import 'package:morningmagic/pages/music_instrument/model/instrument_model.dart';
-import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 
 class MusicInstrumentControllers extends GetxController {

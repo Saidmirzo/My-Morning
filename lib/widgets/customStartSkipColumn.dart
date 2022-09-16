@@ -9,7 +9,8 @@ class StartSkipColumn extends StatelessWidget {
   final GestureTapCallback mainMenuCallback;
   final String buttonText;
 
-  StartSkipColumn(this.startCallback, this.gestureTapCallback,
+  // ignore: use_key_in_widget_constructors
+  const StartSkipColumn(this.startCallback, this.gestureTapCallback,
       this.mainMenuCallback, this.buttonText);
 
   @override
@@ -20,11 +21,11 @@ class StartSkipColumn extends StatelessWidget {
           child: AnimatedButton(startCallback, buttonText, 15, null, null),
         ),
         Container(
-          padding: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
           child: AnimatedButton(gestureTapCallback, 'skip'.tr, 15, null, null),
         ),
         Container(
-          padding: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
           child: AnimatedButton(mainMenuCallback, 'menu'.tr, 15, null, null),
         )
       ],

@@ -5,7 +5,7 @@ class ProgressItemHeader extends StatelessWidget {
   final String title;
 
 
-  ProgressItemHeader(this.title);
+  const ProgressItemHeader(this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class ProgressItemHeader extends StatelessWidget {
       title,
       textAlign: TextAlign.center,
       maxLines: 1,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 22,
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,

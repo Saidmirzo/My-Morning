@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/route_manager.dart';
 import 'package:morningmagic/db/model/progress/diary_progress/diary_note_progress.dart';
 import 'package:morningmagic/pages/progress/components/appbar.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -37,7 +33,7 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                 MediaQuery.of(context).size.width, // match parent(all screen)
             height:
                 MediaQuery.of(context).size.height, // match parent(all screen)
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -60,13 +56,13 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             //crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 5),
                                 child: Icon(Icons.access_time),
                               ),
                               Container(
@@ -74,7 +70,7 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                               ),
                               Text(
                                 '${date.day}.${date.month}.${date.year}',
-                                style: TextStyle(),
+                                style: const TextStyle(),
                               ),
                             ],
                           ),
@@ -86,7 +82,7 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                               maxLines: null,
                               minLines: 10,
                               //controller: nameController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Text',
                               ),
@@ -126,27 +122,27 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => MyDiaryProgress()));
       },
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.1,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.add_circle_outline,
               size: 40,
               //color: AppColors.VIOLET,
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: 10,
               ),
               //width: MediaQuery.of(context).size.width * 0.75,
               child: Text(
                 'save_diary'.tr,
                 //textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.VIOLET,
                   fontSize: 30,
                   fontWeight: FontWeight.normal,
@@ -165,21 +161,21 @@ _showAlert(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        titleTextStyle: TextStyle(
+        titleTextStyle: const TextStyle(
           backgroundColor: AppColors.SHADER_BOTTOM,
         ),
-        titlePadding: EdgeInsets.all(0),
-        contentPadding: EdgeInsets.all(0),
-        actionsPadding: EdgeInsets.all(0),
-        buttonPadding: EdgeInsets.all(0),
+        titlePadding: const EdgeInsets.all(0),
+        contentPadding: const EdgeInsets.all(0),
+        actionsPadding: const EdgeInsets.all(0),
+        buttonPadding: const EdgeInsets.all(0),
         backgroundColor: AppColors.BOTTOM_GRADIENT,
-        content: Container(
+        content: SizedBox(
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
+              const Padding(
+                padding: EdgeInsets.only(top: 20),
                 child: Text(
                   'Вы уверены ?',
                   style: TextStyle(
@@ -192,7 +188,7 @@ _showAlert(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FlatButton(
-                    child: Text(
+                    child: const Text(
                       "Да",
                       style: TextStyle(
                         color: AppColors.FIX_TOP,
@@ -205,7 +201,7 @@ _showAlert(BuildContext context) {
                     },
                   ),
                   FlatButton(
-                    child: Text(
+                    child: const Text(
                       "Нет",
                       style: TextStyle(
                         color: AppColors.FIX_TOP,

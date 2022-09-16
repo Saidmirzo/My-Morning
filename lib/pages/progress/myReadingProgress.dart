@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'components/appbar.dart';
 
 class MyReadingProgress extends StatefulWidget {
@@ -19,11 +17,11 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
     super.initState();
     // Get old data or init empty map
     try {
-      _map = MyDB().getJournalProgress(MyResource.READING_JOURNAL);
+      _map = MyDB().getJournalProgress(MyResource.FULL_COMPLEX_FINISH);
     } catch (e) {
       print('error get reading progress');
       myDbBox.put(MyResource.READING_JOURNAL, {});
-      _map = MyDB().getJournalProgress(MyResource.READING_JOURNAL);
+      _map = MyDB().getJournalProgress(MyResource.FULL_COMPLEX_FINISH);
     }
   }
 
@@ -33,7 +31,7 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
       body: Container(
         width: MediaQuery.of(context).size.width, // match parent(all screen)
         height: MediaQuery.of(context).size.height, // match parent(all screen)
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -52,7 +50,7 @@ class _MyReadingProgressState extends State<MyReadingProgress> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 0),
                 child: GridView(
-                  padding: EdgeInsets.only(bottom: 15),
+                  padding: const EdgeInsets.only(bottom: 15),
                   children: _map.isNotEmpty
                       ? List.generate(
                           _map.length,
@@ -84,7 +82,7 @@ class ReadingMiniProgress extends StatelessWidget {
   final String date;
   final List<dynamic> list;
 
-  ReadingMiniProgress(this.id, this.list, this.date);
+  const ReadingMiniProgress(this.id, this.list, this.date);
 
   void selectCategory(BuildContext ctx) {
     Navigator.push(
@@ -115,19 +113,19 @@ class ReadingMiniProgress extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Text(
-                    list.last.book,
+                    list.last..toString(),
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04, //16,
                       color: Colors.black54,
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 5),
                         child: Icon(Icons.access_time),
                       ),
                       Text(date)
@@ -153,7 +151,8 @@ class ReadingFullProgress extends StatefulWidget {
   String date;
   List<dynamic> list;
 
-  ReadingFullProgress(this.id, this.list, this.date);
+  ReadingFullProgress(this.id, this.list, this.date, {Key key})
+      : super(key: key);
 
   @override
   _ReadingFullProgressState createState() => _ReadingFullProgressState();
@@ -164,7 +163,7 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -191,16 +190,16 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 5),
                                 child: Icon(Icons.access_time),
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               Text(widget.date),
-                              Spacer(),
+                              const Spacer(),
                             ],
                           ),
                         ),
@@ -238,7 +237,7 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    '${widget.list[i].sec}' + ' ' + 'sec'.tr,
+                    '${widget.list[i].sec}' ' ' + 'sec'.tr,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04,
                       color: Colors.black54,
@@ -249,7 +248,7 @@ class _ReadingFullProgressState extends State<ReadingFullProgress> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    '${widget.list[i].pages}' + ' ' + 'pages_short'.tr,
+                    '${widget.list[i].pages}' ' ' + 'pages_short'.tr,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04,
                       color: Colors.black54,

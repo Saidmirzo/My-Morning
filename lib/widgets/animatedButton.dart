@@ -10,9 +10,10 @@ class AnimatedButton extends StatefulWidget {
   final double width;
   final FontWeight fontWeight;
 
-  AnimatedButton(
+  const AnimatedButton(
       this.onPressed, this.title, this.fontSize, this.width, this.fontWeight);
 
+  @override
   _AnimatedButtonState createState() => _AnimatedButtonState();
 }
 
@@ -50,9 +51,9 @@ class _AnimatedButtonState extends State<AnimatedButton> {
     return Center(
       child: AnimatedContainer(
         duration: _duration,
-        decoration: BoxDecoration(),
+        decoration: const BoxDecoration(),
         child: ButtonTheme(
-          minWidth: widget.width != null ? widget.width : 180.0,
+          minWidth: widget.width ?? 180.0,
           height: 50.0,
           child: RaisedButton(
             elevation: 0,
@@ -67,17 +68,15 @@ class _AnimatedButtonState extends State<AnimatedButton> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(38.0)),
             child: Container(
-              padding: EdgeInsets.only(top: 3),
+              padding: const EdgeInsets.only(top: 3),
               child: Text(
                 widget.title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: textColor,
                   fontStyle: FontStyle.normal,
-                  fontWeight: widget.fontWeight != null
-                      ? widget.fontWeight
-                      : FontWeight.w400,
-                  fontSize: widget.fontSize != null ? widget.fontSize : 23,
+                  fontWeight: widget.fontWeight ?? FontWeight.w400,
+                  fontSize: widget.fontSize ?? 23,
                 ),
               ),
             ),

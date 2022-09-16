@@ -1,15 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:intl/intl.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/progress/diary_progress/diary_record_progress.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/pages/progress/components/appbar.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'diary_progress_details_add.dart';
 import 'diary_progress_ditails.dart';
 
@@ -26,7 +21,7 @@ class _MyDiaryProgressState extends State<MyDiaryProgress> {
     try {
       _map = MyDB().getDiaryProgress();
     } catch (e) {
-      print('error get reading progress');
+      print('error get reading progres');
       myDbBox.put(MyResource.DIARY_JOURNAL, {});
       _map = MyDB().getDiaryProgress();
     }
@@ -40,7 +35,7 @@ class _MyDiaryProgressState extends State<MyDiaryProgress> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -55,7 +50,36 @@ class _MyDiaryProgressState extends State<MyDiaryProgress> {
             //SingleChildScrollView
             child: Column(
               children: [
-                appBarProgress('my_diary'.tr),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 30, 10, 1),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                          audioPlayer.stop();
+                        },
+                        child: const Icon(
+                          Icons.keyboard_arrow_left_rounded,
+                          size: 45,
+                          color: AppColors.VIOLET,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        'my_diary'.tr,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.VIOLET,
+                          fontSize: Get.width * .06,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -106,27 +130,24 @@ class _MyDiaryProgressState extends State<MyDiaryProgress> {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => JournalMyDitailsAdd()));
       },
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.1,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.add_circle_outline,
               size: 40,
-              //color: AppColors.VIOLET,
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: 10,
               ),
-              //width: MediaQuery.of(context).size.width * 0.75,
               child: Text(
                 'add_note'.tr,
-                //textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.VIOLET,
                   fontSize: 30,
                   fontWeight: FontWeight.normal,
@@ -155,8 +176,32 @@ class CategoryItem extends StatelessWidget {
             builder: (context) => journalMyDitails(id, text, date, map)));
   }
 
+  List<String> weekdays = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
+  List<String> months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   @override
   Widget build(BuildContext context) {
+    DateTime d = DateTime.parse(date);
     return Hero(
       tag: id,
       child: Material(
@@ -185,19 +230,16 @@ class CategoryItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 5),
                         child: Icon(Icons.access_time),
                       ),
                       Text(
-                        DateFormat.yMMMEd()
-                            .format(DateTime.parse(date))
-                            .toString(),
-                        style: TextStyle(),
+                        '${weekdays[d.weekday - 1].tr},${months[d.month - 1].tr},${d.day},${d.year}',
                       )
                     ],
                   ),
@@ -216,14 +258,13 @@ class CategoryItem extends StatelessWidget {
   }
 }
 
-// TODO remove one of players
 class CategoryRecordItem extends StatefulWidget {
   final String id;
   final String text;
   final String date;
   final AudioPlayer audioPlayer;
 
-  CategoryRecordItem(this.id, this.text, this.date, this.audioPlayer);
+  const CategoryRecordItem(this.id, this.text, this.date, this.audioPlayer);
 
   @override
   _CategoryRecordItemState createState() => _CategoryRecordItemState();
@@ -242,8 +283,32 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
     await widget.audioPlayer?.stop();
   }
 
+  List<String> weekdays = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
+  List<String> months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   @override
   Widget build(BuildContext context) {
+    DateTime d = DateTime.parse(widget.date);
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -270,19 +335,16 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Container(
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 5),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 5),
                     child: Icon(Icons.access_time),
                   ),
                   Text(
-                    DateFormat.yMMMEd()
-                        .format(DateTime.parse(widget.date))
-                        .toString(),
-                    style: TextStyle(),
+                    '${weekdays[d.weekday - 1].tr},${months[d.month - 1].tr},${d.day},${d.year}',
                   )
                 ],
               ),

@@ -49,7 +49,7 @@ class _MyCheckboxState extends State<MyCheckbox> {
           Flexible(
             child: widget.textWidget ?? Text(
               widget.text,
-              style: TextStyle(fontSize: 12),
+              style: const TextStyle(fontSize: 12),
             ),
           )
         ],

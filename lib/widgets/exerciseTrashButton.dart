@@ -3,7 +3,7 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/progress_util.dart';
 
 class ExerciseTrashTag extends StatefulWidget {
-  ExerciseTrashTag(this.text, this.size, this.myKey, this.callback);
+  const ExerciseTrashTag(this.text, this.size, this.myKey, this.callback);
 
   final String text;
   final double size;
@@ -13,7 +13,7 @@ class ExerciseTrashTag extends StatefulWidget {
 
   @override
   ExerciseTrashTagState createState() {
-    return new ExerciseTrashTagState();
+    return ExerciseTrashTagState();
   }
 }
 
@@ -35,12 +35,12 @@ class ExerciseTrashTagState extends State<ExerciseTrashTag> {
       child: Container(
         width: 130.0,
         height: 28.0,
-        margin: EdgeInsets.only(bottom: 10),
-        decoration: BoxDecoration(
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: const BoxDecoration(
             color: AppColors.PINK,
             borderRadius: BorderRadius.all(Radius.circular(40))),
         child: Container(
-          padding: EdgeInsets.only(top: 2),
+          padding: const EdgeInsets.only(top: 2),
           child: Center(
             child: Text(
               widget.text,

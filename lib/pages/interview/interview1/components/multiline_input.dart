@@ -11,7 +11,7 @@ Container multilineInput(TextEditingController _controller,
       color: Colors.white.withOpacity(0.4),
     ),
     child: Container(
-      padding: EdgeInsets.all(19),
+      padding: const EdgeInsets.all(19),
       child: TextField(
         controller: _controller,
         minLines: minLines,

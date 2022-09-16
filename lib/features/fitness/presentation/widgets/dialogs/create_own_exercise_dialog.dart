@@ -2,18 +2,19 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import '../dialog_header_button.dart';
 
 class CreateOwnExerciseDialog extends StatefulWidget {
+  const CreateOwnExerciseDialog({Key key}) : super(key: key);
+
   @override
   _CreateOwnExerciseDialogState createState() =>
       _CreateOwnExerciseDialogState();
 }
 
 class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
-  TextEditingController _nameTextController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _nameTextController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -34,14 +35,14 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
                     DialogHeaderButton(
                         text: 'back_button'.tr,
                         onTap: () => Navigator.pop(context)),
-                    Spacer(),
+                    const Spacer(),
                     DialogHeaderButton(
                       text: 'save'.tr,
                       onTap: () => saveExercise(context),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
@@ -52,44 +53,44 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
                   },
                   controller: _nameTextController,
                   decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
                     ),
-                    enabledBorder: OutlineInputBorder(
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.VIOLET, width: 1),
                     ),
                     suffixIcon: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.clear,
                         color: AppColors.VIOLET,
                       ),
                       onPressed: () => _nameTextController.text = '',
                     ),
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'type_exercise_name'.tr,
                   ),
                   autofocus: true,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
                   controller: _descriptionController,
                   decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
                     ),
-                    enabledBorder: OutlineInputBorder(
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.VIOLET, width: 1),
                     ),
                     suffixIcon: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.clear,
                         color: AppColors.VIOLET,
                       ),
                       onPressed: () => _descriptionController.text = '',
                     ),
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'type_exercise_description'.tr,
                   ),
                   minLines: 10,

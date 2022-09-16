@@ -14,16 +14,29 @@ Widget dilaogPlayList({bool fromTimer = false}) {
   InstrumentAudioController _audioController = Get.find();
   return Container(
     margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-    padding: EdgeInsets.all(15),
+    padding: const EdgeInsets.all(15),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25), color: AppColors.nightModeBG),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _button(child: Icon(Icons.close, color: Colors.white), onPress: _close),
+        _button(
+            child: const Icon(Icons.close, color: Colors.white),
+            onPress: _close),
         Expanded(
-            child: SingleChildScrollView(
-                child: Obx(() => Column(
+          child: _audioController.audioSourse == null ||
+                  _audioController.audioSourse.isEmpty
+              ? Center(
+                  child: Text(
+                    'no_sound'.tr,
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Obx(
+                    () => Column(
                       children: [
                         for (var i = 0;
                             i < _audioController.audioSourse.length;
@@ -32,8 +45,11 @@ Widget dilaogPlayList({bool fromTimer = false}) {
                               _audioController.audioSourse.values.elementAt(i),
                               fromTimer)
                       ],
-                    )))),
-        SizedBox(height: 15),
+                    ),
+                  ),
+                ),
+        ),
+        const SizedBox(height: 15),
       ],
     ),
   );
@@ -49,7 +65,7 @@ Widget _itemList(Instrument instrument, bool fromTimer) {
     padding: const EdgeInsets.all(8.0),
     child: Row(
       children: [
-        Container(
+        SizedBox(
           width: 45,
           child: SvgPicture.asset(
             instrument.instrumentImage,
@@ -80,7 +96,7 @@ Widget _itemList(Instrument instrument, bool fromTimer) {
   );
 }
 
-Function() _close() {
+void _close() {
   Get.back();
 }
 

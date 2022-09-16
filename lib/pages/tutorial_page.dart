@@ -1,7 +1,4 @@
-//TODO: Нужно удалить после настройки страницы WelcomePage
-
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -56,7 +53,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   void playTutorial() {
-    Future.delayed(Duration(milliseconds: 200), () async {
+    Future.delayed(const Duration(milliseconds: 200), () async {
       await player.setAsset('tutorial_asset'.tr);
       await player.play();
     });
@@ -65,7 +62,7 @@ class _TutorialPageState extends State<TutorialPage> {
       print("${state.processingState.index}, playing = ${state.playing}");
       if (state.playing &&
           state.processingState.index == ProcessingState.completed.index) {
-        AppRouting.replace(SettingsPage());
+        AppRouting.replace(const SettingsPage());
         // Navigator.pushNamedAndRemoveUntil(
         //     context, homePageRoute, (route) => false);
       }
@@ -76,7 +73,7 @@ class _TutorialPageState extends State<TutorialPage> {
     setState(() {
       value1 = true;
     });
-    await Future.delayed(Duration(seconds: 5), () {
+    await Future.delayed(const Duration(seconds: 5), () {
       viewIcon2();
     });
   }
@@ -85,7 +82,7 @@ class _TutorialPageState extends State<TutorialPage> {
     setState(() {
       value1 = false;
     });
-    await Future.delayed(Duration(milliseconds: 1000), () {
+    await Future.delayed(const Duration(milliseconds: 1000), () {
       setState(() {
         value2 = true;
         text1 = true;
@@ -96,7 +93,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon3() async {
-    await Future.delayed(Duration(milliseconds: 4400), () {
+    await Future.delayed(const Duration(milliseconds: 4400), () {
       setState(() {
         value3 = true;
         text2 = true;
@@ -107,7 +104,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon4() async {
-    await Future.delayed(Duration(milliseconds: 4400), () {
+    await Future.delayed(const Duration(milliseconds: 4400), () {
       setState(() {
         value4 = true;
         text3 = true;
@@ -118,7 +115,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon5() async {
-    await Future.delayed(Duration(milliseconds: 4400), () {
+    await Future.delayed(const Duration(milliseconds: 4400), () {
       setState(() {
         value5 = true;
         text4 = true;
@@ -130,7 +127,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon6() async {
-    await Future.delayed(Duration(milliseconds: 4400), () {
+    await Future.delayed(const Duration(milliseconds: 4400), () {
       setState(() {
         value6 = true;
         text5 = true;
@@ -141,7 +138,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   viewIcon7() async {
-    await Future.delayed(Duration(milliseconds: 4400), () {
+    await Future.delayed(const Duration(milliseconds: 4400), () {
       setState(() {
         value7 = true;
         text6 = true;
@@ -153,10 +150,11 @@ class _TutorialPageState extends State<TutorialPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: 30, left: 15, right: 15, bottom: 30),
+        padding:
+            const EdgeInsets.only(top: 30, left: 15, right: 15, bottom: 30),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.fill,
             image: AssetImage('assets/images/background_tutorial.jpg'),
@@ -167,7 +165,7 @@ class _TutorialPageState extends State<TutorialPage> {
             Align(
               alignment:
                   Alignment.lerp(Alignment.topCenter, Alignment.center, 0.1),
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: ColorSonar(
@@ -176,7 +174,7 @@ class _TutorialPageState extends State<TutorialPage> {
                   innerWaveColor: AppColors.LIGHT_VIOLET.withOpacity(0.4),
                   middleWaveColor: AppColors.LIGHT_VIOLET.withOpacity(0.3),
                   outerWaveColor: AppColors.LIGHT_VIOLET.withOpacity(0.1),
-                  duration: Duration(seconds: 2),
+                  duration: const Duration(seconds: 2),
                   contentAreaColor: Colors.transparent,
                   waveMotionEffect: Curves.fastOutSlowIn,
                   child: Container(
@@ -202,7 +200,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 child: Text(
                   'tutorial_text'.tr,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 25,
                   ),
@@ -213,7 +211,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 2000),
                 opacity: text1 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -223,7 +221,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 },
                 child: Text(
                   'meditation_small'.tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 35,
                   ),
@@ -233,11 +231,11 @@ class _TutorialPageState extends State<TutorialPage> {
             Align(
               alignment: Alignment.lerp(
                   Alignment.bottomLeft, Alignment.bottomRight, 0),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   opacity: value2 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -251,7 +249,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 2000),
                 opacity: text2 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -261,7 +259,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 },
                 child: Text(
                   'affirmation_small'.tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 35,
                   ),
@@ -271,11 +269,11 @@ class _TutorialPageState extends State<TutorialPage> {
             Align(
               alignment: Alignment.lerp(
                   Alignment.bottomLeft, Alignment.bottomRight, 0.2),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   opacity: value3 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -290,7 +288,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 2000),
                 opacity: text3 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -300,7 +298,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 },
                 child: Text(
                   'visualization_small'.tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 35,
                   ),
@@ -310,11 +308,11 @@ class _TutorialPageState extends State<TutorialPage> {
             Align(
               alignment: Alignment.lerp(
                   Alignment.bottomLeft, Alignment.bottomRight, 0.4),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   opacity: value4 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -329,7 +327,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 2000),
                 opacity: text4 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -339,7 +337,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 },
                 child: Text(
                   'fitness_small'.tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 35,
                   ),
@@ -349,11 +347,11 @@ class _TutorialPageState extends State<TutorialPage> {
             Align(
               alignment: Alignment.lerp(
                   Alignment.bottomLeft, Alignment.bottomRight, 0.6),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   opacity: value5 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -368,7 +366,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 2000),
                 opacity: text5 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -378,7 +376,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 },
                 child: Text(
                   'reading_small'.tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 35,
                   ),
@@ -388,11 +386,11 @@ class _TutorialPageState extends State<TutorialPage> {
             Align(
               alignment: Alignment.lerp(
                   Alignment.bottomLeft, Alignment.bottomRight, 0.8),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   opacity: value6 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -407,7 +405,7 @@ class _TutorialPageState extends State<TutorialPage> {
               alignment: Alignment.lerp(
                   Alignment.center, Alignment.bottomCenter, 0.25),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 2000),
                 opacity: text6 ? 1 : 0,
                 onEnd: () {
                   print('end');
@@ -417,7 +415,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 },
                 child: Text(
                   'diary_small'.tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 35,
                   ),
@@ -427,11 +425,11 @@ class _TutorialPageState extends State<TutorialPage> {
             Align(
               alignment: Alignment.lerp(
                   Alignment.bottomLeft, Alignment.bottomRight, 1),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: 50,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   opacity: value7 ? 1 : 0,
                   onEnd: () {
                     print('end');
@@ -448,10 +446,10 @@ class _TutorialPageState extends State<TutorialPage> {
                 ? InkWell(
                     onTap: () async {
                       await player.stop();
-                      AppRouting.replace(SettingsPage());
+                      AppRouting.replace(const SettingsPage());
                       appAnalitics.logEvent('first_skip_tutorial');
                     },
-                    child: Container(
+                    child: const SizedBox(
                       height: 70,
                       width: 70,
                       child: Icon(

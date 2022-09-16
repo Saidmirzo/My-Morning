@@ -6,7 +6,6 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/timer_service.dart';
-
 import '../../../../storage.dart';
 import '../../../add_time_page/add_time_period.dart';
 
@@ -14,7 +13,7 @@ Widget buildMenuButtons(TimerService timerService) {
   double btnSize = 30;
   return Container(
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
         color:
             menuState == MenuState.NIGT ? AppColors.nightModeBG : Colors.white),
     child: SafeArea(

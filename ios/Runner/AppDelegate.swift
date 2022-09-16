@@ -9,7 +9,6 @@ import Flutter
     if #available(iOS 10.0, *) {
       UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
     }
-
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
     let channel = FlutterMethodChannel(name: "dexterx.dev/flutter_local_notifications_example",
                                         binaryMessenger: controller.binaryMessenger)

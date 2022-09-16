@@ -9,7 +9,7 @@ import '../resources/colors.dart';
 class LanguageSwitcher extends StatefulWidget {
   final Alignment alignment;
 
-  LanguageSwitcher({this.alignment = Alignment.center});
+  const LanguageSwitcher({this.alignment = Alignment.center});
 
   @override
   LanguageSwitcherState createState() {
@@ -23,7 +23,7 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(left: 10, top: 10, bottom: 10),
+          padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
           child: Align(
             alignment: widget.alignment,
             child: Text(
@@ -45,6 +45,10 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
             buildBtn('Русский', LocalizationService.RU),
             const SizedBox(width: 20),
             buildBtn('English', LocalizationService.EN),
+            const SizedBox(width: 20),
+            buildBtn('Ger', LocalizationService.GE),
+            const SizedBox(width: 20),
+            buildBtn('Por', LocalizationService.PO),
           ],
         )
       ],
@@ -57,7 +61,7 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
       width: 120,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: isActive ? Colors.white : Color(0xffEAC5D2)),
+          color: isActive ? Colors.white : const Color(0xffEAC5D2)),
       child: CupertinoButton(
         child: Text(
           text,

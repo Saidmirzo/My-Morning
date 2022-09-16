@@ -5,7 +5,7 @@ import 'colors.dart';
 
 class AppStyles {
   static final TextStyle btnTextStyle =
-      TextStyle(color: AppColors.btnText, fontWeight: FontWeight.w700);
+      const TextStyle(color: AppColors.btnText, fontWeight: FontWeight.w700);
   static final TextStyle treaningTitle = TextStyle(
     fontSize: Get.height * 0.03,
     color: AppColors.WHITE,

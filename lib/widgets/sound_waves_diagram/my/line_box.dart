@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'line.dart';
 
@@ -10,7 +9,7 @@ List<Line> linesList;
 class LineBox extends StatefulWidget {
   final int lines;
 
-  LineBox({this.lines});
+  const LineBox({this.lines});
 
 
   @override
@@ -32,7 +31,7 @@ class LineBox extends StatefulWidget {
 }
 
 class LineBoxState extends State<LineBox> with TickerProviderStateMixin {
-  final _random = new Random();
+  final _random = Random();
 
   @override
   void initState() {
@@ -51,7 +50,7 @@ class LineBoxState extends State<LineBox> with TickerProviderStateMixin {
   }
 
   List<Line> createLines() {
-    List<Line> list = List();
+    List<Line> list = [];
 
     double wideStep = 0;
 

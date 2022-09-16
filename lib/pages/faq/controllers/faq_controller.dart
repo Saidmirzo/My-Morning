@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../faq_category.dart';
 
 class FaqController extends GetX {
@@ -33,7 +32,8 @@ class FaqController extends GetX {
         {'faq_tarifs_title_4'.tr: 'faq_tarifs_desc_4'.tr},
         {'faq_tarifs_title_5'.tr: 'faq_tarifs_desc_5'.tr},
       ];
-    } else
+    } else {
       return [];
+    }
   }
 }

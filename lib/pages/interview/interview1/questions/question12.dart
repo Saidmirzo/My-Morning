@@ -3,7 +3,6 @@ import '../components/multiline_input.dart';
 import '../components/title_question.dart';
 import '../questions/question_frame.dart';
 import 'package:get/get.dart';
-
 import '../../interview1/interview_controller.dart';
 
 Widget q12() {

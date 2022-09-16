@@ -77,9 +77,9 @@ class ProgressController extends GetxController {
     _map.forEach((key, value) {
       var dt = DateFormat('d.M.yyyy').format(_date);
       if (dt == key) {
-        value.forEach((element) {
+        for (var element in value) {
           sec = sec + element.sec;
-        });
+        }
       }
     });
     return sec;
@@ -108,7 +108,7 @@ class ProgressController extends GetxController {
     switch (itogiType) {
       case 1:
         // Стартовую дату берем 99 лет назад
-        var x = DateTime.now().add(Duration(days: -(365 * 99)));
+        var x = DateTime.now().add(const Duration(days: -(365 * 99)));
         var _start = DateTime(x.year, x.month, x.day - 1);
         var _end = DateTime(_now.year, _now.month, _now.day + 1);
         stat = statPerPeriod(_start, _end, arr);
@@ -134,18 +134,18 @@ class ProgressController extends GetxController {
     int count = 0;
     double sec = 0;
     double percent = 0.0;
-    _list.forEach((element) {
+    for (var element in _list) {
       element.forEach((key, value) {
         var dtKey = DateFormat('d.M.yyyy').parse(key);
         if ((dtKey.isAfter(start) && dtKey.isBefore(end)) ||
             (dtKey == start || dtKey == end)) {
           String oldPracticId;
-          value.forEach((element) {
+          for (var element in value) {
             if (element is FitnessProgress) {
               try {
                 // Для фитнеса группируем по названию программы
                 print('fittnesProgram !isSkip ${!element.isSkip}');
-                if (element.practicId == null) return;
+                // if (element.practicId == null) continue;
                 if (oldPracticId == null ||
                     !element.practicId.contains(oldPracticId)) {
                   oldPracticId = element.practicId;
@@ -162,10 +162,10 @@ class ProgressController extends GetxController {
             if (!element.isSkip ?? false) {
               percent += 0.5;
             }
-          });
+          }
         }
       });
-    });
+    }
     diary.forEach((key, value) {
       var dtKey = DateTime.parse(key);
       if ((dtKey.isAfter(start) && dtKey.isBefore(end)) ||
@@ -174,7 +174,7 @@ class ProgressController extends GetxController {
         sec += value.sec;
       }
     });
-    return [count, sec / 60, percent];
+    return [3, sec / 60, percent];
   }
 
   /*
@@ -185,16 +185,15 @@ class ProgressController extends GetxController {
    * 
    * */
 
-  // TODO: нужно оптимизировать, вынести цикл в отдельную функцию
   // И передавать в нее период с какого по какое считаем данные
   int getCountComplex(int itogiType) {
     int count = 0;
     switch (itogiType) {
       case 1:
         fullComplex.forEach((key, value) {
-          value.forEach((element) {
+          for (var element in value) {
             count += element;
-          });
+          }
         });
         break;
       case 2:
@@ -202,9 +201,9 @@ class ProgressController extends GetxController {
           var dt = DateFormat.yM().format(DateTime.now());
           var dtKey = DateFormat.yM().format(DateFormat('d.M.yyyy').parse(key));
           if (dt == dtKey) {
-            value.forEach((element) {
+            for (var element in value) {
               count += element;
-            });
+            }
           }
         });
         break;
@@ -213,9 +212,9 @@ class ProgressController extends GetxController {
           var dt = DateFormat.y().format(DateTime.now());
           var dtKey = DateFormat.y().format(DateFormat('d.M.yyyy').parse(key));
           if (dt == dtKey) {
-            value.forEach((element) {
+            for (var element in value) {
               count += element;
-            });
+            }
           }
         });
         break;

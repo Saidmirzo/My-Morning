@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/components/back_component.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'components/bg.dart';
 import 'components/dot_panel.dart';
 import 'interview_controller.dart';
@@ -28,13 +26,13 @@ class InterviewPage extends StatefulWidget {
 }
 
 class _InterviewPageState extends State<InterviewPage> {
-  InterviewController _controller = Get.put(InterviewController(14));
+  final InterviewController _controller = Get.put(InterviewController(14));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(gradient: AppColors.Interview_Gradient),
+      decoration: const BoxDecoration(gradient: AppColors.Interview_Gradient),
       child: SafeArea(
         bottom: false,
         child: Stack(
@@ -44,16 +42,19 @@ class _InterviewPageState extends State<InterviewPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
+                const SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
-                    BackComponent(),
+                    const BackComponent(),
                     dotPanel(_pages.length),
                   ],
                 ),
                 Expanded(
                   child: PageView(
                     controller: _controller.pageController,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: _pages,
                   ),
                 ),
@@ -65,7 +66,7 @@ class _InterviewPageState extends State<InterviewPage> {
     ));
   }
 
-  List<Widget> _pages = [
+  final List<Widget> _pages = [
     q1(),
     q2(),
     q3(),

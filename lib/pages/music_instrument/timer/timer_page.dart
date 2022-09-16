@@ -1,10 +1,6 @@
 import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/state_manager.dart';
 import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
 import 'package:morningmagic/pages/music_instrument/timer/components/player_instrument.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -15,8 +11,7 @@ import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
-import 'package:screen/screen.dart';
-
+import '../music_instrument_page.dart';
 import 'components/components.dart';
 
 class InstrumentTimerPage extends StatefulWidget {
@@ -36,7 +31,7 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
     with WidgetsBindingObserver {
   TimerService timerService;
   TimerLeftController cTimerLeft;
-  InstrumentAudioController _audioController = Get.find();
+  final InstrumentAudioController _audioController = Get.find();
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -51,8 +46,7 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
 
   @override
   void initState() {
-    timerService =
-        widget.timerService == null ? TimerService() : widget.timerService;
+    timerService = widget.timerService ?? TimerService();
     _audioController.timerService = timerService;
     cTimerLeft = TimerLeftController();
     super.initState();
@@ -60,10 +54,13 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await timerService.init(TimerPageId.MusicNight);
       timerService.fromHomeMenu = widget.fromHomeMenu;
+      if (_audioController.isPause) {
+        timerService.timer.cancel();
+      }
     });
     AnalyticService.screenView('reading_timer_page');
     try {
-      Screen.keepOn(true);
+      // Screen.keepOn(true);
     } catch (e) {
       log('Screen.keepOn : ' + e.toString());
     }
@@ -91,7 +88,7 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
                 Positioned(
                   bottom: 0,
                   top: 0,
-                  child: Container(
+                  child: SizedBox(
                       width: Get.width,
                       child: Image.asset(
                         'assets/images/reading_night/clouds.png',
@@ -103,11 +100,17 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
                     child: PrimaryCircleButton(
-                      icon: Icon(Icons.arrow_back, color: AppColors.primary),
+                      icon: const Icon(Icons.arrow_back,
+                          color: AppColors.primary),
                       onPressed: () {
                         InstrumentAudioController controller = Get.find();
-                        controller.timerService.resume = true;
-                        Get.back();
+                        controller.stopAll();
+                        timerService.dispose();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MusicInstrumentPage()),
+                        );
                       },
                     ),
                   ),
@@ -115,8 +118,9 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
-                    Spacer(),
-                    buildTimerProgress(timerService),
+                    const Spacer(),
+
+                    //buildTimerProgress(timerService),
                     const SizedBox(height: 20),
                     Obx(() => Text(
                         StringUtil.createTimeString(
@@ -129,7 +133,7 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
                               ? AppColors.primary
                               : AppColors.WHITE,
                         ))),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: Get.width / 4,
@@ -162,9 +166,9 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
 
     if (controller == null) {
       Get.delete<TimerLeftController>();
-      super.dispose();
       WidgetsBinding.instance.removeObserver(this);
       timerService.dispose();
     }
+    super.dispose();
   }
 }

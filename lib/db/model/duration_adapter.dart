@@ -5,8 +5,8 @@ class DurationAdapter extends TypeAdapter<Duration> {
   final typeId = 152;
 
   @override
-  void write(BinaryWriter writer, Duration value) =>
-      writer.writeInt(value.inMicroseconds);
+  void write(BinaryWriter writer, Duration obj) =>
+      writer.writeInt(obj.inMicroseconds);
 
   @override
   Duration read(BinaryReader reader) =>

@@ -5,7 +5,7 @@ class Motion extends StatefulWidget {
   final Widget child;
   final int duration;
 
-  Motion({Widget child, int duration = 1000, Move move})
+  const Motion({Widget child, int duration = 1000, Move move})
       : move = move,
         duration = duration,
         child = child;

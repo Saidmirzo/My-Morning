@@ -11,7 +11,7 @@ class ZoomIn extends StatefulWidget {
   /// Whether to indefinitely repeat the zoom-in effect or not.
   final bool repeat;
 
-  ZoomIn({
+  const ZoomIn({
     Widget child,
     int duration = 1000,
     bool repeat = false,

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'exerciseTrashButton.dart';
 
 class ExerciseTrashTarget extends StatefulWidget {
-  ExerciseTrashTarget(this.callback);
+  const ExerciseTrashTarget(this.callback);
 
   final VoidCallback callback;
 
@@ -36,7 +36,7 @@ class ExerciseTrashTargetState extends State<ExerciseTrashTarget> {
           child: Center(
             child: Text('delete_exercise'.tr,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 23,
                     fontStyle: FontStyle.normal,
                     color: AppColors.TRANSPARENT_VIOLET)),

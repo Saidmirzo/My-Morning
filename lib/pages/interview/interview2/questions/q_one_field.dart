@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import '../components/multiline_input.dart';
 import 'question_frame.dart';
-
 import '../interview_controller.dart';
 
 Widget qOneField(String title, int index) {

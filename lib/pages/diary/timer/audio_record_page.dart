@@ -1,6 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
@@ -23,7 +24,6 @@ import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/utils/string_util.dart';
 import 'package:morningmagic/widgets/sound_waves_diagram/my/line_box.dart';
-import 'package:morningmagic/widgets/timer_circle_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -42,7 +42,7 @@ class TimerRecordPage extends StatefulWidget {
 class _TimerRecordPageState extends State<TimerRecordPage> {
   // Timer
   Timer _timer;
-  RxInt _time = 0.obs;
+  final RxInt _time = 0.obs;
   int _startTime;
 
   PermissionStatus statusMicrophone;
@@ -73,7 +73,9 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   }
 
   Future<String> get _localPath async {
-    final directory = Platform.isIOS ? await getApplicationDocumentsDirectory() : await getTemporaryDirectory();
+    final directory = Platform.isIOS
+        ? await getApplicationDocumentsDirectory()
+        : await getTemporaryDirectory();
     return directory.path + "/" + randomAlpha(10);
   }
 
@@ -82,7 +84,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   Future<void> _startRecording() async {
     await _recorder.start();
     Recording current = await _recorder.current();
-    print('_startRecording    current : $current');
+    print('_startRecording    current : ${current.duration}');
     _recording = current;
     isRecording.toggle();
   }
@@ -112,9 +114,10 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   }
 
   Future<void> playPause() async {
+    bool permission = await getPermissions();
+    if (!permission) return;
     if (_recording == null) {
-      print('AudioRecordPage _recordering == null');
-      return;
+      await _prepare();
     }
     switch (_recording.status) {
       case RecordingStatus.Initialized:
@@ -149,6 +152,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
       default:
         break;
     }
+    await startTimer();
   }
 
   Future<void> stop() async {
@@ -180,7 +184,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
     if (path != null) {
       print('saveDiaryRecordProgress');
       path = path.substring(1);
-      var model = new DiaryRecordProgress(path, passedSec, isSkip);
+      var model = DiaryRecordProgress(path, passedSec, isSkip);
       ProgressController pg = Get.find();
       pg.saveDiaryJournal(model);
     }
@@ -208,15 +212,27 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   @override
   void initState() {
     passedSec = 0;
-    checkPermissions().then((value) {
-      print("process complete");
-    });
-    initTimer();
+    // checkPermissions().then((value) {
+    //   print("process complete");
+    // });
+    // // initTimer();
+    // if (!isRecording.value) {
+    //   _startRecording();
+    // }
+    ExerciseTime time = MyDB()
+        .getBox()
+        .get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
+    _startTime = time.time;
+    _time.value = time.time * 60;
     super.initState();
   }
 
   void initTimer() {
-    ExerciseTime time = MyDB().getBox().get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
+    ExerciseTime time = MyDB()
+        .getBox()
+        .get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
+    _time.value = 0;
+    _startTime = 0;
     _time.value = time.time * 60;
     _startTime = time.time;
 
@@ -225,7 +241,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   }
 
   RxBool isActive = false.obs;
-  void startTimer() async {
+  Future<void> startTimer() async {
     print('startTimer');
     if (_timer == null || !_timer.isActive) {
       isActive.toggle();
@@ -255,8 +271,11 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   Future<void> checkPermissions() async {
     bool res = await getPermissions();
     if (res) {
-      await _prepare();
+      // await _prepare();
+      // await _startRecording();
+      // await startTimer();
     } else {
+      // await getPermissions();
       print('permissions not allowed');
     }
   }
@@ -268,7 +287,8 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   }
 
   Future _init() async {
-    _recorder = FlutterAudioRecorder(await _localPath, audioFormat: AudioFormat.AAC, sampleRate: 22050);
+    _recorder = FlutterAudioRecorder(await _localPath,
+        audioFormat: AudioFormat.AAC, sampleRate: 22050);
     await _recorder.initialized;
     Recording rec = await _recorder.current();
     print(rec.path);
@@ -282,6 +302,8 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
     super.dispose();
   }
 
+  bool isLoading = true;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -290,53 +312,203 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
         body: Container(
           height: Get.height,
           width: Get.width, // match parent(all screen)
-          decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Diary),
-          child: Container(
-            child: Stack(
-              children: [
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    width: Get.width,
-                    child: Image.asset(
-                      'assets/images/timer/clouds_timer.png',
-                      fit: BoxFit.cover,
-                    ),
+          decoration:
+              const BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Diary),
+          child: Stack(
+            children: [
+              Positioned(
+                bottom: 0,
+                child: SizedBox(
+                  width: Get.width,
+                  child: Image.asset(
+                    'assets/images/timer/clouds_timer.png',
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Spacer(),
-                    buildTimerProgress(),
-                    const SizedBox(height: 20),
-                    buildTextProgress(),
-                    Spacer(),
-                    // Старые кнопки
-                    // playPauseMic(),
-                    buildMic(),
-                    const SizedBox(height: 10),
-                    buildTextMic(),
-                    // Анимация в новом дизайне не испольузется
-                    // buildRecordAnim(),
-                    Spacer(),
-                    buildMenuButtons(),
-                  ],
-                ),
-              ],
-            ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: (() => Navigator.pop(context)),
+                          child: const Padding(
+                            padding: EdgeInsets.only(top: 37),
+                            child: Icon(
+                              Icons.west,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 37),
+                          child: GestureDetector(
+                            onTap: (() {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const TimerRecordPage()),
+                              );
+                            }),
+                            child: Image.asset(
+                              'assets/images/replay.png',
+                              width: 16.3,
+                              height: 18,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 54.0, bottom: 16),
+                    child: Obx(
+                      () => CircularPercentIndicator(
+                        radius: Get.height * 0.24,
+                        lineWidth: 20.0,
+                        animation: false,
+                        percent: createValue(),
+                        center: isLoading == true
+                            ? CupertinoButton(
+                                child: Stack(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SvgPicture.asset(
+                                          SvgAssets.microphone),
+                                    ),
+                                    Positioned(
+                                      right: 13,
+                                      child: Container(
+                                          child: Obx(() => Icon(
+                                              isRecording.isTrue
+                                                  ? Icons.pause
+                                                  : Icons.play_arrow,
+                                              color: AppColors.primary,
+                                              size: 10)),
+                                          padding: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                                onPressed: () async {
+                                  await playPause();
+                                })
+                            : buildLoading(),
+
+                        // TimerCircleButton(
+                        //   child: Icon(
+                        //     isActive.isTrue ? Icons.pause : Icons.play_arrow,
+                        //     size: 40,
+                        //     color: AppColors.VIOLET,
+                        //   ),
+                        //   onPressed: startTimer,
+                        // ),
+                        circularStrokeCap: CircularStrokeCap.round,
+                        linearGradient: AppColors.Progress_Gradient_Timer_Diary,
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  buildTextProgress(),
+                  const Spacer(),
+                  // Старые кнопки
+                  // playPauseMic(),
+                  //buildMic(),
+                  const SizedBox(height: 10),
+                  buildTextMic(),
+                  // Анимация в новом дизайне не испольузется
+                  // buildRecordAnim(),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () async {
+                      _timer?.cancel();
+                      await stop();
+                      OrderUtil().getRouteById(TimerPageId.Diary).then(
+                        (value) {
+                          Get.off(TimerSuccessScreen(
+                              () => Get.to(widget.fromHomeMenu
+                                  ? const ProgressPage()
+                                  : value),
+                              MyDB()
+                                  .getBox()
+                                  .get(MyResource.DIARY_TIME_KEY)
+                                  .time,
+                              false,
+                              1));
+                        },
+                      );
+                      appAnalitics.logEvent('first_dnevnik_next');
+                    },
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 33),
+                        child: Container(
+                          height: 70,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(17),
+                            color: const Color(0xff592F72),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Save note'.tr,
+                              style: const TextStyle(
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.white,
+                                  fontSize: 14),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  )
+                  // buildMenuButtons(),
+                ],
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
+  Widget buildLoading() => const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 2),
+        child: SizedBox(
+            height: 94,
+            child: Center(
+                child: SizedBox(
+              width: 36,
+              height: 36,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+              ),
+            ))),
+      );
+
   Widget buildRecordAnim() {
-    return Obx(() => Container(
+    return Obx(() => SizedBox(
           width: Get.width / 2.2,
           height: 53,
           child: Visibility(
-            child: LineBox(lines: 21),
+            child: const LineBox(lines: 21),
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
@@ -362,69 +534,25 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   // }
 
   Widget buildTextMic() {
-    return Obx(() => Text(isRecording.isTrue ? 'go_stop_record'.tr : 'go_start_record'.tr, style: TextStyle(fontSize: Get.height * 0.015, color: Colors.white)));
+    return Obx(() => Text(
+        isRecording.isTrue ? 'Recording in progress'.tr : 'Recording paused'.tr,
+        style: TextStyle(fontSize: Get.height * 0.015, color: Colors.white)));
   }
 
   Widget buildTextProgress() {
-    return Obx(() => Text(StringUtil.createTimeString(_time.value), style: TextStyle(fontSize: Get.height * 0.033, fontWeight: FontWeight.w600, color: Colors.white)));
-  }
-
-  Widget buildTimerProgress() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 54.0, bottom: 16),
-      child: Obx(
-        () => CircularPercentIndicator(
-          radius: Get.height * 0.24,
-          lineWidth: 20.0,
-          animation: false,
-          percent: createValue(),
-          center: TimerCircleButton(
-            child: Icon(
-              isActive.isTrue ? Icons.pause : Icons.play_arrow,
-              size: 40,
-              color: AppColors.VIOLET,
-            ),
-            onPressed: startTimer,
-          ),
-          circularStrokeCap: CircularStrokeCap.round,
-          linearGradient: AppColors.Progress_Gradient_Timer_Diary,
-          backgroundColor: Colors.white,
-        ),
-      ),
-    );
-  }
-
-  Widget buildMic() {
-    return CupertinoButton(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SvgPicture.asset(SvgAssets.microphone),
-            ),
-            Positioned(
-              right: 13,
-              child: Container(
-                  child: Obx(() => Icon(isRecording.isTrue ? Icons.stop : Icons.play_arrow, color: AppColors.primary, size: 10)),
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.white,
-                  )),
-            ),
-          ],
-        ),
-        onPressed: () async {
-          print('path   :    ${await _localPath}');
-          await checkPermissions();
-          await playPause();
-        });
+    return Obx(() => Text(StringUtil.createTimeString(_time.value),
+        style: TextStyle(
+            fontSize: Get.height * 0.033,
+            fontWeight: FontWeight.w600,
+            color: Colors.white)));
   }
 
   Widget buildMenuButtons() {
     double btnSize = 30;
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(30)), color: Colors.white),
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+          color: Colors.white),
       child: SafeArea(
         top: false,
         child: Row(
@@ -452,7 +580,13 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                   await stop();
                   OrderUtil().getRouteById(TimerPageId.Diary).then(
                     (value) {
-                      Get.off(TimerSuccessScreen(() => Get.to(widget.fromHomeMenu ? ProgressPage() : value), MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time, false, 1));
+                      Get.off(TimerSuccessScreen(
+                          () => Get.to(widget.fromHomeMenu
+                              ? const ProgressPage()
+                              : value),
+                          MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time,
+                          false,
+                          1));
                     },
                   );
                   appAnalitics.logEvent('first_dnevnik_next');
@@ -463,7 +597,8 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
     );
   }
 
-  RxDouble get createValue => _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.obs;
+  RxDouble get createValue =>
+      _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.0.obs;
 
   Future<bool> _onWillPop() async {
     if (_timer != null) {

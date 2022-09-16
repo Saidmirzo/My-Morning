@@ -1,16 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:morningmagic/adjust_config.dart';
+import 'package:install_referrer/install_referrer.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/pages/loading/evening.dart';
 import 'package:morningmagic/pages/loading/morning.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/nigth/nigth.dart';
-import 'package:morningmagic/pages/onboarding/onboarding_1_page.dart';
+import 'package:morningmagic/resources/remote_config_keys.dart';
 import 'package:morningmagic/routing/app_routing.dart';
+import 'package:morningmagic/services/ab_testing_service.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
+
 import '../../db/hive.dart';
 import '../../db/resource.dart';
 import '../../storage.dart';
@@ -18,6 +21,9 @@ import 'afternoon.dart';
 import 'night.dart';
 
 class LoadingPage extends StatefulWidget {
+  final ABTestingService abTestService;
+  const LoadingPage({Key key, this.abTestService}) : super(key: key);
+
   @override
   LoadingPageState createState() {
     return LoadingPageState();
@@ -26,7 +32,8 @@ class LoadingPage extends StatefulWidget {
 
 enum TimeType { morning, afternoon, evening, night }
 
-class LoadingPageState extends State<LoadingPage> with SingleTickerProviderStateMixin {
+class LoadingPageState extends State<LoadingPage>
+    with SingleTickerProviderStateMixin {
   bool switcherSun = false;
   bool firstBuild = false;
   AppStates appStates = Get.put(AppStates());
@@ -35,9 +42,6 @@ class LoadingPageState extends State<LoadingPage> with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
-    AdJust.initConfigAdJust();
-    print('LoadingPage initState');
-    AdJust.trackevent(AdJust.trialEvent);
     checkTime();
     _initTimerValue();
     billingService.init();
@@ -65,29 +69,43 @@ class LoadingPageState extends State<LoadingPage> with SingleTickerProviderState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        timeType == TimeType.morning
-            ? MorningPage(onDone: _redirect)
-            : timeType == TimeType.afternoon
-                ? AfternoonPage(onDone: _redirect)
-                : timeType == TimeType.evening
-                    ? EveningPage(onDone: () => AppRouting.replace(chooseNavigationRoute()))
-                    : NightPage(onDone: _redirect),
-      ],
-    ));
+      body: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          timeType == TimeType.morning
+              ? MorningPage(onDone: _redirect)
+              : timeType == TimeType.afternoon
+                  ? AfternoonPage(onDone: _redirect)
+                  : timeType == TimeType.evening
+                      ? EveningPage(
+                          onDone: () async => AppRouting.replace(
+                            await chooseNavigationRoute(),
+                          ),
+                        )
+                      : NightPage(onDone: _redirect),
+        ],
+      ),
+    );
   }
 
-  Widget chooseNavigationRoute() {
+  Future<Widget> chooseNavigationRoute() async {
     calculateOpanApp();
     if (myDbBox != null && myDbBox.get(MyResource.USER_KEY) != null) {
       return getMenuPage();
     } else {
       AnalyticService.analytics.logAppOpen();
-      return OnBoarding1Page();
-      // return WelcomePage();
+      return await getOnboardingRemoteConfig();
     }
+  }
+
+  Future<Widget> getOnboardingRemoteConfig() async {
+    String id = AdaptyCustomPayloadKeys.testOnboardingID;
+    final InstallationAppReferrer referrer = await InstallReferrer.referrer;
+    if (referrer == InstallationAppReferrer.iosTestFlight || kDebugMode) {
+      id = AdaptyCustomPayloadKeys.internalABTestID;
+    }
+    widget.abTestService.setup(await billingService.fetchDataForABTest(id));
+    return widget.abTestService.testOnboarding();
   }
 
   Widget getMenuPage() {
@@ -114,18 +132,23 @@ class LoadingPageState extends State<LoadingPage> with SingleTickerProviderState
       );
     }
 
-    return menuState == MenuState.NIGT ? MainMenuNightPage() : MainMenuPage();
+    return menuState == MenuState.NIGT
+        ? const MainMenuNightPage()
+        : const MainMenuPage();
   }
 
   void calculateOpanApp() {
-    MyDB().getBox().put(MyResource.COUNT_APP_LAUNCH, MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH, defaultValue: 0) + 1);
-    MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE, MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0) + 1);
+    MyDB().getBox().put(MyResource.COUNT_APP_LAUNCH,
+        MyDB().getBox().get(MyResource.COUNT_APP_LAUNCH, defaultValue: 0) + 1);
+    MyDB().getBox().put(MyResource.LAUNCH_FOR_RATE,
+        MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0) + 1);
 
-    print('launch app for rate    :    ${MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0)}');
+    print(
+        'launch app for rate    :    ${MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0)}');
   }
 
   _redirect() async {
-    AppRouting.replace(chooseNavigationRoute());
+    AppRouting.replace(await chooseNavigationRoute());
   }
 
   void _initTimerValue() {
@@ -139,10 +162,10 @@ class LoadingPageState extends State<LoadingPage> with SingleTickerProviderState
       MyDB().getBox().put(MyResource.FITNESS_TIME_KEY, ExerciseTime(5));
     }
     if (MyDB().getBox().get(MyResource.DIARY_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.DIARY_TIME_KEY, ExerciseTime(1));
+      MyDB().getBox().put(MyResource.DIARY_TIME_KEY, ExerciseTime(3));
     }
     if (MyDB().getBox().get(MyResource.READING_TIME_KEY) == null) {
-      MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(10));
+      MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(5));
     }
     if (MyDB().getBox().get(MyResource.VISUALIZATION_TIME_KEY) == null) {
       MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(1));

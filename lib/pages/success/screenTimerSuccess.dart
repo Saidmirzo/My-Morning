@@ -14,7 +14,8 @@ class TimerSuccessScreen extends StatefulWidget {
   final bool isFinal;
   final double procent;
 
-  TimerSuccessScreen(this.onPressed, this.minutes, this.isFinal, this.procent);
+  const TimerSuccessScreen(
+      this.onPressed, this.minutes, this.isFinal, this.procent);
 
   @override
   State createState() {
@@ -23,7 +24,7 @@ class TimerSuccessScreen extends StatefulWidget {
 }
 
 class TimerSuccessScreenState extends State<TimerSuccessScreen> {
-  AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
   DateTime dateTime = DateTime.now();
   int count;
 
@@ -62,15 +63,18 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        widget.onPressed();
+      onWillPop: () async {
+        return false;
       },
       child: Scaffold(
         body: Center(
           child: Container(
             width: Get.width,
             height: Get.height,
-            decoration: BoxDecoration(gradient: menuState == MenuState.MORNING ? AppColors.Bg_Gradient_Timer_Reading : AppColors.gradient_loading_night_bg),
+            decoration: BoxDecoration(
+                gradient: menuState == MenuState.MORNING
+                    ? AppColors.Bg_Gradient_Timer_Reading
+                    : AppColors.gradient_loading_night_bg),
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -81,7 +85,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     buildProgress(),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     const SizedBox(height: 50),
                     buildButton(),
                   ],
@@ -97,7 +101,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   Widget buildButton() {
     return PrimaryCircleButton(
       size: 45,
-      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+      icon: const Icon(Icons.arrow_forward, color: AppColors.primary),
       onPressed: () {
         if (_audioPlayer != null) {
           _audioPlayer.stop();
@@ -111,7 +115,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   Positioned bg() {
     return Positioned(
       bottom: 0,
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset(
           'assets/images/timer/clouds_timer.png',
@@ -124,14 +128,16 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   Positioned mn1() {
     return Positioned(
       bottom: 0,
-      child: Image.asset('assets/images/meditation/mountain1_night.png', width: Get.width, fit: BoxFit.cover),
+      child: Image.asset('assets/images/meditation/mountain1_night.png',
+          width: Get.width, fit: BoxFit.cover),
     );
   }
 
   Positioned mn2() {
     return Positioned(
       bottom: 0,
-      child: Image.asset('assets/images/meditation/mountain2_night.png', width: Get.width, fit: BoxFit.cover),
+      child: Image.asset('assets/images/meditation/mountain2_night.png',
+          width: Get.width, fit: BoxFit.cover),
     );
   }
 
@@ -144,7 +150,11 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
       percent: widget.isFinal ? 1 : widget.procent,
       center: Text(
         'success'.tr,
-        style: TextStyle(fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
+        style: TextStyle(
+            fontSize: Get.height * 0.04,
+            fontStyle: FontStyle.normal,
+            color: Colors.white,
+            fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
       linearGradient: AppColors.Progress_Gradient_Timer_Reading,

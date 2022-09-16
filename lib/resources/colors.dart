@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -16,8 +18,8 @@ class AppColors {
   static const GRAY = Color(0xFF778899);
   static const LIGHT_GRAY = Color(0xFFC0C0C0);
   static const BLUE = Color(0xFF1E90FF);
-  static const TRANSPARENT_VIOLET = Color(0xFF59502e82);
-  static const TRANSPARENT = Color(0);
+  static const TRANSPARENT_VIOLET = Color(0xff59502e82);
+  static const TRANSPARENT = Color(0x00000000);
   static const TRANSPARENTS = Color(0x3dffffff);
   static const primary = Color(0xff592F72);
   static const btnText = Color(0xff592F72);
@@ -31,7 +33,7 @@ class AppColors {
   static const THUMB = Color(0xFF673A7A);
   static const TRACKBAR_ACTIVE = Color(0xFF673A7A);
   static const LOADING_INDICATOR = Color(0xFFB994DA);
-  static const timerNightBgButton = Color(0xFFC50B2);
+  static const timerNightBgButton = Color(0x0ffc50b2);
   static const nightButtonMenuIocons = Color(0xFFE4CDF8);
   //static const timerNightMenuIcon = Color(0xFFB994DA);
 
@@ -42,8 +44,8 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xff592F72),
-      const Color(0xffFFD3DB),
+      Color(0xff592F72),
+      Color(0xffFFD3DB),
     ],
   );
 
@@ -53,8 +55,8 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xff040826),
-      const Color(0xff462663),
+      Color(0xff040826),
+      Color(0xff462663),
     ],
   );
   // страница загрузки
@@ -67,50 +69,50 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xffFFF0D9),
-      const Color(0xffFFB5C3),
+      Color(0xffFFF0D9),
+      Color(0xffFFB5C3),
     ],
   );
   static const gradient_evening_sun = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xffFFF7EA),
-      const Color(0xffFFB8F8),
+      Color(0xffFFF7EA),
+      Color(0xffFFB8F8),
     ],
   );
   static const gradient_loading_morning_bg = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffAE80D6),
-      const Color(0xffD68FA8),
-      const Color(0xffFFE3BA),
+      Color(0xffAE80D6),
+      Color(0xffD68FA8),
+      Color(0xffFFE3BA),
     ],
   );
   static const gradient_loading_afternoon_bg = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffFFE3BA),
-      const Color(0xffFFB5C3),
-      const Color(0xffB994DA),
+      Color(0xffFFE3BA),
+      Color(0xffFFB5C3),
+      Color(0xffB994DA),
     ],
   );
   static const gradient_loading_evening_bg = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffAE80D6),
-      const Color(0xffD68FA8),
+      Color(0xffAE80D6),
+      Color(0xffD68FA8),
     ],
   );
   static const gradient_loading_night_bg = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xff040826),
-      const Color(0xff140225),
+      Color(0xff040826),
+      Color(0xff140225),
     ],
   );
 
@@ -118,43 +120,43 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xffFFFAFB),
-      const Color(0xffFFF0D9),
+      Color(0xffFFFAFB),
+      Color(0xffFFF0D9),
     ],
   );
   static const Bg_Gradient_1 = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffF8D199),
-      const Color(0xffDA90AA),
-      const Color(0xffB994DA),
+      Color(0xffF8D199),
+      Color(0xffDA90AA),
+      Color(0xffB994DA),
     ],
   );
   static const Bg_Gradient_2 = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffAE80D6),
-      const Color(0xffD892AB),
-      const Color(0xffE4C596),
+      Color(0xffAE80D6),
+      Color(0xffD892AB),
+      Color(0xffE4C596),
     ],
   );
   static const Bg_Gradient_3 = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffDA90AA),
-      const Color(0xffB994DA),
+      Color(0xffDA90AA),
+      Color(0xffB994DA),
     ],
   );
   static const Bg_Gradient_Payments = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffB994DA),
-      const Color(0xffFFB5C3),
-      const Color(0xffFFF9EF),
+      Color(0xffB994DA),
+      Color(0xffFFB5C3),
+      Color(0xffFFF9EF),
     ],
   );
   //ночное чтение
@@ -162,8 +164,8 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xff53336C),
-      const Color(0xff2A1B4C),
+      Color(0xff53336C),
+      Color(0xff2A1B4C),
     ],
   );
   // главное меню
@@ -171,8 +173,8 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xffFFB5C3),
-      const Color(0xffAE80D6),
+      Color(0xffFFB5C3),
+      Color(0xffAE80D6),
     ],
   );
 
@@ -186,16 +188,16 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffFFA0C2),
-      const Color(0xffFFE3BA),
+      Color(0xffFFA0C2),
+      Color(0xffFFE3BA),
     ],
   );
   static const Progress_Gradient_Timer_Meditation = LinearGradient(
     begin: Alignment.bottomCenter,
     end: Alignment.topCenter,
     colors: [
-      const Color(0xffFFE6C1),
-      const Color(0xffFFD3DB),
+      Color(0xffFFE6C1),
+      Color(0xffFFD3DB),
     ],
   );
 
@@ -203,8 +205,8 @@ class AppColors {
     begin: Alignment.bottomCenter,
     end: Alignment.topCenter,
     colors: [
-      const Color(0xff592F72),
-      const Color(0xff040826),
+      Color(0xff592F72),
+      Color(0xff040826),
     ],
   );
 
@@ -212,16 +214,16 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffB994DA),
-      const Color(0xffFFA8C1),
+      Color(0xffB994DA),
+      Color(0xffFFA8C1),
     ],
   );
   static const Progress_Gradient_Timer_Reading = LinearGradient(
     begin: Alignment.bottomCenter,
     end: Alignment.topCenter,
     colors: [
-      const Color(0xff592F72),
-      const Color(0xffEEA6C8),
+      Color(0xff592F72),
+      Color(0xffEEA6C8),
     ],
   );
 
@@ -229,17 +231,17 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffAE80D6),
-      const Color(0xffD68FA8),
-      const Color(0xffFFE3BA),
+      Color(0xffAE80D6),
+      Color(0xffD68FA8),
+      Color(0xffFFE3BA),
     ],
   );
   static const Progress_Gradient_Timer_Affirmation = LinearGradient(
     begin: Alignment.bottomCenter,
     end: Alignment.topCenter,
     colors: [
-      const Color(0xffB994DA),
-      const Color(0xff592F72),
+      Color(0xffB994DA),
+      Color(0xff592F72),
     ],
   );
 
@@ -247,33 +249,33 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffFFB5C3),
-      const Color(0xffAE80D6),
+      Color(0xffFFB5C3),
+      Color(0xffAE80D6),
     ],
   );
   static const Bg_Gradient_Timer_Diary_Note = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffFFF0D9),
-      const Color(0xffFFB5C3),
-      const Color(0xffB994DA),
+      Color(0xffFFF0D9),
+      Color(0xffFFB5C3),
+      Color(0xffB994DA),
     ],
   );
   static const Progress_Gradient_Timer_Diary = LinearGradient(
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
     colors: [
-      const Color(0xffFFF0D9),
-      const Color(0xffB994DA),
+      Color(0xffFFF0D9),
+      Color(0xffB994DA),
     ],
   );
   static const Progress_Gradient_Timer_Diary_Note = LinearGradient(
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
     colors: [
-      const Color(0xff592F72),
-      const Color(0xffEEA6C8),
+      Color(0xff592F72),
+      Color(0xffEEA6C8),
     ],
   );
 
@@ -281,16 +283,16 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xff9F71C8),
-      const Color(0xffDA90AA),
+      Color(0xff9F71C8),
+      Color(0xffDA90AA),
     ],
   );
   static const Progress_Gradient_Timer_Fitnes = LinearGradient(
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
     colors: [
-      const Color(0xff592F72),
-      const Color(0xffEEA6C8),
+      Color(0xff592F72),
+      Color(0xffEEA6C8),
     ],
   );
 
@@ -298,8 +300,8 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xffE2AABE),
-      const Color(0xffB994DA),
+      Color(0xffE2AABE),
+      Color(0xffB994DA),
     ],
   );
 
@@ -308,9 +310,9 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      const Color(0xffAE80D6),
-      const Color(0xffD68FA8),
-      const Color(0xffFFE3BA),
+      Color(0xffAE80D6),
+      Color(0xffD68FA8),
+      Color(0xffFFE3BA),
     ],
   );
 }

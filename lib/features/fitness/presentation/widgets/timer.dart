@@ -11,7 +11,7 @@ class TimerFitnes extends StatefulWidget {
   final String exerciseName;
   final TimeAppBarState timeAppBarState = TimeAppBarState();
 
-  TimerFitnes({@required this.exerciseName});
+  TimerFitnes({Key key, @required this.exerciseName}) : super(key: key);
 
   @override
   TimeAppBarState createState() {
@@ -53,37 +53,40 @@ class TimeAppBarState extends State<TimerFitnes> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        buildTimerProgress(),
-        playPauseBtn(),
-      ],
-    );
+    return buildTimerProgress();
   }
 
   Widget buildTimerProgress() {
     return Padding(
-      padding: const EdgeInsets.only(top: 54.0, bottom: 16),
+      padding: const EdgeInsets.only(bottom: 22),
       child: Obx(
         () {
           var tm = StringUtil.createTimeString(cTimer.time.value).split(':');
-          return CircularPercentIndicator(
-            radius: Get.height * 0.17,
-            lineWidth: 10.0,
-            animation: false,
-            percent: cTimer.createValue.value,
-            center: Text(
-              ' ${tm.first}\n${tm.last}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                fontSize: Get.height * 0.03,
+          return Column(
+            children: [
+              CircularPercentIndicator(
+                radius: Get.width / 4,
+                lineWidth: 10.0,
+                animation: false,
+                percent: cTimer.createValue.value,
+                center: playPauseBtn(),
+                circularStrokeCap: CircularStrokeCap.round,
+                linearGradient: AppColors.Progress_Gradient_Timer_Fitnes,
+                backgroundColor: Colors.white,
               ),
-            ),
-            circularStrokeCap: CircularStrokeCap.round,
-            linearGradient: AppColors.Progress_Gradient_Timer_Fitnes,
-            backgroundColor: Colors.white,
+              const SizedBox(
+                height: 14.6,
+              ),
+              Text(
+                ' ${tm.first}:${tm.last}',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  fontSize: Get.height * 0.03,
+                ),
+              ),
+            ],
           );
         },
       ),

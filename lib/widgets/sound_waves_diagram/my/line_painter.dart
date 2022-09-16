@@ -4,7 +4,7 @@ import 'package:morningmagic/resources/colors.dart';
 class LinePainter extends CustomPainter {
 
   Paint _paint;
-  double _progress;
+  final double _progress;
   double wideStep;
   int randomValue;
 

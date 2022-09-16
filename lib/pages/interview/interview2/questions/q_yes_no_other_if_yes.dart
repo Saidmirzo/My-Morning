@@ -19,12 +19,14 @@ Widget qYesNoOtherIfyes(String title, String subtitle, int index) {
           (val.value == YesNoOther.yes && fieldController2.text.isEmpty)) {
         Get.snackbar(null, 'please_fill_all_fields'.tr);
       } else {
-        if (val.value == YesNoOther.yes)
+        if (val.value == YesNoOther.yes) {
           _controller.data[title + ' ' + 'если да'] = fieldController2.text;
+        }
         if (val.value == YesNoOther.no) _controller.data[title] = 'нет';
-        if (val.value == YesNoOther.other)
+        if (val.value == YesNoOther.other) {
           _controller.data[title.tr + ' ' + 'если другое'] =
               fieldController.text;
+        }
         _controller.slideNext();
       }
     },

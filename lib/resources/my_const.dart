@@ -1,14 +1,8 @@
-import 'dart:io';
+// ignore_for_file: constant_identifier_names
 
-const REVENUE_IOS_KEY = 'klRWquXussoxppFDFBOGwoZvTgwawgBm';
-const REVENUE_ANDROID_KEY = 'joxdRNutDmmrudomDHmIbGerKngVcZlD';
-
-final String REVENUE_KEY =
-    Platform.isIOS ? REVENUE_IOS_KEY : REVENUE_ANDROID_KEY;
-
-final String UrlAgreement =
+const String UrlAgreement =
     'https://mymorningnow.blogspot.com/p/terms-of-use.html';
-final String UrlPrivacy =
+const String UrlPrivacy =
     'https://mymorningnow.blogspot.com/p/privacy-policy.html';
 
 // Мин кол-во секунд для записи в журнал прогресса

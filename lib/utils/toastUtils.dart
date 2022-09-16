@@ -11,7 +11,7 @@ class ToastUtils {
     if (toastTimer == null || !toastTimer.isActive) {
       _overlayEntry = createOverlayEntry(context, message);
       Overlay.of(context).insert(_overlayEntry);
-      toastTimer = Timer(Duration(seconds: 1), () {
+      toastTimer = Timer(const Duration(seconds: 1), () {
         if (_overlayEntry != null) {
           _overlayEntry.remove();
         }
@@ -30,8 +30,8 @@ class ToastUtils {
           borderRadius: BorderRadius.circular(6),
           child: Container(
             padding:
-                EdgeInsets.only(left: 10, right: 10, top: 16, bottom: 16),
-            decoration: BoxDecoration(
+                const EdgeInsets.only(left: 10, right: 10, top: 16, bottom: 16),
+            decoration: const BoxDecoration(
                 color: AppColors.PINK,
                 borderRadius: BorderRadius.all(Radius.circular(6.0))),
             child: Align(
@@ -40,7 +40,7 @@ class ToastUtils {
                 message,
                 textAlign: TextAlign.center,
                 softWrap: true,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontStyle: FontStyle.normal,
                   fontWeight: FontWeight.w600,

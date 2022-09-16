@@ -16,11 +16,12 @@ class TrackBar extends StatefulWidget {
       this.dialogMode = false,
       this.fromTimer = false});
 
+  @override
   TrackBarState createState() => TrackBarState();
 }
 
 class TrackBarState extends State<TrackBar> {
-  InstrumentAudioController _audioController = Get.find();
+  final InstrumentAudioController _audioController = Get.find();
   @override
   Widget build(BuildContext context) {
     return SliderTheme(
@@ -30,9 +31,9 @@ class TrackBarState extends State<TrackBar> {
         inactiveTrackColor: AppColors.purchaseDesc,
         trackHeight: 2.0,
         thumbColor: AppColors.THUMB,
-        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5.0),
+        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5.0),
         overlayColor: AppColors.THUMB.withAlpha(32),
-        overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+        overlayShape: const RoundSliderOverlayShape(overlayRadius: 28.0),
       ),
       child: GestureDetector(
         //  onHorizontalDragEnd: (detail) => _audioController
@@ -57,6 +58,7 @@ class TrackBarState extends State<TrackBar> {
 }
 
 class CustomTrackShape extends RoundedRectSliderTrackShape {
+  @override
   Rect getPreferredRect({
     @required RenderBox parentBox,
     Offset offset = Offset.zero,

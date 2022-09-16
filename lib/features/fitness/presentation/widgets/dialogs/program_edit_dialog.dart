@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/state_manager.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
 import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
@@ -56,24 +54,24 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               _buildDialogHeader(context),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               _buildProgramNameInputForm(),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               if (exercises.isNotEmpty)
                 Text(
                   'hold_to_move_exercise'.tr,
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               Expanded(
@@ -117,7 +115,7 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
           text: 'back_button'.tr,
           onTap: () => Navigator.pop(context),
         ),
-        Spacer(),
+        const Spacer(),
         DialogHeaderButton(
           text: 'save'.tr,
           onTap: () => _saveProgram(context),
@@ -129,7 +127,7 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
   List<Widget> _buildExerciseItems(BuildContext context,
       List<FitnessExercise> exercises, ExerciseCallback onDelete) {
     final List<Widget> widgets = [];
-    exercises.forEach((element) {
+    for (var element in exercises) {
       widgets.add(ExerciseEditDialogItem(
         exercise: element,
         onDeleteItem: () {
@@ -137,7 +135,7 @@ class _ProgramEditDialogState extends State<ProgramEditDialog> {
         },
         key: ValueKey(element),
       ));
-    });
+    }
 
     return widgets;
   }

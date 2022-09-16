@@ -8,7 +8,6 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/resources/my_const.dart';
 import 'package:morningmagic/services/progress.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
-
 import '../../../../resources/colors.dart';
 import '../../../../widgets/primary_circle_button.dart';
 
@@ -18,7 +17,7 @@ class InputTextColumn extends StatefulWidget {
   final int passedSec;
   final bool isSkip;
 
-  InputTextColumn(this.onPressed, this.passedSec, this.isSkip,
+  const InputTextColumn(this.onPressed, this.passedSec, this.isSkip,
       {this.fromHomeMenu = false});
 
   @override
@@ -50,23 +49,23 @@ class InputTextColumnState extends State<InputTextColumn> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width, // match parent(all screen)
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(bottom: 15),
+            padding: const EdgeInsets.only(bottom: 15),
             child: Text(
               'pages'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontStyle: FontStyle.normal,
                 fontSize: 20,
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width / 3.2,
             child: Container(
                 decoration: BoxDecoration(
@@ -74,8 +73,8 @@ class InputTextColumnState extends State<InputTextColumn> {
                   color: Colors.white,
                 ),
                 child: Container(
-                  padding:
-                      EdgeInsets.only(bottom: 10, top: 10, left: 15, right: 15),
+                  padding: const EdgeInsets.only(
+                      bottom: 10, top: 10, left: 15, right: 15),
                   child: TextField(
                     controller: controller,
                     minLines: 1,
@@ -84,7 +83,7 @@ class InputTextColumnState extends State<InputTextColumn> {
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 27,
                         fontStyle: FontStyle.normal,
                         color: AppColors.primary,
@@ -95,12 +94,12 @@ class InputTextColumnState extends State<InputTextColumn> {
           ),
           const SizedBox(height: 40),
           PrimaryCircleButton(
-            icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+            icon: const Icon(Icons.arrow_forward, color: AppColors.primary),
             onPressed: () {
               saveProg(widget.isSkip);
               widget.onPressed();
               OrderUtil().getRouteById(4).then((value) {
-                Get.off(widget.fromHomeMenu ? ProgressPage() : value);
+                Get.off(widget.fromHomeMenu ? const ProgressPage() : value);
               });
             },
           ),

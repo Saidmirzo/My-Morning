@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/interview/interview1/components/multiline_input.dart';
 import 'question_frame.dart';
-
 import '../../interview1/interview_controller.dart';
 
 Widget q1() {

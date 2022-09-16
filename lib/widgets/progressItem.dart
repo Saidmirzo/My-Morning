@@ -6,12 +6,12 @@ class ProgressPair extends StatelessWidget {
   final String exerciseTitle;
   final String exerciseValue;
 
-  ProgressPair(this.exerciseTitle, this.exerciseValue);
+  const ProgressPair(this.exerciseTitle, this.exerciseValue);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -19,7 +19,7 @@ class ProgressPair extends StatelessWidget {
           Container(
             child: Text(
               exerciseTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: AppColors.VIOLET,
                 fontStyle: FontStyle.normal,
@@ -27,13 +27,13 @@ class ProgressPair extends StatelessWidget {
             ),
           ),
           Container(
-            child: Text(' – '),
+            child: const Text(' – '),
           ),
           Flexible(
             child: Container(
               child: Text(
                 exerciseValue,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: AppColors.VIOLET,
                   fontStyle: FontStyle.normal,

@@ -24,15 +24,13 @@ class AdmobService {
   void createInterstitialAd() {
     InterstitialAd.load(
       adUnitId: interstitialId,
-      request: AdRequest(),
+      request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
-          print('$ad loaded');
           _interstitialAd = ad;
           _numInterstitialLoadAttempts = 0;
         },
         onAdFailedToLoad: (LoadAdError error) {
-          print('InterstitialAd failed to load: $error.');
           _numInterstitialLoadAttempts += 1;
           _interstitialAd = null;
           if (_numInterstitialLoadAttempts <= maxFailedLoadAttempts) {
@@ -45,12 +43,10 @@ class AdmobService {
 
   void showInterstitial() async {
     if (billingService.isVip.value) {
-      print('Notice: мы не будем показывать рекламу ВИП юзерам');
       return;
     }
 
     if (_interstitialAd == null) {
-      print('Warning: attempt to show interstitial before loaded.');
       return;
     }
     _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(

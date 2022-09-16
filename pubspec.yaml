@@ -3,16 +3,15 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 1.1.5+44
+version: 1.2.4+56
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
-
+  flutter: 2.10.5
+  
 dependencies:
   flutter:
     sdk: flutter
-  # Временно через гит, т.к. с версией pub.dev ошибка:
-  # The getter 'body1' isn't defined for the class 'TextTheme'.
   charts_flutter: ^0.12.0
   cupertino_icons: ^1.0.3
   expandable: ^5.0.1
@@ -26,12 +25,11 @@ dependencies:
   flutter_circular_chart_two: ^0.1.2
   flutter_html: ^2.1.0
   flutter_svg: ^0.22.0
-  #flutter_visualizers: ^0.0.2
   get: ^3.26.0
   hive: ^2.0.4
+  flutter_keyboard_visibility: ^5.3.0
   hive_flutter: ^1.0.0
   permission_handler: ^7.2.0
-  # purchases_flutter: ^3.2.2
   random_string: ^2.1.0
   reorderables: ^0.3.2
   shared_preferences: ^2.0.6
@@ -43,7 +41,6 @@ dependencies:
   in_app_review_play_store: ^0.0.3
   rate_my_app: ^1.1.0+1
   smooth_star_rating: ^1.1.1
-  screen: ^0.0.5
   just_audio: ^0.9.6
   audioplayers: ^0.20.1
   multi_image_picker: ^4.8.0
@@ -56,18 +53,21 @@ dependencies:
   percent_indicator: ^3.0.1
   facebook_app_events: ^0.11.2
   app_tracking_transparency: ^2.0.0
-  adjust_sdk: ^4.29.1
-  #intl: "^0.17.0"
   flutter_gifimage: ^1.0.1
   day_night_time_picker: ^1.0.2
   duration_picker: ^1.0.1
   numberpicker: ^2.1.1
   hexcolor: ^2.0.0
   appmetrica_plugin: ^0.1.0
-  adapty_flutter: ^1.0.10
+  adapty_flutter: ^1.0.11
   flutter_localizations:
     sdk: flutter
-  
+  connectivity_plus: ^2.1.0
+  flutter_native_timezone: ^2.0.0
+  firebase_remote_config: ^2.0.9
+  provider: ^6.0.3
+  get_it: 7.2.0
+  install_referrer: 1.2.1
 
 #  remove on fix charts flutter
 dependency_overrides:
@@ -82,15 +82,12 @@ dev_dependencies:
 
   flutter_launcher_icons: ^0.9.0
 
-flutter_icons:
-  android: "launcher_icon"
-  ios: false
-  image_path: "assets/images/logo.png"
-
 flutter:
   assets:
     - assets/images/
     - assets/images/onboarding/
+    - assets/images/onboarding/version_second_images/
+    - assets/images/onboarding/version_third_images/
     - assets/images/paywall/
     - assets/images/auth/
     - assets/images/faq/
@@ -101,6 +98,7 @@ flutter:
     - assets/images/startscreen/night/
     - assets/images/interview/
     - assets/images/targets/
+    - assets/images/packageImages/
     - assets/images/fitnes/
     - assets/images/fitnes/ex/
     - assets/images/fitnes/ex/program_1/

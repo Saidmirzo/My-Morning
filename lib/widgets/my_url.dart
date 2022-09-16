@@ -13,10 +13,11 @@ TextSpan myUrl(String text, String url,
     recognizer: TapGestureRecognizer()
       ..onTap = () async {
         print('Url click');
-        if (await canLaunch(url))
+        if (await canLaunch(url)) {
           await launch(url);
-        else
+        } else {
           print('Can\'t launch url: $url');
+        }
       },
   );
 }

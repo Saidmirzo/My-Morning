@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:morningmagic/features/visualization/domain/entities/image_tag.dart';
-
 part 'visualization_target.g.dart';
 
 @HiveType(typeId: 21)
@@ -20,7 +19,7 @@ class VisualizationTarget extends Equatable {
   bool get isCustom =>
       tag == EnumToString.convertToString(VisualizationImageTag.custom);
 
-  VisualizationTarget(
+  const VisualizationTarget(
       {@required this.id,
       @required this.tag,
       @required this.title,

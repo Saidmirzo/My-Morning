@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'components/name.dart';
 
 class AfternoonPage extends StatefulWidget {
@@ -48,8 +47,8 @@ class _AfternoonPageState extends State<AfternoonPage>
       controller.forward();
     });
     return Container(
-      decoration:
-          BoxDecoration(gradient: AppColors.gradient_loading_afternoon_bg),
+      decoration: const BoxDecoration(
+          gradient: AppColors.gradient_loading_afternoon_bg),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -65,7 +64,7 @@ class _AfternoonPageState extends State<AfternoonPage>
 
   Widget buildBg() {
     return Positioned(
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset('assets/images/startscreen/afternoon/houses.png',
             fit: BoxFit.fitWidth),
@@ -76,7 +75,7 @@ class _AfternoonPageState extends State<AfternoonPage>
 
   Positioned buildClouds() {
     return Positioned(
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset(
           'assets/images/startscreen/afternoon/clouds.png',
@@ -93,8 +92,8 @@ class _AfternoonPageState extends State<AfternoonPage>
         child: Container(
           width: Get.width * 0.8,
           height: Get.width * 0.8,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(180),
+          decoration: const BoxDecoration(
+              shape: BoxShape.circle,
               gradient: AppColors.gradient_afternoon_sun),
         ),
       );

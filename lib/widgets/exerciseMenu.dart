@@ -9,7 +9,7 @@ class ExerciseMenu extends StatefulWidget {
   final List<ExerciseName> list;
   final VoidCallback _voidCallback;
 
-  ExerciseMenu(this.list, this._voidCallback);
+  const ExerciseMenu(this.list, this._voidCallback);
 
   @override
   ExerciseMenuState createState() {
@@ -20,8 +20,8 @@ class ExerciseMenu extends StatefulWidget {
 class ExerciseMenuState extends State<ExerciseMenu> {
 
   List<Widget> createExerciseColumn(List<ExerciseName> items) {
-    List<Widget> list = new List<Widget>();
-    List<ExerciseName> listBuffer = new List<ExerciseName>();
+    List<Widget> list = <Widget>[];
+    List<ExerciseName> listBuffer = <ExerciseName>[];
     listBuffer.addAll(items);
 
     if (listBuffer.length % 2 == 0) {
@@ -63,7 +63,7 @@ class ExerciseMenuState extends State<ExerciseMenu> {
       sizeOne = exerciseName.size;
     }
 
-    Row row = new Row(
+    Row row = Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -100,7 +100,7 @@ class ExerciseMenuState extends State<ExerciseMenu> {
       sizeTwo = exerciseNameTwo.size;
     }
 
-    Row row = new Row(
+    Row row = Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

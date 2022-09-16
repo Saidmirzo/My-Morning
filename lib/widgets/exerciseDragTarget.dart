@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+// import 'package:hive/hive.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise/exercise_holder.dart';
 import 'package:morningmagic/db/model/exercise/exercise_title.dart';
@@ -103,19 +103,18 @@ class ExerciseDragTargetState extends State<ExerciseDragTarget> {
 //  }
 
   List<ExerciseTrashTag> doStuff() {
-    List<ExerciseTrashTag> list = new List<ExerciseTrashTag>();
+    List<ExerciseTrashTag> list = <ExerciseTrashTag>[];
     UserProgram program = MyDB().getBox().get(MyResource.USER_PROGRAM_HOLDER,
-        defaultValue: UserProgram(List<ExerciseTitle>()));
+        defaultValue: UserProgram(<ExerciseTitle>[]));
 
     ExerciseHolder holder = MyDB().getBox().get(MyResource.EXERCISES_HOLDER,
-        defaultValue:
-            new ExerciseHolder(List<ExerciseTitle>(), List<ExerciseTitle>()));
+        defaultValue: ExerciseHolder(<ExerciseTitle>[], <ExerciseTitle>[]));
 
     holder.freshExercises.clear();
     holder.freshExercises.addAll(program.exercises);
 
     for (int i = 0; i < holder.freshExercises.length; i++) {
-      list.add(new ExerciseTrashTag(holder.freshExercises[i].title,
+      list.add(ExerciseTrashTag(holder.freshExercises[i].title,
           holder.freshExercises[i].size, holder.freshExercises[i].key, () {
         setState(() {});
       }));
@@ -124,15 +123,14 @@ class ExerciseDragTargetState extends State<ExerciseDragTarget> {
   }
 
   Future<List<ExerciseTrashTag>> getTrashButtonsList() async {
-    List<ExerciseTrashTag> list = List<ExerciseTrashTag>();
+    List<ExerciseTrashTag> list = <ExerciseTrashTag>[];
     list = doStuff();
     return list;
   }
 
   void saveExerciseToHolder(ExerciseDeskTag button) {
     ExerciseHolder holder = MyDB().getBox().get(MyResource.EXERCISES_HOLDER,
-        defaultValue:
-            new ExerciseHolder(List<ExerciseTitle>(), List<ExerciseTitle>()));
+        defaultValue: ExerciseHolder(<ExerciseTitle>[], <ExerciseTitle>[]));
 
     String key = randomAlpha(5);
     holder.freshExercises.add(ExerciseTitle(button.text, button.size, key));
@@ -145,7 +143,7 @@ class ExerciseDragTargetState extends State<ExerciseDragTarget> {
 
   void saveExerciseProgram(ExerciseDeskTag button) {
     UserProgram program = MyDB().getBox().get(MyResource.USER_PROGRAM_HOLDER,
-        defaultValue: new UserProgram(List<ExerciseTitle>()));
+        defaultValue: UserProgram(<ExerciseTitle>[]));
 
     String key = randomAlpha(5);
     program.exercises.add(ExerciseTitle(button.text, button.size, key));

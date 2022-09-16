@@ -2,18 +2,16 @@ import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/pages/reading/timer/timer_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/services/timer_service.dart';
-
 import '../../storage.dart';
 
 class AddTimePeriod extends StatelessWidget {
   final TimerService timerService;
   final int pageId;
 
-  GlobalKey _scaffoldKey = GlobalKey();
+  final GlobalKey _scaffoldKey = GlobalKey();
 
   AddTimePeriod({Key key, @required this.timerService, this.pageId = -1})
       : super(key: key);
@@ -35,7 +33,7 @@ class AddTimePeriod extends StatelessWidget {
           children: [
             Positioned(
               bottom: 0,
-              child: Container(
+              child: SizedBox(
                 width: Get.width,
                 child: menuState == MenuState.MORNING
                     ? Image.asset(
@@ -61,28 +59,32 @@ class AddTimePeriod extends StatelessWidget {
                       min: 4, pageId: pageId),
                   button('x_minutes'.trParams({'x': '5'}),
                       min: 5, pageId: pageId),
-                  button('own_time'.tr,
-                      btnColor: menuState == MenuState.MORNING
-                          ? Color(0xff592F72)
-                          : Color(0xff040826), onPressed: () async {
-                    Duration _duration = await showDurationPicker(
-                      context: context,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                      ),
-                      initialTime: Duration(minutes: 10),
-                    );
-                    if (_duration != null) {
-                      menuState == MenuState.MORNING
-                          ? timerService.setTime(_duration.inMinutes ?? 0)
-                          : pageId == TimerPageId.MeditationNight
-                              ? timerService
-                                  .setNightTime(_duration.inSeconds ?? 0)
-                              : timerService.setTime(_duration.inMinutes ?? 0);
-                      Get.back();
-                    }
-                  }),
+                  button(
+                    'own_time'.tr,
+                    btnColor: menuState == MenuState.MORNING
+                        ? const Color(0xff592F72)
+                        : const Color(0xff040826),
+                    onPressed: () async {
+                      Duration _duration = await showDurationPicker(
+                        context: context,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                        ),
+                        initialTime: const Duration(minutes: 10),
+                      );
+                      if (_duration != null) {
+                        menuState == MenuState.MORNING
+                            ? timerService.setTime(_duration.inSeconds ?? 0)
+                            : pageId == TimerPageId.MeditationNight
+                                ? timerService
+                                    .setNightTime(_duration.inSeconds ?? 0)
+                                : timerService
+                                    .setTime(_duration.inSeconds ?? 0);
+                        Get.back();
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
@@ -99,27 +101,26 @@ class AddTimePeriod extends StatelessWidget {
       onPressed: onPressed ??
           () {
             menuState == MenuState.MORNING
-                ? timerService.setTime(min ?? 0)
+                ? timerService.setTime(min * 60 ?? 0)
                 : pageId == TimerPageId.MeditationNight
-                    ? timerService.setNightTime((min ?? 0) * 60)
-                    : timerService.setTime(min ?? 0);
+                    ? timerService.setNightTime((min * 60 ?? 0))
+                    : timerService.setTime(min * 60 ?? 0);
             Get.back();
           },
       child: Container(
         child: Text(
           title,
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         width: Get.width * .8,
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(7),
-            color: btnColor != null
-                ? btnColor
-                : menuState == MenuState.NIGT
+            color: btnColor ??
+                (menuState == MenuState.NIGT
                     ? AppColors.timerNightBgButton
-                    : Color(0xffB77CAC)),
+                    : const Color(0xffB77CAC))),
       ),
     );
   }

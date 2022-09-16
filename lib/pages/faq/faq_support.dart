@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/other.dart';
-import 'package:morningmagic/widgets/primary_circle_button.dart';
 
 class FaqSupportPage extends StatefulWidget {
   @override
@@ -28,11 +27,11 @@ class _FaqSupportPageState extends State<FaqSupportPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     backBtn(),
-                    Spacer(),
+                    const Spacer(),
                     buildInstagram(),
                     const SizedBox(height: 100),
                     buildEmail(),
-                    Spacer(),
+                    const Spacer(),
                   ],
                 ),
               ),
@@ -46,10 +45,13 @@ class _FaqSupportPageState extends State<FaqSupportPage> {
   Widget backBtn() {
     return Align(
       alignment: Alignment.topLeft,
-      child: PrimaryCircleButton(
-        icon: Icon(Icons.arrow_back, color: AppColors.primary),
-        onPressed: () => Get.back(),
-        size: 40,
+      child: GestureDetector(
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+          size: 25,
+        ),
+        onTap: () => Get.back(),
       ),
     );
   }
@@ -62,7 +64,8 @@ class _FaqSupportPageState extends State<FaqSupportPage> {
       },
       child: Column(
         children: [
-          SvgPicture.asset('assets/images/svg/instagram.svg', width: Get.width / 4),
+          SvgPicture.asset('assets/images/svg/instagram.svg',
+              width: Get.width / 4),
           Text(
             '@mymorningapp',
             style: TextStyle(color: Colors.white, fontSize: Get.width * .04),
@@ -91,7 +94,7 @@ class _FaqSupportPageState extends State<FaqSupportPage> {
 
   Widget get clouds => Positioned(
         bottom: 0,
-        child: Container(
+        child: SizedBox(
           width: Get.width,
           child: Image.asset(
             'assets/images/faq/clouds.png',

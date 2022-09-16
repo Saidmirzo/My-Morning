@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeTextSlide extends StatelessWidget {
   final PageController _pageController;
 
-  WelcomeTextSlide(this._pageController);
+  const WelcomeTextSlide(this._pageController);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +17,7 @@ class WelcomeTextSlide extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Spacer(),
+          const Spacer(),
           Text(
             'welcome_page_title'.tr,
             style: TextStyle(color: Colors.white, fontSize: Get.width * .055, fontWeight: FontWeight.w600),
@@ -30,16 +27,16 @@ class WelcomeTextSlide extends StatelessWidget {
             'welcome_page_subtitle'.tr,
             style: TextStyle(color: Colors.white60, fontSize: Get.width * .042),
           ),
-          Spacer(),
+          const Spacer(),
           Center(
               child: PrimaryCircleButton(
             size: 40,
-            icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+            icon: const Icon(Icons.arrow_forward, color: AppColors.primary),
             onPressed: () async {
               Navigator.pop(context);
             },
           )),
-          Spacer(),
+          const Spacer(),
           Center(
               child: SvgPicture.asset(
             'assets/images/yoga.svg',

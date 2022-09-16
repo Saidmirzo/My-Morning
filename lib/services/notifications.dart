@@ -7,8 +7,6 @@ import 'package:rxdart/subjects.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../routing/app_routing.dart';
-
 class PushNotifications {
   PushNotifications() {
     _initLocalPush();
@@ -32,17 +30,17 @@ class PushNotifications {
       BehaviorSubject<String>();
 
   MethodChannel platform =
-      MethodChannel('dexterx.dev/flutter_local_notifications_example');
+      const MethodChannel('dexterx.dev/flutter_local_notifications_example');
 
   Future<void> _initLocalPush() async {
     await configureLocalTimeZone();
 
     final NotificationAppLaunchDetails notificationAppLaunchDetails =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-    String initialRoute = AppRouting.initialRoute;
+    // String initialRoute = AppRouting.initialRoute;
     if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
       selectedNotificationPayload = notificationAppLaunchDetails.payload;
-      initialRoute = AppRouting.initialRoute;
+      // initialRoute = AppRouting.initialRoute;
     }
 
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -86,9 +84,10 @@ class PushNotifications {
     const MethodChannel platform =
         MethodChannel('dexterx.dev/flutter_local_notifications_example');
     tz.initializeTimeZones();
-    final String timeZoneName =
-        await platform.invokeMethod<String>('getTimeZoneName');
-    tz.setLocalLocation(tz.getLocation(timeZoneName));
+
+    // final String timeZoneName =
+    //     await platform.invokeMethod<String>('getTimeZoneName');
+    // tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
   void requestPermissions() {
@@ -115,10 +114,10 @@ class PushNotifications {
       {int id = 0}) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         id,
-        title,
-        msg,
+        'My Morning',
+        "meditation is complete".tr,
         tz.TZDateTime.now(tz.local).add(Duration(seconds: secondsSleep)),
-        NotificationDetails(
+        const NotificationDetails(
           android: AndroidNotificationDetails(
             'your channel id',
             'your channel name',
@@ -140,7 +139,7 @@ class PushNotifications {
         title,
         msg,
         tz.TZDateTime.from(dateTime, tz.local),
-        NotificationDetails(
+        const NotificationDetails(
           android: AndroidNotificationDetails(
             'your channel id',
             'your channel name',

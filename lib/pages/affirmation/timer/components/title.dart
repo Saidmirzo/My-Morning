@@ -10,7 +10,7 @@ Widget buildTitleWidget(String text) {
         width: Get.width * 3 / 4,
         child: CustomText(text: text, size: 22),
       ),
-      SizedBox(height: 24),
+      const SizedBox(height: 24),
     ],
   );
 }

@@ -1,4 +1,5 @@
-import 'package:hive/hive.dart';
+// ignore_for_file: non_constant_identifier_names, constant_identifier_names
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/custom_exercise_holder.dart';
 import 'package:morningmagic/db/model/note/note.dart';
@@ -16,7 +17,6 @@ import 'package:morningmagic/features/visualization/domain/entities/target/visua
 import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_cat_model.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirmation_text_model.dart';
 import 'package:morningmagic/pages/reminders/models/reminder.dart';
-
 import 'model/affirmation_text/affirmation_text_adapter.dart';
 import 'model/app_and_custom_exercises/app_exercise_holder.dart';
 import 'model/app_and_custom_exercises/custom_exercise_holder.dart';
@@ -37,11 +37,9 @@ import 'model/user_program/user_program.dart';
 Box myDbBox;
 
 class MyDB {
-  static final USER = 'user';
+  static const USER = 'user';
 
   Future<void> initHiveDatabase() async {
-    print('initHiveDatabase');
-
     await Hive.initFlutter();
     Hive.registerAdapter(ReminderModelAdapter());
     Hive.registerAdapter(AffirmationCategoryModelAdapter());
@@ -75,10 +73,10 @@ class MyDB {
     Hive.registerAdapter(MusicForSleepingProgressAdapter());
 
     try {
-      await this.openMyBox();
+      await openMyBox();
     } catch (e) {
       await Hive.deleteBoxFromDisk(MyResource.BOX_NAME);
-      await this.openMyBox();
+      await openMyBox();
     }
   }
 
@@ -88,12 +86,9 @@ class MyDB {
 
   Box getBox() {
     if (Hive == null) {
-      print('Hive == null | need reInit db');
       // await this.initHiveDatabase();
     }
-    if (myDbBox == null) {
-      print('myDbBox == null | need openBox');
-    }
+    if (myDbBox == null) {}
     // print('return myDbBox');
     return myDbBox;
   }
@@ -101,24 +96,26 @@ class MyDB {
   // Получаем любой журнал
   Map<String, List<dynamic>> getJournalProgress(String journal) {
     try {
-      return Map<String, List<dynamic>>.from(myDbBox.get(journal, defaultValue: Map<String, List<dynamic>>()));
+      return Map<String, List<dynamic>>.from(
+          myDbBox.get(journal, defaultValue: <String, List<dynamic>>{}));
     } catch (e) {
-      print('Ошибка получения журнала $e');
       // Ошиюка будет у старых пользователей из-за другой структуры сохраненных данных
       // По этому удаляем их и начинаем вести статистику заново
-      myDbBox.put(journal, Map<String, List<dynamic>>());
-      return Map<String, List<dynamic>>.from(myDbBox.get(journal, defaultValue: Map<String, List<dynamic>>()));
+      myDbBox.put(journal, <String, List<dynamic>>{});
+      return Map<String, List<dynamic>>.from(
+          myDbBox.get(journal, defaultValue: <String, List<dynamic>>{}));
     }
   }
 
   // Получаем журнал дневника
   Map<String, dynamic> getDiaryProgress() {
-    return Map<String, dynamic>.from(getBox().get(MyResource.DIARY_JOURNAL, defaultValue: Map<String, dynamic>()));
+    return Map<String, dynamic>.from(getBox()
+        .get(MyResource.DIARY_JOURNAL, defaultValue: <String, dynamic>{}));
   }
 
   Future<void> clearWithoutUserName() async {
     // Очищаем весь журнал по всем практикам
-    [
+    for (var element in [
       MyResource.AFFIRMATION_JOURNAL,
       MyResource.MEDITATION_JOURNAL,
       MyResource.FITNESS_JOURNAL,
@@ -127,12 +124,12 @@ class MyDB {
       MyResource.FULL_COMPLEX_FINISH,
       MyResource.MEDITATION_NIGHT_JOURNAL,
       MyResource.MUSIC_SLEEPING_NIGHT_JOURNAL,
-    ].forEach((element) {
-      myDbBox.put(element, Map<String, List<dynamic>>());
-    });
+    ]) {
+      myDbBox.put(element, <String, List<dynamic>>{});
+    }
 
     // У дневника сохранение по другому, по этому очищаем так
-    myDbBox.put(MyResource.DIARY_JOURNAL, Map<String, dynamic>());
+    myDbBox.put(MyResource.DIARY_JOURNAL, <String, dynamic>{});
 
     await myDbBox.put(MyResource.MEDITATION_AUDIO_FAVORITE, []);
   }

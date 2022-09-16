@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/pages/interview/interview1/interview_page.dart';
-
 import '../resources/colors.dart';
 import '../storage.dart';
 
 class InterviewDialog extends Dialog {
+  const InterviewDialog({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,20 +24,26 @@ class InterviewDialog extends Dialog {
                 color: Colors.white,
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 50),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 50),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      billingService.isPro() ? 'interview_dialog_text_vip'.tr : 'interview_dialog_text'.tr,
+                      billingService.isPro()
+                          ? 'interview_dialog_text_vip'.tr
+                          : 'interview_dialog_text'.tr,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: Colors.black),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black),
                     ),
                     const SizedBox(height: 30),
                     CupertinoButton(
                       child: Text(
                         'help_us'.tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.VIOLET,
                         ),
                       ),
@@ -48,10 +55,12 @@ class InterviewDialog extends Dialog {
                     CupertinoButton(
                         child: Text(
                           'more_not_show'.tr,
-                          style: TextStyle(color: Colors.red),
+                          style: const TextStyle(color: Colors.red),
                         ),
                         onPressed: () {
-                          MyDB().getBox().put(MyResource.IS_DONE_INTERVIEW, true);
+                          MyDB()
+                              .getBox()
+                              .put(MyResource.IS_DONE_INTERVIEW, true);
                           Get.back();
                         }),
                   ],
@@ -60,7 +69,9 @@ class InterviewDialog extends Dialog {
             ),
             Positioned(
               right: 0,
-              child: CupertinoButton(child: Icon(Icons.close, color: Colors.black), onPressed: Get.back),
+              child: CupertinoButton(
+                  child: const Icon(Icons.close, color: Colors.black),
+                  onPressed: Get.back),
             )
           ],
         ),

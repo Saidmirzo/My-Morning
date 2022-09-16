@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class LeftIn extends StatefulWidget {
   final double inValue;
 
-  LeftIn({double inValue = 100.0}) : inValue = inValue;
+  const LeftIn({double inValue = 100.0}) : inValue = inValue;
 
   @override
   State<StatefulWidget> createState() {
@@ -17,7 +17,7 @@ class LeftInState extends State<LeftIn> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     animation = AnimationController(
-      duration: Duration(milliseconds: 10000),
+      duration: const Duration(milliseconds: 10000),
       vsync: this,
       upperBound: widget.inValue,
     )..addListener(() {
@@ -45,7 +45,7 @@ class LeftInState extends State<LeftIn> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Transform.translate(
       offset: Offset(animation.value, 0.0),
-      child: Text('Mujtaba'),
+      child: const Text('Mujtaba'),
     );
   }
 }

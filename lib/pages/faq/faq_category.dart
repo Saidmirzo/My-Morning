@@ -1,20 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/html_parser.dart';
-import 'package:flutter_html/style.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/app_gradient_container.dart';
 import 'package:morningmagic/pages/faq/faq_support.dart';
-import 'package:morningmagic/pages/interview/interview1/interview_page.dart';
 import 'package:morningmagic/pages/interview/interview2/interview_page.dart';
-import 'package:morningmagic/pages/paywall/payment.dart';
+import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/other.dart';
 import 'package:morningmagic/widgets/expansion_tile.dart';
-import 'package:morningmagic/widgets/primary_circle_button.dart';
-
 import 'controllers/faq_controller.dart';
 
 class FaqCategoryPage extends StatefulWidget {
@@ -42,7 +35,10 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
                 const SizedBox(height: 20),
                 Text(
                   widget.category,
-                  style: TextStyle(color: Colors.white, fontSize: Get.width * .065, fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: Get.width * .065,
+                      fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 30),
                 questionList(),
@@ -69,7 +65,7 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
       list.length,
       (index) => MyExpansionTile(
         headerColor: Colors.white,
-        backgroundColor: Color(0xff9A6393),
+        backgroundColor: const Color(0xff9A6393),
         childrenPadding: const EdgeInsets.all(10),
         title: Text(list[index].entries.first.key,
             style: TextStyle(
@@ -99,11 +95,13 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
                 if (url.contains('mailto')) openEmail(url.split(':').last, '');
                 if (url.contains('screen')) {
                   print('open screen: ${url.split(':').last}');
-                  if (url.split(':').last == 'support')
+                  if (url.split(':').last == 'support') {
                     Get.to(FaqSupportPage());
-                  else if (url.split(':').last == 'tarifs')
-                    Get.to(PaymentPage());
-                  else if (url.split(':').last == 'unsubscribe') Get.to(Interview2Page());
+                  } else if (url.split(':').last == 'tarifs') {
+                    Get.to(NewPaywall());
+                  } else if (url.split(':').last == 'unsubscribe') {
+                    Get.to(Interview2Page());
+                  }
                 }
               },
             ),
@@ -112,13 +110,14 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
         ],
       ),
     );
-    if (widget.category == faqController.cat_tarifs)
+    if (widget.category == faqController.cat_tarifs) {
       ll.add(
         GestureDetector(
           onTap: () => Get.to(FaqSupportPage()),
           child: Container(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(13), color: Colors.white),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(13), color: Colors.white),
             child: Text(
               'faq_tarifs_title_6'.tr,
               style: TextStyle(
@@ -130,16 +129,19 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
           ),
         ),
       );
+    }
     return ll;
   }
 
   Widget backBtn() {
     return Align(
       alignment: Alignment.topLeft,
-      child: PrimaryCircleButton(
-        icon: Icon(Icons.arrow_back, color: AppColors.primary),
-        onPressed: () => Get.back(),
-        size: 40,
+      child: GestureDetector(
+        onTap: () => Get.back(),
+        child: const Icon(
+          Icons.west,
+          color: Colors.white,
+        ),
       ),
     );
   }

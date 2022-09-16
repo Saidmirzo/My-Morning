@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:morningmagic/db/model/progress/exercise/exercise.dart';
-
 part 'affirmation_progress.g.dart';
 
 @HiveType(typeId: 10)

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
@@ -13,6 +12,8 @@ import 'package:morningmagic/features/visualization/presentation/widgets/visuali
 import 'package:morningmagic/resources/colors.dart';
 
 class VisualizationTargetPage extends StatefulWidget {
+  const VisualizationTargetPage({Key key}) : super(key: key);
+
   @override
   _VisualizationTargetPageState createState() =>
       _VisualizationTargetPageState();
@@ -32,8 +33,11 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
               child: Stack(
                 children: [
                   Obx(
-                    () => ListView.builder(
+                    () => GridView.builder(
                       itemCount: _controller.targets.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
                       itemBuilder: (context, index) {
                         final _target = _controller.targets[index];
                         return VisualizationTargetItem(
@@ -45,7 +49,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
                               _showEditTargetDialog(context, _target.id),
                         );
                       },
-                      padding: EdgeInsets.only(top: 16, bottom: 108),
+                      padding: const EdgeInsets.only(top: 16, bottom: 108),
                     ),
                   ),
                   _buildAddButton(),
@@ -53,7 +57,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
               ),
             ),
           ]),
-          VisualizationBackButton(
+          const VisualizationBackButton(
             color: AppColors.VIOLET,
           ),
         ],
@@ -86,7 +90,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
       padding: const EdgeInsets.only(top: 48, bottom: 16.0),
       child: StyledText(
         'target_selection'.tr,
-        fontSize: 32,
+        fontSize: 27,
         color: AppColors.VIOLET,
       ),
     );
@@ -108,7 +112,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
   ) async {
     showModalBottomSheet(
       context: context,
-      builder: (context) => AddNewTargetDialog(),
+      builder: (context) => const AddNewTargetDialog(),
     );
   }
 

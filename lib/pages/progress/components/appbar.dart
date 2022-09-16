@@ -8,10 +8,10 @@ Widget appBarProgress(String title, {Color bgColor = Colors.transparent}) {
     foregroundColor: Colors.transparent,
     shadowColor: Colors.transparent,
     leading: IconButton(
-        icon: Icon(
-          Icons.keyboard_arrow_left_rounded,
-          size: 40,
-          color: AppColors.VIOLET,
+        icon: const Icon(
+          Icons.west,
+          size: 30,
+          color: Colors.white,
         ),
         onPressed: Get.back),
     title: Text(

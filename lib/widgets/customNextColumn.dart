@@ -9,7 +9,7 @@ class NextColumn extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(bottom: 30),
+          padding: const EdgeInsets.only(bottom: 30),
           child: ButtonTheme(
             minWidth: 170.0,
             height: 50.0,
@@ -20,7 +20,7 @@ class NextColumn extends StatelessWidget {
                   borderRadius: BorderRadius.circular(38.0)),
               child: Text(
                 'continue'.tr,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.WHITE,
                   fontWeight: FontWeight.normal,
                   fontSize: 21,

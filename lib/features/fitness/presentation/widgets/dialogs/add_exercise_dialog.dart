@@ -5,7 +5,6 @@ import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_e
 import 'package:morningmagic/features/fitness/presentation/widgets/dialog_header_button.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialogs/create_own_exercise_dialog.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import '../dialog_footer_button.dart';
 import '../styled_text.dart';
 
@@ -22,12 +21,12 @@ class AddExerciseDialog extends StatefulWidget {
 }
 
 class _AddExerciseDialogState extends State<AddExerciseDialog> {
-  List<FitnessExercise> _defaultExercises =
+  final List<FitnessExercise> _defaultExercises =
       FitnessDataGenerator.generateDefaultExercises();
 
   List<FitnessExercise> _initialExercises;
 
-  List<FitnessExercise> _selectedExercises = [];
+  final List<FitnessExercise> _selectedExercises = [];
 
   @override
   void initState() {
@@ -43,7 +42,7 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height / 1.3,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -51,20 +50,20 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               Row(children: [
                 DialogHeaderButton(
                     text: 'back_button'.tr,
                     onTap: () => Navigator.pop(context)),
-                Spacer(),
+                const Spacer(),
                 DialogHeaderButton(
                   text: 'save'.tr,
                   onTap: () => Navigator.pop(context, _selectedExercises),
                 ),
               ]),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               StyledText(
@@ -72,7 +71,7 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
                 fontSize: 20,
                 color: Colors.blueGrey,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               (_initialExercises.isEmpty)
@@ -96,8 +95,9 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
                           onItemSelected: (value) {
                             if (_selectedExercises.contains(value)) {
                               _selectedExercises.remove(value);
-                            } else
+                            } else {
                               _selectedExercises.add(value);
+                            }
                           },
                         ),
                       ),
@@ -115,7 +115,7 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
   Future<void> _openCreateOwnExerciseDialog(BuildContext context) async {
     final _exerciseResult = await showDialog(
       context: context,
-      builder: (context) => CreateOwnExerciseDialog(),
+      builder: (context) => const CreateOwnExerciseDialog(),
     );
     if (_exerciseResult != null) {
       setState(() {
@@ -162,8 +162,8 @@ class _ExerciseAddExerciseDialogItemState
 
   Container _buildSelectedItem() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+      decoration: const BoxDecoration(
           color: AppColors.LIGHT_VIOLET,
           borderRadius: BorderRadius.all(Radius.circular(40))),
       child: Row(
@@ -180,8 +180,8 @@ class _ExerciseAddExerciseDialogItemState
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.check,
               color: AppColors.WHITE,
@@ -194,10 +194,10 @@ class _ExerciseAddExerciseDialogItemState
 
   Container _buildUnselectedItem() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
       decoration: BoxDecoration(
           border: Border.all(width: 1, color: AppColors.LIGHT_VIOLET),
-          borderRadius: BorderRadius.all(Radius.circular(40))),
+          borderRadius: const BorderRadius.all(Radius.circular(40))),
       child: Row(
         children: [
           Expanded(
@@ -212,8 +212,8 @@ class _ExerciseAddExerciseDialogItemState
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.add,
               color: AppColors.LIGHT_VIOLET,

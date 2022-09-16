@@ -22,7 +22,7 @@ class Rotate extends StatefulWidget {
   /// The direction in which to rotate.
   final RotationDirection rotationDirection;
 
-  Rotate({
+  const Rotate({
     this.child,
     this.rotationsPerMinute = 70,
     this.repeat = false,

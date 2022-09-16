@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/pages/faq/faq_menu.dart';
 import 'package:morningmagic/pages/interview/interview2/questions/q_futures.dart';
 import 'package:morningmagic/pages/interview/interview2/questions/q_yes_no_other.dart';
 import 'package:morningmagic/pages/interview/interview2/questions/q_yes_no_other_if_yes.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import 'components/bg.dart';
 import 'components/dot_panel.dart';
 import 'interview_controller.dart';
@@ -18,9 +17,9 @@ class Interview2Page extends StatefulWidget {
 }
 
 class _Interview2PageState extends State<Interview2Page> {
-  Interview2Controller _controller = Get.put(Interview2Controller(10));
+  final Interview2Controller _controller = Get.put(Interview2Controller(10));
 
-  List<Widget> _pages = [
+  final List<Widget> _pages = [
     qOneField('interview_2_q_1'.tr, 1),
     qOneField('interview_2_q_2'.tr, 2),
     qYesNoOther('interview_2_q_3'.tr, 3),
@@ -37,7 +36,7 @@ class _Interview2PageState extends State<Interview2Page> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(gradient: AppColors.Interview_Gradient),
+      decoration: const BoxDecoration(gradient: AppColors.Interview_Gradient),
       child: SafeArea(
         bottom: false,
         child: Stack(
@@ -47,19 +46,60 @@ class _Interview2PageState extends State<Interview2Page> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                dotPanel(_pages.length),
+                Row(
+                  children: [
+                    const BackButton(
+                      color: Colors.white,
+                    ),
+                    dotPanel(_pages.length),
+                  ],
+                ),
                 Expanded(
                   child: PageView(
                     controller: _controller.pageController,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: _pages,
                   ),
                 ),
               ],
             ),
+            const Positioned(
+              right: 20,
+              top: 20,
+              child: CloseAndGoFaqMenuButton(),
+            ),
           ],
         ),
       ),
     ));
+  }
+}
+
+class CloseAndGoFaqMenuButton extends StatelessWidget {
+  const CloseAndGoFaqMenuButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Get.to(const FaqMenuPage()),
+      child: Container(
+        width: 30,
+        height: 30,
+        alignment: Alignment.center,
+        decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 3,
+              )
+            ]),
+        child: const Icon(
+          Icons.close,
+          size: 15,
+        ),
+      ),
+    );
   }
 }

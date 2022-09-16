@@ -1,15 +1,11 @@
-import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
-import 'package:morningmagic/features/fitness/presentation/controller/timer_controller.dart';
 import 'package:morningmagic/pages/progress/progress_page.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
-
 import '../../../../resources/colors.dart';
 import '../../../../widgets/primary_circle_button.dart';
 
@@ -17,7 +13,8 @@ class FitnessSuccessPage extends StatefulWidget {
   final int countProgram;
   final Function onNext;
 
-  const FitnessSuccessPage({Key key, this.countProgram, this.onNext}) : super(key: key);
+  const FitnessSuccessPage({Key key, this.countProgram, this.onNext})
+      : super(key: key);
 
   @override
   State createState() {
@@ -26,7 +23,7 @@ class FitnessSuccessPage extends StatefulWidget {
 }
 
 class FitnessSuccessPageState extends State<FitnessSuccessPage> {
-  AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
   DateTime dateTime = DateTime.now();
   FitnessController controller = Get.find();
   int count;
@@ -62,7 +59,8 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
         body: Container(
           width: Get.width,
           height: Get.height,
-          decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
+          decoration: const BoxDecoration(
+              gradient: AppColors.Bg_Gradient_Timer_Reading),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -71,7 +69,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   buildProgress(),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   const SizedBox(height: 50),
                   buildButton(),
                 ],
@@ -86,7 +84,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   Widget buildButton() {
     return PrimaryCircleButton(
       size: 45,
-      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+      icon: const Icon(Icons.arrow_forward, color: AppColors.primary),
       onPressed: widget.onNext ?? _continueClicked,
     );
   }
@@ -94,7 +92,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
   Positioned bg() {
     return Positioned(
       bottom: 0,
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset(
           'assets/images/timer/clouds_timer.png',
@@ -110,10 +108,14 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
       lineWidth: 27.0,
       reverse: true,
       animation: false,
-      percent: 0.6,
+      percent: 1,
       center: Text(
         'success'.tr,
-        style: TextStyle(fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
+        style: TextStyle(
+            fontSize: Get.height * 0.04,
+            fontStyle: FontStyle.normal,
+            color: Colors.white,
+            fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
       linearGradient: AppColors.Progress_Gradient_Timer_Reading,
@@ -125,7 +127,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
     Widget _routeValue;
     print('fromHome: ${controller.fromHomeMenu}');
     if (controller.fromHomeMenu) {
-      _routeValue = ProgressPage();
+      _routeValue = const ProgressPage();
     } else {
       _routeValue = await OrderUtil().getRouteById(2);
     }

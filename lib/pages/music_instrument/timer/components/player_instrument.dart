@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/features/instruments_audio/controllers/instruments_audio_controller.dart';
@@ -23,13 +22,17 @@ Widget instrumentPlayer(
         if (!fromTimer)
           _playButton(SvgAssets.time,
               onPress: () => setTimePeriod(timerService)),
-        Obx(() => _playButton(
-            audioController.audioSourse.length == 0
-                ? SvgAssets.play
-                : audioController.isPause == false
-                    ? SvgAssets.pause
-                    : SvgAssets.play,
-            onPress: () => playPause())),
+        Obx(
+          () => _playButton(
+              audioController.audioSourse.isEmpty
+                  ? SvgAssets.play
+                  : audioController.isPause == false
+                      ? SvgAssets.pause
+                      : SvgAssets.play, onPress: () {
+            playPause();
+            timerService.startTimer();
+          }),
+        ),
         Stack(
           children: [
             _playButton(
@@ -45,8 +48,8 @@ Widget instrumentPlayer(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 5, 5, 0),
                     child: Text(
-                      '${audioController.audioSourse.length == 0 ? '' : audioController.audioSourse.length}',
-                      style: TextStyle(fontSize: 10),
+                      '${audioController.audioSourse.isEmpty ? '' : audioController.audioSourse.length}',
+                      style: const TextStyle(fontSize: 10),
                     ),
                   ),
                 ),
@@ -55,8 +58,14 @@ Widget instrumentPlayer(
           ],
         ),
         if (!fromTimer)
-          _playButton(SvgAssets.next,
-              onPress: () => gotToTimerPage(timerService)),
+          Obx(
+            () => _playButton(
+              SvgAssets.next,
+              onPress: audioController.audioSourse.isNotEmpty
+                  ? () => gotToTimerPage(timerService)
+                  : () {},
+            ),
+          ),
       ],
     ),
   );

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -12,8 +11,10 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 
 class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
-  NetworkInfo networkInfo = NetworkInfoImpl(dataConnectionChecker: DataConnectionChecker());
+  NetworkInfo networkInfo =
+      NetworkInfoImpl(dataConnectionChecker: DataConnectionChecker());
 
+  // ignore: constant_identifier_names
   static const String IMAGE_CACHE_DIR_SEGMENT = 'imageAssets';
 
   Directory _tempAssetsDir;
@@ -21,7 +22,8 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
   String get imageCacheDirPath => _tempAssetsDir.path;
 
   @override
-  Future<List<VisualizationImage>> getVisualizationImages(String tag, int targetId) async {
+  Future<List<VisualizationImage>> getVisualizationImages(
+      String tag, int targetId) async {
     List<VisualizationImage> _resultImages = [];
 
     bool _isConnected = await networkInfo.isConnected;
@@ -39,13 +41,15 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
   }
 
   @override
-  Future<void> cachePickedFromGalleryAssets(List<Asset> assetImages, int targetId) async {
+  Future<void> cachePickedFromGalleryAssets(
+      List<Asset> assetImages, int targetId) async {
     final _tempAppDir = await syspaths.getTemporaryDirectory();
 
     //create root directory if not exists
     await _getDirectory('${_tempAppDir.path}/$IMAGE_CACHE_DIR_SEGMENT');
 
-    final _imagesCacheDirectory = await _getDirectory('${_tempAppDir.path}/$IMAGE_CACHE_DIR_SEGMENT/$targetId');
+    final _imagesCacheDirectory = await _getDirectory(
+        '${_tempAppDir.path}/$IMAGE_CACHE_DIR_SEGMENT/$targetId');
 
     for (Asset asset in assetImages) {
       final assetByteData = await asset.getByteData();
@@ -134,7 +138,8 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
       if (_file == null) {
         _result.add(VisualizationNetworkImage(path: url, isDefault: true));
       } else {
-        _result.add(VisualizationFileSystemImage(path: _file.path, file: _file, isDefault: true));
+        _result.add(VisualizationFileSystemImage(
+            path: _file.path, file: _file, isDefault: true));
       }
     });
 
@@ -144,11 +149,16 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
   Future<List<VisualizationImage>> _getCachedPickedImages(int targetId) async {
     List<VisualizationImage> _result = [];
     final _tempAppDir = await syspaths.getTemporaryDirectory();
-    final _imagesCacheDirectory = Directory('${_tempAppDir.path}/$IMAGE_CACHE_DIR_SEGMENT/$targetId');
+    final _imagesCacheDirectory =
+        Directory('${_tempAppDir.path}/$IMAGE_CACHE_DIR_SEGMENT/$targetId');
 
     if (!(await _imagesCacheDirectory.exists())) return _result;
 
-    List<VisualizationImage> _imagesFromTempDirectory = _imagesCacheDirectory.listSync().map((file) => VisualizationFileSystemImage(path: file.path, file: File(file.path), isDefault: false)).toList();
+    List<VisualizationImage> _imagesFromTempDirectory = _imagesCacheDirectory
+        .listSync()
+        .map((file) => VisualizationFileSystemImage(
+            path: file.path, file: File(file.path), isDefault: false))
+        .toList();
 
     _result.addAll(_imagesFromTempDirectory);
 
@@ -158,15 +168,17 @@ class VisualizationImageRepositoryImpl implements VisualizationImageRepository {
   Future<Directory> _getDirectory(String path) async {
     final _directory = Directory(path);
 
-    if (await _directory.exists())
+    if (await _directory.exists()) {
       return _directory;
-    else
+    } else {
       return await _createDirectory(path);
+    }
   }
 
   Future<Directory> _createDirectory(String path) async {
     return Directory(path).create();
   }
 
-  bool _isCustomTarget(String tag) => tag == EnumToString.convertToString(VisualizationImageTag.custom);
+  bool _isCustomTarget(String tag) =>
+      tag == EnumToString.convertToString(VisualizationImageTag.custom);
 }

@@ -10,6 +10,8 @@ import 'slides/name_input_slide.dart';
 import 'slides/welcome_text_slide.dart';
 
 class WelcomePage extends StatefulWidget {
+  const WelcomePage({Key key}) : super(key: key);
+
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
@@ -19,7 +21,6 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     SharedPreferences.getInstance().then((value) {
       AppMetrica.reportEvent('first_open');
@@ -32,7 +33,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: BoxDecoration(gradient: AppColors.Bg_Gradient_2),
+        decoration: const BoxDecoration(gradient: AppColors.Bg_Gradient_2),
         child: Stack(
           children: [
             buildClouds(),
@@ -49,7 +50,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   Expanded(
                     child: PageView(
                       controller: pageController,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       children: [
                         AddPushSlide(pageController),
                         NameInputSlide(pageController),
@@ -69,7 +70,7 @@ class _WelcomePageState extends State<WelcomePage> {
   Positioned buildClouds() {
     return Positioned(
       bottom: 0,
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset(
           'assets/images/auth/clouds.png',

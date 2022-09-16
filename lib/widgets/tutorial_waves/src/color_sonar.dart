@@ -34,7 +34,7 @@ class ColorSonar extends StatefulWidget {
   /// The widget to be placed inside the waves.
   final Widget child;
 
-  ColorSonar({
+  const ColorSonar({
     this.contentAreaRadius = 24.0,
     this.waveFall = 15.0,
     this.waveMotion = WaveMotion.synced,

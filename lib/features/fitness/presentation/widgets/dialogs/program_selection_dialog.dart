@@ -1,17 +1,16 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/controller/fitness_controller.dart';
 import 'package:morningmagic/features/fitness/presentation/pages/exercise_page.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/dialog_header_button.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/program_dialog_item.dart';
 import 'package:morningmagic/resources/colors.dart';
-
 import '../styled_text.dart';
 
 class ProgramSelectionDialog extends StatelessWidget {
   final _fitnessController = Get.find<FitnessController>();
+
+  ProgramSelectionDialog({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class ProgramSelectionDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height / 1.3,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -31,12 +30,12 @@ class ProgramSelectionDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               DialogHeaderButton(
                   text: 'back_button'.tr, onTap: () => Navigator.pop(context)),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               Expanded(

@@ -1,11 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/state_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/domain/entities/visualization_image.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
+import 'package:morningmagic/features/visualization/presentation/pages/visualization_target_page.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_timer_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -14,62 +15,86 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 class VisualizationImpressionImagePage extends StatelessWidget {
   final _controller = Get.find<VisualizationController>();
 
+  VisualizationImpressionImagePage({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        _buildSelectImpressionTitle(context),
-        Obx(() {
-          if (_controller.isImagesDownloading.value) {
-            return _buildLoading();
-          } else
-            return Expanded(
-              child: Column(
-                children: [
-                  _buildImageCounter(),
-                  _buildImageGrid(),
-                ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _buildSelectImpressionTitle(context),
+          Obx(() {
+            if (_controller.isImagesDownloading.value) {
+              return _buildLoading();
+            } else {
+              return Expanded(
+                child: Column(
+                  children: [
+                    _buildImageCounter(),
+                    _buildImageGrid(),
+                  ],
+                ),
+              );
+            }
+          }),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildActionButton(
+                () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const VisualizationTargetPage()),
+                  )
+                },
+                'assets/images/arrow_back.svg',
               ),
-            );
-        }),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildActionButton(
-                () => {Navigator.pop(context)}, 'assets/images/arrow_back.svg'),
-            _buildActionButton(() async => {await _loadAssets(context)},
-                'assets/images/plus.svg'),
-            Obx(() => Opacity(
+              _buildActionButton(
+                () async => {
+                  await _loadAssets(context),
+                },
+                'assets/images/plus.svg',
+              ),
+              Obx(
+                () => Opacity(
                   opacity:
                       (_controller.selectedImageIndexes.isEmpty) ? 0.3 : 1.0,
-                  child: _buildActionButton(() {
-                    if (_controller.selectedImageIndexes.isEmpty) return;
-                    Navigator.push(
+                  child: _buildActionButton(
+                    () {
+                      if (_controller.selectedImageIndexes.isEmpty) return;
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => VisualizationTimerPage()));
-                  }, 'assets/images/arrow_forward.svg'),
-                )),
-          ],
-        ),
-      ]),
+                          builder: (_) => const VisualizationTimerPage(),
+                        ),
+                      );
+                    },
+                    'assets/images/arrow_forward.svg',
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
   Obx _buildImageCounter() {
     return Obx(() {
-      if (_controller.selectedImagesCount > 0)
-        return Container(
-          child: StyledText(
-            _controller.selectedImagesCount.toString(),
-            fontSize: 28,
-          ),
+      if (_controller.selectedImagesCount > 0) {
+        return StyledText(
+          _controller.selectedImagesCount.toString(),
+          fontSize: 28,
         );
-      else
+      } else {
         return Container(
           height: 28,
         );
+      }
     });
   }
 
@@ -78,58 +103,63 @@ class VisualizationImpressionImagePage extends StatelessWidget {
       child: GridView.builder(
         itemCount: _controller.images.length,
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         itemBuilder: (context, index) => GestureDetector(
           onTap: () => _controller.toggleImageSelected(index),
-          child: Obx(() => Container(
-                margin: EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                    border: (_controller.selectedImageIndexes.contains(index))
-                        ? Border.all(color: AppColors.VIOLET, width: 2.5)
-                        : null,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    )),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                        child: _buildImage(index)),
-                    if (!_controller.images[index].isDefault &&
-                        _controller.selectedImageIndexes.contains(index))
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: InkWell(
-                          onTap: () => _showDialogRemoveImageSelection(index),
-                          // onTap: () => _controller.toggleImageSelected(index),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: SvgPicture.asset(
-                              'assets/images/remove_target.svg',
-                              height: 24,
-                              width: 24,
-                            ),
+          child: Obx(
+            () => Container(
+              margin: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                border: (_controller.selectedImageIndexes.contains(index))
+                    ? Border.all(color: AppColors.VIOLET, width: 2.5)
+                    : null,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      child: _buildImage(index)),
+                  if (!_controller.images[index].isDefault &&
+                      _controller.selectedImageIndexes.contains(index))
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: () => _showDialogRemoveImageSelection(index),
+                        // onTap: () => _controller.toggleImageSelected(index),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: SvgPicture.asset(
+                            'assets/images/remove_target.svg',
+                            height: 24,
+                            width: 24,
                           ),
                         ),
-                      )
-                  ],
-                ),
-              )),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildLoading() => Expanded(
-          child: Center(
-              child: Container(
-        width: 64,
-        height: 64,
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+  Widget _buildLoading() => const Expanded(
+        child: Center(
+          child: SizedBox(
+            width: 64,
+            height: 64,
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+            ),
+          ),
         ),
-      )));
+      );
 
   Widget _buildImage(int index) {
     final _image = _controller.images[index];
@@ -173,7 +203,8 @@ class VisualizationImpressionImagePage extends StatelessWidget {
             if (loadingProgress == null) return child;
             return Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+                valueColor:
+                    const AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
                 value: loadingProgress.expectedTotalBytes != null
                     ? loadingProgress.cumulativeBytesLoaded /
                         loadingProgress.expectedTotalBytes
@@ -184,7 +215,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
         );
         break;
       default:
-        throw new UnsupportedError('unknown image type');
+        throw UnsupportedError('unknown image type');
     }
   }
 

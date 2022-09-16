@@ -6,7 +6,6 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
-
 import '../../../resources/colors.dart';
 
 class TimerInputSuccessScreen extends StatefulWidget {
@@ -14,7 +13,7 @@ class TimerInputSuccessScreen extends StatefulWidget {
   final bool isSkip;
   final bool fromHomeMenu;
 
-  TimerInputSuccessScreen(this.passedSec, this.isSkip,
+  const TimerInputSuccessScreen(this.passedSec, this.isSkip,
       {this.fromHomeMenu = false});
 
   @override
@@ -24,7 +23,7 @@ class TimerInputSuccessScreen extends StatefulWidget {
 }
 
 class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
-  AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -121,7 +120,7 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   Positioned bg(String pathImage) {
     return Positioned(
       bottom: 0,
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset(
           pathImage,

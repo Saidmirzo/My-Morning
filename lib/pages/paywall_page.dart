@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/user/user.dart';
 import 'package:morningmagic/db/resource.dart';
-import 'package:morningmagic/pages/paywall/payment.dart';
+import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/all.dart';
-import 'package:morningmagic/widgets/primary_circle_button.dart';
-
 import '../resources/colors.dart';
 import 'progress/progress_page.dart';
 
@@ -18,65 +15,119 @@ class PaywallPage extends StatefulWidget {
 }
 
 class _PaywallPageState extends State<PaywallPage> {
-  User _user = myDbBox.get(MyResource.USER_KEY);
+  final User _user = myDbBox.get(MyResource.USER_KEY);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: AssetImage('assets/images/background_paywall.png'))),
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('assets/images/background_paywall.png'))),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: PrimaryCircleButton(
-                  icon: Icon(Icons.arrow_back, color: AppColors.primary),
-                  onPressed: () {
-                    return AppRouting.navigateToHomeWithClearHistory();
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 20),
+                  child: GestureDetector(
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                    onTap: () {
+                      return AppRouting.navigateToHomeWithClearHistory();
+                    },
+                  ),
                 ),
               ),
               const Spacer(),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                 child: Column(
                   children: [
                     Text(
-                      "${'well_done'.tr} ${_user.name}!",
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                      'well_done'.tr,
+                      style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       'well_done_desc'.tr,
-                      style: TextStyle(fontSize: 20, fontStyle: FontStyle.normal, color: Colors.white),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontStyle: FontStyle.normal,
+                          color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
               ),
-              Image(image: AssetImage('assets/images/paywall_logo.png')),
-              SizedBox(height: 36),
+              const Image(image: AssetImage('assets/images/paywollnew.png')),
+              const SizedBox(height: 36),
+
               _buildPaywallButton(
-                title: 'buy_free'.tr,
-                actionCallback: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentPage()));
-                  appAnalitics.logEvent('first_polnyi_complex');
-                },
-              ),
-              SizedBox(height: 15),
-              Text(
-                'days_free'.trParams({'days': (MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false) ? 14 : 3).toString()}),
-                style: TextStyle(color: const Color(0x594A1D72)),
-              ),
-              SizedBox(height: 15),
+                  widget: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Try PREMIUM'.tr,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        '3 days free'.tr,
+                        style: const TextStyle(
+                            color: Color(0xffEBA2C8),
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  actionCallback: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => NewPaywall()));
+                    // appAnalitics.logEvent('first_polnyi_complex');
+                  },
+                  bgColor: AppColors.VIOLET,
+                  color: Colors.white),
+              const SizedBox(height: 15),
+              // Text(
+              //   'days_free'.trParams({
+              //     'days': (MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW,
+              //                 defaultValue: false)
+              //             ? 14
+              //             : 3)
+              //         .toString()
+              //   }),
+              //   style: const TextStyle(color: AppColors.VIOLET),
+              // ),
+              const SizedBox(height: 15),
               _buildPaywallButton(
-                title: 'my_progress'.tr,
+                widget: Text(
+                  'my_progress'.tr,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: AppColors.VIOLET,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
                 actionCallback: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProgressPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProgressPage()));
                   appAnalitics.logEvent('first_reklama');
                   // admobService.showInterstitial();
                 },
@@ -89,23 +140,30 @@ class _PaywallPageState extends State<PaywallPage> {
     );
   }
 
-  Widget _buildPaywallButton({@required String title, @required VoidCallback actionCallback}) {
-    return Container(
+  Widget _buildPaywallButton(
+      {@required Widget widget,
+      @required VoidCallback actionCallback,
+      Color bgColor = Colors.white,
+      Color color = AppColors.VIOLET}) {
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 3 / 4,
       child: TextButton(
         onPressed: actionCallback,
         style: TextButton.styleFrom(
           primary: AppColors.PINK,
-          backgroundColor: Colors.white,
+          backgroundColor: bgColor,
           // onSurface: Colors.red,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(27))),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(27))),
           padding: const EdgeInsets.symmetric(vertical: 20),
         ),
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: AppColors.VIOLET, fontSize: 14, fontWeight: FontWeight.bold),
-        ),
+        child: widget,
+        // child: Text(
+        //   title,
+        //   textAlign: TextAlign.center,
+        //   style: TextStyle(
+        //       color: color, fontSize: 14, fontWeight: FontWeight.bold),
+        // ),
       ),
     );
   }

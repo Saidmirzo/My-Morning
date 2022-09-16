@@ -45,7 +45,7 @@ class JumpState extends State<Jump> with SingleTickerProviderStateMixin {
     ).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(
+        curve: const Interval(
           0.0,
           .50,
         ),
@@ -58,7 +58,7 @@ class JumpState extends State<Jump> with SingleTickerProviderStateMixin {
     ).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(
+        curve: const Interval(
           0.50,
           1.0,
         ),

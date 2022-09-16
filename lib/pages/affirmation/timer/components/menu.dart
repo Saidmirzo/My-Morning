@@ -1,4 +1,3 @@
-import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,7 +11,9 @@ import 'package:morningmagic/services/timer_service.dart';
 Widget buildMenuButtons(TimerService timerService) {
   double btnSize = 30;
   return Container(
-    decoration: BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(30)), color: Colors.white),
+    decoration: const BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        color: Colors.white),
     child: SafeArea(
       top: false,
       child: Row(
@@ -24,7 +25,8 @@ Widget buildMenuButtons(TimerService timerService) {
                 width: btnSize,
                 height: btnSize,
               ),
-              onPressed: () => Get.to(AddTimePeriod(timerService: timerService))),
+              onPressed: () =>
+                  Get.to(AddTimePeriod(timerService: timerService))),
           CupertinoButton(
               child: SvgPicture.asset(
                 SvgAssets.home,
@@ -41,8 +43,10 @@ Widget buildMenuButtons(TimerService timerService) {
                 height: btnSize,
               ),
               onPressed: () async {
-                final _affirmation = await Get.dialog(AffirmationCategoryDialog());
-                if (_affirmation != null) timerService.affirmationText.value = _affirmation.toString();
+                final _affirmation =
+                    await Get.dialog(const AffirmationCategoryDialog());
+                if (_affirmation != null)
+                  timerService.affirmationText.value = _affirmation.toString();
               }),
           CupertinoButton(
             child: SvgPicture.asset(
@@ -50,8 +54,8 @@ Widget buildMenuButtons(TimerService timerService) {
               width: btnSize,
               height: btnSize,
             ),
-            onPressed: () {
-              timerService.skipTask();
+            onPressed: () async {
+              await timerService.skipTask();
               appAnalitics.logEvent('first_affirmation_next');
             },
           ),

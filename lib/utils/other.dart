@@ -7,17 +7,19 @@ openEmail(String email, String subject) async {
     query: 'subject=$subject',
   );
   var url = params.toString();
-  if (await canLaunch(url))
+  if (await canLaunch(url)) {
     await launch(url);
-  else
+  } else {
     print('Can\'t launch email: $url');
+  }
 }
 
 openUrl(String url) async {
-  if (await canLaunch(url))
+  if (await canLaunch(url)) {
     await launch(url);
-  else
+  } else {
     print('Can\'t launch url: $url');
+  }
 }
 
 String printDuration(Duration duration, {bool h = true}) {

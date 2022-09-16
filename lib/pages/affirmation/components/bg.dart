@@ -16,13 +16,28 @@ Widget bg() {
       ),
       Positioned(
         bottom: 0,
-        child: Image.asset('$path/mountain2.png',
-            width: Get.width, fit: BoxFit.cover),
+        child: Image.asset(
+          '$path/mountain2.png',
+          width: Get.width,
+          fit: BoxFit.cover,
+        ),
+      ),
+      Positioned(
+        bottom: 0,
+        child: Image.asset(
+          '$path/avatar_bg.png',
+          width: Get.width,
+          fit: BoxFit.cover,
+        ),
       ),
       Positioned(
           bottom: 0,
-          child: Image.asset('$path/main.png',
-              width: Get.width, fit: BoxFit.cover)),
+          right: Get.width / 4.518072289,
+          left: Get.width / 4.518072289,
+          child: Image.asset(
+            '$path/main.png',
+            width: Get.width,
+          )),
     ],
   );
 }

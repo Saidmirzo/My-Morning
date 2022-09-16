@@ -27,20 +27,20 @@ class FitnessNameInputForm extends StatelessWidget {
         },
         controller: _textController,
         decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
           ),
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.VIOLET, width: 1),
           ),
           suffixIcon: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.clear,
               color: AppColors.VIOLET,
             ),
             onPressed: () => _textController.text = '',
           ),
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           hintText: 'type_program_name'.tr,
         ),
         autofocus: autoFocus,

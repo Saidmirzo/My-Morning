@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
 
 class AddTextReminder extends StatelessWidget {
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
+
+  AddTextReminder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +35,20 @@ class AddTextReminder extends StatelessWidget {
         textInputAction: TextInputAction.next,
         controller: _textController,
         decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
           ),
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.VIOLET, width: 1),
           ),
           suffixIcon: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.clear,
               color: AppColors.VIOLET,
             ),
             onPressed: () => _textController.clear(),
           ),
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           hintText: 'input_desc'.tr,
         ),
         autofocus: true,
@@ -57,7 +59,7 @@ class AddTextReminder extends StatelessWidget {
   Row buildMenu() {
     return Row(
       children: [
-        Spacer(),
+        const Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
           child: InkWell(
@@ -70,7 +72,7 @@ class AddTextReminder extends StatelessWidget {
             child: Text(
               'done'.tr,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 23,
                   fontStyle: FontStyle.normal,
                   color: AppColors.VIOLET),

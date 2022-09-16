@@ -7,7 +7,7 @@ class BottomExerciseNavigation extends StatelessWidget {
   final GestureTapCallback soundCallback;
   final VoidCallback nextCallback;
 
-  BottomExerciseNavigation(
+  const BottomExerciseNavigation(
       {@required this.soundCallback, @required this.nextCallback});
 
   @override
@@ -16,12 +16,12 @@ class BottomExerciseNavigation extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(bottom: 15),
+            padding: const EdgeInsets.only(bottom: 15),
             child:
                 AnimatedButton(soundCallback, 'listen_to'.tr, 20, null, null),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.only(bottom: 16),
             child: AnimatedButton(
                 nextCallback, 'next_exercise'.tr, 19, 270.0, null),
           ),

@@ -18,7 +18,7 @@ class FitnessController extends GetxController {
     print('FitnessController fromHomeMenu : $fromHomeMenu');
   }
 
-  Rx<FitnessProgram> _selectedProgram = Rx<FitnessProgram>();
+  final Rx<FitnessProgram> _selectedProgram = Rx<FitnessProgram>();
 
   FitnessProgram get selectedProgram => _selectedProgram.value;
 
@@ -37,24 +37,26 @@ class FitnessController extends GetxController {
   void dicrementStep() => step--;
 
   FitnessExercise get currentExercise {
-    if (selectedProgram == null || selectedProgram.exercises.isEmpty)
+    if (selectedProgram == null || selectedProgram.exercises.isEmpty) {
       return null;
-    else {
-      if (step >= selectedProgram.exercises.length)
+    } else {
+      if (step >= selectedProgram.exercises.length) {
         return null;
-      else
+      } else {
         return selectedProgram.exercises[step];
+      }
     }
   }
 
   FitnessExercise get prevExercise {
-    if (selectedProgram == null || selectedProgram.exercises.isEmpty)
+    if (selectedProgram == null || selectedProgram.exercises.isEmpty) {
       return null;
-    else {
-      if (step < 0)
+    } else {
+      if (step < 0) {
         return null;
-      else
+      } else {
         return selectedProgram.exercises[step];
+      }
     }
   }
 

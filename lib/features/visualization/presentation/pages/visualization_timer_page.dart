@@ -1,13 +1,14 @@
-import 'dart:ui';
+// ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/fitness/presentation/widgets/styled_text.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/pages/visualization_full_screen_page.dart';
-import 'package:morningmagic/features/visualization/presentation/widgets/back_button.dart';
+import 'package:morningmagic/features/visualization/presentation/pages/visualization_main_page.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/routes/scale_route.dart';
 import 'package:morningmagic/services/analitics/all.dart';
@@ -15,21 +16,27 @@ import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/widgets/circular_progress_bar/circular_progress_bar.dart';
 
 class VisualizationTimerPage extends StatefulWidget {
+  const VisualizationTimerPage({Key key}) : super(key: key);
+
   @override
   _VisualizationTimerPageState createState() => _VisualizationTimerPageState();
 }
 
-class _VisualizationTimerPageState extends State<VisualizationTimerPage> with WidgetsBindingObserver {
-  VisualizationController _controller = Get.find<VisualizationController>();
+class _VisualizationTimerPageState extends State<VisualizationTimerPage>
+    with WidgetsBindingObserver {
+  final VisualizationController _controller =
+      Get.find<VisualizationController>();
 
   TimerLeftController cTimerLeft;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      cTimerLeft.onAppLeft(_controller.timer, _controller.timeLeft.value, onPlayPause: () => _controller.toggleStartPauseTimer());
+      cTimerLeft.onAppLeft(_controller.timer, _controller.timeLeft.value,
+          onPlayPause: () => _controller.toggleStartPauseTimer());
     } else if (state == AppLifecycleState.resumed) {
-      cTimerLeft.onAppResume(_controller.timer, _controller.timeLeft, _controller.passedSec);
+      cTimerLeft.onAppResume(
+          _controller.timer, _controller.timeLeft, _controller.passedSec);
     }
   }
 
@@ -38,6 +45,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> with Wi
     Get.delete<TimerLeftController>();
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    _controller.dispose();
   }
 
   @override
@@ -92,8 +100,10 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> with Wi
   BoxDecoration _buildPageDecoration() {
     return BoxDecoration(
       image: DecorationImage(
-        image: _controller.getImpressionDecorationImage(_controller.currentImageIndex),
-        colorFilter: new ColorFilter.mode(Colors.grey.withOpacity(0.5), BlendMode.exclusion),
+        image: _controller
+            .getImpressionDecorationImage(_controller.currentImageIndex),
+        colorFilter:
+            ColorFilter.mode(Colors.grey.withOpacity(0.5), BlendMode.exclusion),
         fit: BoxFit.cover,
       ),
     );
@@ -104,10 +114,15 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> with Wi
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildActionButton(() => Navigator.of(context).push(_createFullScreenRoute()), 'assets/images/full_screen.svg'),
+        _buildActionButton(
+            () => Navigator.of(context).push(_createFullScreenRoute()),
+            'assets/images/full_screen.svg'),
         Obx(() {
-          VoidCallback _toggleStartPauseCallback = () => _controller.toggleStartPauseTimer();
-          final _imageRes = _controller.isTimerActive.value ? 'assets/images/pause.svg' : 'assets/images/play.svg';
+          VoidCallback _toggleStartPauseCallback =
+              () => _controller.toggleStartPauseTimer();
+          final _imageRes = _controller.isTimerActive.value
+              ? 'assets/images/pause.svg'
+              : 'assets/images/play.svg';
           return _buildActionButton(_toggleStartPauseCallback, _imageRes);
         }),
         _buildActionButton(() {
@@ -115,6 +130,24 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> with Wi
           appAnalitics.logEvent('first_visualisation_next');
         }, 'assets/images/arrow_forward.svg'),
       ],
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  Widget VisualizationBackButton() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 36.0, left: 8),
+      child: IconButton(
+        icon: const Icon(
+          Icons.arrow_back_rounded,
+          size: 36,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          _controller.timer.cancel();
+          Get.to(const VisualizationMainPage());
+        },
+      ),
     );
   }
 
@@ -131,7 +164,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> with Wi
     double _timerSize = MediaQuery.of(context).size.width * 0.45;
     return Padding(
       padding: const EdgeInsets.only(top: 54.0, bottom: 16),
-      child: Container(
+      child: SizedBox(
         width: _timerSize,
         child: Obx(
           () => CircularProgressBar(
@@ -164,6 +197,6 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage> with Wi
   }
 
   Route _createFullScreenRoute() {
-    return ScaleRoute(page: VisualizationFullScreenPage());
+    return ScaleRoute(page: const VisualizationFullScreenPage());
   }
 }

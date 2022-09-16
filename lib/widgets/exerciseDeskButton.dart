@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:morningmagic/db/model/app_and_custom_exercises/exercise_name.dart';
 import 'package:morningmagic/dialog/deleteExerciseDialog.dart';
@@ -11,7 +13,8 @@ class ExerciseDeskButton extends StatelessWidget {
   final List<ExerciseName> list;
   final VoidCallback voidCallback;
 
-  ExerciseDeskButton(
+  // ignore: use_key_in_widget_constructors
+  const ExerciseDeskButton(
       {@required this.id,
       @required this.text,
       @required this.size,
@@ -55,19 +58,19 @@ class ExerciseDeskTag extends StatelessWidget {
   final String text;
   final double size;
 
-  ExerciseDeskTag(this.text, this.size);
+  const ExerciseDeskTag(this.text, this.size);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 130.0,
       height: 28.0,
-      margin: EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(bottom: 10),
+      decoration: const BoxDecoration(
           color: AppColors.PINK,
           borderRadius: BorderRadius.all(Radius.circular(40))),
       child: Container(
-        padding: EdgeInsets.only(top: 2),
+        padding: const EdgeInsets.only(top: 2),
         child: Center(
           child: Text(
             text,
@@ -76,7 +79,7 @@ class ExerciseDeskTag extends StatelessWidget {
               decoration: TextDecoration.none,
               color: AppColors.WHITE,
               fontStyle: FontStyle.normal,
-              fontSize: size != null ? size : 14,
+              fontSize: size ?? 14,
             ),
           ),
         ),

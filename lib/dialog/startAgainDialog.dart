@@ -4,13 +4,15 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/animatedButton.dart';
 
 class StartAgainDialog extends Dialog {
+  const StartAgainDialog({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height / 3.6,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -19,11 +21,11 @@ class StartAgainDialog extends Dialog {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: Center(
                   child: Text(
                     'sure'.tr,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 23,
                         fontStyle: FontStyle.normal,
                         color: AppColors.VIOLET),
@@ -31,7 +33,7 @@ class StartAgainDialog extends Dialog {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: AnimatedButton(() {
                   Navigator.pop(context, true);
                 }, 'cancel'.tr, 22, null, null),

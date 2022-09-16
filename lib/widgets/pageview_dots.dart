@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PageViewDots extends StatefulWidget {
@@ -27,7 +26,7 @@ class PageViewDots extends StatefulWidget {
 }
 
 class _PageViewDotsState extends State<PageViewDots> {
-  var _page = new ValueNotifier<int>(0);
+  final _page = ValueNotifier<int>(0);
 
   @override
   void initState() {
@@ -47,7 +46,7 @@ class _PageViewDotsState extends State<PageViewDots> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<int>(
       valueListenable: _page,
-      builder: (context, value, child) => Container(
+      builder: (context, value, child) => SizedBox(
         height: 3,
         child: ListView.builder(
           shrinkWrap: true,

@@ -4,6 +4,8 @@
 <dict>
 	<key>AdaptyPublicSdkKey</key>
 	<string>public_live_PClKBY0Y.MZbpd0SuxiUqeF9Edr4c</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

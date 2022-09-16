@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
@@ -9,11 +8,11 @@ abstract class VisualizationImage extends Equatable {
   final String path;
   final bool isDefault;
 
-  VisualizationImage({@required this.path, this.isDefault});
+  const VisualizationImage({@required this.path, this.isDefault});
 }
 
 class VisualizationAssetImage extends VisualizationImage {
-  VisualizationAssetImage({@required String path, @required isDefault})
+  const VisualizationAssetImage({@required String path, @required isDefault})
       : super(path: path, isDefault: isDefault);
 
   @override
@@ -24,7 +23,7 @@ class VisualizationGalleryImage extends VisualizationImage {
   final Asset pickedAsset;
   final ByteData byteData;
 
-  VisualizationGalleryImage(
+  const VisualizationGalleryImage(
       {@required String path,
       @required this.pickedAsset,
       @required this.byteData,
@@ -38,7 +37,7 @@ class VisualizationGalleryImage extends VisualizationImage {
 class VisualizationFileSystemImage extends VisualizationImage {
   final File file;
 
-  VisualizationFileSystemImage(
+  const VisualizationFileSystemImage(
       {@required String path, @required this.file, @required isDefault})
       : super(path: path, isDefault: isDefault);
 
@@ -47,7 +46,7 @@ class VisualizationFileSystemImage extends VisualizationImage {
 }
 
 class VisualizationNetworkImage extends VisualizationImage {
-  VisualizationNetworkImage({@required String path, @required isDefault})
+  const VisualizationNetworkImage({@required String path, @required isDefault})
       : super(path: path, isDefault: isDefault);
 
   @override

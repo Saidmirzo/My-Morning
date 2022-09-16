@@ -3,7 +3,6 @@ import 'package:morningmagic/pages/interview/interview1/components/multiline_inp
 import 'package:morningmagic/pages/interview/interview1/components/title_question.dart';
 import 'question_frame.dart';
 import 'package:get/get.dart';
-
 import '../../interview1/interview_controller.dart';
 
 Widget q3() {

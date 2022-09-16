@@ -6,7 +6,6 @@ import 'package:morningmagic/db/resource.dart';
 import 'package:morningmagic/features/meditation_audio/data/mediation_audio_cache_manager.dart';
 import 'package:morningmagic/features/meditation_audio/domain/entities/meditation_audio.dart';
 import 'package:morningmagic/features/meditation_audio/domain/repositories/audio_repository.dart';
-
 import '../../domain/entities/meditation_audio.dart';
 
 class AudioRepositoryImpl implements AudioRepository {
@@ -18,12 +17,13 @@ class AudioRepositoryImpl implements AudioRepository {
     for (var item in map) {
       FileInfo _cachedFile =
           await MeditationAudioCacheManager.instance.getFileFromCache(item.url);
-      if (_cachedFile != null)
+      if (_cachedFile != null) {
         audioFiles.add(MeditationAudio(
           name: item.name,
           url: item.url,
           filePath: _cachedFile.file.path,
         ));
+      }
     }
 
     return Future.value(audioFiles);

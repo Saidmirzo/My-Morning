@@ -17,7 +17,7 @@ class Fade extends StatefulWidget {
   /// Whether to fade-in or fade-out.
   final FadeEffect fadeEffect;
 
-  Fade({
+  const Fade({
     this.child,
     this.duration = const Duration(milliseconds: 1000),
     this.fadeEffect = FadeEffect.fadeIn,

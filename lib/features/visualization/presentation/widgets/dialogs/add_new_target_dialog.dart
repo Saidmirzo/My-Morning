@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/instance_manager.dart';
 import 'package:morningmagic/features/visualization/domain/entities/target/visualization_target.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
 import 'package:morningmagic/features/visualization/presentation/widgets/round_bordered_button.dart';
@@ -33,35 +32,33 @@ class _AddNewTargetDialogState extends State<AddNewTargetDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-                left: 16,
-                right: 16,
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: TextField(
-              controller: _textEditingController,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                labelText: 'target_title'.tr,
-              ),
-              showCursor: true,
-            ),
-          ),
-          (_textEditingController.text.isEmpty)
-              ? _buildNotActiveAddButton(context)
-              : _buildActiveAddButton(context),
-          Text(
-            'target_short_desc'.tr,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: TextField(
+            controller: _textEditingController,
             textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
+            decoration: InputDecoration(
+              labelText: 'target_title'.tr,
+            ),
+            showCursor: true,
+          ),
+        ),
+        (_textEditingController.text.isEmpty)
+            ? _buildNotActiveAddButton(context)
+            : _buildActiveAddButton(context),
+        Text(
+          'target_short_desc'.tr,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+        )
+      ],
     );
   }
 
@@ -82,11 +79,12 @@ class _AddNewTargetDialogState extends State<AddNewTargetDialog> {
   void _saveOrUpdateVisualizationTarget(BuildContext context) {
     if (_textEditingController.text != null &&
         _textEditingController.text.isNotEmpty) {
-      if (widget.targetId != null)
+      if (widget.targetId != null) {
         _visualizationController.updateTarget(
             widget.targetId, _textEditingController.text);
-      else
+      } else {
         _visualizationController.saveTarget(_textEditingController.text);
+      }
     }
     Navigator.pop(context);
   }

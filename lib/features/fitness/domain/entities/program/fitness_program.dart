@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:morningmagic/features/fitness/domain/entities/exercise/fitness_exercise.dart';
-
 part 'fitness_program.g.dart';
 
 @HiveType(typeId: 18)
@@ -15,14 +14,15 @@ class FitnessProgram extends Equatable {
   @HiveField(2)
   final List<FitnessExercise> exercises;
 
-  FitnessProgram(this._name,
+  const FitnessProgram(this._name,
       {@required this.isCreatedByUser, @required this.exercises});
 
   String get name {
-    if (!this.isCreatedByUser)
+    if (!isCreatedByUser) {
       return _name.tr;
-    else
+    } else {
       return _name;
+    }
   }
 
   @override

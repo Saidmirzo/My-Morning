@@ -6,7 +6,6 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:vibration/vibration.dart';
-
 import '../../../resources/colors.dart';
 
 class TimerInputSuccessScreen extends StatefulWidget {
@@ -15,7 +14,8 @@ class TimerInputSuccessScreen extends StatefulWidget {
   final bool fromHomeMenu;
   final double procent;
 
-  TimerInputSuccessScreen(this.passedSec, this.isSkip, this.procent, {this.fromHomeMenu = false});
+  const TimerInputSuccessScreen(this.passedSec, this.isSkip, this.procent,
+      {this.fromHomeMenu = false});
 
   @override
   State createState() {
@@ -24,7 +24,7 @@ class TimerInputSuccessScreen extends StatefulWidget {
 }
 
 class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
-  AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -63,11 +63,16 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
         body: Container(
           width: Get.width,
           height: Get.height,
-          decoration: BoxDecoration(gradient: menuState == MenuState.NIGT ? AppColors.gradient_loading_night_bg : AppColors.Bg_Gradient_Timer_Reading),
+          decoration: BoxDecoration(
+              gradient: menuState == MenuState.NIGT
+                  ? AppColors.gradient_loading_night_bg
+                  : AppColors.Bg_Gradient_Timer_Reading),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              bg(menuState == MenuState.NIGT ? 'assets/images/reading_night/clouds.png' : 'assets/images/timer/clouds_timer.png'),
+              bg(menuState == MenuState.NIGT
+                  ? 'assets/images/reading_night/clouds.png'
+                  : 'assets/images/timer/clouds_timer.png'),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -101,7 +106,11 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
       percent: widget.procent,
       center: Text(
         'success'.tr,
-        style: TextStyle(fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
+        style: TextStyle(
+            fontSize: Get.height * 0.04,
+            fontStyle: FontStyle.normal,
+            color: Colors.white,
+            fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
       linearGradient: AppColors.Progress_Gradient_Timer_Reading,
@@ -112,7 +121,7 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   Positioned bg(String pathImage) {
     return Positioned(
       bottom: 0,
-      child: Container(
+      child: SizedBox(
         width: Get.width,
         child: Image.asset(
           pathImage,
@@ -125,16 +134,24 @@ class TimerInputSuccessScreenState extends State<TimerInputSuccessScreen> {
   Widget bgNight() {
     return Stack(
       children: [
-        Positioned(bottom: 0, child: Image.asset('assets/images/reading_night/clouds.png', width: Get.width, fit: BoxFit.cover)),
+        Positioned(
+            bottom: 0,
+            child: Image.asset('assets/images/reading_night/clouds.png',
+                width: Get.width, fit: BoxFit.cover)),
         Positioned(
           bottom: 0,
-          child: Image.asset('assets/images/reading/mountain1.png', width: Get.width, fit: BoxFit.cover),
+          child: Image.asset('assets/images/reading/mountain1.png',
+              width: Get.width, fit: BoxFit.cover),
         ),
         Positioned(
           bottom: 0,
-          child: Image.asset('assets/images/reading/mountain2.png', width: Get.width, fit: BoxFit.cover),
+          child: Image.asset('assets/images/reading/mountain2.png',
+              width: Get.width, fit: BoxFit.cover),
         ),
-        Positioned(bottom: 0, child: Image.asset('assets/images/reading_night/main.png', width: Get.width, fit: BoxFit.cover)),
+        Positioned(
+            bottom: 0,
+            child: Image.asset('assets/images/reading_night/main.png',
+                width: Get.width, fit: BoxFit.cover)),
       ],
     );
   }

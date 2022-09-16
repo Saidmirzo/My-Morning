@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
@@ -50,7 +49,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -77,11 +76,11 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                         child: Column(
                           children: [
                             Container(
-                              padding: EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.only(bottom: 10),
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 5),
+                                  const Padding(
+                                    padding: EdgeInsets.only(right: 5),
                                     child: Icon(Icons.access_time),
                                   ),
                                   Container(
@@ -89,20 +88,20 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                                   ),
                                   Text(
                                     widget.date,
-                                    style: TextStyle(),
+                                    style: const TextStyle(),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
                                         isEnabled = true;
                                       });
                                       Future.delayed(
-                                          Duration(milliseconds: 300), () {
+                                          const Duration(milliseconds: 300), () {
                                         setFocus();
                                       });
                                     },
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.edit_outlined,
                                       //size: 40,
                                       //color: AppColors.VIOLET,
@@ -116,7 +115,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                                       print('!!!delete_outline!!!');
                                       _showAlert(context);
                                     },
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.delete_outline,
                                       //size: 40,
                                       //color: AppColors.VIOLET,
@@ -132,7 +131,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                                 controller: controller,
                                 maxLines: 100,
                                 enabled: isEnabled ? true : false,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: InputBorder.none,
                                 ),
                                 // enabled: true,
@@ -176,26 +175,26 @@ class _journalMyDitailsState extends State<journalMyDitails> {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => MyDiaryProgress()));
       },
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.1,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.add_circle_outline,
               size: 40,
               //color: AppColors.VIOLET,
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: 10,
               ),
               //width: MediaQuery.of(context).size.width * 0.75,
               child: Text('save_diary'.tr,
                   //textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppColors.VIOLET,
                     fontSize: 30,
                     fontWeight: FontWeight.normal,
@@ -212,13 +211,13 @@ class _journalMyDitailsState extends State<journalMyDitails> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          titleTextStyle: TextStyle(
+          titleTextStyle: const TextStyle(
             backgroundColor: AppColors.SHADER_BOTTOM,
           ),
-          titlePadding: EdgeInsets.all(0),
-          contentPadding: EdgeInsets.all(0),
-          actionsPadding: EdgeInsets.all(0),
-          buttonPadding: EdgeInsets.all(0),
+          titlePadding: const EdgeInsets.all(0),
+          contentPadding: const EdgeInsets.all(0),
+          actionsPadding: const EdgeInsets.all(0),
+          buttonPadding: const EdgeInsets.all(0),
           backgroundColor: AppColors.BOTTOM_GRADIENT,
           // title: Container(
           //   color: AppColors.VIOLET,
@@ -231,7 +230,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
           //     ),
           //   ),
           // ),
-          content: Container(
+          content: SizedBox(
             height: MediaQuery.of(context).size.height * 0.2,
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -240,7 +239,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                   padding: const EdgeInsets.only(top: 20),
                   child: Text(
                     'sure'.tr,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.VIOLET,
                       fontSize: 40,
                     ),
@@ -252,7 +251,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                     FlatButton(
                       child: Text(
                         'yes'.tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.FIX_TOP,
                           fontSize: 40,
                         ),
@@ -275,7 +274,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                     FlatButton(
                       child: Text(
                         'no'.tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.FIX_TOP,
                           fontSize: 40,
                         ),

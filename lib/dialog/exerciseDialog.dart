@@ -12,8 +12,10 @@ class ExerciseDialog extends Dialog {
   final VoidCallback _addCallback;
   final List<ExerciseName> list;
 
-  ExerciseDialog(
-      this._controller, this._backCallback, this._addCallback, this.list);
+  const ExerciseDialog(
+      this._controller, this._backCallback, this._addCallback, this.list,
+      {Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class ExerciseDialog extends Dialog {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height / 2.9,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -30,12 +32,12 @@ class ExerciseDialog extends Dialog {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: Center(
                   child: Text(
                     'enter_your_exercise'.tr,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 23,
                         fontStyle: FontStyle.normal,
                         color: AppColors.VIOLET),
@@ -43,7 +45,7 @@ class ExerciseDialog extends Dialog {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(bottom: 10, top: 10),
+                padding: const EdgeInsets.only(bottom: 10, top: 10),
                 child: TextField(
                   controller: _controller,
                   minLines: 1,
@@ -51,7 +53,7 @@ class ExerciseDialog extends Dialog {
                   cursorColor: AppColors.LIGHT_GRAY,
                   keyboardType: TextInputType.text,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 23,
                       fontStyle: FontStyle.normal,
                       color: AppColors.VIOLET,
@@ -59,38 +61,34 @@ class ExerciseDialog extends Dialog {
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'your_exercise'.tr,
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: AppColors.LIGHT_GRAY,
                       )),
                 ),
               ),
-              Container(
-                  child: Column(
+              Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  AnimatedButton(() {
+                    if (_controller.text.isNotEmpty) {
+                      ExerciseName exerciseName =
+                          ExerciseName(randomAlpha(10), _controller.text, null);
+                      list.add(exerciseName);
+                      ExerciseUtils()
+                          .saveCustomExerciseToDB(exerciseName)
+                          .then((value) {
+                        _addCallback();
+                        _backCallback();
+                      });
+                    }
+                  }, 'add_exercise'.tr, 18, null, null),
                   Container(
-                    child: AnimatedButton(() {
-                      if (_controller.text.isNotEmpty) {
-                        print(_controller.text);
-                        ExerciseName exerciseName = ExerciseName(
-                            randomAlpha(10), _controller.text, null);
-                        list.add(exerciseName);
-                        ExerciseUtils()
-                            .saveCustomExerciseToDB(exerciseName)
-                            .then((value) {
-                          _addCallback();
-                          _backCallback();
-                        });
-                      }
-                    }, 'add_exercise'.tr, 18, null, null),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 10),
                     child: AnimatedButton(
                         _backCallback, 'back_button'.tr, 18, null, null),
                   )
                 ],
-              )),
+              ),
             ],
           ),
         ),

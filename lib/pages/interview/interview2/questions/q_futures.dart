@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/pages/interview/interview2/models/futures.dart';
-
 import '../components/multiline_input.dart';
 import '../interview_controller.dart';
 import 'question_frame.dart';
@@ -24,14 +23,14 @@ Widget qFutures(String title, int index) {
     title: title,
     onNext: () {
       List<String> _items = [];
-      futuresList.value.forEach((element) {
+      for (var element in futuresList.value) {
         if (element.isActive) {
           element.name == 'other'.tr
               ? _items.add(fieldController.text)
               : _items.add(element.name);
         }
-      });
-      if (_items.length == 0) return;
+      }
+      if (_items.isEmpty) return;
       _controller.data[title] = _items;
       _controller.slideNext();
     },

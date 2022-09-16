@@ -1,19 +1,15 @@
 import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/state_manager.dart';
+import 'package:morningmagic/pages/reading/reading_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/timer_page_ids.dart';
+import 'package:morningmagic/services/analitics/all.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/string_util.dart';
-import 'package:screen/screen.dart';
-
 import 'components/components.dart';
 
 class ReadingTimerPage extends StatefulWidget {
@@ -47,8 +43,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
 
   @override
   void initState() {
-    timerService =
-        widget.timerService == null ? TimerService() : widget.timerService;
+    timerService = widget.timerService ?? TimerService();
     cTimerLeft = TimerLeftController();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -58,7 +53,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
     });
     AnalyticService.screenView('reading_timer_page');
     try {
-      Screen.keepOn(true);
+      // Screen.keepOn(true);
     } catch (e) {
       log('Screen.keepOn : ' + e.toString());
     }
@@ -83,7 +78,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
             children: [
               Positioned(
                 bottom: 0,
-                child: Container(
+                child: SizedBox(
                     width: Get.width,
                     child: Image.asset(
                       menuState == MenuState.MORNING
@@ -95,7 +90,38 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Spacer(),
+                  const SizedBox(
+                    height: 67,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Align(
+                          alignment: Alignment.topLeft,
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(left: 31),
+                                    child: Icon(
+                                      Icons.west,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    timerService.dispose();
+                                    // Navigator.pop(context);
+                                    Get.to(const ReadingPage());
+                                  }),
+                            ],
+                          ))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 70,
+                  ),
+
                   buildTimerProgress(timerService),
                   const SizedBox(height: 20),
                   Obx(() => Text(
@@ -109,10 +135,9 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
                             ? AppColors.primary
                             : AppColors.WHITE,
                       ))),
-                  Spacer(),
-                  Spacer(),
-                  Spacer(),
-                  buildMenuButtons(timerService),
+                  const Spacer(),
+                  ReadMyButton(timerService: timerService),
+                  // buildMenuButtons(timerService),
                 ],
               ),
             ],
@@ -128,5 +153,48 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
     timerService.dispose();
+  }
+}
+
+class ReadMyButton extends StatelessWidget {
+  const ReadMyButton({Key key, this.onClick, this.timerService})
+      : super(key: key);
+  final VoidCallback onClick;
+  final TimerService timerService;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: GestureDetector(
+        onTap: () {
+          timerService.skipTask();
+          appAnalitics.logEvent('first_reading_next');
+        },
+        child: Container(
+          height: 70,
+          width: double.maxFinite,
+          margin: const EdgeInsets.symmetric(horizontal: 31),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: menuState == MenuState.MORNING
+                ? const Color(0xff592F72)
+                : Colors.white,
+            borderRadius: BorderRadius.circular(19),
+          ),
+          child: Text(
+            'Finish reading'.tr,
+            style: TextStyle(
+              color: menuState == MenuState.MORNING
+                  ? Colors.white
+                  : const Color(0xff592F72),
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Montserrat',
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

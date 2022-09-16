@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
-
 import 'add_text.dart';
 import 'affirmation_controller.dart';
 
 class AffirmationTextDialog extends StatefulWidget {
+  const AffirmationTextDialog({Key key}) : super(key: key);
+
   @override
   _AffirmationTextDialogState createState() => _AffirmationTextDialogState();
 }
@@ -26,7 +27,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height / 1.3,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -44,14 +45,14 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                       child: Text(
                         'back_button'.tr,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 23,
                             fontStyle: FontStyle.normal,
                             color: AppColors.VIOLET),
                       ),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12.0, vertical: 16.0),
@@ -77,7 +78,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               Expanded(
@@ -105,7 +106,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                 alignment: Alignment.center,
                 child: PrimaryCircleButton(
                   onPressed: () => Get.dialog(AddTextAffirmation()),
-                  icon: Icon(Icons.add, color: Colors.black54),
+                  icon: const Icon(Icons.add, color: Colors.black54),
                   bgColor: Colors.black12,
                 ),
               ),
@@ -135,20 +136,20 @@ class AffirmationTextItem extends StatelessWidget {
       onTap: onItemSelected,
       child: Container(
         width: MediaQuery.of(context).size.width / 1.0,
-        margin: EdgeInsets.only(bottom: 10),
-        padding: EdgeInsets.only(left: 10, right: 10),
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(left: 10, right: 10),
         decoration: BoxDecoration(
             color: isSelected ? AppColors.PINK : AppColors.LIGHT_VIOLET,
-            borderRadius: BorderRadius.all(Radius.circular(40))),
+            borderRadius: const BorderRadius.all(Radius.circular(40))),
         child: Container(
-          padding: EdgeInsets.only(top: 2),
+          padding: const EdgeInsets.only(top: 2),
           child: Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.symmetric(vertical: 4),
               child: Text(
                 text,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   decoration: TextDecoration.none,
                   color: AppColors.WHITE,
                   fontStyle: FontStyle.normal,

@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class TimerPageId {
   static const int Affirmation = 0;
   static const int Meditation = 1;

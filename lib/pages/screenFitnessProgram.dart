@@ -25,7 +25,7 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
           width: MediaQuery.of(context).size.width, // match parent(all screen)
           height:
               MediaQuery.of(context).size.height, // match parent(all screen)
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -42,10 +42,10 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(bottom: 35),
+                    padding: const EdgeInsets.only(bottom: 35),
                     child: Text(
                       'fitness'.tr,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 32,
                         fontStyle: FontStyle.normal,
                         color: AppColors.WHITE,
@@ -55,7 +55,7 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
                   Text(
                     'fitness_title'.tr,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 19,
                       fontStyle: FontStyle.italic,
                       color: AppColors.VIOLET,

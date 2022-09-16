@@ -1,5 +1,4 @@
 class StringUtil {
-  // TODO refactor this (now input time in seconds)
   static String createTimeString(int _time) {
     int min;
     int sec;
@@ -9,22 +8,21 @@ class StringUtil {
     if (_time != null) {
       min = _time ~/ 60;
       sec = _time % 60;
-      int length_seconds = sec.toString().length;
-      int length_minutes = min.toString().length;
+      int lengthSeconds = sec.toString().length;
+      int lengthMinutes = min.toString().length;
 
-      if (length_seconds < 2) {
+      if (lengthSeconds < 2) {
         seconds = '0' + sec.toString();
       } else {
         seconds = sec.toString();
       }
 
-      if (length_minutes < 2) {
+      if (lengthMinutes < 2) {
         minutes = '0' + min.toString();
       } else {
         minutes = min.toString();
       }
       return minutes + " : " + seconds;
-
     } else {
       return "";
     }
@@ -38,13 +36,15 @@ class StringUtil {
 
     if (_minutes < 10) {
       _minutesString = '0$_minutes';
-    } else
+    } else {
       _minutesString = '$_minutes';
+    }
 
     if (_seconds < 10) {
       _secondsString = '0$_seconds';
-    } else
+    } else {
       _secondsString = '$_seconds';
+    }
 
     return '$_minutesString : $_secondsString';
   }
@@ -58,22 +58,21 @@ class StringUtil {
     if (_time != null) {
       min = _time ~/ 60;
       sec = _time % 60;
-      int length_seconds = sec.toString().length;
-      int length_minutes = min.toString().length;
+      int lengthSeconds = sec.toString().length;
+      int lengthMinutes = min.toString().length;
 
-      if (length_seconds < 2) {
+      if (lengthSeconds < 2) {
         seconds = '0' + sec.toString();
       } else {
         seconds = sec.toString();
       }
 
-      if (length_minutes < 2) {
+      if (lengthMinutes < 2) {
         minutes = '0' + min.toString();
       } else {
         minutes = min.toString();
       }
       return minutes + " : " + seconds;
-
     } else {
       return "00 : 00";
     }
