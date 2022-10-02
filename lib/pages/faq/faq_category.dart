@@ -8,6 +8,7 @@ import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/utils/other.dart';
 import 'package:morningmagic/widgets/expansion_tile.dart';
+import '../../services/ab_testing_service.dart';
 import 'controllers/faq_controller.dart';
 
 class FaqCategoryPage extends StatefulWidget {
@@ -96,11 +97,11 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
                 if (url.contains('screen')) {
                   print('open screen: ${url.split(':').last}');
                   if (url.split(':').last == 'support') {
-                    Get.to(FaqSupportPage());
+                    Get.to(() => FaqSupportPage());
                   } else if (url.split(':').last == 'tarifs') {
-                    Get.to(NewPaywall());
+                    Get.to(() => ABTestingService.getPaywall());
                   } else if (url.split(':').last == 'unsubscribe') {
-                    Get.to(Interview2Page());
+                    Get.to(() => Interview2Page());
                   }
                 }
               },
@@ -113,7 +114,7 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
     if (widget.category == faqController.cat_tarifs) {
       ll.add(
         GestureDetector(
-          onTap: () => Get.to(FaqSupportPage()),
+          onTap: () => Get.to(() => FaqSupportPage()),
           child: Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(

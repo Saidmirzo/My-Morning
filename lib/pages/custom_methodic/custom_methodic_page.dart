@@ -141,13 +141,11 @@ class _CustomMethodicPageState extends State<CustomMethodicPage>
                   GestureDetector(
                     onTap: () async {
                       await timerService.skipTask();
-                      Get.off(
-                        CastomSuccessPage(
+                      Get.off(() => CastomSuccessPage(
                           fromHomeMenu: false,
                           percentValue: 1,
                           pageid: widget.pageId,
-                        ),
-                      );
+                      ));
                       //predicate: ModalRoute.withName(settingsPageRoute));
                       //appAnalitics.logEvent('first_affirmation_next');
                     },

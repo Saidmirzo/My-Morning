@@ -74,7 +74,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                     _buildSettingsButton(
                         onPressed: () {
                           AppMetrica.reportEvent('night_meditation_start');
-                          Get.off(const MeditationPage(fromHomeMenu: true),
+                          Get.off(() => const MeditationPage(fromHomeMenu: true),
                               opaque: true);
                         },
                         image: 'assets/images/home_menu/night_meditation.png',
@@ -94,7 +94,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                     _buildSettingsButton(
                         onPressed: () {
                           AppMetrica.reportEvent('night_reading_start');
-                          Get.to(const ReadingPage(
+                          Get.to(() => const ReadingPage(
                             fromHomeMenu: true,
                           ));
                         },

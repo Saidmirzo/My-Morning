@@ -81,7 +81,7 @@ class CloseAndGoFaqMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(const FaqMenuPage()),
+      onTap: () => Get.to(() => const FaqMenuPage()),
       child: Container(
         width: 30,
         height: 30,

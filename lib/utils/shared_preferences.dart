@@ -31,7 +31,9 @@ class CustomSharedPreferences {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int count = prefs.getInt('openPaywall');
     count = count == null ? 1 : count + 1;
-    count < 3 ? await prefs.setInt('openPaywall', count) : await prefs.remove('openPaywall');
+    count < 3
+        ? await prefs.setInt('openPaywall', count)
+        : await prefs.remove('openPaywall');
     return count == 3;
   }
 

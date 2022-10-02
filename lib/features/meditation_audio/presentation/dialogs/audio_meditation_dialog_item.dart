@@ -76,8 +76,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
                 widget.timerService
                     .setNightTime(widget.audio.duration.inSeconds);
               }
-              Get.to(
-                isComplex
+              Get.to(() => isComplex
                     ? const MeditationTimerPage(
                         fromAudio: true,
                         fromHomeMenu: true,

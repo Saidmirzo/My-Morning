@@ -20,9 +20,9 @@ Widget qYesNoOther(String title, int index) {
           _controller.data[title] = fieldController.text;
         }
         if (val.value == YesNoOther.yes) {
-          _controller.data[title] = 'да';
+          _controller.data[title] = 'yes'.tr.toLowerCase();
         } else {
-          _controller.data[title] = 'нет';
+          _controller.data[title] = 'no'.tr.toLowerCase();
         }
         _controller.slideNext();
       }

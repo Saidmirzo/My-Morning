@@ -51,9 +51,7 @@ class _SelectedMEditationsScreenState extends State<SelectedMEditationsScreen> {
               onTap: () {
                 _audioController.playingIndex.value = -1;
                 _audioController.bfPlayer.value.stop();
-                Get.to(
-                  const MeditationPage(),
-                );
+                Get.to(() => const MeditationPage());
               },
               child: const Padding(
                 padding: EdgeInsets.only(top: 45, left: 25),

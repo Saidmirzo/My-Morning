@@ -7,6 +7,7 @@ import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import '../../../db/hive.dart';
 import '../../../db/model/user/user.dart';
 import '../../../db/resource.dart';
+import '../../../services/ab_testing_service.dart';
 import '../../../storage.dart';
 import 'models/futures.dart';
 
@@ -95,7 +96,7 @@ class InterviewController extends GetxController {
         if (q1Controller.text.isEmpty) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 1"] = q1Controller.text;
+          _data['question'.tr + " 1"] = q1Controller.text;
           slideNext();
         }
         break;
@@ -105,8 +106,8 @@ class InterviewController extends GetxController {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
           final val = q2val.value == YesNoOther.yes;
-          _data["Вопрос 2"] = val;
-          if (val) _data["Вопрос 2, если да"] = q2TextController.text;
+          _data['question'.tr + " 2"] = val;
+          if (val) _data['question'.tr + " 2, " + 'if_yes'.tr] = q2TextController.text;
           slideNext();
         }
         break;
@@ -117,11 +118,11 @@ class InterviewController extends GetxController {
             (q3val.value == YesNoOther.yes && q3TextController2.text.isEmpty)) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 3"] = q3val.value.toString().split('.').last;
+          _data['question'.tr + " 3"] = q3val.value.toString().split('.').last;
           if (q3val.value == YesNoOther.other)
-            _data["Вопрос 3, другое"] = q3TextController.text;
+            _data['question'.tr + " 3, " + 'other'.tr] = q3TextController.text;
           if (q3val.value == YesNoOther.yes)
-            _data["Вопрос 3, если да"] = q3TextController2.text;
+            _data['question'.tr + " 3, " + 'if_yes'.tr] = q3TextController2.text;
           slideNext();
         }
         break;
@@ -131,9 +132,9 @@ class InterviewController extends GetxController {
                 q4TextControllerOther.text.isEmpty)) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 4"] = q4val.value.toString().split('.').last;
+          _data['question'.tr + " 4"] = q4val.value.toString().split('.').last;
           if (q4val.value == YesNoOther.other)
-            _data["Вопрос 4, другое"] = q4TextControllerOther.text;
+            _data['question'.tr + " 4, " + 'other'.tr] = q4TextControllerOther.text;
           slideNext();
         }
         break;
@@ -141,7 +142,7 @@ class InterviewController extends GetxController {
         if (q5TextController.text.isEmpty) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 5"] = q5TextController.text;
+          _data['question'.tr + " 5"] = q5TextController.text;
           slideNext();
         }
         break;
@@ -149,7 +150,7 @@ class InterviewController extends GetxController {
         if (q6TextController.text.isEmpty) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 6"] = q6TextController.text;
+          _data['question'.tr + " 6"] = q6TextController.text;
           slideNext();
         }
         break;
@@ -159,9 +160,9 @@ class InterviewController extends GetxController {
                 q7TextController.text.isEmpty)) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 7"] = q7val.value.toString().split('.').last;
+          _data['question'.tr + " 7"] = q7val.value.toString().split('.').last;
           if (q7val.value == YesNoOther.other)
-            _data["Вопрос 7, другое"] = q7TextController.text;
+            _data['question'.tr + " 7, " + 'other'.tr] = q7TextController.text;
           slideNext();
         }
         break;
@@ -169,7 +170,7 @@ class InterviewController extends GetxController {
         if (q8TextController.text.isEmpty) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 8"] = q8TextController.text;
+          _data['question'.tr + " 8"] = q8TextController.text;
           slideNext();
         }
         break;
@@ -183,14 +184,14 @@ class InterviewController extends GetxController {
           }
         }
         if (_items.isEmpty) return;
-        _data["Вопрос 9"] = _items;
+        _data['question'.tr + " 9"] = _items;
         slideNext();
         break;
       case 10:
         if (q10TextController.text.isEmpty) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 10"] = q10TextController.text;
+          _data['question'.tr + " 10"] = q10TextController.text;
           slideNext();
         }
         break;
@@ -202,11 +203,11 @@ class InterviewController extends GetxController {
                 q11TextController2.text.isEmpty)) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 11"] = q11val.value.toString().split('.').last;
+          _data['question'.tr + " 11"] = q11val.value.toString().split('.').last;
           if (q11val.value == YesNoOther.other)
-            _data["Вопрос 11, другое"] = q11TextController.text;
+            _data['question'.tr + " 11, " + 'other'.tr] = q11TextController.text;
           if (q11val.value == YesNoOther.yes)
-            _data["Вопрос 11, если да"] = q11TextController2.text;
+            _data['question'.tr + " 11, " + 'if_yes'.tr] = q11TextController2.text;
           slideNext();
         }
         break;
@@ -218,11 +219,11 @@ class InterviewController extends GetxController {
                 q12TextController2.text.isEmpty)) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 12"] = q12val.value.toString().split('.').last;
+          _data['question'.tr + " 12"] = q12val.value.toString().split('.').last;
           if (q12val.value == YesNoOther.other)
-            _data["Вопрос 12, другое"] = q12TextController.text;
+            _data['question'.tr + " 12, " + 'other'.tr] = q12TextController.text;
           if (q12val.value == YesNoOther.yes)
-            _data["Вопрос 12, если да"] = q12TextController2.text;
+            _data['question'.tr + " 12, " + 'if_yes'.tr] = q12TextController2.text;
           slideNext();
         }
         break;
@@ -230,13 +231,13 @@ class InterviewController extends GetxController {
         if (q13Controller.text.isEmpty) {
           Get.snackbar(null, 'please_fill_all_fields'.tr);
         } else {
-          _data["Вопрос 11"] = q13Controller.text;
+          _data['question'.tr + " 11"] = q13Controller.text;
           save();
           if (billingService.isPro()) {
             slideNext();
           } else {
             Get.back();
-            Get.to(NewPaywall());
+            Get.to(() => ABTestingService.getPaywall());
           }
         }
         break;

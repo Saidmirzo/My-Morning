@@ -327,18 +327,14 @@ class CustomTimeButton extends StatelessWidget {
                 "custom");
             timerService.setTime(_duration.inSeconds ?? 0);
             gotoafirm != true
-                ? Get.to(
-                    ReadingTimerPage(
+                ? Get.to(() => ReadingTimerPage(
                       timerService: timerService,
                       fromHomeMenu: fromHomeMenu,
-                    ),
-                  )
-                : Get.to(
-                    AffirmationTimerPage(
+                    ))
+                : Get.to(() => AffirmationTimerPage(
                       timerService: timerService,
                       fromHomeMenu: fromHomeMenu,
-                    ),
-                  );
+                    ));
           }
         },
         child: Container(

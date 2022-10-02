@@ -23,13 +23,13 @@ Function() onShowPlayList(Widget child) {
 }
 
 Function() gotToTimerPage(TimerService timerService) {
-  Get.to(InstrumentTimerPage(
+  Get.to(() => InstrumentTimerPage(
     timerService: timerService,
   ));
 }
 
 Future setTimePeriod(TimerService timerService) async {
-  await Get.to(AddTimePeriod(
+  await Get.to(() => AddTimePeriod(
     timerService: timerService,
   ));
 

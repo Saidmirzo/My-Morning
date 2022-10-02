@@ -76,7 +76,7 @@ class _OnBoarding9PageState extends State<OnBoarding9Page> {
                           color: Colors.white.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        padding: const EdgeInsets.fromLTRB(10, 9, 10, 8),
+                        padding: const EdgeInsets.fromLTRB(10, 9, 10, 12),
                         child: Column(
                           children: [
                             Text(

@@ -26,7 +26,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 height: btnSize,
               ),
               onPressed: () =>
-                  Get.to(AddTimePeriod(timerService: timerService))),
+                  Get.to(() => AddTimePeriod(timerService: timerService))),
           CupertinoButton(
               child: SvgPicture.asset(
                 SvgAssets.home,
