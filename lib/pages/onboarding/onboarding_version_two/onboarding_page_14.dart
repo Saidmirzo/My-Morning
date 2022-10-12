@@ -9,8 +9,6 @@ import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 
-import '../../../services/ab_testing_service.dart';
-
 class OnboardingVersionSecondPage14 extends StatefulWidget {
   const OnboardingVersionSecondPage14({Key key}) : super(key: key);
 
@@ -114,7 +112,7 @@ class _OnboardingVersionSecondPage14State
                 Navigator.push(
                   context,
                   createRoute(
-                    ABTestingService.getPaywall(),
+                    NewPaywall(),
                   ),
                 );
               },

@@ -27,7 +27,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 width: btnSize,
                 height: btnSize,
               ),
-              onPressed: () => Get.to(() => AddTimePeriod(
+              onPressed: () => Get.to(AddTimePeriod(
                     timerService: timerService,
                   ))),
           CupertinoButton(

@@ -8,8 +8,6 @@ import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:get/get.dart';
 
-import '../../../services/ab_testing_service.dart';
-
 class OnboardingVersionThirdPageFifth extends StatefulWidget {
   const OnboardingVersionThirdPageFifth({Key key}) : super(key: key);
 
@@ -88,7 +86,7 @@ class _OnboardingVersionThirdPageFifthState
               title1: itemsInfo[i]["title1"],
               title2: itemsInfo[i]["title2"],
               img: itemsInfo[i]["img"],
-              page: ABTestingService.getPaywall(),
+              page: NewPaywall(),
               isLast: true,
             ),
           ),

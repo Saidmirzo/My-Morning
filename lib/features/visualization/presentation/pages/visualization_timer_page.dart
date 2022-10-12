@@ -145,7 +145,7 @@ class _VisualizationTimerPageState extends State<VisualizationTimerPage>
         ),
         onPressed: () {
           _controller.timer.cancel();
-          Get.to(() => const VisualizationMainPage());
+          Get.to(const VisualizationMainPage());
         },
       ),
     );

@@ -21,7 +21,6 @@ import 'package:morningmagic/services/notifications.dart';
 import 'package:morningmagic/utils/shared_preferences.dart';
 import 'package:morningmagic/widgets/my_url.dart';
 
-import '../../services/ab_testing_service.dart';
 import '../../storage.dart';
 
 class PaymentSalePage extends StatefulWidget {
@@ -60,7 +59,7 @@ class _PaymentSalePageState extends State<PaymentSalePage> {
             height: double.infinity,
           ),
           FutureBuilder(
-            future: ABTestingService.getTest("discount_month"),
+            future: billingService.getPaywall("discount_month"),
             builder: (context, AsyncSnapshot<AdaptyPaywall> snapshot) {
               if (snapshot.hasError) {
                 ScaffoldMessenger.of(context)
@@ -91,7 +90,7 @@ class _PaymentSalePageState extends State<PaymentSalePage> {
                                       .isFirstOpen()) {
                                     AppMetrica.reportEvent(
                                         'paywall_discount_close');
-                                    Get.to(() => const WelcomePage());
+                                    Get.to(const WelcomePage());
                                     pushNotifications = PushNotifications();
                                     WidgetsBinding.instance
                                         .addPostFrameCallback(
@@ -324,7 +323,7 @@ class _PaymentSalePageState extends State<PaymentSalePage> {
                                         .isFirstOpen()) {
                                       AppMetrica.reportEvent(
                                           'subscription_discount_trial');
-                                      Get.to(() => const WelcomePage());
+                                      Get.to(const WelcomePage());
                                       pushNotifications = PushNotifications();
                                       WidgetsBinding.instance
                                           .addPostFrameCallback(

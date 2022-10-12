@@ -146,7 +146,7 @@ class OrderUtil {
 
     if (!billingService.isPro() && ![0, 1].contains(orderItem.position)) {
       print('!isPro && ![0,1].contains(id)');
-      return Get.to(() => PaywallPage());
+      return Get.to(PaywallPage());
     }
     if (id.contains("custom")) {
       AppMetrica.reportEvent('complex_userpractice');

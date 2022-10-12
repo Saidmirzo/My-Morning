@@ -300,7 +300,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
     );
   }
 
-  void onNegativeAnswer() => Get.to(() => const DiaryPage());
+  void onNegativeAnswer() => Get.to(const DiaryPage());
 
   // _showAlert(BuildContext context) {
   //   showDialog(

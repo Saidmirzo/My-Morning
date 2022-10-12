@@ -177,6 +177,4 @@ class MyImages {
   static const newPaywallOffer1Img = 'assets/images/paywall/offer_1_img.png';
   static const newPaywallOffer2Img = 'assets/images/paywall/offer_2_img.png';
   static const newPaywallOffer3Img = 'assets/images/paywall/offer_3_img.png';
-
-  static const paywallSecure = 'assets/images/paywall/secure.png';
 }

@@ -39,7 +39,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 //  color: colorIcon,
               ),
               onPressed: () {
-                Get.to(() => AddTimePeriod(
+                Get.to(AddTimePeriod(
                   timerService: timerService,
                   pageId: menuState == MenuState.NIGT
                       ? TimerPageId.MeditationNight
@@ -71,7 +71,7 @@ Widget buildMenuButtons(TimerService timerService) {
                 cAudio.bgAudioPlayer?.value?.pause();
                 timerService.timer.cancel();
                 timerService.isActive.value = false;
-                Get.to(() => menuState == MenuState.MORNING
+                Get.to(menuState == MenuState.MORNING
                     ? const MeditationAudioPage(fromTimerPage: true)
                     : const MeditationAudioNightPage(fromTimerPage: true));
               }),

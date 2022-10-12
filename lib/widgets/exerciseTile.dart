@@ -15,7 +15,6 @@ import 'package:morningmagic/routing/timer_page_ids.dart';
 import 'package:morningmagic/storage.dart';
 import '../pages/affirmation/affirmation_dialog/affirmation_dialog.dart';
 import '../pages/settings/settingsPage.dart';
-import '../services/ab_testing_service.dart';
 
 class ExerciseTile extends StatefulWidget {
   final int index;
@@ -64,8 +63,9 @@ class _ExerciseTileState extends State<ExerciseTile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ABTestingService.getPaywall(true)
-                ),
+                    builder: (context) => NewPaywall(
+                          isseting: true,
+                        )),
               );
             }
           },
@@ -126,7 +126,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
                           if (!billingService.isVip.value) return;
                           Get.put(FitnessController(
                               repository: FitnessProgramRepositoryImpl()));
-                          Get.to(() => const FitnessProgramSettingsPage());
+                          Get.to(const FitnessProgramSettingsPage());
                         },
                       )
                     ],

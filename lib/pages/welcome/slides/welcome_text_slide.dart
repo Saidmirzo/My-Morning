@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/resources/colors.dart';
-import 'package:morningmagic/services/ab_testing_service.dart';
 import 'package:morningmagic/widgets/primary_circle_button.dart';
-
-import '../../paywall/paywall_v2/paywall_v2_oto.dart';
 
 class WelcomeTextSlide extends StatelessWidget {
   final PageController _pageController;
@@ -32,17 +28,12 @@ class WelcomeTextSlide extends StatelessWidget {
             style: TextStyle(color: Colors.white60, fontSize: Get.width * .042),
           ),
           const Spacer(),
-          // Кнопка Далее
-          Center(child: PrimaryCircleButton(
+          Center(
+              child: PrimaryCircleButton(
             size: 40,
             icon: const Icon(Icons.arrow_forward, color: AppColors.primary),
             onPressed: () async {
-              if (ABTestingService.paywallVersion == 'v2') {
-                Get.to(() => PaywallV2OneTimeOffer());
-              }
-              else {
-                Get.to(() => const MainMenuPage());
-              }
+              Navigator.pop(context);
             },
           )),
           const Spacer(),

@@ -1,20 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../../dialog/connection_dialog.dart';
-import '../../../services/connection_service/connection_service.dart';
-import '../../../storage.dart';
 import '../../../utils/other.dart';
 
 class TextButtonsPayWall extends StatelessWidget {
-
-  final VoidCallback restore;
-
   const TextButtonsPayWall({
     Key key,
     @required this.restore,
   }) : super(key: key);
-
+  final VoidCallback restore;
   @override
   Widget build(BuildContext context) {
     String urltermsandroid = 'https://good-apps.org/morning/terms.html';
@@ -27,21 +20,14 @@ class TextButtonsPayWall extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         MyTextButton(
-          onClick: (() async {
-            if (await ConnectionRepo.isConnected()) {
-              billingService.restore();
-            } else {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return const ConnectionDialog();
-                },
-              );
-            }
+          onClick: (() {
+            // restore,
           }),
           text: 'Restore',
         ),
-        const SizedBox(width: 23),
+        const SizedBox(
+          width: 23,
+        ),
         MyTextButton(
           // onClick: () async {
           //   if (await canLaunch('agreement_title'.tr)) {
@@ -53,7 +39,7 @@ class TextButtonsPayWall extends StatelessWidget {
                 ? openUrl(urltermsandroid)
                 : openUrl(urltermsios);
           }),
-          text: 'Terms'.tr,
+          text: 'Terms',
         ),
         const SizedBox(
           width: 23,
@@ -64,7 +50,7 @@ class TextButtonsPayWall extends StatelessWidget {
                 ? openUrl(urlprivacyandroid)
                 : openUrl(urlprivacyios);
           },
-          text: 'Privacy'.tr,
+          text: 'Privacy',
         ),
       ],
     );

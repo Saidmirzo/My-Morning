@@ -91,10 +91,12 @@ class AffirmationPageState extends State<AffirmationPage> {
                     ),
                     StartButton(
                       onClick: () {
-                        Get.to(() => AffirmationTimerPage(
+                        Get.to(
+                          AffirmationTimerPage(
                             fromHomeMenu: widget.fromHomeMenu,
                             timerService: timerService,
-                          ));
+                          ),
+                        );
                       },
                     ),
                     const Spacer(

@@ -239,7 +239,8 @@ class VisualizationController extends GetxController {
       cPg.saveJournal(MyResource.VISUALISATION_JOURNAL, model);
     }
     if (!backProgramm) {
-      Get.offAll(() => VisualizationSuccessPage(
+      Get.offAll(
+          VisualizationSuccessPage(
             fromHomeMenu: fromHomeMenu,
             percentValue: (passedSec.value / (60 / 100)) / 100,
           ),

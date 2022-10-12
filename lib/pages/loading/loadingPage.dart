@@ -17,7 +17,6 @@ import 'package:morningmagic/services/analitics/analyticService.dart';
 import '../../db/hive.dart';
 import '../../db/resource.dart';
 import '../../storage.dart';
-import '../paywall_page.dart';
 import 'afternoon.dart';
 import 'night.dart';
 
@@ -95,21 +94,19 @@ class LoadingPageState extends State<LoadingPage>
       return getMenuPage();
     } else {
       AnalyticService.analytics.logAppOpen();
-      // return await getOnboardingRemoteConfig();
-      return ABTestingService.getOnboarding();
+      return await getOnboardingRemoteConfig();
     }
   }
 
-  // Future<Widget> getOnboardingRemoteConfig() async {
-  //   String id = AdaptyCustomPayloadKeys.testOnboardingID;
-  //   final InstallationAppReferrer referrer = await InstallReferrer.referrer;
-  //   if (referrer == InstallationAppReferrer.iosTestFlight || kDebugMode) {
-  //     id = AdaptyCustomPayloadKeys.internalABTestID;
-  //   }
-  //   // Определяем пейволл
-  //   widget.abTestService.setup(await billingService.fetchDataForABTest(id));
-  //   return widget.abTestService.testOnboarding();
-  // }
+  Future<Widget> getOnboardingRemoteConfig() async {
+    String id = AdaptyCustomPayloadKeys.testOnboardingID;
+    final InstallationAppReferrer referrer = await InstallReferrer.referrer;
+    if (referrer == InstallationAppReferrer.iosTestFlight || kDebugMode) {
+      id = AdaptyCustomPayloadKeys.internalABTestID;
+    }
+    widget.abTestService.setup(await billingService.fetchDataForABTest(id));
+    return widget.abTestService.testOnboarding();
+  }
 
   Widget getMenuPage() {
     String eventName;

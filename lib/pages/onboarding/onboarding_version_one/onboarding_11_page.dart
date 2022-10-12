@@ -14,8 +14,6 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 
-import '../../../services/ab_testing_service.dart';
-
 class OnBoarding11Page extends StatefulWidget {
   @override
   State<OnBoarding11Page> createState() => _OnBoarding11PageState();
@@ -119,7 +117,7 @@ class _OnBoarding11PageState extends State<OnBoarding11Page> {
                           onPressed: () {
                             AppRouting.replace(const MainMenuPage());
                             Navigator.of(context)
-                                .push(createRoute(ABTestingService.getPaywall()));
+                                .push(createRoute(NewPaywall()));
                             //Get.to(const PaymentPage());
                           },
                           child: Row(

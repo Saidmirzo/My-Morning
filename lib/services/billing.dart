@@ -12,19 +12,16 @@ import 'package:morningmagic/features/visualization/presentation/controller/visu
 import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import 'package:morningmagic/resources/remote_config_keys.dart';
 
-import 'ab_testing_service.dart';
-
 class BillingService {
   AdaptyPurchaserInfo purchaserInfo;
   String oferingName;
-  // List<AdaptyPaywall> paywalls = [];
-  // List<AdaptyPaywall> _paywalls = [];
+  List<AdaptyPaywall> _paywalls = [];
 
   var isVip = false.obs;
 
   init() async {
     purchaserInfo = await Adapty.getPurchaserInfo();
-    // _fetchPaywalls();
+    _fetchPaywalls();
     isVip.value = isPro();
     liadVisuzlisations();
   }
@@ -42,49 +39,31 @@ class BillingService {
         .reinit();
   }
 
-  // Future<void> _fetchPaywalls() async {
-  //   try {
-  //     final GetPaywallsResult getPaywallsResult = await Adapty.getPaywalls();
-  //     print('getPaywallsResult ${getPaywallsResult}');
-  //     paywalls = getPaywallsResult.paywalls;
-  //     // _paywalls = paywalls;
-  //   } catch(e) {
-  //     print(e);
-  //   }
-  // }
+  Future<void> _fetchPaywalls() async {
+    final GetPaywallsResult getPaywallsResult = await Adapty.getPaywalls();
+    final List<AdaptyPaywall> paywalls = getPaywallsResult.paywalls;
+    _paywalls = paywalls;
+  }
 
-  // Future<Map<String, dynamic>> fetchDataForABTest(String id) async {
-  //   final AdaptyPaywall _paywall = await getPaywall(id);
-  //   return _paywall == null
-  //       ? {} : _paywall.customPayload[AdaptyCustomPayloadKeys.abTestData];
-  // }
+  Future<Map<String, dynamic>> fetchDataForABTest(String id) async {
+    final AdaptyPaywall _paywall = await getPaywall(id);
+    return _paywall.customPayload[AdaptyCustomPayloadKeys.abTestData];
+  }
 
-  // Future<AdaptyPaywall> getPaywall(String param) async {
-  //   try {
-  //     if (paywalls.isEmpty) {
-  //       final GetPaywallsResult getPaywallsResult = await Adapty.getPaywalls();
-  //       paywalls = getPaywallsResult.paywalls;
-  //       // print('getPaywallsResult ${getPaywallsResult}');
-  //       // for(var i in paywalls) {
-  //       //   print('paywalls $i');
-  //       // }
-  //     }
-  //     final AdaptyPaywall bestPaywall =
-  //     paywalls?.firstWhere((paywall) => paywall.developerId == param,
-  //         orElse: () => null
-  //     );
-  //     if (bestPaywall != null) Adapty.logShowPaywall(paywall: bestPaywall);
-  //
-  //     return bestPaywall;
-  //   }
-  //   catch (e) {
-  //     print(e);
-  //     return null;
-  //   }
-  // }
+  Future<AdaptyPaywall> getPaywall(String param) async {
+    final GetPaywallsResult getPaywallsResult = await Adapty.getPaywalls();
+    final List<AdaptyPaywall> paywalls = getPaywallsResult.paywalls;
+    final AdaptyPaywall bestPaywall =
+        paywalls?.firstWhere((paywall) => paywall.developerId == param);
+    try {
+      if (bestPaywall != null) Adapty.logShowPaywall(paywall: bestPaywall);
+    } catch (e) {}
+
+    return bestPaywall;
+  }
 
   bool isPro() {
-    // if (kDebugMode) return true;
+    if (kDebugMode) return true;
     if (purchaserInfo?.accessLevels == null) {
       return false;
     } else {
@@ -97,7 +76,7 @@ class BillingService {
   // Package get lifeTimeTarif => _offering?.lifetime;
 
   startPaymentPage() async {
-    await Get.to(() => ABTestingService);
+    await Get.to(NewPaywall());
   }
 
   var isRestoring = false.obs;

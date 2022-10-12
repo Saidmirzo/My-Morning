@@ -100,10 +100,12 @@ class _ReadingPageState extends State<ReadingPage> {
                                     5) *
                                 60);
                       }
-                      Get.to(() => ReadingTimerPage(
+                      Get.to(
+                        ReadingTimerPage(
                           fromHomeMenu: widget.fromHomeMenu,
                           timerService: timerService,
-                        ));
+                        ),
+                      );
                     },
                   ),
                   const Spacer(

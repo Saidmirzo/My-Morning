@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
 class WindowLineStack extends StatelessWidget {
-
-  WindowLineStack({
-    Key key,
+  WindowLineStack(
+      {Key key,
       this.windowLineImage,
       this.textLineWindowOne,
-      this.textLineWindowTwo,
-  }) : super(key: key);
-
+      this.textLineWindowTwo})
+      : super(key: key);
   String windowLineImage;
   String textLineWindowOne;
   String textLineWindowTwo;
@@ -19,7 +17,7 @@ class WindowLineStack extends StatelessWidget {
         Container(
           padding: const EdgeInsets.only(top: 25.0),
           color: Colors.transparent,
-          height: 125,
+          height: 115,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -27,35 +25,28 @@ class WindowLineStack extends StatelessWidget {
             ),
             child: Center(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
                     height: 55,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: textLineWindowOne,
-                            style: const TextStyle(
-                              color: Color(0xff6B0496),
-                            ),
-                          ),
-                          TextSpan(
-                            text: textLineWindowTwo,
-                            style: const TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+                  RichText(
+                    text: TextSpan(
+                      text: textLineWindowOne,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xff6B0496),
+                        fontWeight: FontWeight.w700,
                       ),
+                      children: [
+                        TextSpan(
+                          text: textLineWindowTwo,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

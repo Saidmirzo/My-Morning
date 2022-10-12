@@ -100,7 +100,7 @@ class InputTextColumnState extends State<InputTextColumn> {
               saveProg(widget.isSkip);
               widget.onPressed();
               OrderUtil().getRouteById(4).then((value) {
-                Get.off(() => widget.fromHomeMenu ? const ProgressPage() : value);
+                Get.off(widget.fromHomeMenu ? const ProgressPage() : value);
               });
             },
           ),

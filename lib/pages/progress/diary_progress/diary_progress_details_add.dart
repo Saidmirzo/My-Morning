@@ -174,10 +174,11 @@ _showAlert(BuildContext context) {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text('sure'.tr,
-                  style: const TextStyle(
+              const Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: Text(
+                  'Вы уверены ?',
+                  style: TextStyle(
                     color: AppColors.VIOLET,
                     fontSize: 40,
                   ),
@@ -187,8 +188,9 @@ _showAlert(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FlatButton(
-                    child: Text('yes'.tr,
-                      style: const TextStyle(
+                    child: const Text(
+                      "Да",
+                      style: TextStyle(
                         color: AppColors.FIX_TOP,
                         fontSize: 40,
                       ),
@@ -199,8 +201,9 @@ _showAlert(BuildContext context) {
                     },
                   ),
                   FlatButton(
-                    child: Text('no'.tr,
-                      style: const TextStyle(
+                    child: const Text(
+                      "Нет",
+                      style: TextStyle(
                         color: AppColors.FIX_TOP,
                         fontSize: 40,
                       ),

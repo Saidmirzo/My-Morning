@@ -26,7 +26,7 @@ class VisualizationBackButton extends StatelessWidget {
               builder: (context) => const BackToMainMenuDialog(),
             );
           } else {
-            Get.to(() => const MainMenuPage());
+            Get.to(const MainMenuPage());
           }
         },
       ),

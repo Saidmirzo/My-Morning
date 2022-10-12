@@ -20,7 +20,6 @@ class _OnboardingVersionThirdPageOneState
   void initState() {
     super.initState();
     AppMetrica.reportEvent('onbording_1');
-    print('ONBOARDING OnboardingVersionThirdPageOne');
   }
 
   @override
@@ -49,16 +48,15 @@ class _OnboardingVersionThirdPageOneState
                 fontFamily: 'Montserrat',
               ),
             ),
-            const SizedBox(height: 40),
-            Container(
-              width: 2 * Get.width / 3,
-              padding: const EdgeInsets.only(left: 20),
-              child: Text('onb_3_1_subtitle'.tr,
-                style: const TextStyle(
-                  color: Color(0xff592F72),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Montserrat',
-                ),
+            const SizedBox(
+              height: 45,
+            ),
+            Text(
+              'onb_3_1_subtitle'.tr,
+              style: const TextStyle(
+                color: Color(0xff592F72),
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Montserrat',
               ),
             ),
             const Spacer(

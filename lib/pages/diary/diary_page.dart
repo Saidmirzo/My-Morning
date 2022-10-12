@@ -136,7 +136,7 @@ class _DiaryPageState extends State<DiaryPage> {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => Get.to(() => TimerNotePage(
+                            onTap: () => Get.to(TimerNotePage(
                                 fromHomeMenu: widget.fromHomeMenu)),
                             child: Container(
                               height: 70,
@@ -155,7 +155,7 @@ class _DiaryPageState extends State<DiaryPage> {
                         ),
                         SizedBox(width: Get.height * 0.01),
                         GestureDetector(
-                          onTap: () => Get.to(() => TimerRecordPage(
+                          onTap: () => Get.to(TimerRecordPage(
                               fromHomeMenu: widget.fromHomeMenu)),
                           child: Container(
                             height: 70,
@@ -297,7 +297,7 @@ class _DiaryItemState extends State<DiaryItem> {
                   MaterialPageRoute(
                       builder: (context) => journalMyDitails(
                           widget.id,
-                          widget.title ?? 'voice_note'.tr,
+                          widget.title ?? 'Голосовая заметка',
                           widget.id,
                           widget.map)));
             },
@@ -348,7 +348,7 @@ class _DiaryItemState extends State<DiaryItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.title ?? 'voice_note'.tr,
+                          widget.title ?? 'Голосовая заметка',
                           style: const TextStyle(
                             color: Color(0xff592F72),
                             fontSize: 14,

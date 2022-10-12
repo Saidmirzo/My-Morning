@@ -112,7 +112,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
                                   onTap: () {
                                     timerService.dispose();
                                     // Navigator.pop(context);
-                                    Get.to(() => const ReadingPage());
+                                    Get.to(const ReadingPage());
                                   }),
                             ],
                           ))

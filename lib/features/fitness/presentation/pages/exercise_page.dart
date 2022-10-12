@@ -63,12 +63,14 @@ class _ExercisePageState extends State<ExercisePage>
   void onDoneTimer() async {
     if (_fitnessController.step !=
         _fitnessController.selectedProgram.exercises.length - 1) {
-      Get.to(() => FitnessSuccessPage(
+      Get.to(
+        FitnessSuccessPage(
           onNext: () async {
             Get.back();
             _onNext();
           },
-        ));
+        ),
+      );
     } else {
       _onNext();
     }
@@ -342,7 +344,7 @@ class _ExercisePageState extends State<ExercisePage>
       exercise.value = _exercise;
     } else {
       _fitnessController.step = 0;
-      Get.off(() => const FitnessMainPage(pageId: TimerPageId.Fitness));
+      Get.off(const FitnessMainPage(pageId: TimerPageId.Fitness));
     }
     try {
       await _audioPlayer.setAsset(exercise.value.audioRes);

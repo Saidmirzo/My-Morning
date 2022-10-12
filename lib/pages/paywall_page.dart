@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:morningmagic/db/hive.dart';
+import 'package:morningmagic/db/model/user/user.dart';
+import 'package:morningmagic/db/resource.dart';
+import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/analitics/all.dart';
 import '../resources/colors.dart';
-import '../services/ab_testing_service.dart';
 import 'progress/progress_page.dart';
 
 class PaywallPage extends StatefulWidget {
-
-  const PaywallPage({Key key}) : super(key: key);
-
   @override
   _PaywallPageState createState() => _PaywallPageState();
 }
 
 class _PaywallPageState extends State<PaywallPage> {
+  final User _user = myDbBox.get(MyResource.USER_KEY);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +97,7 @@ class _PaywallPageState extends State<PaywallPage> {
                   ),
                   actionCallback: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ABTestingService.getPaywall()));
+                        MaterialPageRoute(builder: (context) => NewPaywall()));
                     // appAnalitics.logEvent('first_polnyi_complex');
                   },
                   bgColor: AppColors.VIOLET,
@@ -138,12 +140,11 @@ class _PaywallPageState extends State<PaywallPage> {
     );
   }
 
-  Widget _buildPaywallButton({
-    @required Widget widget,
-    @required VoidCallback actionCallback,
-    Color bgColor = Colors.white,
-    Color color = AppColors.VIOLET,
-  }) {
+  Widget _buildPaywallButton(
+      {@required Widget widget,
+      @required VoidCallback actionCallback,
+      Color bgColor = Colors.white,
+      Color color = AppColors.VIOLET}) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 3 / 4,
       child: TextButton(

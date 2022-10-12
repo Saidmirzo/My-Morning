@@ -130,6 +130,6 @@ class _CastomSuccessPageState extends State<CastomSuccessPage> {
 
   void _navigateToNextExercise() async {
     final _routeValue = await OrderUtil().getRouteById(widget.pageid);
-    Get.off(() => _routeValue);
+    Get.off(_routeValue);
   }
 }

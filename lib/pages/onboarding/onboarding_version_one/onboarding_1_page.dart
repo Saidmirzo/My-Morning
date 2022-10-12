@@ -21,7 +21,6 @@ class _OnBoarding1PageState extends State<OnBoarding1Page> {
   void initState() {
     super.initState();
     AppMetrica.reportEvent('onbording_1');
-    print('ONBOARDING OnBoarding1Page');
   }
 
   @override

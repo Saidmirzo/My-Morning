@@ -25,19 +25,16 @@ import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/ab_testing_service.dart';
-
 class NewPaywall extends StatefulWidget {
-
-  final bool isSettings;
-
-  const NewPaywall({
-    Key key,
-    this.isSettings = false,
+  NewPaywall({
+    Key,
+    key,
+    this.isseting = false,
   }) : super(key: key);
 
   @override
   State<NewPaywall> createState() => _NewPaywallState();
+  bool isseting;
 }
 
 class _NewPaywallState extends State<NewPaywall> {
@@ -63,12 +60,14 @@ class _NewPaywallState extends State<NewPaywall> {
         height: double.maxFinite,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(MyImages.newPaywallBg),
+            image: AssetImage(
+              MyImages.newPaywallBg,
+            ),
             fit: BoxFit.fill,
           ),
         ),
         child: FutureBuilder<AdaptyPaywall>(
-            future: ABTestingService.getTest("My_Morning_Paywall_ID"),
+            future: billingService.getPaywall("My_Morning_Paywall_ID"),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const SizedBox();
@@ -143,7 +142,7 @@ class _NewPaywallState extends State<NewPaywall> {
                                     await CustomSharedPreferences()
                                         .isFirstOpen()) {
                                   AppMetrica.reportEvent('subscription_trial');
-                                  Get.to(() => const WelcomePage());
+                                  Get.to(const WelcomePage());
                                   pushNotifications = PushNotifications();
                                   WidgetsBinding.instance.addPostFrameCallback(
                                     (timeStamp) async {
@@ -198,7 +197,7 @@ class _NewPaywallState extends State<NewPaywall> {
                           Navigator.popUntil(context, (route) => route.isFirst);
                           if (await CustomSharedPreferences().isFirstOpen()) {
                             AppMetrica.reportEvent('paywall_discount_close');
-                            Get.to(() => const WelcomePage());
+                            Get.to(const WelcomePage());
                             pushNotifications = PushNotifications();
                             WidgetsBinding.instance
                                 .addPostFrameCallback((timeStamp) async {
@@ -213,11 +212,11 @@ class _NewPaywallState extends State<NewPaywall> {
                                 }
                               }
                             });
-                          } else if (widget.isSettings) {
-                            Get.to(() => const SettingsPage());
+                          } else if (widget.isseting) {
+                            Get.to(const SettingsPage());
                             // AppMetrica.reportEvent('paywall_inapp_discount_close');
                           } else {
-                            Get.to(() => const MainMenuPage());
+                            Get.to(const MainMenuPage());
                           }
                         },
                       ),

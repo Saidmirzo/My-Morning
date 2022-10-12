@@ -129,7 +129,7 @@ class _MeditationPageState extends State<MeditationPage> {
                 const Spacer(),
                 SelectedMusicsButton(
                   onClick: () {
-                    Get.to(() => const SelectedMEditationsScreen());
+                    Get.to(const SelectedMEditationsScreen());
                   },
                 ),
                 const Spacer(
@@ -179,12 +179,14 @@ class _MeditationPageState extends State<MeditationPage> {
     _source.addAll(newSource);
     _audioController.changeAudioSource(_source);
     // _audioController.currentPage.value = MenuItems.yoga;
-    Get.to(() => MeditationTimerPage(
+    Get.to(
+      MeditationTimerPage(
         isSilence: isSilence,
         isMeditation: isMeditation,
         fromHomeMenu: widget.fromHomeMenu,
         mystateNumber: myStateNumber,
-      ));
+      ),
+    );
   }
 }
 
