@@ -78,7 +78,11 @@ class LoadingPageState extends State<LoadingPage>
               : timeType == TimeType.afternoon
                   ? AfternoonPage(onDone: _redirect)
                   : timeType == TimeType.evening
-                      ? EveningPage(onDone: _redirect)
+                      ? EveningPage(
+                          onDone: () async => AppRouting.replace(
+                            await chooseNavigationRoute(),
+                          ),
+                        )
                       : NightPage(onDone: _redirect),
         ],
       ),
@@ -92,7 +96,6 @@ class LoadingPageState extends State<LoadingPage>
     } else {
       AnalyticService.analytics.logAppOpen();
       // return await getOnboardingRemoteConfig();
-      await ABTestingService.whileInit();
       return ABTestingService.getOnboarding();
     }
   }

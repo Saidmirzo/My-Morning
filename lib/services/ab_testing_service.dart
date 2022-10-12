@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:adapty_flutter/models/adapty_paywall.dart';
 import 'package:adapty_flutter/models/adapty_product.dart';
@@ -23,41 +21,32 @@ class ABTestingService extends GetxService {
   static String paywallVersion = '';
   static String _onboardingVersion;
 
-  static bool loading = false;
-
   ABTestingService() {
     init();
   }
 
   static Future<void> init() async {
-    if (!loading) {
-      try {
-        loading = true;
+    try {
+      // Загружаем все пейволлы
+      final GetPaywallsResult getPaywallsResult = await Adapty.getPaywalls();
 
-        // Загружаем все пейволлы
-        final GetPaywallsResult getPaywallsResult = await Adapty.getPaywalls();
+      // Сохраняем в памяти данные
+      tests = getPaywallsResult.paywalls;
+      products = getPaywallsResult.products;
+      // print('getPaywallsResult ${getPaywallsResult}');
+      // for(var i in paywalls) {
+      //   print('paywalls $i');
+      // }
 
-        // Сохраняем в памяти данные
-        tests = getPaywallsResult.paywalls;
-        products = getPaywallsResult.products;
+      // Определяем версию пейволла
+      await fetchPaywallVersion();
 
-        // Определяем версию пейволла
-        await fetchPaywallVersion();
-
-        // Определяем версию онбординга
-        await fetchOnboardingVersion();
-      }
-      catch(e) {
-        print(e);
-      }
-      finally {
-        loading = false;
-      }
+      // Определяем версию онбординга
+      await fetchOnboardingVersion();
     }
-  }
-
-  static Future whileInit() async {
-    return Future.doWhile(() => loading);
+    catch(e) {
+      print(e);
+    }
   }
 
   // Получаем А/Б тест по его идентификатору
@@ -78,7 +67,7 @@ class ABTestingService extends GetxService {
 
       return bestPaywall;
     }
-    catch(e) {
+    catch (e) {
       print(e);
       return null;
     }
@@ -86,51 +75,50 @@ class ABTestingService extends GetxService {
 
   // Извлекаем версию онбординга
   static Future<void> fetchOnboardingVersion() async {
-    try {
-      // Определяем идентификатор А/Б теста с онбордингами
-      String id = AdaptyCustomPayloadKeys.testOnboardingID;
-      final InstallationAppReferrer referrer = await InstallReferrer.referrer;
-      if (referrer == InstallationAppReferrer.iosTestFlight || kDebugMode) {
-        id = AdaptyCustomPayloadKeys.internalABTestID;
-      }
 
-      // Извлекаем этот А/Б тест
-      final AdaptyPaywall _test = await getTest(id);
-
-      // Извлекаем данные из теста, если они есть
-      if (_test != null &&
-          _test.customPayload
-              .containsKey(AdaptyCustomPayloadKeys.abTestData) &&
-          _test.customPayload[AdaptyCustomPayloadKeys.abTestData]
-              .containsKey(AdaptyCustomPayloadKeys.onboardingVersion)
-      ) {
-        _onboardingVersion = _test
-            .customPayload[AdaptyCustomPayloadKeys.abTestData][AdaptyCustomPayloadKeys.onboardingVersion];
-        print('onboardingVersion $_onboardingVersion');
-      }
+    // Определяем идентификатор А/Б теста с онбордингами
+    String id = AdaptyCustomPayloadKeys.testOnboardingID;
+    final InstallationAppReferrer referrer = await InstallReferrer.referrer;
+    if (referrer == InstallationAppReferrer.iosTestFlight || kDebugMode) {
+      id = AdaptyCustomPayloadKeys.internalABTestID;
     }
-    catch(e) {
-      print(e);
+
+    // Извлекаем этот А/Б тест
+    final AdaptyPaywall _test = await getTest(id);
+
+    // Извлекаем данные из теста, если они есть
+    if (_test != null &&
+        _test.customPayload
+            .containsKey(AdaptyCustomPayloadKeys.abTestData) &&
+        _test.customPayload[AdaptyCustomPayloadKeys.abTestData]
+            .containsKey(AdaptyCustomPayloadKeys.onboardingVersion)
+    ) {
+      _onboardingVersion = _test
+          .customPayload[AdaptyCustomPayloadKeys.abTestData][AdaptyCustomPayloadKeys.onboardingVersion];
+      print('onboardingVersion $_onboardingVersion');
     }
   }
 
   // Извлекаем версию пейволла
   static Future<void> fetchPaywallVersion() async {
-    try {
-      // Извлекаем А/Б тест с пейволлами
-      final AdaptyPaywall _test = await getTest(
-          AdaptyCustomPayloadKeys.testPaywallID
-      );
 
-      // Извлекаем данные из теста, если они есть
-      if (_test != null) {
-        paywallVersion = _test.products.first.paywallName;
-        print('paywallVersion $paywallVersion');
-      }
+    // Извлекаем А/Б тест с пейволлами
+    final AdaptyPaywall _test = await getTest(
+        AdaptyCustomPayloadKeys.testPaywallID
+    );
+
+    // Извлекаем данные из теста, если они есть
+    if (_test != null) {
+      paywallVersion = _test.products.first.paywallName;
+      print('paywallVersion $paywallVersion');
     }
-    catch (e) {
-      print(e);
-    }
+    // if (_test != null &&
+    //     _test.customPayload != null &&
+    //     _test.customPayload
+    //         .containsKey(AdaptyCustomPayloadKeys.paywallVersion)) {
+    //   _paywallVersion = _test.customPayload[AdaptyCustomPayloadKeys.paywallVersion];
+    //   print('paywallVersion $_paywallVersion ${_test.products.length}');
+    // }
   }
 
   // Возвращаем пейволл
@@ -159,8 +147,7 @@ class ABTestingService extends GetxService {
         return const OnboardingVersionThirdPageOne();
       default:
         // for catch in test
-        // throw Error();
-        return const OnBoarding1Page();
+        throw Error();
     }
   }
 }

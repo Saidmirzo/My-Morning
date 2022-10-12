@@ -116,8 +116,13 @@ class _PaywallV2State extends State<PaywallV2> {
                                   children: [
                                     // Закрыть
                                     GestureDetector(
-                                      child: Container(
-                                        margin: const EdgeInsets.only(right: 35, top: 28),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 0,
+                                          right: 10,
+                                          top: 10,
+                                          bottom: 10,
+                                        ),
                                         child: Image.asset(
                                           MyImages.newPaywallCloseIcon,
                                           width: 10.33,
