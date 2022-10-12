@@ -236,6 +236,6 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
   }
 
   void _openVisualizationTargetScreen() => Get.to(
-        const VisualizationTargetPage(),
+        () => const VisualizationTargetPage(),
       );
 }

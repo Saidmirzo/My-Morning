@@ -20,11 +20,11 @@ Widget qYesNoOtherIfyes(String title, String subtitle, int index) {
         Get.snackbar(null, 'please_fill_all_fields'.tr);
       } else {
         if (val.value == YesNoOther.yes) {
-          _controller.data[title + ' ' + 'если да'] = fieldController2.text;
+          _controller.data[title + ' ' + 'if_yes'.tr] = fieldController2.text;
         }
-        if (val.value == YesNoOther.no) _controller.data[title] = 'нет';
+        if (val.value == YesNoOther.no) _controller.data[title] = 'no'.tr.toLowerCase();
         if (val.value == YesNoOther.other) {
-          _controller.data[title.tr + ' ' + 'если другое'] =
+          _controller.data[title + ' ' + 'if_other'.tr] =
               fieldController.text;
         }
         _controller.slideNext();

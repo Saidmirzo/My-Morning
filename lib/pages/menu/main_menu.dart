@@ -26,6 +26,7 @@ import '../../db/hive.dart';
 import '../../db/model/exercise/exercise_holder.dart';
 import '../../db/resource.dart';
 import '../../dialog/interviewDialog.dart';
+import '../../services/ab_testing_service.dart';
 import 'components/menu.dart';
 import 'components/questions_dialog.dart';
 
@@ -94,8 +95,7 @@ class MainMenuPageState extends State<MainMenuPage> {
                       const SizedBox(
                         height: 10.69,
                       ),
-                      const Text(
-                        'MY MORNING',
+                      const Text('MY MORNING',
                         style: TextStyle(
                             color: Color(0xffD1ADE7),
                             fontFamily: 'Montserrat',
@@ -181,7 +181,7 @@ class MainMenuPageState extends State<MainMenuPage> {
     return GestureDetector(
       onTap: () {
         appAnalitics.logEvent('first_faq');
-        Get.to(const FaqMenuPage());
+        Get.to(() => const FaqMenuPage());
       },
       child: Container(
         width: 47.05,
@@ -202,7 +202,7 @@ class MainMenuPageState extends State<MainMenuPage> {
     return GestureDetector(
       onTap: () {
         AppMetrica.reportEvent('meditation_start');
-        Get.off(const MeditationPage(fromHomeMenu: true), opaque: true);
+        Get.off(() => const MeditationPage(fromHomeMenu: true), opaque: true);
         isComplex = false;
       },
       child: Container(
@@ -217,7 +217,7 @@ class MainMenuPageState extends State<MainMenuPage> {
           color: const Color(0xffFFD2DB),
         ),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 31, 10, 30),
+          padding: const EdgeInsets.fromLTRB(16, 31, 10, 30),
           child: Text(
             'meditation_small'.tr,
             style: TextStyle(
@@ -234,7 +234,7 @@ class MainMenuPageState extends State<MainMenuPage> {
     return GestureDetector(
       onTap: () {
         AppMetrica.reportEvent('affirmations_start');
-        Get.off(const AffirmationPage(fromHomeMenu: true), opaque: true);
+        Get.off(() => const AffirmationPage(fromHomeMenu: true), opaque: true);
         isComplex = false;
       },
       child: Container(
@@ -249,7 +249,7 @@ class MainMenuPageState extends State<MainMenuPage> {
           color: const Color(0xffFFD2DB),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, bottom: 10, right: 10),
+          padding: const EdgeInsets.only(left: 16, bottom: 10, right: 10),
           child: Row(
             children: [
               const SizedBox(
@@ -274,18 +274,21 @@ class MainMenuPageState extends State<MainMenuPage> {
       children: [
         // if (!billingService.isPro())
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(width: 5),
             GestureDetector(child: SvgPicture.asset('$imagePath/crown.svg')),
             const SizedBox(width: 10),
             Text(
-              !billingService.isPro()
-                  ? 'Try PREMIUM Package for free'.tr
-                  : 'PREMIUM activated'.tr,
+              billingService.isPro()
+                  ? 'PREMIUM activated'.tr
+                  : 'Try PREMIUM Package for free'.tr,
               style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   color: Color(0xff592F72)),
+              textAlign: TextAlign.left,
             ),
           ],
         ),
@@ -295,21 +298,30 @@ class MainMenuPageState extends State<MainMenuPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                exerciseBLock('assets/images/purchase/fitness.png',
-                    'fitness_small'.tr, 'fitness_desc'.tr, onPressed: () {
-                  isComplex = false;
-
-                  AppMetrica.reportEvent('fitness_start');
-                  openIfVip(const FitnessMainPage(
-                      pageId: TimerPageId.Fitness, fromHomeMenu: true));
-                }),
-                exerciseBLock('assets/images/purchase/note.png',
-                    'menu_diary_small'.tr, 'menu_diary_desc'.tr,
-                    color: const Color(0xffFFD2DB), onPressed: () {
-                  isComplex = false;
-                  AppMetrica.reportEvent('diary_start');
-                  openIfVip(const DiaryPage(fromHomeMenu: true));
-                }),
+                exerciseBLock(
+                  'assets/images/purchase/fitness.png',
+                  'fitness_small'.tr,
+                  'fitness_desc'.tr,
+                  onPressed: () {
+                    isComplex = false;
+                    AppMetrica.reportEvent('fitness_start');
+                    openIfVip(const FitnessMainPage(
+                        pageId: TimerPageId.Fitness,
+                        fromHomeMenu: true,
+                    ));
+                  },
+                ),
+                exerciseBLock(
+                  'assets/images/purchase/note.png',
+                  'menu_diary_small'.tr,
+                  'menu_diary_desc'.tr,
+                  color: const Color(0xffFFD2DB),
+                  onPressed: () {
+                    isComplex = false;
+                    AppMetrica.reportEvent('diary_start');
+                    openIfVip(const DiaryPage(fromHomeMenu: true));
+                  },
+                ),
               ],
             ),
             const SizedBox(height: 10),
@@ -323,7 +335,6 @@ class MainMenuPageState extends State<MainMenuPage> {
                   color: const Color(0xffE4C8FC),
                   onPressed: () async {
                     isComplex = false;
-
                     if (await ConnectionRepo.isConnected()) {
                       AppMetrica.reportEvent('visualization_start');
                       openIfVip(
@@ -345,7 +356,6 @@ class MainMenuPageState extends State<MainMenuPage> {
                   'reading_desc'.tr,
                   onPressed: () {
                     isComplex = false;
-
                     AppMetrica.reportEvent('reading_start');
                     openIfVip(const ReadingPage(fromHomeMenu: true));
                   },
@@ -361,9 +371,9 @@ class MainMenuPageState extends State<MainMenuPage> {
 
   void openIfVip(Widget page) async {
     if (billingService.isPro()) {
-      Get.off(page, opaque: true);
+      Get.off(() => page, opaque: true);
     } else {
-      await Get.to(NewPaywall());
+      await Get.to(() => ABTestingService.getPaywall());
       setState(() {});
     }
   }
@@ -576,11 +586,11 @@ class MainMenuPageState extends State<MainMenuPage> {
         .getBox()
         .put(MyResource.LAUNCH_FOR_INTERVIEW, _cntBeforInterview);
     appAnalitics.logEvent('first_start');
-    Get.to(const MeditationPage());
+    Get.to(() => const MeditationPage());
     await OrderUtil()
         .getRouteByPositionInList(await OrderUtil().getNextPos(0))
         .then((value) {
-      Get.off(value);
+      Get.off(() => value);
     });
   }
 

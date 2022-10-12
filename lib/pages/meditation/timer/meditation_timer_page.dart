@@ -159,7 +159,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                             _audioController.bfPlayer.value.stop();
                             _audioController.audioPlayer.value.stop();
                             _audioController.pause();
-                            Get.to(const MeditationPage());
+                            Get.to(() => const MeditationPage());
                           },
                           child: const Icon(
                             Icons.west,
@@ -204,11 +204,9 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                               //////////////////////////////////
                               // _audioController.pause();
                               // timerService.timer.cancel();
-                              Get.to(
-                                MeditationAudioPage(
+                              Get.to(() => MeditationAudioPage(
                                     isMeditation: widget.isMeditation,
-                                    timerService: timerService),
-                              );
+                                    timerService: timerService));
                             }),
                       if (_audioController.audioSource.isEmpty ||
                           !widget.isMeditation)
@@ -217,7 +215,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                           imgW: 17.57,
                           imgH: 20.33,
                           onClick: () =>
-                              Get.to(AddTimePeriod(timerService: timerService)),
+                              Get.to(() => AddTimePeriod(timerService: timerService)),
                         ),
                     ],
                   ),

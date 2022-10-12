@@ -151,7 +151,7 @@ class FAQStateScreen extends State<FaqMenuPage> {
                                 ),
                                 onPressed: () {
                                   AppMetrica.reportEvent('poll_screen');
-                                  Get.to(InterviewPage());
+                                  Get.to(() => InterviewPage());
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

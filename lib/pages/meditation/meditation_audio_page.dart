@@ -189,7 +189,7 @@ class _MeditationAudioPageState extends State<MeditationAudioPage> {
           reinitMainSound: !widget.withBgSound);
       Get.back();
     } else {
-      Get.to(MeditationTimerPage(
+      Get.to(() => MeditationTimerPage(
           fromAudio: true, fromHomeMenu: widget.fromHomeMenu));
       appAnalitics.logEvent('first_music_next');
     }

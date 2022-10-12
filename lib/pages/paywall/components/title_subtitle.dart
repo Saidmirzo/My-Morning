@@ -22,15 +22,13 @@ class TitleSubtitlePaywall extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          'Unlock all features'.tr,
+        Text('Unlock all features'.tr,
           style: titleStyle,
         ),
         const SizedBox(
           height: 8,
         ),
-        Text(
-          "Build your perfect morning routine".tr,
+        Text("Build your perfect morning routine".tr,
           style: subtitleStyle,
         ),
       ],

@@ -19,6 +19,7 @@ import '../../db/model/exercise_time/exercise_time.dart';
 import '../../db/model/user/user.dart';
 import '../../db/resource.dart';
 import '../../resources/colors.dart';
+import '../../services/ab_testing_service.dart';
 import '../../storage.dart';
 import '../../widgets/setting_activity_list.dart';
 import '../affirmation/affirmation_dialog/affirmation_dialog.dart';
@@ -125,7 +126,7 @@ class SettingsPageState extends State<SettingsPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   GestureDetector(
-                                    onTap: () => Get.to(const MainMenuPage()),
+                                    onTap: () => Get.to(() => const MainMenuPage()),
                                     child: const Icon(
                                       Icons.west,
                                       color: Colors.white,
@@ -180,9 +181,7 @@ class SettingsPageState extends State<SettingsPage> {
                               child: GestureDetector(
                                   onTap: () async {
                                     if (!billingService.isPro()) {
-                                      Get.to(NewPaywall(
-                                        isseting: true,
-                                      ));
+                                      Get.to(() => ABTestingService.getPaywall(true));
                                       return;
                                     }
                                     AppMetrica.reportEvent(
@@ -261,7 +260,7 @@ class SettingsPageState extends State<SettingsPage> {
   SliverToBoxAdapter btnSetReminders() {
     return SliverToBoxAdapter(
       child: GestureDetector(
-        onTap: () => Get.to(RemindersPage()),
+        onTap: () => Get.to(() => RemindersPage()),
         child: Container(
           padding: const EdgeInsets.only(left: 8, top: 5, bottom: 10),
           child: Row(

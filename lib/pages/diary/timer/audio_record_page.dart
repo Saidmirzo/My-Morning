@@ -255,7 +255,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                   _timer.cancel();
                   Future.microtask(() => stop());
                   OrderUtil().getRouteById(3).then((value) {
-                    Get.off(value);
+                    Get.off(() => value);
                   });
                 } else {
                   _time.value--;
@@ -439,8 +439,8 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                       await stop();
                       OrderUtil().getRouteById(TimerPageId.Diary).then(
                         (value) {
-                          Get.off(TimerSuccessScreen(
-                              () => Get.to(widget.fromHomeMenu
+                          Get.off(() => TimerSuccessScreen(
+                              () => Get.to(() => widget.fromHomeMenu
                                   ? const ProgressPage()
                                   : value),
                               MyDB()
@@ -580,8 +580,8 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                   await stop();
                   OrderUtil().getRouteById(TimerPageId.Diary).then(
                     (value) {
-                      Get.off(TimerSuccessScreen(
-                          () => Get.to(widget.fromHomeMenu
+                      Get.off(() => TimerSuccessScreen(
+                          () => Get.to(() => widget.fromHomeMenu
                               ? const ProgressPage()
                               : value),
                           MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time,

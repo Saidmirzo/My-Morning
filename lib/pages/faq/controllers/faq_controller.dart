@@ -7,7 +7,7 @@ class FaqController extends GetX {
   String cat_tarifs = 'faq_cat_tarifs'.tr;
 
   void openCategory(String _cat) {
-    Get.to(FaqCategoryPage(category: _cat));
+    Get.to(() => FaqCategoryPage(category: _cat));
   }
 
   List<Map<String, String>> getQuestionsByCategory(String cat) {

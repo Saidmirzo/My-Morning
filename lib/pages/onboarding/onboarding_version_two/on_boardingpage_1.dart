@@ -22,6 +22,7 @@ class _OnboardingVersionSecondPage1State
   void initState() {
     super.initState();
     AppMetrica.reportEvent('onbording_1');
+    print('ONBOARDING OnboardingVersionSecondPage1');
   }
 
   @override

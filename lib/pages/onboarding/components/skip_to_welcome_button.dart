@@ -13,7 +13,7 @@ class SizedBox extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         AppRouting.replace(const MainMenuPage());
-        Get.to(const WelcomePage());
+        Get.to(() => const WelcomePage());
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 7),

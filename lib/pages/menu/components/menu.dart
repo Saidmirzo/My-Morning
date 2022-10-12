@@ -150,12 +150,12 @@ class BottomMenu extends StatelessWidget {
 
   _openFaq() {
     // appAnalitics.logEvent('first_faq');
-    Get.to(RemindersPage());
+    Get.to(() => RemindersPage());
   }
 
   _openProgress() {
     AppMetrica.reportEvent('statistics_screen');
     appAnalitics.logEvent('first_menu_progress');
-    Get.to(const ProgressPage());
+    Get.to(() => const ProgressPage());
   }
 }

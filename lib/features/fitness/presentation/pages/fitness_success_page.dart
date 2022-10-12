@@ -131,7 +131,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
     } else {
       _routeValue = await OrderUtil().getRouteById(2);
     }
-    Get.off(_routeValue, opaque: true);
+    Get.off(() => _routeValue, opaque: true);
   }
 
   Future<void> _vibrate() async {

@@ -281,8 +281,8 @@ class TimerService {
   // Время таймера записывается неверно если залочить экран ( passedSeconds )
 
   getNextPage(dynamic value, bool isSkip, {bool isFinal = false}) {
-    Get.off(
-      pageId == TimerPageId.Reading
+    Get.off(() =>
+    pageId == TimerPageId.Reading
           ? TimerInputSuccessScreen(passedSec.value, isSkip,
               calculateProcent(constTime.value, time.value),
               fromHomeMenu: fromHomeMenu)
@@ -293,7 +293,7 @@ class TimerService {
                         pageId == TimerPageId.Custom2 ||
                         pageId == TimerPageId.Custom3 ||
                         pageId == TimerPageId.Custom4)
-                    ? Get.off(_routeValue)
+                    ? Get.off(() => _routeValue)
 
                     // ? Get.offAll(
                     //     CastomSuccessPage(
@@ -302,8 +302,7 @@ class TimerService {
                     //       pageid: pageId,
                     //     ),
                     //   )}
-                    : Get.off(
-                        fromHomeMenu
+                    : Get.off(() => fromHomeMenu
                             ? billingService.isVip.value
                                 ? const ProgressPage()
                                 : PaywallPage()

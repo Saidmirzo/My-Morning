@@ -10,6 +10,7 @@ import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:reorderables/reorderables.dart';
 import '../pages/paywall/new_paywall.dart';
+import '../services/ab_testing_service.dart';
 import 'exerciseTile.dart';
 
 class SettingsActivityList extends StatefulWidget {
@@ -164,9 +165,8 @@ class SettingsActivityListState extends State<SettingsActivityList> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => NewPaywall(
-                  isseting: true,
-                )),
+            builder: (context) => ABTestingService.getPaywall(true)
+        ),
       );
     }
     calculateNewTime();

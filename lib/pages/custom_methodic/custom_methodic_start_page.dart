@@ -91,7 +91,7 @@ class _CustomMethodicStartPageState extends State<CustomMethodicStartPage> {
                       icon: const Icon(Icons.arrow_forward,
                           color: AppColors.primary),
                       onPressed: () =>
-                          Get.to(CustomMethodicPage(pageId: widget.pageId)),
+                          Get.to(() => CustomMethodicPage(pageId: widget.pageId)),
                     )
                   ],
                 ),

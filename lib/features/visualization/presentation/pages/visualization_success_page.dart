@@ -133,6 +133,6 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
 
   void _navigateToNextExercise() async {
     final _routeValue = await OrderUtil().getRouteById(5);
-    Get.off(widget.fromHomeMenu ? const ProgressPage() : _routeValue);
+    Get.off(() => widget.fromHomeMenu ? const ProgressPage() : _routeValue);
   }
 }

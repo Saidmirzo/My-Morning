@@ -49,7 +49,7 @@ class InterviewDialog extends Dialog {
                       ),
                       onPressed: () async {
                         Get.back();
-                        Get.to(InterviewPage());
+                        Get.to(() => InterviewPage());
                       },
                     ),
                     CupertinoButton(

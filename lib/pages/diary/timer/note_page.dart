@@ -105,8 +105,8 @@ class TimerNotePageState extends State<TimerNotePage> {
     await _audioPlayer.setAsset("assets/audios/success.mp3");
     saveNoteProgress(isSkip);
     OrderUtil().getRouteById(TimerPageId.Diary).then((value) {
-      Get.off(TimerSuccessScreen(() {
-        Get.off(widget.fromHomeMenu ? const ProgressPage() : value);
+      Get.off(() => TimerSuccessScreen(() {
+        Get.off(() => widget.fromHomeMenu ? const ProgressPage() : value);
       }, MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time, false, 1));
     });
     appAnalitics.logEvent('first_dnevnik_next');
@@ -178,7 +178,7 @@ class TimerNotePageState extends State<TimerNotePage> {
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  Get.off(const DiaryPage(), opaque: true);
+                                  Get.off(() => const DiaryPage(), opaque: true);
                                   _timer?.cancel();
                                 },
                                 child: const Icon(
