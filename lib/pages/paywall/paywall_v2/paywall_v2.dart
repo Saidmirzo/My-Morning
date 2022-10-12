@@ -116,18 +116,10 @@ class _PaywallV2State extends State<PaywallV2> {
                                   children: [
                                     // Закрыть
                                     GestureDetector(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 0,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 10,
-                                        ),
-                                        child: Image.asset(
-                                          MyImages.newPaywallCloseIcon,
-                                          width: 10.33,
-                                          height: 10.33,
-                                        ),
+                                      child: Image.asset(
+                                        MyImages.newPaywallCloseIcon,
+                                        width: 10.33,
+                                        height: 10.33,
                                       ),
                                       onTap: () async {
                                         // Navigator.popUntil(context, (route) => route.isFirst);
