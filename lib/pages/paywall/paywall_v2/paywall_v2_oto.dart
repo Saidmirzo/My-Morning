@@ -112,13 +112,8 @@ class _PaywallV2OneTimeOfferState extends State<PaywallV2OneTimeOffer> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: GestureDetector(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 0,
-                                right: 10,
-                                top: 10,
-                                bottom: 10,
-                              ),
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 27, top: 20),
                               child: Image.asset(
                                 MyImages.newPaywallCloseIcon,
                                 width: 10.33,
