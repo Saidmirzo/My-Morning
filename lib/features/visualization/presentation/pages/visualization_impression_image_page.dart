@@ -260,13 +260,13 @@ class VisualizationImpressionImagePage extends StatelessWidget {
         title: Text('remove_image'.tr),
         // content: Text(""),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('cancellation'.tr),
             onPressed: () {
               Get.back();
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text('delete'.tr),
             onPressed: () {
               _controller.removePickedImage(index);

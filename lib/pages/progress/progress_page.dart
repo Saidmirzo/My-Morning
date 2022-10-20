@@ -759,7 +759,7 @@ class _ProgressPageState extends State<ProgressPage> {
                 ],
               ),
               actions: [
-                FlatButton(
+                TextButton(
                   child: Text(
                     'action_remind'.tr,
                     style: const TextStyle(
@@ -771,7 +771,7 @@ class _ProgressPageState extends State<ProgressPage> {
                     Navigator.pop(context);
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text(
                     'action_rate'.tr,
                     style: const TextStyle(fontSize: 16),

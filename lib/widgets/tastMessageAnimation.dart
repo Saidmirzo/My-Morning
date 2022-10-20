@@ -4,7 +4,7 @@ import 'package:simple_animations/simple_animations.dart';
 class ToastMessageAnimation extends StatelessWidget {
   final Widget child;
 
-  const ToastMessageAnimation(this.child);
+  const ToastMessageAnimation(this.child, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

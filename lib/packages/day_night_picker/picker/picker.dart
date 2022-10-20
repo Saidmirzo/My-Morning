@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/packages/day_night_picker/providers/day_night_picker_provider.dart';
 import 'package:morningmagic/packages/day_night_picker/utils/day_night_banner.dart';

@@ -7,18 +7,16 @@ class DialogFooterButton extends StatelessWidget {
 
   final VoidCallback onPressed;
 
-  const DialogFooterButton(
-      {Key key, @required this.text, @required this.onPressed})
-      : super(key: key);
+  const DialogFooterButton({Key key, @required this.text, @required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton.icon(
+    return TextButton.icon(
         onPressed: onPressed,
-        shape: RoundedRectangleBorder(
-            side: const BorderSide(
-                style: BorderStyle.solid, width: 2, color: AppColors.VIOLET),
-            borderRadius: BorderRadius.circular(30.0)),
+        style: TextButton.styleFrom(
+            shape: RoundedRectangleBorder(
+                side: const BorderSide(style: BorderStyle.solid, width: 2, color: AppColors.VIOLET),
+                borderRadius: BorderRadius.circular(30.0))),
         icon: const Icon(
           Icons.add,
           color: AppColors.VIOLET,

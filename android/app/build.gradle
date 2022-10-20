@@ -37,7 +37,7 @@ configurations.all {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -50,7 +50,7 @@ android {
     defaultConfig {
         applicationId "com.wonderfullmoning.morningmagic"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -78,6 +78,7 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.google.android.gms:play-services-basement:17.6.0'
-    implementation 'com.android.installreferrer:installreferrer:1.0'
     implementation 'com.github.adaptyteam:AdaptySDK-Android:1.2.0'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
 }

@@ -186,7 +186,7 @@ _showAlert(BuildContext context) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FlatButton(
+                  TextButton(
                     child: Text('yes'.tr,
                       style: const TextStyle(
                         color: AppColors.FIX_TOP,
@@ -198,7 +198,7 @@ _showAlert(BuildContext context) {
                       Navigator.of(context).pop();
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text('no'.tr,
                       style: const TextStyle(
                         color: AppColors.FIX_TOP,

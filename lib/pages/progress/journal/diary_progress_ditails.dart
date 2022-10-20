@@ -248,7 +248,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         'yes'.tr,
                         style: const TextStyle(
@@ -271,7 +271,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                             builder: (context) => MyDiaryProgress()));
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         'no'.tr,
                         style: const TextStyle(

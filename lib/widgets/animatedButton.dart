@@ -10,8 +10,7 @@ class AnimatedButton extends StatefulWidget {
   final double width;
   final FontWeight fontWeight;
 
-  const AnimatedButton(
-      this.onPressed, this.title, this.fontSize, this.width, this.fontWeight);
+  const AnimatedButton(this.onPressed, this.title, this.fontSize, this.width, this.fontWeight);
 
   @override
   _AnimatedButtonState createState() => _AnimatedButtonState();
@@ -55,18 +54,17 @@ class _AnimatedButtonState extends State<AnimatedButton> {
         child: ButtonTheme(
           minWidth: widget.width ?? 180.0,
           height: 50.0,
-          child: RaisedButton(
-            elevation: 0,
-            animationDuration: _duration,
+          child: ElevatedButton(
             autofocus: false,
-            hoverColor: AppColors.TRANSPARENT,
-            highlightElevation: 0,
+            style: ElevatedButton.styleFrom(
+                elevation: 0,
+                animationDuration: _duration,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(38.0)),
+                backgroundColor: buttonColor),
             onPressed: () {
               change();
               widget.onPressed();
             },
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(38.0)),
             child: Container(
               padding: const EdgeInsets.only(top: 3),
               child: Text(
@@ -80,7 +78,6 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                 ),
               ),
             ),
-            color: buttonColor,
           ),
         ),
       ),

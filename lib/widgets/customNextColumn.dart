@@ -4,6 +4,8 @@ import 'package:morningmagic/resources/colors.dart';
 import 'package:get/get.dart';
 
 class NextColumn extends StatelessWidget {
+  const NextColumn({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -13,11 +15,12 @@ class NextColumn extends StatelessWidget {
           child: ButtonTheme(
             minWidth: 170.0,
             height: 50.0,
-            child: RaisedButton(
-              elevation: 0,
+            child: ElevatedButton(
               onPressed: () {},
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(38.0)),
+              style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(38.0)),
+                  backgroundColor: AppColors.PINK),
               child: Text(
                 'continue'.tr,
                 style: const TextStyle(
@@ -26,7 +29,6 @@ class NextColumn extends StatelessWidget {
                   fontSize: 21,
                 ),
               ),
-              color: AppColors.PINK,
             ),
           ),
         ),

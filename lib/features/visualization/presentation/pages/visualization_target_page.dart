@@ -131,13 +131,13 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
         title: Text('remove_created_target'.tr),
         // content: Text(""),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('cancellation'.tr),
             onPressed: () {
               Get.back();
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text('delete'.tr),
             onPressed: () {
               _controller.removeTarget(targetId);

@@ -1,6 +1,7 @@
+import 'dart:ui';
+
 import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';

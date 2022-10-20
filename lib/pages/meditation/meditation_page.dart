@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/dialog/back_to_main_menu_dialog.dart';
 import 'package:morningmagic/features/meditation_audio/data/meditation_audio_data.dart';

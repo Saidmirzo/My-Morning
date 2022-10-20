@@ -275,7 +275,7 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
 
   void onPlayAudio() async {
     isPlayed.value = true;
-    await widget.audioPlayer?.play(widget.text, isLocal: true);
+    await widget.audioPlayer?.play(AssetSource(widget.text));
   }
 
   void onStopAudio() async {

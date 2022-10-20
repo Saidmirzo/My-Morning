@@ -19,7 +19,6 @@ import 'package:morningmagic/pages/affirmation/affirmation_dialog/models/affirma
 import 'package:morningmagic/pages/reminders/models/reminder.dart';
 import 'model/affirmation_text/affirmation_text_adapter.dart';
 import 'model/app_and_custom_exercises/app_exercise_holder.dart';
-import 'model/app_and_custom_exercises/custom_exercise_holder.dart';
 import 'model/app_and_custom_exercises/exercise_name.dart';
 import 'model/duration_adapter.dart';
 import 'model/exercise/exercise_holder.dart';

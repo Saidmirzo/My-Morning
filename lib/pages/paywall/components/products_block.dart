@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:morningmagic/pages/paywall/paywall_provider.dart';
 import 'package:provider/provider.dart';
 

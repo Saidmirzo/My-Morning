@@ -18,7 +18,7 @@ class FitnessController extends GetxController {
     print('FitnessController fromHomeMenu : $fromHomeMenu');
   }
 
-  final Rx<FitnessProgram> _selectedProgram = Rx<FitnessProgram>();
+  final Rx<FitnessProgram> _selectedProgram = Rx<FitnessProgram>(null);
 
   FitnessProgram get selectedProgram => _selectedProgram.value;
 

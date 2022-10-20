@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui_fake.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 
 class CloseButtonPaywall extends StatelessWidget {

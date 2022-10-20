@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:morningmagic/pages/affirmation/affirmation_page.dart';
-import 'package:wakelock/wakelock.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -8,6 +7,7 @@ import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/timer_left.dart';
 import 'package:morningmagic/services/timer_service.dart';
 import 'package:morningmagic/utils/string_util.dart';
+import 'package:wakelock/wakelock.dart';
 import '../../../services/analitics/all.dart';
 import '../affirmation_dialog/affirmation_dialog.dart';
 import 'components/components.dart';

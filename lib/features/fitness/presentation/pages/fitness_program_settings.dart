@@ -1,4 +1,5 @@
-import 'package:flutter_html/shims/dart_ui_real.dart';
+import 'dart:ui';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:morningmagic/features/fitness/domain/entities/program/fitness_program.dart';
@@ -12,12 +13,10 @@ class FitnessProgramSettingsPage extends StatefulWidget {
   const FitnessProgramSettingsPage({Key key}) : super(key: key);
 
   @override
-  _FitnessProgramSettingsPageState createState() =>
-      _FitnessProgramSettingsPageState();
+  _FitnessProgramSettingsPageState createState() => _FitnessProgramSettingsPageState();
 }
 
-class _FitnessProgramSettingsPageState
-    extends State<FitnessProgramSettingsPage> {
+class _FitnessProgramSettingsPageState extends State<FitnessProgramSettingsPage> {
   final _fitnessController = Get.find<FitnessController>();
 
   @override
@@ -28,9 +27,7 @@ class _FitnessProgramSettingsPageState
         width: double.maxFinite,
         height: double.maxFinite,
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/fitnes/settings_bg.png'),
-                fit: BoxFit.fill)),
+            image: DecorationImage(image: AssetImage('assets/images/fitnes/settings_bg.png'), fit: BoxFit.fill)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
@@ -62,10 +59,7 @@ class _FitnessProgramSettingsPageState
                   Text(
                     'Fitnes'.tr,
                     style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Montserrat'),
+                        color: Colors.white, fontSize: 24, fontWeight: FontWeight.w600, fontFamily: 'Montserrat'),
                   ),
                   const SizedBox(
                     width: 20,
@@ -167,11 +161,11 @@ class _FitnessProgramSettingsPageState
           'restore_default_dialog_title'.tr,
         ),
         actions: [
-          FlatButton(
+          TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text('cancellation'.tr),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () {
               _fitnessController.restoreDefaultPrograms();
               Navigator.pop(context);
@@ -226,8 +220,7 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
                   Padding(
                     padding: const EdgeInsets.only(top: 17, bottom: 9.3),
                     child: Obx(() {
-                      final _program =
-                          _fitnessController.findProgram(widget.program);
+                      final _program = _fitnessController.findProgram(widget.program);
 
                       return Wrap(
                         spacing: 4,
@@ -239,8 +232,7 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
                     children: [
                       Expanded(
                         child: GestureDetector(
-                          onTap: () =>
-                              _showEditProgramDialog(program: widget.program),
+                          onTap: () => _showEditProgramDialog(program: widget.program),
                           child: Container(
                             height: 56.14,
                             decoration: BoxDecoration(
@@ -314,13 +306,13 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
     );
   }
 
-  FlatButton _buildProgramCardActionButton(
+  TextButton _buildProgramCardActionButton(
       {@required VoidCallback onPressed,
       @required Color buttonColor,
       @required String title,
       @required IconData icon}) {
-    return FlatButton.icon(
-      color: buttonColor,
+    return TextButton.icon(
+      style: TextButton.styleFrom(backgroundColor: buttonColor),
       onPressed: onPressed,
       icon: Icon(
         icon,
@@ -345,11 +337,11 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
                 'delete_program_alert'.tr,
               ),
               actions: [
-                FlatButton(
+                TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text('cancellation'.tr),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     _fitnessController.deleteProgram(widget.program);
                     Navigator.pop(context);

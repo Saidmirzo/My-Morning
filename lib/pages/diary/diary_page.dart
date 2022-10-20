@@ -1,6 +1,7 @@
+import 'dart:ui';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/progress/diary_progress/diary_note_progress.dart';
@@ -81,8 +82,7 @@ class _DiaryPageState extends State<DiaryPage> {
                         } else {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const MainMenuPage()),
+                            MaterialPageRoute(builder: (context) => const MainMenuPage()),
                           );
                         }
                       },
@@ -104,9 +104,7 @@ class _DiaryPageState extends State<DiaryPage> {
                       var key = _map.keys.toList()[i];
                       return DiaryItem(
                         lenght: _map.length,
-                        title: _map[key] is DiaryNoteProgress
-                            ? _map[key].note
-                            : null,
+                        title: _map[key] is DiaryNoteProgress ? _map[key].note : null,
                         audioPlayer: audioPlayer,
                         isRecord: _map[key] is DiaryRecordProgress,
                         id: key,
@@ -136,8 +134,7 @@ class _DiaryPageState extends State<DiaryPage> {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => Get.to(() => TimerNotePage(
-                                fromHomeMenu: widget.fromHomeMenu)),
+                            onTap: () => Get.to(() => TimerNotePage(fromHomeMenu: widget.fromHomeMenu)),
                             child: Container(
                               height: 70,
                               alignment: Alignment.center,
@@ -147,16 +144,14 @@ class _DiaryPageState extends State<DiaryPage> {
                               ),
                               child: Text(
                                 'Add note'.tr,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 14),
+                                style: const TextStyle(color: Colors.white, fontSize: 14),
                               ),
                             ),
                           ),
                         ),
                         SizedBox(width: Get.height * 0.01),
                         GestureDetector(
-                          onTap: () => Get.to(() => TimerRecordPage(
-                              fromHomeMenu: widget.fromHomeMenu)),
+                          onTap: () => Get.to(() => TimerRecordPage(fromHomeMenu: widget.fromHomeMenu)),
                           child: Container(
                             height: 70,
                             decoration: BoxDecoration(
@@ -164,8 +159,7 @@ class _DiaryPageState extends State<DiaryPage> {
                               color: const Color(0xff592F72),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 26, vertical: 26),
+                              padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 26),
                               child: Image.asset(
                                 'assets/images/micrafon.png',
                               ),
@@ -247,8 +241,8 @@ class _DiaryItemState extends State<DiaryItem> {
 
   void onPlayAudio(DiaryProvider prov) async {
     isPlayed.value = true;
-    await widget.audioPlayer?.play(widget.map[widget.id].path, isLocal: true);
-    widget.audioPlayer.onPlayerCompletion.listen((event) {
+    await widget.audioPlayer?.play(AssetSource(widget.map[widget.id].path));
+    widget.audioPlayer.onPlayerComplete.listen((event) {
       prov.selectAudio(-1);
     });
     prov.selectAudio(widget.index);
@@ -295,11 +289,8 @@ class _DiaryItemState extends State<DiaryItem> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => journalMyDitails(
-                          widget.id,
-                          widget.title ?? 'voice_note'.tr,
-                          widget.id,
-                          widget.map)));
+                      builder: (context) =>
+                          journalMyDitails(widget.id, widget.title ?? 'voice_note'.tr, widget.id, widget.map)));
             },
       child: Container(
         width: double.maxFinite,
@@ -310,12 +301,9 @@ class _DiaryItemState extends State<DiaryItem> {
             child: Container(
               width: double.maxFinite,
               // margin: const EdgeInsets.fromLTRB(31, 0, 31, 10),
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 28.9, vertical: 28.4),
+              padding: const EdgeInsets.symmetric(horizontal: 28.9, vertical: 28.4),
               decoration: BoxDecoration(
-                color: menuState == MenuState.NIGT
-                    ? const Color(0xffFAF5FF)
-                    : Colors.white.withOpacity(.37),
+                color: menuState == MenuState.NIGT ? const Color(0xffFAF5FF) : Colors.white.withOpacity(.37),
                 borderRadius: BorderRadius.circular(19),
               ),
               child: Row(
@@ -323,9 +311,7 @@ class _DiaryItemState extends State<DiaryItem> {
                   GestureDetector(
                     onTap: widget.isRecord
                         ? () {
-                            isPlayed.value
-                                ? onStopAudio(prov)
-                                : onPlayAudio(prov);
+                            isPlayed.value ? onStopAudio(prov) : onPlayAudio(prov);
                           }
                         : null,
                     child: Image.asset(
@@ -396,8 +382,7 @@ class _DiaryItemState extends State<DiaryItem> {
 }
 
 class AlertForDelete extends StatefulWidget {
-  const AlertForDelete({Key key, this.map, this.mapKey, this.audioPlayer})
-      : super(key: key);
+  const AlertForDelete({Key key, this.map, this.mapKey, this.audioPlayer}) : super(key: key);
   final Map<String, dynamic> map;
   final String mapKey;
   final AudioPlayer audioPlayer;
