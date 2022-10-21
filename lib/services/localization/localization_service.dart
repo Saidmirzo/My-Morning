@@ -3,7 +3,11 @@
 import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
+import 'langs/es.dart';
+import 'langs/fr.dart';
 import 'langs/ge.dart';
+import 'langs/it.dart';
+import 'langs/jp.dart';
 import 'langs/po.dart';
 import 'langs/ru.dart';
 import 'langs/en.dart';
@@ -14,6 +18,10 @@ class LocalizationService extends Translations {
   static const String EN = 'en';
   static const String GE = 'de';
   static const String PO = 'pt';
+  static const String JP = 'jp';
+  static const String FR = 'fr';
+  static const String ES = 'es';
+  static const String IT = 'it';
 
   @override
   Map<String, Map<String, String>> get keys => {
@@ -21,6 +29,10 @@ class LocalizationService extends Translations {
         EN: translations_en,
         GE: translations_ge,
         PO: translations_po,
+        JP: translations_jp,
+        FR: translations_fr,
+        ES: translations_es,
+        IT: translations_it,
       };
 
   static Future<Locale> getInitialLocale() async {

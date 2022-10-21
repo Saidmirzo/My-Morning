@@ -37,6 +37,19 @@ AlertDialog _landDialog() {
         _btnDialog(
             title: 'Português',
             onPress: () => Get.back(result: LocalizationService.PO)),
+        _btnDialog(
+            title: 'Spanish',
+            onPress: () => Get.back(result: LocalizationService.ES)),
+        _btnDialog(
+            title: 'French',
+            onPress: () => Get.back(result: LocalizationService.FR
+            )),
+        _btnDialog(
+            title: 'Italian',
+            onPress: () => Get.back(result: LocalizationService.IT)),
+        _btnDialog(
+            title: 'Japanese',
+            onPress: () => Get.back(result: LocalizationService.JP)),
       ],
     ),
   );
