@@ -11,10 +11,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:morningmagic/can_save.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/pages/diary/diary_provider.dart';
-import 'package:morningmagic/pages/paywall/new_paywall.dart';
-import 'package:morningmagic/pages/paywall/paywall_v2/paywall_v2_oto.dart';
 import 'package:morningmagic/pages/paywall/paywall_provider.dart';
-import 'package:morningmagic/pages/paywall_page.dart';
 import 'package:morningmagic/pages/reading/reading_provider.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/injections.dart';
@@ -84,6 +81,10 @@ Future<void> main() async {
               Locale(LocalizationService.RU),
               Locale(LocalizationService.GE),
               Locale(LocalizationService.PO),
+              Locale(LocalizationService.ES),
+              Locale(LocalizationService.FR),
+              Locale(LocalizationService.IT),
+              Locale(LocalizationService.JP),
             ],
             fallbackLocale: const Locale(LocalizationService.EN),
             localizationsDelegates: const [
