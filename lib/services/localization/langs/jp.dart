@@ -1,6 +1,6 @@
 //Японский
 
-Map<String, String> translations_jp = {
+Map<String, String> translations_ja = {
   """subscription""": """予約""",
   """settings_desc""": """複合施設をセットアップする""",
   """start_complex""": """複雑なスタート""",

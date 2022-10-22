@@ -18,7 +18,7 @@ class LocalizationService extends Translations {
   static const String EN = 'en';
   static const String GE = 'de';
   static const String PO = 'pt';
-  static const String JP = 'jp';
+  static const String JP = 'ja';
   static const String FR = 'fr';
   static const String ES = 'es';
   static const String IT = 'it';
@@ -29,7 +29,7 @@ class LocalizationService extends Translations {
         EN: translations_en,
         GE: translations_ge,
         PO: translations_po,
-        JP: translations_jp,
+        JP: translations_ja,
         FR: translations_fr,
         ES: translations_es,
         IT: translations_it,
