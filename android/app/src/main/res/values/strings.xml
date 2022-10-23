@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="facebook_app_id">256545563178012</string>
+    <string name="app_name">My Morning</string>
     <string name="fb_login_protocol_scheme">fb256545563178012</string>
 </resources>

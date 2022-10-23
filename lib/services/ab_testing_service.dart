@@ -151,11 +151,11 @@ class ABTestingService extends GetxService {
     // return const OnboardingVersionSecondPage1();
     // return const OnboardingVersionThirdPageOne();
     switch (_onboardingVersion) {
-      case 'v1_11pages':
+      case 'onbording_v1_1':
         return const OnBoarding1Page();
-      case 'v2_14pages':
+      case 'onbording_v2_1':
         return const OnboardingVersionSecondPage1();
-      case 'v3_6pages':
+      case 'onbording_v3_1':
         return const OnboardingVersionThirdPageOne();
       default:
         // for catch in test

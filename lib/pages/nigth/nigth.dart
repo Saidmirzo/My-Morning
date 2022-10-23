@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:appodeal_flutter/appodeal_flutter.dart' as appo;
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,13 @@ import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/pages/meditation/meditation_page.dart';
 import 'package:morningmagic/pages/menu/components/menu.dart';
+import 'package:morningmagic/pages/paywall/paywall_provider.dart';
 import 'package:morningmagic/pages/reading/reading_page.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/utils/oval_top_clipper.dart';
-import '../../db/hive.dart';
+import 'package:provider/provider.dart';
 import '../../db/resource.dart';
 
 class MainMenuNightPage extends StatefulWidget {
@@ -32,7 +34,6 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
   void initState() {
     super.initState();
     // admobService.createInterstitialAd();
-
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (GetPlatform.isIOS) {
         // Show tracking authorization dialog and ask for permission
@@ -45,8 +46,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
 
   @override
   Widget build(BuildContext context) {
-    launchForinterview =
-        MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
+    launchForinterview = MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
     return Scaffold(
       body: Stack(children: [
         SingleChildScrollView(
@@ -57,25 +57,20 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
               buildHeader(),
               Container(
                 decoration: BoxDecoration(
-                    color: AppColors.nightModeBG,
-                    border: Border.all(width: 0, color: AppColors.nightModeBG)),
+                    color: AppColors.nightModeBG, border: Border.all(width: 0, color: AppColors.nightModeBG)),
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       'welcome_to_sleep'.tr,
-                      style: TextStyle(
-                          fontSize: Get.width * .06,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white),
+                      style: TextStyle(fontSize: Get.width * .06, fontWeight: FontWeight.w700, color: Colors.white),
                     ),
                     const SizedBox(height: 30),
                     _buildSettingsButton(
                         onPressed: () {
                           AppMetrica.reportEvent('night_meditation_start');
-                          Get.off(() => const MeditationPage(fromHomeMenu: true),
-                              opaque: true);
+                          Get.off(() => const MeditationPage(fromHomeMenu: true), opaque: true);
                         },
                         image: 'assets/images/home_menu/night_meditation.png',
                         title: 'music_menu_meditations'.tr,
@@ -84,8 +79,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                     _buildSettingsButton(
                         onPressed: () {
                           AppMetrica.reportEvent('night_sounds_start');
-                          Navigator.pushNamed(
-                              context, musicInstrumentsPageRoute);
+                          Navigator.pushNamed(context, musicInstrumentsPageRoute);
                         },
                         forSleep: true,
                         title: 'music_for_sleep_title'.tr,
@@ -95,8 +89,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                         onPressed: () {
                           AppMetrica.reportEvent('night_reading_start');
                           Get.to(() => const ReadingPage(
-                            fromHomeMenu: true,
-                          ));
+                                fromHomeMenu: true,
+                              ));
                         },
                         image: 'assets/images/home_menu/book.png',
                         title: 'reading_at_night_title'.tr,
@@ -118,31 +112,33 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
             )),
         const SizedBox(
           height: 15,
-        )
+        ),
+        if (context.watch<PayWallProvider>().isShowAds)
+          GestureDetector(
+            onTap: () async {
+              await appo.Appodeal.show(appo.AdType.interstitial, placementName: "main_menu");
+              context.read<PayWallProvider>().startTimer();
+            },
+            child: Positioned.fill(
+                child: Container(
+              color: Colors.transparent,
+            )),
+          )
       ]),
     );
   }
 
   Widget textTitleButton(String text) {
-    return Text(text,
-        style: const TextStyle(
-            fontFamily: 'Montserrat',
-            fontSize: 18,
-            fontWeight: FontWeight.w600));
+    return Text(text, style: const TextStyle(fontFamily: 'Montserrat', fontSize: 18, fontWeight: FontWeight.w600));
   }
 
   Widget textSubTitleButton(String text) {
-    return Text(text,
-        style: const TextStyle(
-            fontFamily: 'Montserrat',
-            fontSize: 13,
-            fontWeight: FontWeight.w400));
+    return Text(text, style: const TextStyle(fontFamily: 'Montserrat', fontSize: 13, fontWeight: FontWeight.w400));
   }
 
   Widget buildHeader() {
     return Container(
-      decoration:
-          const BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
+      decoration: const BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
       child: SafeArea(
         bottom: false,
         child: Stack(
@@ -167,10 +163,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                   ),
                   Text(
                     'MY NIGHT',
-                    style: TextStyle(
-                        fontSize: Get.width * .03,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white),
+                    style: TextStyle(fontSize: Get.width * .03, fontWeight: FontWeight.normal, color: Colors.white),
                   ),
                 ],
               ),
@@ -182,11 +175,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
   }
 
   Widget _buildSettingsButton(
-      {String title,
-      String subTitle,
-      String image,
-      bool forSleep = false,
-      Function() onPressed}) {
+      {String title, String subTitle, String image, bool forSleep = false, Function() onPressed}) {
     return container(
       height: Get.width * .33,
       child: Stack(
@@ -195,8 +184,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
               borderRadius: BorderRadius.circular(12),
               child: Transform.rotate(
                 angle: Random().nextInt(50) * Random().nextDouble() * 3.14,
-                child: Image.asset('assets/images/home_menu/night_bg_btn.png',
-                    width: Get.width, fit: BoxFit.fill),
+                child: Image.asset('assets/images/home_menu/night_bg_btn.png', width: Get.width, fit: BoxFit.fill),
               )),
           Positioned(
             right: 0,
@@ -241,17 +229,13 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
               Expanded(
                 flex: 2,
                 child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(12)),
+                    borderRadius: const BorderRadius.only(bottomRight: Radius.circular(12)),
                     child: forSleep == false
-                        ? Image.asset(image,
-                            width: Get.width, fit: BoxFit.contain)
+                        ? Image.asset(image, width: Get.width, fit: BoxFit.contain)
                         : Stack(
                             children: [
-                              Image.asset('assets/images/home_menu/notes.png',
-                                  width: Get.width, fit: BoxFit.fitHeight),
-                              Image.asset('assets/images/home_menu/piano.png',
-                                  width: Get.width, fit: BoxFit.fitHeight)
+                              Image.asset('assets/images/home_menu/notes.png', width: Get.width, fit: BoxFit.fitHeight),
+                              Image.asset('assets/images/home_menu/piano.png', width: Get.width, fit: BoxFit.fitHeight)
                             ],
                           )),
               ),
