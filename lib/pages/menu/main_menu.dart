@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:appodeal_flutter/appodeal_flutter.dart' as appo;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -283,16 +284,25 @@ class MainMenuPageState extends State<MainMenuPage> {
       children: [
         // if (!billingService.isPro())
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(width: 5),
             GestureDetector(child: SvgPicture.asset('$imagePath/crown.svg')),
             const SizedBox(width: 10),
-            Text(
-              billingService.isPro() ? 'PREMIUM activated'.tr : 'Try PREMIUM Package for free'.tr,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xff592F72)),
-              textAlign: TextAlign.left,
+            Container(
+              width: MediaQuery.of(context).size.width - 57,
+              child: AutoSizeText(
+                billingService.isPro()
+                    ? 'PREMIUM activated'.tr
+                    : 'Try PREMIUM Package for free'.tr,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                minFontSize: 14,
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xff592F72)),
+                textAlign: TextAlign.left,
+              ),
             ),
           ],
         ),
