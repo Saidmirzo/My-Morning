@@ -60,6 +60,7 @@ dependencies:
   hexcolor: ^3.0.1
   appmetrica_plugin: ^1.1.0
   adapty_flutter: ^1.0.11
+  appodeal_flutter: ^1.1.2
   flutter_localizations:
     sdk: flutter
   connectivity_plus: ^3.0.1
@@ -140,5 +141,8 @@ flutter:
           weight: 800
         - asset: assets/fonts/Montserrat/Montserrat-Black.ttf
           weight: 900
+    - family: BrandIcons
+      fonts:
+        - asset: assets/fonts/BrandIcons/BrandIcons.ttf
 
   uses-material-design: true

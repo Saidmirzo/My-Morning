@@ -83,8 +83,11 @@ class _PaywallV2State extends State<PaywallV2> {
             return Column(
               children: [
                 Padding(
-                  padding:  EdgeInsets.only(
-                      left: 37.4, right: 37.4, top: 60.1,bottom: MediaQuery.of(context).size.height *0.01),
+                  padding: EdgeInsets.only(
+                      left: 37.4,
+                      right: 37.4,
+                      top: 60.1,
+                      bottom: MediaQuery.of(context).size.height * 0.01),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -152,7 +155,6 @@ class _PaywallV2State extends State<PaywallV2> {
                       ),
                     ],
                   ),
-
                 ),
                 const SizedBox(height: 30),
                 // Разблокировать все функции
@@ -251,7 +253,9 @@ class _PaywallV2State extends State<PaywallV2> {
                   children: [
                     // Let's go
                     Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 14,),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width / 14,
+                      ),
                       child: ActionButton(
                         title: 'lets go'.tr,
                         onTap: () async {
@@ -269,8 +273,10 @@ class _PaywallV2State extends State<PaywallV2> {
                               // Navigator.popUntil(
                               //     context, (route) => route.isFirst);
                               Get.back();
-                              if (await CustomSharedPreferences().isOpenSale() ||
-                                  await CustomSharedPreferences().isFirstOpen()) {
+                              if (await CustomSharedPreferences()
+                                      .isOpenSale() ||
+                                  await CustomSharedPreferences()
+                                      .isFirstOpen()) {
                                 AppMetrica.reportEvent('subscription_trial');
                                 Get.to(() => const WelcomePage());
                                 pushNotifications = PushNotifications();

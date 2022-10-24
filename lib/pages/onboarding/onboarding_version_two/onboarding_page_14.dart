@@ -15,12 +15,10 @@ class OnboardingVersionSecondPage14 extends StatefulWidget {
   const OnboardingVersionSecondPage14({Key key}) : super(key: key);
 
   @override
-  State<OnboardingVersionSecondPage14> createState() =>
-      _OnboardingVersionSecondPage14State();
+  State<OnboardingVersionSecondPage14> createState() => _OnboardingVersionSecondPage14State();
 }
 
-class _OnboardingVersionSecondPage14State
-    extends State<OnboardingVersionSecondPage14> {
+class _OnboardingVersionSecondPage14State extends State<OnboardingVersionSecondPage14> {
   @override
   void initState() {
     MyDB().getBox().put(MyResource.USER_KEY, User(""));
@@ -113,15 +111,12 @@ class _OnboardingVersionSecondPage14State
                 AppRouting.replace(const MainMenuPage());
                 Navigator.push(
                   context,
-                  createRoute(
-                    ABTestingService.getPaywall(),
-                  ),
+                  MaterialPageRoute(builder: (context) => ABTestingService.getPaywall()),
                 );
               },
               child: Container(
                 width: double.maxFinite,
-                margin:
-                    const EdgeInsets.only(left: 14.3, right: 14.3, bottom: 39),
+                margin: const EdgeInsets.only(left: 14.3, right: 14.3, bottom: 39),
                 padding: const EdgeInsets.symmetric(
                   vertical: 22.23,
                 ),

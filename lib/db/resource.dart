@@ -18,6 +18,7 @@ class MyResource {
   static const String BOX_NAME = "magic";
   static const String BOOK_KEY = "book";
   static const String USER_KEY = "user";
+  static const String ADS_SHOW = "ads_show";
   static const String TUTORIAL_VIEWED = "tutorial_viewed";
   static const String AFFIRMATION_TEXT_KEY = "affirmation_text";
   static const String EXERCISE_ORDER_KEY = "exercise_order";

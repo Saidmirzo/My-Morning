@@ -25,19 +25,16 @@ class ReadingTimerPage extends StatefulWidget {
   State createState() => ReadingTimerPageState();
 }
 
-class ReadingTimerPageState extends State<ReadingTimerPage>
-    with WidgetsBindingObserver {
+class ReadingTimerPageState extends State<ReadingTimerPage> with WidgetsBindingObserver {
   TimerService timerService;
   TimerLeftController cTimerLeft;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      cTimerLeft.onAppLeft(timerService.timer, timerService.time.value,
-          onPlayPause: () => timerService.startTimer());
+      cTimerLeft.onAppLeft(timerService.timer, timerService.time.value, onPlayPause: () => timerService.startTimer());
     } else if (state == AppLifecycleState.resumed) {
-      cTimerLeft.onAppResume(
-          timerService.timer, timerService.time, timerService.passedSec);
+      cTimerLeft.onAppResume(timerService.timer, timerService.time, timerService.passedSec);
     }
   }
 
@@ -131,9 +128,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
                       style: TextStyle(
                         fontSize: Get.height * 0.033,
                         fontWeight: FontWeight.w600,
-                        color: menuState == MenuState.MORNING
-                            ? AppColors.primary
-                            : AppColors.WHITE,
+                        color: menuState == MenuState.MORNING ? AppColors.primary : AppColors.WHITE,
                       ))),
                   const Spacer(),
                   ReadMyButton(timerService: timerService),
@@ -157,8 +152,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage>
 }
 
 class ReadMyButton extends StatelessWidget {
-  const ReadMyButton({Key key, this.onClick, this.timerService})
-      : super(key: key);
+  const ReadMyButton({Key key, this.onClick, this.timerService}) : super(key: key);
   final VoidCallback onClick;
   final TimerService timerService;
 
@@ -169,7 +163,7 @@ class ReadMyButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           timerService.skipTask();
-          appAnalitics.logEvent('first_reading_next');
+          // appAnalitics.logEvent('first_reading_next');
         },
         child: Container(
           height: 70,
@@ -177,17 +171,13 @@ class ReadMyButton extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 31),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: menuState == MenuState.MORNING
-                ? const Color(0xff592F72)
-                : Colors.white,
+            color: menuState == MenuState.MORNING ? const Color(0xff592F72) : Colors.white,
             borderRadius: BorderRadius.circular(19),
           ),
           child: Text(
             'Finish reading'.tr,
             style: TextStyle(
-              color: menuState == MenuState.MORNING
-                  ? Colors.white
-                  : const Color(0xff592F72),
+              color: menuState == MenuState.MORNING ? Colors.white : const Color(0xff592F72),
               fontWeight: FontWeight.w600,
               fontFamily: 'Montserrat',
               fontSize: 14,

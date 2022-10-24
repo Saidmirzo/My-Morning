@@ -39,8 +39,7 @@ class _ProgressPageState extends State<ProgressPage> {
   AppStates appStates = Get.put(AppStates());
   int appRating = 5;
 
-  final GlobalKey<AnimatedCircularChartState> _chartKey =
-      GlobalKey<AnimatedCircularChartState>();
+  final GlobalKey<AnimatedCircularChartState> _chartKey = GlobalKey<AnimatedCircularChartState>();
 
   ProgressController cPg = Get.find();
 
@@ -119,10 +118,7 @@ class _ProgressPageState extends State<ProgressPage> {
                       children: [
                         Text(
                           'remove_progress'.tr,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
+                          style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                         Container(
                           height: 2,
@@ -177,17 +173,14 @@ class _ProgressPageState extends State<ProgressPage> {
       child: Row(
         children: [
           CircularPercentIndicator(
-            radius: Get.height / 6.962327134,
+            radius: Get.height / 12,
             lineWidth: 14,
             animation: false,
             percent: monthPercent / 100,
             center: Text(
               '$monthPercent %',
               style: const TextStyle(
-                  color: Color(0xff592F72),
-                  fontWeight: FontWeight.w600,
-                  fontSize: 17.2,
-                  fontFamily: 'Montserrat'),
+                  color: Color(0xff592F72), fontWeight: FontWeight.w600, fontSize: 17.2, fontFamily: 'Montserrat'),
             ),
             circularStrokeCap: CircularStrokeCap.round,
             linearGradient: const LinearGradient(
@@ -290,11 +283,8 @@ class _ProgressPageState extends State<ProgressPage> {
                         Text(
                           'total'.tr,
                           style: TextStyle(
-                            color: _Itog
-                                ? const Color(0xff592F72)
-                                : Colors.black54,
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.04, //23,
+                            color: _Itog ? const Color(0xff592F72) : Colors.black54,
+                            fontSize: MediaQuery.of(context).size.width * 0.04, //23,
                           ),
                         ),
                         _Itog
@@ -325,9 +315,7 @@ class _ProgressPageState extends State<ProgressPage> {
                         Text(
                           'month'.tr,
                           style: TextStyle(
-                            color: _Mounth
-                                ? const Color(0xff592F72)
-                                : Colors.black54,
+                            color: _Mounth ? const Color(0xff592F72) : Colors.black54,
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                           ),
                         ),
@@ -359,16 +347,12 @@ class _ProgressPageState extends State<ProgressPage> {
                         Text(
                           'year'.tr,
                           style: TextStyle(
-                            color: _Year
-                                ? const Color(0xff592F72)
-                                : Colors.black54,
-                            fontSize:
-                                MediaQuery.of(context).size.width * 0.04, //23,
+                            color: _Year ? const Color(0xff592F72) : Colors.black54,
+                            fontSize: MediaQuery.of(context).size.width * 0.04, //23,
                           ),
                         ),
                         _Year
-                            ? const Icon(Icons.arrow_drop_down,
-                                color: Color(0xff592F72))
+                            ? const Icon(Icons.arrow_drop_down, color: Color(0xff592F72))
                             : const Icon(
                                 Icons.arrow_drop_up,
                                 color: Colors.black54,
@@ -434,8 +418,7 @@ class _ProgressPageState extends State<ProgressPage> {
   // }
 
   Widget practicsCount() {
-    var count = cPg
-        .calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[0];
+    var count = cPg.calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[0];
     return Align(
       alignment: Alignment.topLeft,
       child: Column(
@@ -475,8 +458,7 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Align minutesCount() {
-    var count = cPg
-        .calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[1];
+    var count = cPg.calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[1];
     return Align(
       alignment: Alignment.topCenter,
       child: Column(
@@ -510,8 +492,7 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Align completeComplexCount() {
-    var count =
-        cPg.getCountComplex(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year));
+    var count = cPg.getCountComplex(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year));
     return Align(
       alignment: Alignment.topRight,
       child: Column(
@@ -644,17 +625,12 @@ class _ProgressPageState extends State<ProgressPage> {
     const int firstCntLaunch = 2;
     // Кол-во запусков для следующих показов
     const int nextCntLaunch = 5;
-    int launchForRate =
-        await MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0);
+    int launchForRate = await MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0);
     // Кол-во запусков равно либо больше чем нужно для показа оценки
-    bool needLaunch =
-        launchForRate >= firstCntLaunch || launchForRate >= nextCntLaunch;
+    bool needLaunch = launchForRate >= firstCntLaunch || launchForRate >= nextCntLaunch;
     // Ранее оценили или нет?
-    bool isRated =
-        await MyDB().getBox().get(MyResource.IS_RATED, defaultValue: false);
-    bool rateFirstShowed = await MyDB()
-        .getBox()
-        .get(MyResource.RATE_ALREADY_SHOWED, defaultValue: false);
+    bool isRated = await MyDB().getBox().get(MyResource.IS_RATED, defaultValue: false);
+    bool rateFirstShowed = await MyDB().getBox().get(MyResource.RATE_ALREADY_SHOWED, defaultValue: false);
     // Если раньше уже показали, ждем минимум 5 запусков после последнего показа
     if (launchForRate < nextCntLaunch && rateFirstShowed) {
       // print(

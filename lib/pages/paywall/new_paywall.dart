@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:adapty_flutter/models/adapty_paywall.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
@@ -28,7 +30,6 @@ import 'package:provider/provider.dart';
 import '../../services/ab_testing_service.dart';
 
 class NewPaywall extends StatefulWidget {
-
   final bool isSettings;
 
   const NewPaywall({
@@ -122,40 +123,27 @@ class _NewPaywallState extends State<NewPaywall> {
                               try {
                                 DialogComponent().loading();
                                 AppMetrica.reportEvent('paywall_inapp_close');
-                                await billingService.purchase(snapshot
-                                    .data.products[prov.openedProductIndex]);
+                                await billingService.purchase(snapshot.data.products[prov.openedProductIndex]);
                                 appAnalitics.logEvent('first_trial');
                                 AnalyticService.analytics.logEcommercePurchase(
-                                    value: snapshot
-                                        .data
-                                        .products[prov.openedProductIndex]
-                                        .price,
-                                    currency: snapshot
-                                        .data
-                                        .products[prov.openedProductIndex]
-                                        .currencyCode);
+                                    value: snapshot.data.products[prov.openedProductIndex].price,
+                                    currency: snapshot.data.products[prov.openedProductIndex].currencyCode);
                                 billingService.init();
-
-                                Navigator.popUntil(
-                                    context, (route) => route.isFirst);
-                                if (await CustomSharedPreferences()
-                                        .isOpenSale() ||
-                                    await CustomSharedPreferences()
-                                        .isFirstOpen()) {
+                                Navigator.popUntil(context, (route) => route.isFirst);
+                                if (await CustomSharedPreferences().isOpenSale() ||
+                                    await CustomSharedPreferences().isFirstOpen()) {
                                   AppMetrica.reportEvent('subscription_trial');
                                   Get.to(() => const WelcomePage());
                                   pushNotifications = PushNotifications();
                                   WidgetsBinding.instance.addPostFrameCallback(
                                     (timeStamp) async {
                                       if (GetPlatform.isIOS) {
-                                        AppTrackingTransparency
-                                            .requestTrackingAuthorization();
+                                        AppTrackingTransparency.requestTrackingAuthorization();
                                       }
                                     },
                                   );
                                 } else {
-                                  AppMetrica.reportEvent(
-                                      'subscription_inapp_trial');
+                                  AppMetrica.reportEvent('subscription_inapp_trial');
                                 }
                               } catch (e) {
                                 Get.back();
@@ -200,16 +188,12 @@ class _NewPaywallState extends State<NewPaywall> {
                             AppMetrica.reportEvent('paywall_discount_close');
                             Get.to(() => const WelcomePage());
                             pushNotifications = PushNotifications();
-                            WidgetsBinding.instance
-                                .addPostFrameCallback((timeStamp) async {
+                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
                               if (GetPlatform.isIOS) {
-                                AppMetrica.reportEvent(
-                                    'idfa_notification_show');
-                                var result = await AppTrackingTransparency
-                                    .requestTrackingAuthorization();
+                                AppMetrica.reportEvent('idfa_notification_show');
+                                var result = await AppTrackingTransparency.requestTrackingAuthorization();
                                 if (result == TrackingStatus.authorized) {
-                                  AppMetrica.reportEvent(
-                                      'idfa_notification_endabled');
+                                  AppMetrica.reportEvent('idfa_notification_endabled');
                                 }
                               }
                             });

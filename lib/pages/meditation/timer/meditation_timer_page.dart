@@ -35,8 +35,7 @@ class MeditationTimerPage extends StatefulWidget {
   State createState() => MeditationTimerPageState();
 }
 
-class MeditationTimerPageState extends State<MeditationTimerPage>
-    with WidgetsBindingObserver {
+class MeditationTimerPageState extends State<MeditationTimerPage> with WidgetsBindingObserver {
   MediationAudioController _audioController;
   TimerService timerService;
   TimerLeftController cTimerLeft;
@@ -51,18 +50,15 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
         player: _audioController.audioPlayer.value,
       );
     } else if (state == AppLifecycleState.resumed) {
-      cTimerLeft.onAppResume(
-          timerService.timer, timerService.time, timerService.passedSec);
+      cTimerLeft.onAppResume(timerService.timer, timerService.time, timerService.passedSec);
     }
   }
 
   @override
   void initState() {
     // if (menuState == MenuState.MORNING) {
-    timerService = widget.timerService ??
-        TimerService(
-            mystateNumber: widget.mystateNumber,
-            fromHomeMenu: widget.fromHomeMenu);
+    timerService =
+        widget.timerService ?? TimerService(mystateNumber: widget.mystateNumber, fromHomeMenu: widget.fromHomeMenu);
     cTimerLeft = TimerLeftController();
     // }
     super.initState();
@@ -96,8 +92,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
     Future.delayed(Duration.zero, () {
       if (!timerService.isActive.value) {
         timerService.startTimer();
-        print(
-            "-------------------------------------- Balus Dzez ----------------------------------------------");
+        print("-------------------------------------- Balus Dzez ----------------------------------------------");
         // Future.delayed(Duration(seconds: 1), () {
         //   if (timerService.timer == null) {
         //timerService.nightMeditationStart(_audioController.player.duration);
@@ -183,9 +178,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                       style: TextStyle(
                         fontSize: Get.height * 0.033,
                         fontWeight: FontWeight.w600,
-                        color: menuState == MenuState.MORNING
-                            ? AppColors.primary
-                            : Colors.white,
+                        color: menuState == MenuState.MORNING ? AppColors.primary : Colors.white,
                       ),
                     ),
                   ),
@@ -204,18 +197,15 @@ class MeditationTimerPageState extends State<MeditationTimerPage>
                               //////////////////////////////////
                               // _audioController.pause();
                               // timerService.timer.cancel();
-                              Get.to(() => MeditationAudioPage(
-                                    isMeditation: widget.isMeditation,
-                                    timerService: timerService));
+                              Get.to(() =>
+                                  MeditationAudioPage(isMeditation: widget.isMeditation, timerService: timerService));
                             }),
-                      if (_audioController.audioSource.isEmpty ||
-                          !widget.isMeditation)
+                      if (_audioController.audioSource.isEmpty || !widget.isMeditation)
                         ControlButton(
                           img: 'assets/images/meditation/clock_icon.png',
                           imgW: 17.57,
                           imgH: 20.33,
-                          onClick: () =>
-                              Get.to(() => AddTimePeriod(timerService: timerService)),
+                          onClick: () => Get.to(() => AddTimePeriod(timerService: timerService)),
                         ),
                     ],
                   ),
@@ -308,9 +298,7 @@ class ControlButton extends StatelessWidget {
         height: 54,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: menuState == MenuState.NIGT
-              ? const Color(0xffFAF5FF)
-              : Colors.white.withOpacity(.56),
+          color: menuState == MenuState.NIGT ? const Color(0xffFAF5FF) : Colors.white.withOpacity(.56),
         ),
         alignment: Alignment.center,
         child: Image.asset(

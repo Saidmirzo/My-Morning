@@ -27,8 +27,6 @@ import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:morningmagic/utils/storage.dart';
 
-import '../pages/custom_methodic/custom_sucsses.dart';
-
 class TimerService {
   Timer timer;
   RxInt constTime = 0.obs;
@@ -117,13 +115,11 @@ class TimerService {
             : result;
   }
 
-  double get createValue => startTime != null
-      ? getCircularProcent(constTime.value, constTime.value - time.value) ?? 0
-      : time.toDouble();
+  double get createValue =>
+      startTime != null ? getCircularProcent(constTime.value, constTime.value - time.value) ?? 0 : time.toDouble();
 
-  double get creatValueNight => startTime != null
-      ? getCircularProcent(constTime.value, constTime.value - time.value) ?? 0
-      : time.toDouble();
+  double get creatValueNight =>
+      startTime != null ? getCircularProcent(constTime.value, constTime.value - time.value) ?? 0 : time.toDouble();
 
   void setTime(int min) {
     startTime = min;
@@ -173,18 +169,13 @@ class TimerService {
   }
 
   Future<int> getTimeAndText() async {
-    ExerciseTime time =
-        myDbBox.get(getBoxTimeKey(pageId), defaultValue: ExerciseTime(0));
-    AffirmationText text = myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY,
-        defaultValue: AffirmationText(""));
+    ExerciseTime time = myDbBox.get(getBoxTimeKey(pageId), defaultValue: ExerciseTime(0));
+    AffirmationText text = myDbBox.get(MyResource.AFFIRMATION_TEXT_KEY, defaultValue: AffirmationText(""));
 
     affirmationText.value = text.affirmationText.isEmpty
-        ? affiramtions[Random().nextInt(affiramtions.length - 1)]
-            .affirmations[Random().nextInt(5)]
-            .text
+        ? affiramtions[Random().nextInt(affiramtions.length - 1)].affirmations[Random().nextInt(5)].text
         : text.affirmationText;
-    Visualization visualization = myDbBox.get(MyResource.VISUALIZATION_KEY,
-        defaultValue: Visualization(""));
+    Visualization visualization = myDbBox.get(MyResource.VISUALIZATION_KEY, defaultValue: Visualization(""));
     visualizationText = visualization.visualization;
     bookTitle = myDbBox.get(MyResource.BOOK_KEY, defaultValue: '');
     return time.time;
@@ -200,8 +191,7 @@ class TimerService {
       ProgressController pg = Get.find();
       switch (pageId) {
         case TimerPageId.Affirmation:
-          var model = AffirmationProgress(passedSec.value,
-              affirmationText.value.isEmpty ? '-' : affirmationText.value,
+          var model = AffirmationProgress(passedSec.value, affirmationText.value.isEmpty ? '-' : affirmationText.value,
               isSkip: isSkip);
           pg.saveJournal(MyResource.AFFIRMATION_JOURNAL, model);
           break;
@@ -262,9 +252,7 @@ class TimerService {
             CanSave.resetSavingModel();
           }
 
-          OrderUtil()
-              .getRouteById(pageId)
-              .then((value) => getNextPage(value, false));
+          OrderUtil().getRouteById(pageId).then((value) => getNextPage(value, false));
 
           if (onDone != null) onDone();
         } else {
@@ -281,33 +269,28 @@ class TimerService {
   // Время таймера записывается неверно если залочить экран ( passedSeconds )
 
   getNextPage(dynamic value, bool isSkip, {bool isFinal = false}) {
-    Get.off(() =>
-    pageId == TimerPageId.Reading
-          ? TimerInputSuccessScreen(passedSec.value, isSkip,
-              calculateProcent(constTime.value, time.value),
+    Get.off(
+      () => pageId == TimerPageId.Reading
+          ? TimerInputSuccessScreen(passedSec.value, isSkip, calculateProcent(constTime.value, time.value),
               fromHomeMenu: fromHomeMenu)
           : TimerSuccessScreen(
               () async {
                 final _routeValue = await OrderUtil().getRouteById(pageId);
-                (pageId == TimerPageId.Custom1 ||
-                        pageId == TimerPageId.Custom2 ||
-                        pageId == TimerPageId.Custom3 ||
-                        pageId == TimerPageId.Custom4)
-                    ? Get.off(() => _routeValue)
-
-                    // ? Get.offAll(
-                    //     CastomSuccessPage(
-                    //       fromHomeMenu: false,
-                    //       percentValue: 1,
-                    //       pageid: pageId,
-                    //     ),
-                    //   )}
-                    : Get.off(() => fromHomeMenu
-                            ? billingService.isVip.value
-                                ? const ProgressPage()
-                                : PaywallPage()
-                            : value,
-                      );
+                if (pageId == TimerPageId.Custom1 ||
+                    pageId == TimerPageId.Custom2 ||
+                    pageId == TimerPageId.Custom3 ||
+                    pageId == TimerPageId.Custom4) {
+                  Get.off(_routeValue);
+                } else {
+                  // await appo.Appodeal.show(appo.AdType.interstitial, placementName: "getNextPage");
+                  Get.off(
+                    fromHomeMenu
+                        ? billingService.isVip.value
+                            ? const ProgressPage()
+                            : const PaywallPage()
+                        : value,
+                  );
+                }
               },
               MyDB().getBox().get(getBoxTimeKey(pageId)).time ?? 3,
               isFinal,

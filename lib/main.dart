@@ -2,6 +2,7 @@ import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:adapty_flutter/models/adapty_enums.dart';
 import 'package:adapty_flutter/models/adapty_error.dart';
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
+import 'package:appodeal_flutter/appodeal_flutter.dart' as appo;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +28,6 @@ Future<void> main() async {
   // Для выполнение действия через N время на андроид
   WidgetsFlutterBinding.ensureInitialized();
   await setInjections();
-  //TODO move all this stuff inside loading page, because all this functions performs on native splash screen
   MobileAds.instance.initialize();
   await Firebase.initializeApp();
   Adapty.activate();
@@ -43,20 +43,35 @@ Future<void> main() async {
     pushNotifications = PushNotifications();
   }
   Get.put(ProgressController());
+  appo.Appodeal.setAppKeys(
+    androidAppKey: '3ff46b9b1c8e9177665c6f5e3c70fe466ffc0c5539f0c476',
+    iosAppKey: '985706b731e5dfc16d5208cc6ed049c49b54c20065b6491d',
+  );
+
+  await appo.Appodeal.initialize(
+    hasConsent: true,
+    adTypes: [
+      appo.AdType.banner,
+      appo.AdType.mrec,
+      appo.AdType.interstitial,
+      appo.AdType.reward,
+      appo.AdType.nonSkippable
+    ],
+    testMode: true,
+    verbose: true,
+  );
 
   final _initialLocale = await LocalizationService.getInitialLocale();
   CanSave.savingModel = myDbBox.get('savingModel') != null
-      ? SavingModel.fromMap(
-          Map<String, dynamic>.from(myDbBox.get('savingModel')))
+      ? SavingModel.fromMap(Map<String, dynamic>.from(myDbBox.get('savingModel')))
       : SavingModel();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
-      //TODO add app runner for performance
       runApp(
         MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (context) => PayWallProvider(),
+              create: (context) => PayWallProvider()..initTimerAds(),
             ),
             ChangeNotifierProvider(
               create: (context) => ReadingProvider(),
@@ -103,6 +118,6 @@ _initializeHiveStore() async {
   try {
     await MyDB().initHiveDatabase();
   } catch (e) {
-    print('Hive error: $e');
+    debugPrint('Hive error: $e');
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:appodeal_flutter/appodeal_flutter.dart' as appo;
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/resources/colors.dart';
@@ -14,8 +15,7 @@ class TimerSuccessScreen extends StatefulWidget {
   final bool isFinal;
   final double procent;
 
-  const TimerSuccessScreen(
-      this.onPressed, this.minutes, this.isFinal, this.procent);
+  const TimerSuccessScreen(this.onPressed, this.minutes, this.isFinal, this.procent);
 
   @override
   State createState() {
@@ -102,10 +102,13 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
     return PrimaryCircleButton(
       size: 45,
       icon: const Icon(Icons.arrow_forward, color: AppColors.primary),
-      onPressed: () {
+      onPressed: () async {
         if (_audioPlayer != null) {
           _audioPlayer.stop();
           _audioPlayer.dispose();
+        }
+        if (widget.isFinal && !billingService.isVip.value) {
+          await appo.Appodeal.show(appo.AdType.interstitial, placementName: "getNextPage");
         }
         widget.onPressed();
       },
@@ -128,22 +131,20 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
   Positioned mn1() {
     return Positioned(
       bottom: 0,
-      child: Image.asset('assets/images/meditation/mountain1_night.png',
-          width: Get.width, fit: BoxFit.cover),
+      child: Image.asset('assets/images/meditation/mountain1_night.png', width: Get.width, fit: BoxFit.cover),
     );
   }
 
   Positioned mn2() {
     return Positioned(
       bottom: 0,
-      child: Image.asset('assets/images/meditation/mountain2_night.png',
-          width: Get.width, fit: BoxFit.cover),
+      child: Image.asset('assets/images/meditation/mountain2_night.png', width: Get.width, fit: BoxFit.cover),
     );
   }
 
   Widget buildProgress() {
     return CircularPercentIndicator(
-      radius: Get.height * 0.35,
+      radius: Get.height * 0.2,
       lineWidth: 27.0,
       reverse: true,
       animation: false,
@@ -151,10 +152,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
       center: Text(
         'success'.tr,
         style: TextStyle(
-            fontSize: Get.height * 0.04,
-            fontStyle: FontStyle.normal,
-            color: Colors.white,
-            fontWeight: FontWeight.w600),
+            fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
       linearGradient: AppColors.Progress_Gradient_Timer_Reading,
