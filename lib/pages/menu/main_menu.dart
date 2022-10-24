@@ -578,7 +578,7 @@ class MainMenuPageState extends State<MainMenuPage> {
     var _cntBeforInterview = launchForinterview + 1;
     await MyDB().getBox().put(MyResource.LAUNCH_FOR_INTERVIEW, _cntBeforInterview);
     appAnalitics.logEvent('first_start');
-    Get.to(() => const MeditationPage());
+    Get.to(const MeditationPage());
     await OrderUtil().getRouteByPositionInList(await OrderUtil().getNextPos(0)).then((value) {
       Get.off(() => value);
     });

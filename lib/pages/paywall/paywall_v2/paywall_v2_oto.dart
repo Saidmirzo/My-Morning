@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
-import 'package:intl/intl.dart';
 import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:adapty_flutter/models/adapty_paywall.dart';
 import 'package:flutter/material.dart';
