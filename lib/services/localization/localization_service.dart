@@ -7,7 +7,7 @@ import 'langs/es.dart';
 import 'langs/fr.dart';
 import 'langs/ge.dart';
 import 'langs/it.dart';
-import 'langs/jp.dart';
+import 'langs/ja.dart';
 import 'langs/po.dart';
 import 'langs/ru.dart';
 import 'langs/en.dart';

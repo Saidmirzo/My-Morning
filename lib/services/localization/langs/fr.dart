@@ -778,5 +778,193 @@ Map<String, String> translations_fr = {
   """text""": """Texte""",
   """your_own_ritual""": """Votre propre rituel""",
   """support_text_title""": """Répondez à l'enquête""",
-  """support_text_body""": """Et aider au développement de l'application."""
+  """support_text_body""": """Et aider au développement de l'application.""",
+  """Morning Routine: Wake Up Alarm""": """Routine Matinale : Réveil""", """Daily habits. Meditation. Yoga""": """Routines. Méditation. Yoga""", """Miracle morning. Waking up habit tracker. Gratitude journal, yoga, daily routine""": """Matin miracle. Suivi des habitudes de réveil. Livre de gratitude, yoga,routine""", """miracle,checklist,tracker,waking,clock,gratitude,journal,diary,alarmy,alarmme,affirmation,simple,app""": """miracle, checklist, suivi, réveil, horloge, gratitude, journal, agenda, alarme, alerte, affirmation, simple, app""", """Daily Routine & Alarm: 1 month""": """Routine & Alarme: 1 mois""", """Wake Up Morning Routine 1 year""": """Réveil du Matin Routine 1 an""", """All features. Improve your morning routine""": """Caractéristiques. Améliorez votre routine""", """2""": """""", """Build your perfect morning routine""": """Créez votre routine matinale parfaite""", """Wake up with a morning workout""": """Réveil avec un entraînement matinal""", """Start your day with meditation""": """Commencez la journée par la méditation""", """Write diary or a gratitude journal""": """Tenir un agenda ou un livre de gratitude""", """Read useful books""": """Lire des livres utiles""", """Get daily affirmations""": """Obtenir des affirmations quotidiennes""", """All this in one app""": """Tout cela en une seule app""", """Change your life with simple morning habits""": """Changez de vie avec des routines simples""", """3""": """""", """Morning routine tracker with alarm clock and simple daily habits: gratitude journal, diary, yoga, visualization, meditation and positive affirmations. Download the app, set the wake up alarm and start your miracle morning. Make your waking up easy and be more efficient, productive and motivated! You can also personalize the app to include your favorite daily habits in the morning routine.
+
+• Start your morning routine with meditation, which helps wake up your mind slowly.
+• Daily affirmations charge you with positive emotions.
+• Gratitude journal. Write down all your gratitudes, great ideas and achievements with a daily diary entry.
+• Visualization motivates you and helps you understand what you want to achieve.
+• Morning yoga charges you with energy.
+• A habit of morning reading will begin your day productively. 
+• Set the wake up alarm to not oversleep.
+And any of your favorite miracle morning routines!
+
+Discover a miracle morning full of new emotions, beauty, delight and energy. Make your morning routine enjoyable and learn simple daily habits. On the routine tracker progress page, you will be able to see your results and strides for each day.
+
+The free version of this daily routine tracker app has access to the most common morning meditations and free positive affirmations. Join this app to start waking up easily and begin building your own miracle morning.
+
+Miracle morning routine checklist:
+• Try to wake up early, set an alarm clock at 5 am or 6 am.
+• Do a small meditation.
+• Read one or more positive affirmations.
+• Continue your morning routine with visualization.
+• Don’t forget to fill your gratitude journal & diary.
+• Wake up with some yoga & exercise.
+• Read a few pages of your favorite book.
+• Add your own habits & routines to complete your miracle morning. 
+
+Congrats! You finished your morning routine and got motivated for the day! Make this ritual a daily habit and this morning routine tracker app will help you. Don’t forget to write diary and say thanks to our app in your gratitude journal :)
+
+How to write positive affirmations correctly:
+• Affirmations should always be in the present tense.
+• Affirmations must be clear.
+• Daily affirmations should be enjoyable.
+• Your affirmation target should be exactly what you want, no sacrifices. Yes, it's a miracle and it works. 
+
+How to meditate?
+• Choose a place to meditate.
+• Get in the right posture.
+• Relax your body.
+
+It’s recommended to meditate for 15-20 minutes. Morning meditation will help you wake up, put your mind in order, give you a boost of energy and prepare you for the beginning of the day. Make morning meditation a necessary, simple daily habit and start your miracle morning from it. This is a simple routine habit that is aimed at achieving personal happiness and harmony. In the evening it will reduce any stress and relieve annoying thoughts and worries. Try not to miss even a single session. 
+
+Of course, it is better to meditate in a quiet home environment. Nothing should distract you. You don’t have to be an expert in yoga. The main thing is that your back is straight and comfortable for you. With correct posture, it's easier for you to breathe and air flows better through your lungs. This is also required to maintain awareness - not slipping into a sleep but still maintaining relaxation. 
+
+Close your eyes and try to completely relax! This is perhaps the most important aspect of meditation! Try to find the parts of your body that are tense and relax them. Try to coordinate this process with breathing: Inhale, focus your attention on the tense part of the body, exhale, relax. Direct your attention to your breath or a mantra. When practice ends, you will hear the alarm clock. Will be great, if you write your gratitude journal or diary after.
+
+We wish you a successful and healthy future with your miracle morning! Hope that this simple routine tracker app with a diary, gratitude journal, alarm clock and routine planner will make your waking up much better!""": """Suivi de routine matinale avec réveil et habitudes quotidiennes: livre de gratitude, agenda, yoga, visualisation, méditation et affirmations positives. Téléchargez l'app, réglez le réveil et commencez votre matin miracle. Facilitez le réveil, soyez efficace, productif et motivé! Vous pouvez aussi personnaliser l'app pour inclure vos habitudes favorites dans la routine du matin.
+ 
+ -Commencez votre routine par la méditation, qui aide à réveiller l'esprit.
+ -Des affirmations quotidiennes vous chargent d'émotions positives.
+ -Livre de gratitude. Notez toutes vos gratitudes, idées et réalisations dans un agenda.
+ -La visualisation motive et vous aide à comprendre ce que vous voulez faire.
+ -Le yoga matinal vous charge d'énergie.
+ -Une habitude de lecture matinale vous permettra de débuter votre journée productivement.
+ -Réglez le réveil pour ne pas trop dormir.
+ Et toutes vos routines matinales miracles préférées!
+ 
+ Découvrez un matin miracle riche en nouvelles émotions, beauté, plaisir et énergie. Rendez votre routine agréable et adoptez des habitudes simples. Sur la page de suivi de routine, vous pourrez voir vos résultats et vos progrès journaliers.
+ 
+ La version gratuite de cette app de suivi de routine quotidienne a accès aux méditations du matin les plus courantes et aux affirmations positives gratuites. Rejoignez cette app pour vous réveiller facilement et construire votre propre matin miracle.
+ 
+ Check-list d'une routine matinale miracle:
+ -Essayez de vous lever tôt, réglez un réveil à 5 ou 6 h du matin.
+ -Faites une petite méditation.
+ -Lisez une ou plusieurs affirmations.
+ -Continuez votre routine par la visualisation.
+ -N'oubliez pas de remplir votre livre de gratitude et votre agenda.
+ -Réveillez-vous avec du yoga et de l'exercice.
+ -Lisez des pages de votre livre préféré.
+ -Ajoutez vos habitudes et routines pour compléter votre matin miracle.
+ 
+ Felicitations! Vous avez terminé votre routine matinale et êtes motivé pour la journée! Faites de ce rituel une habitude et cette app vous aidera. N'oubliez pas d'écrire quotiennement et de remercier notre app dans votre livre de gratitude :)
+ 
+ Comment écrire correctement des affirmations positives:
+ -Les affirmations doivent toujours être au présent.
+ -Les affirmations doivent être claires.
+ -Les affirmations doivent être agréables.
+ -Votre objectif d'affirmation doit être exactement ce que vous voulez, sans sacrifice. Oui c'est un miracle et ça marche.
+ 
+ Comment méditer?
+ -Choisissez un endroit pour méditer.
+ -Prenez la bonne posture.
+ -Détendez votre corps.
+ 
+ Il est recommandé de méditer pendant 15 à 20mn. La méditation vous aidera à vous réveiller, à mettre de l'ordre dans votre esprit, à vous donner de l'énergie et à vous préparer pour la journée. Faites de la méditation une habitude nécessaire et commencez vos matins miracles grâce à cela. Il s'agit d'une simple habitude qui vise à atteindre le bonheur et l'harmonie personnels. Le soir, elle réduira tout stress et soulagera les pensées et soucis gênants. Ne manquer aucune séance.
+ 
+ Méditer dans un environnement calme. Rien ne doit vous distraire. Vous n'avez pas besoin d'être un expert en yoga. Ayez votre dos droit et soyez à l'aise. Avec une posture correcte, il est plus facile de respirer et l'air circule mieux. Cela est nécessaire pour maintenir la conscience - ne pas s'endormir, mais maintenir la relaxation.
+ 
+ Fermez les yeux, essayez de vous détendre complètement! Ceci est l'aspect le plus important de la méditation! Trouver les parties de votre corps qui sont tendues et détendez-les. Coordonner ce processus avec la respiration: Inspirez, concentrez vous sur la partie du corps qui est tendue, expirez, détendez. Dirigez votre attention sur la respiration ou un mantra. Quand l'entraînement se termine le réveil sonne. Ecrire dans votre livre de gratitude ou agenda après serait bien.
+ 
+ Nous vous souhaitons un avenir réussi et sain avec votre matin miracle! Nous espérons que cette app simple avec agenda, livre de gratitude, réveil et planning de routine rendra votre réveil bien meilleur!""", """4""": """""", """Change your life with morning rituals""": """Changez votre vie avec des rituels matinaux""", """Continue""": """Continuer""", """How much sleep do you usually get at night?""": """Combien de temps dormez-vous habituellement chaque nuit?""", """7 hours or less""": """7 heures ou moins""", """7-9 hours""": """7-9 heures""", """9-12 hours""": """9-12 heures""", """12 hours or more""": """12 heures ou plus""", """Got it! Do you wake up feeling well-rested?""": """Parfait! Vous réveillez-vous en vous sentant bien reposé?""", """Always""": """Toujours""", """Usually""": """Habituellement""", """Sometimes""": """Parfois""", """Rarely""": """Rarement""", """How much time do you have at the start of your day?""": """De combien de temps disposez-vous au début de votre journée?""", """0-10 minutes""": """0-10 minutes""", """10-20 minutes""": """10-20 minutes""", """20-30 minutes""": """20-30 minutes""", """30+ minutes""": """30+ minutes""", """Understood! Throughout your day, how are your energy levels?""": """Compris! Tout au long de la journée, quel est votre niveau d'énergie?""", """High - energized throughout the day""": """Élevé - j'ai de l'énergie tout au long de la journée""", """Medium - I have bursts of energy""": """Moyen - j'ai des poussées d'énergie""", """Low - my energy fades throughout the day""": """Faible - mon énergie diminue au cours de la journée""", """How satisfied are you with your current fitness level?""": """Quel est votre degré de satisfaction par rapport à votre niveau de forme actuel?""", """Completely - I feel fit and healthy""": """Complètement - Je me sens en forme et en bonne santé""", """Somewhat - I'd like to see some improvements""": """Un peu - j'aimerais voir quelques améliorations""", """Not at all - I'd like to see a mojor change""": """Pas du tout - j'aimerais voir un changement majeur""", """Over the past year, what's been your experience building better habits?""": """Au cours de l'année écoulée, quelle a été votre expérience en matière d'amélioration des habitudes?""", """I have been constantly improving my habits""": """J'ai constamment amélioré mes habitudes""", """I have built some good habits""": """J'ai pris de bonnes habitudes""", """I have tried to build good habits, but have not kept up with them""": """J'ai essayé de prendre de bonnes habitudes, mais je n'ai pas réussi à les conserver.""", """I have not tried to build new habits""": """Je n'ai pas essayé de prendre de nouvelles habitudes""", """We hear you. What single change would improve your life right now?""": """Nous vous écoutons. Quel changement unique améliorerait votre vie en ce moment?""", """More energy""": """Plus d'énergie""", """More productivity""": """Plus de productivité""", """More mindfulness""": """Plus d'attention""", """More sleep""": """Plus de sommeil""", """How often do you focus on the past or future?""": """À quelle fréquence vous concentrez-vous sur le passé ou le futur?""", """Never - I live in the present""": """Jamais - je vis dans le présent""", """Some of the time""": """De temps en temps""", """Most of the time""": """La plupart du temps""", """All of the time""": """Tout le temps""", """How distractable are you?""": """Dans quelle mesure êtes-vous distrait?""", """Easily distracted""": """Facilement distrait""", """Sometimes lose focus""": """Je me déconcentre parfois""", """Rarely lose focus""": """Je me déconcentre rarement""", """Laser focus""": """Concentration maximale""", """We're finalizing your personalized journey...""": """Nous finalisons votre voyage personnalisé...""", """You're embarking on this journey to build more Energy""": """Vous vous lancez dans ce voyage pour vous donner plus d'Énergie""", """Fitness""": """Fitness""", """Visualization""": """Visualisation""", """Meditations""": """Méditations""", """Reading""": """Lecture""", """Notes""": """Notes""", """Affirmations""": """Affirmations""", """My morning
+your entire morning routine in one app""": """My morning
+ toute votre routine matinale en une seule app""", """Just 30 minutes every day for a year will change your life dramatically!""": """30 minutes par jour pendant un an suffiront à changer radicalement votre vie!""", """Ready to start?""": """Prêt à commencer?""", """Let's go!""": """Allons-y!""", """""": """""", """If not now, when?""": """Si ce n'est pas maintenant, quand?""", """Start taking care of yourself and forming morning habits that will change your life forever """: """Commencez à prendre soin de vous et à prendre des habitudes matinales qui changeront votre vie pour toujours.""", """What time do you usually wake up?""": """À quelle heure vous réveillez-vous habituellement?""", """Do you tend to procrastinate?""": """Avez-vous tendance à procrastiner?""", """Yes, and I want to change that""": """Oui, et je veux changer cela""", """No, I can easily stick to my plan""": """Non, je peux facilement m'en tenir à mon plan""", """I'm not sure""": """Je ne suis pas sûr""", """Do you have trouble concentrating?""": """Avez-vous des difficultés à vous concentrer?""", """Yes, I get distracted easily""": """Oui, je me laisse facilement distraire""", """No, I can focus well and don't get distracted""": """Non, je me concentre bien et je ne me laisse pas distraire.""", """What do you want to get out of My Morning?""": """Que voulez-vous retirer de My Morning?""", """I want to form good habits""": """Je veux prendre de bonnes habitudes""", """I want to plan my day better""": """Je veux mieux planifier ma journée""", """5""": """""", """Unlock all features""": """Déverrouillez toutes les fonctionnalités""", """Monthly
+\$5.99/month,
+cancel anytime""": """Mensuel
+5,99 \$/mois, 
+annulation à tout moment""", """Annually (popular)
+\$19.99/month,
+cancel anytime""": """Annuellement (populaire) 
+19,99 \$/mois, 
+annulation à tout moment""", """Lifetime
+\$50.99, one-time payment""": """À vie
+50,99 \$, paiement unique""", """Start 3 days free trial""": """Démarrez un essai gratuit de 3 jours""", """Restore""": """Restaurez""", """Terms""": """Conditions générales""", """Privacy""": """Confidentialité""", """https://docs.google.com/spreadsheets/d/1f3RtAeBiHOy5qeep1ZVdClsYlqbMtrs_RM3Qizh4eNk/edit?usp=sharing""": """""", """Voice note""": """Note vocale""", """Add a note""": """Ajoutez une note""", """Recording is on hold
+It’s recording""": """L'enregistrement est en attente
+Ça enregistre""", """Save a note""": """Sauvegardez une note""", """Write something here""": """Écrivez quelque chose ici""", """Are you sure you want to delete a note?
+Delete  a note""": """Êtes-vous sûr de vouloir supprimer une note?
+Supprimez une note""", """Finish reading""": """Terminez la lecture""", """How much time are you going to read?
+
+Set your own time
+
+Start reading
+""": """Combien de temps allez-vous lire?
+Fixez votre propre temps
+Commencez à lire""", """You haven't added any meditations to your Favorites yet""": """Vous n'avez pas encore ajouté de méditations à vos favoris.""", """Choose favorite meditations""": """Choisissez vos méditations préférées""", """Finish meditating""": """Terminez la méditation""", """How much time are you going to read affirmations?
+
+Begin
+""": """Combien de temps allez-vous lire des affirmations?
+Commencez""", """Select affirmation""": """Sélectionnez l'affirmation""", """Morning complex
+
+Try PREMIUM Package for free
+
+Morning
+
+Evening
+
+Statistics
+
+Notifications
+""": """Module du matin
+Essayez gratuitement le paquet PREMIUM
+Matin
+Soirée
+Statistiques
+Notifications""", """Organize your morning routine with ease using the complex program. 
+
+
+
+Complex is a consistent set of your morning daily rituals. 
+
+
+
+Customize the sequence and duration of your rituals in the Settings section. 
+
+
+
+
+
+For instance: 
+
+
+
+1) Meditation - 5 minutes
+
+2) Fitness & Yoga - 15 minutes 
+
+3) Reading - 20 minutes
+""": """Organisez votre routine matinale en toute simplicité grâce au programme du Module. 
+ 
+Le module est un ensemble cohérent de vos rituels quotidiens du matin. 
+ 
+Personnalisez la séquence et la durée de vos rituels dans la section Paramètres. 
+ 
+ 
+Par exemple 
+ 
+1) Méditation - 5 minutes
+2) Fitness & Yoga - 15 minutes 
+3) Lecture - 20 minutes""", """Complex duration: 6 minutes
+
+Set my own time 
+""": """Durée du module: 6 minutes
+Fixer mon propre temps""", """Affirmation settings
+
+Write your own affirmation…
+or
+Select ready-to-use affirmations
+Save affirmation""": """Paramètres des affirmations
+ 
+Rédigez votre propre affirmation...
+ou
+Sélectionnez des affirmations prêtes à l'emploi
+Sauvegardez l'affirmation""", """Add a reminder
+
+Apply
+""": """Ajoutez un rappel
+Appliquez""", """Minutes of awareness per week
+
+Delete the progress
+""": """Minutes de sensibilisation par semaine
+Effacez les progrès""", """Enter your name""": """Entrez votre nom""", """Try PREMIUM Package free for 3 days""": """Essayez gratuitement le paquet PREMIUM pendant 3 jours""", """Start""": """Démarrez""", """Start the day with productive daily routine. Get motivation & energy for success""": """Commencez la journée avec une routine quotidienne productive. Obtenez la motivation et l'énergie nécessaires pour réussir""", """Start morning with good habits""": """Commencez la matinée avec de bonnes habitudes""", """- 10 minute Meditation""": """- Méditation de 10 minutes""", """- Get daily motivation with good habits""": """-Obtenez une motivation quotidienne avec de bonnes habitudes""", """- Start morning with meditation and affirmation""": """-Commencez la journée avec de la méditation et affirmations"""
 };

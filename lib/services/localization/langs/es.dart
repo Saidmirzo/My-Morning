@@ -130,12 +130,12 @@ Map<String, String> translations_es = {
 • Levanta los brazos y dobla el tronco hacia atrás al mismo tiempo. Inhala profundamente mientras levanta los brazos.
 • Vuelve a la posición inicial.""",
   "program_1_ex_1_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FHasta%20Uttanasana.mp3?alt=media&token=c010bab3-eb1f-4cd6-9199-d12b2836ed26',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FHasta%20Uttanasana.mp3?alt=media&token=c010bab3-eb1f-4cd6-9199-d12b2836ed26',
   """program_1_ex_2_name""": """Uttanasana""",
   """program_1_ex_2_desc""":
       """• Mantén tu cuerpo erguido hasta tu cuello sin arquear la espalda.""",
   "program_1_ex_2_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FUttanasana.mp3?alt=media&token=60ed84bd-c90e-4ffa-b5ac-f12990c4b613',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FUttanasana.mp3?alt=media&token=60ed84bd-c90e-4ffa-b5ac-f12990c4b613',
   """program_1_ex_3_name""": """Ashwa Sanchalanasana""",
   """program_1_ex_3_desc""":
       """• Ponte en la postura del perro con la la cara hacia abajo.
@@ -147,43 +147,43 @@ Map<String, String> translations_es = {
 • Inhala. Exhala y ponte en la postura del perro mirando hacia abajo. Presiona firmemente hacia abajo con las yemas de los dedos para llevar los antebrazos hacia el frente. Puedes doblar las rodillas.
 • Vuelve a la posición inicial.""",
   "program_1_ex_3_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FAshwa%20Sanchalanasana.mp3?alt=media&token=adac340e-29b7-4b46-a2b5-4015c65c2a04',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FAshwa%20Sanchalanasana.mp3?alt=media&token=adac340e-29b7-4b46-a2b5-4015c65c2a04',
   "program_1_ex_4_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FAdho%20Mukha%20Svanasana.mp3?alt=media&token=2499d895-ebf7-44cd-8255-1b51d52a33b1',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FAdho%20Mukha%20Svanasana.mp3?alt=media&token=2499d895-ebf7-44cd-8255-1b51d52a33b1',
   """program_1_ex_5_name""": """Bhujangasana""",
   """program_1_ex_5_desc""": """1. Acuestate boca abajo.
 2. Coloca las palmas de las manos apoyadas en el suelo justo debajo de los hombros.
 3. Inhala para levantar el pecho del suelo. Mantén los glúteos y piernas estiradas.""",
   "program_1_ex_5_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBhujangasana.mp3?alt=media&token=fe0835bb-cca4-4141-9651-678c0fac3f28',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBhujangasana.mp3?alt=media&token=fe0835bb-cca4-4141-9651-678c0fac3f28',
   """program_1_ex_6_name""": """Gomukhasana""",
   """program_1_ex_6_desc""":
       """Comienza en una posición sentada con las piernas cruzadas tal y como se muestra en la imagen.
 • Inhala y levanta tus brazos directo hacia el techo. Exhala y junta las manos detrás de la espalda. 
 • Vuelve a la posición inicial y alterna las piernas y los brazos.""",
   "program_1_ex_6_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FGomukhasana.mp3?alt=media&token=47a01e08-b6b7-4045-8aa9-733bc7a39fc2',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FGomukhasana.mp3?alt=media&token=47a01e08-b6b7-4045-8aa9-733bc7a39fc2',
   """program_2""": """Buen ánimo""",
   "program_2_ex_1_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FWalk-in-Place.mp3?alt=media&token=0210ca41-b307-43bf-8e83-1e360d9b9422',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FWalk-in-Place.mp3?alt=media&token=0210ca41-b307-43bf-8e83-1e360d9b9422',
   """program_2_ex_1_name""": """Lugar de encuentro""",
   """program_2_ex_2_name""": """Inclinación lateral de pie""",
   "program_2_ex_2_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend.mp3?alt=media&token=51ad278d-44e8-49bc-9b11-99a5b8b074a4',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend.mp3?alt=media&token=51ad278d-44e8-49bc-9b11-99a5b8b074a4',
   """program_2_ex_2_desc""":
       """• Ponte de pie con los pies y las piernas separados a la anchura de los hombros.
 • Baja el brazo derecho por el lado derecho del cuerpo y exhala mientras alarga el brazo izquierdo sobre la cabeza, doblando el cuerpo suavemente hacia la derecha. Exhala mientras repites en el lado izquierdo.""",
   """program_2_ex_3_name""": """Sentadillas con rotación corporal""",
   "program_2_ex_3_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20body-rotation.mp3?alt=media&token=418c6afc-3ec0-48b6-a6e8-6a36dc9ed335',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20body-rotation.mp3?alt=media&token=418c6afc-3ec0-48b6-a6e8-6a36dc9ed335',
   """program_2_ex_3_desc""":
       """• Ponte de pie con los pies separados a la anchura de los hombros.
 • Haz una sentadilla. 
 • Ahora, impulsa los talones para ponerte de pie, levantando los brazos por encima de la cabeza hacia la derecha. Transfiere el peso a los pies derechos, los pies izquierdos sobre los dedos de los pies levantados. 
 • Dobla las rodillas en cuclillas y levántate hacia otro lado.""",
-  """program_2_ex_4_name""": """Equilibrio""", "program_2_ex_4_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBalance.mp3?alt=media&token=2d14b8ed-bcda-4ee2-a56f-959e3203e8c9',
-
+  """program_2_ex_4_name""": """Equilibrio""",
+  "program_2_ex_4_audio":
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBalance.mp3?alt=media&token=2d14b8ed-bcda-4ee2-a56f-959e3203e8c9',
   """program_2_ex_4_desc""":
       """• Ponte de pie, con los brazos a los lados. Levanta la pierna derecha y dóblala.
 • Ponte de pie sobre la pierna izquierda, estira las manos hacia delante y levanta la pierna izquierda por detrás.
@@ -191,21 +191,20 @@ Map<String, String> translations_es = {
 • Cambia a la siguiente pierna.""",
   """program_2_ex_5_name""": """Puente""",
   "program_2_ex_5_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBridge.mp3?alt=media&token=efbe555e-42b7-4673-b290-36c5b78ccb38',
-
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBridge.mp3?alt=media&token=efbe555e-42b7-4673-b290-36c5b78ccb38',
   """program_2_ex_5_desc""":
       """• Túmbate boca arriba con las manos a los lados, las rodillas dobladas y los pies apoyados en el suelo bajo las rodillas.
 • Eleva las caderas para crear una línea recta desde las rodillas hasta los hombros. Aprieta los músculos abdominales y los de los glúteos. 
 • Completa al menos 20 repeticiones.""",
   """program_3""": """Mueve montañas""",
   "program_3_ex_1_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend%20copy.mp3?alt=media&token=23112729-ce26-48d7-9bd6-66f7a86a404e',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend%20copy.mp3?alt=media&token=23112729-ce26-48d7-9bd6-66f7a86a404e',
   """program_3_ex_1_name""": """Inclinaciones laterales de pie""",
   """program_3_ex_1_desc""":
       """• Ponte de pie con los pies y las piernas separados a la anchura de los hombros. 
 • Pon el brazo derecho en la cadera derecha y exhala mientras alargas el brazo izquierdo sobre la cabeza, doblando el cuerpo suavemente hacia la derecha. Exhala mientras repites en el lado izquierdo.""",
   "program_3_ex_2_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20Jumps.mp3?alt=media&token=8c827f9b-0cc8-4530-baf7-0e1a306f290f',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20Jumps.mp3?alt=media&token=8c827f9b-0cc8-4530-baf7-0e1a306f290f',
   """program_3_ex_2_name""": """Sentadillas con saltos""",
   """program_3_ex_2_desc""":
       """• Ponte de pie con los talones separados a una distancia mayor que la de los hombros, con los dedos de los pies ligeramente girados hacia fuera 
@@ -213,17 +212,17 @@ Map<String, String> translations_es = {
 • Ahora, impulsa los talones para saltar hacia arriba, manteniendo las manos cruzadas sobre el pecho. 
 • Realiza algunas repeticiones.""",
   "program_3_ex_3_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FPushups.mp3?alt=media&token=46aafc2a-66e6-47c1-930a-320aad5148d2',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FPushups.mp3?alt=media&token=46aafc2a-66e6-47c1-930a-320aad5148d2',
   """program_3_ex_3_name""": """Pushups""",
   "program_3_ex_4_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FPlank%20Twists.mp3?alt=media&token=1d51db42-410f-4d5b-ae86-f6ce94037e8a',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FPlank%20Twists.mp3?alt=media&token=1d51db42-410f-4d5b-ae86-f6ce94037e8a',
   """program_3_ex_4_name""": """Planchas giratorias""",
   """program_3_ex_4_desc""": """• Comienza en posición de plancha. 
 • Mete el ombligo hacia la columna vertebral con la mayor firmeza posible. 
 • Ahora, empieza a levantar el pecho y un brazo hacia el techo.
 • Vuelve a la posición de plancha. Repite el ejercicio con el otro lado.""",
   "program_3_ex_5_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FCats%20Dogs%20exercise.mp3?alt=media&token=b738846e-0c8a-41f9-9cc7-535217192b07',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FCats%20Dogs%20exercise.mp3?alt=media&token=b738846e-0c8a-41f9-9cc7-535217192b07',
   """program_3_ex_5_name""": """Ejercicio perro gato""",
   """program_3_ex_5_desc""":
       """• Ponte a cuatro patas con el peso distribuido uniformemente. Las rodillas debajo de las caderas. La cabeza y el cuello en línea recta con la columna vertebral. 
@@ -232,29 +231,29 @@ Map<String, String> translations_es = {
 • Repite las veces que desees.""",
   """program_4""": """Cuello Sano""",
   "program_4_ex_1_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSide%20Tilt.mp3?alt=media&token=fe2671d0-c001-4ccd-8a09-8ff380a75355',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSide%20Tilt.mp3?alt=media&token=fe2671d0-c001-4ccd-8a09-8ff380a75355',
   """program_4_ex_1_name""": """Inclinación lateral""",
   "program_4_ex_2_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FForward%20and%20Backward%20Tilt.mp3?alt=media&token=346ffde3-4cd3-460c-928e-9f9ab177512f',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FForward%20and%20Backward%20Tilt.mp3?alt=media&token=346ffde3-4cd3-460c-928e-9f9ab177512f',
   """program_4_ex_2_name""": """Inclinación hacia adelante y hacia atrás""",
   """program_4_ex_2_desc""": """•  Empieza con la cabeza y la espalda rectas. 
 •  Baja la barbilla hacia el pecho y vuelve a la posición inicial. 
 •  Levanta la barbilla hacia el techo y lleva la base del cráneo hacia la espalda. 
 •  Repite la serie varias veces""",
   "program_4_ex_3_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSide%20Rotation.mp3?alt=media&token=da9612fe-6559-47ce-83a1-a52a037ce63f',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSide%20Rotation.mp3?alt=media&token=da9612fe-6559-47ce-83a1-a52a037ce63f',
   """program_4_ex_3_name""": """Rotación lateral""",
   """program_4_ex_3_desc""":
       """• Mantén la cabeza alineada con los hombros y la espalda recta. 
 • Gira lentamente la cabeza hacia la derecha y hacia la izquierda hasta que sientas un estiramiento en el lado del cuello y del hombro.""",
   "program_4_ex_4_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FHead%20rotation.mp3?alt=media&token=c5817357-2218-400a-bde1-3d8509c1dbb3',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FHead%20rotation.mp3?alt=media&token=c5817357-2218-400a-bde1-3d8509c1dbb3',
   """program_4_ex_4_name""": """Rotación de la cabeza""",
   "program_4_ex_5_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FShoulders%20rotation.mp3?alt=media&token=ad9f4128-bbe2-42b1-be88-4f9a3a75310e',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FShoulders%20rotation.mp3?alt=media&token=ad9f4128-bbe2-42b1-be88-4f9a3a75310e',
   """program_4_ex_5_name""": """Rotación de hombros""",
   "program_4_ex_6_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FCow%20Face%20Pose.mp3?alt=media&token=1654d6bc-dba2-4063-a674-9bd4519eb110',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FCow%20Face%20Pose.mp3?alt=media&token=1654d6bc-dba2-4063-a674-9bd4519eb110',
   """program_4_ex_6_name""": """Postura de la cara de vaca""",
   """exercise_1_title""": """Estiramiento""",
   """exercise_1_text""": """Empieza con el estiramiento. 
@@ -763,4 +762,346 @@ Map<String, String> translations_es = {
   """your_own_ritual""": """Tu propio ritual""",
   """support_text_title""": """Haz la encuesta""",
   """support_text_body""": """Y ayúdanos con el desarrollo de la app.""",
+  """Morning Routine: Wake Up Alarm""":
+      """Rutina Matutina: Alarma Despertadora""",
+  """Daily habits. Meditation. Yoga""": """Hábitos diarios. Meditación. Yoga""",
+  """Miracle morning. Waking up habit tracker. Gratitude journal, yoga, daily routine""":
+      """Mañana milagrosa. Monitor de hábito para despertar. Diario de gratitud, yoga rutina diaria""",
+  """miracle,checklist,tracker,waking,clock,gratitude,journal,diary,alarmy,alarmme,affirmation,simple,app""":
+      """milagro,lista,monitor,despertar,reloj,gratitud,agenda,diario,alarmy,alarmme,afirmación,fácil,app""",
+  """Daily Routine & Alarm: 1 month""": """Rutina diaria y alarma: 1 mes""",
+  """Wake Up Morning Routine 1 year""":
+      """Rutina matutina para despertar: 1 año""",
+  """All features. Improve your morning routine""":
+      """Todas las funciones. Mejora tu rutina matutina""",
+  """2""": """""",
+  """Build your perfect morning routine""":
+      """Crea tu rutina matutina perfecta""",
+  """Wake up with a morning workout""":
+      """Despierta con un ejercicio matutino""",
+  """Start your day with meditation""": """Empieza tu día con meditación""",
+  """Write diary or a gratitude journal""":
+      """Escribe un diario o journal de gratitud""",
+  """Read useful books""": """Lee libros interesantes""",
+  """Get daily affirmations""": """Recibe afirmaciones diarias""",
+  """All this in one app""": """Todo en una app""",
+  """Change your life with simple morning habits""":
+      """Cambia tu vida con simples hábitos matutinos""",
+  """3""": """""",
+  """Morning routine tracker with alarm clock and simple daily habits: gratitude journal, diary, yoga, visualization, meditation and positive affirmations. Download the app, set the wake up alarm and start your miracle morning. Make your waking up easy and be more efficient, productive and motivated! You can also personalize the app to include your favorite daily habits in the morning routine.
+
+• Start your morning routine with meditation, which helps wake up your mind slowly.
+• Daily affirmations charge you with positive emotions.
+• Gratitude journal. Write down all your gratitudes, great ideas and achievements with a daily diary entry.
+• Visualization motivates you and helps you understand what you want to achieve.
+• Morning yoga charges you with energy.
+• A habit of morning reading will begin your day productively. 
+• Set the wake up alarm to not oversleep.
+And any of your favorite miracle morning routines!
+
+Discover a miracle morning full of new emotions, beauty, delight and energy. Make your morning routine enjoyable and learn simple daily habits. On the routine tracker progress page, you will be able to see your results and strides for each day.
+
+The free version of this daily routine tracker app has access to the most common morning meditations and free positive affirmations. Join this app to start waking up easily and begin building your own miracle morning.
+
+Miracle morning routine checklist:
+• Try to wake up early, set an alarm clock at 5 am or 6 am.
+• Do a small meditation.
+• Read one or more positive affirmations.
+• Continue your morning routine with visualization.
+• Don’t forget to fill your gratitude journal & diary.
+• Wake up with some yoga & exercise.
+• Read a few pages of your favorite book.
+• Add your own habits & routines to complete your miracle morning. 
+
+Congrats! You finished your morning routine and got motivated for the day! Make this ritual a daily habit and this morning routine tracker app will help you. Don’t forget to write diary and say thanks to our app in your gratitude journal :)
+
+How to write positive affirmations correctly:
+• Affirmations should always be in the present tense.
+• Affirmations must be clear.
+• Daily affirmations should be enjoyable.
+• Your affirmation target should be exactly what you want, no sacrifices. Yes, it's a miracle and it works. 
+
+How to meditate?
+• Choose a place to meditate.
+• Get in the right posture.
+• Relax your body.
+
+It’s recommended to meditate for 15-20 minutes. Morning meditation will help you wake up, put your mind in order, give you a boost of energy and prepare you for the beginning of the day. Make morning meditation a necessary, simple daily habit and start your miracle morning from it. This is a simple routine habit that is aimed at achieving personal happiness and harmony. In the evening it will reduce any stress and relieve annoying thoughts and worries. Try not to miss even a single session. 
+
+Of course, it is better to meditate in a quiet home environment. Nothing should distract you. You don’t have to be an expert in yoga. The main thing is that your back is straight and comfortable for you. With correct posture, it's easier for you to breathe and air flows better through your lungs. This is also required to maintain awareness - not slipping into a sleep but still maintaining relaxation. 
+
+Close your eyes and try to completely relax! This is perhaps the most important aspect of meditation! Try to find the parts of your body that are tense and relax them. Try to coordinate this process with breathing: Inhale, focus your attention on the tense part of the body, exhale, relax. Direct your attention to your breath or a mantra. When practice ends, you will hear the alarm clock. Will be great, if you write your gratitude journal or diary after.
+
+We wish you a successful and healthy future with your miracle morning! Hope that this simple routine tracker app with a diary, gratitude journal, alarm clock and routine planner will make your waking up much better!""":
+      """Monitor de rutina matutina con despertador y simples hábitos diarios: diario de gratitud, agenda, yoga, visualización, meditación y afirmaciones positivas. Descarga la app, configura el despertador y empieza tu mañana milagrosa. Despierta con facilidad y sé más eficiente, productivo y motivado. También puedes personalizar la app para incluir tus hábitos diarios favoritos en tu rutina.
+
+• Inicia tu rutina matutina con meditación, despertará tu mente sutilmente.
+• Las afirmaciones diarias te cargan de positividad.
+• Diario de gratitud. Anota todas tus gratitudes, grandes ideas y logros.
+• Visualizar te motiva y ayuda a entender lo que quieres lograr.
+• El yoga matutino te da energía.
+• El hábito de la lectura matutina ayuda a iniciar el día de forma productiva. 
+• Activa el despertador para no quedarte dormido.
+¡Y cualquiera de tus rutinas matutinas milagrosas favoritas!
+
+Descubre una mañana milagrosa llena de nuevas emociones, belleza, deleite y energía. Haz que tu rutina matutina sea agradable y aprende sencillos hábitos diarios. En la página de seguimiento, podrás ver resultados y avances cada día.
+
+La versión gratuita de esta app de seguimiento de rutina diaria tiene acceso a las meditaciones matutinas más comunes y a las afirmaciones positivas gratuitas. Descárgala para empezar a despertar con facilidad y para crear tus propias mañanas milagrosas.
+
+Lista de una rutina matutina milagrosa:
+• Intenta despertar temprano, pon la alarma para las 5 o 6 de la mañana.
+• Haz una pequeña meditación.
+• Lee una o más afirmaciones positivas.
+• Continúa tu rutina matutina con la visualización.
+• No olvides llenar tu diario de gratitud y tu agenda.
+• Despiértate con un poco de yoga y ejercicio.
+• Lee unas páginas de tu libro favorito.
+• Añade tus propios hábitos y rutinas para completar tu mañana milagrosa. 
+
+¡Felicidades! Terminaste tu rutina matutina y te has motivado para el día. Haz de este ritual un hábito diario y esta app de seguimiento de rutina matutina te ayudará. No olvides escribir en la agenda y agradecer a nuestra app en tu diario de gratitud :)
+
+Cómo escribir afirmaciones positivas correctamente:
+Las afirmaciones deben estar en tiempo presente.
+Deben ser claras.
+Deben ser agradables.
+Tu objetivo de afirmación debe ser exactamente lo que quieres, sin sacrificios. Sí, es un milagro y funciona. 
+
+¿Cómo meditar?
+Elige un lugar para meditar.
+Ponte en la postura correcta.
+Relaja tu cuerpo.
+
+Se recomienda meditar por 15-20 minutos. La meditación matutina te ayudará a despertarte, a poner tu mente en orden, a darte un impulso de energía y a prepararte para iniciar tu día. Conviértela en un hábito diario necesario y sencillo, y comienza tu mañana milagrosa desde la meditación. Es un sencillo hábito rutinario cuyo objetivo es lograr la felicidad y armonía personal. Por la noche reducirá el estrés y aliviará pensamientos y preocupaciones molestas. Trata de no perder ni una sola sesión.
+
+Sin duda, es mejor meditar en un entorno tranquilo. Sin distracciones. No hace falta ser un experto en yoga. Lo principal es que tu espalda esté recta y estés cómodo. Con una postura correcta, será más fácil respirar y el aire fluye mejor por los pulmones. Esto es necesario para mantener la conciencia, sin caer en el sueño pero manteniéndote relajado. 
+
+Cierra los ojos e intenta relajarte por completo. Este es quizás el aspecto más crucial de la meditación. Identifica las partes de tu cuerpo que están tensas y relájalas. Trata de coordinar este proceso con la respiración: inhala, enfócate en la parte tensa del cuerpo, exhala, relájate. Enfócate en la respiración o en un mantra. Cuando termines, oirás el despertador. Será genial si luego escribes en tu diario de gratitud.
+
+¡Te deseamos un futuro exitoso y saludable con tu mañana milagrosa! Esperamos que esta sencilla app de seguimiento de rutina con agenda, diario de gratitud, despertador y un planificador de rutina haga que tu despertar sea mucho mejor.
+
+
+""",
+  """4""": """""",
+  """Change your life with morning rituals""":
+      """Cambia tu vida con rituales matutinos""",
+  """Continue""": """Continuar""",
+  """How much sleep do you usually get at night?""":
+      """Por lo general, ¿cuánto duermes por las noches?""",
+  """7 hours or less""": """7 horas o menos""",
+  """7-9 hours""": """7-9 horas""",
+  """9-12 hours""": """9-12 horas""",
+  """12 hours or more""": """12 horas o más""",
+  """Got it! Do you wake up feeling well-rested?""":
+      """¡Entendido! ¿Te despiertas sintiendo que descansaste?""",
+  """Always""": """Siempre""",
+  """Usually""": """Por lo general""",
+  """Sometimes""": """Algunas veces""",
+  """Rarely""": """Rara vez""",
+  """How much time do you have at the start of your day?""":
+      """¿De cuánto tiempo dispones para empezar tu día?""",
+  """0-10 minutes""": """0-10 minutos""",
+  """10-20 minutes""": """10-20 minutos""",
+  """20-30 minutes""": """20-30 minutos""",
+  """30+ minutes""": """30+ minutos""",
+  """Understood! Throughout your day, how are your energy levels?""":
+      """¡Bien! ¿Cómo está tu nivel de energía durante el día?""",
+  """High - energized throughout the day""":
+      """Alto: con energía todo el día""",
+  """Medium - I have bursts of energy""": """Medio: Tengo ráfagas de energía""",
+  """Low - my energy fades throughout the day""":
+      """Bajo: Mi energía se desvanece a lo largo del dia""",
+  """How satisfied are you with your current fitness level?""":
+      """¿Qué tan satisfecho estás con tu forma física actual?""",
+  """Completely - I feel fit and healthy""":
+      """Totalmente: Me siento en forma y saludable""",
+  """Somewhat - I'd like to see some improvements""":
+      """Algo: Me gustaría ver algunas mejoras""",
+  """Not at all - I'd like to see a mojor change""":
+      """Nada satisfecho: Me gustaría ver un gran cambio """,
+  """Over the past year, what's been your experience building better habits?""":
+      """¿Cómo fue tu experiencia creando mejores hábitos el año pasado?""",
+  """I have been constantly improving my habits""":
+      """He estado mejorando constantemente mis hábitos""",
+  """I have built some good habits""": """He adoptado algunos hábitos buenos""",
+  """I have tried to build good habits, but have not kept up with them""":
+      """He tratado de adoptar buenos hábitos pero no he podido mantenerlos""",
+  """I have not tried to build new habits""":
+      """No he intentado adoptar buenos hábitos""",
+  """We hear you. What single change would improve your life right now?""":
+      """Te entendemos. ¿Qué cambio podría mejorar tu vida en este momento?""",
+  """More energy""": """Más energía""",
+  """More productivity""": """Más productividad""",
+  """More mindfulness""": """Más mindfulness""",
+  """More sleep""": """Más sueño""",
+  """How often do you focus on the past or future?""":
+      """¿Qué tan seguido te enfocas en el pasado o en el futuro?""",
+  """Never - I live in the present""": """Nunca, vivo en el presente""",
+  """Some of the time""": """Algunas veces""",
+  """Most of the time""": """Casi todo el tiempo""",
+  """All of the time""": """Todo el tiempo""",
+  """How distractable are you?""": """¿Te distraes?""",
+  """Easily distracted""": """Fácilmente""",
+  """Sometimes lose focus""": """A veces pierdo el enfoque""",
+  """Rarely lose focus""": """Rara vez pierdo el enfoque""",
+  """Laser focus""": """Enfoque de láser""",
+  """We're finalizing your personalized journey...""":
+      """Estamos finalizando tu experiencia personalizada...""",
+  """You're embarking on this journey to build more Energy""":
+      """Te estás embarcando en este viaje para crear más Energía""",
+  """Fitness""": """Fitness""",
+  """Visualization""": """Visualización""",
+  """Meditations""": """Meditaciones""",
+  """Reading""": """Lectura""",
+  """Notes""": """Notas""",
+  """Affirmations""": """Afirmaciones""",
+  """My morning
+your entire morning routine in one app""": """My morning
+Toda tu rutina matutina en una app""",
+  """Just 30 minutes every day for a year will change your life dramatically!""":
+      """¡Solo 30 minutos diarios por un año cambiarán dramáticamente tu vida!""",
+  """Ready to start?""": """¿Listo para iniciar?""",
+  """Let's go!""": """¡Vamos!""",
+  """""": """""",
+  """If not now, when?""": """Si no es ahora ¿cuándo?""",
+  """Start taking care of yourself and forming morning habits that will change your life forever """:
+      """Empieza a cuidar de ti y a formar hábitos matutinos que cambiarán tu vida para siempre""",
+  """What time do you usually wake up?""":
+      """Por lo general, ¿a qué hora despiertas?""",
+  """Do you tend to procrastinate?""": """¿Sueles procrastinar?""",
+  """Yes, and I want to change that""": """Sí y quiero cambiar eso""",
+  """No, I can easily stick to my plan""": """No, cumplo mi plan fácilmente""",
+  """I'm not sure""": """No estoy seguro""",
+  """Do you have trouble concentrating?""":
+      """¿Tienes problemas para concentrarte?""",
+  """Yes, I get distracted easily""": """Sí, me distraigo fácilmente""",
+  """No, I can focus well and don't get distracted""":
+      """No, me puedo enfocar y no me distraigo""",
+  """What do you want to get out of My Morning?""":
+      """¿Qué quieres conseguir con My Morning?""",
+  """I want to form good habits""": """Quiero formar buenos hábitos""",
+  """I want to plan my day better""": """Quiero planificar mejor mi día""",
+  """5""": """""",
+  """Unlock all features""": """Desbloquea todas las funciones""",
+  """Monthly
+\$5.99/month,
+cancel anytime""": """Mensualmente
+\$5.99/mes,
+cancela en cualquier momento""",
+  """Annually (popular)
+\$19.99/month,
+cancel anytime""": """Anualmente (popular)
+\$19.99/mes
+cancela en cualquier momento""",
+  """Lifetime
+\$50.99, one-time payment""": """De por vida
+\$50.99, un solo pago""",
+  """Start 3 days free trial""": """Empieza la prueba gratis de 3 días""",
+  """Restore""": """Restaurar""",
+  """Terms""": """Términos""",
+  """Privacy""": """Privacidad""",
+  """https://docs.google.com/spreadsheets/d/1t8PxBc2oY2-fHmp7fUxRr5vH67lDs9MvfM_PHZUPY9U/edit?usp=sharing""":
+      """""",
+  """Voice note""": """Nota de voz""",
+  """Add a note""": """Agregar una nota""",
+  """Recording is on hold
+It’s recording""": """La grabación está en pausa
+Está grabando""",
+  """Save a note""": """Guardar una nota""",
+  """Write something here""": """Escribir algo aquí""",
+  """Are you sure you want to delete a note?
+Delete a note""": """¿Estás seguro de que deseas eliminar una nota?
+Eliminar una nota""",
+  """Finish reading""": """Finalizar la lectura""",
+  """How much time are you going to read?
+
+Set your own time
+
+Start reading
+""": """¿Por cuánto tiempo vas a leer?
+Establece tu propio tiempo
+Empieza a leer""",
+  """You haven't added any meditations to your Favorites yet""":
+      """Aún no has agregado ninguna meditación a tus Favoritos""",
+  """Choose favorite meditations""": """Elige tu meditaciones favoritas""",
+  """Finish meditating""": """Finalizar la meditación""",
+  """How much time are you going to read affirmations?
+
+Begin
+""": """¿Por cuánto tiempo vas a leer las afirmacione?
+Empieza""",
+  """Select affirmation""": """Seleccionar afirmación""",
+  """Morning complex
+Try PREMIUM Package for free
+Morning
+Evening
+Statistics
+Notifications
+""": """Circuito matutino
+Prueba el paquete PREMIUM gratis
+Mañana
+Noche
+Estadísticas
+Notificaciones""",
+  """Organize your morning routine with ease using the complex program. 
+
+Complex is a consistent set of your morning daily rituals. 
+
+Customize the sequence and duration of your rituals in the Settings section. 
+
+
+For instance: 
+
+1) Meditation - 5 minutes
+2) Fitness & Yoga - 15 minutes 
+3) Reading - 20 minutes
+""": """Organiza tu rutina matutina con el programa de circuitos.
+
+El circuito es un conjunto consistente de rituales matutinos diarios
+
+Personaliza la secuencia y duración de tus rituales en la sección de Ajustes
+
+Por ejemplo:
+
+1) Meditación: 5 minutos
+2) Fitness & Yoga: 15 minutos
+3) Lectura: 20 minutos""",
+  """Complex duration: 6 minutes
+
+Set my own time 
+""": """Duración del circuito: 6 minutos
+Establecer mi propio tiempo""",
+  """Affirmation settings
+
+Write your own affirmation…
+or
+Select ready-to-use affirmations
+Save affirmation""": """Ajustes de afirmaciones 
+
+Escribe tu propia afirmación
+o 
+Selecciona afirmaciones listas para usar
+Guardar afirmación""",
+  """Add a reminder
+
+Apply
+""": """Agregar un recordatorio
+Aplicar""",
+  """Minutes of awareness per week
+
+Delete the progress
+""": """Minutos de conciencia por semana
+Eliminar el progreso""",
+  """Enter your name""": """Ingresa tu nombre""",
+  """Try PREMIUM Package free for 3 days""":
+      """Prueba el Paquete PREMIUM gratis por 3 días""",
+  """Start""": """Empezar""",
+  """Start the day with productive daily routine. Get motivation & energy for success""":
+      """Empieza el día con una rutina diaria productiva. Recibe motivación y energía para el éxito""",
+  """Start morning with good habits""":
+      """Empieza la mañana con buenos hábitos""",
+  """- 10 minute Meditation""": """- 10 minutos de meditación""",
+  """- Get daily motivation with good habits""":
+      """- Recibe motivación diaria con buenos hábitos""",
+  """- Start morning with meditation and affirmation""":
+      """- Empieza la mañana con meditación y afirmación""",
 };

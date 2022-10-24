@@ -115,86 +115,85 @@ Map<String, String> translations_ja = {
   """program_1_ex_2_name""": """ウッタナサナ""",
   """program_1_ex_2_desc""": """•背中を丸めずに首全体を長くしてください。""",
   "program_1_ex_2_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FUttanasana.mp3?alt=media&token=60ed84bd-c90e-4ffa-b5ac-f12990c4b613',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FUttanasana.mp3?alt=media&token=60ed84bd-c90e-4ffa-b5ac-f12990c4b613',
   """program_1_ex_3_name""": """アシュワ·サンカラナサナ""",
   """program_1_ex_3_desc""": """•下を向いて犬のポーズをしてください。
  •息を吐いて、右膝を鼻の方に向けてください。右膝を90度の角度で曲げ続ける
  •両腕を空に向けて持ち上げ、左膝を下に下ろして右膝をテーブルの位置に戻します。または、右足を下に向けて犬に戻します。""",
   "program_1_ex_3_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FAshwa%20Sanchalanasana.mp3?alt=media&token=adac340e-29b7-4b46-a2b5-4015c65c2a04',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FAshwa%20Sanchalanasana.mp3?alt=media&token=adac340e-29b7-4b46-a2b5-4015c65c2a04',
   """program_1_ex_4_name""": """アドー・ムカ・スヴァナーサナ""",
   """program_1_ex_4_desc""": """•肩から約3インチ前に手を置き、肩幅を離して4つすべてにセットアップします。
  •息を吸う。息を吐き出し、下向きの犬のポーズを取ります。指先でしっかりと押し下げて、前腕を部屋の正面に引き寄せます。膝を曲げることができます。
  •開始位置に戻ります。""",
   "program_1_ex_4_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FAdho%20Mukha%20Svanasana.mp3?alt=media&token=2499d895-ebf7-44cd-8255-1b51d52a33b1',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FAdho%20Mukha%20Svanasana.mp3?alt=media&token=2499d895-ebf7-44cd-8255-1b51d52a33b1',
   """program_1_ex_5_name""": """ブジャンガサナ""",
   """program_1_ex_5_desc""": """1.うつぶせになってください。
  2.手のひらを肩の真下の地面に平らに置く
  3.息を吸って胸を床から持ち上げます。お尻と足を伸ばしておきなさい。""",
   "program_1_ex_5_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBhujangasana.mp3?alt=media&token=fe0835bb-cca4-4141-9651-678c0fac3f28',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBhujangasana.mp3?alt=media&token=fe0835bb-cca4-4141-9651-678c0fac3f28',
   """program_1_ex_6_name""": """ゴムカサナ""",
   """program_1_ex_6_desc""": """写真のように座った足を組んで座った姿勢で始める
  •息を吸い込み、腕を天井に向かってまっすぐに上げます。息を吐き出し、背中の後ろで手を握り締める。
  •開始位置に戻り、足と腕を交互にしてください。""",
   "program_1_ex_6_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FGomukhasana.mp3?alt=media&token=47a01e08-b6b7-4045-8aa9-733bc7a39fc2',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FGomukhasana.mp3?alt=media&token=47a01e08-b6b7-4045-8aa9-733bc7a39fc2',
   """program_2""": """お元気ですか""",
   "program_2_ex_1_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FWalk-in-Place.mp3?alt=media&token=0210ca41-b307-43bf-8e83-1e360d9b9422',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FWalk-in-Place.mp3?alt=media&token=0210ca41-b307-43bf-8e83-1e360d9b9422',
   """program_2_ex_1_name""": """ウォークインプレイス""",
   """program_2_ex_2_name""": """スタンディング·サイド·ベンド""",
   "program_2_ex_2_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend.mp3?alt=media&token=51ad278d-44e8-49bc-9b11-99a5b8b074a4',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend.mp3?alt=media&token=51ad278d-44e8-49bc-9b11-99a5b8b074a4',
   """program_2_ex_2_desc""": """•足と足を肩幅に開いて高く立ってください。
  •右腕を体の右側に下ろし、左腕を頭の上に伸ばし、体を右に軽く曲げながら息を吐き出します。左側で繰り返すように息を吐いてください。""",
   """program_2_ex_3_name""": """体を回転させるスクワット""",
   "program_2_ex_3_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20body-rotation.mp3?alt=media&token=418c6afc-3ec0-48b6-a6e8-6a36dc9ed335',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20body-rotation.mp3?alt=media&token=418c6afc-3ec0-48b6-a6e8-6a36dc9ed335',
   """program_2_ex_3_desc""": """•足を肩幅に開いてまっすぐに立ってください。
  •しゃがむ。
  •それから、かかとを突き破って立ち上がって、頭上の腕を右に持ち上げます。ウェイトを右足、左足をつま先を上げた状態にします。
  •膝を曲げてしゃがんで、別の側に立ってください。​""",
-  """program_2_ex_4_name""": """秤""", "program_2_ex_4_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBalance.mp3?alt=media&token=2d14b8ed-bcda-4ee2-a56f-959e3203e8c9',
-
+  """program_2_ex_4_name""": """秤""",
+  "program_2_ex_4_audio":
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBalance.mp3?alt=media&token=2d14b8ed-bcda-4ee2-a56f-959e3203e8c9',
   """program_2_ex_4_desc""": """•腕を横にしてまっすぐ立ってください。右足を上に上げて曲げてください。​
  •左足に立って両手を前に伸ばし、左足を後ろに持ち上げます。
  •しばらく姿勢を保ってまっすぐに立ってください。
  •脚を交換してください。""",
   """program_2_ex_5_name""": """橋""",
   "program_2_ex_5_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBridge.mp3?alt=media&token=efbe555e-42b7-4673-b290-36c5b78ccb38',
-
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBridge.mp3?alt=media&token=efbe555e-42b7-4673-b290-36c5b78ccb38',
   """program_2_ex_5_desc""": """•両手を両脇に置き、膝を曲げ、足を膝の下の床に平らにして仰向けに横たわります。
  •腰を上げて、膝から肩までの直線を作成します。腹筋とお尻の筋肉を引き締める
  •少なくとも20人の担当者を完了します。""",
   """program_3""": """山を移動する""",
   "program_3_ex_1_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend%20copy.mp3?alt=media&token=23112729-ce26-48d7-9bd6-66f7a86a404e',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend%20copy.mp3?alt=media&token=23112729-ce26-48d7-9bd6-66f7a86a404e',
   """program_3_ex_1_name""": """スタンディング・サイドベンド""",
   """program_3_ex_1_desc""": """•足と足を肩幅に開いて高く立ってください。
  •右腕を右腰にして、左腕を頭の上に伸ばし、体を右に軽く曲げながら息を吐き出します。左側で繰り返すように息を吐いてください。""",
   "program_3_ex_2_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20Jumps.mp3?alt=media&token=8c827f9b-0cc8-4530-baf7-0e1a306f290f',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20Jumps.mp3?alt=media&token=8c827f9b-0cc8-4530-baf7-0e1a306f290f',
   """program_3_ex_2_name""": """ジャンプのあるスクワット""",
   """program_3_ex_2_desc""": """•かかとが肩幅より広く、つま先が少し曲がっている状態で立つ
  •膝を曲げ、腰を後ろにしてしゃがんで、両腕を下に落として脚の間の床に触ります。
  •そして、両手を胸にあてて、ヒールを走って飛び上がりましょう。
  •いくつかのレプを実行します。​""",
   "program_3_ex_3_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FPushups.mp3?alt=media&token=46aafc2a-66e6-47c1-930a-320aad5148d2',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FPushups.mp3?alt=media&token=46aafc2a-66e6-47c1-930a-320aad5148d2',
   """program_3_ex_3_name""": """腕立て伏せ""",
   "program_3_ex_4_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FPlank%20Twists.mp3?alt=media&token=1d51db42-410f-4d5b-ae86-f6ce94037e8a',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FPlank%20Twists.mp3?alt=media&token=1d51db42-410f-4d5b-ae86-f6ce94037e8a',
   """program_3_ex_4_name""": """プランク·ツイスト""",
   """program_3_ex_4_desc""": """•板の位置から始めましょう。
  •へそを背骨の方にできるだけしっかりと引き入れなさい.。
  •それから、胸と片腕を天井に向けて持ち上げます。
  •元のプランクに戻れ。反対側で繰り返す""",
   "program_3_ex_5_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FCats%20Dogs%20exercise.mp3?alt=media&token=b738846e-0c8a-41f9-9cc7-535217192b07',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FCats%20Dogs%20exercise.mp3?alt=media&token=b738846e-0c8a-41f9-9cc7-535217192b07',
   """program_3_ex_5_name""": """キャッツドッグス運動""",
   """program_3_ex_5_desc""":
       """•あなたの体重を均等に分散して4つすべてに降りてください。あなたの腰の下に膝。頭と首が背骨と一直線に。
@@ -203,28 +202,28 @@ Map<String, String> translations_ja = {
  •繰り返しの所望の回数だけ繰り返します。""",
   """program_4""": """健康な首""",
   "program_4_ex_1_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSide%20Tilt.mp3?alt=media&token=fe2671d0-c001-4ccd-8a09-8ff380a75355',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSide%20Tilt.mp3?alt=media&token=fe2671d0-c001-4ccd-8a09-8ff380a75355',
   """program_4_ex_1_name""": """サイドチルト""",
   "program_4_ex_2_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FForward%20and%20Backward%20Tilt.mp3?alt=media&token=346ffde3-4cd3-460c-928e-9f9ab177512f',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FForward%20and%20Backward%20Tilt.mp3?alt=media&token=346ffde3-4cd3-460c-928e-9f9ab177512f',
   """program_4_ex_2_name""": """前方および後方チルト""",
   """program_4_ex_2_desc""": """•頭と背中を真っすぐにしてください。
  •あごを胸の方に下げて、スタート位置に戻ります。
  •あごを天井に向けて傾け、頭蓋骨の付け根を背中に向けてください。
  •このセットを数回繰り返します。""",
   "program_4_ex_3_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSide%20Rotation.mp3?alt=media&token=da9612fe-6559-47ce-83a1-a52a037ce63f',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSide%20Rotation.mp3?alt=media&token=da9612fe-6559-47ce-83a1-a52a037ce63f',
   """program_4_ex_3_name""": """側面回転""",
   """program_4_ex_3_desc""": """•頭を真っすぐに肩の上に置き、背中をまっすぐにしてください。
  •首と肩の横が伸びるまでゆっくりと左右に頭を回してください。""",
   "program_4_ex_4_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FHead%20rotation.mp3?alt=media&token=c5817357-2218-400a-bde1-3d8509c1dbb3',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FHead%20rotation.mp3?alt=media&token=c5817357-2218-400a-bde1-3d8509c1dbb3',
   """program_4_ex_4_name""": """ヘッドローテーション""",
   "program_4_ex_5_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FShoulders%20rotation.mp3?alt=media&token=ad9f4128-bbe2-42b1-be88-4f9a3a75310e',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FShoulders%20rotation.mp3?alt=media&token=ad9f4128-bbe2-42b1-be88-4f9a3a75310e',
   """program_4_ex_5_name""": """肩の回転""",
   "program_4_ex_6_audio":
-  'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FCow%20Face%20Pose.mp3?alt=media&token=1654d6bc-dba2-4063-a674-9bd4519eb110',
+      'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FCow%20Face%20Pose.mp3?alt=media&token=1654d6bc-dba2-4063-a674-9bd4519eb110',
   """program_4_ex_6_name""": """牛の顔のポーズ""",
   """exercise_1_title""": """ストレッチ""",
   """exercise_1_text""": """ストレッチから始める。
@@ -678,5 +677,291 @@ Map<String, String> translations_ja = {
   """text""": """テキスト""",
   """your_own_ritual""": """あなた自身の儀式""",
   """support_text_title""": """アンケートにご協力""",
-  """support_text_body""": """そして、アプリケーションの開発を支援します。"""
+  """support_text_body""": """そして、アプリケーションの開発を支援します。""",
+  """Morning Routine: Wake Up Alarm""": """モーニングルーティン:ウェイクアップアラーム""",
+  """Daily habits. Meditation. Yoga""": """日常の習慣。瞑想。ヨガ""",
+  """Miracle morning. Waking up habit tracker. Gratitude journal, yoga, daily routine""":
+      """奇跡の朝。覚醒習慣トラッカー。感謝日記、ヨガ、日課""",
+  """miracle,checklist,tracker,waking,clock,gratitude,journal,diary,alarmy,alarmme,affirmation,simple,app""":
+      """奇跡、チェックリスト、トラッカー、目覚め、時計、感謝、ジャーナル、日記、アラーム、アラーム、肯定、シンプル、アプリ""",
+  """Daily Routine & Alarm: 1 month""": """1日の日課とアラーム:1ヶ月""",
+  """Wake Up Morning Routine 1 year""": """ウェイクアップモーニングルーティン1年""",
+  """All features. Improve your morning routine""": """すべての機能。朝の日課を改善する""",
+  """2""": """""",
+  """Build your perfect morning routine""": """完璧な朝の習慣を作る""",
+  """Wake up with a morning workout""": """朝の運動で目を覚ます""",
+  """Start your day with meditation""": """瞑想で一日をスタート""",
+  """Write diary or a gratitude journal""": """日記や感謝日記を書く""",
+  """Read useful books""": """役に立つ本を読む""",
+  """Get daily affirmations""": """日々の確認を受ける""",
+  """All this in one app""": """一つのアプリでこれら全てを""",
+  """Change your life with simple morning habits""": """簡単な朝の習慣で生活を変える""",
+  """3""": """""",
+  """Morning routine tracker with alarm clock and simple daily habits: gratitude journal, diary, yoga, visualization, meditation and positive affirmations. Download the app, set the wake up alarm and start your miracle morning. Make your waking up easy and be more efficient, productive and motivated! You can also personalize the app to include your favorite daily habits in the morning routine.
+
+• Start your morning routine with meditation, which helps wake up your mind slowly.
+• Daily affirmations charge you with positive emotions.
+• Gratitude journal. Write down all your gratitudes, great ideas and achievements with a daily diary entry.
+• Visualization motivates you and helps you understand what you want to achieve.
+• Morning yoga charges you with energy.
+• A habit of morning reading will begin your day productively.
+• Set the wake up alarm to not oversleep.
+And any of your favorite miracle morning routines!
+
+Discover a miracle morning full of new emotions, beauty, delight and energy. Make your morning routine enjoyable and learn simple daily habits. On the routine tracker progress page, you will be able to see your results and strides for each day.
+
+The free version of this daily routine tracker app has access to the most common morning meditations and free positive affirmations. Join this app to start waking up easily and begin building your own miracle morning.
+
+Miracle morning routine checklist:
+• Try to wake up early, set an alarm clock at 5 am or 6 am.
+• Do a small meditation.
+• Read one or more positive affirmations.
+• Continue your morning routine with visualization.
+• Don’t forget to fill your gratitude journal & diary.
+• Wake up with some yoga & exercise.
+• Read a few pages of your favorite book.
+• Add your own habits & routines to complete your miracle morning.
+
+Congrats! You finished your morning routine and got motivated for the day! Make this ritual a daily habit and this morning routine tracker app will help you. Don’t forget to write diary and say thanks to our app in your gratitude journal :)
+
+How to write positive affirmations correctly:
+• Affirmations should always be in the present tense.
+• Affirmations must be clear.
+• Daily affirmations should be enjoyable.
+• Your affirmation target should be exactly what you want, no sacrifices. Yes, it's a miracle and it works.
+
+How to meditate?
+• Choose a place to meditate.
+• Get in the right posture.
+• Relax your body.
+
+It’s recommended to meditate for 15-20 minutes. Morning meditation will help you wake up, put your mind in order, give you a boost of energy and prepare you for the beginning of the day. Make morning meditation a necessary, simple daily habit and start your miracle morning from it. This is a simple routine habit that is aimed at achieving personal happiness and harmony. In the evening it will reduce any stress and relieve annoying thoughts and worries. Try not to miss even a single session.
+
+Of course, it is better to meditate in a quiet home environment. Nothing should distract you. You don’t have to be an expert in yoga. The main thing is that your back is straight and comfortable for you. With correct posture, it's easier for you to breathe and air flows better through your lungs. This is also required to maintain awareness - not slipping into a sleep but still maintaining relaxation.
+
+Close your eyes and try to completely relax! This is perhaps the most important aspect of meditation! Try to find the parts of your body that are tense and relax them. Try to coordinate this process with breathing: Inhale, focus your attention on the tense part of the body, exhale, relax. Direct your attention to your breath or a mantra. When practice ends, you will hear the alarm clock. Will be great, if you write your gratitude journal or diary after.
+
+We wish you a successful and healthy future with your miracle morning! Hope that this simple routine tracker app with a diary, gratitude journal, alarm clock and routine planner will make your waking up much better!""":
+      """目覚まし時計とシンプルな毎日の習慣：感謝日記、日記、ヨガ、視覚化、瞑想、肯定的な断言と朝のルーチントラッカー。アプリをダウンロードし、目覚ましアラームをセットして、奇跡の朝を始めましょう。目覚めを簡単にし、より効率的で生産的、そしてやる気のある朝を迎えましょう!また、アプリをパーソナライズして、お気に入りの毎日の習慣を朝のルーチンに含めることもできます。
+
+ •瞑想から朝の日課を始め、心をゆっくり目覚めさせましょう。
+ •毎日肯定することは、肯定的な感情をあなたに課します。
+ •感謝日記。毎日の日記に感謝の気持ち、素晴らしいアイデア、成果を書き留めます。
+ •可視化は、あなたにやる気を起こさせ、何を達成したいかを理解するのに役立ちます。
+ •朝のヨガは、あなたにエネルギーをチャージします。
+ •朝読書の習慣は生産的に一日を始めるでしょう。
+ •ウェイクアップアラームを寝坊しないように設定します。
+ そして、あなたの好きな奇跡の朝のルーティン！
+
+ 新しい感情、美しさ、喜び、エネルギーに満ちた奇跡の朝を発見してください。あなたの朝のルーチンを楽しくし、簡単な毎日の習慣を学びましょう。定期的なトラッカーの進行状況ページでは、毎日の結果と歩幅を確認できます。
+
+ この毎日のルーチントラッカーアプリの無料版は、最も一般的な朝の瞑想と無料の肯定的な肯定へのアクセスを持っています。このアプリに参加して、簡単に目を覚まし始め、あなた自身の奇跡の朝を作り始めましょう。
+
+ ミラクルモーニングルーティンチェックリスト:
+ •朝早く起きて、朝5時か6時に目覚まし時計をセットしてください。
+ •ちょっと瞑想してください。
+ •1つまたは複数の肯定応答を読みます。
+ •朝の日課を視覚化で続けましょう。
+ •感謝の日記を書くのを忘れないでください。
+ •ヨガと運動で目を覚ましなさい。
+ •あなたのお気に入りの本を数ページ読みなさい。
+ •自分の習慣や習慣を追加して、奇跡の朝を完成させましょう。
+
+ おめでとうございます。あなたは朝のルーチンを終え、一日のやる気を取り戻しました!この儀式を毎日の習慣にして、この朝のルーチントラッカーアプリがあなたを助けるでしょう。感謝の日記を書き、このアプリに感謝することを忘れないでください。）
+
+ ポジティブなアファメーションの正しい書き方
+ •アファメーションは常に現在形であるべきです。
+ •アファメーションは明確でなければなりません。
+ •毎日のアファメーションは、楽しいものでなければなりません。
+ •アファメーションのターゲットは、まさにあなたが望むものであるべきで、犠牲を払わないこと。はい、それは奇跡であり、それは働きます。
+
+ 瞑想する方法は?
+ •瞑想する場所を選択してください。
+ •正しい姿勢を取る。
+ •あなたの体をリラックスさせます。
+
+ 15~20分間瞑想することをおすすめします。朝の瞑想は、あなたが目覚め、心を整頓し、あなたに元気を与え、一日の始まりに備えるのに役立ちます。朝の瞑想を必要で単純な日常習慣にし、そこから奇跡の朝をスタートさせる。これは、個人の幸福と調和を達成するための単純な日常的な習慣です。夕方になるとストレスが減り、煩わしい考えや心配が和らぎます。一度のセッションも見逃さないようにしてください。
+
+ もちろん、静かな家庭環境で瞑想した方が良い。何も気を散らしてはいけない。ヨガの専門家である必要はありません。一番重要なのは、背筋がまっすぐで、体が楽だということです。正しい姿勢があれば、呼吸が楽になり、肺から空気がよく流れます。これはまた、意識を維持するためにも必要です。眠りに落ちるのではなく、リラックスした状態を維持するためです。
+
+ 目を閉じて、完全にリラックスしてください！これは瞑想の最も重要な側面でしょう！体の緊張している部分を見つけてリラックスしてください。このプロセスを呼吸に合わせて調整してください。息を吸って、体の緊張した部分に集中して、息を吐いて、リラックスしてください。呼吸や呪文に注意を向けなさい。練習が終わると、目覚まし時計が鳴ります。その後に感謝日記や日記を書けばいいですね。
+
+ 奇跡の朝を迎え、成功的で健康な未来をお祈りします！日記、感謝日記、目覚まし時計、ルーティンプランナーが付いたこのシンプルな日常的なトラッカーアプリがあなたの目覚めをずっと良くしてくれることを願っています！""",
+  """4""": """""",
+  """Change your life with morning rituals""": """朝の儀式で人生を変える""",
+  """Continue""": """続行""",
+  """How much sleep do you usually get at night?""": """あなたは普段、夜どのくらい寝ていますか？""",
+  """7 hours or less""": """7時間以下""",
+  """7-9 hours""": """7時間～9時間""",
+  """9-12 hours""": """9時間～12時間""",
+  """12 hours or more""": """12時間以上""",
+  """Got it! Do you wake up feeling well-rested?""":
+      """わかったあなたは、目覚めたとき、十分な休息を感じていますか？""",
+  """Always""": """いつも""",
+  """Usually""": """通常""",
+  """Sometimes""": """時々""",
+  """Rarely""": """めったにない""",
+  """How much time do you have at the start of your day?""":
+      """一日の始まりにどのくらい時間がありますか？""",
+  """0-10 minutes""": """0-10分""",
+  """10-20 minutes""": """10-20分""",
+  """20-30 minutes""": """20-30分""",
+  """30+ minutes""": """30分以上""",
+  """Understood! Throughout your day, how are your energy levels?""":
+      """理解できましたか？一日を通して、あなたのエネルギーレベルはどうですか？""",
+  """High - energized throughout the day""": """高-一日中元気でいられる""",
+  """Medium - I have bursts of energy""": """中-エネルギーの爆発がある""",
+  """Low - my energy fades throughout the day""": """低い-一日中エネルギーが低下している""",
+  """How satisfied are you with your current fitness level?""":
+      """現在のフィットネスレベルにどの程度満足していますか？""",
+  """Completely - I feel fit and healthy""": """完全に-健康的であると感じる""",
+  """Somewhat - I'd like to see some improvements""": """やや-もう少し改善したい。""",
+  """Not at all - I'd like to see a mojor change""":
+      """全く満足していない-もっと大きな変化がほしい""",
+  """Over the past year, what's been your experience building better habits?""":
+      """過去1年間、より良い習慣を身につけるためにどのようなことを経験しましたか？""",
+  """I have been constantly improving my habits""": """常に習慣を改善し続けている""",
+  """I have built some good habits""": """良い習慣を身につけることができた""",
+  """I have tried to build good habits, but have not kept up with them""":
+      """私は良い習慣を身に付けようとしましたが、それに追いついていません""",
+  """I have not tried to build new habits""": """私は新しい習慣を構築しようとしていない""",
+  """We hear you. What single change would improve your life right now?""":
+      """私たちはあなたの声を聞きます。今のあなたの人生を一つでも改善できるでしょうか。""",
+  """More energy""": """より多くのエネルギー""",
+  """More productivity""": """生産性の向上""",
+  """More mindfulness""": """より多くのマインドフルネス""",
+  """More sleep""": """より多くの睡眠""",
+  """How often do you focus on the past or future?""":
+      """どのくらいの頻度で過去や未来に焦点を当てていますか?""",
+  """Never - I live in the present""": """決して-私は現在に住んでいます""",
+  """Some of the time""": """時々""",
+  """Most of the time""": """ほとんどの場合""",
+  """All of the time""": """常に""",
+  """How distractable are you?""": """あなたはどのくらい気を散らしていますか?""",
+  """Easily distracted""": """簡単に気を散らす""",
+  """Sometimes lose focus""": """時々集中力を失う""",
+  """Rarely lose focus""": """集中力を失うことはめったにない""",
+  """Laser focus""": """レーザーフォーカス""",
+  """We're finalizing your personalized journey...""":
+      """私たちはあなたのパーソナライズされた旅を仕上げています...""",
+  """You're embarking on this journey to build more Energy""":
+      """あなたはより多くのエネルギーを構築するためにこの旅に乗り出しています""",
+  """Fitness""": """フィットネス""",
+  """Visualization""": """ビジュアライゼーション""",
+  """Meditations""": """瞑想""",
+  """Reading""": """読書""",
+  """Notes""": """メモ""",
+  """Affirmations""": """アファメーション""",
+  """My morning
+your entire morning routine in one app""": """「おはようございます。""",
+  """Just 30 minutes every day for a year will change your life dramatically!""":
+      """続行""",
+  """Ready to start?""": """1年間毎日30分で人生が劇的に変わります！""",
+  """Let's go!""": """準備はいいですか？""",
+  """""": """""",
+  """If not now, when?""": """今じゃないといつ？""",
+  """Start taking care of yourself and forming morning habits that will change your life forever """:
+      """自分の体に気をつけて、あなたの人生を永遠に変える朝の習慣を身につけましょう。""",
+  """What time do you usually wake up?""": """いつも何時に起きますか？""",
+  """Do you tend to procrastinate?""": """ぐずぐずしがちですか？""",
+  """Yes, and I want to change that""": """はい、そして私はそれを変えたいです。""",
+  """No, I can easily stick to my plan""": """いいえ、私は簡単に自分の計画を守ることができます。""",
+  """I'm not sure""": """私はよく分からない""",
+  """Do you have trouble concentrating?""": """集中しにくいですか？""",
+  """Yes, I get distracted easily""": """はい、すぐに気が散ります。""",
+  """No, I can focus well and don't get distracted""": """いや、集中力もいいし、集中力もないし""",
+  """What do you want to get out of My Morning?""": """マイモーニングから何を得たいですか？""",
+  """I want to form good habits""": """私は良い習慣をつけたい。""",
+  """I want to plan my day better""": """もっと良い一日を計画したいです。""",
+  """5""": """""",
+  """Unlock all features""": """すべての機能をアンロックする""",
+  r"""Monthly $5.99/month, cancel anytime""": r"毎月 $5.99/月, いつでもキャンセル",
+  r"""Annually (popular) $19.99/month, cancel anytime""":
+      r"毎年(人気) $19.99/月, いつでもキャンセル",
+  r"Lifetime $50.99, one-time payment": r"生涯 $50.99、1回限りの支払い",
+  "Start 3 days free trial": "3日間の無料トライアルを開始",
+  "Restore": "リストア",
+  """
+Terms""": """利用規約""",
+  """
+Privacy""": """プライバシー""",
+  """Voice note""": """ボイスノート""",
+  """Add a note""": """メモを追加する""",
+  "Recording is on hold It’s recording" "": "録音は保留中です。録音だよ",
+  "Save a note": """メモを保存する""",
+  """Write something here""": """ここに何かを書く""",
+  "Are you sure you want to delete a note? Delete a note":
+      "メモを削除してもよろしいですか? メモの削除",
+  "Finish reading": """読み終わる""",
+  "How much time are you going to read?Set your own time Start reading":
+      "どのくらいの時間読むつもりですか? 自分の時間を設定する 読み始める",
+  """You haven't added any meditations to your Favorites yet""":
+      """まだ、お気に入りに瞑想を追加していません。""",
+  """Choose favorite meditations""": """お気に入りの瞑想を選ぶ""",
+  """Finish meditating""": """瞑想を終了する""",
+  """How much time are you going to read affirmations? Begin""":
+      """肯定文を読むのにどれくらいの時間をかけますか? 始める""",
+  """Select affirmation""": """肯定の選択""",
+  """Morning complex
+Try PREMIUM Package for free
+Morning
+Evening
+Statistics
+Notifications
+""": """朝のコンプレックス
+ プレミアムパッケージを無料でお試しください
+ 朝
+ イブニング
+ 統計
+ お知らせ
+""",
+  """Organize your morning routine with ease using the complex program. 
+
+Complex is a consistent set of your morning daily rituals. 
+
+Customize the sequence and duration of your rituals in the Settings section. 
+
+
+For instance: 
+
+1) Meditation - 5 minutes
+2) Fitness & Yoga - 15 minutes 
+3) Reading - 20 minutes
+""": """複雑なプログラムを使用して、簡単に朝の日課を整理できます。
+コンプレックスは、あなたの毎朝の儀式の一貫したセットです。
+設定セクションで、儀式の順序と期間をカスタマイズします。
+たとえば、次のようになります。
+
+1) 瞑想-5分
+2) フィットネス&ヨガ-15分
+3) 読み取り-20分
+""",
+  """Complex duration: 6 minutes
+Set my own time 
+""": """コンプレックスの持続時間 6分
+ 自分の時間を設定する""",
+  """Affirmation settings
+
+Write your own affirmation…
+or
+Select ready-to-use affirmations
+Save affirmation""": """肯定設定
+  
+ あなた自身の肯定を書いてください...
+ 又は
+ すぐに使用できるアファメーションの選択
+ 肯定の保存""",
+  "Add a reminder Apply": """リマインダーを追加する 申し込む""",
+  """Minutes of awareness per week
+Delete the progress
+""": """1週間あたりの意識付けの分数
+ 進捗を削除する""",
+  """Enter your name""": """名前を入力してください""",
+  """Try PREMIUM Package free for 3 days""": """プレミアムパッケージを3日間無料でお試しください""",
+  """Start""": """始める""",
+  """Start the day with productive daily routine. Get motivation & energy for success""": """生産的な毎日のルーチンで一日を始めましょう。成功のためのモチベーションとエネルギーを得る""",
+  """Start morning with good habits""": """良い習慣で朝を始める""",
+  """- 10 minute Meditation""": """10分間の瞑想""",
+  """- Get daily motivation with good habits""": """良い習慣で日々のモチベーションを得る""",
+  """-Start morning with meditation and affirmation""": """瞑想と肯定から朝を始める"""
 };
