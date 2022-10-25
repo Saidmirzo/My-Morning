@@ -70,7 +70,7 @@ dependencies:
   get_it: 7.2.0
   install_referrer: 1.2.1
   wakelock: ^0.6.2
-
+  auto_size_text: ^3.0.0
 #  remove on fix charts flutter
 dependency_overrides:
   file: ^6.1.2

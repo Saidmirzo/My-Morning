@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:morningmagic/pages/paywall/components/safety_shield.dart';
-import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:provider/provider.dart';
 
 import '../paywall_provider.dart';
@@ -74,13 +72,12 @@ class Product extends StatelessWidget {
       onTap: onClicked,
       // Белый блок
       child: Container(
-        // margin: const EdgeInsets.symmetric(horizontal: 4),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15.84),
-        // height: double.maxFinite,
-        width: double.maxFinite,
+        width: MediaQuery.of(context).size.width * .85,
+        height: 170,
+        padding: const EdgeInsets.symmetric(vertical: 15.8, horizontal: 20),
         decoration: BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.circular(19),
+          color: Colors.white,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

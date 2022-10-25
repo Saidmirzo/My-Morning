@@ -7,7 +7,6 @@ import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/db/model/reordering_program/order_item.dart';
 import 'package:morningmagic/pages/affirmation/affirmation_dialog/affirmation_controller.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
-import 'package:morningmagic/pages/paywall/new_paywall.dart';
 import 'package:morningmagic/pages/reminders/reminders_page.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/routing/app_routing.dart';
@@ -314,71 +313,111 @@ class SettingsPageState extends State<SettingsPage> {
                 ),
               ]),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.08),
-                    child: Row(
-                      //    mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'duration'.tr,
+            Container(
+              margin: const EdgeInsets.only(left: 50),
+              child: RichText(
+                  maxLines: 2,
+
+                  textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: '${'duration'.tr} ${'complex'.tr}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16,
+                      ),
+                    ),
+
+                    WidgetSpan(
+                      child: Obx(
+                        () => Text(
+                          'x_minutes'.trParams({
+                            'x': settingsController.countAvailableMinutes.value
+                                        .toString()
+                                        .length ==
+                                    1
+                                ? '${settingsController.countAvailableMinutes.value}'
+                                : settingsController.countAvailableMinutes.value
+                                    .toString()
+                          }),
                           textAlign: TextAlign.start,
                           style: const TextStyle(
-                              color: Colors.white,
+                              color: Color(0xffE4C8FC),
                               fontStyle: FontStyle.normal,
                               fontSize: 13),
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.08),
-                    child: Row(
-                      //    mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'complex'.tr,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 13),
-                        ),
-                        const SizedBox(
-                          width: 1,
-                        ),
-                        Obx(
-                          () => Text(
-                            'x_minutes'.trParams({
-                              'x': settingsController
-                                          .countAvailableMinutes.value
-                                          .toString()
-                                          .length ==
-                                      1
-                                  ? '${settingsController.countAvailableMinutes.value}'
-                                  : settingsController
-                                      .countAvailableMinutes.value
-                                      .toString()
-                            }),
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(
-                                color: Color(0xffE4C8FC),
-                                fontStyle: FontStyle.normal,
-                                fontSize: 13),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+                      ),
+                    )
+                  ])),
+            ),
+
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 15.0),
+            //   child: Column(
+            //     mainAxisSize: MainAxisSize.min,
+            //     children: <Widget>[
+            //       Padding(
+            //         padding: EdgeInsets.only(
+            //           left: MediaQuery.of(context).size.width * 0.08,
+            //           right: MediaQuery.of(context).size.width * 0.04,
+            //         ),
+            //         child: FittedBox(
+            //           fit: BoxFit.scaleDown,
+            //           child: Text(
+            //             'duration'.tr,
+            //             textAlign: TextAlign.start,
+            //             maxLines: 1,
+            //             style: const TextStyle(
+            //                 color: Colors.white,
+            //                 fontStyle: FontStyle.normal,
+            //                 fontSize: 13),
+            //           ),
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding: EdgeInsets.only(
+            //             left: MediaQuery.of(context).size.width * 0.08),
+            //         child: Row(
+            //           //    mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             Text(
+            //               'complex'.tr,
+            //               textAlign: TextAlign.start,
+            //               style: const TextStyle(
+            //                   color: Colors.white,
+            //                   fontStyle: FontStyle.normal,
+            //                   fontSize: 13),
+            //             ),
+            //             const SizedBox(
+            //               width: 1,
+            //             ),
+            //             Obx(
+            //               () => Text(
+            //                 'x_minutes'.trParams({
+            //                   'x': settingsController
+            //                               .countAvailableMinutes.value
+            //                               .toString()
+            //                               .length ==
+            //                           1
+            //                       ? '${settingsController.countAvailableMinutes.value}'
+            //                       : settingsController
+            //                           .countAvailableMinutes.value
+            //                           .toString()
+            //                 }),
+            //                 textAlign: TextAlign.start,
+            //                 style: const TextStyle(
+            //                     color: Color(0xffE4C8FC),
+            //                     fontStyle: FontStyle.normal,
+            //                     fontSize: 13),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // )
           ],
         ),
       ),

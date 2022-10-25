@@ -4,12 +4,11 @@ import 'package:get/get.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/services/localization/localization_service.dart';
 
-import '../resources/colors.dart';
 
 class LanguageSwitcher extends StatefulWidget {
   final Alignment alignment;
 
-  const LanguageSwitcher({this.alignment = Alignment.center});
+  const LanguageSwitcher({Key key, this.alignment = Alignment.center}) : super(key: key);
 
   @override
   LanguageSwitcherState createState() {
@@ -49,6 +48,14 @@ class LanguageSwitcherState extends State<LanguageSwitcher> {
             buildBtn('Ger', LocalizationService.GE),
             const SizedBox(width: 20),
             buildBtn('Por', LocalizationService.PO),
+            const SizedBox(width: 20),
+            buildBtn('Spanish', LocalizationService.ES),
+            const SizedBox(width: 20),
+            buildBtn('French', LocalizationService.FR),
+            const SizedBox(width: 20),
+            buildBtn('Italian', LocalizationService.IT),
+            const SizedBox(width: 20),
+            buildBtn('Japanese', LocalizationService.JP),
           ],
         )
       ],

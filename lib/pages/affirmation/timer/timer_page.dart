@@ -136,17 +136,13 @@ class AffirmationTimerPageState extends State<AffirmationTimerPage>
                     flex: 2,
                   ),
                   Obx(() => timerService.affirmationText.value.isNotEmpty
-                      ? buildTitleWidget(timerService.affirmationText.value)
+                      ? buildTitleWidget(timerService.affirmationText.value,context)
                       : const SizedBox()),
-                  const Spacer(
-                    flex: 2,
-                  ),
+                  const Spacer(flex: 2),
 
                   // buildTitleWidget("affirmation text"),
 
-                  const SizedBox(
-                    height: 37,
-                  ),
+                  const SizedBox(height: 37),
                   GestureDetector(
                     onTap: () async {
                       final _affirmation =

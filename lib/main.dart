@@ -98,6 +98,10 @@ Future<void> main() async {
               Locale(LocalizationService.RU),
               Locale(LocalizationService.GE),
               Locale(LocalizationService.PO),
+              Locale(LocalizationService.ES),
+              Locale(LocalizationService.FR),
+              Locale(LocalizationService.IT),
+              Locale(LocalizationService.JP),
             ],
             fallbackLocale: const Locale(LocalizationService.EN),
             localizationsDelegates: const [

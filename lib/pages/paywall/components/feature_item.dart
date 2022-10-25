@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 
 class FeatureItem extends StatelessWidget {
-
   final String img;
   final String text;
 
@@ -14,37 +12,19 @@ class FeatureItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final w = (Get.width - 66) / 3;
     return Container(
-      alignment: Alignment.bottomCenter,
-      height: 94,
-      width: 100,
-      // margin: const EdgeInsets.symmetric(horizontal: 7),
+      width: MediaQuery.of(context).size.width / 3.8,
       child: Column(
-        // mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 7),
-            child: Center(
-              child: SizedBox(
-              height: 71,
-              width: 100,
-              child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: Image.asset(img,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 5),
           SizedBox(
-            height: 17,
-            // width: w,
-            child: Text(text,
+            height: 94,
+            width: 94,
+            child: Image.asset(img),
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              text,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
