@@ -33,7 +33,9 @@ Future<void> main() async {
   Adapty.activate();
   try {
     Adapty.setLogLevel(AdaptyLogLevel.verbose);
-  } on AdaptyError {}
+  } on AdaptyError catch (e) {
+    debugPrint(e.toString());
+  }
   AppMetrica.activate(
     const AppMetricaConfig("d0444ec3-134e-4d78-a896-8f82dbfe24e9"),
   );
