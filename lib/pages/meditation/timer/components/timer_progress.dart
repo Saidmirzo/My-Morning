@@ -18,7 +18,7 @@ Widget buildTimerProgress(TimerService timerService, bool isSilence) {
     padding: const EdgeInsets.only(top: 54.0, bottom: 16),
     child: Obx(
       () => CircularPercentIndicator(
-        radius: Get.height * 0.24,
+        radius: Get.height * 0.2,
         lineWidth: 20.0,
         animation: false,
         percent: menuState == MenuState.MORNING ? timerService.createValue : timerService.creatValueNight,

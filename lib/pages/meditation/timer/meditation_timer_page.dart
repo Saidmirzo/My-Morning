@@ -142,7 +142,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage> with WidgetsBi
                 // mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   const Spacer(
-                    flex: 3,
+                    flex: 6,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 31),
@@ -166,7 +166,7 @@ class MeditationTimerPageState extends State<MeditationTimerPage> with WidgetsBi
                     ),
                   ),
                   const Spacer(
-                    flex: 5,
+                    flex: 4,
                   ),
                   buildTimerProgress(timerService, widget.isSilence),
                   const Spacer(

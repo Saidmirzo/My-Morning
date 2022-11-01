@@ -39,7 +39,7 @@ class _MeditationPageState extends State<MeditationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false, 
       body: Container(
         decoration: BoxDecoration(
             gradient: menuState == MenuState.MORNING
@@ -54,12 +54,12 @@ class _MeditationPageState extends State<MeditationPage> {
             Column(
               children: <Widget>[
                 const Spacer(
-                  flex: 3,
+                  flex: 4,
                 ),
                 BackButton(widget: widget),
                 const Spacer(
                   flex: 4,
-                ),
+                ), 
                 Text(
                   'meditation'.tr.toUpperCase(),
                   style: const TextStyle(

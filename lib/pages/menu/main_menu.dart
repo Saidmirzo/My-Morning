@@ -83,72 +83,81 @@ class MainMenuPageState extends State<MainMenuPage> {
   Widget build(BuildContext context) {
     launchForinterview = MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
     return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            child: Column(
-              children: [
-                buildHeader(),
-                Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Image.asset('$imagePath/logo.png', width: Get.width * .2),
-                      const SizedBox(
-                        height: 10.69,
-                      ),
-                      const Text(
-                        'MY MORNING',
-                        style: TextStyle(
-                            color: Color(0xffD1ADE7),
-                            fontFamily: 'Montserrat',
-                            fontStyle: FontStyle.normal,
-                            fontSize: 19.47,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(height: 25.04),
-                      buildStartComplexButton(),
-                      const SizedBox(
-                        height: 12.6,
-                      ),
-                      SizedBox(
-                        width: Get.width - 10,
-                        child: Row(
-                          children: [
-                            buildMeditationsButton(),
-                            const Spacer(),
-                            buildAffirmationsButton(),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      buildExercises()
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Positioned(
-            bottom: 0,
-            child: BottomMenu(
-              currentPageNumber: 1,
-            ),
-          ),
-          if (context.watch<PayWallProvider>().isShowAds)
-            GestureDetector(
-              onTap: () async {
-                await appo.Appodeal.show(appo.AdType.interstitial, placementName: "main_menu");
+      body: GestureDetector(
+        onTap: (context.watch<PayWallProvider>().isShowAds)
+            ? () async {
+                await appo.Appodeal.show(appo.AdType.interstitial,
+                    placementName: "main_menu");
                 context.read<PayWallProvider>().startTimer();
-              },
-              child: Positioned.fill(
-                  child: Container(
-                color: Colors.transparent,
-              )),
-            )
-        ],
+              }
+            : null,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Column(
+                children: [
+                  buildHeader(),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                      Image.asset('$imagePath/logo.png', width: Get.width * .2),
+                        const SizedBox(
+                          height: 10.69,
+                        ),
+                        const Text(
+                          'MY MORNING',
+                          style: TextStyle(
+                              color: Color(0xffD1ADE7),
+                              fontFamily: 'Montserrat',
+                              fontStyle: FontStyle.normal,
+                              fontSize: 19.47,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 25.04),
+                        buildStartComplexButton(),
+                        const SizedBox(
+                          height: 12.6,
+                        ),
+                        SizedBox(
+                          width: Get.width - 10,
+                          child: Row(
+                            children: [
+                              buildMeditationsButton(),
+                              const Spacer(),
+                              buildAffirmationsButton(),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        buildExercises()
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Positioned(
+              bottom: 0,
+              child: BottomMenu(
+                currentPageNumber: 1,
+              ),
+            ),
+            // if (context.watch<PayWallProvider>().isShowAds)
+            //   GestureDetector(
+            //     onTap: () async {
+            //       await appo.Appodeal.show(appo.AdType.interstitial, placementName: "main_menu");
+            //       context.read<PayWallProvider>().startTimer();
+            //     },
+            //     child: Positioned.fill(
+            //         child: Container(
+            //       color: Colors.transparent,
+            //     )),
+            //   )
+          ],
+        ),
       ),
     );
   }
@@ -579,7 +588,9 @@ class MainMenuPageState extends State<MainMenuPage> {
   }
 
   _clearExercisesHolder() async {
-    await MyDB().getBox().put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
+    await MyDB()
+        .getBox()
+        .put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
   }
 
   _startExercise() async {
