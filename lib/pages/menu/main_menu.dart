@@ -594,7 +594,9 @@ class MainMenuPageState extends State<MainMenuPage> {
   }
 
   _clearExercisesHolder() async {
-    await MyDB().getBox().put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
+    await MyDB()
+        .getBox()
+        .put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
   }
 
   _startExercise() async {

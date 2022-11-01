@@ -46,7 +46,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
 
   @override
   Widget build(BuildContext context) {
-    launchForinterview = MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
+    launchForinterview =
+        MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
     return Scaffold(
       body: Stack(children: [
         ListView(
@@ -129,16 +130,25 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
   }
 
   Widget textTitleButton(String text) {
-    return Text(text, style: const TextStyle(fontFamily: 'Montserrat', fontSize: 18, fontWeight: FontWeight.w600));
+    return Text(text,
+        style: const TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 18,
+            fontWeight: FontWeight.w600));
   }
 
   Widget textSubTitleButton(String text) {
-    return Text(text, style: const TextStyle(fontFamily: 'Montserrat', fontSize: 13, fontWeight: FontWeight.w400));
+    return Text(text,
+        style: const TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 13,
+            fontWeight: FontWeight.w400));
   }
 
   Widget buildHeader() {
     return Container(
-      decoration: const BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
+      decoration:
+          const BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
       child: SafeArea(
         bottom: false,
         child: Stack(
@@ -163,7 +173,10 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
                   ),
                   Text(
                     'MY NIGHT',
-                    style: TextStyle(fontSize: Get.width * .03, fontWeight: FontWeight.normal, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: Get.width * .03,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white),
                   ),
                 ],
               ),
@@ -175,7 +188,11 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
   }
 
   Widget _buildSettingsButton(
-      {String title, String subTitle, String image, bool forSleep = false, Function() onPressed}) {
+      {String title,
+      String subTitle,
+      String image,
+      bool forSleep = false,
+      Function() onPressed}) {
     return container(
       height: Get.width * .33,
       child: Stack(
@@ -184,7 +201,8 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
               borderRadius: BorderRadius.circular(12),
               child: Transform.rotate(
                 angle: Random().nextInt(50) * Random().nextDouble() * 3.14,
-                child: Image.asset('assets/images/home_menu/night_bg_btn.png', width: Get.width, fit: BoxFit.fill),
+                child: Image.asset('assets/images/home_menu/night_bg_btn.png',
+                    width: Get.width, fit: BoxFit.fill),
               )),
           Positioned(
             right: 0,
@@ -229,13 +247,17 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
               Expanded(
                 flex: 2,
                 child: ClipRRect(
-                    borderRadius: const BorderRadius.only(bottomRight: Radius.circular(12)),
+                    borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(12)),
                     child: forSleep == false
-                        ? Image.asset(image, width: Get.width, fit: BoxFit.contain)
+                        ? Image.asset(image,
+                            width: Get.width, fit: BoxFit.contain)
                         : Stack(
                             children: [
-                              Image.asset('assets/images/home_menu/notes.png', width: Get.width, fit: BoxFit.fitHeight),
-                              Image.asset('assets/images/home_menu/piano.png', width: Get.width, fit: BoxFit.fitHeight)
+                              Image.asset('assets/images/home_menu/notes.png',
+                                  width: Get.width, fit: BoxFit.fitHeight),
+                              Image.asset('assets/images/home_menu/piano.png',
+                                  width: Get.width, fit: BoxFit.fitHeight)
                             ],
                           )),
               ),

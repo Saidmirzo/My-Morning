@@ -292,6 +292,7 @@ class SettingsPageState extends State<SettingsPage> {
                   textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
                   text: TextSpan(children: [
                     TextSpan(
+
                       text: '${'duration'.tr} ${'complex'.tr}',
                       style: const TextStyle(
                         color: Colors.white,
@@ -299,7 +300,7 @@ class SettingsPageState extends State<SettingsPage> {
                         fontSize: 16,
                       ),
                     ),
-                    WidgetSpan(
+                    WidgetSpan(alignment: PlaceholderAlignment.middle,
                       child: Obx(
                         () => Text(
                           'x_minutes'.trParams({

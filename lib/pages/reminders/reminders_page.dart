@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -41,10 +42,12 @@ class _RemindersPageState extends State<RemindersPage> {
                         color: Colors.white,
                       ),
                     ),
-                    Text(
+                    AutoSizeText(
                       'reminders'.tr,
+                      maxLines: 1,
+                      minFontSize: 14,
                       style: TextStyle(
-                          fontSize: Get.height * 0.036, color: Colors.white),
+                          fontSize: Get.height * 0.032, color: Colors.white),
                     ),
                     const SizedBox(
                       width: 30,

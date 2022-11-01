@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,8 @@ class _ProgressPageState extends State<ProgressPage> {
   AppStates appStates = Get.put(AppStates());
   int appRating = 5;
 
-  final GlobalKey<AnimatedCircularChartState> _chartKey = GlobalKey<AnimatedCircularChartState>();
+  final GlobalKey<AnimatedCircularChartState> _chartKey = GlobalKey<
+      AnimatedCircularChartState>();
 
   ProgressController cPg = Get.find();
 
@@ -107,7 +109,7 @@ class _ProgressPageState extends State<ProgressPage> {
                 GestureDetector(
                     onTap: () {
                       Get.dialog(DeleteProgressDialog(
-                        () async {
+                            () async {
                           await MyDB().clearWithoutUserName();
                           AppRouting.navigateToHomeWithClearHistory();
                         },
@@ -118,7 +120,9 @@ class _ProgressPageState extends State<ProgressPage> {
                       children: [
                         Text(
                           'remove_progress'.tr,
-                          style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                          style: const TextStyle(color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
                         ),
                         Container(
                           height: 2,
@@ -180,7 +184,10 @@ class _ProgressPageState extends State<ProgressPage> {
             center: Text(
               '$monthPercent %',
               style: const TextStyle(
-                  color: Color(0xff592F72), fontWeight: FontWeight.w600, fontSize: 17.2, fontFamily: 'Montserrat'),
+                  color: Color(0xff592F72),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 17.2,
+                  fontFamily: 'Montserrat'),
             ),
             circularStrokeCap: CircularStrokeCap.round,
             linearGradient: const LinearGradient(
@@ -283,19 +290,23 @@ class _ProgressPageState extends State<ProgressPage> {
                         Text(
                           'total'.tr,
                           style: TextStyle(
-                            color: _Itog ? const Color(0xff592F72) : Colors.black54,
-                            fontSize: MediaQuery.of(context).size.width * 0.04, //23,
+                            color: _Itog ? const Color(0xff592F72) : Colors
+                                .black54,
+                            fontSize: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.04, //23,
                           ),
                         ),
                         _Itog
                             ? const Icon(
-                                Icons.arrow_drop_down,
-                                color: Color(0xff592F72),
-                              )
+                          Icons.arrow_drop_down,
+                          color: Color(0xff592F72),
+                        )
                             : const Icon(
-                                Icons.arrow_drop_up,
-                                color: Colors.black54,
-                              ),
+                          Icons.arrow_drop_up,
+                          color: Colors.black54,
+                        ),
                       ],
                     ),
                   ),
@@ -315,19 +326,23 @@ class _ProgressPageState extends State<ProgressPage> {
                         Text(
                           'month'.tr,
                           style: TextStyle(
-                            color: _Mounth ? const Color(0xff592F72) : Colors.black54,
-                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                            color: _Mounth ? const Color(0xff592F72) : Colors
+                                .black54,
+                            fontSize: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.04,
                           ),
                         ),
                         _Mounth
                             ? const Icon(
-                                Icons.arrow_drop_down,
-                                color: Color(0xff592F72),
-                              )
+                          Icons.arrow_drop_down,
+                          color: Color(0xff592F72),
+                        )
                             : const Icon(
-                                Icons.arrow_drop_up,
-                                color: Colors.black54,
-                              ),
+                          Icons.arrow_drop_up,
+                          color: Colors.black54,
+                        ),
                       ],
                     ),
                   ),
@@ -347,16 +362,21 @@ class _ProgressPageState extends State<ProgressPage> {
                         Text(
                           'year'.tr,
                           style: TextStyle(
-                            color: _Year ? const Color(0xff592F72) : Colors.black54,
-                            fontSize: MediaQuery.of(context).size.width * 0.04, //23,
+                            color: _Year ? const Color(0xff592F72) : Colors
+                                .black54,
+                            fontSize: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.04, //23,
                           ),
                         ),
                         _Year
-                            ? const Icon(Icons.arrow_drop_down, color: Color(0xff592F72))
+                            ? const Icon(
+                            Icons.arrow_drop_down, color: Color(0xff592F72))
                             : const Icon(
-                                Icons.arrow_drop_up,
-                                color: Colors.black54,
-                              ),
+                          Icons.arrow_drop_up,
+                          color: Colors.black54,
+                        ),
                       ],
                     ),
                   ),
@@ -367,8 +387,8 @@ class _ProgressPageState extends State<ProgressPage> {
           Container(
             padding: const EdgeInsets.only(
               top: 5,
-              left: 25,
-              right: 25,
+              left: 15,
+              right: 15,
               bottom: 10,
             ),
             ////////////////////////////////////////////////////////////////////////////////////
@@ -418,7 +438,8 @@ class _ProgressPageState extends State<ProgressPage> {
   // }
 
   Widget practicsCount() {
-    var count = cPg.calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[0];
+    var count = cPg.calcStatByPeriod(
+        _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[0];
     return Align(
       alignment: Alignment.topLeft,
       child: Column(
@@ -431,20 +452,27 @@ class _ProgressPageState extends State<ProgressPage> {
             'assets/images/myicone1st.png',
             width: 12.7,
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            'count_of_sessions'.tr,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: MediaQuery.of(context).size.width * 0.03, //
+          Container(
+            margin: const EdgeInsets.only(top: 6, bottom: 10),
+            width: MediaQuery
+                .of(context)
+                .size
+                .width / 4,
+            child: AutoSizeText(
+              'count_of_sessions'.tr,
+              maxLines: 3,
+              minFontSize: 10,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.03, //
+              ),
             ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
+
           Text(
             count.toString(),
             style: const TextStyle(
@@ -458,7 +486,8 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Align minutesCount() {
-    var count = cPg.calcStatByPeriod(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[1];
+    var count = cPg.calcStatByPeriod(
+        _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year))[1];
     return Align(
       alignment: Alignment.topCenter,
       child: Column(
@@ -469,16 +498,25 @@ class _ProgressPageState extends State<ProgressPage> {
             'assets/images/myicone2st.png',
             width: 18.5,
           ),
-          const SizedBox(height: 10),
-          Text(
-            'minutes_of_awareness_with_myself'.tr,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: MediaQuery.of(context).size.width * 0.03,
+          // const SizedBox(height: 10),
+          Container(
+            width: MediaQuery.of(context).size.width/4,
+            margin: const EdgeInsets.only(top: 6, bottom: 10),
+            child: AutoSizeText(
+              'minutes_of_awareness_with_myself'.tr,
+              maxLines: 3,
+              minFontSize: 10,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.025,
+              ),
             ),
           ),
-          const SizedBox(height: 15),
+          // const SizedBox(height: 15),
           Text(
             double.parse(count.toStringAsFixed(1)).toString(),
             style: const TextStyle(
@@ -492,7 +530,8 @@ class _ProgressPageState extends State<ProgressPage> {
   }
 
   Align completeComplexCount() {
-    var count = cPg.getCountComplex(_Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year));
+    var count = cPg.getCountComplex(
+        _Itogi_Mounth_Year_kol_vo(_Itog, _Mounth, _Year));
     return Align(
       alignment: Alignment.topRight,
       child: Column(
@@ -503,16 +542,29 @@ class _ProgressPageState extends State<ProgressPage> {
             'assets/images/myicone3st.png',
             width: 18.5,
           ),
-          const SizedBox(height: 10),
-          Text(
-            'count_of_completed_sessions'.tr,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: MediaQuery.of(context).size.width * 0.03, //
+          // const SizedBox(height: 10),
+          Container(
+            margin: const EdgeInsets.only(top: 6, bottom: 10),
+            width: MediaQuery
+                .of(context)
+                .size
+                .width / 4,
+            child: AutoSizeText(
+              'count_of_completed_sessions'.tr,
+              minFontSize: 10,
+              maxLines: 3,
+
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.03, //
+              ),
             ),
           ),
-          const SizedBox(height: 15),
+          // const SizedBox(height: 15),
           Text(
             count.toString(),
             style: const TextStyle(
@@ -625,12 +677,16 @@ class _ProgressPageState extends State<ProgressPage> {
     const int firstCntLaunch = 2;
     // Кол-во запусков для следующих показов
     const int nextCntLaunch = 5;
-    int launchForRate = await MyDB().getBox().get(MyResource.LAUNCH_FOR_RATE, defaultValue: 0);
+    int launchForRate = await MyDB().getBox().get(
+        MyResource.LAUNCH_FOR_RATE, defaultValue: 0);
     // Кол-во запусков равно либо больше чем нужно для показа оценки
-    bool needLaunch = launchForRate >= firstCntLaunch || launchForRate >= nextCntLaunch;
+    bool needLaunch = launchForRate >= firstCntLaunch ||
+        launchForRate >= nextCntLaunch;
     // Ранее оценили или нет?
-    bool isRated = await MyDB().getBox().get(MyResource.IS_RATED, defaultValue: false);
-    bool rateFirstShowed = await MyDB().getBox().get(MyResource.RATE_ALREADY_SHOWED, defaultValue: false);
+    bool isRated = await MyDB().getBox().get(
+        MyResource.IS_RATED, defaultValue: false);
+    bool rateFirstShowed = await MyDB().getBox().get(
+        MyResource.RATE_ALREADY_SHOWED, defaultValue: false);
     // Если раньше уже показали, ждем минимум 5 запусков после последнего показа
     if (launchForRate < nextCntLaunch && rateFirstShowed) {
       // print(
@@ -769,47 +825,47 @@ class _ProgressPageState extends State<ProgressPage> {
     }
   }
 
-  // String _getUserName() {
-  //   String userName = "";
-  //   User user = MyDB().getBox().get(MyResource.USER_KEY);
-  //   if (user != null) {
-  //     userName = user.name;
-  //   }
-  //   return userName;
-  // }
+// String _getUserName() {
+//   String userName = "";
+//   User user = MyDB().getBox().get(MyResource.USER_KEY);
+//   if (user != null) {
+//     userName = user.name;
+//   }
+//   return userName;
+// }
 
-  // Future<String> _editUserNameDialog() {
-  //   return showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: Text(
-  //         'your_name'.tr,
-  //       ),
-  //       content: TextField(
-  //         autofocus: true,
-  //         controller: nameController,
-  //         maxLines: 1,
-  //         keyboardType: TextInputType.text,
-  //         style: const TextStyle(
-  //           fontSize: 23,
-  //           color: AppColors.VIOLET,
-  //         ),
-  //       ),
-  //       actions: [
-  //         FlatButton(
-  //           onPressed: () => Navigator.pop(context),
-  //           child: Text('cancellation'.tr),
-  //         ),
-  //         FlatButton(
-  //           onPressed: () {
-  //             Navigator.pop(context, nameController.text);
-  //           },
-  //           child: Text('save'.tr),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
+// Future<String> _editUserNameDialog() {
+//   return showDialog(
+//     context: context,
+//     builder: (context) => AlertDialog(
+//       title: Text(
+//         'your_name'.tr,
+//       ),
+//       content: TextField(
+//         autofocus: true,
+//         controller: nameController,
+//         maxLines: 1,
+//         keyboardType: TextInputType.text,
+//         style: const TextStyle(
+//           fontSize: 23,
+//           color: AppColors.VIOLET,
+//         ),
+//       ),
+//       actions: [
+//         FlatButton(
+//           onPressed: () => Navigator.pop(context),
+//           child: Text('cancellation'.tr),
+//         ),
+//         FlatButton(
+//           onPressed: () {
+//             Navigator.pop(context, nameController.text);
+//           },
+//           child: Text('save'.tr),
+//         )
+//       ],
+//     ),
+//   );
+// }
 }
 
 class VerticalBarLabelChart extends StatelessWidget {
