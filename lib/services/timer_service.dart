@@ -270,7 +270,7 @@ class TimerService {
 
   getNextPage(dynamic value, bool isSkip, {bool isFinal = false}) {
     Get.off(
-      () => pageId == TimerPageId.Reading
+      pageId == TimerPageId.Reading
           ? TimerInputSuccessScreen(passedSec.value, isSkip, calculateProcent(constTime.value, time.value),
               fromHomeMenu: fromHomeMenu)
           : TimerSuccessScreen(

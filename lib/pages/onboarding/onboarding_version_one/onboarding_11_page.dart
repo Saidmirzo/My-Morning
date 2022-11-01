@@ -118,8 +118,7 @@ class _OnBoarding11PageState extends State<OnBoarding11Page> {
                           ),
                           onPressed: () {
                             AppRouting.replace(const MainMenuPage());
-                            Navigator.of(context)
-                                .push(createRoute(ABTestingService.getPaywall()));
+                            Get.to(ABTestingService.getPaywall());
                             //Get.to(const PaymentPage());
                           },
                           child: Row(

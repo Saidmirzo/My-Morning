@@ -23,6 +23,7 @@ import '../../../services/ab_testing_service.dart';
 import '../components/bottom_buttons.dart';
 import '../components/feature_item.dart';
 import '../components/products.dart';
+import 'paywall_v2_oto.dart';
 
 class PaywallV2 extends StatefulWidget {
   final bool isSettings;
@@ -73,26 +74,21 @@ class _PaywallV2State extends State<PaywallV2> {
             var product;
 
             try {
-              product = snapshot.data.products.firstWhere(
-                  (e) => e.vendorProductId == 'subscription_yearly_no_trial');
+              product = snapshot.data.products.firstWhere((e) => e.vendorProductId == 'subscription_yearly_no_trial');
             } catch (e) {
-              product ??= snapshot.data.products.firstWhere(
-                  (e) => e.vendorProductId == 'subscription_yearly');
+              product ??= snapshot.data.products.firstWhere((e) => e.vendorProductId == 'subscription_yearly');
             }
 
             return Column(
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      left: 37.4,
-                      right: 37.4,
-                      top: 60.1,
-                      bottom: MediaQuery.of(context).size.height * 0.01),
+                      left: 37.4, right: 37.4, top: 60.1, bottom: MediaQuery.of(context).size.height * 0.01),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Закрыть
-                      GestureDetector(
+                      InkWell(
                         child: Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsets.all(8),
@@ -108,16 +104,12 @@ class _PaywallV2State extends State<PaywallV2> {
                             AppMetrica.reportEvent('paywall_discount_close');
                             Get.to(() => const WelcomePage());
                             pushNotifications = PushNotifications();
-                            WidgetsBinding.instance
-                                .addPostFrameCallback((timeStamp) async {
+                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
                               if (GetPlatform.isIOS) {
-                                AppMetrica.reportEvent(
-                                    'idfa_notification_show');
-                                var result = await AppTrackingTransparency
-                                    .requestTrackingAuthorization();
+                                AppMetrica.reportEvent('idfa_notification_show');
+                                var result = await AppTrackingTransparency.requestTrackingAuthorization();
                                 if (result == TrackingStatus.authorized) {
-                                  AppMetrica.reportEvent(
-                                      'idfa_notification_endabled');
+                                  AppMetrica.reportEvent('idfa_notification_endabled');
                                 }
                               }
                             });
@@ -125,7 +117,7 @@ class _PaywallV2State extends State<PaywallV2> {
                             Get.to(() => const SettingsPage());
                             // AppMetrica.reportEvent('paywall_inapp_discount_close');
                           } else {
-                            Get.to(() => const MainMenuPage());
+                            Get.to(() => PaywallV2OneTimeOffer());
                           }
                         },
                       ),
@@ -265,32 +257,27 @@ class _PaywallV2State extends State<PaywallV2> {
                               AppMetrica.reportEvent('paywall_inapp_close');
                               await billingService.purchase(product);
                               appAnalitics.logEvent('first_trial');
-                              AnalyticService.analytics.logEcommercePurchase(
-                                  value: product.price,
-                                  currency: product.currencyCode);
+                              AnalyticService.analytics
+                                  .logEcommercePurchase(value: product.price, currency: product.currencyCode);
                               billingService.init();
 
                               // Navigator.popUntil(
                               //     context, (route) => route.isFirst);
                               Get.back();
-                              if (await CustomSharedPreferences()
-                                      .isOpenSale() ||
-                                  await CustomSharedPreferences()
-                                      .isFirstOpen()) {
+                              if (await CustomSharedPreferences().isOpenSale() ||
+                                  await CustomSharedPreferences().isFirstOpen()) {
                                 AppMetrica.reportEvent('subscription_trial');
                                 Get.to(() => const WelcomePage());
                                 pushNotifications = PushNotifications();
                                 WidgetsBinding.instance.addPostFrameCallback(
                                   (timeStamp) async {
                                     if (GetPlatform.isIOS) {
-                                      AppTrackingTransparency
-                                          .requestTrackingAuthorization();
+                                      AppTrackingTransparency.requestTrackingAuthorization();
                                     }
                                   },
                                 );
                               } else {
-                                AppMetrica.reportEvent(
-                                    'subscription_inapp_trial');
+                                AppMetrica.reportEvent('subscription_inapp_trial');
                               }
                             } catch (e) {
                               Get.back();

@@ -1,7 +1,7 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../storage.dart';
 
@@ -14,58 +14,58 @@ class AdmobService {
           ? 'ca-app-pub-8444251353824953/5675746746'
           : 'ca-app-pub-8444251353824953/8111156632';
 
-  InterstitialAd _interstitialAd;
-  int _numInterstitialLoadAttempts = 0;
+  // InterstitialAd _interstitialAd;
+  // int _numInterstitialLoadAttempts = 0;
 
-  AdmobService() {
-    createInterstitialAd();
-  }
+  // AdmobService() {
+  //   createInterstitialAd();
+  // }
 
-  void createInterstitialAd() {
-    InterstitialAd.load(
-      adUnitId: interstitialId,
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (InterstitialAd ad) {
-          _interstitialAd = ad;
-          _numInterstitialLoadAttempts = 0;
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          _numInterstitialLoadAttempts += 1;
-          _interstitialAd = null;
-          if (_numInterstitialLoadAttempts <= maxFailedLoadAttempts) {
-            createInterstitialAd();
-          }
-        },
-      ),
-    );
-  }
+  // void createInterstitialAd() {
+  //   InterstitialAd.load(
+  //     adUnitId: interstitialId,
+  //     request: const AdRequest(),
+  //     adLoadCallback: InterstitialAdLoadCallback(
+  //       onAdLoaded: (InterstitialAd ad) {
+  //         _interstitialAd = ad;
+  //         _numInterstitialLoadAttempts = 0;
+  //       },
+  //       onAdFailedToLoad: (LoadAdError error) {
+  //         _numInterstitialLoadAttempts += 1;
+  //         _interstitialAd = null;
+  //         if (_numInterstitialLoadAttempts <= maxFailedLoadAttempts) {
+  //           createInterstitialAd();
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
 
-  void showInterstitial() async {
-    if (billingService.isVip.value) {
-      return;
-    }
+  // void showInterstitial() async {
+  //   if (billingService.isVip.value) {
+  //     return;
+  //   }
 
-    if (_interstitialAd == null) {
-      return;
-    }
-    _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
-        ad.dispose();
-        createInterstitialAd();
-      },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
-        ad.dispose();
-        createInterstitialAd();
-      },
-    );
-    _interstitialAd?.show();
-    _interstitialAd = null;
-  }
+  //   if (_interstitialAd == null) {
+  //     return;
+  //   }
+  //   _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+  //     onAdShowedFullScreenContent: (InterstitialAd ad) =>
+  //         print('ad onAdShowedFullScreenContent.'),
+  //     onAdDismissedFullScreenContent: (InterstitialAd ad) {
+  //       print('$ad onAdDismissedFullScreenContent.');
+  //       ad.dispose();
+  //       createInterstitialAd();
+  //     },
+  //     onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+  //       print('$ad onAdFailedToShowFullScreenContent: $error');
+  //       ad.dispose();
+  //       createInterstitialAd();
+  //     },
+  //   );
+  //   _interstitialAd?.show();
+  //   _interstitialAd = null;
+  // }
 }
 
 AdmobService admobService = AdmobService();

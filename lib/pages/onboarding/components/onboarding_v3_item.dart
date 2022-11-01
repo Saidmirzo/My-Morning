@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/routing/app_routing.dart' as routing;
 import 'package:morningmagic/utils/navigation_animation.dart';
 
 class OnboardingV3Item extends StatelessWidget {
-  const OnboardingV3Item(
-      {Key key,
-      this.img,
-      this.title1,
-      this.title2,
-      this.isLast = false,
-      this.page})
+  const OnboardingV3Item({Key key, this.img, this.title1, this.title2, this.isLast = false, this.page})
       : super(key: key);
   final String img;
   final String title1;
@@ -29,6 +24,7 @@ class OnboardingV3Item extends StatelessWidget {
             page,
           ),
         );
+        Get.to(page);
       },
       child: Container(
         width: double.maxFinite,

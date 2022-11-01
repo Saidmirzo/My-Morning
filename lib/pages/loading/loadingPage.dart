@@ -1,15 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-import 'package:install_referrer/install_referrer.dart';
 import 'package:morningmagic/app_states.dart';
 import 'package:morningmagic/db/model/exercise_time/exercise_time.dart';
 import 'package:morningmagic/pages/loading/evening.dart';
 import 'package:morningmagic/pages/loading/morning.dart';
 import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/nigth/nigth.dart';
-import 'package:morningmagic/resources/remote_config_keys.dart';
 import 'package:morningmagic/routing/app_routing.dart';
 import 'package:morningmagic/services/ab_testing_service.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
@@ -17,7 +14,6 @@ import 'package:morningmagic/services/analitics/analyticService.dart';
 import '../../db/hive.dart';
 import '../../db/resource.dart';
 import '../../storage.dart';
-import '../paywall_page.dart';
 import 'afternoon.dart';
 import 'night.dart';
 

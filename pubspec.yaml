@@ -15,8 +15,8 @@ dependencies:
   charts_flutter: ^0.12.0
   cupertino_icons: ^1.0.3
   expandable: ^5.0.1
-  google_mobile_ads: ^2.1.0
-  firebase_analytics: ^10.0.1
+  # google_mobile_ads: ^2.1.0
+  firebase_analytics: ^10.0.2
   firebase_core: ^2.0.0
   firebase_storage: ^11.0.1
   cloud_firestore: ^4.0.1
@@ -51,7 +51,7 @@ dependencies:
   flutter_local_notifications: ^12.0.2
   sliding_sheet: ^0.5.2
   percent_indicator: ^4.2.2
-  facebook_app_events: ^0.17.1
+  # facebook_app_events: ^0.17.1
   app_tracking_transparency: ^2.0.0
   flutter_gifimage: ^1.0.1
   day_night_time_picker: ^1.0.2
@@ -60,7 +60,7 @@ dependencies:
   hexcolor: ^3.0.1
   appmetrica_plugin: ^1.1.0
   adapty_flutter: ^1.0.11
-  appodeal_flutter: ^1.1.2
+  stack_appodeal_flutter: ^3.0.0
   flutter_localizations:
     sdk: flutter
   connectivity_plus: ^3.0.1

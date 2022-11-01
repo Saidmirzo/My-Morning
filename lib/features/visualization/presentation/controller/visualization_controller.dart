@@ -25,10 +25,7 @@ class VisualizationController extends GetxController {
   final VisualizationImageRepository imageRepository;
   TextEditingController vizualizationText = TextEditingController();
 
-  VisualizationController(
-      {@required Box hiveBox,
-      @required this.targetRepository,
-      @required this.imageRepository});
+  VisualizationController({@required Box hiveBox, @required this.targetRepository, @required this.imageRepository});
 
   bool fromHomeMenu = false;
 
@@ -52,16 +49,13 @@ class VisualizationController extends GetxController {
 
   int selectedTargetId = 0;
 
-  List<VisualizationImage> get selectedImages =>
-      selectedImageIndexes.map((index) => images[index]).toList();
+  List<VisualizationImage> get selectedImages => selectedImageIndexes.map((index) => images[index]).toList();
 
   String get formattedTimeLeft => StringUtil.createTimeString(timeLeft.value);
 
   double get timeLeftValue => 1 - timeLeft / _initialTimeLeft;
 
-  int get currentImageIndex => (_currentImageIndex >= selectedImages.length)
-      ? 0
-      : _currentImageIndex.value;
+  int get currentImageIndex => (_currentImageIndex >= selectedImages.length) ? 0 : _currentImageIndex.value;
 
   RxInt passedSec = 0.obs;
 
@@ -127,8 +121,7 @@ class VisualizationController extends GetxController {
   }
 
   updateTarget(int id, String title) {
-    final _oldTarget =
-        targets.firstWhere((element) => element.id == id, orElse: () => null);
+    final _oldTarget = targets.firstWhere((element) => element.id == id, orElse: () => null);
     final _oldTargetIndex = targets.indexOf(_oldTarget);
     if (_oldTarget != null) {
       final _newTarget = VisualizationTarget(
@@ -151,8 +144,7 @@ class VisualizationController extends GetxController {
       images.clear();
     }
 
-    final _loadedImages =
-        await imageRepository.getVisualizationImages(target.tag, target.id);
+    final _loadedImages = await imageRepository.getVisualizationImages(target.tag, target.id);
     images.addAll(_loadedImages);
 
     _setDownloading(false);
@@ -167,24 +159,19 @@ class VisualizationController extends GetxController {
     }
   }
 
-  Future<List<VisualizationImage>> loadAttachedTargetImages(
-      int targetId) async {
-    return imageRepository.getVisualizationImages(
-        EnumToString.convertToString(VisualizationImageTag.custom), targetId);
+  Future<List<VisualizationImage>> loadAttachedTargetImages(int targetId) async {
+    return imageRepository.getVisualizationImages(EnumToString.convertToString(VisualizationImageTag.custom), targetId);
   }
 
   Future<void> addImageAssetsFromGallery(List<Asset> assetImages) async {
     int oldLastImageIndex = images.length - 1;
 
-    final _galleryImages =
-        await _convertAssetsToVisualizationImage(assetImages);
+    final _galleryImages = await _convertAssetsToVisualizationImage(assetImages);
 
     if (_galleryImages.isNotEmpty) {
       images.addAll(_galleryImages);
       int newLastImageIndex = images.length - 1;
-      final _selectedIndexes = List.generate(
-          newLastImageIndex - oldLastImageIndex,
-          (i) => oldLastImageIndex + 1 + i);
+      final _selectedIndexes = List.generate(newLastImageIndex - oldLastImageIndex, (i) => oldLastImageIndex + 1 + i);
       selectedImageIndexes.addAll(_selectedIndexes);
     }
     print(images);
@@ -200,8 +187,7 @@ class VisualizationController extends GetxController {
       selectedImageIndexes.add(index);
     }
     myDbBox.put(selectedTargetId.toString(), selectedImageIndexes);
-    print(
-        "----------------------------------------------------------------------- $selectedImages");
+    print("----------------------------------------------------------------------- $selectedImages");
   }
 
   bool isImageSelected(int index) => selectedImageIndexes.contains(index);
@@ -239,7 +225,8 @@ class VisualizationController extends GetxController {
       cPg.saveJournal(MyResource.VISUALISATION_JOURNAL, model);
     }
     if (!backProgramm) {
-      Get.offAll(() => VisualizationSuccessPage(
+      Get.offAll(
+          VisualizationSuccessPage(
             fromHomeMenu: fromHomeMenu,
             percentValue: (passedSec.value / (60 / 100)) / 100,
           ),
@@ -262,8 +249,7 @@ class VisualizationController extends GetxController {
   }
 
   _getTimeLeftFromPrefs() {
-    ExerciseTime _exerciseTime = myDbBox.get(MyResource.VISUALIZATION_TIME_KEY,
-        defaultValue: ExerciseTime(0));
+    ExerciseTime _exerciseTime = myDbBox.get(MyResource.VISUALIZATION_TIME_KEY, defaultValue: ExerciseTime(0));
     print('Init time : ${_exerciseTime.time}');
     _initialTimeLeft = _exerciseTime.time * 60; // time from prefs in minutes
     print('Init time : $_initialTimeLeft');
@@ -274,8 +260,7 @@ class VisualizationController extends GetxController {
     if (newValue != isTimerActive?.value) isTimerActive?.value = newValue;
   }
 
-  void _setDownloading(bool isDownloading) =>
-      isImagesDownloading.value = isDownloading;
+  void _setDownloading(bool isDownloading) => isImagesDownloading.value = isDownloading;
 
   ImageProvider getImpressionDecorationImage(int imageIndex) {
     final _image = selectedImages[imageIndex];
@@ -294,8 +279,7 @@ class VisualizationController extends GetxController {
         );
         break;
       case VisualizationGalleryImage:
-        return MemoryImage(
-            (image as VisualizationGalleryImage).byteData.buffer.asUint8List());
+        return MemoryImage((image as VisualizationGalleryImage).byteData.buffer.asUint8List());
         break;
       case VisualizationFileSystemImage:
         return FileImage(
@@ -309,17 +293,13 @@ class VisualizationController extends GetxController {
     }
   }
 
-  Future<List<VisualizationImage>> _convertAssetsToVisualizationImage(
-      List<Asset> assetImages) async {
+  Future<List<VisualizationImage>> _convertAssetsToVisualizationImage(List<Asset> assetImages) async {
     final List<VisualizationImage> _visualizationImagesFromGallery = [];
 
     for (Asset asset in assetImages) {
       final _byteData = await asset.getByteData();
-      final _galleryImage = VisualizationGalleryImage(
-          path: asset.identifier,
-          pickedAsset: asset,
-          byteData: _byteData,
-          isDefault: false);
+      final _galleryImage =
+          VisualizationGalleryImage(path: asset.identifier, pickedAsset: asset, byteData: _byteData, isDefault: false);
       _visualizationImagesFromGallery.add(_galleryImage);
     }
 

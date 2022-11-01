@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:appodeal_flutter/appodeal_flutter.dart' as appo;
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:morningmagic/resources/colors.dart';
 import 'package:morningmagic/storage.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../widgets/primary_circle_button.dart';
@@ -108,7 +108,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
           _audioPlayer.dispose();
         }
         if (widget.isFinal && !billingService.isVip.value) {
-          await appo.Appodeal.show(appo.AdType.interstitial, placementName: "getNextPage");
+          await Appodeal.show(AppodealAdType.Interstitial, "buildButton");
         }
         widget.onPressed();
       },

@@ -17,8 +17,7 @@ class InputTextColumn extends StatefulWidget {
   final int passedSec;
   final bool isSkip;
 
-  const InputTextColumn(this.onPressed, this.passedSec, this.isSkip,
-      {this.fromHomeMenu = false});
+  const InputTextColumn(this.onPressed, this.passedSec, this.isSkip, {this.fromHomeMenu = false});
 
   @override
   State createState() {
@@ -40,8 +39,7 @@ class InputTextColumnState extends State<InputTextColumn> {
     if (widget.passedSec > minPassedSec) {
       String book = MyDB().getBox().get(MyResource.BOOK_KEY, defaultValue: '');
       int pages = int.tryParse(controller.text) ?? 0;
-      ReadingProgress model =
-          ReadingProgress(book, pages, widget.passedSec, isSkip: isSkip);
+      ReadingProgress model = ReadingProgress(book, pages, widget.passedSec, isSkip: isSkip);
       ProgressController cPg = Get.find();
       cPg.saveJournal(MyResource.READING_JOURNAL, model);
     }
@@ -73,8 +71,7 @@ class InputTextColumnState extends State<InputTextColumn> {
                   color: Colors.white,
                 ),
                 child: Container(
-                  padding: const EdgeInsets.only(
-                      bottom: 10, top: 10, left: 15, right: 15),
+                  padding: const EdgeInsets.only(bottom: 10, top: 10, left: 15, right: 15),
                   child: TextField(
                     controller: controller,
                     minLines: 1,
@@ -99,7 +96,7 @@ class InputTextColumnState extends State<InputTextColumn> {
               saveProg(widget.isSkip);
               widget.onPressed();
               OrderUtil().getRouteById(4).then((value) {
-                Get.off(() => widget.fromHomeMenu ? const ProgressPage() : value);
+                Get.off(widget.fromHomeMenu ? const ProgressPage() : value);
               });
             },
           ),

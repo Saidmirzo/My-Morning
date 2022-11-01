@@ -11,7 +11,7 @@ import '../../paywall/paywall_v2/paywall_v2_oto.dart';
 class WelcomeTextSlide extends StatelessWidget {
   final PageController _pageController;
 
-  const WelcomeTextSlide(this._pageController);
+  const WelcomeTextSlide(this._pageController, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +33,14 @@ class WelcomeTextSlide extends StatelessWidget {
           ),
           const Spacer(),
           // Кнопка Далее
-          Center(child: PrimaryCircleButton(
+          Center(
+              child: PrimaryCircleButton(
             size: 40,
             icon: const Icon(Icons.arrow_forward, color: AppColors.primary),
             onPressed: () async {
               if (ABTestingService.paywallVersion == 'v2') {
                 Get.to(() => PaywallV2OneTimeOffer());
-              }
-              else {
+              } else {
                 Get.to(() => const MainMenuPage());
               }
             },

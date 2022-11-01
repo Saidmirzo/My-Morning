@@ -64,12 +64,8 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   void getAndSetCountLaunches() {
-    countLaunchesSettingsPage =
-        MyDB().getBox().get(MyResource.LAUNCH_SETTINGS_PAGE, defaultValue: 0) +
-            1;
-    MyDB()
-        .getBox()
-        .put(MyResource.LAUNCH_SETTINGS_PAGE, countLaunchesSettingsPage);
+    countLaunchesSettingsPage = MyDB().getBox().get(MyResource.LAUNCH_SETTINGS_PAGE, defaultValue: 0) + 1;
+    MyDB().getBox().put(MyResource.LAUNCH_SETTINGS_PAGE, countLaunchesSettingsPage);
     print('countLaunchesSettingsPage: $countLaunchesSettingsPage');
   }
 
@@ -89,8 +85,7 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    ScrollController _scrollController =
-        PrimaryScrollController.of(context) ?? ScrollController();
+    ScrollController _scrollController = PrimaryScrollController.of(context) ?? ScrollController();
     double titleFontSize = Get.width * 0.055;
 
     return WillPopScope(
@@ -106,9 +101,7 @@ class SettingsPageState extends State<SettingsPage> {
               width: Get.width,
               height: Get.height,
               decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/settingspagecolor.jpg'),
-                    fit: BoxFit.cover),
+                image: DecorationImage(image: AssetImage('assets/images/settingspagecolor.jpg'), fit: BoxFit.cover),
               ),
               child: Column(
                 children: [
@@ -121,8 +114,7 @@ class SettingsPageState extends State<SettingsPage> {
                           slivers: <Widget>[
                             SliverToBoxAdapter(
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   GestureDetector(
                                     onTap: () => Get.to(() => const MainMenuPage()),
@@ -139,41 +131,33 @@ class SettingsPageState extends State<SettingsPage> {
 
                             SliverToBoxAdapter(
                               child: Container(
-                                padding:
-                                    const EdgeInsets.only(top: 10, left: 10),
+                                padding: const EdgeInsets.only(top: 10, left: 10),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     'choose_sequence'.tr,
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: titleFontSize),
+                                        color: Colors.white, fontWeight: FontWeight.w600, fontSize: titleFontSize),
                                   ),
                                 ),
                               ),
                             ),
                             SliverToBoxAdapter(
                               child: Container(
-                                padding:
-                                    const EdgeInsets.only(top: 10, left: 10),
+                                padding: const EdgeInsets.only(top: 10, left: 10),
                                 child: Text(
                                   'choose_title'.tr,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: Get.width * .033),
+                                      color: Colors.white, fontStyle: FontStyle.normal, fontSize: Get.width * .033),
                                 ),
                               ),
                             ),
-                            const SliverPadding(
-                                padding: EdgeInsets.only(top: 11)),
+                            const SliverPadding(padding: EdgeInsets.only(top: 11)),
                             Obx(() {
                               print(settingsController.countAvailableMinutes);
-                              return activityList ??
-                                  const CircularProgressIndicator();
+                              return activityList ?? const CircularProgressIndicator();
                             }),
                             // activityList,
                             SliverToBoxAdapter(
@@ -183,33 +167,22 @@ class SettingsPageState extends State<SettingsPage> {
                                       Get.to(() => ABTestingService.getPaywall(true));
                                       return;
                                     }
-                                    AppMetrica.reportEvent(
-                                        'settings_practice_add');
+                                    AppMetrica.reportEvent('settings_practice_add');
                                     for (var i = 0; i < 4; i++) {
-                                      if (MyDB().getBox().get(
-                                              "${MyResource.CUSTOM_TIME_KEY}$i") ==
-                                          null) {
-                                        await MyDB().getBox().put(
-                                            "${MyResource.CUSTOM_TIME_KEY}$i",
-                                            ExerciseTime(1));
-                                        List<OrderItem> _itemRows =
-                                            (await OrderUtil().getOrderHolder())
-                                                .list;
-                                        _itemRows.add(OrderItem(
-                                            _itemRows.length,
-                                            "${MyResource.CUSTOM_TIME_KEY}$i"));
+                                      if (MyDB().getBox().get("${MyResource.CUSTOM_TIME_KEY}$i") == null) {
+                                        await MyDB().getBox().put("${MyResource.CUSTOM_TIME_KEY}$i", ExerciseTime(1));
+                                        List<OrderItem> _itemRows = (await OrderUtil().getOrderHolder()).list;
+                                        _itemRows.add(OrderItem(_itemRows.length, "${MyResource.CUSTOM_TIME_KEY}$i"));
                                         OrderUtil().addOrderHolder(_itemRows);
                                         setState(() {
-                                          activityList =
-                                              buildActivityList(true);
+                                          activityList = buildActivityList(true);
                                         });
                                         return;
                                       }
                                     }
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
                                     child: Container(
                                       height: 67,
                                       decoration: BoxDecoration(
@@ -217,8 +190,7 @@ class SettingsPageState extends State<SettingsPage> {
                                         color: AppColors.VIOLET,
                                       ),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           !billingService.isVip.value
                                               ? SvgPicture.asset(
@@ -317,7 +289,6 @@ class SettingsPageState extends State<SettingsPage> {
               margin: const EdgeInsets.only(left: 50),
               child: RichText(
                   maxLines: 2,
-
                   textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
                   text: TextSpan(children: [
                     TextSpan(
@@ -329,24 +300,16 @@ class SettingsPageState extends State<SettingsPage> {
                         fontSize: 16,
                       ),
                     ),
-
                     WidgetSpan(alignment: PlaceholderAlignment.middle,
                       child: Obx(
                         () => Text(
                           'x_minutes'.trParams({
-                            'x': settingsController.countAvailableMinutes.value
-                                        .toString()
-                                        .length ==
-                                    1
+                            'x': settingsController.countAvailableMinutes.value.toString().length == 1
                                 ? '${settingsController.countAvailableMinutes.value}'
-                                : settingsController.countAvailableMinutes.value
-                                    .toString()
+                                : settingsController.countAvailableMinutes.value.toString()
                           }),
                           textAlign: TextAlign.start,
-                          style: const TextStyle(
-                              color: Color(0xffE4C8FC),
-                              fontStyle: FontStyle.normal,
-                              fontSize: 13),
+                          style: const TextStyle(color: Color(0xffE4C8FC), fontStyle: FontStyle.normal, fontSize: 13),
                         ),
                       ),
                     )
@@ -440,20 +403,15 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   void initTextEditingControllers() {
-    affirmationTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.AFFIRMATION_TIME_KEY));
-    meditationTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.MEDITATION_TIME_KEY));
-    fitnessTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.FITNESS_TIME_KEY));
-    vocabularyTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.DIARY_TIME_KEY));
-    readingTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.READING_TIME_KEY));
-    visualizationTimeController = TextEditingController(
-        text: getInitialValueForTimeField(MyResource.VISUALIZATION_TIME_KEY));
-    affirmationTextController =
-        TextEditingController(text: getInitialValueForAffirmationTextField());
+    affirmationTimeController =
+        TextEditingController(text: getInitialValueForTimeField(MyResource.AFFIRMATION_TIME_KEY));
+    meditationTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.MEDITATION_TIME_KEY));
+    fitnessTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.FITNESS_TIME_KEY));
+    vocabularyTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.DIARY_TIME_KEY));
+    readingTimeController = TextEditingController(text: getInitialValueForTimeField(MyResource.READING_TIME_KEY));
+    visualizationTimeController =
+        TextEditingController(text: getInitialValueForTimeField(MyResource.VISUALIZATION_TIME_KEY));
+    affirmationTextController = TextEditingController(text: getInitialValueForAffirmationTextField());
     bookController = TextEditingController(text: getInitialValueForBookField());
     nameController = TextEditingController(text: getInitialValueForNameField());
   }
@@ -467,15 +425,11 @@ class SettingsPageState extends State<SettingsPage> {
 
   void addListenersToEditText() {
     affirmationTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          affirmationTimeController, MyResource.AFFIRMATION_TIME_KEY);
-      if (affirmationTimeController.text != null &&
-          affirmationTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(affirmationTimeController, MyResource.AFFIRMATION_TIME_KEY);
+      if (affirmationTimeController.text != null && affirmationTimeController.text.isNotEmpty) {
         int input = int.tryParse(affirmationTimeController.text);
         if (input != null) {
-          MyDB()
-              .getBox()
-              .put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(input));
+          MyDB().getBox().put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(input));
         }
       } else {
         MyDB().getBox().put(MyResource.AFFIRMATION_TIME_KEY, ExerciseTime(0));
@@ -483,15 +437,11 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     meditationTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          meditationTimeController, MyResource.MEDITATION_TIME_KEY);
-      if (meditationTimeController.text != null &&
-          meditationTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(meditationTimeController, MyResource.MEDITATION_TIME_KEY);
+      if (meditationTimeController.text != null && meditationTimeController.text.isNotEmpty) {
         int input = int.tryParse(meditationTimeController.text);
         if (input != null) {
-          MyDB()
-              .getBox()
-              .put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(input));
+          MyDB().getBox().put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(input));
         }
       } else {
         MyDB().getBox().put(MyResource.MEDITATION_TIME_KEY, ExerciseTime(0));
@@ -499,10 +449,8 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     fitnessTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          fitnessTimeController, MyResource.FITNESS_TIME_KEY);
-      if (fitnessTimeController.text != null &&
-          fitnessTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(fitnessTimeController, MyResource.FITNESS_TIME_KEY);
+      if (fitnessTimeController.text != null && fitnessTimeController.text.isNotEmpty) {
         int input = int.tryParse(fitnessTimeController.text);
         if (input != null) {
           MyDB().getBox().put(MyResource.FITNESS_TIME_KEY, ExerciseTime(input));
@@ -513,10 +461,8 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     vocabularyTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          vocabularyTimeController, MyResource.DIARY_TIME_KEY);
-      if (vocabularyTimeController.text != null &&
-          vocabularyTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(vocabularyTimeController, MyResource.DIARY_TIME_KEY);
+      if (vocabularyTimeController.text != null && vocabularyTimeController.text.isNotEmpty) {
         int input = int.tryParse(vocabularyTimeController.text);
         if (input != null) {
           MyDB().getBox().put(MyResource.DIARY_TIME_KEY, ExerciseTime(input));
@@ -527,10 +473,8 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     readingTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          readingTimeController, MyResource.READING_TIME_KEY);
-      if (readingTimeController.text != null &&
-          readingTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(readingTimeController, MyResource.READING_TIME_KEY);
+      if (readingTimeController.text != null && readingTimeController.text.isNotEmpty) {
         int input = int.tryParse(readingTimeController.text);
         if (input != null) {
           MyDB().getBox().put(MyResource.READING_TIME_KEY, ExerciseTime(input));
@@ -541,15 +485,11 @@ class SettingsPageState extends State<SettingsPage> {
     });
 
     visualizationTimeController.addListener(() {
-      _mutateTextOnValidationFailed(
-          visualizationTimeController, MyResource.VISUALIZATION_TIME_KEY);
-      if (visualizationTimeController.text != null &&
-          visualizationTimeController.text.isNotEmpty) {
+      _mutateTextOnValidationFailed(visualizationTimeController, MyResource.VISUALIZATION_TIME_KEY);
+      if (visualizationTimeController.text != null && visualizationTimeController.text.isNotEmpty) {
         int input = int.tryParse(visualizationTimeController.text);
         if (input != null) {
-          MyDB()
-              .getBox()
-              .put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(input));
+          MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(input));
         }
       } else {
         MyDB().getBox().put(MyResource.VISUALIZATION_TIME_KEY, ExerciseTime(0));
@@ -558,8 +498,7 @@ class SettingsPageState extends State<SettingsPage> {
 
     affirmationTextController.addListener(() {
       if (affirmationTextController.text != null) {
-        MyDB().getBox().put(MyResource.AFFIRMATION_TEXT_KEY,
-            AffirmationText(affirmationTextController.text));
+        MyDB().getBox().put(MyResource.AFFIRMATION_TEXT_KEY, AffirmationText(affirmationTextController.text));
       }
       setState(() {});
     });
@@ -607,9 +546,7 @@ class SettingsPageState extends State<SettingsPage> {
   }
 
   Future<String> _showAffirmationCategoryDialog(BuildContext context) async {
-    return await showDialog(
-        context: context,
-        builder: (context) => const AffirmationCategoryDialog());
+    return await showDialog(context: context, builder: (context) => const AffirmationCategoryDialog());
   }
 
   _mutateTextOnValidationFailed(TextEditingController controller, String key) {
@@ -623,17 +560,12 @@ class SettingsPageState extends State<SettingsPage> {
       }
       controller.clear();
       controller.text = _oldValue;
-      controller.selection =
-          TextSelection.collapsed(offset: controller.text.length);
+      controller.selection = TextSelection.collapsed(offset: controller.text.length);
     }
   }
 
   bool _isInputTimeNotValid(String text) {
-    return text.contains(".") ||
-        text.contains("-") ||
-        text.contains(",") ||
-        text.contains(" ") ||
-        text.length > 2;
+    return text.contains(".") || text.contains("-") || text.contains(",") || text.contains(" ") || text.length > 2;
   }
 }
 
@@ -657,10 +589,7 @@ class AffirmationTextField extends StatelessWidget {
       keyboardType: TextInputType.text,
       textAlign: TextAlign.left,
       style: const TextStyle(
-          fontSize: 13,
-          fontStyle: FontStyle.normal,
-          color: AppColors.VIOLET,
-          decoration: TextDecoration.none),
+          fontSize: 13, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
       decoration: InputDecoration(
         hintMaxLines: 8,
         hintText: 'affirmation_hint'.tr,

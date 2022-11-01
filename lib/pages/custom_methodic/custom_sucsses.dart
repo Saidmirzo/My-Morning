@@ -12,9 +12,7 @@ class CastomSuccessPage extends StatefulWidget {
   final double percentValue;
   int pageid;
 
-  CastomSuccessPage(
-      {Key key, this.fromHomeMenu = false, this.percentValue = 0, this.pageid})
-      : super(key: key);
+  CastomSuccessPage({Key key, this.fromHomeMenu = false, this.percentValue = 0, this.pageid}) : super(key: key);
 
   @override
   _CastomSuccessPageState createState() => _CastomSuccessPageState();
@@ -64,8 +62,7 @@ class _CastomSuccessPageState extends State<CastomSuccessPage> {
         body: Container(
           width: Get.width,
           height: Get.height,
-          decoration: const BoxDecoration(
-              gradient: AppColors.Bg_Gradient_Timer_Reading),
+          decoration: const BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -117,10 +114,7 @@ class _CastomSuccessPageState extends State<CastomSuccessPage> {
       center: Text(
         'success'.tr,
         style: TextStyle(
-            fontSize: Get.height * 0.04,
-            fontStyle: FontStyle.normal,
-            color: Colors.white,
-            fontWeight: FontWeight.w600),
+            fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
       linearGradient: AppColors.Progress_Gradient_Timer_Reading,
@@ -130,6 +124,6 @@ class _CastomSuccessPageState extends State<CastomSuccessPage> {
 
   void _navigateToNextExercise() async {
     final _routeValue = await OrderUtil().getRouteById(widget.pageid);
-    Get.off(() => _routeValue);
+    Get.off(_routeValue);
   }
 }

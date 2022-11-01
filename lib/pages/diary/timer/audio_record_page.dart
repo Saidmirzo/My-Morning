@@ -73,9 +73,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   }
 
   Future<String> get _localPath async {
-    final directory = Platform.isIOS
-        ? await getApplicationDocumentsDirectory()
-        : await getTemporaryDirectory();
+    final directory = Platform.isIOS ? await getApplicationDocumentsDirectory() : await getTemporaryDirectory();
     return directory.path + "/" + randomAlpha(10);
   }
 
@@ -219,18 +217,14 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
     // if (!isRecording.value) {
     //   _startRecording();
     // }
-    ExerciseTime time = MyDB()
-        .getBox()
-        .get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
+    ExerciseTime time = MyDB().getBox().get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
     _startTime = time.time;
     _time.value = time.time * 60;
     super.initState();
   }
 
   void initTimer() {
-    ExerciseTime time = MyDB()
-        .getBox()
-        .get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
+    ExerciseTime time = MyDB().getBox().get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(3));
     _time.value = 0;
     _startTime = 0;
     _time.value = time.time * 60;
@@ -255,7 +249,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                   _timer.cancel();
                   Future.microtask(() => stop());
                   OrderUtil().getRouteById(3).then((value) {
-                    Get.off(() => value);
+                    Get.off(value);
                   });
                 } else {
                   _time.value--;
@@ -287,8 +281,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   }
 
   Future _init() async {
-    _recorder = FlutterAudioRecorder(await _localPath,
-        audioFormat: AudioFormat.AAC, sampleRate: 22050);
+    _recorder = FlutterAudioRecorder(await _localPath, audioFormat: AudioFormat.AAC, sampleRate: 22050);
     await _recorder.initialized;
     Recording rec = await _recorder.current();
     print(rec.path);
@@ -312,8 +305,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
         body: Container(
           height: Get.height,
           width: Get.width, // match parent(all screen)
-          decoration:
-              const BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Diary),
+          decoration: const BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Diary),
           child: Stack(
             children: [
               Positioned(
@@ -352,9 +344,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                               Navigator.pop(context);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const TimerRecordPage()),
+                                MaterialPageRoute(builder: (context) => const TimerRecordPage()),
                               );
                             }),
                             child: Image.asset(
@@ -382,22 +372,16 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: SvgPicture.asset(
-                                          SvgAssets.microphone),
+                                      child: SvgPicture.asset(SvgAssets.microphone),
                                     ),
                                     Positioned(
                                       right: 13,
                                       child: Container(
-                                          child: Obx(() => Icon(
-                                              isRecording.isTrue
-                                                  ? Icons.pause
-                                                  : Icons.play_arrow,
-                                              color: AppColors.primary,
-                                              size: 10)),
+                                          child: Obx(() => Icon(isRecording.isTrue ? Icons.pause : Icons.play_arrow,
+                                              color: AppColors.primary, size: 10)),
                                           padding: const EdgeInsets.all(5),
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
+                                            borderRadius: BorderRadius.circular(50),
                                             color: Colors.white,
                                           )),
                                     ),
@@ -439,14 +423,9 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                       await stop();
                       OrderUtil().getRouteById(TimerPageId.Diary).then(
                         (value) {
-                          Get.off(() => TimerSuccessScreen(
-                              () => Get.to(() => widget.fromHomeMenu
-                                  ? const ProgressPage()
-                                  : value),
-                              MyDB()
-                                  .getBox()
-                                  .get(MyResource.DIARY_TIME_KEY)
-                                  .time,
+                          Get.off(TimerSuccessScreen(
+                              () => Get.to(() => widget.fromHomeMenu ? const ProgressPage() : value),
+                              MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time,
                               false,
                               1));
                         },
@@ -534,25 +513,20 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
   // }
 
   Widget buildTextMic() {
-    return Obx(() => Text(
-        isRecording.isTrue ? 'Recording in progress'.tr : 'Recording paused'.tr,
+    return Obx(() => Text(isRecording.isTrue ? 'Recording in progress'.tr : 'Recording paused'.tr,
         style: TextStyle(fontSize: Get.height * 0.015, color: Colors.white)));
   }
 
   Widget buildTextProgress() {
     return Obx(() => Text(StringUtil.createTimeString(_time.value),
-        style: TextStyle(
-            fontSize: Get.height * 0.033,
-            fontWeight: FontWeight.w600,
-            color: Colors.white)));
+        style: TextStyle(fontSize: Get.height * 0.033, fontWeight: FontWeight.w600, color: Colors.white)));
   }
 
   Widget buildMenuButtons() {
     double btnSize = 30;
     return Container(
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-          color: Colors.white),
+      decoration:
+          const BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(30)), color: Colors.white),
       child: SafeArea(
         top: false,
         child: Row(
@@ -580,13 +554,8 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                   await stop();
                   OrderUtil().getRouteById(TimerPageId.Diary).then(
                     (value) {
-                      Get.off(() => TimerSuccessScreen(
-                          () => Get.to(() => widget.fromHomeMenu
-                              ? const ProgressPage()
-                              : value),
-                          MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time,
-                          false,
-                          1));
+                      Get.off(TimerSuccessScreen(() => Get.to(() => widget.fromHomeMenu ? const ProgressPage() : value),
+                          MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time, false, 1));
                     },
                   );
                   appAnalitics.logEvent('first_dnevnik_next');
@@ -597,8 +566,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
     );
   }
 
-  RxDouble get createValue =>
-      _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.0.obs;
+  RxDouble get createValue => _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.0.obs;
 
   Future<bool> _onWillPop() async {
     if (_timer != null) {
