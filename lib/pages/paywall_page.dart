@@ -7,7 +7,6 @@ import '../services/ab_testing_service.dart';
 import 'progress/progress_page.dart';
 
 class PaywallPage extends StatefulWidget {
-
   const PaywallPage({Key key}) : super(key: key);
 
   @override
@@ -21,9 +20,7 @@ class _PaywallPageState extends State<PaywallPage> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage('assets/images/background_paywall.png'))),
+            image: DecorationImage(fit: BoxFit.fill, image: AssetImage('assets/images/background_paywall.png'))),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,25 +43,18 @@ class _PaywallPageState extends State<PaywallPage> {
               ),
               const Spacer(),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                 child: Column(
                   children: [
                     Text(
                       'well_done'.tr,
-                      style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                      style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       'well_done_desc'.tr,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontStyle: FontStyle.normal,
-                          color: Colors.white),
+                      style: const TextStyle(fontSize: 20, fontStyle: FontStyle.normal, color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -79,23 +69,16 @@ class _PaywallPageState extends State<PaywallPage> {
                     children: [
                       Text(
                         'Try PREMIUM'.tr,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold),
+                        style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         '3 days free'.tr,
-                        style: const TextStyle(
-                            color: Color(0xffEBA2C8),
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold),
+                        style: const TextStyle(color: Color(0xffEBA2C8), fontSize: 14, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
                   actionCallback: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ABTestingService.getPaywall()));
+                    Get.to(ABTestingService.getPaywall());
                     // appAnalitics.logEvent('first_polnyi_complex');
                   },
                   bgColor: AppColors.VIOLET,
@@ -116,16 +99,10 @@ class _PaywallPageState extends State<PaywallPage> {
                 widget: Text(
                   'my_progress'.tr,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color: AppColors.VIOLET,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: AppColors.VIOLET, fontSize: 14, fontWeight: FontWeight.bold),
                 ),
                 actionCallback: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProgressPage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProgressPage()));
                   appAnalitics.logEvent('first_reklama');
                   // admobService.showInterstitial();
                 },
@@ -152,8 +129,7 @@ class _PaywallPageState extends State<PaywallPage> {
           primary: AppColors.PINK,
           backgroundColor: bgColor,
           // onSurface: Colors.red,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(27))),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(27))),
           padding: const EdgeInsets.symmetric(vertical: 20),
         ),
         child: widget,

@@ -596,18 +596,24 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - Adapty (1.16.10)
+  - Adapty (1.17.7)
   - adapty_flutter (1.0.0):
-    - Adapty (= 1.16.10)
+    - Adapty (= 1.17.7)
     - Flutter
   - app_tracking_transparency (0.0.1):
     - Flutter
-  - appmetrica_plugin (0.1.0):
+  - appmetrica_plugin (1.1.0):
     - Flutter
-    - YandexMobileMetrica (~> 4.2)
+    - YandexMobileMetrica (~> 4.4)
+  - Appodeal (3.0.0):
+    - Protobuf
+    - StackConsentManager (~> 1.2.0)
+    - StackIAB (~> 1.7.0)
+    - StackModules (~> 1.2.0)
+    - StackProtobuf (~> 0.8.0)
   - audio_session (0.0.1):
     - Flutter
-  - audioplayers (0.0.1):
+  - audioplayers_darwin (0.0.1):
     - Flutter
   - BoringSSL-GRPC (0.0.24):
     - BoringSSL-GRPC/Implementation (= 0.0.24)
@@ -620,83 +626,76 @@ PODS:
     - BSGridCollectionViewLayout (= 1.2.5)
     - BSImageView (= 1.0.3)
   - BSImageView (1.0.3)
-  - cloud_firestore (2.5.4):
-    - Firebase/Firestore (= 8.15.0)
+  - cloud_firestore (4.0.1):
+    - Firebase/Firestore (= 10.0.0)
     - firebase_core
     - Flutter
+    - nanopb (< 2.30910.0, >= 2.30908.0)
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
-  - facebook_app_events (0.0.1):
-    - FBSDKCoreKit (~> 9.0.0)
-    - Flutter
-  - FBSDKCoreKit (9.0.1):
-    - FBSDKCoreKit/Basics (= 9.0.1)
-    - FBSDKCoreKit/Core (= 9.0.1)
-  - FBSDKCoreKit/Basics (9.0.1)
-  - FBSDKCoreKit/Core (9.0.1):
-    - FBSDKCoreKit/Basics
-  - Firebase/Analytics (8.15.0):
+  - Firebase/Analytics (10.0.0):
     - Firebase/Core
-  - Firebase/Core (8.15.0):
+  - Firebase/Core (10.0.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 8.15.0)
-  - Firebase/CoreOnly (8.15.0):
-    - FirebaseCore (= 8.15.0)
-  - Firebase/Firestore (8.15.0):
+    - FirebaseAnalytics (~> 10.0.0)
+  - Firebase/CoreOnly (10.0.0):
+    - FirebaseCore (= 10.0.0)
+  - Firebase/Firestore (10.0.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (~> 8.15.0)
-  - Firebase/RemoteConfig (8.15.0):
+    - FirebaseFirestore (~> 10.0.0)
+  - Firebase/RemoteConfig (10.0.0):
     - Firebase/CoreOnly
-    - FirebaseRemoteConfig (~> 8.15.0)
-  - Firebase/Storage (8.15.0):
+    - FirebaseRemoteConfig (~> 10.0.0)
+  - Firebase/Storage (10.0.0):
     - Firebase/CoreOnly
-    - FirebaseStorage (~> 8.15.0)
-  - firebase_analytics (8.3.4):
-    - Firebase/Analytics (= 8.15.0)
+    - FirebaseStorage (~> 10.0.0)
+  - firebase_analytics (10.0.2):
+    - Firebase/Analytics (= 10.0.0)
     - firebase_core
     - Flutter
-  - firebase_core (1.17.1):
-    - Firebase/CoreOnly (= 8.15.0)
+  - firebase_core (2.1.0):
+    - Firebase/CoreOnly (= 10.0.0)
     - Flutter
-  - firebase_remote_config (2.0.9):
-    - Firebase/RemoteConfig (= 8.15.0)
+  - firebase_remote_config (3.0.1):
+    - Firebase/RemoteConfig (= 10.0.0)
     - firebase_core
     - Flutter
-  - firebase_storage (8.1.3):
-    - Firebase/Storage (= 8.15.0)
+  - firebase_storage (11.0.1):
+    - Firebase/Storage (= 10.0.0)
     - firebase_core
     - Flutter
-  - FirebaseABTesting (8.15.0):
-    - FirebaseCore (~> 8.0)
-  - FirebaseAnalytics (8.15.0):
-    - FirebaseAnalytics/AdIdSupport (= 8.15.0)
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (8.15.0):
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleAppMeasurement (= 8.15.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseCore (8.15.0):
-    - FirebaseCoreDiagnostics (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GoogleUtilities/Logger (~> 7.7)
-  - FirebaseCoreDiagnostics (8.15.0):
-    - GoogleDataTransport (~> 9.1)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GoogleUtilities/Logger (~> 7.7)
-    - nanopb (~> 2.30908.0)
-  - FirebaseFirestore (8.15.0):
+  - FirebaseABTesting (10.0.0):
+    - FirebaseCore (~> 10.0)
+  - FirebaseAnalytics (10.0.0):
+    - FirebaseAnalytics/AdIdSupport (= 10.0.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/MethodSwizzler (~> 7.8)
+    - GoogleUtilities/Network (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseAnalytics/AdIdSupport (10.0.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleAppMeasurement (= 10.0.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/MethodSwizzler (~> 7.8)
+    - GoogleUtilities/Network (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseAppCheckInterop (10.0.0)
+  - FirebaseAuthInterop (10.0.0)
+  - FirebaseCore (10.0.0):
+    - FirebaseCoreInternal (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Logger (~> 7.8)
+  - FirebaseCoreExtension (10.0.0):
+    - FirebaseCore (~> 10.0)
+  - FirebaseCoreInternal (10.0.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseFirestore (10.0.0):
     - abseil/algorithm (~> 1.20211102.0)
     - abseil/base (~> 1.20211102.0)
     - abseil/container/flat_hash_map (~> 1.20211102.0)
@@ -705,24 +704,27 @@ PODS:
     - abseil/strings/strings (~> 1.20211102.0)
     - abseil/time (~> 1.20211102.0)
     - abseil/types (~> 1.20211102.0)
-    - FirebaseCore (~> 8.0)
+    - FirebaseCore (~> 10.0)
     - "gRPC-C++ (~> 1.44.0)"
     - leveldb-library (~> 1.22)
-    - nanopb (~> 2.30908.0)
-  - FirebaseInstallations (8.15.0):
-    - FirebaseCore (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GoogleUtilities/UserDefaults (~> 7.7)
-    - PromisesObjC (< 3.0, >= 1.2)
-  - FirebaseRemoteConfig (8.15.0):
-    - FirebaseABTesting (~> 8.0)
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-  - FirebaseStorage (8.15.0):
-    - FirebaseCore (~> 8.0)
-    - GTMSessionFetcher/Core (~> 1.5)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseInstallations (10.0.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - PromisesObjC (~> 2.1)
+  - FirebaseRemoteConfig (10.0.0):
+    - FirebaseABTesting (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseStorage (10.0.0):
+    - FirebaseAppCheckInterop (~> 10.0)
+    - FirebaseAuthInterop (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseCoreExtension (~> 10.0)
+    - GTMSessionFetcher/Core (~> 2.1)
   - Flutter (1.0.0)
   - flutter_audio_recorder (0.5.4):
     - Flutter
@@ -735,55 +737,44 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - Google-Mobile-Ads-SDK (8.11.0):
-    - GoogleAppMeasurement (< 9.0, >= 7.0)
-    - GoogleUserMessagingPlatform (>= 1.1)
-  - google_mobile_ads (0.0.1):
-    - Flutter
-    - Google-Mobile-Ads-SDK (= 8.11.0)
-  - GoogleAppMeasurement (8.15.0):
-    - GoogleAppMeasurement/AdIdSupport (= 8.15.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (8.15.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 8.15.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (8.15.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleDataTransport (9.2.0):
-    - GoogleUtilities/Environment (~> 7.7)
+  - GoogleAppMeasurement (10.0.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.0.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/MethodSwizzler (~> 7.8)
+    - GoogleUtilities/Network (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-    - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUserMessagingPlatform (2.0.0)
-  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+  - GoogleAppMeasurement/AdIdSupport (10.0.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.0.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/MethodSwizzler (~> 7.8)
+    - GoogleUtilities/Network (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.0.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/MethodSwizzler (~> 7.8)
+    - GoogleUtilities/Network (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.8.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.7.0):
+  - GoogleUtilities/Environment (7.8.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.7.0):
+  - GoogleUtilities/Logger (7.8.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.7.0):
+  - GoogleUtilities/MethodSwizzler (7.8.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.7.0):
+  - GoogleUtilities/Network (7.8.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.7.0)"
-  - GoogleUtilities/Reachability (7.7.0):
+  - "GoogleUtilities/NSData+zlib (7.8.0)"
+  - GoogleUtilities/Reachability (7.8.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.7.0):
+  - GoogleUtilities/UserDefaults (7.8.0):
     - GoogleUtilities/Logger
   - "gRPC-C++ (1.44.0)":
     - "gRPC-C++/Implementation (= 1.44.0)"
@@ -836,9 +827,7 @@ PODS:
     - gRPC-Core/Interface (= 1.44.0)
     - Libuv-gRPC (= 0.0.10)
   - gRPC-Core/Interface (1.44.0)
-  - GTMSessionFetcher/Core (1.7.2)
-  - hexcolor (0.0.1):
-    - Flutter
+  - GTMSessionFetcher/Core (2.1.0)
   - install_referrer (1.0.0):
     - Flutter
   - just_audio (0.0.1):
@@ -853,17 +842,19 @@ PODS:
   - multi_image_picker (4.8.00):
     - BSImagePicker (~> 2.10.3)
     - Flutter
-  - nanopb (2.30908.0):
-    - nanopb/decode (= 2.30908.0)
-    - nanopb/encode (= 2.30908.0)
-  - nanopb/decode (2.30908.0)
-  - nanopb/encode (2.30908.0)
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
+  - OMSDK_Appodeal (1.3.37)
   - path_provider_ios (0.0.1):
     - Flutter
-  - "permission_handler (5.1.0+2)":
+  - permission_handler_apple (9.0.4):
     - Flutter
   - PromisesObjC (2.1.1)
-  - rate_my_app (1.1.2):
+  - Protobuf (3.21.8)
+  - rate_my_app (1.1.3):
     - Flutter
   - ReachabilitySwift (5.0.0)
   - shared_preferences_ios (0.0.1):
@@ -871,23 +862,73 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
+  - stack_appodeal_flutter (3.0.0):
+    - Appodeal (= 3.0.0)
+    - Flutter
+  - StackConsentManager (1.2.2)
+  - StackIAB (1.7.4):
+    - StackIAB/StackIABAssets (= 1.7.4)
+    - StackIAB/StackMRAIDKit (= 1.7.4)
+    - StackIAB/StackNASTKit (= 1.7.4)
+    - StackIAB/StackOpenMeasure (= 1.7.4)
+    - StackIAB/StackRichMedia (= 1.7.4)
+    - StackIAB/StackVASTAssets (= 1.7.4)
+    - StackIAB/StackVASTKit (= 1.7.4)
+    - StackIAB/StackVideoPlayer (= 1.7.4)
+    - StackIAB/StackXML (= 1.7.4)
+    - StackModules (~> 1.2.1)
+  - StackIAB/StackIABAssets (1.7.4):
+    - StackModules (~> 1.2.1)
+  - StackIAB/StackMRAIDKit (1.7.4):
+    - StackIAB/StackIABAssets
+    - StackIAB/StackOpenMeasure
+    - StackModules (~> 1.2.1)
+  - StackIAB/StackNASTKit (1.7.4):
+    - StackIAB/StackVASTKit
+    - StackModules (~> 1.2.1)
+  - StackIAB/StackOpenMeasure (1.7.4):
+    - OMSDK_Appodeal (~> 1.3.27)
+    - StackModules (~> 1.2.1)
+  - StackIAB/StackRichMedia (1.7.4):
+    - StackIAB/StackIABAssets
+    - StackIAB/StackVASTAssets
+    - StackIAB/StackVideoPlayer
+    - StackModules (~> 1.2.1)
+  - StackIAB/StackVASTAssets (1.7.4):
+    - StackIAB/StackIABAssets
+    - StackIAB/StackXML
+    - StackModules (~> 1.2.1)
+  - StackIAB/StackVASTKit (1.7.4):
+    - StackIAB/StackMRAIDKit
+    - StackIAB/StackVASTAssets
+    - StackIAB/StackVideoPlayer
+    - StackModules (~> 1.2.1)
+  - StackIAB/StackVideoPlayer (1.7.4):
+    - StackModules (~> 1.2.1)
+  - StackIAB/StackXML (1.7.4):
+    - StackModules (~> 1.2.1)
+  - StackModules (1.2.5):
+    - StackModules/StackProductPresentation (= 1.2.5)
+  - StackModules/StackFoundation (1.2.5)
+  - StackModules/StackProductPresentation (1.2.5):
+    - StackModules/StackUIKit
+  - StackModules/StackUIKit (1.2.5):
+    - StackModules/StackFoundation
+  - StackProtobuf (0.8.3):
+    - Protobuf (~> 3.13)
   - url_launcher_ios (0.0.1):
     - Flutter
-  - vibration (1.7.3):
-    - Flutter
-  - video_player_avfoundation (0.0.1):
+  - vibration (1.7.5):
     - Flutter
   - wakelock (0.0.1):
     - Flutter
-  - webview_flutter_wkwebview (0.0.1):
-    - Flutter
-  - YandexMobileMetrica (4.2.0):
-    - YandexMobileMetrica/Static (= 4.2.0)
-  - YandexMobileMetrica/Static (4.2.0):
-    - YandexMobileMetrica/Static/Core (= 4.2.0)
-    - YandexMobileMetrica/Static/Crashes (= 4.2.0)
-  - YandexMobileMetrica/Static/Core (4.2.0)
-  - YandexMobileMetrica/Static/Crashes (4.2.0):
+  - YandexMobileMetrica (4.4.0):
+    - YandexMobileMetrica/Static (= 4.4.0)
+  - YandexMobileMetrica/Static (4.4.0):
+    - YandexMobileMetrica/Static/Core (= 4.4.0)
+    - YandexMobileMetrica/Static/Crashes (= 4.4.0)
+  - YandexMobileMetrica/Static/Core (4.4.0)
+  - YandexMobileMetrica/Static/Crashes (4.4.0):
     - YandexMobileMetrica/Static/Core
 
 DEPENDENCIES:
@@ -895,10 +936,9 @@ DEPENDENCIES:
   - app_tracking_transparency (from `.symlinks/plugins/app_tracking_transparency/ios`)
   - appmetrica_plugin (from `.symlinks/plugins/appmetrica_plugin/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
-  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
-  - facebook_app_events (from `.symlinks/plugins/facebook_app_events/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
@@ -908,45 +948,42 @@ DEPENDENCIES:
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_native_timezone (from `.symlinks/plugins/flutter_native_timezone/ios`)
-  - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
-  - hexcolor (from `.symlinks/plugins/hexcolor/ios`)
   - install_referrer (from `.symlinks/plugins/install_referrer/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - multi_image_picker (from `.symlinks/plugins/multi_image_picker/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
-  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - rate_my_app (from `.symlinks/plugins/rate_my_app/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - stack_appodeal_flutter (from `.symlinks/plugins/stack_appodeal_flutter/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
-  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
-  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
   trunk:
     - abseil
     - Adapty
+    - Appodeal
     - BoringSSL-GRPC
     - BSGridCollectionViewLayout
     - BSImagePicker
     - BSImageView
-    - FBSDKCoreKit
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
+    - FirebaseAppCheckInterop
+    - FirebaseAuthInterop
     - FirebaseCore
-    - FirebaseCoreDiagnostics
+    - FirebaseCoreExtension
+    - FirebaseCoreInternal
     - FirebaseFirestore
     - FirebaseInstallations
     - FirebaseRemoteConfig
     - FirebaseStorage
     - FMDB
-    - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
-    - GoogleDataTransport
-    - GoogleUserMessagingPlatform
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
@@ -954,8 +991,14 @@ SPEC REPOS:
     - leveldb-library
     - Libuv-gRPC
     - nanopb
+    - OMSDK_Appodeal
     - PromisesObjC
+    - Protobuf
     - ReachabilitySwift
+    - StackConsentManager
+    - StackIAB
+    - StackModules
+    - StackProtobuf
     - YandexMobileMetrica
 
 EXTERNAL SOURCES:
@@ -967,14 +1010,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/appmetrica_plugin/ios"
   audio_session:
     :path: ".symlinks/plugins/audio_session/ios"
-  audioplayers:
-    :path: ".symlinks/plugins/audioplayers/ios"
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/ios"
-  facebook_app_events:
-    :path: ".symlinks/plugins/facebook_app_events/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_core:
@@ -993,10 +1034,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_native_timezone:
     :path: ".symlinks/plugins/flutter_native_timezone/ios"
-  google_mobile_ads:
-    :path: ".symlinks/plugins/google_mobile_ads/ios"
-  hexcolor:
-    :path: ".symlinks/plugins/hexcolor/ios"
   install_referrer:
     :path: ".symlinks/plugins/install_referrer/ios"
   just_audio:
@@ -1005,90 +1042,90 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/multi_image_picker/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
-  permission_handler:
-    :path: ".symlinks/plugins/permission_handler/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   rate_my_app:
     :path: ".symlinks/plugins/rate_my_app/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  stack_appodeal_flutter:
+    :path: ".symlinks/plugins/stack_appodeal_flutter/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   vibration:
     :path: ".symlinks/plugins/vibration/ios"
-  video_player_avfoundation:
-    :path: ".symlinks/plugins/video_player_avfoundation/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
-  webview_flutter_wkwebview:
-    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
-  Adapty: 76319ab7bde8708c722702fff371ef15c84ec55e
-  adapty_flutter: 4857d8c3310aa2b062342e56db889e8cbc94783c
+  Adapty: 7b0d95d78b86df348dd9c488c6955624f671e53a
+  adapty_flutter: 27f1022f0c2b0777ad4cac3561d61747e1db13ae
   app_tracking_transparency: 5b1745ef9ade815f7455cb6a0848349589afb7c5
-  appmetrica_plugin: 5dc1ec4190b59dbe192e75244e413a7bd0b5485d
+  appmetrica_plugin: 4a29f127f4608f66aada648f02e1cb0054ba3f74
+  Appodeal: b1940db7eaae7b1ed7ca425a56b3fd76e0588f5a
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
-  audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
+  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   BSGridCollectionViewLayout: 333dcb457a5a3bdd9212607ab5756553dcfe06cb
   BSImagePicker: 07404254f2fcdaf5a2eb403c0f8c337267ce8738
   BSImageView: a149459433a2687157d034c78e059d30ac7f2544
-  cloud_firestore: fa31ea1e096832227b4d012d95e1347b9209e34e
+  cloud_firestore: 517613047eaa75493f00adc8735f9d0315ec906d
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
-  facebook_app_events: 432ce4d1291c5eab4df38a5415a78405ef7b28d3
-  FBSDKCoreKit: fada1a6a0076724678993ff05a633848765ff18c
-  Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
-  firebase_analytics: eae2c08064ac5534bf0b97e7bcf1d604721728b3
-  firebase_core: 318de541b0e61d3f24262982a3f0b54afe72439b
-  firebase_remote_config: 5c7e3511505272482125c1c84774137fe7f5fe35
-  firebase_storage: cb4ab5b139caa2889f37368cd7a55b8899ad2ebe
-  FirebaseABTesting: 10cbce8db9985ae2e3847ea44e9947dd18f94e10
-  FirebaseAnalytics: 7761cbadb00a717d8d0939363eb46041526474fa
-  FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
-  FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
-  FirebaseFirestore: d7023faff8e1b4fd69d0adbcf18e65129bc03842
-  FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
-  FirebaseRemoteConfig: 2d6e2cfdb49af79535c8af8a80a4a5009038ec2b
-  FirebaseStorage: 8019af461599b2c3bc61c6a5dbdfa3d2de66a4d9
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  Firebase: 1b810f3d0c0532e27a48f1961f8c0400a668a2cf
+  firebase_analytics: 913637c11a0baf049802dd30ca56d9fa843e96c0
+  firebase_core: 9f457751caed72a30d23be90eb72de6ccbd1f9b0
+  firebase_remote_config: 11eee0656374e6ef595f36e49d904ddc209b4523
+  firebase_storage: 96b37d59a2a8d23177c8d025e111f4826fc4bfad
+  FirebaseABTesting: 5a08a4d3060b7fb5638f60698bc2cb57996bcc73
+  FirebaseAnalytics: 9921a52739f4ab66099da31b6e0243db78a3ac0a
+  FirebaseAppCheckInterop: 9a7af9d0a4d9197265cda30194f3644e8aea24f9
+  FirebaseAuthInterop: c342679f45bee2a665a3b9148a55fcdb10df8c66
+  FirebaseCore: 97f48a3a567a72b8d4daa0f03c3aadb78df4e995
+  FirebaseCoreExtension: 449595a035812f16314ca88cebf959e3bb77dd67
+  FirebaseCoreInternal: 5eb3960335da5ea30115d57d39db6988c4ad06f3
+  FirebaseFirestore: 5007583f3db2129de8e87f18ee63f4c86f07e7a3
+  FirebaseInstallations: 7f1c9ae6bd9df6abe9c74124b38fa8740aba5df4
+  FirebaseRemoteConfig: e4431ddba74ddf705e2aabd7d356a23d5b802853
+  FirebaseStorage: 8b0b0630e11b9f3e4a479a26cfccb70ec790ec50
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_audio_recorder: eb998d4e75e59b39d9e3ca1818a5e0f3a82f5836
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_timezone: 5f05b2de06c9776b4cc70e1839f03de178394d22
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  Google-Mobile-Ads-SDK: be2192b51b74d74a6ed70590c2e8275412f1b71e
-  google_mobile_ads: baafda8d037dcea9f51cfa503ab537fc1ed0aaa7
-  GoogleAppMeasurement: 4c19f031220c72464d460c9daa1fb5d1acce958e
-  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
-  GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
-  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GoogleAppMeasurement: 7e48a3249792ac35d6f18f107f63f199a7e9d0ce
+  GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
-  GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  hexcolor: fdfb9c4258ad96e949c2dbcdf790a62194b8aa89
+  GTMSessionFetcher: ffbb25ec00ebcb5201adab0a56d808f6f1902d9f
   install_referrer: 1bde9acf8b1bfd372706454234444a01b5732bcf
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   multi_image_picker: 443e776a762d7901641854043b60abf88a85d5ef
-  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  OMSDK_Appodeal: 0d216e95f5313c64e2cd8a1eb8b45e54b8b138a9
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
-  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  rate_my_app: 5c11c00c864fdb2d0d6d4529b1692a2e78a64d0b
+  Protobuf: 0a11f3000cd10ffa17611bf96e66a66b25c956e4
+  rate_my_app: 96f658ddb7f0a8d2f46d54452583f084760aef57
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  stack_appodeal_flutter: 084c2e276c754daa1f092adec5607fb9a34c0b6a
+  StackConsentManager: db10f9ab43a91440049886c7f09a6ce8114b5f37
+  StackIAB: f1e1e0313f4b65c3152a47517e92ac0741743cf0
+  StackModules: 2132d737caceb3142351583a890b1ba22da93745
+  StackProtobuf: 4ce3cf175993834536fbb7260a278400cabeb463
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
-  vibration: b5a33e764c3f609a975b9dca73dce20fdde627dc
-  video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
+  vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
-  webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
-  YandexMobileMetrica: f5f9c605eaaba33ff6ab2b6bc3259035ca60ed87
+  YandexMobileMetrica: baf7cea47cb87fc9af963c4f747ce8dd7df3d7c0
 
-PODFILE CHECKSUM: ac8b1c125e834ab05576e5f0dc8ec6c9debf59a6
+PODFILE CHECKSUM: 917fa35d3e9b9707910b851ba13727089d95e04d
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

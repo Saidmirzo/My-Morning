@@ -10,12 +10,10 @@ class OnboardingVersionSecondPage13 extends StatefulWidget {
   const OnboardingVersionSecondPage13({Key key}) : super(key: key);
 
   @override
-  State<OnboardingVersionSecondPage13> createState() =>
-      _OnboardingVersionSecondPage13State();
+  State<OnboardingVersionSecondPage13> createState() => _OnboardingVersionSecondPage13State();
 }
 
-class _OnboardingVersionSecondPage13State
-    extends State<OnboardingVersionSecondPage13> {
+class _OnboardingVersionSecondPage13State extends State<OnboardingVersionSecondPage13> {
   void initState() {
     super.initState();
     AppMetrica.reportEvent('onbording_13');
@@ -57,8 +55,7 @@ class _OnboardingVersionSecondPage13State
                 horizontal: 27.43,
               ),
               decoration: BoxDecoration(
-                  color: const Color(0xff6B0496).withOpacity(0.82),
-                  borderRadius: BorderRadius.circular(19)),
+                  color: const Color(0xff6B0496).withOpacity(0.82), borderRadius: BorderRadius.circular(19)),
               child: FittedBox(
                 child: Text(
                   "your entire morning routine in one app".tr,
@@ -77,8 +74,7 @@ class _OnboardingVersionSecondPage13State
             ),
             ContinueButton(
               callback: () {
-                Navigator.of(context)
-                    .push(createRoute(const OnboardingVersionSecondPage14()));
+                Get.to(const OnboardingVersionSecondPage14());
               },
             ),
           ],

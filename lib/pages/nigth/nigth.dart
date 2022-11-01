@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
-import 'package:appodeal_flutter/appodeal_flutter.dart' as appo;
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ import 'package:morningmagic/routing/route_values.dart';
 import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/utils/oval_top_clipper.dart';
 import 'package:provider/provider.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import '../../db/resource.dart';
 
 class MainMenuNightPage extends StatefulWidget {
@@ -49,81 +49,81 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
     launchForinterview = MyDB().getBox().get(MyResource.LAUNCH_FOR_INTERVIEW, defaultValue: 0);
     return Scaffold(
       body: Stack(children: [
-        SingleChildScrollView(
+        ListView(
+          shrinkWrap: true,
           padding: EdgeInsets.zero,
-          // physics: const ClampingScrollPhysics(),
-          child: Column(
-            children: [
-              buildHeader(),
-              Container(
-                decoration: BoxDecoration(
-                    color: AppColors.nightModeBG, border: Border.all(width: 0, color: AppColors.nightModeBG)),
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'welcome_to_sleep'.tr,
-                      style: TextStyle(fontSize: Get.width * .06, fontWeight: FontWeight.w700, color: Colors.white),
-                    ),
-                    const SizedBox(height: 30),
-                    _buildSettingsButton(
-                        onPressed: () {
-                          AppMetrica.reportEvent('night_meditation_start');
-                          Get.off(() => const MeditationPage(fromHomeMenu: true), opaque: true);
-                        },
-                        image: 'assets/images/home_menu/night_meditation.png',
-                        title: 'music_menu_meditations'.tr,
-                        subTitle: 'meditation_subtitle'.tr),
-                    const SizedBox(height: 20),
-                    _buildSettingsButton(
-                        onPressed: () {
-                          AppMetrica.reportEvent('night_sounds_start');
-                          Navigator.pushNamed(context, musicInstrumentsPageRoute);
-                        },
-                        forSleep: true,
-                        title: 'music_for_sleep_title'.tr,
-                        subTitle: 'music_for_sleep_subtitle'.tr),
-                    const SizedBox(height: 20),
-                    _buildSettingsButton(
-                        onPressed: () {
-                          AppMetrica.reportEvent('night_reading_start');
-                          Get.to(() => const ReadingPage(
-                                fromHomeMenu: true,
-                              ));
-                        },
-                        image: 'assets/images/home_menu/book.png',
-                        title: 'reading_at_night_title'.tr,
-                        subTitle: 'reading_at_night_subtitle'.tr),
-                    const SizedBox(
-                      height: 100,
-                    )
-                  ],
-                ),
+          children: [
+            buildHeader(),
+            Container(
+              decoration: BoxDecoration(
+                  color: AppColors.nightModeBG, border: Border.all(width: 0, color: AppColors.nightModeBG)),
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'welcome_to_sleep'.tr,
+                    style: TextStyle(fontSize: Get.width * .06, fontWeight: FontWeight.w700, color: Colors.white),
+                  ),
+                  const SizedBox(height: 30),
+                  _buildSettingsButton(
+                      onPressed: () {
+                        AppMetrica.reportEvent('night_meditation_start');
+                        Get.off(const MeditationPage(fromHomeMenu: true), opaque: true);
+                      },
+                      image: 'assets/images/home_menu/night_meditation.png',
+                      title: 'music_menu_meditations'.tr,
+                      subTitle: 'meditation_subtitle'.tr),
+                  const SizedBox(height: 20),
+                  _buildSettingsButton(
+                      onPressed: () {
+                        AppMetrica.reportEvent('night_sounds_start');
+                        Navigator.pushNamed(context, musicInstrumentsPageRoute);
+                      },
+                      forSleep: true,
+                      title: 'music_for_sleep_title'.tr,
+                      subTitle: 'music_for_sleep_subtitle'.tr),
+                  const SizedBox(height: 20),
+                  _buildSettingsButton(
+                      onPressed: () {
+                        AppMetrica.reportEvent('night_reading_start');
+                        Get.to(() => const ReadingPage(
+                              fromHomeMenu: true,
+                            ));
+                      },
+                      image: 'assets/images/home_menu/book.png',
+                      title: 'reading_at_night_title'.tr,
+                      subTitle: 'reading_at_night_subtitle'.tr),
+                  const SizedBox(
+                    height: 100,
+                  )
+                ],
               ),
-            ],
+            ),
+          ],
+        ),
+        Consumer<PayWallProvider>(builder: (context, model, child) {
+          return model.isShowAds
+              ? GestureDetector(
+                  onTap: () async {
+                    await Appodeal.show(AppodealAdType.Interstitial, "main_menu");
+                    context.read<PayWallProvider>().startTimer();
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.transparent,
+                  ),
+                )
+              : const SizedBox.shrink();
+        }),
+        const Positioned(
+          bottom: 0,
+          child: BottomMenu(
+            bgColor: AppColors.nightModeBG,
+            currentPageNumber: 2,
           ),
         ),
-        const Positioned(
-            bottom: 0,
-            child: BottomMenu(
-              bgColor: AppColors.nightModeBG,
-              currentPageNumber: 2,
-            )),
-        const SizedBox(
-          height: 15,
-        ),
-        if (context.watch<PayWallProvider>().isShowAds)
-          GestureDetector(
-            onTap: () async {
-              await appo.Appodeal.show(appo.AdType.interstitial, placementName: "main_menu");
-              context.read<PayWallProvider>().startTimer();
-            },
-            child: Positioned.fill(
-                child: Container(
-              color: Colors.transparent,
-            )),
-          )
       ]),
     );
   }

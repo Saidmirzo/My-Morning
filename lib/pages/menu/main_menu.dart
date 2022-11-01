@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
-import 'package:appodeal_flutter/appodeal_flutter.dart' as appo;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +25,7 @@ import 'package:morningmagic/storage.dart';
 import 'package:morningmagic/utils/oval_top_clipper.dart';
 import 'package:morningmagic/utils/reordering_util.dart';
 import 'package:provider/provider.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import '../../db/model/exercise/exercise_holder.dart';
 import '../../db/resource.dart';
 import '../../dialog/interviewDialog.dart';
@@ -85,69 +85,89 @@ class MainMenuPageState extends State<MainMenuPage> {
     return Scaffold(
       body: Stack(
         children: [
-          SingleChildScrollView(
+          ListView(
             physics: const ClampingScrollPhysics(),
-            child: Column(
-              children: [
-                buildHeader(),
-                Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Image.asset('$imagePath/logo.png', width: Get.width * .2),
-                      const SizedBox(
-                        height: 10.69,
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            children: [
+              buildHeader(),
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      '$imagePath/logo.png',
+                      width: Get.width * .2,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(
+                      height: 10.69,
+                    ),
+                    const Text(
+                      'MY MORNING',
+                      style: TextStyle(
+                          color: Color(0xffD1ADE7),
+                          fontFamily: 'Montserrat',
+                          fontStyle: FontStyle.normal,
+                          fontSize: 19.47,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 25.04),
+                    buildStartComplexButton(),
+                    const SizedBox(
+                      height: 12.6,
+                    ),
+                    SizedBox(
+                      width: Get.width - 10,
+                      child: Row(
+                        children: [
+                          buildMeditationsButton(),
+                          const Spacer(),
+                          buildAffirmationsButton(),
+                        ],
                       ),
-                      const Text(
-                        'MY MORNING',
-                        style: TextStyle(
-                            color: Color(0xffD1ADE7),
-                            fontFamily: 'Montserrat',
-                            fontStyle: FontStyle.normal,
-                            fontSize: 19.47,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(height: 25.04),
-                      buildStartComplexButton(),
-                      const SizedBox(
-                        height: 12.6,
-                      ),
-                      SizedBox(
-                        width: Get.width - 10,
-                        child: Row(
-                          children: [
-                            buildMeditationsButton(),
-                            const Spacer(),
-                            buildAffirmationsButton(),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      buildExercises()
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 30),
+                    buildExercises()
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+          Consumer<PayWallProvider>(builder: (context, model, child) {
+            return model.isShowAds
+                ? GestureDetector(
+                    onTap: () async {
+                      await Appodeal.show(AppodealAdType.Interstitial, "main_menu");
+                      context.read<PayWallProvider>().startTimer();
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.transparent,
+                    ),
+                  )
+                : const SizedBox.shrink();
+          }),
           const Positioned(
             bottom: 0,
             child: BottomMenu(
               currentPageNumber: 1,
             ),
-          ),
-          if (context.watch<PayWallProvider>().isShowAds)
-            GestureDetector(
-              onTap: () async {
-                await appo.Appodeal.show(appo.AdType.interstitial, placementName: "main_menu");
-                context.read<PayWallProvider>().startTimer();
-              },
-              child: Positioned.fill(
-                  child: Container(
-                color: Colors.transparent,
-              )),
-            )
+          )
+          // if (context.watch<PayWallProvider>().isShowAds)
+          //   GestureDetector(
+          //     onTap: () async {
+          //       await Appodeal.show(AppodealAdType.Interstitial, "main_menu");
+          //       context.read<PayWallProvider>().startTimer();
+          //     },
+          //     child: Container(
+          //       color: Colors.transparent,
+          //       height: MediaQuery.of(context).size.height,
+          //       width: MediaQuery.of(context).size.width,
+          //     ),
+          //   )
         ],
       ),
     );
@@ -218,7 +238,7 @@ class MainMenuPageState extends State<MainMenuPage> {
     return GestureDetector(
       onTap: () {
         AppMetrica.reportEvent('meditation_start');
-        Get.off(() => const MeditationPage(fromHomeMenu: true), opaque: true);
+        Get.off(const MeditationPage(fromHomeMenu: true), opaque: true);
         isComplex = false;
       },
       child: Container(
@@ -247,7 +267,7 @@ class MainMenuPageState extends State<MainMenuPage> {
     return GestureDetector(
       onTap: () {
         AppMetrica.reportEvent('affirmations_start');
-        Get.off(() => const AffirmationPage(fromHomeMenu: true), opaque: true);
+        Get.off(const AffirmationPage(fromHomeMenu: true), opaque: true);
         isComplex = false;
       },
       child: Container(
@@ -291,16 +311,11 @@ class MainMenuPageState extends State<MainMenuPage> {
             Container(
               width: MediaQuery.of(context).size.width - 57,
               child: AutoSizeText(
-                billingService.isPro()
-                    ? 'PREMIUM activated'.tr
-                    : 'Try PREMIUM Package for free'.tr,
+                billingService.isPro() ? 'PREMIUM activated'.tr : 'Try PREMIUM Package for free'.tr,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 minFontSize: 14,
-                style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xff592F72)),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xff592F72)),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -385,7 +400,7 @@ class MainMenuPageState extends State<MainMenuPage> {
 
   void openIfVip(Widget page) async {
     if (billingService.isPro()) {
-      Get.off(() => page, opaque: true);
+      Get.off(page, opaque: true);
     } else {
       await Get.to(() => ABTestingService.getPaywall());
       setState(() {});
@@ -590,14 +605,15 @@ class MainMenuPageState extends State<MainMenuPage> {
     appAnalitics.logEvent('first_start');
     Get.to(const MeditationPage());
     await OrderUtil().getRouteByPositionInList(await OrderUtil().getNextPos(0)).then((value) {
-      Get.off(() => value);
+      Get.off(value);
     });
   }
 
   void openInterviewModel(int _cntBeforInterview) async {
     bool isInterviewed = await MyDB().getBox().get(MyResource.IS_DONE_INTERVIEW, defaultValue: false);
-    if (_cntBeforInterview > 2 && !isInterviewed)
+    if (_cntBeforInterview > 2 && !isInterviewed) {
       Future.delayed(const Duration(seconds: 1), () => Get.dialog(const InterviewDialog(), barrierDismissible: false));
+    }
   }
 
   _openSettings() {

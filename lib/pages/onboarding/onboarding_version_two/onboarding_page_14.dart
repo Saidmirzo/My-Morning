@@ -109,10 +109,7 @@ class _OnboardingVersionSecondPage14State extends State<OnboardingVersionSecondP
             GestureDetector(
               onTap: () {
                 AppRouting.replace(const MainMenuPage());
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ABTestingService.getPaywall()),
-                );
+                Get.to(ABTestingService.getPaywall());
               },
               child: Container(
                 width: double.maxFinite,

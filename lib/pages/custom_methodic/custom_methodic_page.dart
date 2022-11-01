@@ -18,19 +18,16 @@ class CustomMethodicPage extends StatefulWidget {
   State<CustomMethodicPage> createState() => _CustomMethodicPageState();
 }
 
-class _CustomMethodicPageState extends State<CustomMethodicPage>
-    with WidgetsBindingObserver {
+class _CustomMethodicPageState extends State<CustomMethodicPage> with WidgetsBindingObserver {
   TimerService timerService = TimerService();
   TimerLeftController cTimerLeft;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      cTimerLeft.onAppLeft(timerService.timer, timerService.time.value,
-          onPlayPause: () => timerService.startTimer());
+      cTimerLeft.onAppLeft(timerService.timer, timerService.time.value, onPlayPause: () => timerService.startTimer());
     } else if (state == AppLifecycleState.resumed) {
-      cTimerLeft.onAppResume(
-          timerService.timer, timerService.time, timerService.passedSec);
+      cTimerLeft.onAppResume(timerService.timer, timerService.time, timerService.passedSec);
     }
   }
 
@@ -108,21 +105,16 @@ class _CustomMethodicPageState extends State<CustomMethodicPage>
                         radius: Get.height * 0.18,
                         lineWidth: 15.0,
                         animation: false,
-                        percent: timerService.createValue > 1.0
-                            ? 1
-                            : timerService.createValue,
+                        percent: timerService.createValue > 1.0 ? 1 : timerService.createValue,
                         center: TimerCircleButton(
                             child: Icon(
-                              timerService.isActive.isTrue
-                                  ? Icons.pause
-                                  : Icons.play_arrow,
+                              timerService.isActive.isTrue ? Icons.pause : Icons.play_arrow,
                               size: 40,
                               color: AppColors.VIOLET,
                             ),
                             onPressed: () => timerService.startTimer()),
                         circularStrokeCap: CircularStrokeCap.round,
-                        linearGradient:
-                            AppColors.Progress_Gradient_Timer_Affirmation,
+                        linearGradient: AppColors.Progress_Gradient_Timer_Affirmation,
                         backgroundColor: Colors.white,
                       ),
                     ),
@@ -141,17 +133,16 @@ class _CustomMethodicPageState extends State<CustomMethodicPage>
                   GestureDetector(
                     onTap: () async {
                       await timerService.skipTask();
-                      Get.off(() => CastomSuccessPage(
-                          fromHomeMenu: false,
-                          percentValue: 1,
-                          pageid: widget.pageId,
+                      Get.off(CastomSuccessPage(
+                        fromHomeMenu: false,
+                        percentValue: 1,
+                        pageid: widget.pageId,
                       ));
                       //predicate: ModalRoute.withName(settingsPageRoute));
                       //appAnalitics.logEvent('first_affirmation_next');
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: Container(
                         height: 65,
                         decoration: BoxDecoration(

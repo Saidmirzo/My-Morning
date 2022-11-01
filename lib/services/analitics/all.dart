@@ -1,5 +1,4 @@
 import 'analyticService.dart';
-import 'facebook_analitics.dart';
 
 class AppAnalitics {
   // Объединим отправку но оставим возможность отключить в отдельную сеть
@@ -7,7 +6,7 @@ class AppAnalitics {
       {bool logFacebook = true,
       bool logFirebase = true,
       Map<String, dynamic> params}) {
-    if (logFacebook) fbAppEvents.logEvent(name: name, parameters: params);
+    // if (logFacebook) fbAppEvents.logEvent(name: name, parameters: params);
     if (logFirebase) {
       AnalyticService.analytics.logEvent(name: name, parameters: params);
     }

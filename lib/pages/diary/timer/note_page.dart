@@ -56,21 +56,16 @@ class TimerNotePageState extends State<TimerNotePage> {
   void initEditText() {
     textEditingController = TextEditingController();
     textEditingController.addListener(() async {
-      if (textEditingController.text != null &&
-          textEditingController.text.isNotEmpty) {
-        await MyDB()
-            .getBox()
-            .put(MyResource.NOTE_KEY, Note(textEditingController.text));
+      if (textEditingController.text != null && textEditingController.text.isNotEmpty) {
+        await MyDB().getBox().put(MyResource.NOTE_KEY, Note(textEditingController.text));
       }
     });
   }
 
   int passedSec = 0;
   void saveNoteProgress(bool isSkip) {
-    if (textEditingController.text != null &&
-        textEditingController.text.isNotEmpty) {
-      var model =
-          DiaryNoteProgress(textEditingController.text, passedSec, isSkip);
+    if (textEditingController.text != null && textEditingController.text.isNotEmpty) {
+      var model = DiaryNoteProgress(textEditingController.text, passedSec, isSkip);
       ProgressController pg = Get.find();
       pg.saveDiaryJournal(model);
     }
@@ -105,24 +100,21 @@ class TimerNotePageState extends State<TimerNotePage> {
     await _audioPlayer.setAsset("assets/audios/success.mp3");
     saveNoteProgress(isSkip);
     OrderUtil().getRouteById(TimerPageId.Diary).then((value) {
-      Get.off(() => TimerSuccessScreen(() {
-        Get.off(() => widget.fromHomeMenu ? const ProgressPage() : value);
+      Get.off(TimerSuccessScreen(() {
+        Get.off(widget.fromHomeMenu ? const ProgressPage() : value);
       }, MyDB().getBox().get(MyResource.DIARY_TIME_KEY).time, false, 1));
     });
     appAnalitics.logEvent('first_dnevnik_next');
   }
 
   void initTimer() {
-    ExerciseTime time = MyDB()
-        .getBox()
-        .get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(1));
+    ExerciseTime time = MyDB().getBox().get(MyResource.DIARY_TIME_KEY, defaultValue: ExerciseTime(1));
     _time.value = 60;
     _startTime = time.time;
     startTimer();
   }
 
-  RxDouble get leftTime =>
-      _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.obs;
+  RxDouble get leftTime => _startTime != null ? (1 - _time.value / (_startTime * 60)).obs : 0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +170,7 @@ class TimerNotePageState extends State<TimerNotePage> {
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  Get.off(() => const DiaryPage(), opaque: true);
+                                  Get.off(const DiaryPage(), opaque: true);
                                   _timer?.cancel();
                                 },
                                 child: const Icon(
