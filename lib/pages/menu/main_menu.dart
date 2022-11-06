@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -86,7 +87,7 @@ class MainMenuPageState extends State<MainMenuPage> {
       body: Stack(
         children: [
           ListView(
-            physics: const ClampingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.zero,
             shrinkWrap: true,
             children: [
@@ -135,21 +136,22 @@ class MainMenuPageState extends State<MainMenuPage> {
               ),
             ],
           ),
-          Consumer<PayWallProvider>(builder: (context, model, child) {
-            return model.isShowAds
-                ? GestureDetector(
-                    onTap: () async {
-                      await Appodeal.show(AppodealAdType.Interstitial, "main_menu");
-                      context.read<PayWallProvider>().startTimer();
-                    },
-                    child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.transparent,
-                    ),
-                  )
-                : const SizedBox.shrink();
-          }),
+          if (Platform.isAndroid)
+            Consumer<PayWallProvider>(builder: (context, model, child) {
+              return model.isShowAds
+                  ? GestureDetector(
+                      onTap: () async {
+                        await Appodeal.show(AppodealAdType.Interstitial, "main_menu");
+                        context.read<PayWallProvider>().startTimer();
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.transparent,
+                      ),
+                    )
+                  : const SizedBox.shrink();
+            }),
           const Positioned(
             bottom: 0,
             child: BottomMenu(
@@ -308,7 +310,7 @@ class MainMenuPageState extends State<MainMenuPage> {
             const SizedBox(width: 5),
             GestureDetector(child: SvgPicture.asset('$imagePath/crown.svg')),
             const SizedBox(width: 10),
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width - 57,
               child: AutoSizeText(
                 billingService.isPro() ? 'PREMIUM activated'.tr : 'Try PREMIUM Package for free'.tr,
@@ -402,7 +404,7 @@ class MainMenuPageState extends State<MainMenuPage> {
     if (billingService.isPro()) {
       Get.off(page, opaque: true);
     } else {
-      await Get.to(() => ABTestingService.getPaywall());
+      await Get.to(() => ABTestingService.getPaywall(true));
       setState(() {});
     }
   }
@@ -594,9 +596,7 @@ class MainMenuPageState extends State<MainMenuPage> {
   }
 
   _clearExercisesHolder() async {
-    await MyDB()
-        .getBox()
-        .put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
+    await MyDB().getBox().put(MyResource.EXERCISES_HOLDER, ExerciseHolder([], []));
   }
 
   _startExercise() async {

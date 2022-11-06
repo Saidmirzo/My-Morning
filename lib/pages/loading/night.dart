@@ -12,16 +12,14 @@ class NightPage extends StatefulWidget {
   _NightPageState createState() => _NightPageState();
 }
 
-class _NightPageState extends State<NightPage>
-    with SingleTickerProviderStateMixin {
+class _NightPageState extends State<NightPage> with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   RxDouble animX = (-1.5).obs;
   RxDouble animY = (-.3).obs;
 
   void initController() {
-    controller = AnimationController(
-        duration: const Duration(milliseconds: 1500), vsync: this);
+    controller = AnimationController(duration: const Duration(milliseconds: 1500), vsync: this);
     controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         widget.onDone();
@@ -42,13 +40,11 @@ class _NightPageState extends State<NightPage>
 
   @override
   Widget build(BuildContext context) {
-    print('Build NightPage');
     Future.delayed(const Duration(milliseconds: 500), () {
       controller.forward();
     });
     return Container(
-      decoration:
-          const BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
+      decoration: const BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
       child: Stack(
         alignment: Alignment.center,
         children: [

@@ -99,7 +99,7 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
                   if (url.split(':').last == 'support') {
                     Get.to(() => FaqSupportPage());
                   } else if (url.split(':').last == 'tarifs') {
-                    Get.to(() => ABTestingService.getPaywall());
+                    Get.to(() => ABTestingService.getPaywall(true));
                   } else if (url.split(':').last == 'unsubscribe') {
                     Get.to(() => Interview2Page());
                   }

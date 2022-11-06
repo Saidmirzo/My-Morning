@@ -10,15 +10,14 @@ import 'package:percent_indicator/percent_indicator.dart';
 Widget buildTimerProgress(TimerService timerService, bool isSilence) {
   // double _timerSize = Get.width * 0.5;
   MediationAudioController audioController = Get.find();
-  if(menuState == MenuState.NIGT){
-
-  audioController.play();
+  if (menuState == MenuState.NIGT) {
+    audioController.play();
   }
   return Padding(
     padding: const EdgeInsets.only(top: 54.0, bottom: 16),
     child: Obx(
       () => CircularPercentIndicator(
-        radius: Get.height * 0.2,
+        radius: Get.width * 0.4,
         lineWidth: 20.0,
         animation: false,
         percent: menuState == MenuState.MORNING ? timerService.createValue : timerService.creatValueNight,
@@ -38,7 +37,9 @@ Widget buildTimerProgress(TimerService timerService, bool isSilence) {
           },
         ),
         circularStrokeCap: CircularStrokeCap.round,
-        linearGradient: menuState == MenuState.MORNING ? AppColors.Progress_Gradient_Timer_Meditation : AppColors.Progress_Gradient_Timer_Meditation_Night,
+        linearGradient: menuState == MenuState.MORNING
+            ? AppColors.Progress_Gradient_Timer_Meditation
+            : AppColors.Progress_Gradient_Timer_Meditation_Night,
         backgroundColor: Colors.white,
       ),
     ),

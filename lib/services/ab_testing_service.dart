@@ -16,7 +16,6 @@ import 'package:morningmagic/pages/paywall/paywall_v2/paywall_v2.dart';
 import 'package:morningmagic/resources/remote_config_keys.dart';
 
 class ABTestingService extends GetxService {
-
   static List<AdaptyPaywall> tests = [];
   static List<AdaptyProduct> products = [];
 
@@ -46,11 +45,9 @@ class ABTestingService extends GetxService {
 
         // Определяем версию онбординга
         await fetchOnboardingVersion();
-      }
-      catch(e) {
+      } catch (e) {
         print(e);
-      }
-      finally {
+      } finally {
         loading = false;
       }
     }
@@ -71,14 +68,11 @@ class ABTestingService extends GetxService {
 
       // Находим нужный тест
       final AdaptyPaywall bestPaywall =
-      tests?.firstWhere((paywall) => paywall.developerId == param,
-          orElse: () => null
-      );
+          tests?.firstWhere((paywall) => paywall.developerId == param, orElse: () => null);
       if (bestPaywall != null) Adapty.logShowPaywall(paywall: bestPaywall);
 
       return bestPaywall;
-    }
-    catch(e) {
+    } catch (e) {
       print(e);
       return null;
     }
@@ -99,17 +93,14 @@ class ABTestingService extends GetxService {
 
       // Извлекаем данные из теста, если они есть
       if (_test != null &&
-          _test.customPayload
-              .containsKey(AdaptyCustomPayloadKeys.abTestData) &&
+          _test.customPayload.containsKey(AdaptyCustomPayloadKeys.abTestData) &&
           _test.customPayload[AdaptyCustomPayloadKeys.abTestData]
-              .containsKey(AdaptyCustomPayloadKeys.onboardingVersion)
-      ) {
-        _onboardingVersion = _test
-            .customPayload[AdaptyCustomPayloadKeys.abTestData][AdaptyCustomPayloadKeys.onboardingVersion];
+              .containsKey(AdaptyCustomPayloadKeys.onboardingVersion)) {
+        _onboardingVersion =
+            _test.customPayload[AdaptyCustomPayloadKeys.abTestData][AdaptyCustomPayloadKeys.onboardingVersion];
         print('onboardingVersion $_onboardingVersion');
       }
-    }
-    catch(e) {
+    } catch (e) {
       print(e);
     }
   }
@@ -118,17 +109,14 @@ class ABTestingService extends GetxService {
   static Future<void> fetchPaywallVersion() async {
     try {
       // Извлекаем А/Б тест с пейволлами
-      final AdaptyPaywall _test = await getTest(
-          AdaptyCustomPayloadKeys.testPaywallID
-      );
+      final AdaptyPaywall _test = await getTest(AdaptyCustomPayloadKeys.testPaywallID);
 
       // Извлекаем данные из теста, если они есть
       if (_test != null) {
         paywallVersion = _test.products.first.paywallName;
         print('paywallVersion $paywallVersion');
       }
-    }
-    catch (e) {
+    } catch (e) {
       print(e);
     }
   }
@@ -139,7 +127,10 @@ class ABTestingService extends GetxService {
       case 'v1':
         return NewPaywall(isSettings: param ?? false);
       case 'v2':
-        return PaywallV2(isSettings: param ?? false);
+        return PaywallV2(
+          isSettings: param ?? false,
+          onBack: param ?? false,
+        );
       default:
         return NewPaywall(isSettings: param ?? false);
     }
@@ -147,20 +138,20 @@ class ABTestingService extends GetxService {
 
   // Возвращаем онбординг
   static Widget getOnboarding() {
-    // return const OnBoarding1Page();
+    return const OnBoarding1Page();
     // return const OnboardingVersionSecondPage1();
     // return const OnboardingVersionThirdPageOne();
-    switch (_onboardingVersion) {
-      case 'onbording_v1_1':
-        return const OnBoarding1Page();
-      case 'onbording_v2_1':
-        return const OnboardingVersionSecondPage1();
-      case 'onbording_v3_1':
-        return const OnboardingVersionThirdPageOne();
-      default:
-        // for catch in test
-        // throw Error();
-        return const OnBoarding1Page();
-    }
+    // switch (_onboardingVersion) {
+    //   case 'onbording_v1_1':
+    //     return const OnBoarding1Page();
+    //   case 'onbording_v2_1':
+    //     return const OnboardingVersionSecondPage1();
+    //   case 'onbording_v3_1':
+    //     return const OnboardingVersionThirdPageOne();
+    //   default:
+    //     // for catch in test
+    //     // throw Error();
+    //     return const OnBoarding1Page();
+    // }
   }
 }

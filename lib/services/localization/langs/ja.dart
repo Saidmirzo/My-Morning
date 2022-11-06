@@ -12,10 +12,8 @@ Map<String, String> translations_ja = {
   """thanks_to_interview""": """ありがとうございます、ぜひお聞きしたいと思います！""",
   """help_us""": """ヘルプ""",
   """more_not_show""": """二度と表示しない""",
-  """interview_dialog_text""":
-      """おい! 14日間の無料トライアルが欲しいのか？アンケートに答えて、このアプリをより良くする手助けをしてください！""",
-  """interview_dialog_text_vip""":
-      """おい!アプリケーションのフルバージョンをご利用いただき、ありがとうございます。改善したいので、アンケートにご協力いただければ幸いです。""",
+  """interview_dialog_text""": """おい! 14日間の無料トライアルが欲しいのか？アンケートに答えて、このアプリをより良くする手助けをしてください！""",
+  """interview_dialog_text_vip""": """おい!アプリケーションのフルバージョンをご利用いただき、ありがとうございます。改善したいので、アンケートにご協力いただければ幸いです。""",
   """question_1""": """親しくなりましょう。年齢、性別、国(オプション)について教えてください。""",
   """question_2""": """朝起きるのが辛いですか？""",
   """question_2_subquestion_1""": """その場合、理由は？""",
@@ -195,8 +193,7 @@ Map<String, String> translations_ja = {
   "program_3_ex_5_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FCats%20Dogs%20exercise.mp3?alt=media&token=b738846e-0c8a-41f9-9cc7-535217192b07',
   """program_3_ex_5_name""": """キャッツドッグス運動""",
-  """program_3_ex_5_desc""":
-      """•あなたの体重を均等に分散して4つすべてに降りてください。あなたの腰の下に膝。頭と首が背骨と一直線に。
+  """program_3_ex_5_desc""": """•あなたの体重を均等に分散して4つすべてに降りてください。あなたの腰の下に膝。頭と首が背骨と一直線に。
  •前を向くまで息を吸い込み、頭を上げます。
  •息を吐き出し、腹のボタンを背骨に引っ張り、腰を前方に持って行きます。あごを胸に押し込みます。
  •繰り返しの所望の回数だけ繰り返します。""",
@@ -294,8 +291,7 @@ Map<String, String> translations_ja = {
   """fitness_program""": """既製のプログラム""",
   """fitness_my_program""": """自分のプログラムを作る""",
   """visualization""": """視覚化""",
-  """visualization_title""":
-      """目を閉じて、あなたの欲望を想像し、それに触れ、それを感じ、ステップバイステップでそれへの道を想像する""",
+  """visualization_title""": """目を閉じて、あなたの欲望を想像し、それに触れ、それを感じ、ステップバイステップでそれへの道を想像する""",
   """visualization_hint""": """ビジュアライゼーションを入力し、簡単に説明する""",
   """diary""": """日記""",
   """voice_record""": """音声記録""",
@@ -325,8 +321,7 @@ Map<String, String> translations_ja = {
   """push_success""": """成功！""",
   """action_completed""": """アクションが完了しました!""",
   """timer_started""": """タイマーが開始""",
-  """appreciate""":
-      """私たちはあなたの居心地の良さと快適さに感謝し、それ故に申請書を支払いました。広告に気を取られることがないように。""",
+  """appreciate""": """私たちはあなたの居心地の良さと快適さに感謝し、それ故に申請書を支払いました。広告に気を取られることがないように。""",
   """Subscription will provide the opportunity to perform exercises such as""":
       """フィットネス、日記、読書、視覚化。毎月自動更新されますが、いつでもキャンセルできます。""",
   """price""": """価格""",
@@ -335,8 +330,7 @@ Map<String, String> translations_ja = {
   """tarif_annual_title""": """年間@price""",
   """tarif_annual_desc""": """1か月あたりの@price""",
   """well_done""": """よくやりましたね""",
-  """well_done_desc""":
-      """あなたはあなたの朝に素晴らしいスタートを切った、あなた自身に感謝し、そして利益を得てこの日を過ごしてください。""",
+  """well_done_desc""": """あなたはあなたの朝に素晴らしいスタートを切った、あなた自身に感謝し、そして利益を得てこの日を過ごしてください。""",
   """buy_month""": """サブスクリプションの支払い""",
   """buy_free""": """完全な複合体を試してみてください""",
   """days_free""": """@days日間無料""",
@@ -348,12 +342,12 @@ Map<String, String> translations_ja = {
   """choose_sequence""": """シーケンスの選択""",
   """choose""": """選ぶ""",
   """done""": """完成です""",
-  """choose_title""":
-      """ドラッグアンドドロップしてエクササイズのシーケンスを変更し、それらの時間を設定します.0分-エクササイズをスキップします。""",
+  """choose_title""": """ドラッグアンドドロップしてエクササイズのシーケンスを変更し、それらの時間を設定します.0分-エクササイズをスキップします。""",
   """exercises_note""": """演習""",
   """visualizations_note""": """視覚化""",
   """seconds""": """お代わり""",
   """affirmation_small""": """確約""",
+  """affirmation_smal""": """確約""",
   """meditation_small""": """黙想""",
   """fitness_small""": """フィットネス""",
   """diary_small""": """日記""",
@@ -404,8 +398,7 @@ Map<String, String> translations_ja = {
   """paragraph2""": """フィットネスで体を鍛えよう""",
   """paragraph3""": """朝、本からインスピレーションを得る""",
   """paragraph4""": """成功の可視化""",
-  """try_vip_desc""":
-      """無料で日間試してみると、価格は月額@priceになります。サブスクリプションはいつでもキャンセルできます""",
+  """try_vip_desc""": """無料で日間試してみると、価格は月額@priceになります。サブスクリプションはいつでもキャンセルできます""",
   """vip_price_card""": """1ヶ月""",
   """vip_def_month_price""": """0.99\$""",
   """for_confidence""": """自信のために""",
@@ -426,8 +419,7 @@ Map<String, String> translations_ja = {
   """health_text_4""": """私は、癒しの秘密を知っている私の内なる部分と調和しています。""",
   """health_text_5""": """私は毎日、より健康でより強くなっている""",
   """health_text_6""": """私は、エネルギーと生命力に満ち溢れている""",
-  """health_text_7""":
-      """私は、自分が作り出す心の雰囲気をコントロールすることができます。思考は変えることができ、私が選んだポジティブな思考が、私の治癒を助けてくれています。""",
+  """health_text_7""": """私は、自分が作り出す心の雰囲気をコントロールすることができます。思考は変えることができ、私が選んだポジティブな思考が、私の治癒を助けてくれています。""",
   """health_text_8""": """私は健康で、幸せで、輝いている""",
   """health_text_9""": """私は健康であることに価値がある""",
   """health_text_10""": """私は健康を放射しています""",
@@ -486,10 +478,8 @@ Map<String, String> translations_ja = {
   """add_yours""": """自分のものを作成する""",
   """save""": """セーブ""",
   """delete_program_alert""": """プログラムを削除してもよろしいですか?""",
-  """initial_exercises_empty""":
-      """デフォルトのエクササイズはすでに追加されています独自のエクササイズを作成してみてください""",
-  """restore_default_dialog_title""":
-      """デフォルトの演習を復元してもよろしいですか?ユーザープログラム/演習は削除されます""",
+  """initial_exercises_empty""": """デフォルトのエクササイズはすでに追加されています独自のエクササイズを作成してみてください""",
+  """restore_default_dialog_title""": """デフォルトの演習を復元してもよろしいですか?ユーザープログラム/演習は削除されます""",
   """name_not_be_empty""": """名前を空にすることはできません""",
   """type_exercise_name""": """エクササイズ名を入力する""",
   """type_program_name""": """プログラム名を入力します。""",
@@ -531,11 +521,9 @@ Map<String, String> translations_ja = {
   """faq_cat_why""": """それは何のためですか?""",
   """faq_cat_tarifs""": """サブスクリプションに関する質問""",
   """faq_tarifs_title_1""": """サブスクリプションは何を提供しますか?""",
-  """faq_tarifs_desc_1""":
-      """-<p>広告<br>を削除します-セクションフィットネス、日記、読書、視覚化<br>へのアクセス-将来の新しい複合体へのアクセス。</p>""",
+  """faq_tarifs_desc_1""": """-<p>広告<br>を削除します-セクションフィットネス、日記、読書、視覚化<br>へのアクセス-将来の新しい複合体へのアクセス。</p>""",
   """faq_tarifs_title_2""": """アプリが無料ではないのはなぜですか？""",
-  """faq_tarifs_desc_2""":
-      """<p>-無料商品は評価されない、自己啓発ツールに投資しないと評価されない<br>-購読者から受け取るお金はすべて、アプリの改善に向かいます</p>""",
+  """faq_tarifs_desc_2""": """<p>-無料商品は評価されない、自己啓発ツールに投資しないと評価されない<br>-購読者から受け取るお金はすべて、アプリの改善に向かいます</p>""",
   """faq_tarifs_title_3""": """関税の変更方法は？""",
   """faq_tarifs_desc_3""":
       """<p>1.に行きます<ahref='screentarifs'>«関税プラン»</a>タブ（クリックできます）<br>2.必要な関税を選択する<br>3.関税の変更をクリックします<br>4.来月、関税が変わります</p>""",
@@ -543,8 +531,7 @@ Map<String, String> translations_ja = {
   """faq_tarifs_desc_4""":
       """<p>アクティブなサブスクリプションがある場合にのみ回復が機能します。サブスクリプションの戻す"ボタンをクリックするか、手動で実行できます。<br>1.に行きます<ahref='screentarifs'>«関税プラン»</a>タブ(クリックできます)<br>2.下部をクリックして復元します</p>""",
   """faq_tarifs_title_5""": """サブスクリプションをキャンセルする方法""",
-  """faq_tarifs_desc_5""":
-      """<p>手動で実行するか、ボタンをクリックします<ahref='screen:unsubscribe'>«登録解除»</a></p>""",
+  """faq_tarifs_desc_5""": """<p>手動で実行するか、ボタンをクリックします<ahref='screen:unsubscribe'>«登録解除»</a></p>""",
   """faq_tarifs_title_6""": """サポート担当者について""",
   """faq_about_title_1""": """これらの運動は何のためのものですか？""",
   """faq_about_desc_1""":
@@ -556,8 +543,7 @@ Map<String, String> translations_ja = {
   """faq_about_desc_3""":
       """<p>練習をすることで、その日に合わせて調整したり、陽気さをチャージしたり、ストレスを解消したりすることができます<br>多くのトップマネージャーや成功した人は、より良い結果を得るために、より早く起きることを選びます。しかし、単にエネルギーを充電したり、精神的な態度を改善したい場合にも役立ちます。</p>""",
   """faq_about_title_4""": """結果を見ると？""",
-  """faq_about_desc_4""":
-      """<p>10日後には、習慣<br>1ヶ月使用すると、目覚めやすくなり、ストレスも著しく少なくなったことを実感できるようになります。</p>""",
+  """faq_about_desc_4""": """<p>10日後には、習慣<br>1ヶ月使用すると、目覚めやすくなり、ストレスも著しく少なくなったことを実感できるようになります。</p>""",
   """faq_about_title_5""": """フィットネスの設定方法""",
   """faq_about_title_6""": """視覚化を設定する方法""",
   """welcome_to_sleep""": """ようこそおやすみなさい""",
@@ -629,16 +615,13 @@ Map<String, String> translations_ja = {
   """onb_1_btn""": """どのように私を助けるつもりですか?""",
   """onb_2_text_1""": """私の仕事は、日々の混沌をコントロールし、あなたの人生を根本的に変える完璧なシステムを作り出すことです。""",
   """onb_2_btn""": """どうやってやるの?""",
-  """onb_3_text_1""":
-      """毎朝、あなたは習慣と儀式の特定のセットから始めます。彼らはあなたに一日中活力、エネルギー、そしてモチベーションの電荷を与えるでしょう!""",
+  """onb_3_text_1""": """毎朝、あなたは習慣と儀式の特定のセットから始めます。彼らはあなたに一日中活力、エネルギー、そしてモチベーションの電荷を与えるでしょう!""",
   """onb_3_btn""": """それは私の人生をどのように変えるでしょうか?""",
   """onb_4_btn""": """ナイス！習慣について教えてください。""",
-  """onb_5_text_1""":
-      """パワーは小さなステップにあります!毎日、あなたは自分の人生を一歩一歩、少しずつ創造しているでしょう。私は2ヶ月後にあなたが自分自身を認識しないことを保証します!""",
+  """onb_5_text_1""": """パワーは小さなステップにあります!毎日、あなたは自分の人生を一歩一歩、少しずつ創造しているでしょう。私は2ヶ月後にあなたが自分自身を認識しないことを保証します!""",
   """onb_6_text_1""": """習慣その1""",
   """onb_6_text_2""": """朝の運動""",
-  """onb_6_text_3""":
-      """誰もが知っているが、誰も知らない！でも、ちゃんとやれば、コーヒーよりもずっと強力で、元気を出して、やっと目を覚ますのに一番効果的な方法だよ！""",
+  """onb_6_text_3""": """誰もが知っているが、誰も知らない！でも、ちゃんとやれば、コーヒーよりもずっと強力で、元気を出して、やっと目を覚ますのに一番効果的な方法だよ！""",
   """onb_6_text_4""": """5分でエネルギーが急増し、一日中元気が出る特別なエクササイズセットを準備してください。""",
   """onb_6_btn""": """習慣その2""",
   """onb_7_text_1""": """習慣その2""",
@@ -648,22 +631,17 @@ Map<String, String> translations_ja = {
   """onb_7_btn""": """習慣その3""",
   """onb_8_text_1""": """習慣その3""",
   """onb_8_text_2""": """計画""",
-  """onb_8_text_3""":
-      """生産的な1日を過ごすには、何をすべきかを知る必要があります。この点については、毎朝、あなたのその日の計画を書きます。""",
-  """onb_8_text_4""":
-      """計画や目標、自分の考えやアイデアをアプリ内にそのまま書き留めたり、オーディオ形式で記録したりすることができる。""",
+  """onb_8_text_3""": """生産的な1日を過ごすには、何をすべきかを知る必要があります。この点については、毎朝、あなたのその日の計画を書きます。""",
+  """onb_8_text_4""": """計画や目標、自分の考えやアイデアをアプリ内にそのまま書き留めたり、オーディオ形式で記録したりすることができる。""",
   """onb_8_btn""": """習慣その4""",
   """onb_9_text_1""": """習慣その4""",
   """onb_9_text_2""": """瞑想""",
-  """onb_9_text_3""":
-      """余計な考えから心を清めなさい。瞑想は最も実行可能な実践の一つです。すぐに影響が出て、毎回この効果が蓄積されます。""",
-  """onb_9_text_4""":
-      """瞑想がアプリケーションに組み込まれています。私たちはすべてを熟考しました。ただオンにして練習してください！""",
+  """onb_9_text_3""": """余計な考えから心を清めなさい。瞑想は最も実行可能な実践の一つです。すぐに影響が出て、毎回この効果が蓄積されます。""",
+  """onb_9_text_4""": """瞑想がアプリケーションに組み込まれています。私たちはすべてを熟考しました。ただオンにして練習してください！""",
   """onb_9_btn""": """習慣その5""",
   """onb_10_text_1""": """習慣その5""",
   """onb_10_text_2""": """肯定""",
-  """onb_10_text_3""":
-      """あなたは長い間何か夢を見ていたのですか？肯定の実践を通じて潜在意識を再プログラミングし、目標と欲求を満たすように設定することができる。""",
+  """onb_10_text_3""": """あなたは長い間何か夢を見ていたのですか？肯定の実践を通じて潜在意識を再プログラミングし、目標と欲求を満たすように設定することができる。""",
   """onb_10_text_4""": """埋め込み型の肯定システムによって、自然で効果的に実践できます。""",
   """onb_10_btn""": """他に何がある？""",
   """onb_11_text_1""": """完全な統計情報""",
@@ -795,35 +773,29 @@ We wish you a successful and healthy future with your miracle morning! Hope that
   """7-9 hours""": """7時間～9時間""",
   """9-12 hours""": """9時間～12時間""",
   """12 hours or more""": """12時間以上""",
-  """Got it! Do you wake up feeling well-rested?""":
-      """わかったあなたは、目覚めたとき、十分な休息を感じていますか？""",
+  """Got it! Do you wake up feeling well-rested?""": """わかったあなたは、目覚めたとき、十分な休息を感じていますか？""",
   """Always""": """いつも""",
   """Usually""": """通常""",
   """Sometimes""": """時々""",
   """Rarely""": """めったにない""",
-  """How much time do you have at the start of your day?""":
-      """一日の始まりにどのくらい時間がありますか？""",
+  """How much time do you have at the start of your day?""": """一日の始まりにどのくらい時間がありますか？""",
   """0-10 minutes""": """0-10分""",
   """10-20 minutes""": """10-20分""",
   """20-30 minutes""": """20-30分""",
   """30+ minutes""": """30分以上""",
-  """Understood! Throughout your day, how are your energy levels?""":
-      """理解できましたか？一日を通して、あなたのエネルギーレベルはどうですか？""",
+  """Understood! Throughout your day, how are your energy levels?""": """理解できましたか？一日を通して、あなたのエネルギーレベルはどうですか？""",
   """High - energized throughout the day""": """高-一日中元気でいられる""",
   """Medium - I have bursts of energy""": """中-エネルギーの爆発がある""",
   """Low - my energy fades throughout the day""": """低い-一日中エネルギーが低下している""",
-  """How satisfied are you with your current fitness level?""":
-      """現在のフィットネスレベルにどの程度満足していますか？""",
+  """How satisfied are you with your current fitness level?""": """現在のフィットネスレベルにどの程度満足していますか？""",
   """Completely - I feel fit and healthy""": """完全に-健康的であると感じる""",
   """Somewhat - I'd like to see some improvements""": """やや-もう少し改善したい。""",
-  """Not at all - I'd like to see a mojor change""":
-      """全く満足していない-もっと大きな変化がほしい""",
+  """Not at all - I'd like to see a mojor change""": """全く満足していない-もっと大きな変化がほしい""",
   """Over the past year, what's been your experience building better habits?""":
       """過去1年間、より良い習慣を身につけるためにどのようなことを経験しましたか？""",
   """I have been constantly improving my habits""": """常に習慣を改善し続けている""",
   """I have built some good habits""": """良い習慣を身につけることができた""",
-  """I have tried to build good habits, but have not kept up with them""":
-      """私は良い習慣を身に付けようとしましたが、それに追いついていません""",
+  """I have tried to build good habits, but have not kept up with them""": """私は良い習慣を身に付けようとしましたが、それに追いついていません""",
   """I have not tried to build new habits""": """私は新しい習慣を構築しようとしていない""",
   """We hear you. What single change would improve your life right now?""":
       """私たちはあなたの声を聞きます。今のあなたの人生を一つでも改善できるでしょうか。""",
@@ -831,8 +803,7 @@ We wish you a successful and healthy future with your miracle morning! Hope that
   """More productivity""": """生産性の向上""",
   """More mindfulness""": """より多くのマインドフルネス""",
   """More sleep""": """より多くの睡眠""",
-  """How often do you focus on the past or future?""":
-      """どのくらいの頻度で過去や未来に焦点を当てていますか?""",
+  """How often do you focus on the past or future?""": """どのくらいの頻度で過去や未来に焦点を当てていますか?""",
   """Never - I live in the present""": """決して-私は現在に住んでいます""",
   """Some of the time""": """時々""",
   """Most of the time""": """ほとんどの場合""",
@@ -842,10 +813,8 @@ We wish you a successful and healthy future with your miracle morning! Hope that
   """Sometimes lose focus""": """時々集中力を失う""",
   """Rarely lose focus""": """集中力を失うことはめったにない""",
   """Laser focus""": """レーザーフォーカス""",
-  """We're finalizing your personalized journey...""":
-      """私たちはあなたのパーソナライズされた旅を仕上げています...""",
-  """You're embarking on this journey to build more Energy""":
-      """あなたはより多くのエネルギーを構築するためにこの旅に乗り出しています""",
+  """We're finalizing your personalized journey...""": """私たちはあなたのパーソナライズされた旅を仕上げています...""",
+  """You're embarking on this journey to build more Energy""": """あなたはより多くのエネルギーを構築するためにこの旅に乗り出しています""",
   """Fitness""": """フィットネス""",
   """Visualization""": """ビジュアライゼーション""",
   """Meditations""": """瞑想""",
@@ -854,8 +823,7 @@ We wish you a successful and healthy future with your miracle morning! Hope that
   """Affirmations""": """アファメーション""",
   """My morning
 your entire morning routine in one app""": """「おはようございます。""",
-  """Just 30 minutes every day for a year will change your life dramatically!""":
-      """続行""",
+  """Just 30 minutes every day for a year will change your life dramatically!""": """続行""",
   """Ready to start?""": """1年間毎日30分で人生が劇的に変わります！""",
   """Let's go!""": """準備はいいですか？""",
   """""": """""",
@@ -876,8 +844,7 @@ your entire morning routine in one app""": """「おはようございます。"
   """5""": """""",
   """Unlock all features""": """すべての機能をアンロックする""",
   r"""Monthly $5.99/month, cancel anytime""": r"毎月 $5.99/月, いつでもキャンセル",
-  r"""Annually (popular) $19.99/month, cancel anytime""":
-      r"毎年(人気) $19.99/月, いつでもキャンセル",
+  r"""Annually (popular) $19.99/month, cancel anytime""": r"毎年(人気) $19.99/月, いつでもキャンセル",
   r"Lifetime $50.99, one-time payment": r"生涯 $50.99、1回限りの支払い",
   "Start 3 days free trial": "3日間の無料トライアルを開始",
   "Restore": "リストア",
@@ -887,20 +854,26 @@ Terms""": """利用規約""",
 Privacy""": """プライバシー""",
   """Voice note""": """ボイスノート""",
   """Add a note""": """メモを追加する""",
+  "5 min": """5分""",
+  "10 min": """10分""",
+  "15 min": """15分""",
+  "min 1": "分",
+  "leave": "去る",
+  "Are you sure you want to leave the complex": "あなたは複合体を残して本当にしたいですか",
+  "Start reading""": """読み始める""",
   "Recording is on hold It’s recording" "": "録音は保留中です。録音だよ",
   "Save a note": """メモを保存する""",
   """Write something here""": """ここに何かを書く""",
-  "Are you sure you want to delete a note? Delete a note":
-      "メモを削除してもよろしいですか? メモの削除",
+  "Are you sure you want to delete a note? Delete a note": "メモを削除してもよろしいですか? メモの削除",
   "Finish reading": """読み終わる""",
-  "How much time are you going to read?Set your own time Start reading":
-      "どのくらいの時間読むつもりですか? 自分の時間を設定する 読み始める",
-  """You haven't added any meditations to your Favorites yet""":
-      """まだ、お気に入りに瞑想を追加していません。""",
+  "How much time are you going to read?": """どのくらいの時間読むつもりですか?""",
+  "Set your own time": """自分の時間を設定する""",
+  "Favorites": """お気に入り""",
+  "How much time are you going to read?Set your own time Start reading": "どのくらいの時間読むつもりですか? 自分の時間を設定する 読み始める",
+  """You haven't added any meditations to your Favorites yet""": """まだ、お気に入りに瞑想を追加していません。""",
   """Choose favorite meditations""": """お気に入りの瞑想を選ぶ""",
   """Finish meditating""": """瞑想を終了する""",
-  """How much time are you going to read affirmations? Begin""":
-      """肯定文を読むのにどれくらいの時間をかけますか? 始める""",
+  """How much time are you going to read affirmations? Begin""": """肯定文を読むのにどれくらいの時間をかけますか? 始める""",
   """Select affirmation""": """肯定の選択""",
   """Morning complex
 Try PREMIUM Package for free
@@ -959,7 +932,8 @@ Delete the progress
   """Enter your name""": """名前を入力してください""",
   """Try PREMIUM Package free for 3 days""": """プレミアムパッケージを3日間無料でお試しください""",
   """Start""": """始める""",
-  """Start the day with productive daily routine. Get motivation & energy for success""": """生産的な毎日のルーチンで一日を始めましょう。成功のためのモチベーションとエネルギーを得る""",
+  """Start the day with productive daily routine. Get motivation & energy for success""":
+      """生産的な毎日のルーチンで一日を始めましょう。成功のためのモチベーションとエネルギーを得る""",
   """Start morning with good habits""": """良い習慣で朝を始める""",
   """- 10 minute Meditation""": """10分間の瞑想""",
   """- Get daily motivation with good habits""": """良い習慣で日々のモチベーションを得る""",

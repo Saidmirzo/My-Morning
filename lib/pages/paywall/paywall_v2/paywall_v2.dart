@@ -7,13 +7,11 @@ import 'package:get/get.dart';
 import 'package:morningmagic/components/app_loading.dart';
 import 'package:morningmagic/components/dialog_component.dart';
 import 'package:morningmagic/dialog/connection_dialog.dart';
-import 'package:morningmagic/pages/menu/main_menu.dart';
 import 'package:morningmagic/pages/paywall/components/action_button.dart';
 import 'package:morningmagic/pages/settings/settingsPage.dart';
 import 'package:morningmagic/pages/welcome/welcome_page.dart';
 import 'package:morningmagic/resources/svg_assets.dart';
 import 'package:morningmagic/services/analitics/all.dart';
-import 'package:morningmagic/services/analitics/analyticService.dart';
 import 'package:morningmagic/services/connection_service/connection_service.dart';
 import 'package:morningmagic/services/notifications.dart';
 import 'package:morningmagic/storage.dart';
@@ -27,10 +25,12 @@ import 'paywall_v2_oto.dart';
 
 class PaywallV2 extends StatefulWidget {
   final bool isSettings;
+  final bool onBack;
 
   const PaywallV2({
     Key key,
     this.isSettings = false,
+    this.onBack = false,
   }) : super(key: key);
 
   @override
@@ -100,24 +100,28 @@ class _PaywallV2State extends State<PaywallV2> {
                         ),
                         onTap: () async {
                           // Navigator.popUntil(context, (route) => route.isFirst);
-                          if (await CustomSharedPreferences().isFirstOpen()) {
-                            AppMetrica.reportEvent('paywall_discount_close');
-                            Get.to(() => const WelcomePage());
-                            pushNotifications = PushNotifications();
-                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-                              if (GetPlatform.isIOS) {
-                                AppMetrica.reportEvent('idfa_notification_show');
-                                var result = await AppTrackingTransparency.requestTrackingAuthorization();
-                                if (result == TrackingStatus.authorized) {
-                                  AppMetrica.reportEvent('idfa_notification_endabled');
-                                }
-                              }
-                            });
-                          } else if (widget.isSettings) {
-                            Get.to(() => const SettingsPage());
-                            // AppMetrica.reportEvent('paywall_inapp_discount_close');
+                          if (widget.onBack) {
+                            Get.back();
                           } else {
-                            Get.to(() => PaywallV2OneTimeOffer());
+                            if (await CustomSharedPreferences().isFirstOpen()) {
+                              AppMetrica.reportEvent('paywall_discount_close');
+                              Get.to(() => const WelcomePage());
+                              pushNotifications = PushNotifications();
+                              WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+                                if (GetPlatform.isIOS) {
+                                  AppMetrica.reportEvent('idfa_notification_show');
+                                  var result = await AppTrackingTransparency.requestTrackingAuthorization();
+                                  if (result == TrackingStatus.authorized) {
+                                    AppMetrica.reportEvent('idfa_notification_endabled');
+                                  }
+                                }
+                              });
+                            } else if (widget.isSettings) {
+                              Get.to(() => const SettingsPage());
+                              // AppMetrica.reportEvent('paywall_inapp_discount_close');
+                            } else {
+                              Get.to(() => PaywallV2OneTimeOffer());
+                            }
                           }
                         },
                       ),
@@ -256,14 +260,13 @@ class _PaywallV2State extends State<PaywallV2> {
                               DialogComponent().loading();
                               AppMetrica.reportEvent('paywall_inapp_close');
                               await billingService.purchase(product);
-                              appAnalitics.logEvent('first_trial');
-                              AnalyticService.analytics
-                                  .logEcommercePurchase(value: product.price, currency: product.currencyCode);
                               billingService.init();
+                              Get.back();
+                              appAnalitics.logEvent('first_trial');
+                              Get.back();
 
                               // Navigator.popUntil(
                               //     context, (route) => route.isFirst);
-                              Get.back();
                               if (await CustomSharedPreferences().isOpenSale() ||
                                   await CustomSharedPreferences().isFirstOpen()) {
                                 AppMetrica.reportEvent('subscription_trial');

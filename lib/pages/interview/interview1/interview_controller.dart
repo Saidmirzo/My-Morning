@@ -237,7 +237,7 @@ class InterviewController extends GetxController {
             slideNext();
           } else {
             Get.back();
-            Get.to(() => ABTestingService.getPaywall());
+            Get.to(() => ABTestingService.getPaywall(true));
           }
         }
         break;

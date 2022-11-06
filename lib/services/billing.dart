@@ -1,16 +1,11 @@
 import 'package:adapty_flutter/adapty_flutter.dart';
-import 'package:adapty_flutter/models/adapty_paywall.dart';
 import 'package:adapty_flutter/models/adapty_product.dart';
 import 'package:adapty_flutter/models/adapty_purchaser_info.dart';
-import 'package:adapty_flutter/results/get_paywalls_result.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:morningmagic/db/hive.dart';
 import 'package:morningmagic/features/visualization/data/repositories/visualization_image_repository_impl.dart';
 import 'package:morningmagic/features/visualization/data/repositories/visualization_target_repository_impl.dart';
 import 'package:morningmagic/features/visualization/presentation/controller/visualization_controller.dart';
-import 'package:morningmagic/pages/paywall/new_paywall.dart';
-import 'package:morningmagic/resources/remote_config_keys.dart';
 
 import 'ab_testing_service.dart';
 

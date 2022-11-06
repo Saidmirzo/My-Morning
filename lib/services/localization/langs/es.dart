@@ -16,47 +16,34 @@ Map<String, String> translations_es = {
       """¡Oye!, ¿quieres una prueba gratuita de 14 días? Entonces realiza la encuesta y ayúdanos a mejorar la app""",
   """interview_dialog_text_vip""":
       """¡Oye! Gracias por usar la versión completa de la app. Queremos mejorarla, así que estaremos agradecidos si realizaras la encuesta.""",
-  """question_1""":
-      """Vamos a conocernos. Cuéntame cuál es tu edad, género, país (opcional)""",
+  """question_1""": """Vamos a conocernos. Cuéntame cuál es tu edad, género, país (opcional)""",
   """question_2""": """¿Es difícil para ti despertar en las mañanas?""",
   """question_2_subquestion_1""": """Si es así, ¿por qué?""",
   """question_3""": """¿Usas apps para mejorar tu salud física y mental?""",
   """question_3_subquestion_1""": """Si es así, ¿por qué?""",
   """question_4""": """¿Te gustan nuestras funciones gratuitas?""",
   """question_5""": """¿Por qué escogiste nuestro producto?""",
-  """question_6""":
-      """¿Qué necesitabas cuando estabas buscando nuestro producto?""",
+  """question_6""": """¿Qué necesitabas cuando estabas buscando nuestro producto?""",
   """question_7""": """¿Encontraste lo que estabas buscando?""",
   """question_8""": """¿Qué beneficios obtienes de nuestra app?""",
   """question_9""": """¿Qué funciones necesitas?""",
-  """question_10""":
-      """¿Qué le agregarías? ¿Qué le quitarías? ¿Qué cambiarías?""",
-  """question_11""":
-      """En tu opinión, ¿es buena idea introducir las prácticas diurnas?""",
-  """question_11_subquestion_1""":
-      """Si es así, ¿por qué? (respiración, fitness matutino)""",
-  """question_12""":
-      """En tu opinión, ¿es buena idea introducir las prácticas nocturnas?""",
-  """question_12_subquestion_1""":
-      """Si es así, ¿por qué? (sonidos para dormir, preparación para dormir)""",
+  """question_10""": """¿Qué le agregarías? ¿Qué le quitarías? ¿Qué cambiarías?""",
+  """question_11""": """En tu opinión, ¿es buena idea introducir las prácticas diurnas?""",
+  """question_11_subquestion_1""": """Si es así, ¿por qué? (respiración, fitness matutino)""",
+  """question_12""": """En tu opinión, ¿es buena idea introducir las prácticas nocturnas?""",
+  """question_12_subquestion_1""": """Si es así, ¿por qué? (sonidos para dormir, preparación para dormir)""",
   """question_13""":
       """Si te gustaría participar en una entrevista con nosotros, por favor déjanos tu correo electrónico para contactarte""",
-  """interview_2_q_1""":
-      """Vamos a conocernos. Cuéntame cuál es tu edad, género, país (opcional)""",
+  """interview_2_q_1""": """Vamos a conocernos. Cuéntame cuál es tu edad, género, país (opcional)""",
   """interview_2_q_2""": """¿La app cumplió con tus expectativas? ¿Por qué?""",
   """interview_2_q_3""": """¿Te gustaron nuestras funciones gratuitas?""",
   """interview_2_q_4""": """¿Qué beneficios obtuviste de nuestra app?""",
   """interview_2_q_5""": """¿Qué funciones consideras necesarias?""",
-  """interview_2_q_6""":
-      """¿Qué le agregarías? ¿Qué le quitarías? ¿Qué cambiarías?""",
-  """interview_2_q_7""":
-      """En tu opinión, ¿es buena idea introducir las prácticas diurnas?""",
-  """interview_2_q_7_sub_1""":
-      """Si es así, ¿por qué? (respiración, fitness matutino)""",
-  """interview_2_q_8""":
-      """En tu opinión, ¿es buena idea introducir las prácticas nocturnas?""",
-  """interview_2_q_8_sub_1""":
-      """Si es así, ¿por qué? (sonidos para dormir, preparación para dormir)""",
+  """interview_2_q_6""": """¿Qué le agregarías? ¿Qué le quitarías? ¿Qué cambiarías?""",
+  """interview_2_q_7""": """En tu opinión, ¿es buena idea introducir las prácticas diurnas?""",
+  """interview_2_q_7_sub_1""": """Si es así, ¿por qué? (respiración, fitness matutino)""",
+  """interview_2_q_8""": """En tu opinión, ¿es buena idea introducir las prácticas nocturnas?""",
+  """interview_2_q_8_sub_1""": """Si es así, ¿por qué? (sonidos para dormir, preparación para dormir)""",
   """interview_2_q_9""":
       """Si te gustaría participar en una entrevista con nosotros, por favor déjanos tu correo electrónico para contactarte""",
   """please_fill_all_fields""": """Completa todos los campos por favor""",
@@ -65,8 +52,7 @@ Map<String, String> translations_es = {
   """welcome_page_subtitle""":
       """Esta aplicación está diseñada para tu comodidad. Breves lecciones de meditación, junto con otros circuitos, te ayudarán a afrontar la mañana con vigor, aliviar el estrés, ponerte a tono para el día y dormir mejor por la noche.""",
   """welcome_push_title""": """¿Cuándo te gustaría despertarte?""",
-  """welcome_push_subtitle""":
-      """Escoge la hora, y nos aseguraremos de que no duermas en exceso""",
+  """welcome_push_subtitle""": """Escoge la hora, y nos aseguraremos de que no duermas en exceso""",
   """start_input""": """Empieza a escribir...""",
   """start""": """Empezar""",
   """progress_item""": """Progreso""",
@@ -100,8 +86,7 @@ Map<String, String> translations_es = {
   """saturday_short""": """sá""",
   """sunday_short""": """do""",
   """count_of_sessions""": """Porcentaje de práctica completado""",
-  """minutes_of_awareness_with_myself""":
-      """Minutos de conciencia conmigo mismo""",
+  """minutes_of_awareness_with_myself""": """Minutos de conciencia conmigo mismo""",
   """count_of_completed_sessions""": """Porcentaje de circuitos completados""",
   """my_diary""": """Mi agenda""",
   """my_exercises""": """Mis ejercicios""",
@@ -112,8 +97,7 @@ Map<String, String> translations_es = {
   """add_note""": """Agregar nota""",
   """faq""": """Preguntas y respuestas""",
   """reading""": """LECTURA""",
-  """reading_title""":
-      """Ponte en una posición cómoda y prepárate para leer un libro""",
+  """reading_title""": """Ponte en una posición cómoda y prepárate para leer un libro""",
   """next_button""": """Siguiente""",
   """progress""": """PROGRESO""",
   """progress_title""": """No has tenido ninguna mañana maravillosa.""",
@@ -132,13 +116,11 @@ Map<String, String> translations_es = {
   "program_1_ex_1_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FHasta%20Uttanasana.mp3?alt=media&token=c010bab3-eb1f-4cd6-9199-d12b2836ed26',
   """program_1_ex_2_name""": """Uttanasana""",
-  """program_1_ex_2_desc""":
-      """• Mantén tu cuerpo erguido hasta tu cuello sin arquear la espalda.""",
+  """program_1_ex_2_desc""": """• Mantén tu cuerpo erguido hasta tu cuello sin arquear la espalda.""",
   "program_1_ex_2_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FUttanasana.mp3?alt=media&token=60ed84bd-c90e-4ffa-b5ac-f12990c4b613',
   """program_1_ex_3_name""": """Ashwa Sanchalanasana""",
-  """program_1_ex_3_desc""":
-      """• Ponte en la postura del perro con la la cara hacia abajo.
+  """program_1_ex_3_desc""": """• Ponte en la postura del perro con la la cara hacia abajo.
 • Exhala y lleva la rodilla derecha hacia la nariz. Mantén la rodilla derecha doblada en un ángulo de 90 grados
 • Levanta los brazos hacia el cielo, baja la rodilla izquierda hacia abajo y desliza la rodilla derecha hacia la posición de la mesa, o alternativamente vuelve a poner el pie derecho en la postura del perro boca abajo.""",
   """program_1_ex_4_name""": """Adho Mukha Svanasana""",
@@ -170,22 +152,19 @@ Map<String, String> translations_es = {
   """program_2_ex_2_name""": """Inclinación lateral de pie""",
   "program_2_ex_2_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend.mp3?alt=media&token=51ad278d-44e8-49bc-9b11-99a5b8b074a4',
-  """program_2_ex_2_desc""":
-      """• Ponte de pie con los pies y las piernas separados a la anchura de los hombros.
+  """program_2_ex_2_desc""": """• Ponte de pie con los pies y las piernas separados a la anchura de los hombros.
 • Baja el brazo derecho por el lado derecho del cuerpo y exhala mientras alarga el brazo izquierdo sobre la cabeza, doblando el cuerpo suavemente hacia la derecha. Exhala mientras repites en el lado izquierdo.""",
   """program_2_ex_3_name""": """Sentadillas con rotación corporal""",
   "program_2_ex_3_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20body-rotation.mp3?alt=media&token=418c6afc-3ec0-48b6-a6e8-6a36dc9ed335',
-  """program_2_ex_3_desc""":
-      """• Ponte de pie con los pies separados a la anchura de los hombros.
+  """program_2_ex_3_desc""": """• Ponte de pie con los pies separados a la anchura de los hombros.
 • Haz una sentadilla. 
 • Ahora, impulsa los talones para ponerte de pie, levantando los brazos por encima de la cabeza hacia la derecha. Transfiere el peso a los pies derechos, los pies izquierdos sobre los dedos de los pies levantados. 
 • Dobla las rodillas en cuclillas y levántate hacia otro lado.""",
   """program_2_ex_4_name""": """Equilibrio""",
   "program_2_ex_4_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FBalance.mp3?alt=media&token=2d14b8ed-bcda-4ee2-a56f-959e3203e8c9',
-  """program_2_ex_4_desc""":
-      """• Ponte de pie, con los brazos a los lados. Levanta la pierna derecha y dóblala.
+  """program_2_ex_4_desc""": """• Ponte de pie, con los brazos a los lados. Levanta la pierna derecha y dóblala.
 • Ponte de pie sobre la pierna izquierda, estira las manos hacia delante y levanta la pierna izquierda por detrás.
 • Mantén la posición durante algún tiempo y permanece erguido. 
 • Cambia a la siguiente pierna.""",
@@ -200,8 +179,7 @@ Map<String, String> translations_es = {
   "program_3_ex_1_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FStanding%20Side%20Bend%20copy.mp3?alt=media&token=23112729-ce26-48d7-9bd6-66f7a86a404e',
   """program_3_ex_1_name""": """Inclinaciones laterales de pie""",
-  """program_3_ex_1_desc""":
-      """• Ponte de pie con los pies y las piernas separados a la anchura de los hombros. 
+  """program_3_ex_1_desc""": """• Ponte de pie con los pies y las piernas separados a la anchura de los hombros. 
 • Pon el brazo derecho en la cadera derecha y exhala mientras alargas el brazo izquierdo sobre la cabeza, doblando el cuerpo suavemente hacia la derecha. Exhala mientras repites en el lado izquierdo.""",
   "program_3_ex_2_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSquats%20with%20Jumps.mp3?alt=media&token=8c827f9b-0cc8-4530-baf7-0e1a306f290f',
@@ -243,8 +221,7 @@ Map<String, String> translations_es = {
   "program_4_ex_3_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FSide%20Rotation.mp3?alt=media&token=da9612fe-6559-47ce-83a1-a52a037ce63f',
   """program_4_ex_3_name""": """Rotación lateral""",
-  """program_4_ex_3_desc""":
-      """• Mantén la cabeza alineada con los hombros y la espalda recta. 
+  """program_4_ex_3_desc""": """• Mantén la cabeza alineada con los hombros y la espalda recta. 
 • Gira lentamente la cabeza hacia la derecha y hacia la izquierda hasta que sientas un estiramiento en el lado del cuello y del hombro.""",
   "program_4_ex_4_audio":
       'https://firebasestorage.googleapis.com/v0/b/my-morning-b0697.appspot.com/o/en_dart_audio%2FHead%20rotation.mp3?alt=media&token=c5817357-2218-400a-bde1-3d8509c1dbb3',
@@ -273,20 +250,17 @@ Map<String, String> translations_es = {
 3. Inhala y sube los talones apoyándote sobre los dedos de los pies, exhala y desciende suavemente sobre los talones 
 4. Repítelo de 20 a 25 veces.""",
   """exercise_4_title""": """Rotaciones""",
-  """exercise_4_text""":
-      """1. La mejor manera de calentar es haciendo ejercicios de rotación.
+  """exercise_4_text""": """1. La mejor manera de calentar es haciendo ejercicios de rotación.
 2. Comienza con la cabeza y luego con las muñecas, los codos, los hombros, los pies, los tobillos y las rodillas.
 3. Repítelo en cada parte de tu cuerpo al menos 10 intentos en cada lado.""",
   """exercise_5_title""": """Alternando flexiones y sentadillas""",
-  """exercise_5_text""":
-      """Un ejercicio simple, pero efectivo, ayuda a mejorar muchos músculos importantes.
+  """exercise_5_text""": """Un ejercicio simple, pero efectivo, ayuda a mejorar muchos músculos importantes.
 1. Párate derecha con los pies abiertos más que el ancho de los hombros, sostén las manos en la cintura.
 2. Agáchate suavemente manteniendo la espalda plana y haz una sentadilla.
 3. Presta atención a tu postura para evitar lesiones en las rodillas.
 4. Haz 10-20 intentos.""",
   """exercise_6_title""": """Flexión lateral de pie""",
-  """exercise_6_text""":
-      """1. Ponte de pie con los pies un poco más separados que la distancia de las caderas.
+  """exercise_6_text""": """1. Ponte de pie con los pies un poco más separados que la distancia de las caderas.
 2. Levanta la mano derecha.
 3. Baja el brazo derecho por el lado derecho del cuerpo y exhala mientras alargas el brazo izquierdo por encima de la cabeza, doblando el cuerpo suavemente hacia la derecha.
 4. Inhala para devolver los brazos por encima de la cabeza al centro y exhala mientras repites en el lado izquierdo.
@@ -298,34 +272,29 @@ Map<String, String> translations_es = {
 4. Gira el torso para poder tocar con el codo la rodilla contraria al subir. 
 5. Intenta hacer 15 repeticiones para cada pierna.""",
   """exercise_8_title""": """Gato y perro""",
-  """exercise_8_text""":
-      """Este ejercicio mejora la flexión y la extensión de la columna vertebral. 
+  """exercise_8_text""": """Este ejercicio mejora la flexión y la extensión de la columna vertebral. 
 1. Coloca las manos y las rodillas en el suelo.
 2. En un movimiento fluido, arquea la espalda, mete el estómago y lleva las caderas hacia delante.
 3. Ahora mira hacia arriba en lugar de hacia tus piernas o hacia el suelo.
 4. Repítelo al menos 15 veces hacia cada lado.""",
   """exercise_9_title""": """Flexiones""",
-  """exercise_9_text""":
-      """1. Hay flexiones de dedos y flexiones de rodillas. La segunda se considera más fácil.
+  """exercise_9_text""": """1. Hay flexiones de dedos y flexiones de rodillas. La segunda se considera más fácil.
 2. Manteniendo el cuerpo en línea recta y los codos pegados al cuerpo, dobla y estira los brazos para completar una flexión.
 3. Si la primera opción es difícil, dobla la rodilla y haz lo mismo que en el primer ejercicio.
 4. Haz 15 flexiones.""",
   """exercise_10_title""": """Estiramiento de manos""",
-  """exercise_10_text""":
-      """1. Extiende los brazos con las palmas hacia el techo.
+  """exercise_10_text""": """1. Extiende los brazos con las palmas hacia el techo.
 2. Exhala mientras extiendes los brazos hacia el techo.
 3. Inhale mientras se apoya en el talón y se relaja.
 4. Repite hasta 5 veces, cada vez extiende las manos durante 10 segundos.""",
   """fitness""": """FITNESS""",
-  """fitness_title""":
-      """Préparate para los ejercicios que te devolverán la salud física""",
+  """fitness_title""": """Préparate para los ejercicios que te devolverán la salud física""",
   """good_morning""": """Buenos días""",
   """good_afternoon""": """Buenas tardes""",
   """good_evening""": """Buenas noches""",
   """good_night""": """Buenas noches""",
   """meditation""": """MEDITACIÓN""",
-  """meditation_title""":
-      """Siéntate en una posición cómoda y concéntrate en tu respiración.""",
+  """meditation_title""": """Siéntate en una posición cómoda y concéntrate en tu respiración.""",
   """meditation_select""": """Elige una meditación""",
   """meditation_menu_1""": """Silencio""",
   """meditation_menu_2""": """Sólo música""",
@@ -336,14 +305,12 @@ Map<String, String> translations_es = {
   """visualization""": """VISUALIZACIÓN""",
   """visualization_title""":
       """Cierra los ojos, imagina tu deseo, tócalo, siéntelo, imagina que vas hacia él paso a paso""",
-  """visualization_hint""":
-      """Escribe tu visualización, descríbela brevemente""",
+  """visualization_hint""": """Escribe tu visualización, descríbela brevemente""",
   """diary""": """DIARIO""",
   """voice_record""": """Un registro de voz""",
   """written_record""": """Un registro escrito""",
   """affirmation""": """AFIRMACIÓN""",
-  """affirmation_title""":
-      """Pronuncia claramente, en voz alta, con plena confianza y concentración""",
+  """affirmation_title""": """Pronuncia claramente, en voz alta, con plena confianza y concentración""",
   """your_name""": """Tu nombre""",
   """google""": """Iniciar sesión con Google""",
   """apple""": """Iniciar sesión con Apple""",
@@ -352,8 +319,7 @@ Map<String, String> translations_es = {
   """day""": """Día""",
   """min""": """min""",
   """sec""": """seg""",
-  """pull_program""":
-      """Para configurar tu programa despliegue los ejercicios de arriba""",
+  """pull_program""": """Para configurar tu programa despliegue los ejercicios de arriba""",
   """add_exercises""": """Añadir ejercicios""",
   """success""": """¡Éxito!""",
   """vip_restored""": """Suscripciones restauradas""",
@@ -378,8 +344,7 @@ Map<String, String> translations_es = {
   """tarif_annual_title""": """@price por año""",
   """tarif_annual_desc""": """@price por mes""",
   """well_done""": """Bien hecho""",
-  """well_done_desc""":
-      """Has empezado bien la mañana, agradécete y pasa este día con beneficios.""",
+  """well_done_desc""": """Has empezado bien la mañana, agradécete y pasa este día con beneficios.""",
   """buy_month""": """Pagar la suscripción""",
   """buy_free""": """PRUEBA EL CIRCUITO COMPLETO""",
   """days_free""": """@days días gratis""",
@@ -397,6 +362,7 @@ Map<String, String> translations_es = {
   """visualizations_note""": """Visualización""",
   """seconds""": """segundos""",
   """affirmation_small""": """Afirmaciones""",
+  """affirmation_smal""": """Afirmaciones""",
   """meditation_small""": """Meditación""",
   """fitness_small""": """Fitness""",
   """diary_small""": """Diario""",
@@ -437,11 +403,9 @@ Map<String, String> translations_es = {
   """save_diary""": """Guardar nota""",
   """enter_your_name""": """Ingresa tu nombre""",
   """remove_progress""": """Eliminar el progreso""",
-  """sure_delete_progress""":
-      """¿Seguro de que quieres eliminar todos los progresos de la aplicación?""",
+  """sure_delete_progress""": """¿Seguro de que quieres eliminar todos los progresos de la aplicación?""",
   """and""": """y""",
-  """agreement_start""":
-      """Al hacer clic en «Siguiente», confirma que aceptas""",
+  """agreement_start""": """Al hacer clic en «Siguiente», confirma que aceptas""",
   """agreement_title""": """Condiciones de uso""",
   """privacy_title""": """Política de privacidad""",
   """paragraph1""": """Escribe pensamientos importantes en notas""",
@@ -458,23 +422,17 @@ Map<String, String> translations_es = {
   """for_success""": """Para el éxito""",
   """for_career""": """Para la carrera""",
   """for_wealth""": """Para la riqueza""",
-  """confidence_text_1""":
-      """Los retos son oportunidades para crecer y mejorar""",
+  """confidence_text_1""": """Los retos son oportunidades para crecer y mejorar""",
   """confidence_text_2""": """Creo en mis capacidades""",
   """confidence_text_3""": """No hay bloqueos que no pueda superar""",
-  """confidence_text_4""":
-      """Soy digno de vivir mi vida y tener lo que quiero""",
-  """confidence_text_5""":
-      """Me permito elegir mi propio camino, cumpliendo mis sueños""",
+  """confidence_text_4""": """Soy digno de vivir mi vida y tener lo que quiero""",
+  """confidence_text_5""": """Me permito elegir mi propio camino, cumpliendo mis sueños""",
   """confidence_text_6""": """Amo lo que soy por dentro y por fuera""",
   """health_text_1""":
       """Mi cuerpo sabe cómo curarse a sí mismo. Permito que la inteligencia de mi cuerpo haga avanzar mi salud""",
-  """health_text_2""":
-      """Creo en mi intuición. Siempre escucho mi voz interior""",
-  """health_text_3""":
-      """Me duermo con facilidad. Mi cuerpo, mi mente y mi alma merecen su descanso""",
-  """health_text_4""":
-      """Estoy en armonía con mi parte interior, que conoce los secretos de la curación""",
+  """health_text_2""": """Creo en mi intuición. Siempre escucho mi voz interior""",
+  """health_text_3""": """Me duermo con facilidad. Mi cuerpo, mi mente y mi alma merecen su descanso""",
+  """health_text_4""": """Estoy en armonía con mi parte interior, que conoce los secretos de la curación""",
   """health_text_5""": """Me vuelvo más sano y fuerte cada día""",
   """health_text_6""": """Tengo mucha energía y poder vital""",
   """health_text_7""":
@@ -482,69 +440,47 @@ Map<String, String> translations_es = {
   """health_text_8""": """Estoy sano, feliz y radiante""",
   """health_text_9""": """Soy digno de tener buena salud""",
   """health_text_10""": """Irradio buena salud""",
-  """love_text_1""":
-      """Doy mi corazón, dispuesto a recibir el corazón de otro""",
+  """love_text_1""": """Doy mi corazón, dispuesto a recibir el corazón de otro""",
   """love_text_2""": """Siento que soy amado""",
   """love_text_3""": """Merezco amor y afecto""",
   """love_text_4""": """Soy tremendamente carismático""",
-  """love_text_5""":
-      """Le doy permiso a mi diosa interior para que haga su magia""",
+  """love_text_5""": """Le doy permiso a mi diosa interior para que haga su magia""",
   """love_text_6""": """Abrazo el hecho de ser una mujer""",
   """love_text_7""": """Tengo confianza en mi sexualidad""",
-  """love_text_8""":
-      """Me abro a una relación sana y amorosa que sea adecuada para mí""",
+  """love_text_8""": """Me abro a una relación sana y amorosa que sea adecuada para mí""",
   """love_text_9""": """Merezco logros, éxito y abundancia""",
   """love_text_10""": """Merezco una relación sana y amorosa""",
-  """love_text_11""":
-      """Tengo una relación maravillosa con alguien que me trata bien""",
-  """success_text_1""":
-      """Soy de mente abierta y siempre estoy dispuesto a explorar nuevos caminos hacia el éxito""",
-  """success_text_2""":
-      """Tengo el poder de crear todo el éxito y la prosperidad que deseo""",
+  """love_text_11""": """Tengo una relación maravillosa con alguien que me trata bien""",
+  """success_text_1""": """Soy de mente abierta y siempre estoy dispuesto a explorar nuevos caminos hacia el éxito""",
+  """success_text_2""": """Tengo el poder de crear todo el éxito y la prosperidad que deseo""",
   """success_text_3""": """Me organizo y administro bien mi tiempo""",
   """success_text_4""": """Vuelo alto y siempre cumplo mis expectativas""",
-  """success_text_5""":
-      """Confío en mi intuición y siempre tomo decisiones acertadas""",
-  """success_text_6""":
-      """Atraigo sucesivamente las circunstancias necesarias en el momento adecuado""",
-  """success_text_7""":
-      """Cada día me lleno de nuevas ideas que me motivan y me inspiran""",
-  """success_text_8""":
-      """Tengo un poder ilimitado para conseguir todo lo que quiero""",
+  """success_text_5""": """Confío en mi intuición y siempre tomo decisiones acertadas""",
+  """success_text_6""": """Atraigo sucesivamente las circunstancias necesarias en el momento adecuado""",
+  """success_text_7""": """Cada día me lleno de nuevas ideas que me motivan y me inspiran""",
+  """success_text_8""": """Tengo un poder ilimitado para conseguir todo lo que quiero""",
   """success_text_9""": """Tomo decisiones inteligentes con alegría""",
-  """success_text_10""":
-      """El Universo quiere ayudarme, dándome todo lo que necesito""",
-  """success_text_11""":
-      """Tengo el valor de utilizar todos los premios de la vida""",
-  """career_text_1""":
-      """Estoy motivado, orientado al logro y soy coherente conmigo mismo""",
+  """success_text_10""": """El Universo quiere ayudarme, dándome todo lo que necesito""",
+  """success_text_11""": """Tengo el valor de utilizar todos los premios de la vida""",
+  """career_text_1""": """Estoy motivado, orientado al logro y soy coherente conmigo mismo""",
   """career_text_2""": """Siempre consigo mis objetivos profesionales""",
   """career_text_3""": """El éxito en el trabajo es fácil""",
   """career_text_4""": """Me respetan y me tratan bien""",
-  """career_text_5""":
-      """En este momento, mi currículum está siendo visto por todas las personas adecuadas""",
-  """career_text_6""":
-      """Me merezco un trabajo que me satisfaga y ahora estoy preparado para encontrarlo""",
+  """career_text_5""": """En este momento, mi currículum está siendo visto por todas las personas adecuadas""",
+  """career_text_6""": """Me merezco un trabajo que me satisfaga y ahora estoy preparado para encontrarlo""",
   """career_text_7""":
       """Cuando alineo mi carrera con mis verdaderos talentos, ¡el dinero y la felicidad fluyen hacia mí!""",
-  """career_text_8""":
-      """¡Trabajo duro! Trabajo de forma inteligente. ¡Me merezco los reconocimientos que recibo!""",
-  """career_text_9""":
-      """¡Hoy y todos los días, utilizo mis talentos de manera satisfactoria!""",
+  """career_text_8""": """¡Trabajo duro! Trabajo de forma inteligente. ¡Me merezco los reconocimientos que recibo!""",
+  """career_text_9""": """¡Hoy y todos los días, utilizo mis talentos de manera satisfactoria!""",
   """career_text_10""": """¡Adapto mi carrera a mis objetivos!""",
-  """career_text_11""":
-      """Estoy financieramente seguro, haciendo lo que quiero""",
+  """career_text_11""": """Estoy financieramente seguro, haciendo lo que quiero""",
   """wealth_text_1""": """Atraigo naturalmente la buena fortuna""",
   """wealth_text_2""": """El dinero es mi amigo""",
   """wealth_text_3""": """¡Gasto y recibo dinero con facilidad!""",
-  """wealth_text_4""":
-      """¡Soy un imán de dinero! El dinero fluye libremente hacia mí""",
-  """wealth_text_5""":
-      """Tengo una relación positiva con el dinero y sé cómo gastarlo sabiamente""",
-  """wealth_text_6""":
-      """¡Veo las oportunidades para atraer el dinero! ¡Convierto las mejores oportunidades!""",
-  """wealth_text_7""":
-      """Estoy conectado con el suministro universal de dinero""",
+  """wealth_text_4""": """¡Soy un imán de dinero! El dinero fluye libremente hacia mí""",
+  """wealth_text_5""": """Tengo una relación positiva con el dinero y sé cómo gastarlo sabiamente""",
+  """wealth_text_6""": """¡Veo las oportunidades para atraer el dinero! ¡Convierto las mejores oportunidades!""",
+  """wealth_text_7""": """Estoy conectado con el suministro universal de dinero""",
   """wealth_text_8""": """El Universo me colma de regalos""",
   """wealth_text_9""": """Cada buena acción vuelve a mí multiplicada""",
   """wealth_text_10""": """Siempre atraigo muchos recursos e ideas""",
@@ -560,8 +496,7 @@ Map<String, String> translations_es = {
   """add_yours""": """Crea el tuyo""",
   """save""": """Guardar""",
   """delete_program_alert""": """¿Seguro que quieres eliminar un programa?""",
-  """initial_exercises_empty""":
-      """Los ejercicios por defecto ya están añadidos Intente hacer su propio ejercicio""",
+  """initial_exercises_empty""": """Los ejercicios por defecto ya están añadidos Intente hacer su propio ejercicio""",
   """restore_default_dialog_title""":
       """¿Seguro que quiere restaurar los ejercicios por defecto? Los programas/ejercicios del usuario serán eliminados""",
   """name_not_be_empty""": """El nombre no puede estar vacío""",
@@ -590,8 +525,7 @@ Map<String, String> translations_es = {
   """impression_selection""": """Seleccionar impresión""",
   """remove_image""": """¿Eliminar imagen?""",
   """target_title""": """título""",
-  """target_short_desc""":
-      """en el campo describe brevemente (en una frase) lo que vas a visualizar""",
+  """target_short_desc""": """en el campo describe brevemente (en una frase) lo que vas a visualizar""",
   """music_menu_music""": """Música""",
   """music_menu_sounds""": """Sonidos""",
   """music_menu_meditations""": """Meditaciones""",
@@ -636,13 +570,11 @@ Map<String, String> translations_es = {
   """faq_about_title_5""": """¿Cómo configurar el fitness?""",
   """faq_about_title_6""": """¿Cómo configurar las visualizaciones?""",
   """welcome_to_sleep""": """Bienvenido al Sueño""",
-  """meditation_subtitle""":
-      """Escucha una de nuestras meditaciones para aliviar el estrés""",
+  """meditation_subtitle""": """Escucha una de nuestras meditaciones para aliviar el estrés""",
   """music_for_sleep_subtitle""": """Duérmete con tu música favorita""",
   """music_for_sleep_title""": """Sonidos para dormir""",
   """reading_at_night_title""": """Lectura de noche""",
-  """reading_at_night_subtitle""":
-      """Si prefieres leer antes de irte a dormir""",
+  """reading_at_night_subtitle""": """Si prefieres leer antes de irte a dormir""",
   """music_instrument_title""": """Instumentos musicales""",
   """instrument_1""": """Arpa""",
   """instrument_2""": """Glucófono""",
@@ -702,8 +634,7 @@ Map<String, String> translations_es = {
   """creatures_12""": """Gaviota""",
   """save_selected""": """Guardar Seleccionado""",
   """my_night""": """Mi noche""",
-  """onb_1_text_1""":
-      """¡Hola! Soy tu mentor y voy a hacer que tu mañana sea perfecta.""",
+  """onb_1_text_1""": """¡Hola! Soy tu mentor y voy a hacer que tu mañana sea perfecta.""",
   """onb_1_btn""": """¿Cómo vas a ayudarme?""",
   """onb_2_text_1""":
       """Mi trabajo consiste en poner el caos cotidiano bajo control y crear un sistema perfecto que cambiará fundamentalmente tu vida.""",
@@ -750,8 +681,7 @@ Map<String, String> translations_es = {
       """El sistema de afirmaciones incorporado le permitirá practicarlas de forma natural y efectiva.""",
   """onb_10_btn""": """¿Qué más?""",
   """onb_11_text_1""": """Estadísticas completas""",
-  """onb_11_text_2""":
-      """Estadísticas detalladas de todos los hábitos, para que puedas controlar tu progreso""",
+  """onb_11_text_2""": """Estadísticas detalladas de todos los hábitos, para que puedas controlar tu progreso""",
   """onb_11_text_3""": """Entonces, ¿estás listo para cambiar tu vida?""",
   """onb_11_btn""": """¡Estoy listo! ¡Vamos!""",
   """paywall_title""": """Probar MY MORNING GRATIS""",
@@ -762,31 +692,24 @@ Map<String, String> translations_es = {
   """your_own_ritual""": """Tu propio ritual""",
   """support_text_title""": """Haz la encuesta""",
   """support_text_body""": """Y ayúdanos con el desarrollo de la app.""",
-  """Morning Routine: Wake Up Alarm""":
-      """Rutina Matutina: Alarma Despertadora""",
+  """Morning Routine: Wake Up Alarm""": """Rutina Matutina: Alarma Despertadora""",
   """Daily habits. Meditation. Yoga""": """Hábitos diarios. Meditación. Yoga""",
   """Miracle morning. Waking up habit tracker. Gratitude journal, yoga, daily routine""":
       """Mañana milagrosa. Monitor de hábito para despertar. Diario de gratitud, yoga rutina diaria""",
   """miracle,checklist,tracker,waking,clock,gratitude,journal,diary,alarmy,alarmme,affirmation,simple,app""":
       """milagro,lista,monitor,despertar,reloj,gratitud,agenda,diario,alarmy,alarmme,afirmación,fácil,app""",
   """Daily Routine & Alarm: 1 month""": """Rutina diaria y alarma: 1 mes""",
-  """Wake Up Morning Routine 1 year""":
-      """Rutina matutina para despertar: 1 año""",
-  """All features. Improve your morning routine""":
-      """Todas las funciones. Mejora tu rutina matutina""",
+  """Wake Up Morning Routine 1 year""": """Rutina matutina para despertar: 1 año""",
+  """All features. Improve your morning routine""": """Todas las funciones. Mejora tu rutina matutina""",
   """2""": """""",
-  """Build your perfect morning routine""":
-      """Crea tu rutina matutina perfecta""",
-  """Wake up with a morning workout""":
-      """Despierta con un ejercicio matutino""",
+  """Build your perfect morning routine""": """Crea tu rutina matutina perfecta""",
+  """Wake up with a morning workout""": """Despierta con un ejercicio matutino""",
   """Start your day with meditation""": """Empieza tu día con meditación""",
-  """Write diary or a gratitude journal""":
-      """Escribe un diario o journal de gratitud""",
+  """Write diary or a gratitude journal""": """Escribe un diario o journal de gratitud""",
   """Read useful books""": """Lee libros interesantes""",
   """Get daily affirmations""": """Recibe afirmaciones diarias""",
   """All this in one app""": """Todo en una app""",
-  """Change your life with simple morning habits""":
-      """Cambia tu vida con simples hábitos matutinos""",
+  """Change your life with simple morning habits""": """Cambia tu vida con simples hábitos matutinos""",
   """3""": """""",
   """Morning routine tracker with alarm clock and simple daily habits: gratitude journal, diary, yoga, visualization, meditation and positive affirmations. Download the app, set the wake up alarm and start your miracle morning. Make your waking up easy and be more efficient, productive and motivated! You can also personalize the app to include your favorite daily habits in the morning routine.
 
@@ -882,59 +805,47 @@ Cierra los ojos e intenta relajarte por completo. Este es quizás el aspecto má
 
 """,
   """4""": """""",
-  """Change your life with morning rituals""":
-      """Cambia tu vida con rituales matutinos""",
+  """Change your life with morning rituals""": """Cambia tu vida con rituales matutinos""",
   """Continue""": """Continuar""",
-  """How much sleep do you usually get at night?""":
-      """Por lo general, ¿cuánto duermes por las noches?""",
+  """How much sleep do you usually get at night?""": """Por lo general, ¿cuánto duermes por las noches?""",
   """7 hours or less""": """7 horas o menos""",
   """7-9 hours""": """7-9 horas""",
   """9-12 hours""": """9-12 horas""",
   """12 hours or more""": """12 horas o más""",
-  """Got it! Do you wake up feeling well-rested?""":
-      """¡Entendido! ¿Te despiertas sintiendo que descansaste?""",
+  """Got it! Do you wake up feeling well-rested?""": """¡Entendido! ¿Te despiertas sintiendo que descansaste?""",
   """Always""": """Siempre""",
   """Usually""": """Por lo general""",
   """Sometimes""": """Algunas veces""",
   """Rarely""": """Rara vez""",
-  """How much time do you have at the start of your day?""":
-      """¿De cuánto tiempo dispones para empezar tu día?""",
+  """How much time do you have at the start of your day?""": """¿De cuánto tiempo dispones para empezar tu día?""",
   """0-10 minutes""": """0-10 minutos""",
   """10-20 minutes""": """10-20 minutos""",
   """20-30 minutes""": """20-30 minutos""",
   """30+ minutes""": """30+ minutos""",
   """Understood! Throughout your day, how are your energy levels?""":
       """¡Bien! ¿Cómo está tu nivel de energía durante el día?""",
-  """High - energized throughout the day""":
-      """Alto: con energía todo el día""",
+  """High - energized throughout the day""": """Alto: con energía todo el día""",
   """Medium - I have bursts of energy""": """Medio: Tengo ráfagas de energía""",
-  """Low - my energy fades throughout the day""":
-      """Bajo: Mi energía se desvanece a lo largo del dia""",
+  """Low - my energy fades throughout the day""": """Bajo: Mi energía se desvanece a lo largo del dia""",
   """How satisfied are you with your current fitness level?""":
       """¿Qué tan satisfecho estás con tu forma física actual?""",
-  """Completely - I feel fit and healthy""":
-      """Totalmente: Me siento en forma y saludable""",
-  """Somewhat - I'd like to see some improvements""":
-      """Algo: Me gustaría ver algunas mejoras""",
-  """Not at all - I'd like to see a mojor change""":
-      """Nada satisfecho: Me gustaría ver un gran cambio """,
+  """Completely - I feel fit and healthy""": """Totalmente: Me siento en forma y saludable""",
+  """Somewhat - I'd like to see some improvements""": """Algo: Me gustaría ver algunas mejoras""",
+  """Not at all - I'd like to see a mojor change""": """Nada satisfecho: Me gustaría ver un gran cambio """,
   """Over the past year, what's been your experience building better habits?""":
       """¿Cómo fue tu experiencia creando mejores hábitos el año pasado?""",
-  """I have been constantly improving my habits""":
-      """He estado mejorando constantemente mis hábitos""",
+  """I have been constantly improving my habits""": """He estado mejorando constantemente mis hábitos""",
   """I have built some good habits""": """He adoptado algunos hábitos buenos""",
   """I have tried to build good habits, but have not kept up with them""":
       """He tratado de adoptar buenos hábitos pero no he podido mantenerlos""",
-  """I have not tried to build new habits""":
-      """No he intentado adoptar buenos hábitos""",
+  """I have not tried to build new habits""": """No he intentado adoptar buenos hábitos""",
   """We hear you. What single change would improve your life right now?""":
       """Te entendemos. ¿Qué cambio podría mejorar tu vida en este momento?""",
   """More energy""": """Más energía""",
   """More productivity""": """Más productividad""",
   """More mindfulness""": """Más mindfulness""",
   """More sleep""": """Más sueño""",
-  """How often do you focus on the past or future?""":
-      """¿Qué tan seguido te enfocas en el pasado o en el futuro?""",
+  """How often do you focus on the past or future?""": """¿Qué tan seguido te enfocas en el pasado o en el futuro?""",
   """Never - I live in the present""": """Nunca, vivo en el presente""",
   """Some of the time""": """Algunas veces""",
   """Most of the time""": """Casi todo el tiempo""",
@@ -944,8 +855,7 @@ Cierra los ojos e intenta relajarte por completo. Este es quizás el aspecto má
   """Sometimes lose focus""": """A veces pierdo el enfoque""",
   """Rarely lose focus""": """Rara vez pierdo el enfoque""",
   """Laser focus""": """Enfoque de láser""",
-  """We're finalizing your personalized journey...""":
-      """Estamos finalizando tu experiencia personalizada...""",
+  """We're finalizing your personalized journey...""": """Estamos finalizando tu experiencia personalizada...""",
   """You're embarking on this journey to build more Energy""":
       """Te estás embarcando en este viaje para crear más Energía""",
   """Fitness""": """Fitness""",
@@ -965,19 +875,15 @@ Toda tu rutina matutina en una app""",
   """If not now, when?""": """Si no es ahora ¿cuándo?""",
   """Start taking care of yourself and forming morning habits that will change your life forever """:
       """Empieza a cuidar de ti y a formar hábitos matutinos que cambiarán tu vida para siempre""",
-  """What time do you usually wake up?""":
-      """Por lo general, ¿a qué hora despiertas?""",
+  """What time do you usually wake up?""": """Por lo general, ¿a qué hora despiertas?""",
   """Do you tend to procrastinate?""": """¿Sueles procrastinar?""",
   """Yes, and I want to change that""": """Sí y quiero cambiar eso""",
   """No, I can easily stick to my plan""": """No, cumplo mi plan fácilmente""",
   """I'm not sure""": """No estoy seguro""",
-  """Do you have trouble concentrating?""":
-      """¿Tienes problemas para concentrarte?""",
+  """Do you have trouble concentrating?""": """¿Tienes problemas para concentrarte?""",
   """Yes, I get distracted easily""": """Sí, me distraigo fácilmente""",
-  """No, I can focus well and don't get distracted""":
-      """No, me puedo enfocar y no me distraigo""",
-  """What do you want to get out of My Morning?""":
-      """¿Qué quieres conseguir con My Morning?""",
+  """No, I can focus well and don't get distracted""": """No, me puedo enfocar y no me distraigo""",
+  """What do you want to get out of My Morning?""": """¿Qué quieres conseguir con My Morning?""",
   """I want to form good habits""": """Quiero formar buenos hábitos""",
   """I want to plan my day better""": """Quiero planificar mejor mi día""",
   """5""": """""",
@@ -999,8 +905,7 @@ cancela en cualquier momento""",
   """Restore""": """Restaurar""",
   """Terms""": """Términos""",
   """Privacy""": """Privacidad""",
-  """https://docs.google.com/spreadsheets/d/1t8PxBc2oY2-fHmp7fUxRr5vH67lDs9MvfM_PHZUPY9U/edit?usp=sharing""":
-      """""",
+  """https://docs.google.com/spreadsheets/d/1t8PxBc2oY2-fHmp7fUxRr5vH67lDs9MvfM_PHZUPY9U/edit?usp=sharing""": """""",
   """Voice note""": """Nota de voz""",
   """Add a note""": """Agregar una nota""",
   """Recording is on hold
@@ -1008,10 +913,15 @@ It’s recording""": """La grabación está en pausa
 Está grabando""",
   """Save a note""": """Guardar una nota""",
   """Write something here""": """Escribir algo aquí""",
+  """Set your own time""": """Establece tu propio tiempo""",
+  """Are you sure you want to leave the complex""": """¿Estás seguro de que quieres salir del complejo""",
   """Are you sure you want to delete a note?
 Delete a note""": """¿Estás seguro de que deseas eliminar una nota?
 Eliminar una nota""",
   """Finish reading""": """Finalizar la lectura""",
+  """Start reading""": """Empieza a leer""",
+  """Favorites""": """Favorito""",
+  """leave""": """Dejar""",
   """How much time are you going to read?
 
 Set your own time
@@ -1092,16 +1002,12 @@ Delete the progress
 """: """Minutos de conciencia por semana
 Eliminar el progreso""",
   """Enter your name""": """Ingresa tu nombre""",
-  """Try PREMIUM Package free for 3 days""":
-      """Prueba el Paquete PREMIUM gratis por 3 días""",
+  """Try PREMIUM Package free for 3 days""": """Prueba el Paquete PREMIUM gratis por 3 días""",
   """Start""": """Empezar""",
   """Start the day with productive daily routine. Get motivation & energy for success""":
       """Empieza el día con una rutina diaria productiva. Recibe motivación y energía para el éxito""",
-  """Start morning with good habits""":
-      """Empieza la mañana con buenos hábitos""",
+  """Start morning with good habits""": """Empieza la mañana con buenos hábitos""",
   """- 10 minute Meditation""": """- 10 minutos de meditación""",
-  """- Get daily motivation with good habits""":
-      """- Recibe motivación diaria con buenos hábitos""",
-  """- Start morning with meditation and affirmation""":
-      """- Empieza la mañana con meditación y afirmación""",
+  """- Get daily motivation with good habits""": """- Recibe motivación diaria con buenos hábitos""",
+  """- Start morning with meditation and affirmation""": """- Empieza la mañana con meditación y afirmación""",
 };

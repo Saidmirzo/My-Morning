@@ -11,12 +11,10 @@ class OnboardingVersionSecondPageElevent extends StatefulWidget {
   const OnboardingVersionSecondPageElevent({Key key}) : super(key: key);
 
   @override
-  State<OnboardingVersionSecondPageElevent> createState() =>
-      _OnboardingVersionSecondPageEleventState();
+  State<OnboardingVersionSecondPageElevent> createState() => _OnboardingVersionSecondPageEleventState();
 }
 
-class _OnboardingVersionSecondPageEleventState
-    extends State<OnboardingVersionSecondPageElevent> {
+class _OnboardingVersionSecondPageEleventState extends State<OnboardingVersionSecondPageElevent> {
   Timer timer;
   double circularValue = 0.0;
   int textValue = 0;
@@ -25,8 +23,7 @@ class _OnboardingVersionSecondPageEleventState
     timer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
       if (circularValue >= 1) {
         timer.cancel();
-        Navigator.push(
-            context, createRoute(const OnboardingVersionSecondPageTwelve()));
+        Get.to(createRoute(const OnboardingVersionSecondPageTwelve()));
       } else {
         setState(() {
           circularValue += 1 / 100;
@@ -63,8 +60,7 @@ class _OnboardingVersionSecondPageEleventState
                 horizontal: 27.43,
               ),
               decoration: BoxDecoration(
-                  color: const Color(0xff6B0496).withOpacity(0.82),
-                  borderRadius: BorderRadius.circular(19)),
+                  color: const Color(0xff6B0496).withOpacity(0.82), borderRadius: BorderRadius.circular(19)),
               child: FittedBox(
                 child: Text(
                   "We’re finalizing your personalized journey...".tr,

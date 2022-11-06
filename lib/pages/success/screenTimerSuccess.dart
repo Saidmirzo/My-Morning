@@ -144,7 +144,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
 
   Widget buildProgress() {
     return CircularPercentIndicator(
-      radius: Get.height * 0.2,
+      radius: Get.width * 0.43,
       lineWidth: 27.0,
       reverse: true,
       animation: false,
