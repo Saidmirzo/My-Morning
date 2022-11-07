@@ -21,7 +21,7 @@ class ProgressPair extends StatelessWidget {
               exerciseTitle,
               style: const TextStyle(
                 fontSize: 16,
-                color: AppColors.VIOLET,
+                color: AppColors.violet,
                 fontStyle: FontStyle.normal,
               ),
             ),
@@ -35,7 +35,7 @@ class ProgressPair extends StatelessWidget {
                 exerciseValue,
                 style: const TextStyle(
                   fontSize: 16,
-                  color: AppColors.VIOLET,
+                  color: AppColors.violet,
                   fontStyle: FontStyle.normal,
                 ),
               ),

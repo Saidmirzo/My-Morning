@@ -17,7 +17,7 @@ class ProgressItemHeader extends StatelessWidget {
         fontSize: 22,
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
-        color: AppColors.VIOLET,
+        color: AppColors.violet,
       ),
     );
   }

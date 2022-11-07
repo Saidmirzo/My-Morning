@@ -71,7 +71,7 @@ class TimeAppBarState extends State<TimerFitnes> with WidgetsBindingObserver {
                 percent: cTimer.createValue.value,
                 center: playPauseBtn(),
                 circularStrokeCap: CircularStrokeCap.round,
-                linearGradient: AppColors.Progress_Gradient_Timer_Fitnes,
+                linearGradient: AppColors.progressGradientTimerFitness,
                 backgroundColor: Colors.white,
               ),
               const SizedBox(
@@ -98,7 +98,7 @@ class TimeAppBarState extends State<TimerFitnes> with WidgetsBindingObserver {
         child: Icon(
           cTimer.isRuning.isTrue ? Icons.pause : Icons.play_arrow,
           size: 25,
-          color: AppColors.VIOLET,
+          color: AppColors.violet,
         ),
         onPressed: () => cTimer.startStopTimer()));
   }

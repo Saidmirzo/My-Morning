@@ -187,7 +187,7 @@ class SettingsPageState extends State<SettingsPage> {
                                       height: 67,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(17),
-                                        color: AppColors.VIOLET,
+                                        color: AppColors.violet,
                                       ),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
@@ -244,7 +244,7 @@ class SettingsPageState extends State<SettingsPage> {
                   padding: const EdgeInsets.only(left: 10),
                   child: Text('set_reminders'.tr,
                       style: TextStyle(
-                        color: AppColors.VIOLET,
+                        color: AppColors.violet,
                         fontSize: Get.height * 0.028,
                         fontWeight: FontWeight.normal,
                       )),
@@ -267,7 +267,7 @@ class SettingsPageState extends State<SettingsPage> {
         height: 56,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(19),
-          color: AppColors.VIOLET,
+          color: AppColors.violet,
         ),
         child: Stack(
           alignment: Alignment.center,
@@ -585,16 +585,16 @@ class AffirmationTextField extends StatelessWidget {
       onSubmitted: (_) => FocusScope.of(context).nextFocus(),
       minLines: 6,
       maxLines: 6,
-      cursorColor: AppColors.VIOLET,
+      cursorColor: AppColors.violet,
       keyboardType: TextInputType.text,
       textAlign: TextAlign.left,
       style: const TextStyle(
-          fontSize: 13, fontStyle: FontStyle.normal, color: AppColors.VIOLET, decoration: TextDecoration.none),
+          fontSize: 13, fontStyle: FontStyle.normal, color: AppColors.violet, decoration: TextDecoration.none),
       decoration: InputDecoration(
         hintMaxLines: 8,
         hintText: 'affirmation_hint'.tr,
         hintStyle: const TextStyle(
-          color: AppColors.VIOLET,
+          color: AppColors.violet,
           fontSize: 13,
           fontFamily: 'Montserrat',
           fontWeight: FontWeight.w500,

@@ -159,7 +159,7 @@ class _PaywallV2OneTimeOfferState extends State<PaywallV2OneTimeOffer> {
                     // width: double.maxFinite,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: AppColors.VIOLET_ONB,
+                      color: AppColors.violetOnb,
                       borderRadius: BorderRadius.circular(19),
                     ),
                     child: FittedBox(
@@ -206,12 +206,12 @@ class _PaywallV2OneTimeOfferState extends State<PaywallV2OneTimeOffer> {
                           const SizedBox(width: 2),
                           CounterItem(
                             num: s.characters.first,
-                            color: AppColors.VIOLET_ONB,
+                            color: AppColors.violetOnb,
                           ),
                           const SizedBox(width: 6),
                           CounterItem(
                             num: s.characters.last,
-                            color: AppColors.VIOLET_ONB,
+                            color: AppColors.violetOnb,
                           ),
                         ],
                       );
@@ -274,7 +274,7 @@ class _PaywallV2OneTimeOfferState extends State<PaywallV2OneTimeOffer> {
                                       Text(
                                         ' ' + 'Free'.tr,
                                         style: textStyle.copyWith(
-                                          color: AppColors.VIOLET_ONB,
+                                          color: AppColors.violetOnb,
                                           fontSize: 29,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -310,7 +310,7 @@ class _PaywallV2OneTimeOfferState extends State<PaywallV2OneTimeOffer> {
                                       Text(
                                         "${(100 * product.price / 12).round() / 100} ${product.currencyCode}",
                                         style: textStyle.copyWith(
-                                          color: AppColors.VIOLET_ONB,
+                                          color: AppColors.violetOnb,
                                           fontSize: 20,
                                           fontWeight: FontWeight.w700,
                                         ),

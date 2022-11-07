@@ -25,7 +25,7 @@ class ArcProgressBarPainter extends CustomPainter {
 
     final backgroundPaint = Paint()
       ..shader = const LinearGradient(
-              colors: [AppColors.SHADER_BOTTOM, AppColors.PINK],
+              colors: [AppColors.shaderBottom, AppColors.pink],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter)
           .createShader(Rect.fromLTRB(constrainedSize.height,

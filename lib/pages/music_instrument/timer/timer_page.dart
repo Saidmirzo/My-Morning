@@ -79,8 +79,8 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
           height: Get.height,
           decoration: BoxDecoration(
             gradient: menuState == MenuState.MORNING
-                ? AppColors.Bg_Gradient_Timer_Reading
-                : AppColors.gradient_loading_night_bg,
+                ? AppColors.bgGradientTimerReading
+                : AppColors.gradientLoadingNightBg,
           ),
           child: SafeArea(
             child: Stack(
@@ -131,7 +131,7 @@ class InstrumentTimerPageState extends State<InstrumentTimerPage>
                           fontWeight: FontWeight.w600,
                           color: menuState == MenuState.MORNING
                               ? AppColors.primary
-                              : AppColors.WHITE,
+                              : AppColors.white,
                         ))),
                     const Spacer(),
                     Padding(

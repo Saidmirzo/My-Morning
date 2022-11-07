@@ -81,7 +81,7 @@ class _ExercisePageState extends State<ExercisePage>
       child: Scaffold(
         body: Container(
           decoration:
-              const BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Fitnes),
+              const BoxDecoration(gradient: AppColors.bgGradientTimerFitness),
           child: Obx(() {
             print('Rebuild exercise page');
             cTimer.exerciseCount =
@@ -212,7 +212,7 @@ class _ExercisePageState extends State<ExercisePage>
                   style: TextStyle(
                     fontSize: Get.height * 0.03,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.WHITE,
+                    color: AppColors.white,
                   ),
                 ),
               ),
@@ -242,7 +242,7 @@ class _ExercisePageState extends State<ExercisePage>
       style: TextStyle(
         fontSize: Get.height * 0.023,
         fontWeight: FontWeight.w500,
-        color: AppColors.WHITE,
+        color: AppColors.white,
       ),
     );
   }

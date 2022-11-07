@@ -46,7 +46,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
           },
           child: Container(
             width: Get.width,
-            decoration: const BoxDecoration(gradient: AppColors.Bg_Gradient_2),
+            decoration: const BoxDecoration(gradient: AppColors.bgGradient2),
             child: SafeArea(
               bottom: false,
               child: Stack(
@@ -171,7 +171,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
         'visualization'.tr,
         fontWeight: FontWeight.w600,
         fontSize: Get.height * 0.028,
-        color: AppColors.WHITE,
+        color: AppColors.white,
       ),
     );
   }
@@ -183,7 +183,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
         'visualization_title'.tr,
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: Get.height * 0.019, color: AppColors.WHITE, height: 1.3),
+            fontSize: Get.height * 0.019, color: AppColors.white, height: 1.3),
       ),
     );
   }
@@ -194,7 +194,7 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
-          color: AppColors.TRANSPARENT_WHITE,
+          color: AppColors.transparentWhite,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -204,14 +204,14 @@ class _VisualizationMainPageState extends State<VisualizationMainPage> {
             controller: _controller.vizualizationText,
             minLines: 4,
             maxLines: 4,
-            cursorColor: AppColors.VIOLET,
+            cursorColor: AppColors.violet,
             // keyboardType: TextInputType.text,
             textInputAction: TextInputAction.newline,
             textAlign: TextAlign.left,
             style: const TextStyle(
                 fontSize: 24,
                 fontStyle: FontStyle.normal,
-                color: AppColors.VIOLET,
+                color: AppColors.violet,
                 decoration: TextDecoration.none),
             decoration: InputDecoration(
               hintMaxLines: 4,

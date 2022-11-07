@@ -31,15 +31,15 @@ class ExerciseTrashTargetState extends State<ExerciseTrashTarget> {
           height: MediaQuery.of(context).size.width * 0.4,
           decoration: BoxDecoration(
               color: candidateData.isEmpty
-                  ? AppColors.TRANSPARENT
-                  : AppColors.TRANSPARENT_WHITE),
+                  ? AppColors.transparent
+                  : AppColors.transparentWhite),
           child: Center(
             child: Text('delete_exercise'.tr,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontSize: 23,
                     fontStyle: FontStyle.normal,
-                    color: AppColors.TRANSPARENT_VIOLET)),
+                    color: AppColors.transparentViolet)),
           ),
         );
       },

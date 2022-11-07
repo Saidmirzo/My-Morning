@@ -30,9 +30,9 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.TOP_GRADIENT,
-              AppColors.MIDDLE_GRADIENT,
-              AppColors.BOTTOM_GRADIENT
+              AppColors.topGradient,
+              AppColors.middleGradient,
+              AppColors.bottomGradient
             ],
           )),
           child: Stack(
@@ -48,7 +48,7 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
                       style: const TextStyle(
                         fontSize: 32,
                         fontStyle: FontStyle.normal,
-                        color: AppColors.WHITE,
+                        color: AppColors.white,
                       ),
                     ),
                   ),
@@ -58,7 +58,7 @@ class FitnessProgramScreenState extends State<FitnessProgramScreen> {
                     style: const TextStyle(
                       fontSize: 19,
                       fontStyle: FontStyle.italic,
-                      color: AppColors.VIOLET,
+                      color: AppColors.violet,
                     ),
                   ),
                 ],

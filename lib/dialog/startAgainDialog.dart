@@ -28,7 +28,7 @@ class StartAgainDialog extends Dialog {
                     style: const TextStyle(
                         fontSize: 23,
                         fontStyle: FontStyle.normal,
-                        color: AppColors.VIOLET),
+                        color: AppColors.violet),
                   ),
                 ),
               ),

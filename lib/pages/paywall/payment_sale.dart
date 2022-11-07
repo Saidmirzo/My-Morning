@@ -212,7 +212,7 @@ class _PaymentSalePageState extends State<PaymentSalePage> {
                                                         ? 18
                                                         : 17,
                                                     fontWeight: FontWeight.bold,
-                                                    color: AppColors.VIOLET)),
+                                                    color: AppColors.violet)),
                                             Text(
                                                 products[i]['body'][Get.locale
                                                                 .languageCode ==
@@ -228,7 +228,7 @@ class _PaymentSalePageState extends State<PaymentSalePage> {
                                                     fontSize: Platform.isIOS
                                                         ? 15
                                                         : 14,
-                                                    color: AppColors.VIOLET)),
+                                                    color: AppColors.violet)),
                                           ],
                                         ),
                                       ),
@@ -268,14 +268,14 @@ class _PaymentSalePageState extends State<PaymentSalePage> {
                             children: [
                               RichText(
                                   text: myUrl('privacy_title'.tr, UrlPrivacy,
-                                      textColor: AppColors.VIOLET,
+                                      textColor: AppColors.violet,
                                       underline: false)),
                               // const SizedBox(height: 5),
                               RichText(
                                 text: myUrl(
                                   'agreement_title'.tr,
                                   UrlAgreement,
-                                  textColor: AppColors.VIOLET,
+                                  textColor: AppColors.violet,
                                   underline: false,
                                 ),
                               ),
@@ -296,7 +296,7 @@ class _PaymentSalePageState extends State<PaymentSalePage> {
                             ),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: AppColors.VIOLET_ONB,
+                                primary: AppColors.violetOnb,
                                 minimumSize: Size(
                                     double.infinity, Platform.isIOS ? 70 : 60),
                                 shape: RoundedRectangleBorder(

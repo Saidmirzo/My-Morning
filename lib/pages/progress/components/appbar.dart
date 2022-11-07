@@ -18,7 +18,7 @@ Widget appBarProgress(String title, {Color bgColor = Colors.transparent}) {
       title,
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: AppColors.VIOLET,
+        color: AppColors.violet,
         fontSize: Get.width * .06,
         fontWeight: FontWeight.bold,
       ),

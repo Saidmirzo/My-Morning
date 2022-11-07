@@ -37,7 +37,7 @@ class _CustomMethodicStartPageState extends State<CustomMethodicStartPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
-          decoration: const BoxDecoration(gradient: AppColors.Bg_Gradient_2),
+          decoration: const BoxDecoration(gradient: AppColors.bgGradient2),
           width: Get.width,
           height: Get.height,
           child: SafeArea(
@@ -81,10 +81,10 @@ class _CustomMethodicStartPageState extends State<CustomMethodicStartPage> {
                       ),
                     ),
                     SizedBox(height: Get.height * 0.15),
-                    Text(_info.title ?? "", style: AppStyles.treaningTitle),
+                    Text(_info.title ?? "", style: AppStyles.trainingTitle),
                     SizedBox(height: Get.height * 0.05),
                     Text('your_own_ritual'.tr,
-                        style: AppStyles.treaningSubtitle,
+                        style: AppStyles.trainingSubtitle,
                         textAlign: TextAlign.center),
                     SizedBox(height: Get.height * 0.1),
                     PrimaryCircleButton(

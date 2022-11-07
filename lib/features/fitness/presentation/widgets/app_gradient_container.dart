@@ -14,7 +14,7 @@ class AppGradientContainer extends StatelessWidget {
     return Container(
       height: Get.height,
       width: Get.width,
-      decoration: BoxDecoration(gradient: gradient ?? AppColors.Bg_Gradient_1),
+      decoration: BoxDecoration(gradient: gradient ?? AppColors.bgGradient1),
       child: child,
     );
   }

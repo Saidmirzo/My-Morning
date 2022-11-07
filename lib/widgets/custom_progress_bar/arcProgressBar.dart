@@ -11,7 +11,7 @@ class ArcProgressBar extends StatelessWidget {
   const ArcProgressBar({
     Key key,
     @required this.text,
-    this.textColor = AppColors.LIGHT_VIOLET,
+    this.textColor = AppColors.lightViolet,
   }) : super(key: key);
 
   @override

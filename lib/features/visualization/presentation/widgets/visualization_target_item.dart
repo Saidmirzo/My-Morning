@@ -82,7 +82,7 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
               width: 36,
               height: 36,
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.violet),
               ),
             ))),
       );
@@ -102,7 +102,7 @@ class _VisualizationTargetItemState extends State<VisualizationTargetItem> {
                     (widget.target.isCustom)
                         ? widget.target.title
                         : (widget.target.title).tr,
-                    color: AppColors.WHITE,
+                    color: AppColors.white,
                     fontSize: 26,
                     textAlign: TextAlign.center,
                   ),

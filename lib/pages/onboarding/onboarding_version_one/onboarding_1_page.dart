@@ -63,7 +63,7 @@ class _OnBoarding1PageState extends State<OnBoarding1Page> {
                               style: TextStyle(
                                   fontSize: Platform.isIOS ? 22 : 19,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.VIOLET_ONB.withOpacity(0.5)),
+                                  color: AppColors.violetOnb.withOpacity(0.5)),
                             ),
                             const SizedBox(height: 5),
                             Text(
@@ -76,7 +76,7 @@ class _OnBoarding1PageState extends State<OnBoarding1Page> {
                                   //   AnalyticService.analytics.logAppOpen();
                                   //   return await getOnboardingFromFirebase();
                                   // }                   fontSize: Platform.isIOS ? 20 : 17,
-                                  color: AppColors.VIOLET_ONB.withOpacity(0.5)),
+                                  color: AppColors.violetOnb.withOpacity(0.5)),
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -100,7 +100,7 @@ class _OnBoarding1PageState extends State<OnBoarding1Page> {
                         ),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.VIOLET_ONB,
+                            primary: AppColors.violetOnb,
                             minimumSize: const Size(double.infinity, 64),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),

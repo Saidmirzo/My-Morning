@@ -16,7 +16,7 @@ class ExerciseEditDialogItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
       decoration: const BoxDecoration(
-          color: AppColors.LIGHT_VIOLET,
+          color: AppColors.lightViolet,
           borderRadius: BorderRadius.all(Radius.circular(40))),
       child: Row(
         children: [
@@ -26,7 +26,7 @@ class ExerciseEditDialogItem extends StatelessWidget {
                   left: 16.0, right: 8.0, top: 12, bottom: 8),
               child: StyledText(
                 exercise.name,
-                color: AppColors.WHITE,
+                color: AppColors.white,
                 fontSize: 18,
                 textAlign: TextAlign.start,
               ),
@@ -35,7 +35,7 @@ class ExerciseEditDialogItem extends StatelessWidget {
           IconButton(
             icon: const Icon(
               Icons.delete,
-              color: AppColors.WHITE,
+              color: AppColors.white,
             ),
             onPressed: onDeleteItem,
           ),

@@ -95,7 +95,7 @@ class _DiaryPageState extends State<DiaryPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text('diary'.tr, style: AppStyles.treaningTitle),
+                Text('diary'.tr, style: AppStyles.trainingTitle),
                 const SizedBox(height: 10),
                 Expanded(
                   child: ListView.builder(

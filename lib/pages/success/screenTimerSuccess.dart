@@ -73,8 +73,8 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
             height: Get.height,
             decoration: BoxDecoration(
                 gradient: menuState == MenuState.MORNING
-                    ? AppColors.Bg_Gradient_Timer_Reading
-                    : AppColors.gradient_loading_night_bg),
+                    ? AppColors.bgGradientTimerReading
+                    : AppColors.gradientLoadingNightBg),
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -155,7 +155,7 @@ class TimerSuccessScreenState extends State<TimerSuccessScreen> {
             fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
-      linearGradient: AppColors.Progress_Gradient_Timer_Reading,
+      linearGradient: AppColors.progressGradientTimerReading,
       backgroundColor: Colors.white,
     );
   }

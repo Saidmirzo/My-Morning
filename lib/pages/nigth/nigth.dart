@@ -141,7 +141,7 @@ class MainMenuNightPageState extends State<MainMenuNightPage> {
 
   Widget buildHeader() {
     return Container(
-      decoration: const BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
+      decoration: const BoxDecoration(gradient: AppColors.gradientLoadingNightBg),
       child: SafeArea(
         bottom: false,
         child: Stack(

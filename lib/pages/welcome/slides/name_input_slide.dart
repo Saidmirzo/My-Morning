@@ -91,7 +91,7 @@ class NameInputSlide extends StatelessWidget {
         width: Get.width * 0.8,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
-          color: AppColors.TRANSPARENT_WHITE,
+          color: AppColors.transparentWhite,
         ),
         child: Container(
           padding: const EdgeInsets.only(left: 15, right: 15, bottom: 5),
@@ -109,13 +109,13 @@ class NameInputSlide extends StatelessWidget {
             },
             minLines: 1,
             maxLines: 1,
-            cursorColor: AppColors.VIOLET,
+            cursorColor: AppColors.violet,
             keyboardType: TextInputType.text,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 16,
               fontStyle: FontStyle.normal,
-              color: AppColors.VIOLET,
+              color: AppColors.violet,
               decoration: TextDecoration.none,
             ),
             decoration: InputDecoration(

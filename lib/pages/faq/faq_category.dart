@@ -24,7 +24,7 @@ class _FaqCategoryPageState extends State<FaqCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AppGradientContainer(
-        gradient: AppColors.Bg_gradient_auth_page,
+        gradient: AppColors.bgGradientAuthPage,
         child: SafeArea(
           bottom: false,
           child: Container(

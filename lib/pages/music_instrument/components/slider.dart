@@ -27,12 +27,12 @@ class TrackBarState extends State<TrackBar> {
     return SliderTheme(
       data: SliderThemeData(
         trackShape: CustomTrackShape(),
-        activeTrackColor: AppColors.TRACKBAR_ACTIVE,
+        activeTrackColor: AppColors.trackbarActive,
         inactiveTrackColor: AppColors.purchaseDesc,
         trackHeight: 2.0,
-        thumbColor: AppColors.THUMB,
+        thumbColor: AppColors.thumb,
         thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5.0),
-        overlayColor: AppColors.THUMB.withAlpha(32),
+        overlayColor: AppColors.thumb.withAlpha(32),
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 28.0),
       ),
       child: GestureDetector(

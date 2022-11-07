@@ -52,7 +52,7 @@ class _OnBoarding10PageState extends State<OnBoarding10Page> {
                       const SizedBox(height: 15),
                       Container(
                         decoration: BoxDecoration(
-                          color: AppColors.VIOLET,
+                          color: AppColors.violet,
                           borderRadius: BorderRadius.circular(100),
                         ),
                         alignment: Alignment.center,
@@ -134,7 +134,7 @@ class _OnBoarding10PageState extends State<OnBoarding10Page> {
                         ),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.VIOLET_ONB,
+                            primary: AppColors.violetOnb,
                             minimumSize: const Size(double.infinity, 64),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),

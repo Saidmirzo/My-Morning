@@ -68,8 +68,8 @@ class ReadingTimerPageState extends State<ReadingTimerPage> with WidgetsBindingO
           height: Get.height,
           decoration: BoxDecoration(
             gradient: menuState == MenuState.MORNING
-                ? AppColors.Bg_Gradient_Timer_Reading
-                : AppColors.gradient_loading_night_bg,
+                ? AppColors.bgGradientTimerReading
+                : AppColors.gradientLoadingNightBg,
           ),
           child: Stack(
             children: [
@@ -128,7 +128,7 @@ class ReadingTimerPageState extends State<ReadingTimerPage> with WidgetsBindingO
                       style: TextStyle(
                         fontSize: Get.height * 0.033,
                         fontWeight: FontWeight.w600,
-                        color: menuState == MenuState.MORNING ? AppColors.primary : AppColors.WHITE,
+                        color: menuState == MenuState.MORNING ? AppColors.primary : AppColors.white,
                       ))),
                   const Spacer(),
                   ReadMyButton(timerService: timerService),

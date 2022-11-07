@@ -15,11 +15,11 @@ class DialogFooterButton extends StatelessWidget {
         onPressed: onPressed,
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(
-                side: const BorderSide(style: BorderStyle.solid, width: 2, color: AppColors.VIOLET),
+                side: const BorderSide(style: BorderStyle.solid, width: 2, color: AppColors.violet),
                 borderRadius: BorderRadius.circular(30.0))),
         icon: const Icon(
           Icons.add,
-          color: AppColors.VIOLET,
+          color: AppColors.violet,
         ),
         label: Padding(
           padding: const EdgeInsets.only(top: 8.0, bottom: 4),

@@ -131,7 +131,7 @@ class _FitnessMainPageState extends State<FitnessMainPage> {
                       StyledText(
                         'fitness'.tr,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.WHITE,
+                        color: AppColors.white,
                         fontSize: 24,
                       ),
                       const SizedBox(height: 53),

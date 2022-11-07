@@ -49,8 +49,8 @@ class _ReadingPageState extends State<ReadingPage> {
       body: Container(
         decoration: BoxDecoration(
             gradient: menuState == MenuState.MORNING
-                ? AppColors.Bg_Gradient_2
-                : AppColors.reading_night_mode),
+                ? AppColors.bgGradient2
+                : AppColors.readingNightMode),
         width: Get.width,
         height: Get.height,
         child: SafeArea(
@@ -69,13 +69,13 @@ class _ReadingPageState extends State<ReadingPage> {
                   const Spacer(
                     flex: 2,
                   ),
-                  Text('reading'.tr, style: AppStyles.treaningTitle),
+                  Text('reading'.tr, style: AppStyles.trainingTitle),
                   const Spacer(
                     flex: 2,
                   ),
                   Text(
                     'reading_title'.tr,
-                    style: AppStyles.treaningSubtitle,
+                    style: AppStyles.trainingSubtitle,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: Get.height * 0.05),

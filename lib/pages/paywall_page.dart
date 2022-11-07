@@ -81,7 +81,7 @@ class _PaywallPageState extends State<PaywallPage> {
                     Get.to(ABTestingService.getPaywall());
                     // appAnalitics.logEvent('first_polnyi_complex');
                   },
-                  bgColor: AppColors.VIOLET,
+                  bgColor: AppColors.violet,
                   color: Colors.white),
               const SizedBox(height: 15),
               // Text(
@@ -92,14 +92,14 @@ class _PaywallPageState extends State<PaywallPage> {
               //             : 3)
               //         .toString()
               //   }),
-              //   style: const TextStyle(color: AppColors.VIOLET),
+              //   style: const TextStyle(color: AppColors.violet),
               // ),
               const SizedBox(height: 15),
               _buildPaywallButton(
                 widget: Text(
                   'my_progress'.tr,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: AppColors.VIOLET, fontSize: 14, fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: AppColors.violet, fontSize: 14, fontWeight: FontWeight.bold),
                 ),
                 actionCallback: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ProgressPage()));
@@ -119,14 +119,14 @@ class _PaywallPageState extends State<PaywallPage> {
     @required Widget widget,
     @required VoidCallback actionCallback,
     Color bgColor = Colors.white,
-    Color color = AppColors.VIOLET,
+    Color color = AppColors.violet,
   }) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 3 / 4,
       child: TextButton(
         onPressed: actionCallback,
         style: TextButton.styleFrom(
-          primary: AppColors.PINK,
+          primary: AppColors.pink,
           backgroundColor: bgColor,
           // onSurface: Colors.red,
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(27))),

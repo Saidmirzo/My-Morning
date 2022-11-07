@@ -48,7 +48,7 @@ class _AfternoonPageState extends State<AfternoonPage>
     });
     return Container(
       decoration: const BoxDecoration(
-          gradient: AppColors.gradient_loading_afternoon_bg),
+          gradient: AppColors.gradientLoadingAfternooBg),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -94,7 +94,7 @@ class _AfternoonPageState extends State<AfternoonPage>
           height: Get.width * 0.8,
           decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              gradient: AppColors.gradient_afternoon_sun),
+              gradient: AppColors.gradientAfternoonSun),
         ),
       );
     });

@@ -68,7 +68,7 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
           width: Get.width,
           height: Get.height,
           decoration: const BoxDecoration(
-              gradient: AppColors.Bg_Gradient_Timer_Reading),
+              gradient: AppColors.bgGradientTimerReading),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -126,7 +126,7 @@ class _VisualizationSuccessPageState extends State<VisualizationSuccessPage> {
             fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
-      linearGradient: AppColors.Progress_Gradient_Timer_Reading,
+      linearGradient: AppColors.progressGradientTimerReading,
       backgroundColor: Colors.white,
     );
   }

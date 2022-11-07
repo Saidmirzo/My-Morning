@@ -848,7 +848,7 @@ class _ProgressPageState extends State<ProgressPage> {
 //         keyboardType: TextInputType.text,
 //         style: const TextStyle(
 //           fontSize: 23,
-//           color: AppColors.VIOLET,
+//           color: AppColors.violet,
 //         ),
 //       ),
 //       actions: [

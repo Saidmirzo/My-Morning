@@ -43,8 +43,8 @@ class _MeditationPageState extends State<MeditationPage> {
       body: Container(
         decoration: BoxDecoration(
             gradient: menuState == MenuState.MORNING
-                ? AppColors.Bg_Gradient_1
-                : AppColors.gradient_loading_night_bg),
+                ? AppColors.bgGradient1
+                : AppColors.gradientLoadingNightBg),
         width: Get.width,
         height: Get.height,
         child: Stack(
@@ -364,7 +364,7 @@ class BackButton extends StatelessWidget {
                 //           ),
                 //           child: Text(
                 //             'meditation_menu_1'.tr.toUpperCase(),
-                //             style: AppStyles.treaningSubtitle.copyWith(
+                //             style: AppStyles.trainingSubtitle.copyWith(
                 //                 color: HexColor("#592F72"),
                 //                 fontWeight: FontWeight.bold,
                 //                 fontSize: 17),
@@ -396,7 +396,7 @@ class BackButton extends StatelessWidget {
                 //           ),
                 //           child: Text(
                 //             'meditation_menu_2'.tr.toUpperCase(),
-                //             style: AppStyles.treaningSubtitle.copyWith(
+                //             style: AppStyles.trainingSubtitle.copyWith(
                 //                 color: HexColor("#592F72"),
                 //                 fontWeight: FontWeight.bold,
                 //                 fontSize: 17),
@@ -435,7 +435,7 @@ class BackButton extends StatelessWidget {
                 //           ),
                 //           child: Text(
                 //             'meditation_menu_3'.tr.toUpperCase(),
-                //             style: AppStyles.treaningSubtitle.copyWith(
+                //             style: AppStyles.trainingSubtitle.copyWith(
                 //                 color: HexColor("#592F72"),
                 //                 fontWeight: FontWeight.bold,
                 //                 fontSize: 17),

@@ -44,7 +44,7 @@ class _NightPageState extends State<NightPage> with SingleTickerProviderStateMix
       controller.forward();
     });
     return Container(
-      decoration: const BoxDecoration(gradient: AppColors.gradient_loading_night_bg),
+      decoration: const BoxDecoration(gradient: AppColors.gradientLoadingNightBg),
       child: Stack(
         alignment: Alignment.center,
         children: [

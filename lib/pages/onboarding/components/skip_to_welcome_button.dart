@@ -20,7 +20,7 @@ class SizedBox extends StatelessWidget {
         child: Text(
           "skip".tr,
           style: const TextStyle(
-            color: AppColors.VIOLET,
+            color: AppColors.violet,
             fontSize: 15,
           ),
         ),

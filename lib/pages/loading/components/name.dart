@@ -16,7 +16,7 @@ Widget nameWidget(String timeType, {double top}) {
      :timeType.tr +',\n'+ user.name,
       textAlign: TextAlign.center,
       style: const TextStyle(
-        color: AppColors.WHITE,
+        color: AppColors.white,
         fontSize: 26,
         fontWeight: FontWeight.w700,
       ),

@@ -111,7 +111,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
               margin: const EdgeInsets.all(2),
               decoration: BoxDecoration(
                 border: (_controller.selectedImageIndexes.contains(index))
-                    ? Border.all(color: AppColors.VIOLET, width: 2.5)
+                    ? Border.all(color: AppColors.violet, width: 2.5)
                     : null,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(15),
@@ -155,7 +155,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
             width: 64,
             height: 64,
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.violet),
             ),
           ),
         ),
@@ -204,7 +204,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
             return Center(
               child: CircularProgressIndicator(
                 valueColor:
-                    const AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+                    const AlwaysStoppedAnimation<Color>(AppColors.violet),
                 value: loadingProgress.expectedTotalBytes != null
                     ? loadingProgress.cumulativeBytesLoaded /
                         loadingProgress.expectedTotalBytes
@@ -225,7 +225,7 @@ class VisualizationImpressionImagePage extends StatelessWidget {
       child: StyledText(
         'impression_selection'.tr,
         fontSize: 32,
-        color: AppColors.VIOLET,
+        color: AppColors.violet,
       ),
     );
   }

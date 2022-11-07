@@ -41,9 +41,9 @@ class _MyDiaryProgressState extends State<MyDiaryProgress> {
                 end: Alignment.bottomCenter,
                 tileMode: TileMode.repeated,
                 colors: [
-                  AppColors.TOP_GRADIENT,
-                  AppColors.MIDDLE_GRADIENT,
-                  AppColors.BOTTOM_GRADIENT,
+                  AppColors.topGradient,
+                  AppColors.middleGradient,
+                  AppColors.bottomGradient,
                 ],
               ),
             ),
@@ -62,7 +62,7 @@ class _MyDiaryProgressState extends State<MyDiaryProgress> {
                         child: const Icon(
                           Icons.keyboard_arrow_left_rounded,
                           size: 45,
-                          color: AppColors.VIOLET,
+                          color: AppColors.violet,
                         ),
                       ),
                       const SizedBox(
@@ -72,7 +72,7 @@ class _MyDiaryProgressState extends State<MyDiaryProgress> {
                         'my_diary'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: AppColors.VIOLET,
+                          color: AppColors.violet,
                           fontSize: Get.width * .06,
                           fontWeight: FontWeight.bold,
                         ),
@@ -148,7 +148,7 @@ class _MyDiaryProgressState extends State<MyDiaryProgress> {
               child: Text(
                 'add_note'.tr,
                 style: const TextStyle(
-                  color: AppColors.VIOLET,
+                  color: AppColors.violet,
                   fontSize: 30,
                   fontWeight: FontWeight.normal,
                 ),
@@ -249,7 +249,7 @@ class CategoryItem extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
-              border: Border.all(width: 1, color: AppColors.BLUE),
+              border: Border.all(width: 1, color: AppColors.blue),
             ),
           ),
         ),
@@ -331,7 +331,7 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
                   child: Obx(() => Icon(
                       isPlayed.value ? Icons.pause : Icons.play_arrow,
                       size: 70,
-                      color: AppColors.VIOLET)),
+                      color: AppColors.violet)),
                 ),
               ),
             ),
@@ -354,7 +354,7 @@ class _CategoryRecordItemState extends State<CategoryRecordItem> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Colors.white,
-          border: Border.all(width: 1, color: AppColors.BLUE),
+          border: Border.all(width: 1, color: AppColors.blue),
         ),
       ),
     );

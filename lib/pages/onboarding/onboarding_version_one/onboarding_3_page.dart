@@ -165,7 +165,7 @@ class _OnBoarding3PageState extends State<OnBoarding3Page> {
                         ),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.VIOLET_ONB,
+                            primary: AppColors.violetOnb,
                             minimumSize: const Size(double.infinity, 64),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),

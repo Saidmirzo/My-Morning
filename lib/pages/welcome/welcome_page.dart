@@ -33,7 +33,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.Bg_Gradient_2),
+        decoration: const BoxDecoration(gradient: AppColors.bgGradient2),
         child: Stack(
           children: [
             buildClouds(),

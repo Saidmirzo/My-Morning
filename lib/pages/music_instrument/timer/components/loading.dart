@@ -12,7 +12,7 @@ Widget buildAudioLoading() {
           StyledText('audio_loading'.tr, fontSize: 16),
           const SizedBox(width: 16),
           const CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.violet),
           ),
         ],
       ));

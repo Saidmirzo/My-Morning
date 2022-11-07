@@ -36,7 +36,7 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
               widget.exerciseTitle,
               style: const TextStyle(
                 fontSize: 16,
-                color: AppColors.VIOLET,
+                color: AppColors.violet,
                 fontStyle: FontStyle.normal,
               ),
             ),
@@ -57,7 +57,7 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
                 });
               },
               child: getIcon(),
-              backgroundColor: AppColors.WHITE,
+              backgroundColor: AppColors.white,
             ),
           ),
         ],
@@ -70,13 +70,13 @@ class ProgressPairRecordState extends State<ProgressPairRecord> {
       return const Icon(
         Icons.play_arrow,
         size: 40,
-        color: AppColors.VIOLET,
+        color: AppColors.violet,
       );
     } else {
       return const Icon(
         Icons.stop,
         size: 40,
-        color: AppColors.VIOLET,
+        color: AppColors.violet,
       );
     }
   }

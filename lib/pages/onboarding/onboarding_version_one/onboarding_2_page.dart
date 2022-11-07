@@ -67,7 +67,7 @@ class _OnBoarding2PageState extends State<OnBoarding2Page> {
                                     fontSize: Platform.isIOS ? 17 : 15,
                                     fontWeight: FontWeight.bold,
                                     color:
-                                        AppColors.VIOLET_ONB.withOpacity(0.5)),
+                                        AppColors.violetOnb.withOpacity(0.5)),
                               ),
                               const TextSpan(text: '\n'),
                               TextSpan(
@@ -75,7 +75,7 @@ class _OnBoarding2PageState extends State<OnBoarding2Page> {
                                 style: TextStyle(
                                     fontSize: Platform.isIOS ? 16 : 14,
                                     color:
-                                        AppColors.VIOLET_ONB.withOpacity(0.5)),
+                                        AppColors.violetOnb.withOpacity(0.5)),
                               )
                             ],
                           ),
@@ -101,7 +101,7 @@ class _OnBoarding2PageState extends State<OnBoarding2Page> {
                         ),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.VIOLET_ONB,
+                            primary: AppColors.violetOnb,
                             minimumSize: const Size(double.infinity, 64),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),

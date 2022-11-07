@@ -27,7 +27,7 @@ class ProgramDialogItem extends StatelessWidget {
           padding: const EdgeInsets.all(4.0),
           child: Container(
             decoration: BoxDecoration(
-                color: _isSelected ? AppColors.PINK : AppColors.LIGHT_VIOLET,
+                color: _isSelected ? AppColors.pink : AppColors.lightViolet,
                 borderRadius: const BorderRadius.all(Radius.circular(40))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -35,7 +35,7 @@ class ProgramDialogItem extends StatelessWidget {
                 child: StyledText(
                   program.name,
                   textAlign: TextAlign.center,
-                  color: AppColors.WHITE,
+                  color: AppColors.white,
                   fontSize: 18,
                 ),
               ),

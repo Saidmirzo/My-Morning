@@ -45,7 +45,7 @@ class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
                     style: const TextStyle(
                         fontSize: 23,
                         fontStyle: FontStyle.normal,
-                        color: AppColors.VIOLET),
+                        color: AppColors.violet),
                   ),
                 ),
               ),
@@ -92,7 +92,7 @@ class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.only(left: 10, right: 10),
         decoration: const BoxDecoration(
-            color: AppColors.LIGHT_VIOLET,
+            color: AppColors.lightViolet,
             borderRadius: BorderRadius.all(Radius.circular(40))),
         child: Container(
           padding: const EdgeInsets.only(top: 2),
@@ -103,7 +103,7 @@ class _AffirmationCategoryDialogState extends State<AffirmationCategoryDialog> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   decoration: TextDecoration.none,
-                  color: AppColors.WHITE,
+                  color: AppColors.white,
                   fontStyle: FontStyle.normal,
                   fontSize: 18,
                 ),

@@ -42,8 +42,8 @@ class ExerciseDragTargetState extends State<ExerciseDragTarget> {
                       bottom: MediaQuery.of(context).size.width * 0.2),
                   decoration: BoxDecoration(
                       color: candidateData.isEmpty
-                          ? AppColors.TRANSPARENT
-                          : AppColors.TRANSPARENT_WHITE),
+                          ? AppColors.transparent
+                          : AppColors.transparentWhite),
 //                child: Column(
 //                  crossAxisAlignment: CrossAxisAlignment.center,
 //                  mainAxisSize: MainAxisSize.min,

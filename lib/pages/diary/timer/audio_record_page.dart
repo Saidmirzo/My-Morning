@@ -305,7 +305,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
         body: Container(
           height: Get.height,
           width: Get.width, // match parent(all screen)
-          decoration: const BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Diary),
+          decoration: const BoxDecoration(gradient: AppColors.bgGradientTimerDiary),
           child: Stack(
             children: [
               Positioned(
@@ -396,12 +396,12 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
                         //   child: Icon(
                         //     isActive.isTrue ? Icons.pause : Icons.play_arrow,
                         //     size: 40,
-                        //     color: AppColors.VIOLET,
+                        //     color: AppColors.violet,
                         //   ),
                         //   onPressed: startTimer,
                         // ),
                         circularStrokeCap: CircularStrokeCap.round,
-                        linearGradient: AppColors.Progress_Gradient_Timer_Diary,
+                        linearGradient: AppColors.progressGradientTimerDiary,
                         backgroundColor: Colors.white,
                       ),
                     ),
@@ -477,7 +477,7 @@ class _TimerRecordPageState extends State<TimerRecordPage> {
               width: 36,
               height: 36,
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.violet),
               ),
             ))),
       );

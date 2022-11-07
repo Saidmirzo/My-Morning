@@ -32,7 +32,7 @@ class _InterviewPageState extends State<InterviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: const BoxDecoration(gradient: AppColors.Interview_Gradient),
+      decoration: const BoxDecoration(gradient: AppColors.interviewGradient),
       child: SafeArea(
         bottom: false,
         child: Stack(

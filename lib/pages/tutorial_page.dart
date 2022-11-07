@@ -171,9 +171,9 @@ class _TutorialPageState extends State<TutorialPage> {
                 child: ColorSonar(
                   contentAreaRadius: 60,
                   waveFall: 20,
-                  innerWaveColor: AppColors.LIGHT_VIOLET.withOpacity(0.4),
-                  middleWaveColor: AppColors.LIGHT_VIOLET.withOpacity(0.3),
-                  outerWaveColor: AppColors.LIGHT_VIOLET.withOpacity(0.1),
+                  innerWaveColor: AppColors.lightViolet.withOpacity(0.4),
+                  middleWaveColor: AppColors.lightViolet.withOpacity(0.3),
+                  outerWaveColor: AppColors.lightViolet.withOpacity(0.1),
                   duration: const Duration(seconds: 2),
                   contentAreaColor: Colors.transparent,
                   waveMotionEffect: Curves.fastOutSlowIn,
@@ -455,7 +455,7 @@ class _TutorialPageState extends State<TutorialPage> {
                       child: Icon(
                         Icons.close,
                         size: 50,
-                        color: AppColors.GRAY,
+                        color: AppColors.gray,
                       ),
                     ),
                   )

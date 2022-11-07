@@ -40,7 +40,7 @@ class ExerciseDialog extends Dialog {
                     style: const TextStyle(
                         fontSize: 23,
                         fontStyle: FontStyle.normal,
-                        color: AppColors.VIOLET),
+                        color: AppColors.violet),
                   ),
                 ),
               ),
@@ -50,19 +50,19 @@ class ExerciseDialog extends Dialog {
                   controller: _controller,
                   minLines: 1,
                   maxLines: 1,
-                  cursorColor: AppColors.LIGHT_GRAY,
+                  cursorColor: AppColors.lightGray,
                   keyboardType: TextInputType.text,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 23,
                       fontStyle: FontStyle.normal,
-                      color: AppColors.VIOLET,
+                      color: AppColors.violet,
                       decoration: TextDecoration.none),
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'your_exercise'.tr,
                       hintStyle: const TextStyle(
-                        color: AppColors.LIGHT_GRAY,
+                        color: AppColors.lightGray,
                       )),
                 ),
               ),

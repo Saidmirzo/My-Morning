@@ -52,7 +52,7 @@ Widget body(BuildContext context) {
             padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
             child: PrimaryCircleButton(
               bgColor: Colors.transparent,
-              icon: const Icon(Icons.west, color: AppColors.WHITE),
+              icon: const Icon(Icons.west, color: AppColors.white),
               onPressed: () {
                 _audioController.dispose();
                 Get.delete<InstrumentAudioController>();
@@ -143,7 +143,7 @@ Widget _title(String title) => Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 10, 15),
       child: Text(
         title,
-        style: AppStyles.instrumentCategotyText,
+        style: AppStyles.instrumentCategoryText,
       ),
     );
 
@@ -240,7 +240,7 @@ Widget _instumentContanier(Size size, BuildContext context,
                     height: 20,
                     width: 20,
                     child: CircularProgressIndicator(
-                      color: AppColors.LOADING_INDICATOR,
+                      color: AppColors.loadingIndicator,
                       strokeWidth: 2,
                     ))),
           if (!isPay)
@@ -249,7 +249,7 @@ Widget _instumentContanier(Size size, BuildContext context,
                 right: 5,
                 child: SvgPicture.asset(
                   'assets/images/home_menu/crown.svg',
-                  color: AppColors.WHITE.withOpacity(0.5),
+                  color: AppColors.white.withOpacity(0.5),
                 )),
           Center(
             child: Padding(

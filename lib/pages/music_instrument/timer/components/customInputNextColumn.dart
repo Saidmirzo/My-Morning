@@ -76,7 +76,7 @@ class InputTextColumnState extends State<InputTextColumn> {
                     controller: controller,
                     minLines: 1,
                     maxLines: 1,
-                    cursorColor: AppColors.VIOLET,
+                    cursorColor: AppColors.violet,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                     textAlign: TextAlign.center,

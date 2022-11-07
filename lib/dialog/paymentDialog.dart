@@ -31,7 +31,7 @@ class PaymentDialog extends Dialog {
                 child: Text(
                   'appreciate'.tr,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: AppColors.VIOLET),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: AppColors.violet),
                 ),
               ),
             ),
@@ -46,7 +46,7 @@ class PaymentDialog extends Dialog {
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
-                        color: AppColors.VIOLET,
+                        color: AppColors.violet,
                       ),
                     ),
                   ),
@@ -60,14 +60,14 @@ class PaymentDialog extends Dialog {
                       const Text(
                         "10\$",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.PINK, decoration: TextDecoration.lineThrough),
+                        style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.pink, decoration: TextDecoration.lineThrough),
                       ),
                       Container(
                         padding: const EdgeInsets.only(left: 10),
                         child: const Text(
                           "1\$",
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.VIOLET),
+                          style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: AppColors.violet),
                         ),
                       )
                     ],
@@ -106,7 +106,7 @@ class PaymentDialog extends Dialog {
 
   Container _buildBuyButton({@required title, @required VoidCallback onTap}) {
     return Container(
-        decoration: const BoxDecoration(color: AppColors.PINK, borderRadius: BorderRadius.all(Radius.circular(30))),
+        decoration: const BoxDecoration(color: AppColors.pink, borderRadius: BorderRadius.all(Radius.circular(30))),
         child: InkWell(
           onTap: onTap,
           child: Padding(
@@ -114,7 +114,7 @@ class PaymentDialog extends Dialog {
             child: StyledText(
               title,
               fontSize: 18,
-              color: AppColors.WHITE,
+              color: AppColors.white,
               textAlign: TextAlign.center,
             ),
           ),

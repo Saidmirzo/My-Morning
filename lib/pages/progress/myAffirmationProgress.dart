@@ -37,9 +37,9 @@ class _MyAffirmationProgressState extends State<MyAffirmationProgress> {
             end: Alignment.bottomCenter,
             tileMode: TileMode.repeated,
             colors: [
-              AppColors.TOP_GRADIENT,
-              AppColors.MIDDLE_GRADIENT,
-              AppColors.BOTTOM_GRADIENT,
+              AppColors.topGradient,
+              AppColors.middleGradient,
+              AppColors.bottomGradient,
             ],
           ),
         ),
@@ -137,7 +137,7 @@ class AffirmationMiniProgress extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
-              border: Border.all(width: 1, color: AppColors.BLUE),
+              border: Border.all(width: 1, color: AppColors.blue),
             ),
           ),
         ),
@@ -168,9 +168,9 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
             end: Alignment.bottomCenter,
             tileMode: TileMode.repeated,
             colors: [
-              AppColors.TOP_GRADIENT,
-              AppColors.MIDDLE_GRADIENT,
-              AppColors.BOTTOM_GRADIENT,
+              AppColors.topGradient,
+              AppColors.middleGradient,
+              AppColors.bottomGradient,
             ],
           ),
         ),
@@ -207,7 +207,7 @@ class _AffirmationFullProgressState extends State<AffirmationFullProgress> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.white,
-                      border: Border.all(width: 1, color: AppColors.BLUE),
+                      border: Border.all(width: 1, color: AppColors.blue),
                     ),
                   ),
                 ),

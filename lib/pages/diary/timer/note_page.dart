@@ -216,12 +216,12 @@ class TimerNotePageState extends State<TimerNotePage> {
           child: Icon(
             isActive.isTrue ? Icons.pause : Icons.play_arrow,
             size: 20,
-            color: AppColors.VIOLET,
+            color: AppColors.violet,
           ),
           onPressed: startTimer,
         ),
         circularStrokeCap: CircularStrokeCap.round,
-        linearGradient: AppColors.Progress_Gradient_Timer_Affirmation,
+        linearGradient: AppColors.progressGradientTimerAffirmation,
         backgroundColor: Colors.white,
       ),
     );
@@ -280,14 +280,14 @@ class TimerNotePageState extends State<TimerNotePage> {
           controller: textEditingController,
           minLines: 10,
           maxLines: 10,
-          cursorColor: AppColors.VIOLET,
+          cursorColor: AppColors.violet,
           // keyboardType: TextInputType.text,
           textInputAction: TextInputAction.newline,
           textAlign: TextAlign.left,
           style: TextStyle(
               fontSize: Get.height * 0.02,
               fontStyle: FontStyle.normal,
-              color: AppColors.VIOLET,
+              color: AppColors.violet,
               decoration: TextDecoration.none),
           decoration: InputDecoration.collapsed(
             hintText: 'Write something here..'.tr,
@@ -303,7 +303,7 @@ class TimerNotePageState extends State<TimerNotePage> {
       style: TextStyle(
         fontSize: Get.height * 0.035,
         fontStyle: FontStyle.normal,
-        color: AppColors.WHITE,
+        color: AppColors.white,
       ),
     );
   }

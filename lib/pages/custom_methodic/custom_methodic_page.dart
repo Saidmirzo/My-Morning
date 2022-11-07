@@ -61,7 +61,7 @@ class _CustomMethodicPageState extends State<CustomMethodicPage> with WidgetsBin
           height: Get.height,
           width: Get.width,
           decoration: const BoxDecoration(
-            gradient: AppColors.Bg_Gradient_Timer_Affirmation,
+            gradient: AppColors.bgGradientTimerAffirmation,
           ),
           child: Stack(
             children: [
@@ -110,11 +110,11 @@ class _CustomMethodicPageState extends State<CustomMethodicPage> with WidgetsBin
                             child: Icon(
                               timerService.isActive.isTrue ? Icons.pause : Icons.play_arrow,
                               size: 40,
-                              color: AppColors.VIOLET,
+                              color: AppColors.violet,
                             ),
                             onPressed: () => timerService.startTimer()),
                         circularStrokeCap: CircularStrokeCap.round,
-                        linearGradient: AppColors.Progress_Gradient_Timer_Affirmation,
+                        linearGradient: AppColors.progressGradientTimerAffirmation,
                         backgroundColor: Colors.white,
                       ),
                     ),

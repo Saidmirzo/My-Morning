@@ -31,9 +31,9 @@ class _MyFitnessProgressState extends State<MyFitnessProgress> {
             end: Alignment.bottomCenter,
             tileMode: TileMode.repeated,
             colors: [
-              AppColors.TOP_GRADIENT,
-              AppColors.MIDDLE_GRADIENT,
-              AppColors.BOTTOM_GRADIENT,
+              AppColors.topGradient,
+              AppColors.middleGradient,
+              AppColors.bottomGradient,
             ],
           ),
         ),
@@ -134,7 +134,7 @@ class FitnessMiniProgress extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
-              border: Border.all(width: 1, color: AppColors.BLUE),
+              border: Border.all(width: 1, color: AppColors.blue),
             ),
           ),
         ),
@@ -165,9 +165,9 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
             end: Alignment.bottomCenter,
             tileMode: TileMode.repeated,
             colors: [
-              AppColors.TOP_GRADIENT,
-              AppColors.MIDDLE_GRADIENT,
-              AppColors.BOTTOM_GRADIENT,
+              AppColors.topGradient,
+              AppColors.middleGradient,
+              AppColors.bottomGradient,
             ],
           ),
         ),
@@ -211,7 +211,7 @@ class _FitnessFullProgressState extends State<FitnessFullProgress> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.white,
-                      border: Border.all(width: 1, color: AppColors.BLUE),
+                      border: Border.all(width: 1, color: AppColors.blue),
                     ),
                   ),
                 ),

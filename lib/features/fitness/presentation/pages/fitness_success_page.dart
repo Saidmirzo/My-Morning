@@ -60,7 +60,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
           width: Get.width,
           height: Get.height,
           decoration: const BoxDecoration(
-              gradient: AppColors.Bg_Gradient_Timer_Reading),
+              gradient: AppColors.bgGradientTimerReading),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -118,7 +118,7 @@ class FitnessSuccessPageState extends State<FitnessSuccessPage> {
             fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
-      linearGradient: AppColors.Progress_Gradient_Timer_Reading,
+      linearGradient: AppColors.progressGradientTimerReading,
       backgroundColor: Colors.white,
     );
   }

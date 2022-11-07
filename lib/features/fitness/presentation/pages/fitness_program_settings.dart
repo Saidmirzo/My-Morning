@@ -147,7 +147,7 @@ class _FitnessProgramSettingsPageState extends State<FitnessProgramSettingsPage>
   //           ),
   //         ),
   //         icon: const Icon(Icons.add),
-  //         backgroundColor: AppColors.PINK,
+  //         backgroundColor: AppColors.pink,
   //       ),
   //     ],
   //   );
@@ -281,13 +281,13 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
                   //     _buildProgramCardActionButton(
                   //         onPressed: () =>
                   //             _showEditProgramDialog(program: widget.program),
-                  //         buttonColor: AppColors.VIOLET,
+                  //         buttonColor: AppColors.violet,
                   //         icon: Icons.edit,
                   //         title: 'edit'.tr),
                   //     const SizedBox(width: 8),
                   //     _buildProgramCardActionButton(
                   //         onPressed: () => showDeleteProgramDialog(context),
-                  //         buttonColor: AppColors.PINK,
+                  //         buttonColor: AppColors.pink,
                   //         icon: Icons.delete,
                   //         title: 'delete'.tr),
 
@@ -316,14 +316,14 @@ class _FitnessProgramEditItemState extends State<FitnessProgramEditItem> {
       onPressed: onPressed,
       icon: Icon(
         icon,
-        color: AppColors.WHITE,
+        color: AppColors.white,
       ),
       label: Padding(
         padding: const EdgeInsets.only(top: 4.0),
         child: StyledText(
           title,
           fontSize: 16,
-          color: AppColors.WHITE,
+          color: AppColors.white,
         ),
       ),
     );

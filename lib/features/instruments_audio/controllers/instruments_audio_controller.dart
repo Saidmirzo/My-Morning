@@ -144,7 +144,7 @@ class InstrumentAudioController extends GetxController {
 
   void showErrorDialog(String text) {
     Get.snackbar('', text,
-        backgroundColor: AppColors.VIOLET.withOpacity(0.5),
+        backgroundColor: AppColors.violet.withOpacity(0.5),
         titleText: snackText(''),
         messageText: snackText(text));
   }

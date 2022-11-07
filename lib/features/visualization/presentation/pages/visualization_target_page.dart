@@ -58,7 +58,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
             ),
           ]),
           const VisualizationBackButton(
-            color: AppColors.VIOLET,
+            color: AppColors.violet,
           ),
         ],
       ),
@@ -91,7 +91,7 @@ class _VisualizationTargetPageState extends State<VisualizationTargetPage> {
       child: StyledText(
         'target_selection'.tr,
         fontSize: 27,
-        color: AppColors.VIOLET,
+        color: AppColors.violet,
       ),
     );
   }

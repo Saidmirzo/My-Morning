@@ -164,7 +164,7 @@ class _ExerciseAddExerciseDialogItemState
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
       decoration: const BoxDecoration(
-          color: AppColors.LIGHT_VIOLET,
+          color: AppColors.lightViolet,
           borderRadius: BorderRadius.all(Radius.circular(40))),
       child: Row(
         children: [
@@ -174,7 +174,7 @@ class _ExerciseAddExerciseDialogItemState
                   left: 16.0, right: 8.0, top: 12, bottom: 8),
               child: StyledText(
                 widget.exercise.name,
-                color: AppColors.WHITE,
+                color: AppColors.white,
                 fontSize: 18,
                 textAlign: TextAlign.start,
               ),
@@ -184,7 +184,7 @@ class _ExerciseAddExerciseDialogItemState
             padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.check,
-              color: AppColors.WHITE,
+              color: AppColors.white,
             ),
           ),
         ],
@@ -196,7 +196,7 @@ class _ExerciseAddExerciseDialogItemState
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
       decoration: BoxDecoration(
-          border: Border.all(width: 1, color: AppColors.LIGHT_VIOLET),
+          border: Border.all(width: 1, color: AppColors.lightViolet),
           borderRadius: const BorderRadius.all(Radius.circular(40))),
       child: Row(
         children: [
@@ -206,7 +206,7 @@ class _ExerciseAddExerciseDialogItemState
                   left: 16.0, right: 8.0, top: 12, bottom: 8),
               child: StyledText(
                 widget.exercise.name,
-                color: AppColors.LIGHT_VIOLET,
+                color: AppColors.lightViolet,
                 fontSize: 18,
                 textAlign: TextAlign.start,
               ),
@@ -216,7 +216,7 @@ class _ExerciseAddExerciseDialogItemState
             padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.add,
-              color: AppColors.LIGHT_VIOLET,
+              color: AppColors.lightViolet,
             ),
           ),
         ],

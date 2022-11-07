@@ -41,15 +41,15 @@ class AddTextAffirmation extends StatelessWidget {
       maxLines: 5,
       decoration: InputDecoration(
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
+          borderSide: BorderSide(color: AppColors.violet, width: 2),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.VIOLET, width: 1),
+          borderSide: BorderSide(color: AppColors.violet, width: 1),
         ),
         suffixIcon: IconButton(
           icon: const Icon(
             Icons.clear,
-            color: AppColors.VIOLET,
+            color: AppColors.violet,
           ),
           onPressed: () => _textController.clear(),
         ),
@@ -73,7 +73,7 @@ class AddTextAffirmation extends StatelessWidget {
               style: const TextStyle(
                   fontSize: 23,
                   fontStyle: FontStyle.normal,
-                  color: AppColors.VIOLET),
+                  color: AppColors.violet),
             ),
           ),
         ),
@@ -93,7 +93,7 @@ class AddTextAffirmation extends StatelessWidget {
               style: const TextStyle(
                   fontSize: 23,
                   fontStyle: FontStyle.normal,
-                  color: AppColors.VIOLET),
+                  color: AppColors.violet),
             ),
           ),
         )

@@ -13,12 +13,12 @@ Widget buildAudioLoading() {
         StyledText('audio_loading'.tr,
             fontSize: 16,
             color: menuState == MenuState.MORNING
-                ? AppColors.VIOLET
+                ? AppColors.violet
                 : Colors.white),
         const SizedBox(width: 16),
         CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(
-              menuState == MenuState.MORNING ? AppColors.VIOLET : Colors.white),
+              menuState == MenuState.MORNING ? AppColors.violet : Colors.white),
         ),
       ],
     ),

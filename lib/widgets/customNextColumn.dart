@@ -20,11 +20,11 @@ class NextColumn extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   elevation: 0,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(38.0)),
-                  backgroundColor: AppColors.PINK),
+                  backgroundColor: AppColors.pink),
               child: Text(
                 'continue'.tr,
                 style: const TextStyle(
-                  color: AppColors.WHITE,
+                  color: AppColors.white,
                   fontWeight: FontWeight.normal,
                   fontSize: 21,
                 ),

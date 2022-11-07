@@ -62,7 +62,7 @@ class _CastomSuccessPageState extends State<CastomSuccessPage> {
         body: Container(
           width: Get.width,
           height: Get.height,
-          decoration: const BoxDecoration(gradient: AppColors.Bg_Gradient_Timer_Reading),
+          decoration: const BoxDecoration(gradient: AppColors.bgGradientTimerReading),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -117,7 +117,7 @@ class _CastomSuccessPageState extends State<CastomSuccessPage> {
             fontSize: Get.height * 0.04, fontStyle: FontStyle.normal, color: Colors.white, fontWeight: FontWeight.w600),
       ),
       circularStrokeCap: CircularStrokeCap.round,
-      linearGradient: AppColors.Progress_Gradient_Timer_Reading,
+      linearGradient: AppColors.progressGradientTimerReading,
       backgroundColor: Colors.white,
     );
   }

@@ -122,7 +122,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                               //   child: const Icon(
                               //     Icons.delete_outline,
                               //     //size: 40,
-                              //     //color: AppColors.VIOLET,
+                              //     //color: AppColors.violet,
                               //   ),
                               // ),
                             ],
@@ -215,7 +215,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                 Text(
                   'sure'.tr,
                   style: const TextStyle(
-                    color: AppColors.VIOLET,
+                    color: AppColors.violet,
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
                     fontFamily: "Montserrat",
@@ -251,7 +251,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                         child: Text(
                           'yes'.tr,
                           style: const TextStyle(
-                            color: AppColors.VIOLET,
+                            color: AppColors.violet,
                             fontSize: 20,
                           ),
                         ),
@@ -268,7 +268,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: AppColors.VIOLET,
+                          color: AppColors.violet,
                         ),
                         child: Text(
                           'no'.tr,
@@ -308,13 +308,13 @@ class _journalMyDitailsState extends State<journalMyDitails> {
   //     builder: (BuildContext context) {
   //       return AlertDialog(
   //         titleTextStyle: const TextStyle(
-  //           backgroundColor: AppColors.SHADER_BOTTOM,
+  //           backgroundColor: AppColors.shaderBottom,
   //         ),
   //         titlePadding: const EdgeInsets.all(0),
   //         contentPadding: const EdgeInsets.all(0),
   //         actionsPadding: const EdgeInsets.all(0),
   //         buttonPadding: const EdgeInsets.all(0),
-  //         backgroundColor: AppColors.BOTTOM_GRADIENT,
+  //         backgroundColor: AppColors.bottomGradient,
   //         content: SizedBox(
   //           height: MediaQuery.of(context).size.height * 0.2,
   //           width: MediaQuery.of(context).size.width,
@@ -325,7 +325,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
   //                 child: Text(
   //                   'sure'.tr,
   //                   style: const TextStyle(
-  //                     color: AppColors.VIOLET,
+  //                     color: AppColors.violet,
   //                     fontSize: 40,
   //                   ),
   //                 ),
@@ -337,7 +337,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
   //                     child: Text(
   //                       'yes'.tr,
   //                       style: const TextStyle(
-  //                         color: AppColors.FIX_TOP,
+  //                         color: AppColors.fixTop,
   //                         fontSize: 40,
   //                       ),
   //                     ),
@@ -357,7 +357,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
   //                     child: Text(
   //                       'no'.tr,
   //                       style: const TextStyle(
-  //                         color: AppColors.FIX_TOP,
+  //                         color: AppColors.fixTop,
   //                         fontSize: 40,
   //                       ),
   //                     ),
@@ -381,7 +381,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
       style: TextStyle(
         fontSize: Get.height * 0.035,
         fontStyle: FontStyle.normal,
-        color: AppColors.WHITE,
+        color: AppColors.white,
       ),
     );
   }

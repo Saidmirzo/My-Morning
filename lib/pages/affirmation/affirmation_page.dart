@@ -44,7 +44,7 @@ class AffirmationPageState extends State<AffirmationPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
-          decoration: const BoxDecoration(gradient: AppColors.Bg_Gradient_2),
+          decoration: const BoxDecoration(gradient: AppColors.bgGradient2),
           width: Get.width,
           height: Get.height,
           child: SafeArea(
@@ -66,14 +66,14 @@ class AffirmationPageState extends State<AffirmationPage> {
                       flex: 2,
                     ),
                     // SizedBox(height: Get.height * 0.15),
-                    Text('affirmation'.tr, style: AppStyles.treaningTitle),
+                    Text('affirmation'.tr, style: AppStyles.trainingTitle),
                     // SizedBox(height: Get.height * 0.05),
                     const Spacer(
                       flex: 2,
                     ),
                     Text(
                       'affirmation_title'.tr,
-                      style: AppStyles.treaningSubtitle,
+                      style: AppStyles.trainingSubtitle,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: Get.height * 0.05),

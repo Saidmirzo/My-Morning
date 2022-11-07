@@ -48,7 +48,7 @@ class _MorningPageState extends State<MorningPage>
     });
     return Container(
       decoration:
-          const BoxDecoration(gradient: AppColors.gradient_loading_morning_bg),
+          const BoxDecoration(gradient: AppColors.gradientLoadingMorningBg),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -118,7 +118,7 @@ class _MorningPageState extends State<MorningPage>
           height: Get.width * 0.7,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(180),
-              gradient: AppColors.gradient_morning_sun),
+              gradient: AppColors.gradientMorningSun),
         ),
       );
     });

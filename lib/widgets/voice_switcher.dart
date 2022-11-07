@@ -23,7 +23,7 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
               'player_voice'.tr,
               textAlign: TextAlign.left,
               style: const TextStyle(
-                  color: AppColors.VIOLET,
+                  color: AppColors.violet,
                   fontStyle: FontStyle.normal,
                   fontSize: 26),
             ),
@@ -55,10 +55,10 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
                     builder: (BuildContext context, AsyncSnapshot<bool> value) {
                       return Switch(
                         value: value.data ?? true,
-                        inactiveThumbColor: AppColors.PINK,
-                        inactiveTrackColor: AppColors.PINK,
-                        activeColor: AppColors.BLUE,
-                        activeTrackColor: AppColors.BLUE,
+                        inactiveThumbColor: AppColors.pink,
+                        inactiveTrackColor: AppColors.pink,
+                        activeColor: AppColors.blue,
+                        activeTrackColor: AppColors.blue,
                         onChanged: (bool value) {
                           setState(() {
                             CustomSharedPreferences().setVoice(value);
@@ -91,10 +91,10 @@ class VoiceSwitcherState extends State<VoiceSwitcher> {
   }
 
   Color chooseWomanColor(bool value) {
-    return value ? AppColors.TRANSPARENT_WHITE : AppColors.PINK;
+    return value ? AppColors.transparentWhite : AppColors.pink;
   }
 
   Color chooseManColor(bool value) {
-    return value ? AppColors.BLUE : AppColors.TRANSPARENT_WHITE;
+    return value ? AppColors.blue : AppColors.transparentWhite;
   }
 }

@@ -10,7 +10,7 @@ class LinePainter extends CustomPainter {
 
   LinePainter(this._progress, this.wideStep, this.randomValue) {
     _paint = Paint()
-      ..color = AppColors.VIOLET
+      ..color = AppColors.violet
       ..strokeWidth = 4.0;
   }
 

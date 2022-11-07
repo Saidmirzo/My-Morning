@@ -67,7 +67,7 @@ class ExerciseDeskTag extends StatelessWidget {
       height: 28.0,
       margin: const EdgeInsets.only(bottom: 10),
       decoration: const BoxDecoration(
-          color: AppColors.PINK,
+          color: AppColors.pink,
           borderRadius: BorderRadius.all(Radius.circular(40))),
       child: Container(
         padding: const EdgeInsets.only(top: 2),
@@ -77,7 +77,7 @@ class ExerciseDeskTag extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               decoration: TextDecoration.none,
-              color: AppColors.WHITE,
+              color: AppColors.white,
               fontStyle: FontStyle.normal,
               fontSize: size ?? 14,
             ),

@@ -18,7 +18,7 @@ class BottomMenu extends StatelessWidget {
 
   const BottomMenu(
       {Key key,
-      this.bgColor = AppColors.WHITE,
+      this.bgColor = AppColors.white,
       @required this.currentPageNumber})
       : super(key: key);
 
@@ -51,7 +51,7 @@ class BottomMenu extends StatelessWidget {
                 SvgAssets.mountains,
                 'Morning'.tr,
                 onPress: _openMorning,
-                color: bgColor == AppColors.WHITE
+                color: bgColor == AppColors.white
                     ? currentPageNumber == 1
                         ? AppColors.primary
                         : AppColors.primary.withOpacity(.34)
@@ -63,7 +63,7 @@ class BottomMenu extends StatelessWidget {
                 SvgAssets.night,
                 'Evening'.tr,
                 onPress: _openNight,
-                color: bgColor == AppColors.WHITE
+                color: bgColor == AppColors.white
                     ? currentPageNumber == 2
                         ? AppColors.primary
                         : AppColors.primary.withOpacity(.34)
@@ -75,7 +75,7 @@ class BottomMenu extends StatelessWidget {
                 SvgAssets.progress,
                 'Statistics'.tr,
                 onPress: _openProgress,
-                color: bgColor == AppColors.WHITE
+                color: bgColor == AppColors.white
                     ? currentPageNumber == 3
                         ? AppColors.primary
                         : AppColors.primary.withOpacity(.34)
@@ -87,7 +87,7 @@ class BottomMenu extends StatelessWidget {
                 'assets/images/home_menu/notification_icon.svg',
                 'Notifications'.tr,
                 onPress: _openFaq,
-                color: bgColor == AppColors.WHITE
+                color: bgColor == AppColors.white
                     ? currentPageNumber == 4
                         ? AppColors.primary
                         : AppColors.primary.withOpacity(.34)

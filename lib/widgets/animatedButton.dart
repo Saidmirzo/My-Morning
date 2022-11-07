@@ -22,19 +22,19 @@ class _AnimatedButtonState extends State<AnimatedButton> {
   bool switcher;
 
   Color getButtonColor() {
-    return switcher ? AppColors.PINK : AppColors.TRANSPARENT;
+    return switcher ? AppColors.pink : AppColors.transparent;
   }
 
   Color getTextColor() {
-    return switcher ? AppColors.WHITE : AppColors.VIOLET;
+    return switcher ? AppColors.white : AppColors.violet;
   }
 
   @override
   void initState() {
     super.initState();
     switcher = false;
-    buttonColor = AppColors.TRANSPARENT;
-    textColor = AppColors.VIOLET;
+    buttonColor = AppColors.transparent;
+    textColor = AppColors.violet;
   }
 
   void change() {

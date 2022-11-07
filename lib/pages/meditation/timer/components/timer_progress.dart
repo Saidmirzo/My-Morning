@@ -26,7 +26,7 @@ Widget buildTimerProgress(TimerService timerService, bool isSilence) {
           child: Icon(
             timerService.isActive.isTrue ? Icons.pause : Icons.play_arrow,
             size: 40,
-            color: AppColors.VIOLET,
+            color: AppColors.violet,
           ),
           onPressed: () {
             print(isSilence);
@@ -38,8 +38,8 @@ Widget buildTimerProgress(TimerService timerService, bool isSilence) {
         ),
         circularStrokeCap: CircularStrokeCap.round,
         linearGradient: menuState == MenuState.MORNING
-            ? AppColors.Progress_Gradient_Timer_Meditation
-            : AppColors.Progress_Gradient_Timer_Meditation_Night,
+            ? AppColors.progressGradientTimerMeditation
+            : AppColors.progressGradientTimerMeditationNight,
         backgroundColor: Colors.white,
       ),
     ),

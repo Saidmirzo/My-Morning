@@ -101,7 +101,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
                           // textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontFamily: 'Montserrat',
-                              color: AppColors.VIOLET,
+                              color: AppColors.violet,
                               fontSize: 16,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w400),
@@ -193,7 +193,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
                                                 'Affirmation Settings'.tr,
                                                 style: const TextStyle(
                                                   fontFamily: 'Montserrat',
-                                                  color: AppColors.VIOLET,
+                                                  color: AppColors.violet,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w700,
                                                   fontStyle: FontStyle.normal,
@@ -357,9 +357,9 @@ class _ExerciseTileState extends State<ExerciseTile> {
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                           ),
-                          cursorColor: AppColors.VIOLET,
+                          cursorColor: AppColors.violet,
                           style: const TextStyle(
-                              color: AppColors.VIOLET,
+                              color: AppColors.violet,
                               fontSize: 16,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w400,
@@ -386,7 +386,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
                               style: TextStyle(
                                   fontSize: Get.width * .025,
                                   fontStyle: FontStyle.normal,
-                                  color: AppColors.VIOLET,
+                                  color: AppColors.violet,
                                   decoration: TextDecoration.none),
                             ),
                           ),
@@ -443,7 +443,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
         controller: widget.textEditingController,
         minLines: 1,
         maxLines: 1,
-        cursorColor: AppColors.VIOLET,
+        cursorColor: AppColors.violet,
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.next,
         textAlign: TextAlign.center,
@@ -466,7 +466,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
             fontSize: Get.width * .04,
             fontWeight: FontWeight.w600,
             fontStyle: FontStyle.normal,
-            color: AppColors.VIOLET,
+            color: AppColors.violet,
             decoration: TextDecoration.none),
       );
     });

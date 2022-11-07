@@ -122,8 +122,8 @@ class MeditationTimerPageState extends State<MeditationTimerPage> with WidgetsBi
           height: Get.height,
           decoration: BoxDecoration(
             gradient: menuState == MenuState.MORNING
-                ? AppColors.Bg_Gradient_Timer_Meditation
-                : AppColors.gradient_loading_night_bg,
+                ? AppColors.bgGradientTimerMeditation
+                : AppColors.gradientLoadingNightBg,
           ),
           child: Stack(
             children: [

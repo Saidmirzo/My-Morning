@@ -44,7 +44,7 @@ class InterviewDialog extends Dialog {
                       child: Text(
                         'help_us'.tr,
                         style: const TextStyle(
-                          color: AppColors.VIOLET,
+                          color: AppColors.violet,
                         ),
                       ),
                       onPressed: () async {

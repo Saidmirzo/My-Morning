@@ -15,7 +15,7 @@ class _FaqSupportPageState extends State<FaqSupportPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AppGradientContainer(
-        gradient: AppColors.Bg_Gradient_Menu,
+        gradient: AppColors.bgGradientMenu,
         child: Stack(
           children: [
             clouds,

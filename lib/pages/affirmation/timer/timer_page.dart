@@ -70,7 +70,7 @@ class AffirmationTimerPageState extends State<AffirmationTimerPage>
         body: Container(
           height: Get.height,
           decoration: const BoxDecoration(
-            gradient: AppColors.Bg_Gradient_Timer_Affirmation,
+            gradient: AppColors.bgGradientTimerAffirmation,
           ),
           child: Stack(
             children: [

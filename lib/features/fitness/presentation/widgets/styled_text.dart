@@ -12,7 +12,7 @@ class StyledText extends StatelessWidget {
     this.data, {
     Key key,
     this.fontSize = 12,
-    this.color = AppColors.VIOLET,
+    this.color = AppColors.violet,
     this.textAlign = TextAlign.start,
     this.fontWeight = FontWeight.w400,
   }) : super(key: key);

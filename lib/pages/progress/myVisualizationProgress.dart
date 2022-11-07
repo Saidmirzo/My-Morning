@@ -32,9 +32,9 @@ class _MyVisualizationProgressState extends State<MyVisualizationProgress> {
             end: Alignment.bottomCenter,
             tileMode: TileMode.repeated,
             colors: [
-              AppColors.TOP_GRADIENT,
-              AppColors.MIDDLE_GRADIENT,
-              AppColors.BOTTOM_GRADIENT,
+              AppColors.topGradient,
+              AppColors.middleGradient,
+              AppColors.bottomGradient,
             ],
           ),
         ),
@@ -137,7 +137,7 @@ class VisualizationMiniProgress extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
-              border: Border.all(width: 1, color: AppColors.BLUE),
+              border: Border.all(width: 1, color: AppColors.blue),
             ),
           ),
         ),
@@ -171,9 +171,9 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
                 end: Alignment.bottomCenter,
                 tileMode: TileMode.repeated,
                 colors: [
-                  AppColors.TOP_GRADIENT,
-                  AppColors.MIDDLE_GRADIENT,
-                  AppColors.BOTTOM_GRADIENT,
+                  AppColors.topGradient,
+                  AppColors.middleGradient,
+                  AppColors.bottomGradient,
                 ],
               ),
             ),
@@ -209,7 +209,7 @@ class _VisualizationFullProgressState extends State<VisualizationFullProgress> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.white,
-                          border: Border.all(width: 1, color: AppColors.BLUE),
+                          border: Border.all(width: 1, color: AppColors.blue),
                         ),
                       ),
                     ),

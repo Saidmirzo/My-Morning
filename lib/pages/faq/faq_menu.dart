@@ -47,7 +47,7 @@ class FAQStateScreen extends State<FaqMenuPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: AppGradientContainer(
-          gradient: AppColors.Bg_Gradient_Menu,
+          gradient: AppColors.bgGradientMenu,
           child: Stack(
             children: [
               clouds,
@@ -94,20 +94,20 @@ class FAQStateScreen extends State<FaqMenuPage> {
                                   controller: nameController,
                                   minLines: 1,
                                   maxLines: 1,
-                                  cursorColor: AppColors.VIOLET,
+                                  cursorColor: AppColors.violet,
                                   keyboardType: TextInputType.text,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontSize: titleFontSize,
                                     fontStyle: FontStyle.normal,
-                                    color: AppColors.VIOLET,
+                                    color: AppColors.violet,
                                     decoration: TextDecoration.none,
                                   ),
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: 'enter_your_name'.tr,
                                       hintStyle: TextStyle(
-                                          color: AppColors.VIOLET,
+                                          color: AppColors.violet,
                                           fontFamily: "Montserrat",
                                           fontWeight: FontWeight.w600,
                                           fontSize: Get.width * .040)),
@@ -142,7 +142,7 @@ class FAQStateScreen extends State<FaqMenuPage> {
                               ),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary: AppColors.VIOLET_ONB,
+                                  primary: AppColors.violetOnb,
                                   minimumSize: Size(double.infinity,
                                       Platform.isIOS ? 70 : 60),
                                   shape: RoundedRectangleBorder(

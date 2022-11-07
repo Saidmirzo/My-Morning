@@ -55,9 +55,9 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                 end: Alignment.bottomCenter,
                 tileMode: TileMode.repeated,
                 colors: [
-                  AppColors.TOP_GRADIENT,
-                  AppColors.MIDDLE_GRADIENT,
-                  AppColors.BOTTOM_GRADIENT,
+                  AppColors.topGradient,
+                  AppColors.middleGradient,
+                  AppColors.bottomGradient,
                 ],
               ),
             ),
@@ -104,7 +104,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                                     child: const Icon(
                                       Icons.edit_outlined,
                                       //size: 40,
-                                      //color: AppColors.VIOLET,
+                                      //color: AppColors.violet,
                                     ),
                                   ),
                                   Container(
@@ -118,7 +118,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                                     child: const Icon(
                                       Icons.delete_outline,
                                       //size: 40,
-                                      //color: AppColors.VIOLET,
+                                      //color: AppColors.violet,
                                     ),
                                   ),
                                 ],
@@ -147,7 +147,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.white,
-                          border: Border.all(width: 1, color: AppColors.BLUE),
+                          border: Border.all(width: 1, color: AppColors.blue),
                         ),
                       ),
                     ),
@@ -185,7 +185,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
             const Icon(
               Icons.add_circle_outline,
               size: 40,
-              //color: AppColors.VIOLET,
+              //color: AppColors.violet,
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -195,7 +195,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
               child: Text('save_diary'.tr,
                   //textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: AppColors.VIOLET,
+                    color: AppColors.violet,
                     fontSize: 30,
                     fontWeight: FontWeight.normal,
                   )),
@@ -212,20 +212,20 @@ class _journalMyDitailsState extends State<journalMyDitails> {
       builder: (BuildContext context) {
         return AlertDialog(
           titleTextStyle: const TextStyle(
-            backgroundColor: AppColors.SHADER_BOTTOM,
+            backgroundColor: AppColors.shaderBottom,
           ),
           titlePadding: const EdgeInsets.all(0),
           contentPadding: const EdgeInsets.all(0),
           actionsPadding: const EdgeInsets.all(0),
           buttonPadding: const EdgeInsets.all(0),
-          backgroundColor: AppColors.BOTTOM_GRADIENT,
+          backgroundColor: AppColors.bottomGradient,
           // title: Container(
-          //   color: AppColors.VIOLET,
+          //   color: AppColors.violet,
           //   child: Text(
           //     'Сообщение !',
           //     style: TextStyle(
-          //       color: AppColors.VIOLET,
-          //       backgroundColor: AppColors.SHADER_BOTTOM,
+          //       color: AppColors.violet,
+          //       backgroundColor: AppColors.shaderBottom,
           //       fontSize: 30,
           //     ),
           //   ),
@@ -240,7 +240,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                   child: Text(
                     'sure'.tr,
                     style: const TextStyle(
-                      color: AppColors.VIOLET,
+                      color: AppColors.violet,
                       fontSize: 40,
                     ),
                   ),
@@ -252,7 +252,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                       child: Text(
                         'yes'.tr,
                         style: const TextStyle(
-                          color: AppColors.FIX_TOP,
+                          color: AppColors.fixTop,
                           fontSize: 40,
                         ),
                       ),
@@ -275,7 +275,7 @@ class _journalMyDitailsState extends State<journalMyDitails> {
                       child: Text(
                         'no'.tr,
                         style: const TextStyle(
-                          color: AppColors.FIX_TOP,
+                          color: AppColors.fixTop,
                           fontSize: 40,
                         ),
                       ),

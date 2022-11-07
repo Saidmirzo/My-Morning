@@ -209,7 +209,7 @@
 //                                                             fontWeight:
 //                                                                 FontWeight.bold,
 //                                                             color: AppColors
-//                                                                 .VIOLET)),
+//                                                                 .violet)),
 //                                                     Text(
 //                                                         products[i]['body'][
 //                                                                 Get.locale.languageCode == "ru"
@@ -232,7 +232,7 @@
 //                                                             fontSize: Platform.isIOS
 //                                                                 ? 15
 //                                                                 : 14,
-//                                                             color: AppColors.VIOLET)),
+//                                                             color: AppColors.violet)),
 //                                                   ],
 //                                                 ),
 //                                               ),
@@ -347,13 +347,13 @@
 //                                   RichText(
 //                                       text: myUrl(
 //                                           'privacy_title'.tr, UrlPrivacy,
-//                                           textColor: AppColors.VIOLET,
+//                                           textColor: AppColors.violet,
 //                                           underline: false)),
 //                                   // const SizedBox(height: 5),
 //                                   RichText(
 //                                       text: myUrl(
 //                                           'agreement_title'.tr, UrlAgreement,
-//                                           textColor: AppColors.VIOLET,
+//                                           textColor: AppColors.violet,
 //                                           underline: false)),
 //                                 ],
 //                               ),
@@ -373,7 +373,7 @@
 //                                 ),
 //                                 child: ElevatedButton(
 //                                   style: ElevatedButton.styleFrom(
-//                                     primary: AppColors.VIOLET_ONB,
+//                                     primary: AppColors.violetOnb,
 //                                     minimumSize: Size(double.infinity,
 //                                         Platform.isIOS ? 70 : 60),
 //                                     shape: RoundedRectangleBorder(

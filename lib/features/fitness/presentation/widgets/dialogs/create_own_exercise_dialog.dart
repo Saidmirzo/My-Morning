@@ -54,15 +54,15 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
                   controller: _nameTextController,
                   decoration: InputDecoration(
                     focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
+                      borderSide: BorderSide(color: AppColors.violet, width: 2),
                     ),
                     enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.VIOLET, width: 1),
+                      borderSide: BorderSide(color: AppColors.violet, width: 1),
                     ),
                     suffixIcon: IconButton(
                       icon: const Icon(
                         Icons.clear,
-                        color: AppColors.VIOLET,
+                        color: AppColors.violet,
                       ),
                       onPressed: () => _nameTextController.text = '',
                     ),
@@ -78,15 +78,15 @@ class _CreateOwnExerciseDialogState extends State<CreateOwnExerciseDialog> {
                   controller: _descriptionController,
                   decoration: InputDecoration(
                     focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.VIOLET, width: 2),
+                      borderSide: BorderSide(color: AppColors.violet, width: 2),
                     ),
                     enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.VIOLET, width: 1),
+                      borderSide: BorderSide(color: AppColors.violet, width: 1),
                     ),
                     suffixIcon: IconButton(
                       icon: const Icon(
                         Icons.clear,
-                        color: AppColors.VIOLET,
+                        color: AppColors.violet,
                       ),
                       onPressed: () => _descriptionController.text = '',
                     ),

@@ -65,8 +65,8 @@ class ProgramSelectionDialog extends StatelessWidget {
                           textAlign: TextAlign.center,
                           fontSize: 23,
                           color: _isActive
-                              ? AppColors.VIOLET
-                              : AppColors.VIOLET.withAlpha(70)),
+                              ? AppColors.violet
+                              : AppColors.violet.withAlpha(70)),
                     ),
                   );
                 }),

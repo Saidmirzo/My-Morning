@@ -48,7 +48,7 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                         style: const TextStyle(
                             fontSize: 23,
                             fontStyle: FontStyle.normal,
-                            color: AppColors.VIOLET),
+                            color: AppColors.violet),
                       ),
                     ),
                   ),
@@ -71,8 +71,8 @@ class _AffirmationTextDialogState extends State<AffirmationTextDialog> {
                             fontSize: 23,
                             fontStyle: FontStyle.normal,
                             color: _selectedItemIndex == null
-                                ? AppColors.VIOLET.withAlpha(70)
-                                : AppColors.VIOLET),
+                                ? AppColors.violet.withAlpha(70)
+                                : AppColors.violet),
                       ),
                     ),
                   )
@@ -139,7 +139,7 @@ class AffirmationTextItem extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.only(left: 10, right: 10),
         decoration: BoxDecoration(
-            color: isSelected ? AppColors.PINK : AppColors.LIGHT_VIOLET,
+            color: isSelected ? AppColors.pink : AppColors.lightViolet,
             borderRadius: const BorderRadius.all(Radius.circular(40))),
         child: Container(
           padding: const EdgeInsets.only(top: 2),
@@ -151,7 +151,7 @@ class AffirmationTextItem extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   decoration: TextDecoration.none,
-                  color: AppColors.WHITE,
+                  color: AppColors.white,
                   fontStyle: FontStyle.normal,
                   fontSize: 18,
                 ),

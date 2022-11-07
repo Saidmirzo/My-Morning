@@ -32,7 +32,7 @@ class ToastUtils {
             padding:
                 const EdgeInsets.only(left: 10, right: 10, top: 16, bottom: 16),
             decoration: const BoxDecoration(
-                color: AppColors.PINK,
+                color: AppColors.pink,
                 borderRadius: BorderRadius.all(Radius.circular(6.0))),
             child: Align(
               alignment: Alignment.center,

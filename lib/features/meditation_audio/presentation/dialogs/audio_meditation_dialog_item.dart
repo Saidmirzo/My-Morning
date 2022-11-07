@@ -98,7 +98,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
             decoration: BoxDecoration(
               color: _audioController.bufIdSelected.value == widget.id
                   ? menuState == MenuState.MORNING
-                      ? AppColors.audiuSelected
+                      ? AppColors.audioSelected
                       : const Color(0xFF11123F)
                   : Colors.transparent,
               borderRadius: const BorderRadius.all(
@@ -190,7 +190,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
         _audioController.playingIndex.value == widget.id
             ? Icons.pause
             : Icons.play_arrow,
-        color: AppColors.WHITE,
+        color: AppColors.white,
         size: 30,
       ),
     );
@@ -215,7 +215,7 @@ class _AudioMeditationDialogItemState extends State<AudioMeditationDialogItem> {
       height: 30,
       width: 30,
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(AppColors.VIOLET),
+        valueColor: AlwaysStoppedAnimation<Color>(AppColors.violet),
       ),
     );
   }

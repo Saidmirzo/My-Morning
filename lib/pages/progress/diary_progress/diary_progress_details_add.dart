@@ -39,9 +39,9 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                 end: Alignment.bottomCenter,
                 tileMode: TileMode.repeated,
                 colors: [
-                  AppColors.TOP_GRADIENT,
-                  AppColors.MIDDLE_GRADIENT,
-                  AppColors.BOTTOM_GRADIENT,
+                  AppColors.topGradient,
+                  AppColors.middleGradient,
+                  AppColors.bottomGradient,
                 ],
               ),
             ),
@@ -97,7 +97,7 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.white,
-                      border: Border.all(width: 1, color: AppColors.BLUE),
+                      border: Border.all(width: 1, color: AppColors.blue),
                     ),
                   ),
                 ),
@@ -132,7 +132,7 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
             const Icon(
               Icons.add_circle_outline,
               size: 40,
-              //color: AppColors.VIOLET,
+              //color: AppColors.violet,
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -143,7 +143,7 @@ class _JournalMyDitailsAddState extends State<JournalMyDitailsAdd> {
                 'save_diary'.tr,
                 //textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: AppColors.VIOLET,
+                  color: AppColors.violet,
                   fontSize: 30,
                   fontWeight: FontWeight.normal,
                 ),
@@ -162,13 +162,13 @@ _showAlert(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         titleTextStyle: const TextStyle(
-          backgroundColor: AppColors.SHADER_BOTTOM,
+          backgroundColor: AppColors.shaderBottom,
         ),
         titlePadding: const EdgeInsets.all(0),
         contentPadding: const EdgeInsets.all(0),
         actionsPadding: const EdgeInsets.all(0),
         buttonPadding: const EdgeInsets.all(0),
-        backgroundColor: AppColors.BOTTOM_GRADIENT,
+        backgroundColor: AppColors.bottomGradient,
         content: SizedBox(
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width,
@@ -178,7 +178,7 @@ _showAlert(BuildContext context) {
                 padding: const EdgeInsets.only(top: 20),
                 child: Text('sure'.tr,
                   style: const TextStyle(
-                    color: AppColors.VIOLET,
+                    color: AppColors.violet,
                     fontSize: 40,
                   ),
                 ),
@@ -189,7 +189,7 @@ _showAlert(BuildContext context) {
                   TextButton(
                     child: Text('yes'.tr,
                       style: const TextStyle(
-                        color: AppColors.FIX_TOP,
+                        color: AppColors.fixTop,
                         fontSize: 40,
                       ),
                     ),
@@ -201,7 +201,7 @@ _showAlert(BuildContext context) {
                   TextButton(
                     child: Text('no'.tr,
                       style: const TextStyle(
-                        color: AppColors.FIX_TOP,
+                        color: AppColors.fixTop,
                         fontSize: 40,
                       ),
                     ),
