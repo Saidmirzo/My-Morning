@@ -34,13 +34,13 @@ class AppColors {
   static const trackbarActive = Color(0xFF673A7A);
   static const loadingIndicator = Color(0xFFB994DA);
   static const timerNightBgButton = Color(0x0ffc50b2);
-  static const nightButtonMenuIocons = Color(0xFFE4CDF8);
+  static const nightButtonMenuIcons = Color(0xFFE4CDF8);
   //static const timerNightMenuIcon = Color(0xFFB994DA);
 
   //страница звуков dark mode
-  static const instrument_text_color = Color(0xFFCAB0DC);
+  static const instrumentTextColor = Color(0xFFCAB0DC);
   static const instrumentalBg = Color(0xFF1F1643);
-  static const gradient_instrument_active = LinearGradient(
+  static const gradientInstrumentActive = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [

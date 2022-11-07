@@ -197,7 +197,7 @@ Widget _titleInstrument(String title) {
     child: Text(
       title,
       style:
-          const TextStyle(color: AppColors.instrument_text_color, fontSize: 14),
+          const TextStyle(color: AppColors.instrumentTextColor, fontSize: 14),
       textAlign: TextAlign.center,
     ),
   );
@@ -229,7 +229,7 @@ Widget _instumentContanier(Size size, BuildContext context,
       decoration: BoxDecoration(
           color: isPlay == false ? AppColors.primary : null,
           borderRadius: BorderRadius.circular(10),
-          gradient: isPlay ? AppColors.gradient_instrument_active : null),
+          gradient: isPlay ? AppColors.gradientInstrumentActive : null),
       child: Stack(
         children: [
           if (audioController.isLoading.value.value == instrument)

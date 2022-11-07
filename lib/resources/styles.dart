@@ -19,7 +19,7 @@ class AppStyles {
 
   static final TextStyle instrumentCategoryText = TextStyle(
     fontSize: Get.height * 0.020,
-    color: AppColors.instrument_text_color,
+    color: AppColors.instrumentTextColor,
     fontWeight: FontWeight.w500,
   );
 }

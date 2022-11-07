@@ -56,8 +56,8 @@ class BottomMenu extends StatelessWidget {
                         ? AppColors.primary
                         : AppColors.primary.withOpacity(.34)
                     : currentPageNumber == 1
-                        ? AppColors.nightButtonMenuIocons
-                        : AppColors.nightButtonMenuIocons.withOpacity(.34),
+                        ? AppColors.nightButtonMenuIcons
+                        : AppColors.nightButtonMenuIcons.withOpacity(.34),
               ),
               _menuButton(
                 SvgAssets.night,
@@ -68,8 +68,8 @@ class BottomMenu extends StatelessWidget {
                         ? AppColors.primary
                         : AppColors.primary.withOpacity(.34)
                     : currentPageNumber == 2
-                        ? AppColors.nightButtonMenuIocons
-                        : AppColors.nightButtonMenuIocons.withOpacity(.34),
+                        ? AppColors.nightButtonMenuIcons
+                        : AppColors.nightButtonMenuIcons.withOpacity(.34),
               ),
               _menuButton(
                 SvgAssets.progress,
@@ -80,8 +80,8 @@ class BottomMenu extends StatelessWidget {
                         ? AppColors.primary
                         : AppColors.primary.withOpacity(.34)
                     : currentPageNumber == 3
-                        ? AppColors.nightButtonMenuIocons
-                        : AppColors.nightButtonMenuIocons.withOpacity(.34),
+                        ? AppColors.nightButtonMenuIcons
+                        : AppColors.nightButtonMenuIcons.withOpacity(.34),
               ),
               _menuButton(
                 'assets/images/home_menu/notification_icon.svg',
@@ -92,8 +92,8 @@ class BottomMenu extends StatelessWidget {
                         ? AppColors.primary
                         : AppColors.primary.withOpacity(.34)
                     : currentPageNumber == 4
-                        ? AppColors.nightButtonMenuIocons
-                        : AppColors.nightButtonMenuIocons.withOpacity(.34),
+                        ? AppColors.nightButtonMenuIcons
+                        : AppColors.nightButtonMenuIcons.withOpacity(.34),
               ),
             ],
           ),
